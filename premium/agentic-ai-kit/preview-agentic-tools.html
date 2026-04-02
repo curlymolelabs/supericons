@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Tools: 10 Original Icons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0a0a0f; --surface: #111118; --border: #1e1e2a;
+            --text: #e5e5e5; --muted: #666680;
+        }
+        body.light {
+            --bg: #f5f5f7; --surface: #fff; --border: #e5e5ea;
+            --text: #1d1d1f; --muted: #86868b;
+        }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+            min-height: 100vh; transition: all 0.3s;
+        }
+        .hero {
+            text-align: center; padding: 4rem 2rem 2rem;
+        }
+        .hero .badge {
+            display: inline-block; padding: 0.3rem 0.8rem; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #F9A8D4, #A78BFA); color: #fff;
+        }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; letter-spacing: -0.04em; }
+        .hero p { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+        .controls {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(16px);
+            background: color-mix(in srgb, var(--bg) 80%, transparent);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem; display: flex; justify-content: center; gap: 2rem;
+        }
+        button {
+            font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500;
+            padding: 0.45em 0.9em; border-radius: 6px; cursor: pointer;
+            border: 1px solid var(--border); background: transparent; color: var(--muted);
+        }
+        button:hover { background: var(--border); color: var(--text); }
+        button.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+        .grid {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 2rem; padding: 2.5rem; max-width: 900px; margin: 0 auto;
+        }
+        .cell {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 2rem 1rem; border-radius: 16px; border: 1px solid transparent;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .cell:hover {
+            background: color-mix(in srgb, var(--text) 4%, transparent);
+            border-color: var(--border); transform: translateY(-3px);
+        }
+        .icon-wrap {
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .cell:hover .icon-wrap { transform: scale(1.1); }
+        .icon-wrap svg { fill: var(--text); }
+        body.light .icon-wrap svg { fill: #1d1d1f; }
+
+        .label {
+            font-size: 0.6rem; font-family: 'SF Mono', Consolas, monospace;
+            color: var(--muted); margin-top: 0.75rem; text-align: center;
+            opacity: 0; transition: all 0.2s; transform: translateY(4px);
+        }
+        .cell:hover .label { opacity: 1; transform: translateY(0); }
+
+        footer {
+            text-align: center; padding: 3rem; font-size: 0.65rem; color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">Original Design</div>
+    <h1>Agentic Tools</h1>
+    <p>10 original icons. Cute, minimalist, elegant. Every path hand-composed on 256x256 grid.</p>
+</div>
+
+<div class="controls">
+    <div style="display:flex;align-items:center;gap:0.4rem">
+        <span style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)">Theme</span>
+        <button class="active" onclick="setTheme('dark',this)">Dark</button>
+        <button onclick="setTheme('light',this)">Light</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.4rem">
+        <span style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)">Size</span>
+        <button onclick="setSize(32,this)">32</button>
+        <button onclick="setSize(48,this)">48</button>
+        <button class="active" onclick="setSize(64,this)">64</button>
+        <button onclick="setSize(96,this)">96</button>
+        <button onclick="setSize(128,this)">128</button>
+    </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>Agentic Tools &middot; 10 Original Icons &middot; Curly Mole Labs 2026</footer>
+
+<script>
+const names = [
+    'code-editor','command-line','file-tree','web-fetch','clipboard',
+    'notebook','stopwatch','lightbulb','magic-wand','puzzle-piece'
+];
+let currentSize = 64;
+const cache = {};
+
+async function load() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    for (const name of names) {
+        if (!cache[name]) {
+            try {
+                const r = await fetch(`svg-agentic-tools/${name}.svg`);
+                cache[name] = await r.text();
+            } catch { continue; }
+        }
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+
+        const wrap = document.createElement('div');
+        wrap.className = 'icon-wrap';
+        wrap.innerHTML = cache[name];
+        const svg = wrap.querySelector('svg');
+        if (svg) { svg.setAttribute('width', currentSize); svg.setAttribute('height', currentSize); }
+
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = name;
+
+        cell.appendChild(wrap);
+        cell.appendChild(label);
+        grid.appendChild(cell);
+    }
+}
+
+function setTheme(t, btn) {
+    document.body.className = t === 'light' ? 'light' : '';
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+function setSize(s, btn) {
+    currentSize = s;
+    document.querySelectorAll('.icon-wrap svg').forEach(svg => {
+        svg.setAttribute('width', s); svg.setAttribute('height', s);
+    });
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+load();
+</script>
+</body>
+</html>

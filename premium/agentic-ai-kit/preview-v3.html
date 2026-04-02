@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Kit V3: Adaptive Spatial Neon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* 
+        ======================================================================
+        THEME SYSTEM
+        These CSS variables directly control the volumetric SVG structure.
+        ======================================================================
+        */
+        
+        /* 1. Phantom (Linear / Vercel style dark mode - Supericons Brand) */
+        body.theme-phantom {
+            --bg: #09090b; --text: #ededed; --muted: #666; --border: #222;
+            --v3-grad-start: #FF4F00;
+            --v3-grad-end: #7928CA;
+            --v3-shadow-col: rgba(0, 0, 0, 0.9);
+            --v3-glow-opacity: 0.6;
+            --v3-fill-opacity: 0.12;
+            --v3-core-col: #ffffff;
+            --v3-rim-col: rgba(255, 255, 255, 0.5);
+            --icon-bg-hover: rgba(255,79,0,0.05);
+        }
+
+        /* 2. Cyberpunk (Neon bright on deep navy) */
+        body.theme-cyber {
+            --bg: #050510; --text: #00ffcc; --muted: #4e5080; --border: #14143a;
+            --v3-grad-start: #00f0ff;
+            --v3-grad-end: #ff00ff;
+            --v3-shadow-col: rgba(0, 0, 0, 0.9);
+            --v3-glow-opacity: 1;
+            --v3-fill-opacity: 0.2;
+            --v3-core-col: #d4ffff;
+            --v3-rim-col: rgba(255, 255, 255, 0.9);
+            --icon-bg-hover: rgba(0,240,255,0.08);
+        }
+
+        /* 3. Ghost White (Stripe minimal glow) */
+        body.theme-ghost {
+            --bg: #111111; --text: #cccccc; --muted: #555; --border: #2a2a2a;
+            --v3-grad-start: #ffffff;
+            --v3-grad-end: #888888;
+            --v3-shadow-col: rgba(0, 0, 0, 1);
+            --v3-glow-opacity: 0.4;
+            --v3-fill-opacity: 0.05;
+            --v3-core-col: #ffffff;
+            --v3-rim-col: rgba(255, 255, 255, 0.3);
+            --icon-bg-hover: rgba(255,255,255,0.03);
+        }
+
+        /* 4. Tactile Light (Apple VisionOS / Teenage Engineering light plastic) */
+        body.theme-tactile-light {
+            --bg: #f5f5f7; --text: #1d1d1f; --muted: #86868b; --border: #d2d2d7;
+            --v3-grad-start: #ffffff;
+            --v3-grad-end: #d1d1d6;
+            --v3-shadow-col: rgba(0, 0, 0, 0.15);
+            --v3-glow-opacity: 1; /* Used here to create soft white volume */
+            --v3-fill-opacity: 0.6;
+            --v3-core-col: #1d1d1f; /* Dark stroke for visibility */
+            --v3-rim-col: rgba(255, 255, 255, 1);
+            --icon-bg-hover: rgba(0,0,0,0.03);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); color: var(--text); 
+            transition: background 0.4s ease, color 0.4s ease;
+            min-height: 100vh;
+        }
+
+        /* Typography & Layout */
+        .hero { text-align: center; padding: 4rem 2rem 2rem; }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 0.5rem; text-wrap: balance;}
+        .hero p { font-size: 0.95rem; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.5; text-wrap: balance;}
+        
+        .badge {
+            display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px;
+            font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+            background: var(--border); color: var(--text); margin-bottom: 1rem;
+        }
+
+        /* Controls */
+        .controls-wrapper {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(var(--bg), 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); padding: 1rem;
+            display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; align-items: center;
+        }
+        .control-group { display: flex; align-items: center; gap: 0.5rem; }
+        .control-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+        
+        button {
+            font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500;
+            padding: 0.5em 1em; border-radius: 6px; cursor: pointer;
+            border: 1px solid var(--border); background: transparent; color: var(--muted);
+            transition: all 0.2s;
+        }
+        button:hover { background: var(--border); color: var(--text); }
+        button.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+        /* Grid */
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);
+            padding: 3rem 2rem 1rem; max-width: 1200px; margin: 0 auto;
+            border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;
+        }
+
+        .icon-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
+            gap: 1rem; padding: 0 2rem 4rem; max-width: 1200px; margin: 0 auto; 
+        }
+
+        .icon-cell {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 2rem 1rem; border-radius: 12px; border: 1px solid transparent;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
+            position: relative; overflow: hidden;
+            aspect-ratio: 1;
+        }
+        .icon-cell:hover { 
+            background: var(--icon-bg-hover); 
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .icon-wrapper {
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .icon-cell:hover .icon-wrapper { transform: scale(1.1); }
+
+        .icon-name { 
+            position: absolute; bottom: 1rem;
+            font-size: 0.65rem; color: var(--muted); text-align: center; 
+            opacity: 0; transform: translateY(5px);
+            transition: all 0.2s; font-family: 'SF Mono', Consolas, monospace;
+        }
+        .icon-cell:hover .icon-name { opacity: 1; transform: translateY(0); }
+
+        footer { text-align: center; padding: 4rem 2rem; font-size: 0.7rem; color: var(--muted); border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body class="theme-phantom">
+
+<div class="hero">
+    <div class="badge">V3 Redesign</div>
+    <h1>Adaptive Spatial Neon</h1>
+    <p>5-layer volumetric SVGs mapping natively to CSS variables. Drop shadows, neon bloom, soft fills, solid cores, and specular rim lights—all controlled in the browser. Zero rasterization. Infinitely scalable.</p>
+</div>
+
+<div class="controls-wrapper">
+    <div class="control-group">
+        <span class="control-label">Material Theme</span>
+        <button class="active" onclick="setTheme('theme-phantom')">Phantom (Supericons)</button>
+        <button onclick="setTheme('theme-cyber')">Cyberpunk</button>
+        <button onclick="setTheme('theme-ghost')">Ghost White</button>
+        <button onclick="setTheme('theme-tactile-light')">Tactile Light</button>
+    </div>
+    <div class="control-group">
+        <span class="control-label">Scale</span>
+        <button onclick="setSize(24)">24px</button>
+        <button onclick="setSize(32)">32px</button>
+        <button class="active" onclick="setSize(48)">48px</button>
+        <button onclick="setSize(64)">64px</button>
+    </div>
+</div>
+
+<div id="gallery"></div>
+
+<footer>Supericons Agentic AI Kit v3 &middot; Curly Mole Labs 2026</footer>
+
+<script>
+const groups = {
+    'Core Navigation': ['ai-home','ai-search','ai-settings','ai-history','ai-help','ai-menu'],
+    'Agent and Workflow': ['agent','agent-workflow','agent-group','tool-use','chain','orchestrator','agent-loop','agent-stop'],
+    'Prompt and Context': ['prompt','prompt-template','system-prompt','context-window','conversation','regenerate','streaming'],
+    'RAG and Data': ['embedding','chunk','retrieve','rag-pipeline','vector-db','knowledge-base','document-index'],
+    'Model and Configuration': ['model','model-selector','temperature','token-counter','fine-tune','max-tokens'],
+    'Safety and Monitoring': ['guardrail','safety-filter','token-cost','latency'],
+    'Status and Empty States': ['sparkle','empty-agent'],
+};
+
+let currentSize = 48;
+
+async function loadIcons() {
+    const gallery = document.getElementById('gallery');
+    for (const [groupName, names] of Object.entries(groups)) {
+        const title = document.createElement('div');
+        title.className = 'section-title';
+        title.textContent = groupName;
+        gallery.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'icon-grid';
+        gallery.appendChild(grid);
+
+        for (const name of names) {
+            try {
+                // Fetch the V3 SVGs
+                const res = await fetch(`svg-v3/${name}.svg`);
+                if (!res.ok) continue;
+                const text = await res.text();
+
+                const cell = document.createElement('div');
+                cell.className = 'icon-cell';
+                cell.innerHTML = `
+                    <div class="icon-wrapper">${text}</div>
+                    <div class="icon-name">${name}</div>
+                `;
+                
+                // Initialize size
+                const svg = cell.querySelector('svg');
+                if (svg) {
+                    svg.setAttribute('width', currentSize);
+                    svg.setAttribute('height', currentSize);
+                    // Ensure the SVG wrapper is fully transparent so background handles hover
+                    svg.style.overflow = "visible"; // Crucial for blur and shadows not clipping
+                }
+
+                grid.appendChild(cell);
+            } catch (e) {
+                console.warn(`Failed to load ${name}`, e);
+            }
+        }
+    }
+}
+
+function setTheme(themeClass) {
+    document.body.className = themeClass;
+    const buttons = event.target.parentElement.querySelectorAll('button');
+    buttons.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function setSize(size) {
+    currentSize = size;
+    document.querySelectorAll('.icon-wrapper svg').forEach(svg => {
+        svg.setAttribute('width', size);
+        svg.setAttribute('height', size);
+    });
+    const buttons = event.target.parentElement.querySelectorAll('button');
+    buttons.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+loadIcons();
+</script>
+</body>
+</html>

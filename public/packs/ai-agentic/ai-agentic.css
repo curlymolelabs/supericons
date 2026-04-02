@@ -1,0 +1,1411 @@
+/* ═══════════════════════════════════════════════════════════════
+   AI & Agentic Collection V2: Premium CSS Animations
+   50 animated icons with gradient fills, multi-element stagger,
+   draw-in effects, glow pulses, and spectrum cascade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Shared: allow transforms to overflow cell bounds */
+.si-anim svg { overflow: visible; }
+
+/* ━━━ V2 HERO ICONS (10) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ──── 1. SPARKLE ──────────────────────────────────────────────
+   Animation story: Main star pops in with elastic bounce,
+   then 3 accent dots twinkle in sequence with color cycling.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .xznek0 .n8l1r5,
+.icon-card:hover .xznek0 .n8l1r5 {
+  animation: fa08ar 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+.si-icon-cell:hover .xznek0 .ba1np5,
+.icon-card:hover .xznek0 .ba1np5 {
+  animation: q0e7v2 0.8s ease 0.1s both;
+}
+.si-icon-cell:hover .xznek0 .dcs6nk,
+.icon-card:hover .xznek0 .dcs6nk {
+  animation: q0e7v2 0.8s ease 0.25s both;
+}
+.si-icon-cell:hover .xznek0 .ouvkbd,
+.icon-card:hover .xznek0 .ouvkbd {
+  animation: q0e7v2 0.8s ease 0.4s both;
+}
+@keyframes fa08ar {
+  0%   { transform: scale(0.5) rotate(-15deg); opacity: 0.3; }
+  60%  { transform: scale(1.15) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes q0e7v2 {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* ──── 2. AGENT-LOOP ──────────────────────────────────────────
+   Animation story: Dashed ring spins, orbiting dots chase
+   around the center node with different speeds.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .f91tcy .di0fcm,
+.icon-card:hover .f91tcy .di0fcm {
+  animation: l0lz4v 2s linear infinite;
+  transform-origin: center;
+}
+.si-icon-cell:hover .f91tcy .b3gncj,
+.icon-card:hover .f91tcy .b3gncj {
+  animation: kk5i10 1s ease infinite;
+  transform-origin: center;
+}
+.si-icon-cell:hover .f91tcy .lhq3km,
+.icon-card:hover .f91tcy .lhq3km {
+  animation: acwa41 1.5s linear infinite;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .f91tcy .pll55w,
+.icon-card:hover .f91tcy .pll55w {
+  animation: acwa41 1.5s linear 0.5s infinite;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .f91tcy .cw35r0,
+.icon-card:hover .f91tcy .cw35r0 {
+  animation: acwa41 1.5s linear 1s infinite;
+  transform-origin: 12px 12px;
+}
+@keyframes l0lz4v {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes kk5i10 {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+@keyframes acwa41 {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ──── 3. STREAMING ───────────────────────────────────────────
+   Animation story: Text lines cascade in top-to-bottom with
+   staggered fade-in, cursor blinks at bottom.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .xxyxwf .t753cg,
+.icon-card:hover .xxyxwf .t753cg {
+  animation: n7czq9 0.8s ease both;
+}
+.si-icon-cell:hover .xxyxwf .gloiwq,
+.icon-card:hover .xxyxwf .gloiwq {
+  animation: n7czq9 0.8s ease 0.12s both;
+}
+.si-icon-cell:hover .xxyxwf .okp7k2,
+.icon-card:hover .xxyxwf .okp7k2 {
+  animation: n7czq9 0.8s ease 0.24s both;
+}
+.si-icon-cell:hover .xxyxwf .s0ntbp,
+.icon-card:hover .xxyxwf .s0ntbp {
+  animation: n7czq9 0.8s ease 0.36s both;
+}
+.si-icon-cell:hover .xxyxwf .fgbpcq,
+.icon-card:hover .xxyxwf .fgbpcq {
+  animation: t19j22 0.6s steps(2) infinite;
+}
+@keyframes n7czq9 {
+  0%   { transform: translateX(-4px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes t19j22 {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ──── 4. GUARDRAIL ───────────────────────────────────────────
+   Animation story: Shield border draws in, then glow pulse.
+   Checkmark draws in last as confirmation.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .tihxmg .oug1rq,
+.icon-card:hover .tihxmg .oug1rq {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: eqrepj 0.8s ease forwards;
+}
+.si-icon-cell:hover .tihxmg .rs3fz4,
+.icon-card:hover .tihxmg .rs3fz4 {
+  animation: a1gbba 1s ease 0.4s both;
+}
+.si-icon-cell:hover .tihxmg .t0vwg8,
+.icon-card:hover .tihxmg .t0vwg8 {
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+  animation: wlihdm 0.4s ease 0.7s forwards;
+}
+@keyframes eqrepj {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes a1gbba {
+  0%   { opacity: 0; }
+  50%  { opacity: 0.25; }
+  100% { opacity: 0.15; }
+}
+@keyframes wlihdm {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ──── 5. RAG-PIPELINE ────────────────────────────────────────
+   Animation story: Document fades in, data flows through
+   pipe nodes, output document appears at end.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .kk8xwh .pyoyg9,
+.icon-card:hover .kk8xwh .pyoyg9 {
+  animation: wny52i 0.6s ease;
+}
+.si-icon-cell:hover .kk8xwh .ihqbc3,
+.icon-card:hover .kk8xwh .ihqbc3 {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: eqrepj 0.6s ease 0.2s forwards;
+}
+.si-icon-cell:hover .kk8xwh .aqdt98,
+.icon-card:hover .kk8xwh .aqdt98 {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+}
+.si-icon-cell:hover .kk8xwh .iaqe0y,
+.icon-card:hover .kk8xwh .iaqe0y {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+.si-icon-cell:hover .kk8xwh .dszjse,
+.icon-card:hover .kk8xwh .dszjse {
+  animation: wny52i 0.5s ease 0.65s both;
+}
+@keyframes wny52i {
+  0%   { opacity: 0.05; transform: scale(0.95); }
+  50%  { opacity: 0.3; transform: scale(1.02); }
+  100% { opacity: 0.2; transform: scale(1); }
+}
+@keyframes pd56ye {
+  0%   { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+/* ──── 6. EMBEDDING ───────────────────────────────────────────
+   Animation story: Scattered dots converge toward center
+   core, core grows as dots arrive.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .upo7wq .ikkfnt,
+.icon-card:hover .upo7wq .ikkfnt {
+  animation: iuxbvs 0.7s ease both;
+}
+.si-icon-cell:hover .upo7wq .rzlyah,
+.icon-card:hover .upo7wq .rzlyah {
+  animation: js51je 0.7s ease 0.1s both;
+}
+.si-icon-cell:hover .upo7wq .mgqkvd,
+.icon-card:hover .upo7wq .mgqkvd {
+  animation: a7h78f 0.7s ease 0.15s both;
+}
+.si-icon-cell:hover .upo7wq .k0hxfy,
+.icon-card:hover .upo7wq .k0hxfy {
+  animation: vihstw 0.7s ease 0.2s both;
+}
+.si-icon-cell:hover .upo7wq .ug6qmw,
+.icon-card:hover .upo7wq .ug6qmw {
+  animation: n8zwyw 0.7s ease 0.25s both;
+}
+.si-icon-cell:hover .upo7wq .pezfii,
+.icon-card:hover .upo7wq .pezfii {
+  animation: rd3p17 0.7s ease 0.3s both;
+}
+.si-icon-cell:hover .upo7wq .k6mrgr,
+.icon-card:hover .upo7wq .k6mrgr {
+  animation: oj6gk2 0.5s ease 0.5s both;
+  transform-origin: center;
+}
+@keyframes iuxbvs { to { transform: translate(4px, 5px); opacity: 0; } }
+@keyframes js51je { to { transform: translate(-4px, 5px); opacity: 0; } }
+@keyframes a7h78f { to { transform: translate(6px, -1px); opacity: 0; } }
+@keyframes vihstw { to { transform: translate(-6px, -1px); opacity: 0; } }
+@keyframes n8zwyw { to { transform: translate(2px, -6px); opacity: 0; } }
+@keyframes rd3p17 { to { transform: translate(-3px, -5px); opacity: 0; } }
+@keyframes oj6gk2 {
+  0%   { transform: scale(1); }
+  60%  { transform: scale(1.4); }
+  100% { transform: scale(1.2); }
+}
+
+/* ──── 7. MODEL ───────────────────────────────────────────────
+   Animation story: 3D cube rotates, faces shift opacity
+   creating depth perception.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .iemvrk svg,
+.icon-card:hover .iemvrk svg {
+  animation: rzkyz6 1s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .iemvrk .tz2v9i,
+.icon-card:hover .iemvrk .tz2v9i {
+  animation: zba8hh 1s ease;
+}
+.si-icon-cell:hover .iemvrk .l1fpl0,
+.icon-card:hover .iemvrk .l1fpl0 {
+  animation: tk1f3t 1s ease;
+}
+@keyframes rzkyz6 {
+  0%   { transform: rotateY(0deg) scale(1); }
+  50%  { transform: rotateY(15deg) scale(1.05); }
+  100% { transform: rotateY(0deg) scale(1); }
+}
+@keyframes zba8hh {
+  0%   { opacity: 0.5; }
+  50%  { opacity: 0.7; }
+  100% { opacity: 0.5; }
+}
+@keyframes tk1f3t {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.15; }
+  100% { opacity: 0.3; }
+}
+
+/* ──── 8. PROMPT ──────────────────────────────────────────────
+   Animation story: Prompt line draws in from left, cursor
+   blinks at the insertion point.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .iksow0 .ul2kfp,
+.icon-card:hover .iksow0 .ul2kfp {
+  animation: jfr6ia 0.6s ease both;
+  transform-origin: left center;
+}
+.si-icon-cell:hover .iksow0 .uzu1iw,
+.icon-card:hover .iksow0 .uzu1iw {
+  animation: t19j22 0.6s steps(2) infinite;
+}
+.si-icon-cell:hover .iksow0 .x07tnw,
+.icon-card:hover .iksow0 .x07tnw {
+  animation: xhkd0x 0.3s ease;
+}
+@keyframes jfr6ia {
+  0%   { transform: scaleX(0); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 0.7; }
+}
+@keyframes xhkd0x {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* ──── 9. REGENERATE ──────────────────────────────────────────
+   Animation story: Both arrows spin in opposite directions,
+   creating a spinning refresh effect with glow trail.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .j474hh svg,
+.icon-card:hover .j474hh svg {
+  animation: azitsa 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.4));
+}
+@keyframes azitsa {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ──── 10. REASONING ──────────────────────────────────────────
+   Animation story: Nodes pop in sequentially (top to bottom),
+   links draw in between them, center hub pulses last.
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .nzis6r .t0kc87,
+.icon-card:hover .nzis6r .t0kc87 {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.si-icon-cell:hover .nzis6r .r0ovef,
+.icon-card:hover .nzis6r .r0ovef {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+.si-icon-cell:hover .nzis6r .l2oxwr,
+.icon-card:hover .nzis6r .l2oxwr {
+  animation: gcttak 0.3s ease 0.15s both;
+}
+.si-icon-cell:hover .nzis6r .ac8u1s,
+.icon-card:hover .nzis6r .ac8u1s {
+  animation: gcttak 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .nzis6r .nsogbz,
+.icon-card:hover .nzis6r .nsogbz {
+  animation: gcttak 0.3s ease 0.25s both;
+}
+.si-icon-cell:hover .nzis6r .bhnx8a,
+.icon-card:hover .nzis6r .bhnx8a {
+  animation: qdtcwz 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .nzis6r .kunedt,
+.icon-card:hover .nzis6r .kunedt {
+  animation: gcttak 0.3s ease 0.5s both;
+}
+.si-icon-cell:hover .nzis6r .wpcc46,
+.icon-card:hover .nzis6r .wpcc46 {
+  animation: gcttak 0.3s ease 0.55s both;
+}
+.si-icon-cell:hover .nzis6r .qmfx7j,
+.icon-card:hover .nzis6r .qmfx7j {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+}
+.si-icon-cell:hover .nzis6r .zqq3qk,
+.icon-card:hover .nzis6r .zqq3qk {
+  animation: pd56ye 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s both;
+}
+@keyframes gcttak {
+  0%   { opacity: 0; }
+  100% { opacity: 0.4; }
+}
+@keyframes qdtcwz {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ━━━ V2 UNIQUE ANIMATIONS (40 icons) ━━━━━━━━━━━━━━━━━━━━━━━
+   Every icon has its own animation story driven by Socratic
+   analysis: "What is this icon's core concept? What motion
+   tells that story?"
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ──── AGENT ──────────────────────────────────────────────────
+   Concept: AI robot assistant
+   Story: Robot eyes blink (quick close-open), visor flickers
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .qn0atl .uo31n6,
+.icon-card:hover .qn0atl .uo31n6 {
+  animation: mh93f0 0.4s ease 0.1s both;
+}
+.si-icon-cell:hover .qn0atl .uyc2tb,
+.icon-card:hover .qn0atl .uyc2tb {
+  animation: mh93f0 0.4s ease 0.1s both;
+}
+.si-icon-cell:hover .qn0atl .z8kw4l,
+.icon-card:hover .qn0atl .z8kw4l {
+  animation: xqefs4 0.6s ease 0.3s both;
+}
+.si-icon-cell:hover .qn0atl svg,
+.icon-card:hover .qn0atl svg {
+  filter: drop-shadow(0 0 4px rgba(255, 107, 53, 0.3));
+}
+@keyframes mh93f0 {
+  0%   { transform: scaleY(1); }
+  40%  { transform: scaleY(0.1); }
+  100% { transform: scaleY(1); }
+}
+@keyframes xqefs4 {
+  0%   { opacity: 0.3; }
+  30%  { opacity: 0.8; }
+  60%  { opacity: 0.2; }
+  100% { opacity: 0.3; }
+}
+
+/* ──── AGENT-GROUP ─────────────────────────────────────────────
+   Concept: Multiple agents collaborating
+   Story: Second robot slides in from right, joins the first
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .wtegtf .dbgfxl,
+.icon-card:hover .wtegtf .dbgfxl {
+  animation: livtwv 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.si-icon-cell:hover .wtegtf .jvy325,
+.icon-card:hover .wtegtf .jvy325 {
+  animation: livtwv 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+.si-icon-cell:hover .wtegtf svg,
+.icon-card:hover .wtegtf svg {
+  filter: drop-shadow(0 0 3px rgba(255, 107, 53, 0.25));
+}
+@keyframes livtwv {
+  0%   { transform: translateX(6px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ──── AGENT-STOP ─────────────────────────────────────────────
+   Concept: Emergency halt
+   Story: Inner stop block throbs urgently (scale pulse)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .cu4kkk .jllhqf,
+.icon-card:hover .cu4kkk .jllhqf {
+  animation: r4mwd2 0.5s ease infinite;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cu4kkk .m7c0tn,
+.icon-card:hover .cu4kkk .m7c0tn {
+  animation: cwl4a0 0.3s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cu4kkk svg,
+.icon-card:hover .cu4kkk svg {
+  filter: drop-shadow(0 0 4px rgba(255, 45, 135, 0.4));
+}
+@keyframes r4mwd2 {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+@keyframes cwl4a0 {
+  0%, 100% { transform: translateX(0); }
+  25%  { transform: translateX(-1.5px); }
+  75%  { transform: translateX(1.5px); }
+}
+
+/* ──── AGENT-WORKFLOW ─────────────────────────────────────────
+   Concept: Sequential process flow
+   Story: Nodes light up in sequence (1→2→3→4) showing flow
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .sidg38 .ptkbdc,
+.icon-card:hover .sidg38 .ptkbdc {
+  animation: ih76k4 0.4s ease both;
+}
+.si-icon-cell:hover .sidg38 .uyaz7j,
+.icon-card:hover .sidg38 .uyaz7j {
+  animation: gcttak 0.2s ease 0.15s both;
+}
+.si-icon-cell:hover .sidg38 .vmht0x,
+.icon-card:hover .sidg38 .vmht0x {
+  animation: ih76k4 0.4s ease 0.2s both;
+}
+.si-icon-cell:hover .sidg38 .ar7zf9,
+.icon-card:hover .sidg38 .ar7zf9 {
+  animation: gcttak 0.2s ease 0.25s both;
+}
+.si-icon-cell:hover .sidg38 .txfzvm,
+.icon-card:hover .sidg38 .txfzvm {
+  animation: ih76k4 0.4s ease 0.35s both;
+}
+.si-icon-cell:hover .sidg38 .hefydh,
+.icon-card:hover .sidg38 .hefydh {
+  animation: gcttak 0.2s ease 0.4s both;
+}
+.si-icon-cell:hover .sidg38 .j0vcty,
+.icon-card:hover .sidg38 .j0vcty {
+  animation: gcttak 0.2s ease 0.45s both;
+}
+.si-icon-cell:hover .sidg38 .d1u38q,
+.icon-card:hover .sidg38 .d1u38q {
+  animation: ih76k4 0.4s ease 0.5s both;
+}
+@keyframes ih76k4 {
+  0%   { opacity: 0.3; transform: scale(0.8); }
+  50%  { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+/* ──── AI-HELP ──────────────────────────────────────────────
+   Concept: Getting assistance
+   Story: Question mark wobbles side to side (seeking answer)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .zrffi6 .u5o9aq,
+.icon-card:hover .zrffi6 .u5o9aq {
+  animation: ux1rwe 0.5s ease;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .zrffi6 .r6ktma,
+.icon-card:hover .zrffi6 .r6ktma {
+  animation: q0e7v2 0.4s ease 0.3s both;
+}
+.si-icon-cell:hover .zrffi6 svg,
+.icon-card:hover .zrffi6 svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.3));
+}
+@keyframes ux1rwe {
+  0%   { transform: rotate(0); }
+  25%  { transform: rotate(-8deg); }
+  75%  { transform: rotate(8deg); }
+  100% { transform: rotate(0); }
+}
+
+/* ──── AI-HISTORY ──────────────────────────────────────────────
+   Concept: Going back in time
+   Story: Clock hands spin backward (rewinding)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .uapabx .y7i3vf,
+.icon-card:hover .uapabx .y7i3vf {
+  animation: zt1kot 0.6s ease;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .uapabx svg,
+.icon-card:hover .uapabx svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.25));
+}
+@keyframes zt1kot {
+  from { transform: rotate(0); }
+  to   { transform: rotate(-180deg); }
+}
+
+/* ──── AI-HOME ────────────────────────────────────────────────
+   Concept: Home/dashboard base
+   Story: Roof lifts up slightly (welcoming), door knob appears
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .x2xlvb .nu0cva,
+.icon-card:hover .x2xlvb .nu0cva {
+  animation: hdref5 0.5s ease;
+}
+.si-icon-cell:hover .x2xlvb .wcjgpz,
+.icon-card:hover .x2xlvb .wcjgpz {
+  animation: q0e7v2 0.4s ease 0.25s both;
+}
+.si-icon-cell:hover .x2xlvb svg,
+.icon-card:hover .x2xlvb svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.25));
+}
+@keyframes hdref5 {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* ──── AI-MENU ────────────────────────────────────────────────
+   Concept: Navigation menu
+   Story: Bars slide in with staggered delay
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .ldi6tn .rbc1js,
+.icon-card:hover .ldi6tn .rbc1js {
+  animation: miie9x 0.4s ease both;
+}
+.si-icon-cell:hover .ldi6tn .xomfgp,
+.icon-card:hover .ldi6tn .xomfgp {
+  animation: miie9x 0.4s ease 0.08s both;
+}
+.si-icon-cell:hover .ldi6tn .rq5qhr,
+.icon-card:hover .ldi6tn .rq5qhr {
+  animation: miie9x 0.4s ease 0.16s both;
+}
+.si-icon-cell:hover .ldi6tn svg,
+.icon-card:hover .ldi6tn svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.25));
+}
+@keyframes miie9x {
+  0%   { transform: translateX(-3px); opacity: 0.3; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ──── AI-SEARCH ──────────────────────────────────────────────
+   Concept: Searching / discovery
+   Story: Glint sweeps across glass, handle tilts
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .jkzjn2 svg,
+.icon-card:hover .jkzjn2 svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.3));
+}
+.si-icon-cell:hover .jkzjn2 .q7m7d6,
+.icon-card:hover .jkzjn2 .q7m7d6 {
+  animation: d1axhh 0.6s ease both;
+}
+.si-icon-cell:hover .jkzjn2 .u4kmpd,
+.icon-card:hover .jkzjn2 .u4kmpd {
+  animation: zbou9f 0.5s ease;
+  transform-origin: 10.5px 10.5px;
+}
+@keyframes d1axhh {
+  0%   { transform: translate(-2px, -2px); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translate(3px, 3px); opacity: 0; }
+}
+@keyframes zbou9f {
+  0%   { transform: rotate(0); }
+  50%  { transform: rotate(8deg); }
+  100% { transform: rotate(0); }
+}
+
+/* ──── AI-SETTINGS ────────────────────────────────────────────
+   Concept: Configuration / preferences
+   Story: Gear spins 90 degrees, center dot pulses
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .ixp7b2 .yb8nc8,
+.icon-card:hover .ixp7b2 .yb8nc8 {
+  animation: kk5i10 0.6s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .ixp7b2 svg,
+.icon-card:hover .ixp7b2 svg {
+  animation: aob06m 0.8s ease;
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.2));
+}
+@keyframes aob06m {
+  from { transform: rotate(0); }
+  to   { transform: rotate(90deg); }
+}
+
+/* ──── CHAIN ─────────────────────────────────────────────────
+   Concept: Linked steps in a sequence
+   Story: Links pull apart slightly then snap back together
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .wium09 .yll39m,
+.icon-card:hover .wium09 .yll39m {
+  animation: z43xjf 0.5s ease;
+}
+.si-icon-cell:hover .wium09 .rcb2f8,
+.icon-card:hover .wium09 .rcb2f8 {
+  animation: imuc14 0.5s ease;
+}
+.si-icon-cell:hover .wium09 svg,
+.icon-card:hover .wium09 svg {
+  filter: drop-shadow(0 0 3px rgba(0, 230, 118, 0.3));
+}
+@keyframes z43xjf {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+@keyframes imuc14 {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+/* ──── CHUNK ──────────────────────────────────────────────────
+   Concept: Splitting content into pieces
+   Story: Quadrants separate slightly (chunking effect)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .sh6z0l .zg8tsl,
+.icon-card:hover .sh6z0l .zg8tsl {
+  animation: fisbnb 0.4s ease both;
+}
+.si-icon-cell:hover .sh6z0l .uyqjkk,
+.icon-card:hover .sh6z0l .uyqjkk {
+  animation: j96t5a 0.4s ease 0.05s both;
+}
+.si-icon-cell:hover .sh6z0l .vha9q5,
+.icon-card:hover .sh6z0l .vha9q5 {
+  animation: lrgg83 0.4s ease 0.1s both;
+}
+.si-icon-cell:hover .sh6z0l .oq0bu2,
+.icon-card:hover .sh6z0l .oq0bu2 {
+  animation: vm98v2 0.4s ease 0.15s both;
+}
+@keyframes fisbnb { 50% { transform: translate(-1.5px, -1.5px); } }
+@keyframes j96t5a { 50% { transform: translate(1.5px, -1.5px); } }
+@keyframes lrgg83 { 50% { transform: translate(-1.5px, 1.5px); } }
+@keyframes vm98v2 { 50% { transform: translate(1.5px, 1.5px); } }
+
+/* ──── CONTEXT-WINDOW ─────────────────────────────────────────
+   Concept: Token context filling up
+   Story: Fill region expands toward the limit line
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .gvomgg .yoyr1f,
+.icon-card:hover .gvomgg .yoyr1f {
+  animation: a9you1 0.6s ease both;
+  transform-origin: left center;
+}
+.si-icon-cell:hover .gvomgg .jb9kk7,
+.icon-card:hover .gvomgg .jb9kk7 {
+  animation: embqc2 0.3s ease 0.5s both;
+}
+.si-icon-cell:hover .gvomgg svg,
+.icon-card:hover .gvomgg svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes a9you1 {
+  0%   { transform: scaleX(0.3); opacity: 0.1; }
+  100% { transform: scaleX(1); opacity: 0.25; }
+}
+@keyframes embqc2 {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* ──── CONVERSATION ───────────────────────────────────────────
+   Concept: Chat / messaging
+   Story: 3 typing dots pulse in sequence (typing indicator)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .lq26fd .p7tzcz,
+.icon-card:hover .lq26fd .p7tzcz {
+  animation: dppwqp 0.6s ease infinite;
+}
+.si-icon-cell:hover .lq26fd .ixjfc0,
+.icon-card:hover .lq26fd .ixjfc0 {
+  animation: dppwqp 0.6s ease 0.15s infinite;
+}
+.si-icon-cell:hover .lq26fd .ybth4d,
+.icon-card:hover .lq26fd .ybth4d {
+  animation: dppwqp 0.6s ease 0.3s infinite;
+}
+.si-icon-cell:hover .lq26fd svg,
+.icon-card:hover .lq26fd svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.3));
+}
+@keyframes dppwqp {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%      { transform: translateY(-2px); opacity: 1; }
+}
+
+/* ──── DOCUMENT-INDEX ─────────────────────────────────────────
+   Concept: Indexed document content
+   Story: Text lines cascade in from left, staggered
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .jefa0y .vjw6qr,
+.icon-card:hover .jefa0y .vjw6qr {
+  animation: n7czq9 0.4s ease both;
+}
+.si-icon-cell:hover .jefa0y .yfvhe7,
+.icon-card:hover .jefa0y .yfvhe7 {
+  animation: n7czq9 0.4s ease 0.08s both;
+}
+.si-icon-cell:hover .jefa0y .wvxdrb,
+.icon-card:hover .jefa0y .wvxdrb {
+  animation: n7czq9 0.4s ease 0.16s both;
+}
+.si-icon-cell:hover .jefa0y .cd3re9,
+.icon-card:hover .jefa0y .cd3re9 {
+  animation: n7czq9 0.4s ease 0.24s both;
+}
+
+/* ──── EMPTY-AGENT ────────────────────────────────────────────
+   Concept: Placeholder for a new agent
+   Story: Dashed outline draws in progressively, plus pops in
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .qtp9ey .o78qf1,
+.icon-card:hover .qtp9ey .o78qf1 {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: eqrepj 0.6s ease forwards;
+}
+.si-icon-cell:hover .qtp9ey .kd3xj9,
+.icon-card:hover .qtp9ey .kd3xj9 {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: eqrepj 0.5s ease 0.3s forwards;
+}
+.si-icon-cell:hover .qtp9ey .kz28cq,
+.icon-card:hover .qtp9ey .kz28cq {
+  animation: fa08ar 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+  transform-origin: center;
+}
+
+/* ──── FINE-TUNE ──────────────────────────────────────────────
+   Concept: Adjusting model parameters
+   Story: Slider knobs slide along their tracks
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .p11kol .h61abu,
+.icon-card:hover .p11kol .h61abu {
+  animation: f7azk2 0.5s ease;
+}
+.si-icon-cell:hover .p11kol .mqo7f9,
+.icon-card:hover .p11kol .mqo7f9 {
+  animation: yjp1w6 0.5s ease 0.1s both;
+}
+.si-icon-cell:hover .p11kol .orm3jg,
+.icon-card:hover .p11kol .orm3jg {
+  animation: f7azk2 0.5s ease 0.2s both;
+}
+.si-icon-cell:hover .p11kol svg,
+.icon-card:hover .p11kol svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes f7azk2 {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+@keyframes yjp1w6 {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+/* ──── KNOWLEDGE-BASE ─────────────────────────────────────────
+   Concept: Repository of knowledge
+   Story: Book opens (spine lifts), text lines fade in
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .hfavei .j2n9re,
+.icon-card:hover .hfavei .j2n9re {
+  animation: jo5x2r 0.5s ease;
+  transform-origin: left center;
+}
+.si-icon-cell:hover .hfavei .x1z97y,
+.icon-card:hover .hfavei .x1z97y {
+  animation: n7czq9 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .hfavei .t7dsnz,
+.icon-card:hover .hfavei .t7dsnz {
+  animation: n7czq9 0.3s ease 0.3s both;
+}
+.si-icon-cell:hover .hfavei svg,
+.icon-card:hover .hfavei svg {
+  filter: drop-shadow(0 0 3px rgba(0, 230, 118, 0.3));
+}
+@keyframes jo5x2r {
+  0%   { transform: rotateY(0); }
+  40%  { transform: rotateY(-10deg); }
+  100% { transform: rotateY(0); }
+}
+
+/* ──── LATENCY ────────────────────────────────────────────────
+   Concept: Response time measurement
+   Story: Clock hand ticks forward (measuring elapsed time)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .pybboo .el8mwi,
+.icon-card:hover .pybboo .el8mwi {
+  animation: uy348u 0.5s ease;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .pybboo svg,
+.icon-card:hover .pybboo svg {
+  filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.3));
+}
+@keyframes uy348u {
+  0%   { transform: rotate(0); }
+  100% { transform: rotate(60deg); }
+}
+
+/* ──── MAX-TOKENS ─────────────────────────────────────────────
+   Concept: Token limit / capacity
+   Story: Fill level rises to the limit, limit flashes
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .hwsrw9 .tz0bbk,
+.icon-card:hover .hwsrw9 .tz0bbk {
+  animation: ri36sf 0.6s ease both;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .hwsrw9 .a9j8x1,
+.icon-card:hover .hwsrw9 .a9j8x1 {
+  animation: embqc2 0.3s ease 0.5s both;
+}
+.si-icon-cell:hover .hwsrw9 svg,
+.icon-card:hover .hwsrw9 svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes ri36sf {
+  0%   { transform: scaleY(0.3); opacity: 0.1; }
+  100% { transform: scaleY(1); opacity: 0.4; }
+}
+
+/* ──── MODEL-SELECTOR ─────────────────────────────────────────
+   Concept: Choosing between AI models
+   Story: Active card highlights, checkmark pops in
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .cuw02l .tu8x26,
+.icon-card:hover .cuw02l .tu8x26 {
+  animation: lkv3d8 0.4s ease both;
+}
+.si-icon-cell:hover .cuw02l .egazce,
+.icon-card:hover .cuw02l .egazce {
+  animation: fa08ar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cuw02l svg,
+.icon-card:hover .cuw02l svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.25));
+}
+@keyframes lkv3d8 {
+  0%   { opacity: 0.15; }
+  50%  { opacity: 0.45; }
+  100% { opacity: 0.25; }
+}
+
+/* ──── ORCHESTRATOR ───────────────────────────────────────────
+   Concept: Central hub directing workers
+   Story: Center hub pulses, satellite nodes orbit
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .f2957m .viwrk3,
+.icon-card:hover .f2957m .viwrk3 {
+  animation: kk5i10 0.8s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .f2957m .ja0hzk,
+.icon-card:hover .f2957m .ja0hzk {
+  animation: ih76k4 0.4s ease both;
+}
+.si-icon-cell:hover .f2957m .gpfk18,
+.icon-card:hover .f2957m .gpfk18 {
+  animation: ih76k4 0.4s ease 0.15s both;
+}
+.si-icon-cell:hover .f2957m .fhz601,
+.icon-card:hover .f2957m .fhz601 {
+  animation: ih76k4 0.4s ease 0.3s both;
+}
+.si-icon-cell:hover .f2957m svg,
+.icon-card:hover .f2957m svg {
+  filter: drop-shadow(0 0 3px rgba(255, 107, 53, 0.3));
+}
+
+/* ──── PROMPT-TEMPLATE ────────────────────────────────────────
+   Concept: Template with placeholder slots
+   Story: Template slots fill in from top to bottom
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .zcezjm .qljgig,
+.icon-card:hover .zcezjm .qljgig {
+  animation: n7czq9 0.3s ease both;
+}
+.si-icon-cell:hover .zcezjm .rocxp8,
+.icon-card:hover .zcezjm .rocxp8 {
+  animation: n7czq9 0.3s ease 0.1s both;
+}
+.si-icon-cell:hover .zcezjm .t7xm3y,
+.icon-card:hover .zcezjm .t7xm3y {
+  animation: n7czq9 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .zcezjm .xdslag,
+.icon-card:hover .zcezjm .xdslag {
+  animation: q0e7v2 0.4s ease 0.35s both;
+}
+.si-icon-cell:hover .zcezjm svg,
+.icon-card:hover .zcezjm svg {
+  filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.25));
+}
+
+/* ──── RETRIEVE ───────────────────────────────────────────────
+   Concept: Pulling data from storage
+   Story: Arrow pulls up, document rises from the box
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .vavcq0 .j9dbas,
+.icon-card:hover .vavcq0 .j9dbas {
+  animation: n7l51f 0.5s ease both;
+}
+.si-icon-cell:hover .vavcq0 .owenpb,
+.icon-card:hover .vavcq0 .owenpb {
+  animation: qrlw6i 0.5s ease 0.15s both;
+}
+.si-icon-cell:hover .vavcq0 svg,
+.icon-card:hover .vavcq0 svg {
+  filter: drop-shadow(0 0 3px rgba(0, 230, 118, 0.3));
+}
+@keyframes n7l51f {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+@keyframes qrlw6i {
+  0%   { transform: translateY(3px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 0.5; }
+}
+
+/* ──── SAFETY-FILTER ──────────────────────────────────────────
+   Concept: Content filtering/moderation
+   Story: Funnel border draws in (processing)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .hw58k7 .lecr1a,
+.icon-card:hover .hw58k7 .lecr1a {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: eqrepj 0.7s ease forwards;
+}
+.si-icon-cell:hover .hw58k7 svg,
+.icon-card:hover .hw58k7 svg {
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.3));
+}
+
+/* ──── SYSTEM-PROMPT ──────────────────────────────────────────
+   Concept: System-level instructions
+   Story: Brackets flash (activating), lines type in
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .cfmews .tqcvuc,
+.icon-card:hover .cfmews .tqcvuc {
+  animation: xhkd0x 0.3s ease;
+}
+.si-icon-cell:hover .cfmews .tqcvuc2,
+.icon-card:hover .cfmews .tqcvuc2 {
+  animation: xhkd0x 0.3s ease 0.1s both;
+}
+.si-icon-cell:hover .cfmews .z11omx,
+.icon-card:hover .cfmews .z11omx {
+  animation: n7czq9 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .cfmews .z6aunt,
+.icon-card:hover .cfmews .z6aunt {
+  animation: n7czq9 0.3s ease 0.3s both;
+}
+.si-icon-cell:hover .cfmews svg,
+.icon-card:hover .cfmews svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+
+/* ──── TEMPERATURE ────────────────────────────────────────────
+   Concept: Randomness/creativity control
+   Story: Mercury fill rises, bulb glows hotter
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .esk68q .kmljdj,
+.icon-card:hover .esk68q .kmljdj {
+  animation: ri36sf 0.5s ease both;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .esk68q .hu0w80,
+.icon-card:hover .esk68q .hu0w80 {
+  animation: cusewn 0.5s ease 0.3s both;
+}
+.si-icon-cell:hover .esk68q svg,
+.icon-card:hover .esk68q svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes cusewn {
+  0%   { opacity: 0.5; }
+  50%  { opacity: 0.9; }
+  100% { opacity: 0.7; }
+}
+
+/* ──── TOKEN-COST ─────────────────────────────────────────────
+   Concept: Usage cost / pricing
+   Story: Dollar sign pulses (cost awareness), coin shimmers
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .osp89u .r504ri,
+.icon-card:hover .osp89u .r504ri {
+  animation: vp4myz 0.5s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .osp89u .fzhu41,
+.icon-card:hover .osp89u .fzhu41 {
+  animation: pxi4jp 0.6s ease;
+}
+.si-icon-cell:hover .osp89u svg,
+.icon-card:hover .osp89u svg {
+  filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.3));
+}
+@keyframes vp4myz {
+  0%   { opacity: 0.5; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+@keyframes pxi4jp {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+/* ──── TOKEN-COUNTER ──────────────────────────────────────────
+   Concept: Counting tokens used
+   Story: Digit slots cascade lit (counting up)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .h8xl8q .f7qbny,
+.icon-card:hover .h8xl8q .f7qbny {
+  animation: tbaj6z 0.3s ease both;
+}
+.si-icon-cell:hover .h8xl8q .vl2zy0,
+.icon-card:hover .h8xl8q .vl2zy0 {
+  animation: tbaj6z 0.3s ease 0.1s both;
+}
+.si-icon-cell:hover .h8xl8q .ja340d,
+.icon-card:hover .h8xl8q .ja340d {
+  animation: tbaj6z 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .h8xl8q svg,
+.icon-card:hover .h8xl8q svg {
+  filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.25));
+}
+@keyframes tbaj6z {
+  0%   { transform: translateY(3px); opacity: 0.1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ──── TOOL-USE ───────────────────────────────────────────────
+   Concept: Invoking a tool
+   Story: Wrench rocks back and forth (being used)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .o57xsn .gwe69i,
+.icon-card:hover .o57xsn .gwe69i {
+  animation: oy02lf 0.5s ease;
+  transform-origin: 6px 21px;
+}
+.si-icon-cell:hover .o57xsn .ugijs2,
+.icon-card:hover .o57xsn .ugijs2 {
+  animation: q0e7v2 0.4s ease 0.3s both;
+}
+.si-icon-cell:hover .o57xsn svg,
+.icon-card:hover .o57xsn svg {
+  filter: drop-shadow(0 0 3px rgba(255, 107, 53, 0.3));
+}
+@keyframes oy02lf {
+  0%   { transform: rotate(0); }
+  25%  { transform: rotate(-12deg); }
+  75%  { transform: rotate(8deg); }
+  100% { transform: rotate(0); }
+}
+
+/* ──── VECTOR-DB ──────────────────────────────────────────────
+   Concept: Vector database storage
+   Story: Internal data dots pulse in sequence
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .pwgkw8 .nodk35,
+.icon-card:hover .pwgkw8 .nodk35 {
+  animation: ih76k4 0.4s ease both;
+}
+.si-icon-cell:hover .pwgkw8 .kawju2,
+.icon-card:hover .pwgkw8 .kawju2 {
+  animation: ih76k4 0.4s ease 0.15s both;
+}
+.si-icon-cell:hover .pwgkw8 .mu1n43,
+.icon-card:hover .pwgkw8 .mu1n43 {
+  animation: ih76k4 0.4s ease 0.3s both;
+}
+.si-icon-cell:hover .pwgkw8 svg,
+.icon-card:hover .pwgkw8 svg {
+  filter: drop-shadow(0 0 4px rgba(0, 230, 118, 0.3));
+}
+
+/* ──── BATCH-PROCESS ──────────────────────────────────────────
+   Concept: Parallel task execution
+   Story: Play triangles activate in staggered sequence
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .bv52ey .eau7ku,
+.icon-card:hover .bv52ey .eau7ku {
+  animation: vkbwxx 0.3s ease both;
+}
+.si-icon-cell:hover .bv52ey .ce35sp,
+.icon-card:hover .bv52ey .ce35sp {
+  animation: vkbwxx 0.3s ease 0.1s both;
+}
+.si-icon-cell:hover .bv52ey .po57ko,
+.icon-card:hover .bv52ey .po57ko {
+  animation: vkbwxx 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .bv52ey .kxlehm,
+.icon-card:hover .bv52ey .kxlehm {
+  animation: vkbwxx 0.3s ease 0.3s both;
+}
+.si-icon-cell:hover .bv52ey svg,
+.icon-card:hover .bv52ey svg {
+  filter: drop-shadow(0 0 3px rgba(0, 230, 118, 0.25));
+}
+@keyframes vkbwxx {
+  0%   { opacity: 0.2; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ──── HALLUCINATION ──────────────────────────────────────────
+   Concept: False/unreliable output
+   Story: Exclamation mark shakes (warning), triangle border flickers
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .v7rz3j .fboc4i,
+.icon-card:hover .v7rz3j .fboc4i {
+  animation: cwl4a0 0.4s ease infinite;
+  transform-origin: center;
+}
+.si-icon-cell:hover .v7rz3j .evlp8j,
+.icon-card:hover .v7rz3j .evlp8j {
+  animation: xqefs4 0.6s ease infinite;
+}
+.si-icon-cell:hover .v7rz3j svg,
+.icon-card:hover .v7rz3j svg {
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4));
+}
+
+/* ──── FUNCTION-CALL ──────────────────────────────────────────
+   Concept: Executing a function
+   Story: Arrow shoots right (execution), f() flashes
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .envg1l .e2jdvh,
+.icon-card:hover .envg1l .e2jdvh {
+  animation: wrtb3b 0.4s ease both;
+}
+.si-icon-cell:hover .envg1l .qwhev7,
+.icon-card:hover .envg1l .qwhev7 {
+  animation: vp4myz 0.3s ease 0.2s both;
+}
+.si-icon-cell:hover .envg1l svg,
+.icon-card:hover .envg1l svg {
+  filter: drop-shadow(0 0 3px rgba(255, 107, 53, 0.3));
+}
+@keyframes wrtb3b {
+  0%   { transform: translateX(-4px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ──── MULTIMODAL ─────────────────────────────────────────────
+   Concept: Multiple input modalities
+   Story: Three panels light up in sequence (image, text, audio)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .p25f9w .cnkvmi,
+.icon-card:hover .p25f9w .cnkvmi {
+  animation: sq42rh 0.4s ease both;
+}
+.si-icon-cell:hover .p25f9w .yt0dgw,
+.icon-card:hover .p25f9w .yt0dgw {
+  animation: sq42rh 0.4s ease 0.12s both;
+}
+.si-icon-cell:hover .p25f9w .ts62qv,
+.icon-card:hover .p25f9w .ts62qv {
+  animation: sq42rh 0.4s ease 0.24s both;
+}
+.si-icon-cell:hover .p25f9w .f7vtqh,
+.icon-card:hover .p25f9w .f7vtqh {
+  animation: n7czq9 0.4s ease 0.3s both;
+}
+.si-icon-cell:hover .p25f9w svg,
+.icon-card:hover .p25f9w svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes sq42rh {
+  0%   { opacity: 0.1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.4; }
+}
+
+/* ──── ALIGNMENT ──────────────────────────────────────────────
+   Concept: Value alignment / calibration
+   Story: Rings pulse inward toward bullseye center
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .g2yten .yznu8s,
+.icon-card:hover .g2yten .yznu8s {
+  animation: cn2ysl 0.5s ease both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .g2yten .tzd021,
+.icon-card:hover .g2yten .tzd021 {
+  animation: cn2ysl 0.5s ease 0.1s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .g2yten .jul941,
+.icon-card:hover .g2yten .jul941 {
+  animation: cn2ysl 0.5s ease 0.2s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .g2yten .yj6keh,
+.icon-card:hover .g2yten .yj6keh {
+  animation: fa08ar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .g2yten svg,
+.icon-card:hover .g2yten svg {
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
+}
+@keyframes cn2ysl {
+  0%   { transform: scale(1.15); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* ──── ATTENTION ──────────────────────────────────────────────
+   Concept: Focus mechanism
+   Story: Pupil dilates (focusing attention)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .cybhkq .xwl8ri,
+.icon-card:hover .cybhkq .xwl8ri {
+  animation: n4kada 0.5s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cybhkq .k3tote,
+.icon-card:hover .cybhkq .k3tote {
+  animation: euc8w6 0.5s ease;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cybhkq svg,
+.icon-card:hover .cybhkq svg {
+  filter: drop-shadow(0 0 3px rgba(155, 89, 182, 0.3));
+}
+@keyframes n4kada {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1.2); }
+}
+@keyframes euc8w6 {
+  0%   { transform: scale(1); opacity: 0.4; }
+  50%  { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0.4; }
+}
+
+/* ──── TOKENIZER ──────────────────────────────────────────────
+   Concept: Breaking text into tokens
+   Story: Token blocks split apart from center
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .f8cvek .fznlac,
+.icon-card:hover .f8cvek .fznlac {
+  animation: fisbnb 0.4s ease both;
+}
+.si-icon-cell:hover .f8cvek .dpnqeq,
+.icon-card:hover .f8cvek .dpnqeq {
+  animation: n7l51f 0.4s ease 0.05s both;
+}
+.si-icon-cell:hover .f8cvek .gr9iph,
+.icon-card:hover .f8cvek .gr9iph {
+  animation: j96t5a 0.4s ease 0.1s both;
+}
+.si-icon-cell:hover .f8cvek .scogl5,
+.icon-card:hover .f8cvek .scogl5 {
+  animation: lrgg83 0.4s ease 0.15s both;
+}
+.si-icon-cell:hover .f8cvek .u3dmap,
+.icon-card:hover .f8cvek .u3dmap {
+  animation: n7l51f 0.4s ease 0.2s both;
+}
+.si-icon-cell:hover .f8cvek .bfxbv2,
+.icon-card:hover .f8cvek .bfxbv2 {
+  animation: vm98v2 0.4s ease 0.25s both;
+}
+
+/* ──── BENCHMARK ──────────────────────────────────────────────
+   Concept: Performance measurement
+   Story: Bars rise from bottom in sequence (results coming in)
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .zp155h .okvmvj,
+.icon-card:hover .zp155h .okvmvj {
+  animation: lzjkmy 0.4s ease both;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .zp155h .a006d4,
+.icon-card:hover .zp155h .a006d4 {
+  animation: lzjkmy 0.4s ease 0.1s both;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .zp155h .v168ha,
+.icon-card:hover .zp155h .v168ha {
+  animation: lzjkmy 0.4s ease 0.2s both;
+  transform-origin: center bottom;
+}
+.si-icon-cell:hover .zp155h .avgja4,
+.icon-card:hover .zp155h .avgja4 {
+  animation: fa08ar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+  transform-origin: center;
+}
+.si-icon-cell:hover .zp155h svg,
+.icon-card:hover .zp155h svg {
+  filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.3));
+}
+@keyframes lzjkmy {
+  0%   { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* ──── EVAL-METRICS ───────────────────────────────────────────
+   Concept: Performance evaluation score
+   Story: Progress arc draws in, checkmark pops when done
+   ──────────────────────────────────────────────────────────── */
+.si-icon-cell:hover .pikypw .svg8i0,
+.icon-card:hover .pikypw .svg8i0 {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: eqrepj 0.5s ease forwards;
+}
+.si-icon-cell:hover .pikypw .tmthcs,
+.icon-card:hover .pikypw .tmthcs {
+  stroke-dasharray: 12;
+  stroke-dashoffset: 12;
+  animation: wlihdm 0.3s ease 0.4s forwards;
+}
+.si-icon-cell:hover .pikypw svg,
+.icon-card:hover .pikypw svg {
+  filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.3));
+}
+
+
+
+
+
+
+
+
+/* ━━━ PANEL PREVIEW AUTO-PLAY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Mirror hover triggers for premium panel preview context
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+
+
+
+
+.panel__preview-icon .xznek0 .n8l1r5 { animation: fa08ar 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.panel__preview-icon .xznek0 .ba1np5 { animation: q0e7v2 0.8s ease 0.1s both; }
+.panel__preview-icon .xznek0 .dcs6nk { animation: q0e7v2 0.8s ease 0.25s both; }
+.panel__preview-icon .xznek0 .ouvkbd { animation: q0e7v2 0.8s ease 0.4s both; }
+.panel__preview-icon .f91tcy .di0fcm { animation: l0lz4v 2s linear infinite; transform-origin: center; }
+.panel__preview-icon .f91tcy .b3gncj { animation: kk5i10 1s ease infinite; transform-origin: center; }
+.panel__preview-icon .f91tcy .lhq3km { animation: acwa41 1.5s linear infinite; transform-origin: 12px 12px; }
+.panel__preview-icon .xxyxwf .t753cg { animation: n7czq9 0.8s ease both; }
+.panel__preview-icon .xxyxwf .fgbpcq { animation: t19j22 0.6s steps(2) infinite; }
+.panel__preview-icon .tihxmg .oug1rq { stroke-dasharray: 60; stroke-dashoffset: 60; animation: eqrepj 0.8s ease forwards; }
+.panel__preview-icon .tihxmg .t0vwg8 { stroke-dasharray: 15; stroke-dashoffset: 15; animation: wlihdm 0.4s ease 0.7s forwards; }
+.panel__preview-icon .nzis6r .bhnx8a { animation: qdtcwz 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both; transform-origin: center; }
+.panel__preview-icon .j474hh svg { animation: azitsa 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center; filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.4)); }
+
+
+
+
+
+
+
+

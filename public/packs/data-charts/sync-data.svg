@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-sync-data">
+  <!-- Node A -->
+  <circle class="dc-node dc-node-a" cx="5" cy="12" r="3" fill="#3B82F6" fill-opacity="0.66" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.63"/>
+  <circle cx="5" cy="12" r="1" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Node B -->
+  <circle class="dc-node dc-node-b" cx="19" cy="12" r="3" fill="#3B82F6" fill-opacity="0.66" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.63"/>
+  <circle cx="19" cy="12" r="1" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Arrow A to B (top) -->
+  <path class="dc-sync dc-sync-1" d="M8 9.5 Q12 6 16 9.5" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00" stroke-linecap="round"/>
+  <polyline points="14,8 16,9.5 14.5,11" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Arrow B to A (bottom) -->
+  <path class="dc-sync dc-sync-2" d="M16 14.5 Q12 18 8 14.5" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.88" stroke-linecap="round"/>
+  <polyline points="10,16 8,14.5 9.5,13" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.88" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

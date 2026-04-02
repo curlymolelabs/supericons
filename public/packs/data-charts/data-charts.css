@@ -1,0 +1,718 @@
+/* Data & Charts Collection V2: Single-Color Tonal Animations
+   Palette: #3B82F6 (blue) at 5 opacity levels
+   All animations use dc- prefix with per-element stagger */
+
+.si-anim svg { overflow: visible; }
+
+/* ━━━ GLOBAL FILL OVERRIDE: defeat .collection-detail__icon-preview svg { fill: none } cascade ━━━ */
+/* scatter-plot dots */
+.vd12s5 circle { fill: #3B82F6 !important; stroke: none !important; }
+.vd12s5 .dc-dot-1 { fill-opacity: 0.66 !important; }
+.vd12s5 .dc-dot-2 { fill-opacity: 0.99 !important; }
+.vd12s5 .dc-dot-3 { fill-opacity: 0.88 !important; }
+.vd12s5 .dc-dot-4 { fill-opacity: 1 !important; }
+.vd12s5 .dc-dot-5 { fill-opacity: 1 !important; }
+.vd12s5 .dc-dot-6 { fill-opacity: 1 !important; }
+.vd12s5 .dc-dot-7 { fill-opacity: 0.77 !important; }
+/* horizontal-chart bars */
+.pmtnx4 rect { fill: #3B82F6 !important; stroke: none !important; }
+.pmtnx4 .dc-bar-1 { fill-opacity: 1 !important; }
+.pmtnx4 .dc-bar-2 { fill-opacity: 1 !important; }
+.pmtnx4 .dc-bar-3 { fill-opacity: 0.77 !important; }
+/* candlestick bodies */
+.g3qlje rect { fill: #3B82F6 !important; stroke: none !important; }
+.g3qlje .dc-body-1 { fill-opacity: 0.77 !important; }
+.g3qlje .dc-body-2 { fill-opacity: 1 !important; }
+.g3qlje .dc-body-3 { fill-opacity: 1 !important; }
+.g3qlje .dc-body-4 { fill-opacity: 1 !important; }
+/* histogram bars */
+.kh27p9 rect { fill: #3B82F6 !important; stroke: none !important; }
+.kh27p9 .dc-bar-1 { fill-opacity: 0.55 !important; }
+.kh27p9 .dc-bar-2 { fill-opacity: 0.88 !important; }
+.kh27p9 .dc-bar-3 { fill-opacity: 1 !important; }
+.kh27p9 .dc-bar-4 { fill-opacity: 1 !important; }
+.kh27p9 .dc-bar-5 { fill-opacity: 1 !important; }
+.kh27p9 .dc-bar-6 { fill-opacity: 0.66 !important; }
+/* treemap blocks */
+.uv7an2 rect { fill: #3B82F6 !important; stroke: none !important; }
+.uv7an2 .dc-frame { fill: none !important; stroke: #3B82F6 !important; stroke-opacity: 0.38 !important; stroke-width: 1 !important; }
+.uv7an2 .dc-block-1 { fill-opacity: 1 !important; }
+.uv7an2 .dc-block-2 { fill-opacity: 0.85 !important; }
+.uv7an2 .dc-block-3 { fill-opacity: 0.7 !important; }
+.uv7an2 .dc-block-4 { fill-opacity: 0.55 !important; }
+.uv7an2 .dc-block-5 { fill-opacity: 0.85 !important; }
+.uv7an2 .dc-block-6 { fill-opacity: 0.44 !important; }
+
+
+/* ━━━ 1. BAR CHART: bars bounce staggered on hover ━━━ */
+.zhe4xf .dc-bar { transition: transform .3s ease, fill-opacity .3s ease; }
+.si-icon-cell:hover .zhe4xf .dc-bar-1,
+.icon-card:hover .zhe4xf .dc-bar-1 { animation: r90bk2 .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .zhe4xf .dc-bar-2,
+.icon-card:hover .zhe4xf .dc-bar-2 { animation: r90bk2 .4s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .zhe4xf .dc-bar-3,
+.icon-card:hover .zhe4xf .dc-bar-3 { animation: r90bk2 .4s cubic-bezier(.34,1.56,.64,1) .16s forwards; }
+
+/* ━━━ 2. LINE CHART: dots scale up, line brightens ━━━ */
+.m3jmej .dc-dot { transition: transform .25s ease, fill-opacity .25s ease; }
+.m3jmej .dc-line { transition: stroke-opacity .3s ease; }
+.si-icon-cell:hover .m3jmej .dc-line,
+.icon-card:hover .m3jmej .dc-line { stroke-opacity: 0.9; }
+.si-icon-cell:hover .m3jmej .dc-dot-1,
+.icon-card:hover .m3jmej .dc-dot-1 { animation: rsddo2 .3s ease forwards; }
+.si-icon-cell:hover .m3jmej .dc-dot-2,
+.icon-card:hover .m3jmej .dc-dot-2 { animation: rsddo2 .3s ease .06s forwards; }
+.si-icon-cell:hover .m3jmej .dc-dot-3,
+.icon-card:hover .m3jmej .dc-dot-3 { animation: rsddo2 .3s ease .12s forwards; }
+.si-icon-cell:hover .m3jmej .dc-dot-4,
+.icon-card:hover .m3jmej .dc-dot-4 { animation: rsddo2 .3s ease .18s forwards; }
+.si-icon-cell:hover .m3jmej .dc-dot-5,
+.icon-card:hover .m3jmej .dc-dot-5 { animation: rsddo2 .3s ease .24s forwards; }
+
+/* ━━━ 3. PIE CHART: slices explode outward with bounce ━━━ */
+.aejj68 .dc-slice { transform-origin: 12px 12px; }
+.si-icon-cell:hover .aejj68 .dc-slice-1,
+.icon-card:hover .aejj68 .dc-slice-1 { animation: odo17r .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .aejj68 .dc-slice-2,
+.icon-card:hover .aejj68 .dc-slice-2 { animation: etj7x3 .5s cubic-bezier(.34,1.56,.64,1) .06s forwards; }
+.si-icon-cell:hover .aejj68 .dc-slice-3,
+.icon-card:hover .aejj68 .dc-slice-3 { animation: x5kffy .5s cubic-bezier(.34,1.56,.64,1) .12s forwards; }
+
+/* ━━━ 4. DONUT CHART: ring spins, arcs pulse staggered ━━━ */
+/* Force stroke values on all paths - defeats global cascade */
+.jwmqiz path { stroke: #3B82F6 !important; stroke-width: 4.5 !important; fill: none !important; }
+.jwmqiz .dc-arc-1 { stroke-opacity: 0.45 !important; }
+.jwmqiz .dc-arc-2 { stroke-opacity: 0.72 !important; }
+.jwmqiz .dc-arc-3 { stroke-opacity: 1 !important; }
+.imjihk .dc-arc { transform-origin: 12px 12px; }
+.si-icon-cell:hover .imjihk svg,
+.icon-card:hover .imjihk svg { animation: vrnaif .6s ease forwards; }
+.si-icon-cell:hover .imjihk .dc-arc-1,
+.icon-card:hover .imjihk .dc-arc-1 { animation: uwxd5e .4s ease forwards; }
+.si-icon-cell:hover .imjihk .dc-arc-2,
+.icon-card:hover .imjihk .dc-arc-2 { animation: uwxd5e .4s ease .1s forwards; }
+.si-icon-cell:hover .imjihk .dc-arc-3,
+.icon-card:hover .imjihk .dc-arc-3 { animation: uwxd5e .4s ease .2s forwards; }
+
+/* ━━━ 5. AREA CHART: fill rises from baseline, line draws, peak bounces ━━━ */
+.k1k4ap .dc-area { transform-origin: center bottom; }
+.si-icon-cell:hover .k1k4ap .dc-area,
+.icon-card:hover .k1k4ap .dc-area { animation: mqg0nu .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .k1k4ap .dc-line,
+.icon-card:hover .k1k4ap .dc-line { animation: qnvxwz .4s ease forwards; }
+.si-icon-cell:hover .k1k4ap .dc-peak,
+.icon-card:hover .k1k4ap .dc-peak { animation: b9amdj .4s cubic-bezier(.34,1.56,.64,1) .2s forwards; transform-origin: 21px 7px; }
+
+/* ━━━ 6. SCATTER PLOT: dots scatter then settle ━━━ */
+.hg4wk2 .dc-dot { opacity: 1; transform: scale(1); transform-origin: center; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-1,
+.icon-card:hover .hg4wk2 .dc-dot-1 { animation: eybuvc .3s ease forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-2,
+.icon-card:hover .hg4wk2 .dc-dot-2 { animation: eybuvc .3s ease .05s forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-3,
+.icon-card:hover .hg4wk2 .dc-dot-3 { animation: eybuvc .3s ease .1s forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-4,
+.icon-card:hover .hg4wk2 .dc-dot-4 { animation: eybuvc .3s ease .15s forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-5,
+.icon-card:hover .hg4wk2 .dc-dot-5 { animation: eybuvc .3s ease .2s forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-6,
+.icon-card:hover .hg4wk2 .dc-dot-6 { animation: eybuvc .3s ease .25s forwards; }
+.si-icon-cell:hover .hg4wk2 .dc-dot-7,
+.icon-card:hover .hg4wk2 .dc-dot-7 { animation: eybuvc .3s ease .3s forwards; }
+
+/* ━━━ 7. HORIZONTAL CHART: bars surge right then snap back ━━━ */
+.hed5zr .dc-bar { transform: scaleX(1); transform-origin: left; }
+.si-icon-cell:hover .hed5zr .dc-bar-1,
+.icon-card:hover .hed5zr .dc-bar-1 { animation: kib45q .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .hed5zr .dc-bar-2,
+.icon-card:hover .hed5zr .dc-bar-2 { animation: kib45q .5s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .hed5zr .dc-bar-3,
+.icon-card:hover .hed5zr .dc-bar-3 { animation: kib45q .5s cubic-bezier(.34,1.56,.64,1) .16s forwards; }
+
+/* ━━━ 8. CANDLESTICK: live price tick - alternating up/down movement ━━━ */
+.xwmzxg .dc-body { transform: scaleY(1); transform-origin: center; }
+.xwmzxg .dc-wick { stroke-dasharray: 15; stroke-dashoffset: 0; }
+.si-icon-cell:hover .xwmzxg .dc-body-1,
+.icon-card:hover .xwmzxg .dc-body-1 { animation: uq7udz .45s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .xwmzxg .dc-body-2,
+.icon-card:hover .xwmzxg .dc-body-2 { animation: ep7t7i .45s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .xwmzxg .dc-body-3,
+.icon-card:hover .xwmzxg .dc-body-3 { animation: uq7udz .45s cubic-bezier(.34,1.56,.64,1) .16s forwards; }
+.si-icon-cell:hover .xwmzxg .dc-body-4,
+.icon-card:hover .xwmzxg .dc-body-4 { animation: ep7t7i .45s cubic-bezier(.34,1.56,.64,1) .24s forwards; }
+.si-icon-cell:hover .xwmzxg .dc-wick,
+.icon-card:hover .xwmzxg .dc-wick { animation: jy2rzt .4s ease .1s forwards; }
+
+/* ━━━ 9. HISTOGRAM: wave crest ripples from center outward ━━━ */
+.g255bx .dc-bar { transform: scaleY(1); transform-origin: bottom; }
+.si-icon-cell:hover .g255bx .dc-bar-1,
+.icon-card:hover .g255bx .dc-bar-1 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) .2s forwards; }
+.si-icon-cell:hover .g255bx .dc-bar-2,
+.icon-card:hover .g255bx .dc-bar-2 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+.si-icon-cell:hover .g255bx .dc-bar-3,
+.icon-card:hover .g255bx .dc-bar-3 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) 0s forwards; }
+.si-icon-cell:hover .g255bx .dc-bar-4,
+.icon-card:hover .g255bx .dc-bar-4 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) .05s forwards; }
+.si-icon-cell:hover .g255bx .dc-bar-5,
+.icon-card:hover .g255bx .dc-bar-5 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+.si-icon-cell:hover .g255bx .dc-bar-6,
+.icon-card:hover .g255bx .dc-bar-6 { animation: eggkue .5s cubic-bezier(.34,1.56,.64,1) .25s forwards; }
+
+/* ━━━ 10. TREEMAP: tiles cascade in ━━━ */
+.u8vgov .dc-block { opacity: 1; transform: scale(1); }
+.si-icon-cell:hover .u8vgov .dc-block-1,
+.icon-card:hover .u8vgov .dc-block-1 { animation: y6q11t .3s ease forwards; }
+.si-icon-cell:hover .u8vgov .dc-block-2,
+.icon-card:hover .u8vgov .dc-block-2 { animation: y6q11t .3s ease .06s forwards; }
+.si-icon-cell:hover .u8vgov .dc-block-3,
+.icon-card:hover .u8vgov .dc-block-3 { animation: y6q11t .3s ease .12s forwards; }
+.si-icon-cell:hover .u8vgov .dc-block-4,
+.icon-card:hover .u8vgov .dc-block-4 { animation: y6q11t .3s ease .18s forwards; }
+.si-icon-cell:hover .u8vgov .dc-block-5,
+.icon-card:hover .u8vgov .dc-block-5 { animation: y6q11t .3s ease .24s forwards; }
+.si-icon-cell:hover .u8vgov .dc-block-6,
+.icon-card:hover .u8vgov .dc-block-6 { animation: y6q11t .3s ease .3s forwards; }
+
+/* ━━━ 11. TRENDING UP: line pulses glow + shifts upward ━━━ */
+.mjqwll .dc-line { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.mjqwll .dc-arrow { stroke-dasharray: 12; stroke-dashoffset: 0; }
+.si-icon-cell:hover .mjqwll .dc-line,
+.icon-card:hover .mjqwll .dc-line { animation: maoqrh .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .mjqwll .dc-arrow,
+.icon-card:hover .mjqwll .dc-arrow { animation: maoqrh .4s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+.si-icon-cell:hover .mjqwll svg,
+.icon-card:hover .mjqwll svg { filter: drop-shadow(0 0 4px rgba(59,130,246,.5)); }
+
+/* ━━━ 12. TRENDING DOWN: line pulses glow + shifts downward ━━━ */
+.ts9r1n .dc-line { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.ts9r1n .dc-arrow { stroke-dasharray: 12; stroke-dashoffset: 0; }
+.si-icon-cell:hover .ts9r1n .dc-line,
+.icon-card:hover .ts9r1n .dc-line { animation: pueprw .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .ts9r1n .dc-arrow,
+.icon-card:hover .ts9r1n .dc-arrow { animation: pueprw .4s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+.si-icon-cell:hover .ts9r1n svg,
+.icon-card:hover .ts9r1n svg { filter: drop-shadow(0 0 4px rgba(59,130,246,.4)); }
+
+/* ━━━ 13. GAUGE: needle sweeps ━━━ */
+.dhelx3 .dc-needle { transform: rotate(-90deg); transform-origin: 12px 18px; }
+.si-icon-cell:hover .dhelx3 .dc-needle,
+.icon-card:hover .dhelx3 .dc-needle { animation: fwq21j .6s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 14. PERCENTAGE: arc fills ━━━ */
+.aq50cx .dc-progress { stroke-dasharray: 0 56.55; }
+.si-icon-cell:hover .aq50cx .dc-progress,
+.icon-card:hover .aq50cx .dc-progress { animation: u25c6h .7s ease forwards; }
+
+/* ━━━ 15. COUNTER: digits ticker ━━━ */
+.a5s2pb .dc-digit { transform: translateY(4px); opacity: 0; }
+.si-icon-cell:hover .a5s2pb .dc-digit-1,
+.icon-card:hover .a5s2pb .dc-digit-1 { animation: yo50dx .3s ease forwards; }
+.si-icon-cell:hover .a5s2pb .dc-digit-2,
+.icon-card:hover .a5s2pb .dc-digit-2 { animation: yo50dx .3s ease .1s forwards; }
+.si-icon-cell:hover .a5s2pb .dc-digit-3,
+.icon-card:hover .a5s2pb .dc-digit-3 { animation: yo50dx .3s ease .2s forwards; }
+
+/* ━━━ 16. KPI CARD: value bounces, sparkline glows ━━━ */
+.k1zwps .dc-value { opacity: 1; transform: scale(1); }
+.k1zwps .dc-sparkline { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.si-icon-cell:hover .k1zwps .dc-value,
+.icon-card:hover .k1zwps .dc-value { animation: xezpe5 .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .k1zwps .dc-sparkline,
+.icon-card:hover .k1zwps .dc-sparkline { animation: zpvagm .4s ease .1s forwards; }
+.si-icon-cell:hover .k1zwps .dc-indicator,
+.icon-card:hover .k1zwps .dc-indicator { animation: maoqrh .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 17. COMPARISON: bars compete with surge bounce ━━━ */
+.n226s5 .dc-bar { transform: scaleY(1); transform-origin: bottom; }
+.si-icon-cell:hover .n226s5 .dc-bar-a1,
+.icon-card:hover .n226s5 .dc-bar-a1 { animation: eggkue .45s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .n226s5 .dc-bar-b1,
+.icon-card:hover .n226s5 .dc-bar-b1 { animation: eggkue .45s cubic-bezier(.34,1.56,.64,1) .06s forwards; }
+.si-icon-cell:hover .n226s5 .dc-bar-a2,
+.icon-card:hover .n226s5 .dc-bar-a2 { animation: eggkue .45s cubic-bezier(.34,1.56,.64,1) .18s forwards; }
+.si-icon-cell:hover .n226s5 .dc-bar-b2,
+.icon-card:hover .n226s5 .dc-bar-b2 { animation: eggkue .45s cubic-bezier(.34,1.56,.64,1) .24s forwards; }
+
+/* ━━━ 18. DELTA: arrow bounces ━━━ */
+.vhbh68 .dc-arrow, .vhbh68 .dc-arrow-head { transform: translateY(6px); opacity: 0; }
+.si-icon-cell:hover .vhbh68 .dc-arrow,
+.icon-card:hover .vhbh68 .dc-arrow,
+.si-icon-cell:hover .vhbh68 .dc-arrow-head,
+.icon-card:hover .vhbh68 .dc-arrow-head { animation: ezzyfz .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 19. TARGET: rings pulse inward ━━━ */
+.g470sl .dc-ring { opacity: 1; transform: scale(1); transform-origin: 12px 12px; }
+.g470sl .dc-bullseye { opacity: 1; transform: scale(1); transform-origin: 12px 12px; }
+.si-icon-cell:hover .g470sl .dc-ring-1,
+.icon-card:hover .g470sl .dc-ring-1 { animation: yfu86o .6s ease forwards; }
+.si-icon-cell:hover .g470sl .dc-ring-2,
+.icon-card:hover .g470sl .dc-ring-2 { animation: yfu86o .6s ease .1s forwards; }
+.si-icon-cell:hover .g470sl .dc-ring-3,
+.icon-card:hover .g470sl .dc-ring-3 { animation: yfu86o .6s ease .2s forwards; }
+.si-icon-cell:hover .g470sl .dc-bullseye,
+.icon-card:hover .g470sl .dc-bullseye { animation: eicuyt .5s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+
+/* ━━━ 20. SCORE: badge scales, center pops ━━━ */
+.zc6fdj .dc-badge { opacity: 0; transform: scale(.5); transform-origin: 12px 12px; }
+.zc6fdj .dc-center { opacity: 0; }
+.si-icon-cell:hover .zc6fdj .dc-badge,
+.icon-card:hover .zc6fdj .dc-badge { animation: wqdvrs .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .zc6fdj .dc-center,
+.icon-card:hover .zc6fdj .dc-center { animation: ikmub3 .3s ease .3s forwards; }
+
+/* ━━━ 21. TABLE: rows slide in staggered ━━━ */
+.j52uf2 .dc-row { transform: translateX(-8px); opacity: 0; }
+.si-icon-cell:hover .j52uf2 .dc-row-1,
+.icon-card:hover .j52uf2 .dc-row-1 { animation: rattdm .3s ease forwards; }
+.si-icon-cell:hover .j52uf2 .dc-row-2,
+.icon-card:hover .j52uf2 .dc-row-2 { animation: rattdm .3s ease .1s forwards; }
+.si-icon-cell:hover .j52uf2 .dc-row-3,
+.icon-card:hover .j52uf2 .dc-row-3 { animation: rattdm .3s ease .2s forwards; }
+
+/* ━━━ 22. GRID VIEW: cells tile cascade ━━━ */
+.pelqtk .dc-cell { opacity: 1; transform: scale(1); }
+.si-icon-cell:hover .pelqtk .dc-cell-1, .icon-card:hover .pelqtk .dc-cell-1 { animation: j084h8 .35s ease forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-2, .icon-card:hover .pelqtk .dc-cell-2 { animation: j084h8 .35s ease .04s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-3, .icon-card:hover .pelqtk .dc-cell-3 { animation: j084h8 .35s ease .08s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-4, .icon-card:hover .pelqtk .dc-cell-4 { animation: j084h8 .35s ease .12s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-5, .icon-card:hover .pelqtk .dc-cell-5 { animation: j084h8 .35s ease .16s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-6, .icon-card:hover .pelqtk .dc-cell-6 { animation: j084h8 .35s ease .2s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-7, .icon-card:hover .pelqtk .dc-cell-7 { animation: j084h8 .35s ease .24s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-8, .icon-card:hover .pelqtk .dc-cell-8 { animation: j084h8 .35s ease .28s forwards; }
+.si-icon-cell:hover .pelqtk .dc-cell-9, .icon-card:hover .pelqtk .dc-cell-9 { animation: j084h8 .35s ease .32s forwards; }
+
+/* ━━━ 23. DATABASE: layers stack ━━━ */
+.wb54ui .dc-lid { transform: translateY(0); opacity: 1; }
+.wb54ui .dc-body { opacity: 1; }
+.wb54ui .dc-base { opacity: 1; }
+.si-icon-cell:hover .wb54ui .dc-lid, .icon-card:hover .wb54ui .dc-lid { animation: s8sn2o .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .wb54ui .dc-body, .icon-card:hover .wb54ui .dc-body { animation: p5r6wu .4s ease .1s forwards; }
+.si-icon-cell:hover .wb54ui .dc-accent, .icon-card:hover .wb54ui .dc-accent { animation: eicuyt .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 24. SPREADSHEET: active cell pulses ━━━ */
+.c6p5uh .dc-active { opacity: 0; }
+.si-icon-cell:hover .c6p5uh .dc-active,
+.icon-card:hover .c6p5uh .dc-active { animation: isfuyk .6s ease infinite; }
+
+/* ━━━ 25. DATA FLOW: nodes pulse radially, connectors shimmer ━━━ */
+.pc2h65 .dc-node { opacity: 1; transform: scale(1); }
+.pc2h65 .dc-connector { stroke-dasharray: 10; stroke-dashoffset: 0; }
+.si-icon-cell:hover .pc2h65 .dc-node-1, .icon-card:hover .pc2h65 .dc-node-1 { animation: x98gt1 .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .pc2h65 .dc-node-2, .icon-card:hover .pc2h65 .dc-node-2 { animation: x98gt1 .5s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .pc2h65 .dc-node-3, .icon-card:hover .pc2h65 .dc-node-3 { animation: x98gt1 .5s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .pc2h65 .dc-node-4, .icon-card:hover .pc2h65 .dc-node-4 { animation: x98gt1 .5s cubic-bezier(.34,1.56,.64,1) .16s forwards; }
+.si-icon-cell:hover .pc2h65 .dc-connector, .icon-card:hover .pc2h65 .dc-connector { animation: vuqg2k .5s ease .05s forwards; }
+
+/* ━━━ 26. PIVOT TABLE: grid rotates ━━━ */
+.k0gyr8 .dc-cell { opacity: 0; }
+.si-icon-cell:hover .k0gyr8 .dc-cell-1, .icon-card:hover .k0gyr8 .dc-cell-1 { animation: ikmub3 .3s ease forwards; }
+.si-icon-cell:hover .k0gyr8 .dc-cell-2, .icon-card:hover .k0gyr8 .dc-cell-2 { animation: ikmub3 .3s ease .08s forwards; }
+.si-icon-cell:hover .k0gyr8 .dc-cell-3, .icon-card:hover .k0gyr8 .dc-cell-3 { animation: ikmub3 .3s ease .16s forwards; }
+.si-icon-cell:hover .k0gyr8 .dc-cell-4, .icon-card:hover .k0gyr8 .dc-cell-4 { animation: ikmub3 .3s ease .24s forwards; }
+
+/* ━━━ 27. FILTER: particles flow through funnel ━━━ */
+.eerdyd .dc-particle { opacity: 0; }
+.si-icon-cell:hover .eerdyd .dc-particle-1, .icon-card:hover .eerdyd .dc-particle-1 { animation: r60m8e .5s ease forwards; }
+.si-icon-cell:hover .eerdyd .dc-particle-2, .icon-card:hover .eerdyd .dc-particle-2 { animation: r60m8e .5s ease .08s forwards; }
+.si-icon-cell:hover .eerdyd .dc-particle-3, .icon-card:hover .eerdyd .dc-particle-3 { animation: r60m8e .5s ease .04s forwards; }
+.si-icon-cell:hover .eerdyd .dc-particle-4, .icon-card:hover .eerdyd .dc-particle-4 { animation: r60m8e .5s ease .2s forwards; }
+.si-icon-cell:hover .eerdyd .dc-particle-5, .icon-card:hover .eerdyd .dc-particle-5 { animation: wqdvrs .3s ease .35s forwards; }
+
+/* ━━━ 28. SORT ASC: bars surge in reverse staircase ━━━ */
+.wq7vnl .dc-bar { transform: scaleX(1); transform-origin: left; }
+.si-icon-cell:hover .wq7vnl .dc-bar-1, .icon-card:hover .wq7vnl .dc-bar-1 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+.si-icon-cell:hover .wq7vnl .dc-bar-2, .icon-card:hover .wq7vnl .dc-bar-2 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+.si-icon-cell:hover .wq7vnl .dc-bar-3, .icon-card:hover .wq7vnl .dc-bar-3 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .05s forwards; }
+.si-icon-cell:hover .wq7vnl .dc-bar-4, .icon-card:hover .wq7vnl .dc-bar-4 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) 0s forwards; }
+
+/* ━━━ 29. SORT DESC: bars surge in forward staircase ━━━ */
+.o5z2nb .dc-bar { transform: scaleX(1); transform-origin: left; }
+.si-icon-cell:hover .o5z2nb .dc-bar-1, .icon-card:hover .o5z2nb .dc-bar-1 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) 0s forwards; }
+.si-icon-cell:hover .o5z2nb .dc-bar-2, .icon-card:hover .o5z2nb .dc-bar-2 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .05s forwards; }
+.si-icon-cell:hover .o5z2nb .dc-bar-3, .icon-card:hover .o5z2nb .dc-bar-3 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+.si-icon-cell:hover .o5z2nb .dc-bar-4, .icon-card:hover .o5z2nb .dc-bar-4 { animation: kib45q .4s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+
+/* ━━━ 30. GROUP BY: items cluster together ━━━ */
+/* ━━━ 30. GROUP BY: items visible, shift right then bounce back ━━━ */
+.mzpp0v .dc-item { opacity: 1; transform: translateX(0); }
+.mzpp0v .dc-result { opacity: 1; transform: scale(1); transform-origin: 20px 12px; }
+.si-icon-cell:hover .mzpp0v .dc-item-1, .icon-card:hover .mzpp0v .dc-item-1 { animation: v09r0f .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .mzpp0v .dc-item-2, .icon-card:hover .mzpp0v .dc-item-2 { animation: v09r0f .4s cubic-bezier(.34,1.56,.64,1) .07s forwards; }
+.si-icon-cell:hover .mzpp0v .dc-item-3, .icon-card:hover .mzpp0v .dc-item-3 { animation: v09r0f .4s cubic-bezier(.34,1.56,.64,1) .14s forwards; }
+.si-icon-cell:hover .mzpp0v .dc-result, .icon-card:hover .mzpp0v .dc-result { animation: xezpe5 .45s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+
+/* ━━━ 31. DASHBOARD: panels tile in ━━━ */
+.f9vkx5 .dc-panel { opacity: 0; transform: scale(.8); }
+.si-icon-cell:hover .f9vkx5 .dc-panel-1, .icon-card:hover .f9vkx5 .dc-panel-1 { animation: y6q11t .3s ease forwards; }
+.si-icon-cell:hover .f9vkx5 .dc-panel-2, .icon-card:hover .f9vkx5 .dc-panel-2 { animation: y6q11t .3s ease .08s forwards; }
+.si-icon-cell:hover .f9vkx5 .dc-panel-3, .icon-card:hover .f9vkx5 .dc-panel-3 { animation: y6q11t .3s ease .16s forwards; }
+.si-icon-cell:hover .f9vkx5 .dc-panel-4, .icon-card:hover .f9vkx5 .dc-panel-4 { animation: y6q11t .3s ease .24s forwards; }
+
+/* ━━━ 32. FUNNEL: stages narrow top to bottom ━━━ */
+/* ━━━ 31. FUNNEL: stages visible, sequentially squeeze on hover ━━━ */
+.iwl2j4 .dc-stage { transform: scaleX(1); transform-origin: center; }
+.si-icon-cell:hover .iwl2j4 .dc-stage-1, .icon-card:hover .iwl2j4 .dc-stage-1 { animation: qg6dwy .4s cubic-bezier(.34,1.56,.64,1) 0s forwards; }
+.si-icon-cell:hover .iwl2j4 .dc-stage-2, .icon-card:hover .iwl2j4 .dc-stage-2 { animation: qg6dwy .4s cubic-bezier(.34,1.56,.64,1) .07s forwards; }
+.si-icon-cell:hover .iwl2j4 .dc-stage-3, .icon-card:hover .iwl2j4 .dc-stage-3 { animation: qg6dwy .4s cubic-bezier(.34,1.56,.64,1) .14s forwards; }
+.si-icon-cell:hover .iwl2j4 .dc-stage-4, .icon-card:hover .iwl2j4 .dc-stage-4 { animation: qg6dwy .4s cubic-bezier(.34,1.56,.64,1) .21s forwards; }
+
+/* ━━━ 33. HEATMAP: cells warm up in wave ━━━ */
+/* ━━━ 32. HEATMAP: cells visible, ripple flash on hover ━━━ */
+.rjdgal .dc-heat { opacity: 1; }
+.si-icon-cell:hover .rjdgal .dc-heat, .icon-card:hover .rjdgal .dc-heat { animation: ne10a4 .45s ease forwards; }
+.si-icon-cell:hover .rjdgal .dc-heat-2, .icon-card:hover .rjdgal .dc-heat-2 { animation-delay: .03s; }
+.si-icon-cell:hover .rjdgal .dc-heat-3, .icon-card:hover .rjdgal .dc-heat-3 { animation-delay: .06s; }
+.si-icon-cell:hover .rjdgal .dc-heat-4, .icon-card:hover .rjdgal .dc-heat-4 { animation-delay: .09s; }
+.si-icon-cell:hover .rjdgal .dc-heat-5, .icon-card:hover .rjdgal .dc-heat-5 { animation-delay: .12s; }
+.si-icon-cell:hover .rjdgal .dc-heat-6, .icon-card:hover .rjdgal .dc-heat-6 { animation-delay: .03s; }
+.si-icon-cell:hover .rjdgal .dc-heat-7, .icon-card:hover .rjdgal .dc-heat-7 { animation-delay: .06s; }
+.si-icon-cell:hover .rjdgal .dc-heat-8, .icon-card:hover .rjdgal .dc-heat-8 { animation-delay: .09s; }
+.si-icon-cell:hover .rjdgal .dc-heat-9, .icon-card:hover .rjdgal .dc-heat-9 { animation-delay: .12s; }
+.si-icon-cell:hover .rjdgal .dc-heat-10, .icon-card:hover .rjdgal .dc-heat-10 { animation-delay: .06s; }
+.si-icon-cell:hover .rjdgal .dc-heat-11, .icon-card:hover .rjdgal .dc-heat-11 { animation-delay: .09s; }
+.si-icon-cell:hover .rjdgal .dc-heat-12, .icon-card:hover .rjdgal .dc-heat-12 { animation-delay: .12s; }
+.si-icon-cell:hover .rjdgal .dc-heat-13, .icon-card:hover .rjdgal .dc-heat-13 { animation-delay: .15s; }
+.si-icon-cell:hover .rjdgal .dc-heat-14, .icon-card:hover .rjdgal .dc-heat-14 { animation-delay: .09s; }
+.si-icon-cell:hover .rjdgal .dc-heat-15, .icon-card:hover .rjdgal .dc-heat-15 { animation-delay: .12s; }
+.si-icon-cell:hover .rjdgal .dc-heat-16, .icon-card:hover .rjdgal .dc-heat-16 { animation-delay: .15s; }
+
+/* ━━━ 33. CORRELATION: lines visible, converge on hover ━━━ */
+.o7ppf4 .dc-line-a { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.o7ppf4 .dc-line-b { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.o7ppf4 .dc-converge { opacity: 1; }
+.si-icon-cell:hover .o7ppf4 .dc-line-a, .icon-card:hover .o7ppf4 .dc-line-a { animation: maoqrh .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .o7ppf4 .dc-line-b, .icon-card:hover .o7ppf4 .dc-line-b { animation: pueprw .5s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .o7ppf4 .dc-converge, .icon-card:hover .o7ppf4 .dc-converge { animation: eicuyt .5s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+
+/* ━━━ 34. REGRESSION: dots visible, line visible, dots pulse on hover ━━━ */
+.nssm1j .dc-dot { opacity: 1; }
+.nssm1j .dc-best-fit { stroke-dasharray: 22; stroke-dashoffset: 0; }
+.si-icon-cell:hover .nssm1j .dc-dot, .icon-card:hover .nssm1j .dc-dot { animation: x98gt1 .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .nssm1j .dc-best-fit, .icon-card:hover .nssm1j .dc-best-fit { animation: zpvagm .5s ease .1s forwards; }
+
+/* ━━━ 36. ANOMALY: spike flashes ━━━ */
+.y3ctcl .dc-anomaly { opacity: 0; transform: scale(0); transform-origin: 12px 4px; }
+.y3ctcl .dc-spike { opacity: 0; }
+.si-icon-cell:hover .y3ctcl .dc-spike, .icon-card:hover .y3ctcl .dc-spike { animation: ikmub3 .2s ease forwards; }
+.si-icon-cell:hover .y3ctcl .dc-anomaly, .icon-card:hover .y3ctcl .dc-anomaly { animation: g8miei .6s ease .15s forwards; }
+
+/* ━━━ 37. FORECAST: solid draws, dashed extends ━━━ */
+/* ━━━ 37. FORECAST: all visible, actual glows, forecast shimmers ━━━ */
+.di47f1 .dc-actual { stroke-dasharray: 20; stroke-dashoffset: 0; }
+.di47f1 .dc-forecast { stroke-dasharray: 20; stroke-dashoffset: 0; }
+.di47f1 .dc-now { opacity: 1; }
+.si-icon-cell:hover .di47f1 .dc-actual, .icon-card:hover .di47f1 .dc-actual { animation: zpvagm .5s ease forwards; }
+.si-icon-cell:hover .di47f1 .dc-now, .icon-card:hover .di47f1 .dc-now { animation: eicuyt .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .di47f1 .dc-forecast, .icon-card:hover .di47f1 .dc-forecast { animation: vuqg2k .5s ease .1s forwards; }
+
+/* ━━━ 38. SEGMENT: circle splits ━━━ */
+.sz8j5d .dc-seg { transform: scale(0); transform-origin: 12px 12px; }
+.si-icon-cell:hover .sz8j5d .dc-seg-1, .icon-card:hover .sz8j5d .dc-seg-1 { animation: b7dvo8 .3s ease forwards; }
+.si-icon-cell:hover .sz8j5d .dc-seg-2, .icon-card:hover .sz8j5d .dc-seg-2 { animation: b7dvo8 .3s ease .08s forwards; }
+.si-icon-cell:hover .sz8j5d .dc-seg-3, .icon-card:hover .sz8j5d .dc-seg-3 { animation: b7dvo8 .3s ease .16s forwards; }
+.si-icon-cell:hover .sz8j5d .dc-seg-4, .icon-card:hover .sz8j5d .dc-seg-4 { animation: b7dvo8 .3s ease .24s forwards; }
+
+/* ━━━ 39. DISTRIBUTION: curve draws, area fills ━━━ */
+/* ━━━ 39. DISTRIBUTION: curve/area/peak all visible, curve breathes on hover ━━━ */
+.jlkslo .dc-curve { stroke-dasharray: 40; stroke-dashoffset: 0; }
+.jlkslo .dc-area { opacity: 1; }
+.jlkslo .dc-peak { opacity: 1; }
+.si-icon-cell:hover .jlkslo .dc-curve, .icon-card:hover .jlkslo .dc-curve { animation: zpvagm .5s ease forwards; }
+.si-icon-cell:hover .jlkslo .dc-area, .icon-card:hover .jlkslo .dc-area { animation: p5r6wu .5s ease .05s forwards; }
+.si-icon-cell:hover .jlkslo .dc-peak, .icon-card:hover .jlkslo .dc-peak { animation: eicuyt .5s cubic-bezier(.34,1.56,.64,1) .1s forwards; }
+
+/* ━━━ 40. TIMELINE: points appear staggered ━━━ */
+/* ━━━ 40. TIMELINE: points visible, pulse stagger on hover ━━━ */
+.iaxii3 .dc-point { opacity: 1; transform: scale(1); }
+.si-icon-cell:hover .iaxii3 .dc-point-1, .icon-card:hover .iaxii3 .dc-point-1 { animation: x98gt1 .45s cubic-bezier(.34,1.56,.64,1) forwards; }
+.si-icon-cell:hover .iaxii3 .dc-point-2, .icon-card:hover .iaxii3 .dc-point-2 { animation: x98gt1 .45s cubic-bezier(.34,1.56,.64,1) .08s forwards; }
+.si-icon-cell:hover .iaxii3 .dc-point-3, .icon-card:hover .iaxii3 .dc-point-3 { animation: x98gt1 .45s cubic-bezier(.34,1.56,.64,1) .16s forwards; }
+.si-icon-cell:hover .iaxii3 .dc-point-4, .icon-card:hover .iaxii3 .dc-point-4 { animation: x98gt1 .45s cubic-bezier(.34,1.56,.64,1) .24s forwards; }
+.si-icon-cell:hover .iaxii3 .dc-point-5, .icon-card:hover .iaxii3 .dc-point-5 { animation: x98gt1 .45s cubic-bezier(.34,1.56,.64,1) .32s forwards; }
+
+/* ━━━ 41. EXPORT: arrow launches ━━━ */
+.hkc20g .dc-arrow, .hkc20g .dc-arrow-head { transform: translateY(4px); opacity: .5; }
+.si-icon-cell:hover .hkc20g .dc-arrow, .icon-card:hover .hkc20g .dc-arrow,
+.si-icon-cell:hover .hkc20g .dc-arrow-head, .icon-card:hover .hkc20g .dc-arrow-head { animation: zpve32 .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 42. IMPORT: document drops in ━━━ */
+.jeccue .dc-arrow, .jeccue .dc-arrow-head { transform: translateY(-4px); opacity: .5; }
+.si-icon-cell:hover .jeccue .dc-arrow, .icon-card:hover .jeccue .dc-arrow,
+.si-icon-cell:hover .jeccue .dc-arrow-head, .icon-card:hover .jeccue .dc-arrow-head { animation: lh2srf .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 43. REFRESH DATA: arrows spin ━━━ */
+.si-icon-cell:hover .oylkv3 svg, .icon-card:hover .oylkv3 svg { animation: nuw1r4 .6s ease forwards; }
+
+/* ━━━ 44. ZOOM IN: lens scales up ━━━ */
+.si-icon-cell:hover .nb8iaz svg, .icon-card:hover .nb8iaz svg { animation: zna3bv .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ━━━ 45. ZOOM OUT: lens scales down ━━━ */
+.si-icon-cell:hover .l9a8uc svg, .icon-card:hover .l9a8uc svg { animation: dgme4h .4s ease forwards; }
+
+/* ━━━ 46. DRILL DOWN: sub-bars expand ━━━ */
+.qn0vg9 .dc-sub { transform: scaleY(0); transform-origin: bottom; }
+.si-icon-cell:hover .qn0vg9 .dc-sub-1, .icon-card:hover .qn0vg9 .dc-sub-1 { animation: p8tkx9 .3s ease .15s forwards; }
+.si-icon-cell:hover .qn0vg9 .dc-sub-2, .icon-card:hover .qn0vg9 .dc-sub-2 { animation: p8tkx9 .3s ease .2s forwards; }
+.si-icon-cell:hover .qn0vg9 .dc-sub-3, .icon-card:hover .qn0vg9 .dc-sub-3 { animation: p8tkx9 .3s ease .25s forwards; }
+.si-icon-cell:hover .qn0vg9 .dc-sub-4, .icon-card:hover .qn0vg9 .dc-sub-4 { animation: p8tkx9 .3s ease .3s forwards; }
+.si-icon-cell:hover .qn0vg9 .dc-sub-5, .icon-card:hover .qn0vg9 .dc-sub-5 { animation: p8tkx9 .3s ease .35s forwards; }
+
+/* ━━━ 47. ANNOTATION: callout pops ━━━ */
+.nqi9mu .dc-callout { opacity: 0; transform: scale(.5) translateY(4px); transform-origin: 15px 9px; }
+.nqi9mu .dc-pin { opacity: 0; }
+.si-icon-cell:hover .nqi9mu .dc-pin, .icon-card:hover .nqi9mu .dc-pin { animation: wqdvrs .3s ease forwards; }
+.si-icon-cell:hover .nqi9mu .dc-callout, .icon-card:hover .nqi9mu .dc-callout { animation: wqdvrs .4s cubic-bezier(.34,1.56,.64,1) .15s forwards; }
+
+/* ━━━ 48. SNAPSHOT: brackets flash ━━━ */
+.b1u72z .ldsqfa { opacity: 0; }
+.si-icon-cell:hover .b1u72z .dc-bracket, .icon-card:hover .b1u72z .dc-bracket { animation: f3rgk1 .3s ease forwards; }
+.si-icon-cell:hover .b1u72z .ldsqfa, .icon-card:hover .b1u72z .ldsqfa { animation: ldsqfa .2s ease .3s forwards; }
+
+/* ━━━ 49. REAL TIME: dot pulses, line extends ━━━ */
+.jaziz7 .dc-live { opacity: .5; }
+.jaziz7 .dc-stream { stroke-dasharray: 30; stroke-dashoffset: 30; }
+.si-icon-cell:hover .jaziz7 .dc-live, .icon-card:hover .jaziz7 .dc-live { animation: apkdbi .8s ease infinite; }
+.si-icon-cell:hover .jaziz7 .dc-stream, .icon-card:hover .jaziz7 .dc-stream { animation: r500eh .6s ease forwards; }
+
+/* ━━━ 50. SYNC DATA: arrows chase ━━━ */
+.kslva6 .dc-sync { stroke-dasharray: 20; stroke-dashoffset: 20; }
+.si-icon-cell:hover .kslva6 .dc-sync-1, .icon-card:hover .kslva6 .dc-sync-1 { animation: r500eh .5s ease forwards; }
+.si-icon-cell:hover .kslva6 .dc-sync-2, .icon-card:hover .kslva6 .dc-sync-2 { animation: r500eh .5s ease .15s forwards; }
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes p8tkx9 { to { transform: scaleY(1); } }
+@keyframes lu6qqv { to { transform: scaleX(1); } }
+@keyframes r500eh { to { stroke-dashoffset: 0; } }
+@keyframes wqdvrs { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+@keyframes ikmub3 { to { opacity: 1; } }
+@keyframes b7dvo8 { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes eybuvc { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+@keyframes y6q11t { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: scale(1); } }
+@keyframes fwq21j { to { transform: rotate(0deg); } }
+@keyframes u25c6h { to { stroke-dasharray: 42.41 56.55; } }
+@keyframes yo50dx { to { transform: translateY(0); opacity: 1; } }
+@keyframes rattdm { to { transform: translateX(0); opacity: 1; } }
+@keyframes qgny0k { to { transform: translateY(0); opacity: 1; } }
+@keyframes isfuyk { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+@keyframes xj9sgz { to { opacity: 1; transform: scale(1); } }
+@keyframes ezzyfz { to { transform: translateY(0); opacity: 1; } }
+@keyframes r60m8e { 0% { opacity: 0; transform: translateY(-3px); } 50% { opacity: 1; } 100% { opacity: 1; transform: translateY(3px); } }
+@keyframes djs9bf { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes g8miei { 0% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1.3); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes zpve32 { to { transform: translateY(-2px); opacity: 1; } }
+@keyframes lh2srf { to { transform: translateY(2px); opacity: 1; } }
+@keyframes nuw1r4 { to { transform: rotate(360deg); } }
+@keyframes zna3bv { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1.05); } }
+@keyframes dgme4h { 0% { transform: scale(1); } 50% { transform: scale(.85); } 100% { transform: scale(.95); } }
+@keyframes f3rgk1 { 0% { transform: translate(0,0); } 50% { transform: scale(.95); } 100% { transform: scale(1); } }
+@keyframes ldsqfa { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes apkdbi { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+
+/* Enhancement keyframes (visible at rest, enhanced on hover) */
+@keyframes r90bk2 { 0% { transform: scaleY(1); } 40% { transform: scaleY(1.08); } 100% { transform: scaleY(1); } }
+@keyframes rsddo2 { 0% { transform: scale(1); } 50% { transform: scale(1.6); } 100% { transform: scale(1.2); } }
+
+/* Pie: slices burst outward in their natural angle direction */
+@keyframes odo17r {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(2.5px, -2.5px); }
+  75%  { transform: translate(1.5px, -1.5px); }
+  100% { transform: translate(2px, -2px); }
+}
+@keyframes etj7x3 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(2px, 2.5px); }
+  75%  { transform: translate(1px, 1.5px); }
+  100% { transform: translate(1.5px, 2px); }
+}
+@keyframes x5kffy {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-3px, 0.5px); }
+  75%  { transform: translate(-1.5px, 0); }
+  100% { transform: translate(-2px, 0.5px); }
+}
+
+/* Donut: ring spins and settles */
+@keyframes vrnaif {
+  0%   { transform: rotate(0deg); }
+  60%  { transform: rotate(25deg); }
+  100% { transform: rotate(15deg); }
+}
+
+/* Donut: arcs flash brighter then settle */
+@keyframes uwxd5e {
+  0%   { stroke-opacity: inherit; filter: none; }
+  40%  { stroke-opacity: 1; filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.5)); }
+  100% { stroke-opacity: 1; filter: drop-shadow(0 0 1.5px rgba(59, 130, 246, 0.3)); }
+}
+
+/* Area: fill rises from flat baseline */
+@keyframes mqg0nu {
+  0%   { transform: scaleY(0.3); opacity: 0.4; }
+  60%  { transform: scaleY(1.05); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Area: line traces with opacity sweep */
+@keyframes qnvxwz {
+  0%   { stroke-dasharray: 50; stroke-dashoffset: 50; }
+  100% { stroke-dasharray: 50; stroke-dashoffset: 0; }
+}
+
+/* Area: peak dot bounces up */
+@keyframes b9amdj {
+  0%   { transform: scale(1) translateY(0); }
+  50%  { transform: scale(1.8) translateY(-2px); }
+  100% { transform: scale(1.3) translateY(0); }
+}
+
+/* Horizontal bar: surge right then bounce back */
+@keyframes kib45q {
+  0%   { transform: scaleX(1); }
+  45%  { transform: scaleX(1.22); }
+  70%  { transform: scaleX(0.97); }
+  100% { transform: scaleX(1.1); }
+}
+
+/* Candlestick body: bullish tick up */
+@keyframes uq7udz {
+  0%   { transform: translateY(0) scaleY(1); }
+  40%  { transform: translateY(-2.5px) scaleY(1.15); }
+  70%  { transform: translateY(-1px) scaleY(1.05); }
+  100% { transform: translateY(-1.5px) scaleY(1.08); }
+}
+
+/* Candlestick body: bearish tick down */
+@keyframes ep7t7i {
+  0%   { transform: translateY(0) scaleY(1); }
+  40%  { transform: translateY(2px) scaleY(1.12); }
+  70%  { transform: translateY(0.5px) scaleY(1.04); }
+  100% { transform: translateY(1px) scaleY(1.06); }
+}
+
+/* Candlestick wick: briefly stretches */
+@keyframes jy2rzt {
+  0%   { transform: scaleY(1); }
+  50%  { transform: scaleY(1.25); }
+  100% { transform: scaleY(1.1); }
+}
+
+/* Histogram bar: crest up then settle */
+@keyframes eggkue {
+  0%   { transform: scaleY(1); }
+  40%  { transform: scaleY(1.18); }
+  65%  { transform: scaleY(0.96); }
+  100% { transform: scaleY(1.05); }
+}
+
+/* Trending line: nudge upward with bounce then settle slightly above */
+@keyframes maoqrh {
+  0%   { transform: translateY(0); }
+  45%  { transform: translateY(-2.5px); }
+  70%  { transform: translateY(-0.5px); }
+  100% { transform: translateY(-1.5px); }
+}
+
+/* Trending line: nudge downward with bounce */
+@keyframes pueprw {
+  0%   { transform: translateY(0); }
+  45%  { transform: translateY(2.5px); }
+  70%  { transform: translateY(0.5px); }
+  100% { transform: translateY(1.5px); }
+}
+
+/* KPI value block: punchy scale bounce */
+@keyframes xezpe5 {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); }
+  65%  { transform: scale(0.96); }
+  100% { transform: scale(1.05); }
+}
+
+/* KPI sparkline: brief opacity surge + glow */
+@keyframes zpvagm {
+  0%   { stroke-opacity: 1; filter: none; }
+  50%  { stroke-opacity: 1; filter: drop-shadow(0 0 3px rgba(59,130,246,.6)); }
+  100% { stroke-opacity: 1; filter: drop-shadow(0 0 1.5px rgba(59,130,246,.3)); }
+}
+
+/* Target ring: expand slightly then snap back with a crisp settle */
+@keyframes yfu86o {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.12); opacity: 1; }
+  65%  { transform: scale(0.97); opacity: 1; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Bullseye: brief pop and settle at slightly enlarged */
+@keyframes eicuyt {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.6); }
+  75%  { transform: scale(0.9); }
+  100% { transform: scale(1.2); }
+}
+
+/* Grid cell: brief brightness/opacity flash then settle */
+@keyframes j084h8 {
+  0%   { opacity: 1; transform: scale(1); }
+  35%  { opacity: 1; transform: scale(1.15); }
+  65%  { opacity: 1; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Database lid: lifts up then drops back down with bounce */
+@keyframes s8sn2o {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-3px); }
+  70%  { transform: translateY(-0.5px); }
+  100% { transform: translateY(-1.5px); }
+}
+
+/* Database body: brief opacity pulse */
+@keyframes p5r6wu {
+  0%   { opacity: 1; filter: none; }
+  50%  { opacity: 1; filter: drop-shadow(0 0 3px rgba(59,130,246,.5)); }
+  100% { opacity: 1; filter: drop-shadow(0 0 1px rgba(59,130,246,.2)); }
+}
+
+/* Data flow node: swell outward then settle */
+@keyframes x98gt1 {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.35); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1.15); }
+}
+
+/* Data flow connector: opacity shimmer */
+@keyframes vuqg2k {
+  0%   { stroke-opacity: 0.63; }
+  40%  { stroke-opacity: 1; }
+  100% { stroke-opacity: 0.85; }
+}
+
+/* Group-by item: nudge right then bounce back */
+@keyframes v09r0f {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(3px); }
+  70%  { transform: translateX(-0.5px); }
+  100% { transform: translateX(1.5px); }
+}
+
+/* Funnel stage: squeeze inward then bounce open */
+@keyframes qg6dwy {
+  0%   { transform: scaleX(1); }
+  40%  { transform: scaleX(0.82); }
+  70%  { transform: scaleX(1.04); }
+  100% { transform: scaleX(0.95); }
+}
+
+/* Heatmap cell: brief opacity pulse */
+@keyframes ne10a4 {
+  0%   { opacity: 1; }
+  35%  { opacity: 1; filter: brightness(1.5); }
+  65%  { opacity: 1; filter: brightness(0.9); }
+  100% { opacity: 1; filter: brightness(1.15); }
+}

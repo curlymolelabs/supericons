@@ -1,0 +1,38 @@
+/* Supericons Motion Lab */
+/* Animation: shake | Trigger: loop | Duration: 900ms */
+
+@keyframes ml-icon {
+  0% {
+    transform: translateX(0px) scale(1.1) rotate(131deg);
+  }
+  15% {
+    transform: translateX(-1.95px) scale(1.1) rotate(131deg);
+  }
+  30% {
+    transform: translateX(1.95px) scale(1.1) rotate(131deg);
+  }
+  45% {
+    transform: translateX(-1.95px) scale(1.1) rotate(131deg);
+  }
+  60% {
+    transform: translateX(1.95px) scale(1.1) rotate(131deg);
+  }
+  75% {
+    transform: translateX(-1.30px) scale(1.1) rotate(131deg);
+  }
+  100% {
+    transform: translateX(0px) scale(1.1) rotate(131deg);
+  }
+}
+#icon-container svg {
+  animation: ml-icon 900ms ease-out infinite;
+}
+
+/* Static overrides */
+#icon-container svg {
+  transform: scale(1.1) rotate(131deg);
+  transform-origin: center;
+  opacity: 0.8;
+}
+
+/* Usage: <div id="icon-container"><svg>...</svg></div> */

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supericons: Build Roadmap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,900&family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e;
+            --surface: #1a1919;
+            --surface-high: #201f1f;
+            --surface-highest: #262626;
+            --text: #ffffff;
+            --text-muted: #adaaaa;
+            --text-dim: #767575;
+            --primary: #FF4F00;
+            --primary-soft: #ff906c;
+            --green: #4ade80;
+            --yellow: #fbbf24;
+            --red: #ff716c;
+            --purple: #c084fc;
+            --border: #484847;
+            --radius: 0.5rem;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 3rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 { font-family: 'Nunito', sans-serif; font-style: italic; font-weight: 900; font-size: 2.5rem; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem; color: var(--primary); letter-spacing: -0.02em; }
+        h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-soft); }
+        h4 { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 1.25rem; margin-bottom: 0.4rem; }
+        p, li { color: var(--text-muted); font-size: 0.9rem; }
+        p { margin-bottom: 0.75rem; }
+        strong { color: var(--text); }
+        ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        li { margin-bottom: 0.35rem; }
+        hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
+        .hero-sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        th { font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; color: var(--text-dim); text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+        td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(72,72,71,0.2); color: var(--text-muted); vertical-align: top; }
+        tr:hover td { background: var(--surface); }
+
+        /* Section number badge */
+        .num { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: #000; width: 1.6rem; height: 1.6rem; border-radius: 50%; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; margin-right: 0.5rem; flex-shrink: 0; }
+
+        /* Verdict box */
+        .verdict {
+            background: var(--surface);
+            border-left: 3px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+        .verdict p { margin: 0; }
+
+        /* Sprint cards */
+        .sprint-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+        .sprint-card {
+            background: var(--surface);
+            border: 1px solid rgba(72,72,71,0.3);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            position: relative;
+        }
+        .sprint-card.next { border-color: var(--primary); }
+        .sprint-card.next::before {
+            content: 'NEXT';
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: var(--primary);
+            color: #000;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.2em 0.6em;
+            border-radius: 9999px;
+        }
+        .sprint-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .sprint-num { background: var(--surface-highest); color: var(--text-dim); font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600; padding: 0.2em 0.6em; border-radius: 4px; flex-shrink: 0; }
+        .sprint-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); }
+        .sprint-meta { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem; }
+        .sprint-meta span { margin-right: 1rem; }
+        .sprint-tasks { list-style: none; padding: 0; }
+        .sprint-tasks li { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.2rem 0; color: var(--text-muted); font-size: 0.85rem; }
+        .sprint-tasks li::before { content: ''; width: 14px; height: 14px; border: 1px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 0.2rem; }
+        .moat-badge { display: inline-block; background: rgba(192,132,252,0.12); color: var(--purple); border: 1px solid rgba(192,132,252,0.25); font-family: 'Inter', sans-serif; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15em 0.5em; border-radius: 9999px; margin-left: 0.4rem; vertical-align: middle; }
+
+        /* Phase headers */
+        .phase-header {
+            display: flex; align-items: center; gap: 0.75rem;
+            margin: 2.5rem 0 1rem;
+        }
+        .phase-label { font-family: 'Inter', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); background: var(--surface-highest); padding: 0.3em 0.75em; border-radius: 4px; }
+        .phase-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text); }
+
+        /* Shipped section */
+        .shipped-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; margin-top: 0.75rem; }
+        .shipped-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); }
+        .check { color: var(--green); font-size: 0.9rem; }
+
+        /* Status tracker */
+        .tracker { background: var(--surface); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin: 1rem 0; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.78rem; color: var(--text-muted); }
+        .tracker-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0; }
+        .tracker-row.done { color: var(--green); }
+        .tracker-row.next { color: var(--primary); }
+        .tracker-row.pending { color: var(--text-dim); }
+        .tracker-indent { padding-left: 1.5rem; }
+        .dot-done { color: var(--green); }
+        .dot-next { color: var(--primary); }
+        .dot-pending { color: var(--text-dim); }
+
+        @media (max-width: 600px) {
+            body { padding: 2rem 1rem; }
+            .shipped-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Supericons</h1>
+<p class="hero-sub">Build Roadmap &mdash; March 2026</p>
+<p class="hero-sub">North Star: <a href="product_discovery.html">product_discovery.html</a></p>
+
+<hr>
+
+<h2><span class="num">0</span> Brand Synopsis</h2>
+
+<p>Supericons is a free, open-source icon search engine and customization platform built for modern UI/UX designers and frontend developers. Rather than being a single icon library, it unifies <strong>19,000+ icons from 9 of the best open-source libraries</strong> (Material Symbols, Lucide, Tabler, Phosphor, Heroicons, Bootstrap, Ionicons, Iconoir, and Simple Icons) into one searchable, customizable workspace.</p>
+
+<div class="verdict">
+    <p><strong>Core Problem:</strong> Developers waste 5 to 15 minutes per icon going from browse to production. Supericons cuts that to 5 seconds.</p>
+</div>
+
+<p>Powered by AI semantic search (220+ synonym groups, 5-layer matching), true Material Symbols variable font axes, and one-click component export (React, Vue, Svelte, HTML), Supericons gives creators the &ldquo;superpower&rdquo; to find, customize, and ship icons faster than any tool on the market. The brand stands for <strong>speed, precision, and zero friction</strong>, distilling the fragmented icon ecosystem into a single, instant workflow.</p>
+
+<h3>Logo Identity</h3>
+<p>Ultra-minimalist, flat SVG geometry. No gradients, no complex shading, no literal clich&eacute;s. A single, memorable silhouette that balances the &ldquo;Super&rdquo; aspect (speed, power, aggregation) with the digital nature of &ldquo;Icons&rdquo; (clean geometry, pixel precision). The mark should feel at home as a favicon, an app icon, and a watermark on exported ZIP files.</p>
+
+<h4>Logo SVG (for easy retrieval)</h4>
+<div style="background:var(--surface-highest); border-radius:var(--radius); padding:1rem; margin:1rem 0; overflow-x:auto;">
+<pre style="font-family:'JetBrains Mono','Fira Code',monospace; font-size:0.7rem; color:var(--text-muted); white-space:pre-wrap; word-break:break-all; margin:0;">&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="100 120 280 280" fill="currentColor" width="28" height="28"&gt;
+  &lt;path d="M0 0 C0.75 -0.01 1.5 -0.01 2.27 -0.02 C4.74 -0.03 7.21 -0.01 9.68 0.01 ... [truncated for display]" transform="translate(239.73,169.5)" /&gt;
+&lt;/svg&gt;</pre>
+</div>
+<p style="font-size:0.75rem; color:var(--text-dim);">Full SVG path available in <a href="../index.html">index.html</a> lines 192-197 and in <a href="build_roadmap.md">build_roadmap.md</a>.</p>
+
+<h3>Typography</h3>
+<table>
+    <thead><tr><th>Property</th><th>Value</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Typeface</strong></td><td>Nunito Black 900 Italic</td></tr>
+        <tr><td><strong>Tracking</strong></td><td>-0.02em (tight, cohesive, modern tech feel)</td></tr>
+        <tr><td><strong>Header Size</strong></td><td>1.375rem for wordmark</td></tr>
+        <tr><td><strong>Theme</strong></td><td>Primary brand color against dark (#111) or warm light (#faf8f4) backgrounds</td></tr>
+    </tbody>
+</table>
+
+<h3>Color Palette</h3>
+<table>
+    <thead><tr><th>Role</th><th>Value</th><th>Usage</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Primary</strong></td><td style="color:var(--primary)">#FF4F00</td><td>Brand mark, active nav, link highlights, CTA accents</td></tr>
+        <tr><td><strong>Dark Theme</strong></td><td>#111111</td><td>Deep charcoal background</td></tr>
+        <tr><td><strong>Light Theme</strong></td><td>#faf8f4</td><td>Warm linen background</td></tr>
+    </tbody>
+</table>
+<p>Solid color blocks only. No gradients on the brand mark. The high-energy orange stands out sharply against both supported themes.</p>
+
+<hr>
+
+<h2><span class="num">1</span> Socratic Prioritization</h2>
+
+<h3>Q1. What does the user open the app to do?</h3>
+<p><strong>Search &rarr; Customize &rarr; Export.</strong> Export is where value is delivered. If the output doesn't fit their stack, the entire visit was wasted.</p>
+
+<h3>Q2. Where does the current experience break?</h3>
+<table>
+    <thead><tr><th>Step</th><th>Friction</th><th>Severity</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Search</strong></td><td>Synonym search works (30+ groups). Cross-library results now span 20,880 icons.</td><td style="color:var(--yellow)">Medium</td></tr>
+        <tr><td><strong>Browse</strong></td><td>9 libraries, 16,483 outline + 4,397 solid icons. Outline/solid toggle live. Color bugs fixed.</td><td style="color:var(--green)">Low</td></tr>
+        <tr><td><strong>Export</strong></td><td>React, Vue, Svelte, HTML done. PNG + SVG download. Angular/Flutter missing (low demand).</td><td style="color:var(--green)">Low</td></tr>
+    </tbody>
+</table>
+
+<h3>Q3. Which gap, if closed, unlocks the most users?</h3>
+<table>
+    <thead><tr><th>Build</th><th>Effort</th><th>Impact</th><th>Moat?</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Multi-framework export</strong></td><td>~1 session</td><td>High &mdash; unlocks 80% more devs</td><td style="color:var(--purple)">Moat #3</td></tr>
+        <tr><td><strong>More libraries (50K+)</strong></td><td>~2&ndash;3 sessions</td><td>High &mdash; 5x icon count</td><td style="color:var(--purple)">Enables Moat #1</td></tr>
+        <tr><td><strong>AI semantic search</strong></td><td>~3&ndash;5 sessions</td><td>Very High &mdash; key differentiator</td><td style="color:var(--purple)">Moat #1</td></tr>
+    </tbody>
+</table>
+
+<h3>Q4. What's the right sequence?</h3>
+<div class="verdict">
+    <p><strong>Verdict:</strong> Export (quick moat win) &rarr; Libraries (data foundation) &rarr; AI Search (biggest moat, needs the data). Multi-framework export is a 1-session build that immediately unlocks the majority of the developer audience.</p>
+</div>
+
+<hr>
+
+<h2><span class="num">2</span> Sprints</h2>
+
+<div class="phase-header">
+    <span class="phase-label">Phase 1</span>
+    <span class="phase-title">Core Product &mdash; MVP Completion</span>
+</div>
+
+<div class="sprint-grid">
+
+    <div class="sprint-card" style="border-color: var(--green); opacity: 0.7;">
+        <div class="sprint-header">
+            <span class="sprint-num" style="background:rgba(74,222,128,0.15); color:var(--green);">S1</span>
+            <span class="sprint-title">Multi-Framework Code Export <span class="moat-badge">Moat #3</span> <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta">
+            <span>React, Vue, Svelte, HTML templates + batch multi-select export</span>
+        </p>
+    </div>
+
+    <div class="sprint-card" style="border-color: var(--green); opacity: 0.7;">
+        <div class="sprint-header">
+            <span class="sprint-num" style="background:rgba(74,222,128,0.15); color:var(--green);">S2</span>
+            <span class="sprint-title">Icon Library Expansion <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta">
+            <span>9 libraries &mdash; <strong style="color:var(--text)">19,608 outline</strong> + 4,397 solid icons</span>
+        </p>
+        <p class="sprint-meta" style="margin-top:0.25rem;">
+            Added: Phosphor, Heroicons, Simple Icons (3,412 brand logos), Bootstrap, Ionicons, Iconoir &mdash; Removed: Feather (duplicated in Lucide) &mdash; Outline/Solid toggle with lazy loading &mdash; Per-library stroke width &mdash; Ionicons SVG sanitization
+        </p>
+    </div>
+
+    <div class="sprint-card done">
+        <div class="sprint-header">
+            <span class="sprint-num">S3</span>
+            <span class="sprint-title">AI Semantic Search <span class="moat-badge">Moat #1</span> <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta">
+            <span>synonyms.json: 106 &rarr; 220+ groups &mdash; 5-layer smart search &mdash; Tiered results with Related divider</span>
+        </p>
+        <ul class="sprint-tasks">
+            <li>Expanded synonym graph to 220+ groups across 17 categories</li>
+            <li>5-layer term matching: direct, reverse, prefix, plural normalization, fuzzy (d&le;1)</li>
+            <li>Multi-word AND logic (&ldquo;wifi off&rdquo; matches both words)</li>
+            <li>Tiered results: direct name matches surface first, synonym matches below &ldquo;Related&rdquo; divider</li>
+            <li>Word-boundary enforcement for short terms prevents false positives</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="phase-header">
+    <span class="phase-label">Phase 2</span>
+    <span class="phase-title">Growth Features</span>
+</div>
+
+<div class="sprint-grid">
+
+    <div class="sprint-card done">
+        <div class="sprint-header">
+            <span class="sprint-num">S4</span>
+            <span class="sprint-title">Export Format Expansion <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>PNG size picker (7 presets + custom) &mdash; Copy Base64 &mdash; Download ICO (16/32/48px) &mdash; ZIP batch (500 cap, contextual)</span></p>
+    </div>
+
+    <div class="sprint-card next">
+        <div class="sprint-header">
+            <span class="sprint-num">S5</span>
+            <span class="sprint-title">Color Enhancements <span class="done-badge">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~1 session</span></p>
+        <ul class="sprint-tasks">
+            <li>Recent colors history (last 8, persisted in localStorage) &mdash; done</li>
+            <li>Color palette presets (Default, Material, Tailwind, Radix, Mono) &mdash; done</li>
+            <li>Gradient builder (deferred to S5.5)</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card">
+        <div class="sprint-header">
+            <span class="sprint-num">S6</span>
+            <span class="sprint-title">Icon Comparison <span class="done-badge">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~1 session</span></p>
+        <ul class="sprint-tasks">
+            <li>"Also in" cross-library toggle (normalized ID matching) &mdash; done</li>
+            <li>Side-by-side compare drawer (2&ndash;4 icons, slide-up) &mdash; done</li>
+            <li>Diff view for weight/size variations (deferred)</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card">
+        <div class="sprint-header">
+            <span class="sprint-num">S7</span>
+            <span class="sprint-title">SEO &amp; Landing Page <span class="moat-badge">Growth</span> <span class="done-badge">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~1 session &mdash; No auth required</span></p>
+        <ul class="sprint-tasks">
+            <li>Landing hero section (h1, stats bar, CTA, feature grid) &mdash; done</li>
+            <li>Schema.org JSON-LD structured data &mdash; done</li>
+            <li>sitemap.xml + robots.txt &mdash; done</li>
+            <li>OG image (1200x630) + SVG favicon &mdash; done</li>
+            <li>Updated meta tags to 24,000+ &mdash; done</li>
+            <li>Per-library SEO pages (deferred to SSR migration)</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card">
+        <div class="sprint-header">
+            <span class="sprint-num">S8</span>
+            <span class="sprint-title">Supericons MCP Server <span class="moat-badge">Moat #2</span> <span class="done-badge">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~1 session &mdash; No auth required (public read)</span></p>
+        <ul class="sprint-tasks">
+            <li>MCP tool: search_icons(query, library?, limit?) &rarr; tiered results with SVG &mdash; done</li>
+            <li>MCP tool: get_icon(id, lib) &rarr; full SVG + metadata &mdash; done</li>
+            <li>MCP tool: list_libraries() &rarr; 8 libraries with counts &mdash; done</li>
+            <li>5-layer search engine ported from browser (synonym expansion) &mdash; done</li>
+            <li>SKILL.md for AI agent integration (Claude, Cursor, VS Code) &mdash; done</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card" style="border-color: var(--green); opacity: 0.7;">
+        <div class="sprint-header">
+            <span class="sprint-num" style="background:rgba(74,222,128,0.15); color:var(--green);">S9</span>
+            <span class="sprint-title">Launch Polish <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Warm light mode &mdash; Popularity sort &mdash; Search clear button &mdash; Ionicons stroke fix</span></p>
+        <ul class="sprint-tasks">
+            <li>Warm light mode palette (linen base #f4efe8, creamy surfaces, charcoal text) &mdash; done</li>
+            <li>Search clear button (x) appears when input has text &mdash; done</li>
+            <li>Popularity-based default sort (Supabase icon_stats, download/copy counts) &mdash; done</li>
+            <li>Ionicons visibility fix (restored viewBox-aware stroke-width via CSS var) &mdash; done</li>
+            <li>Icon category reference (20 functional categories with keyword sets) &mdash; done</li>
+        </ul>
+    </div>
+
+</div>
+
+    <div class="sprint-card" style="border-color: var(--green); opacity: 0.7;">
+        <div class="sprint-header">
+            <span class="sprint-num" style="background:rgba(74,222,128,0.15); color:var(--green);">S10</span>
+            <span class="sprint-title">UX Polish &amp; Batch Actions <span style="color:var(--green); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">Done</span></span>
+        </div>
+        <p class="sprint-meta"><span>Batch multi-select panel &mdash; Ionicons batch preview fix &mdash; Panel reset &mdash; Spectrum Shift logo hover</span></p>
+        <ul class="sprint-tasks">
+            <li>Batch multi-select panel replaces ZIP button with full actions hub &mdash; done</li>
+            <li>DOM-based SVG normalization for batch preview (strips width/height) &mdash; done</li>
+            <li>Ionicons batch preview stroke-width fix (512x512 viewBox scaling) &mdash; done</li>
+            <li>Panel reset to placeholder on multi-select toggle-off &mdash; done</li>
+            <li>Spectrum Shift logo hover (rainbow cascade, elastic glow) &mdash; done</li>
+            <li>10-icon batch limit with toast notification &mdash; done</li>
+        </ul>
+    </div>
+
+<div class="phase-header">
+    <span class="phase-label">Phase 3</span>
+    <span class="phase-title">Monetization <span style="color:var(--text-dim); font-size:0.75rem; font-family:'Inter',sans-serif; font-weight:400; margin-left:0.5rem;"><a href="monetization_strategy.html" style="color:var(--text-dim)">Full strategy &rarr;</a></span></span>
+</div>
+
+<div class="sprint-grid">
+
+    <div class="sprint-card next">
+        <div class="sprint-header">
+            <span class="sprint-num">S11</span>
+            <span class="sprint-title">Animated Icon Packs <span style="color:var(--primary); font-size:0.75rem; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">In Progress</span></span>
+        </div>
+        <p class="sprint-meta"><span>8 themed packs &mdash; 10 icons each &mdash; CSS-only &mdash; $5-9/pack or $9/mo Pro</span></p>
+        <ul class="sprint-tasks">
+            <li>Status &amp; Feedback pack (10 icons, verified) &mdash; done</li>
+            <li>Security &amp; Auth pack &mdash; next</li>
+            <li>Navigation &amp; Menus pack</li>
+            <li>Social &amp; Communication pack</li>
+            <li>Data &amp; Charts pack</li>
+            <li>E-commerce pack</li>
+            <li>Media &amp; Playback pack</li>
+            <li>AI &amp; Agentic pack</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card">
+        <div class="sprint-header">
+            <span class="sprint-num">S12</span>
+            <span class="sprint-title">Pro Subscription Infrastructure</span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~3+ sessions</span></p>
+        <ul class="sprint-tasks">
+            <li>Payment integration (Stripe / Gumroad)</li>
+            <li>Online icon customizer tool (animation speed/trigger controls)</li>
+            <li>REST API for programmatic icon access</li>
+            <li>Pro tier gating (tools, API, exclusive packs revoked on cancel)</li>
+            <li>Figma plugin</li>
+        </ul>
+    </div>
+
+    <div class="sprint-card">
+        <div class="sprint-header">
+            <span class="sprint-num">S13</span>
+            <span class="sprint-title">Project Collections</span>
+        </div>
+        <p class="sprint-meta"><span>Effort: ~2 sessions</span></p>
+        <ul class="sprint-tasks">
+            <li>Named collections (beyond favorites/recent)</li>
+            <li>Export entire collection as ZIP/sprite sheet/icon font</li>
+            <li>Supabase auth integration</li>
+            <li>Cloud sync for collections</li>
+        </ul>
+    </div>
+
+</div>
+
+<hr>
+
+<h2><span class="num">3</span> Status Tracker</h2>
+
+<div class="tracker">
+    <div class="tracker-row done"><span class="dot-done">&#9679;</span> Phase 1 &mdash; Core Product</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S1: Multi-Framework Export &mdash; DONE</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S2: Library Expansion (24,005 icons, 9 libraries) &mdash; DONE</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S3: AI Semantic Search &mdash; DONE (220+ synonyms, 5-layer match, tiered results)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S4: Export Formats &mdash; DONE (PNG size picker, Base64, ICO, ZIP)</div>
+    <div class="tracker-row done"><span class="dot-done">&#9679;</span> Phase 2 &mdash; Growth Features (no auth)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S5: Color Enhancements &mdash; DONE (palette presets, recent colors)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S6: Icon Comparison &mdash; DONE (also-in toggle, compare drawer)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S7: SEO &amp; Landing Page &mdash; DONE (hero, features, JSON-LD, sitemap, OG image)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S8: Supericons MCP Server &mdash; DONE (3 tools, 15,397 SVG icons, stdio)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S9: Launch Polish &mdash; DONE (warm light mode, popularity sort, Ionicons fix)</div>
+    <div class="tracker-row done tracker-indent"><span class="dot-done">&#9679;</span> S10: UX Polish &amp; Batch Actions &mdash; DONE (batch panel, preview fix, logo hover)</div>
+    <div class="tracker-row pending"><span class="dot-pending">&#9675;</span> Phase 3 &mdash; Monetization</div>
+    <div class="tracker-row next tracker-indent"><span class="dot-next">&#9679;</span> S11: Animated Icon Packs &mdash; IN PROGRESS (1/8 packs done)</div>
+    <div class="tracker-row pending tracker-indent"><span class="dot-pending">&#9675;</span> S12: Pro Subscription Infrastructure</div>
+    <div class="tracker-row pending tracker-indent"><span class="dot-pending">&#9675;</span> S13: Project Collections</div>
+</div>
+
+<hr>
+
+<h2><span class="num">4</span> Already Shipped</h2>
+
+<div class="shipped-grid">
+    <div class="shipped-item"><span class="check">&#10003;</span> 3-column layout (sidebar, grid, panel)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> 19,608 icons across 9 libraries (outline + solid)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Outline/Solid style toggle with lazy loading</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Per-library stroke width (disabled + hint for filled-only)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Ionicons SVG sanitization (fill/stroke normalization)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> True 4-axis Material Symbols sliders</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Color picker + 16 theme-aware presets</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Container previewer (circle, squircle, pill, glass)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Animation presets (spin, pulse, bounce, shake)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Multi-select batch export (all frameworks)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Favorites + Recent (localStorage, unlimited)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Dark/light theme (warm balanced palette)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Mobile responsive (bottom sheet, compact header)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Synonym-expanded search (220+ groups, tiered results, word-boundary enforcement)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> PNG size picker (7 presets + custom, 8 to 1024px)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Copy Base64 data URI (SVG, UTF-8 safe)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Download ICO (16/32/48px embedded, pure DataView)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> ZIP batch download (contextual, 500-icon cap)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Custom CSS tooltips (theme-aware)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Click-to-deselect toggle behavior</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Reset to defaults button</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Keyboard shortcut (/ to focus search)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Infinite scroll (IntersectionObserver)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> SVG and PNG export</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> SEO meta tags</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Preview pane synced with theme</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Simple Icons: 3,412 brand logos (GitHub, Telegram, Claude, etc.)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> 220+ synonym groups across 17 categories (auth, DevOps, AI/agentic, commerce&hellip;)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> 5-layer smart search: direct, reverse, prefix, plural, fuzzy (d&le;1)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Tiered results: direct matches first, &ldquo;Related&rdquo; divider, synonym matches below</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Word-boundary enforcement prevents short-term false positives</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Multi-word AND logic (&ldquo;wifi off&rdquo; intersects both terms)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Recent colors history (last 8, localStorage, dedup)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> 5 palette presets (Default, Material, Tailwind, Radix, Mono)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> "Also in" cross-library toggle (normalized ID matching)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Compare drawer (2&ndash;4 icons side-by-side, slide-up, frosted glass)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Warm light mode palette (linen base, creamy surfaces, charcoal text)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Search clear button (x) with auto-show/hide</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Popularity-based default sort (Supabase icon_stats)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Ionicons viewBox-aware stroke scaling (512x512 &rarr; 21.33x multiplier)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Icon stat tracking (fire-and-forget to Supabase)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Batch multi-select panel (up to 10 icons, batch copy/download all formats)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> DOM-based SVG normalization in batch preview (viewBox fallback)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Ionicons batch preview stroke-width fix (512x512 scaling)</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Panel reset to placeholder on multi-select toggle-off</div>
+    <div class="shipped-item"><span class="check">&#10003;</span> Spectrum Shift logo hover (rainbow cascade, elastic glow)</div>
+</div>
+
+<h3>KIV Items (Keep In View)</h3>
+<table>
+    <thead><tr><th>Item</th><th>Location</th><th>Risk</th><th>Action</th></tr></thead>
+    <tbody>
+        <tr><td><strong>FEATURE_FLAGS.leaderboard: false</strong></td><td>main.js line 12</td><td style="color:var(--yellow)">Low</td><td>Dead code. loadLeaderboard() exists but is gated. Remove or enable post-launch.</td></tr>
+        <tr><td><strong>No TODOs/FIXMEs</strong></td><td>main.js, index.html</td><td style="color:var(--green)">None</td><td>Clean codebase. No placeholder text found.</td></tr>
+        <tr><td><strong>Meta tags correct</strong></td><td>index.html &lt;head&gt;</td><td style="color:var(--green)">None</td><td>Title says "19,000+ Free Icons" which is accurate.</td></tr>
+        <tr><td><strong>console.warn/error</strong></td><td>main.js lines 106, 216, 231</td><td style="color:var(--green)">None</td><td>Legitimate catch blocks for icon/collection loading. Expected behavior.</td></tr>
+    </tbody>
+</table>
+
+<br>
+
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    Supericons Build Roadmap, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

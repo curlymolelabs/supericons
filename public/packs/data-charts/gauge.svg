@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-gauge">
+  <!-- Background arc -->
+  <path class="dc-bg-arc" d="M4 18 A8 8 0 0 1 20 18" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-opacity="0.25" stroke-linecap="round"/>
+  <!-- Filled arc (progress) -->
+  <path class="dc-fill-arc" d="M4 18 A8 8 0 0 1 16.5 8.5" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-opacity="1.00" stroke-linecap="round"/>
+  <!-- Needle -->
+  <line class="dc-needle" x1="12" y1="18" x2="16" y2="9" stroke="#3B82F6" stroke-width="1" stroke-opacity="1.00" stroke-linecap="round"/>
+  <!-- Center pivot -->
+  <circle class="dc-pivot" cx="12" cy="18" r="1.5" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Tick marks -->
+  <line x1="4.5" y1="17" x2="5.5" y2="16" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <line x1="6" y1="11.5" x2="7" y2="12" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <line x1="12" y1="10" x2="12" y2="11" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <line x1="18" y1="11.5" x2="17" y2="12" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <line x1="19.5" y1="17" x2="18.5" y2="16" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+</svg>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supericons: Monetization Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,900&family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e;
+            --surface: #1a1919;
+            --surface-high: #201f1f;
+            --surface-highest: #262626;
+            --text: #ffffff;
+            --text-muted: #adaaaa;
+            --text-dim: #767575;
+            --primary: #FF4F00;
+            --primary-soft: #ff906c;
+            --green: #4ade80;
+            --yellow: #fbbf24;
+            --red: #ff716c;
+            --purple: #c084fc;
+            --blue: #60a5fa;
+            --border: #484847;
+            --radius: 0.5rem;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 3rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 { font-family: 'Nunito', sans-serif; font-style: italic; font-weight: 900; font-size: 2.5rem; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem; color: var(--primary); letter-spacing: -0.02em; }
+        h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-soft); }
+        h4 { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 1.25rem; margin-bottom: 0.4rem; }
+        p, li { color: var(--text-muted); font-size: 0.9rem; }
+        p { margin-bottom: 0.75rem; }
+        strong { color: var(--text); }
+        ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        li { margin-bottom: 0.35rem; }
+        hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
+        .hero-sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        th { font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; color: var(--text-dim); text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+        td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(72,72,71,0.2); color: var(--text-muted); vertical-align: top; }
+        tr:hover td { background: var(--surface); }
+
+        .num { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: #000; width: 1.6rem; height: 1.6rem; border-radius: 50%; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; margin-right: 0.5rem; flex-shrink: 0; }
+        .verdict { background: var(--surface); border-left: 3px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.5rem 0; }
+        .verdict p, .callout p { margin: 0; }
+
+        .callout { background: var(--surface); border-left: 3px solid var(--red); padding: 1rem 1.5rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.5rem 0; }
+        .callout-green { border-left-color: var(--green); }
+        .callout-blue { border-left-color: var(--blue); }
+
+        .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        .tier-card { background: var(--surface); border: 1px solid rgba(72,72,71,0.3); border-radius: var(--radius); padding: 1.5rem; }
+        .tier-card.highlight { border-color: var(--primary); }
+        .tier-card.highlight::before { content: 'RECOMMENDED'; display: block; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 0.5rem; }
+        .tier-price { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .tier-price span { font-size: 0.8rem; color: var(--text-dim); font-weight: 400; }
+        .tier-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+        .tier-desc { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1rem; }
+        .tier-features { list-style: none; padding: 0; }
+        .tier-features li { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.2rem 0; font-size: 0.82rem; color: var(--text-muted); }
+        .tier-features li::before { content: '\2713'; color: var(--green); flex-shrink: 0; }
+
+        .pack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1rem 0; }
+        .pack-card { background: var(--surface); border: 1px solid rgba(72,72,71,0.2); border-radius: var(--radius); padding: 1rem 1.25rem; }
+        .pack-num { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; color: var(--text-dim); }
+        .pack-name { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--text); margin: 0.2rem 0; }
+        .pack-desc { font-size: 0.78rem; color: var(--text-dim); }
+        .pack-status { display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15em 0.5em; border-radius: 9999px; margin-top: 0.4rem; }
+        .status-done { background: rgba(74,222,128,0.15); color: var(--green); }
+        .status-next { background: rgba(255,79,0,0.12); color: var(--primary); }
+        .status-planned { background: var(--surface-highest); color: var(--text-dim); }
+
+        .flywheel { background: var(--surface); border-radius: var(--radius); padding: 1.5rem; margin: 1.5rem 0; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
+        .flywheel .step { color: var(--text); }
+        .flywheel .arrow { color: var(--primary); }
+
+        @media (max-width: 700px) {
+            body { padding: 2rem 1rem; }
+            .tier-grid { grid-template-columns: 1fr; }
+            .pack-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Supericons</h1>
+<p class="hero-sub">Monetization Strategy &mdash; March 2026</p>
+<p class="hero-sub">See also: <a href="build_roadmap.html">Build Roadmap</a></p>
+
+<hr>
+
+<h2><span class="num">1</span> Revenue Model</h2>
+
+<p>Three-tier pricing that separates <strong>downloadable assets</strong> (own forever) from <strong>ongoing services</strong> (access-based). This prevents the &ldquo;subscribe, download, cancel&rdquo; problem.</p>
+
+<div class="tier-grid">
+    <div class="tier-card">
+        <div class="tier-name">Impulse Pack</div>
+        <div class="tier-price">$5<span>-9 one-time</span></div>
+        <div class="tier-desc">1 themed pack (10 animated icons)</div>
+        <ul class="tier-features">
+            <li>10 CSS-animated SVG icons</li>
+            <li>Demo/preview HTML page</li>
+            <li>Full color/size customization</li>
+            <li>Commercial license</li>
+            <li>Own forever after purchase</li>
+        </ul>
+    </div>
+    <div class="tier-card">
+        <div class="tier-name">Curated Bundle</div>
+        <div class="tier-price">$19<span>-39 one-time</span></div>
+        <div class="tier-desc">3-5 packs (30-50 icons), handpicked</div>
+        <ul class="tier-features">
+            <li>Multiple themed packs</li>
+            <li>Version-locked (at time of purchase)</li>
+            <li>Bundle discount vs individual</li>
+            <li>Commercial license</li>
+            <li>Own forever after purchase</li>
+        </ul>
+    </div>
+    <div class="tier-card highlight">
+        <div class="tier-name">Pro Subscription</div>
+        <div class="tier-price">$9<span>/mo or $79/yr</span></div>
+        <div class="tier-desc">All packs + live tools + API + exclusives</div>
+        <ul class="tier-features">
+            <li>All current + future packs</li>
+            <li>Online customizer tool</li>
+            <li>API access (CI/CD, MCP)</li>
+            <li>Pro-exclusive packs</li>
+            <li>Monthly new drops</li>
+            <li>Priority theme requests</li>
+        </ul>
+    </div>
+</div>
+
+<hr>
+
+<h2><span class="num">2</span> Subscribe-and-Cancel Defense</h2>
+
+<div class="callout">
+    <p><strong>Problem:</strong> &ldquo;I&rsquo;ll subscribe for $9, download all packs, cancel next month.&rdquo;</p>
+</div>
+
+<p>The subscription&rsquo;s value is split between <strong>downloadable files</strong> (keep after cancel) and <strong>live services</strong> (revoked on cancel):</p>
+
+<table>
+    <thead><tr><th>Feature</th><th>Download and keep?</th><th>Stops on cancel?</th></tr></thead>
+    <tbody>
+        <tr><td>Animated icon CSS files</td><td style="color:var(--green)">Yes</td><td>No</td></tr>
+        <tr><td><strong>Online customizer tool</strong></td><td>No</td><td style="color:var(--red)">Yes</td></tr>
+        <tr><td><strong>API access</strong> (CI/CD, MCP)</td><td>No</td><td style="color:var(--red)">Yes</td></tr>
+        <tr><td><strong>Monthly new pack drops</strong></td><td>Partial</td><td style="color:var(--red)">Yes (no future access)</td></tr>
+        <tr><td><strong>Pro-exclusive packs</strong></td><td>No</td><td style="color:var(--red)">Yes (access revoked)</td></tr>
+        <tr><td><strong>Priority theme requests</strong></td><td>No</td><td style="color:var(--red)">Yes</td></tr>
+    </tbody>
+</table>
+
+<div class="verdict">
+    <p><strong>Why $9/mo works:</strong> Above the $5-9 impulse pack (no arbitrage). Below Lordicon&rsquo;s $16/mo (competitive). $79/year ($6.58/mo effective) rewards annual commitment without &ldquo;lifetime&rdquo; risk.</p>
+</div>
+
+<hr>
+
+<h2><span class="num">3</span> Competitive Positioning</h2>
+
+<table>
+    <thead><tr><th>Competitor</th><th>Model</th><th>Price</th><th>Supericons Advantage</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Lordicon</strong></td><td>Subscription</td><td>$8-16/mo (33K icons)</td><td>Zero JS dependency. Pure CSS. No runtime.</td></tr>
+        <tr><td><strong>Iconscout</strong></td><td>Subscription</td><td>$15-25/mo (13.6M assets)</td><td>Focused scope. Icon-specialist, not generalist.</td></tr>
+        <tr><td><strong>AnimatedIcons.co</strong></td><td>Lifetime</td><td>$99 (2K icons)</td><td>Lower entry: $5 impulse vs $99 commitment.</td></tr>
+        <tr><td><strong>Creattie</strong></td><td>Hybrid</td><td>$4-6/mo or $99 lifetime</td><td>Simpler format. No Lottie player needed.</td></tr>
+    </tbody>
+</table>
+
+<div class="callout-green callout">
+    <p><strong>Supericons niche:</strong> The only platform offering pure CSS animated icons with zero runtime dependencies. Developers paste the CSS, it works. No CDN, no player library, no account required.</p>
+</div>
+
+<hr>
+
+<h2><span class="num">4</span> Animated Pack Catalog</h2>
+
+<p>8 themed collections, ordered by build priority. Each pack contains 10 CSS-animated SVG icons where animation adds <strong>functional UX value</strong> (not decoration).</p>
+
+<div class="pack-grid">
+    <div class="pack-card">
+        <div class="pack-num">#1</div>
+        <div class="pack-name">Status &amp; Feedback</div>
+        <div class="pack-desc">Loading, success, error, notifications, visibility</div>
+        <span class="pack-status status-done">Done</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#2</div>
+        <div class="pack-name">Security &amp; Auth</div>
+        <div class="pack-desc">Lock/unlock, shield, fingerprint, 2FA, verified</div>
+        <span class="pack-status status-next">Next</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#3</div>
+        <div class="pack-name">Navigation &amp; Menus</div>
+        <div class="pack-desc">Hamburger, tabs, sidebar, search, breadcrumb</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#4</div>
+        <div class="pack-name">Social &amp; Communication</div>
+        <div class="pack-desc">Like burst, comments, share, follow, typing</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#5</div>
+        <div class="pack-name">Data &amp; Charts</div>
+        <div class="pack-desc">Bar grow, pie fill, trend arrow, gauge, filter</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#6</div>
+        <div class="pack-name">E-commerce</div>
+        <div class="pack-desc">Cart bounce, payment, shipping, ratings, wishlist</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#7</div>
+        <div class="pack-name">Media &amp; Playback</div>
+        <div class="pack-desc">Play/pause, volume, seek, record, cast</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+    <div class="pack-card">
+        <div class="pack-num">#8</div>
+        <div class="pack-name">AI &amp; Agentic</div>
+        <div class="pack-desc">Brain think, sparkle, wand, neural pulse, agent orbit</div>
+        <span class="pack-status status-planned">Planned</span>
+    </div>
+</div>
+
+<hr>
+
+<h2><span class="num">5</span> Customization Parity</h2>
+
+<p>Animated icons support the same customization as free static icons, plus premium-only controls.</p>
+
+<table>
+    <thead><tr><th>Feature</th><th>Free Static Icons</th><th>Animated Icons</th></tr></thead>
+    <tbody>
+        <tr><td>Color</td><td style="color:var(--green)">Yes (currentColor)</td><td style="color:var(--green)">Yes (currentColor)</td></tr>
+        <tr><td>Size</td><td style="color:var(--green)">Yes (width/height)</td><td style="color:var(--green)">Yes (width/height)</td></tr>
+        <tr><td>Stroke width</td><td style="color:var(--green)">Yes (CSS var)</td><td style="color:var(--green)">Yes (CSS var)</td></tr>
+        <tr><td>Dark/light mode</td><td style="color:var(--green)">Yes (auto)</td><td style="color:var(--green)">Yes (auto)</td></tr>
+        <tr><td><strong>Animation speed</strong></td><td style="color:var(--text-dim)">N/A</td><td style="color:var(--purple)">Premium-only</td></tr>
+        <tr><td><strong>Animation trigger</strong></td><td style="color:var(--text-dim)">N/A</td><td style="color:var(--purple)">Premium-only</td></tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2><span class="num">6</span> Growth Flywheel</h2>
+
+<div class="flywheel">
+    <span class="step">Free static icons (19,608)</span><br>
+    &nbsp;&nbsp;<span class="arrow">&rarr;</span> User discovers Supericons via search/SEO<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&rarr;</span> Sees animated pack previews in grid<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&rarr;</span> <span class="step">Impulse buys 1 pack ($5)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&rarr;</span> <span class="step">Buys curated bundle ($25-39)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&rarr;</span> <span class="step">Subscribes Pro ($9/mo)</span> for tools + API + exclusives<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&rarr;</span> Requests custom packs (community input)
+</div>
+
+<hr>
+
+<h2><span class="num">7</span> Technical Format</h2>
+
+<table>
+    <thead><tr><th>Asset</th><th>Format</th><th>Size</th></tr></thead>
+    <tbody>
+        <tr><td>Animations</td><td>Single <code>.css</code> per pack</td><td>~4-5KB</td></tr>
+        <tr><td>Demo page</td><td>Single <code>.html</code> per pack</td><td>~8-10KB</td></tr>
+        <tr><td>Individual SVGs</td><td>10 <code>.svg</code> files</td><td>~1KB each</td></tr>
+        <tr><td><strong>Total pack</strong></td><td>All of the above</td><td><strong>Under 25KB</strong></td></tr>
+    </tbody>
+</table>
+
+<p>Compare to Lottie: 50-200KB per single animation + JS player runtime (~50KB).</p>
+
+<br>
+
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    Supericons Monetization Strategy, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

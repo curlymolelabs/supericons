@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <!-- Glass background gradient -->
+    <linearGradient id="model_bg" x1="20" y1="8" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2e1f4d" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#1a1030" stop-opacity="0.95"/>
+    </linearGradient>
+    <!-- Border gradient (frosted edge) -->
+    <linearGradient id="model_border" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- Inner glow -->
+    <radialGradient id="model_glow" cx="60" cy="50" r="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B39DDB" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#B39DDB" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Specular highlight (top shine) -->
+    <linearGradient id="model_shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clip for squircle -->
+    <clipPath id="model_clip">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+    <!-- Drop shadow filter -->
+    <filter id="model_shadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#9575CD" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Ambient shadow -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="transparent" filter="url(#model_shadow)"/>
+
+  <!-- Layer 2: Glass background -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#model_bg)"/>
+
+  <!-- Layer 3: Frosted border -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="none" stroke="url(#model_border)" stroke-width="1"/>
+
+  <!-- Layer 4: Inner glow -->
+  <circle cx="60" cy="50" r="50" fill="url(#model_glow)" clip-path="url(#model_clip)"/>
+
+  <!-- Layer 5: Specular top shine -->
+  <rect x="4" y="4" width="112" height="56" fill="url(#model_shine)" clip-path="url(#model_clip)"/>
+
+  <!-- Layer 6: Icon (scaled from 256x256 to 64x64, centered in glass) -->
+  <g transform="translate(28, 28) scale(0.25)" fill="#9575CD" fill-opacity="0.9">
+    <path d="M212 76v-4a44 44 0 0 0-74.86-31.31a3.93 3.93 0 0 0-1.14 2.8v88.72a4 4 0 0 0 6.2 3.33a47.67 47.67 0 0 1 25.48-7.54a8.18 8.18 0 0 1 8.31 7.58a8 8 0 0 1-8 8.42a32 32 0 0 0-32 32v33.88a4 4 0 0 0 1.49 3.12a47.92 47.92 0 0 0 74.21-17.16a4 4 0 0 0-4.49-5.56A68 68 0 0 1 192 192h-7.73a8.18 8.18 0 0 1-8.25-7.47a8 8 0 0 1 8-8.53h8a51.6 51.6 0 0 0 24-5.88A52 52 0 0 0 212 76m-12 36h-4a36 36 0 0 1-36-36v-4a8 8 0 0 1 16 0v4a20 20 0 0 0 20 20h4a8 8 0 0 1 0 16M88 28a44.05 44.05 0 0 0-44 44v4a52 52 0 0 0-4 94.12A51.6 51.6 0 0 0 64 176h7.73a8.18 8.18 0 0 1 8.27 7.47a8 8 0 0 1-8 8.53h-8a67.5 67.5 0 0 1-15.21-1.73a4 4 0 0 0-4.5 5.55A47.93 47.93 0 0 0 118.51 213a4 4 0 0 0 1.49-3.12V176a32 32 0 0 0-32-32a8 8 0 0 1-8-8.42a8.18 8.18 0 0 1 8.32-7.58a47.67 47.67 0 0 1 25.48 7.54a4 4 0 0 0 6.2-3.33V43.49a4 4 0 0 0-1.14-2.81A43.85 43.85 0 0 0 88 28m8 48a36 36 0 0 1-36 36h-4a8 8 0 0 1 0-16h4a20 20 0 0 0 20-20v-4a8 8 0 0 1 16 0Z"/>
+  </g>
+</svg>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Kit: Outline vs Duotone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-dark: #111111; --bg-light: #faf8f4;
+            --surface-dark: #1a1a1a; --surface-light: #f0ece4;
+            --text-dark: #ffffff; --text-light: #2c2520;
+            --muted-dark: #666; --muted-light: #8a8580;
+            --primary: #FF4F00; --primary-15: rgba(255,79,0,0.15);
+            --border-dark: #2a2a2a; --border-light: #d9d4cc;
+        }
+        body { font-family: 'Inter', sans-serif; margin: 0; transition: background 0.3s, color 0.3s; }
+        body.dark { background: var(--bg-dark); color: var(--text-dark); }
+        body.light { background: var(--bg-light); color: var(--text-light); }
+
+        .header { text-align: center; padding: 3rem 2rem 1rem; }
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; }
+        .header p { font-size: 0.85rem; opacity: 0.5; margin-top: 0.25rem; }
+
+        .controls { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem; flex-wrap: wrap; }
+        .controls button {
+            font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500;
+            padding: 0.45em 1.1em; border-radius: 6px; cursor: pointer;
+            border: 1px solid var(--border-dark); background: transparent; color: inherit;
+            transition: all 0.15s;
+        }
+        .controls button:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .controls button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        body.light .controls button { border-color: var(--border-light); }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.35;
+            padding: 2.5rem 2rem 0.75rem; max-width: 1200px; margin: 0 auto;
+        }
+
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 2px; padding: 0 2rem; max-width: 1200px; margin: 0 auto; }
+
+        .icon-pair {
+            display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem;
+            border-radius: 8px; transition: background 0.15s; cursor: pointer; position: relative;
+        }
+        .dark .icon-pair:hover { background: var(--surface-dark); }
+        .light .icon-pair:hover { background: var(--surface-light); }
+
+        .pair-row { display: flex; gap: 1rem; align-items: center; margin-bottom: 0.4rem; }
+        .pair-label {
+            font-size: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+            opacity: 0.3; width: 100%; text-align: center;
+        }
+        .icon-pair .name { font-size: 0.62rem; opacity: 0.4; text-align: center; word-break: break-all; margin-top: 0.25rem; }
+
+        .style-badge {
+            position: absolute; top: 0.35rem; font-size: 0.45rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.25;
+        }
+        .style-badge.left { left: 0.5rem; }
+        .style-badge.right { right: 0.5rem; }
+
+        .color-demo { display: flex; justify-content: center; gap: 1rem; padding: 1rem 2rem 0; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
+        .color-swatch {
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            padding: 1.5rem; border-radius: 10px; min-width: 100px;
+        }
+        .dark .color-swatch { background: var(--surface-dark); }
+        .light .color-swatch { background: var(--surface-light); }
+        .color-swatch .swatch-label { font-size: 0.6rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.08em; }
+
+        footer { text-align: center; padding: 3rem 2rem; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.2; }
+    </style>
+</head>
+<body class="dark">
+
+<div class="header">
+    <h1>Agentic AI Kit</h1>
+    <p>40 premium icons: Outline and Duotone variants. Side-by-side comparison.</p>
+</div>
+
+<div class="controls">
+    <button class="active" onclick="setTheme('dark')">Dark</button>
+    <button onclick="setTheme('light')">Light</button>
+    <span style="width:1px;height:20px;opacity:0.1;background:currentColor;align-self:center"></span>
+    <button onclick="setSize(16)">16px</button>
+    <button class="active" onclick="setSize(24)">24px</button>
+    <button onclick="setSize(32)">32px</button>
+    <button onclick="setSize(48)">48px</button>
+    <span style="width:1px;height:20px;opacity:0.1;background:currentColor;align-self:center"></span>
+    <button onclick="setColor('')">Default</button>
+    <button onclick="setColor('#FF4F00')">Orange</button>
+    <button onclick="setColor('#6366f1')">Indigo</button>
+    <button onclick="setColor('#10b981')">Emerald</button>
+    <button onclick="setColor('#f43f5e')">Rose</button>
+</div>
+
+<div id="color-demo" class="color-demo"></div>
+
+<div id="sections"></div>
+
+<footer>Supericons Agentic AI Kit v1.0. 40 icons x 2 styles = 80 assets. Curly Mole Labs 2026.</footer>
+
+<script>
+const groups = {
+    'Core Navigation': ['ai-home','ai-search','ai-settings','ai-history','ai-help','ai-menu'],
+    'Agent and Workflow': ['agent','agent-workflow','agent-group','tool-use','chain','orchestrator','agent-loop','agent-stop'],
+    'Prompt and Context': ['prompt','prompt-template','system-prompt','context-window','conversation','regenerate','streaming'],
+    'RAG and Data': ['embedding','chunk','retrieve','rag-pipeline','vector-db','knowledge-base','document-index'],
+    'Model and Configuration': ['model','model-selector','temperature','token-counter','fine-tune','max-tokens'],
+    'Safety and Monitoring': ['guardrail','safety-filter','token-cost','latency'],
+    'Status and Empty States': ['sparkle','empty-agent'],
+};
+
+let currentSize = 24;
+let currentColor = '';
+
+async function loadIcons() {
+    const sections = document.getElementById('sections');
+    for (const [groupName, names] of Object.entries(groups)) {
+        const title = document.createElement('div');
+        title.className = 'section-title';
+        title.textContent = groupName;
+        sections.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'comparison-grid';
+        sections.appendChild(grid);
+
+        for (const name of names) {
+            try {
+                const [outlineRes, duotoneRes] = await Promise.all([
+                    fetch(`svg/${name}.svg`).then(r => r.text()),
+                    fetch(`svg-duotone/${name}.svg`).then(r => r.text()),
+                ]);
+
+                const cell = document.createElement('div');
+                cell.className = 'icon-pair';
+                cell.innerHTML = `
+                    <div class="pair-row">
+                        <div class="outline-icon">${outlineRes}</div>
+                        <div class="duotone-icon">${duotoneRes}</div>
+                    </div>
+                    <div class="pair-label">outline / duotone</div>
+                    <div class="name">${name}</div>
+                `;
+                // Set sizes
+                cell.querySelectorAll('svg').forEach(svg => {
+                    svg.setAttribute('width', currentSize);
+                    svg.setAttribute('height', currentSize);
+                });
+                grid.appendChild(cell);
+            } catch (e) {
+                console.warn(`Failed to load ${name}`, e);
+            }
+        }
+    }
+}
+
+function setTheme(theme) {
+    document.body.className = theme;
+    document.querySelectorAll('.controls button').forEach(b => {
+        if (b.textContent === 'Dark' || b.textContent === 'Light') b.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
+function setSize(size) {
+    currentSize = size;
+    document.querySelectorAll('.icon-pair svg').forEach(svg => {
+        svg.setAttribute('width', size);
+        svg.setAttribute('height', size);
+    });
+    document.querySelectorAll('.controls button').forEach(b => {
+        if (['16px','24px','32px','48px'].includes(b.textContent)) b.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
+function setColor(color) {
+    document.querySelectorAll('.icon-pair').forEach(cell => {
+        cell.style.color = color;
+    });
+    document.querySelectorAll('.color-swatch').forEach(s => {
+        s.style.color = color || 'inherit';
+    });
+    currentColor = color;
+    document.querySelectorAll('.controls button').forEach(b => {
+        if (['Default','Orange','Indigo','Emerald','Rose'].includes(b.textContent)) b.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
+loadIcons();
+</script>
+</body>
+</html>

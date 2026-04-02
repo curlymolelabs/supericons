@@ -3,7 +3,7 @@
  * Handles collection catalog rendering, view switching, and Stripe checkout.
  */
 
-import { getUser, getSupabase, isLoggedIn, isPro, getCreditBalance } from './auth.js';
+import { getUser, getSupabase, isLoggedIn, isPro, getCreditBalance, waitForAuth } from './auth.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -12,6 +12,32 @@ const PREMIUM_ASSET_FN = `${SUPABASE_URL}/functions/v1/serve-premium-asset`;
 const STRIPE_PRO_MONTHLY = 'price_1TEtIs3eLO1ro0kliSB6whjH';
 const STRIPE_PRO_YEARLY = 'price_1TEtK73eLO1ro0klfhQrsrJa';
 const STRIPE_LAUNCH_EDITION = 'price_1TEtZz3eLO1ro0kl0Xk8q1Nw';
+const PRO_PLANS = {
+  monthly: {
+    key: 'monthly',
+    label: 'Monthly',
+    priceId: STRIPE_PRO_MONTHLY,
+    amount: '$15',
+    period: '/mo',
+    ctaLabel: '$15/mo',
+  },
+  annual: {
+    key: 'annual',
+    label: 'Annual',
+    priceId: STRIPE_PRO_YEARLY,
+    amount: '$99',
+    period: '/yr',
+    originalAmount: '$180',
+    ctaLabel: '$99/yr',
+  },
+};
+const MOTION_LAB_LOCKED_CSS = [
+  '@keyframes si-bounce {',
+  '  0%, 100% { transform: translateY(0); }',
+  '  50% { transform: translateY(-6px); }',
+  '}',
+].join('\n');
+const MOTION_LAB_LOCKED_SVG = '<!-- Animated SVG available with Pro -->';
 
 // ── State ─────────────────────────────────────────────────────
 let products = [];
@@ -61,6 +87,7 @@ let userPurchases = [];
 let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail'
 let previousView = 'icons';
 let currentCollectionData = null; // manifest data for the currently viewed collection
+let removeUpgradePrompt = null;
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -68,6 +95,45 @@ const PRODUCT_NAME_OVERRIDES = {
 };
 function getProductName(product) {
   return PRODUCT_NAME_OVERRIDES[product.slug] || product.name;
+}
+
+function getProPlan(plan = 'monthly') {
+  return PRO_PLANS[plan] || PRO_PLANS.monthly;
+}
+
+function getProPlanPriceMarkup(planKey) {
+  const plan = getProPlan(planKey);
+  return `${plan.amount}<span style="font-size:0.65rem;font-weight:400">${plan.period}</span>`;
+}
+
+function getUpgradeCtasMarkup() {
+  return `
+    <div class="si-upsell__actions">
+      <button class="si-upsell__cta si-upsell__cta--primary" data-pro-plan="monthly">
+        ${getProPlan('monthly').label} - ${getProPlan('monthly').ctaLabel}
+      </button>
+      <button class="si-upsell__cta" data-pro-plan="annual">
+        ${getProPlan('annual').label} - ${getProPlan('annual').ctaLabel}
+      </button>
+    </div>
+  `;
+}
+
+function wireUpgradeCtas(root, onDone) {
+  root.querySelectorAll('[data-pro-plan]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      onDone?.();
+      handleProSubscribe(btn.dataset.proPlan);
+    });
+  });
+}
+
+function closeUpgradePrompt() {
+  if (typeof removeUpgradePrompt === 'function') {
+    const cleanup = removeUpgradePrompt;
+    removeUpgradePrompt = null;
+    cleanup();
+  }
 }
 
 // ── Init ──────────────────────────────────────────────────────
@@ -153,6 +219,8 @@ function updateSidebarCreditBadge() {
 // ── View Switching ────────────────────────────────────────────
 export function switchView(view) {
   previousView = currentView;
+  closeUpgradePrompt();
+  document.getElementById('mlExportModal')?.remove();
 
   // Restore the Customize panel if we're leaving a full-width view
   const fullWidthViews = ['pricing', 'motion-lab', 'converter'];
@@ -465,6 +533,8 @@ function createPackCard(product) {
 function createProSubscriptionCard() {
   const card = document.createElement('div');
   card.className = 'promo-banner promo-banner--pro';
+  const monthlyPlan = getProPlan('monthly');
+  const annualPlan = getProPlan('annual');
 
   const monthlyFeatures = `
     <li>MCP + API access for AI agents</li>
@@ -491,7 +561,7 @@ function createProSubscriptionCard() {
         <button class="pro-card__plan-btn" data-plan="annual">Annual</button>
       </div>
       <div class="promo-banner__price-row">
-        <span class="promo-banner__price" id="proPriceDisplay">$15<span style="font-size:0.65rem;font-weight:400">/mo</span></span>
+        <span class="promo-banner__price" id="proPriceDisplay">${getProPlanPriceMarkup('monthly')}</span>
         <span class="pro-card__annual" id="proSavingsBadge" style="display:none">Save 45%</span>
         <button class="promo-banner__btn" id="proSubscribeBtn">Subscribe</button>
       </div>
@@ -513,11 +583,11 @@ function createProSubscriptionCard() {
       toggleBtns.forEach(b => b.classList.remove('pro-card__plan-btn--active'));
       tb.classList.add('pro-card__plan-btn--active');
       if (selectedPlan === 'annual') {
-        priceDisplay.innerHTML = '<span class="pro-card__annual">Save 45%</span> <span class="launch-card__original">$180</span> $99<span style="font-size:0.65rem;font-weight:400">/yr</span>';
+        priceDisplay.innerHTML = `<span class="pro-card__annual">Save 45%</span> <span class="launch-card__original">${annualPlan.originalAmount}</span> ${annualPlan.amount}<span style="font-size:0.65rem;font-weight:400">${annualPlan.period}</span>`;
         savingsBadge.style.display = 'none';
         tooltipFeatures.innerHTML = annualFeatures;
       } else {
-        priceDisplay.innerHTML = '$15<span style="font-size:0.65rem;font-weight:400">/mo</span>';
+        priceDisplay.innerHTML = `${monthlyPlan.amount}<span style="font-size:0.65rem;font-weight:400">${monthlyPlan.period}</span>`;
         savingsBadge.style.display = 'none';
         tooltipFeatures.innerHTML = monthlyFeatures;
       }
@@ -543,7 +613,7 @@ async function handleProSubscribe(plan = 'monthly') {
 
   showToast('Redirecting to checkout...');
 
-  const priceId = plan === 'annual' ? STRIPE_PRO_YEARLY : STRIPE_PRO_MONTHLY;
+  const priceId = getProPlan(plan).priceId;
 
   try {
     const sb = getSupabase();
@@ -576,6 +646,16 @@ async function handleProSubscribe(plan = 'monthly') {
     showToast(err.message || 'Payment error. Please try again.');
     console.error('[Store] Pro subscribe error:', err);
   }
+}
+
+async function requirePro() {
+  await waitForAuth();
+  if (!isLoggedIn()) {
+    document.getElementById('authModal')?.classList.add('open');
+    return 'anon';
+  }
+  if (!isPro()) return 'free';
+  return 'pro';
 }
 
 // ── Collection Detail View ───────────────────────────────────
@@ -1769,6 +1849,7 @@ async function revokeApiKey(keyId) {
 // ── Pricing Page ──────────────────────────────────────────────
 function renderPricingPage() {
   removePackCatalog();
+  const monthlyPlan = getProPlan('monthly');
 
   const gridArea = document.getElementById('gridArea');
   if (!gridArea) return;
@@ -1826,14 +1907,16 @@ function renderPricingPage() {
           <p class="pricing-card__desc">A new animated pack drops in your account every month. Keep all claimed packs forever.</p>
         </div>
         <div class="pricing-card__price">
-          <span class="pricing-card__amount" id="pricingProAmount">$15</span>
-          <span class="pricing-card__period" id="pricingProPeriod">/mo</span>
+          <span class="pricing-card__amount" id="pricingProAmount">${monthlyPlan.amount}</span>
+          <span class="pricing-card__period" id="pricingProPeriod">${monthlyPlan.period}</span>
           <span class="pricing-card__original" id="pricingProOriginal" style="display:none"></span>
         </div>
         <ul class="pricing-card__features">
           <li><span class="material-symbols-outlined">check</span> Everything in Free</li>
           <li><span class="material-symbols-outlined">check</span> 1 pack credit per billing cycle</li>
           <li><span class="material-symbols-outlined">check</span> Claimed packs are yours forever</li>
+          <li><span class="material-symbols-outlined">check</span> Motion Lab: export CSS animations</li>
+          <li><span class="material-symbols-outlined">check</span> Converter: unlimited SVG/PNG conversion</li>
           <li><span class="material-symbols-outlined">check</span> Full MCP access (free + premium)</li>
           <li><span class="material-symbols-outlined">check</span> Commercial use, unlimited projects</li>
           <li><span class="material-symbols-outlined">check</span> 3 bonus packs upfront (annual)</li>
@@ -1972,24 +2055,25 @@ function renderPricingPage() {
   let isAnnualState = false;
 
   function setPeriod(annual) {
+    const plan = annual ? getProPlan('annual') : getProPlan('monthly');
     isAnnualState = annual;
     monthlyBtn.classList.toggle('pricing-toggle__seg--active', !annual);
     annualBtn.classList.toggle('pricing-toggle__seg--active', annual);
 
-    if (annual) {
-      proAmount.textContent = '$99';
-      proPeriod.textContent = '/yr';
+    proAmount.textContent = plan.amount;
+    proPeriod.textContent = plan.period;
+    if (plan.originalAmount) {
       proOriginal.style.display = 'inline';
-      proOriginal.textContent = '$180';
+      proOriginal.textContent = plan.originalAmount;
     } else {
-      proAmount.textContent = '$15';
-      proPeriod.textContent = '/mo';
       proOriginal.style.display = 'none';
+      proOriginal.textContent = '';
     }
   }
 
   monthlyBtn?.addEventListener('click', () => setPeriod(false));
   annualBtn?.addEventListener('click', () => setPeriod(true));
+  setPeriod(false);
 
   // Wire CTA buttons
   document.getElementById('pricingStartFreeBtn')?.addEventListener('click', () => switchView('icons'));
@@ -3985,15 +4069,27 @@ function initMotionLabControls() {
   // ── Export CSS button ─────────────────────────────────────────
   const exportBtn = document.getElementById('mlExportBtn');
   if (exportBtn) {
-    exportBtn.addEventListener('click', showExportModal);
+    exportBtn.addEventListener('click', async () => {
+      const status = await requirePro();
+      if (status === 'pro') {
+        showExportModal();
+      } else if (status === 'free') {
+        showLockedExportModal();
+      }
+    });
   }
 
   // ── Download SVG button ──────────────────────────────────────
   const downloadBtn = document.getElementById('mlDownloadBtn');
   if (downloadBtn) {
-    downloadBtn.addEventListener('click', () => {
+    downloadBtn.addEventListener('click', async () => {
       const svgEl = document.getElementById('mlPreview')?.querySelector('svg');
       if (!svgEl) { showToast('Load an SVG first'); return; }
+      const status = await requirePro();
+      if (status !== 'pro') {
+        if (status === 'free') showLockedExportModal();
+        return;
+      }
       const svgClone = svgEl.cloneNode(true);
       svgClone.id = 'animated-icon';
       // Strip inline live-preview artifacts from clone
@@ -4966,6 +5062,92 @@ function populatePropsFromKeyframe(selector, kf) {
 
 // ---- Export Modal ----------------------------------------
 
+function createMotionLabExportModal({ cssContent, svgContent, locked = false }) {
+  document.getElementById('mlExportModal')?.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'mlExportModal';
+  modal.className = 'ml-modal';
+  const codeClass = locked ? 'ml-modal__code ml-modal__code--locked' : 'ml-modal__code';
+  const cssActions = locked ? '' : `
+    <div class="ml-modal__actions">
+      <button class="ml-modal__action-btn" id="mlCopyCss">
+        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy CSS
+      </button>
+      <button class="ml-modal__action-btn" id="mlDownloadCss">
+        <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .css
+      </button>
+    </div>
+  `;
+  const svgActions = locked ? '' : `
+    <div class="ml-modal__actions">
+      <button class="ml-modal__action-btn" id="mlCopySvg">
+        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG
+      </button>
+      <button class="ml-modal__action-btn" id="mlDownloadSvg">
+        <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .svg
+      </button>
+    </div>
+  `;
+  const upgradeBanner = locked ? `
+    <div class="ml-modal__upgrade si-upsell">
+      <div class="si-upsell__eyebrow">Pro feature</div>
+      <div class="si-upsell__title">Export animations with Pro</div>
+      <p class="si-upsell__body">Preview every preset for free, then subscribe to copy CSS or download the final animated SVG.</p>
+      ${getUpgradeCtasMarkup()}
+      <button class="si-upsell__dismiss" data-upsell-dismiss>Maybe Later</button>
+    </div>
+  ` : '';
+
+  modal.innerHTML = `
+    <div class="ml-modal__backdrop"></div>
+    <div class="ml-modal__box">
+      <div class="ml-modal__header">
+        <span>Export Animation</span>
+        <button class="ml-modal__close" id="mlModalClose">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="ml-modal__tabs">
+        <button class="ml-modal__tab ml-modal__tab--active" data-tab="css">CSS</button>
+        <button class="ml-modal__tab" data-tab="svg">Self-contained SVG</button>
+      </div>
+      <div class="ml-modal__body">
+        <div class="ml-modal__tab-content" data-tab-panel="css">
+          <pre class="${codeClass}" id="mlCssOutput">${escapeHtml(cssContent)}</pre>
+          ${cssActions}
+        </div>
+        <div class="ml-modal__tab-content" data-tab-panel="svg" style="display:none">
+          <pre class="${codeClass}" id="mlSvgOutput">${escapeHtml(svgContent)}</pre>
+          ${svgActions}
+        </div>
+      </div>
+      ${upgradeBanner}
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  modal.querySelectorAll('.ml-modal__tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const activeTab = tab.dataset.tab;
+      modal.querySelectorAll('.ml-modal__tab').forEach(t => t.classList.toggle('ml-modal__tab--active', t === tab));
+      modal.querySelectorAll('[data-tab-panel]').forEach(panel => {
+        panel.style.display = panel.dataset.tabPanel === activeTab ? '' : 'none';
+      });
+    });
+  });
+
+  modal.querySelector('#mlModalClose')?.addEventListener('click', () => modal.remove());
+  modal.querySelector('.ml-modal__backdrop')?.addEventListener('click', () => modal.remove());
+
+  if (locked) {
+    modal.querySelector('[data-upsell-dismiss]')?.addEventListener('click', () => modal.remove());
+    wireUpgradeCtas(modal, () => modal.remove());
+  }
+
+  return modal;
+}
+
 function showExportModal() {
   const rawCSS = generateFullCSS();
   // CSS tab: rewrite for external use with user-friendly container id
@@ -4989,85 +5171,33 @@ function showExportModal() {
     svgExport = svgClone.outerHTML;
   }
 
-  // Remove existing modal
-  document.getElementById('mlExportModal')?.remove();
-
-  const modal = document.createElement('div');
-  modal.id = 'mlExportModal';
-  modal.className = 'ml-modal';
-  modal.innerHTML = `
-    <div class="ml-modal__backdrop"></div>
-    <div class="ml-modal__box">
-      <div class="ml-modal__header">
-        <span>Export Animation</span>
-        <button class="ml-modal__close" id="mlModalClose">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <div class="ml-modal__tabs">
-        <button class="ml-modal__tab ml-modal__tab--active" data-tab="css">CSS</button>
-        <button class="ml-modal__tab" data-tab="svg">Self-contained SVG</button>
-      </div>
-      <div class="ml-modal__body">
-        <div class="ml-modal__tab-content" id="mlTabCss">
-          <pre class="ml-modal__code" id="mlCssOutput">${escapeHtml(cleanCSS)}</pre>
-          <div class="ml-modal__actions">
-            <button class="ml-modal__action-btn" id="mlCopyCss">
-              <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy CSS
-            </button>
-            <button class="ml-modal__action-btn" id="mlDownloadCss">
-              <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .css
-            </button>
-          </div>
-        </div>
-        <div class="ml-modal__tab-content" id="mlTabSvg" style="display:none">
-          <pre class="ml-modal__code" id="mlSvgOutput">${escapeHtml(svgExport || '<!-- Load an SVG first -->')}</pre>
-          <div class="ml-modal__actions">
-            <button class="ml-modal__action-btn" id="mlCopySvg">
-              <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG
-            </button>
-            <button class="ml-modal__action-btn" id="mlDownloadSvg">
-              <span class="material-symbols-outlined" style="font-size:16px">download</span> Download .svg
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  // Tab switching
-  modal.querySelectorAll('.ml-modal__tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      modal.querySelectorAll('.ml-modal__tab').forEach(t => t.classList.remove('ml-modal__tab--active'));
-      tab.classList.add('ml-modal__tab--active');
-      document.getElementById('mlTabCss').style.display = tab.dataset.tab === 'css' ? '' : 'none';
-      document.getElementById('mlTabSvg').style.display = tab.dataset.tab === 'svg' ? '' : 'none';
-    });
+  const modal = createMotionLabExportModal({
+    cssContent: cleanCSS,
+    svgContent: svgExport || '<!-- Load an SVG first -->',
   });
 
-  // Close
-  modal.querySelector('#mlModalClose').addEventListener('click', () => modal.remove());
-  modal.querySelector('.ml-modal__backdrop').addEventListener('click', () => modal.remove());
-
-  // Copy CSS
   modal.querySelector('#mlCopyCss')?.addEventListener('click', () => {
     navigator.clipboard.writeText(cleanCSS).then(() => showToast('CSS copied!'));
   });
 
-  // Download CSS
   modal.querySelector('#mlDownloadCss')?.addEventListener('click', () => {
     downloadFile('animation.css', cleanCSS, 'text/css');
   });
 
-  // Copy SVG
   modal.querySelector('#mlCopySvg')?.addEventListener('click', () => {
     navigator.clipboard.writeText(svgExport).then(() => showToast('SVG copied!'));
   });
 
-  // Download SVG
   modal.querySelector('#mlDownloadSvg')?.addEventListener('click', () => {
     downloadFile('animated-icon.svg', svgExport, 'image/svg+xml');
+  });
+}
+
+function showLockedExportModal() {
+  createMotionLabExportModal({
+    cssContent: MOTION_LAB_LOCKED_CSS,
+    svgContent: MOTION_LAB_LOCKED_SVG,
+    locked: true,
   });
 }
 
@@ -5079,6 +5209,64 @@ function downloadFile(filename, content, mimeType) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function showUpgradePrompt(anchorEl, context) {
+  closeUpgradePrompt();
+  if (!anchorEl) return null;
+
+  const prompt = document.createElement('div');
+  prompt.className = 'conv__upgrade-prompt si-upsell';
+  prompt.setAttribute('role', 'dialog');
+  prompt.setAttribute('aria-live', 'polite');
+  prompt.innerHTML = `
+    <div class="si-upsell__eyebrow">Pro feature</div>
+    <div class="si-upsell__title">Exporting ${escapeHtml(context)} requires Pro</div>
+    <p class="si-upsell__body">Keep previewing and adjusting settings for free. Subscribe to download files or copy the converted output.</p>
+    ${getUpgradeCtasMarkup()}
+    <button class="si-upsell__dismiss" data-upsell-dismiss>Maybe Later</button>
+  `;
+  document.body.appendChild(prompt);
+
+  const positionPrompt = () => {
+    if (!document.body.contains(prompt)) return;
+    const rect = anchorEl.getBoundingClientRect();
+    const promptWidth = prompt.offsetWidth || 320;
+    const promptHeight = prompt.offsetHeight || 0;
+    let left = Math.min(rect.left, window.innerWidth - promptWidth - 12);
+    left = Math.max(12, left);
+    let top = rect.bottom + 12;
+    if (top + promptHeight > window.innerHeight - 12) {
+      top = Math.max(12, rect.top - promptHeight - 12);
+    }
+    prompt.style.left = `${Math.round(left)}px`;
+    prompt.style.top = `${Math.round(top)}px`;
+  };
+
+  const handleOutsideClick = (e) => {
+    if (prompt.contains(e.target) || anchorEl.contains(e.target)) return;
+    closeUpgradePrompt();
+  };
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') closeUpgradePrompt();
+  };
+  const cleanup = () => {
+    document.removeEventListener('mousedown', handleOutsideClick, true);
+    document.removeEventListener('keydown', handleEscape);
+    window.removeEventListener('resize', positionPrompt);
+    window.removeEventListener('scroll', positionPrompt, true);
+    prompt.remove();
+  };
+
+  removeUpgradePrompt = cleanup;
+  positionPrompt();
+  document.addEventListener('mousedown', handleOutsideClick, true);
+  document.addEventListener('keydown', handleEscape);
+  window.addEventListener('resize', positionPrompt);
+  window.addEventListener('scroll', positionPrompt, true);
+  prompt.querySelector('[data-upsell-dismiss]')?.addEventListener('click', () => closeUpgradePrompt());
+  wireUpgradeCtas(prompt, () => closeUpgradePrompt());
+  return prompt;
 }
 
 // ── Converter ────────────────────────────────────────────────
@@ -5487,8 +5675,14 @@ function initConverterControls() {
   });
 
   // Download button
-  document.getElementById('convDownload')?.addEventListener('click', () => {
+  document.getElementById('convDownload')?.addEventListener('click', async (e) => {
     if (!converterState.outputBlob) return;
+    const status = await requirePro();
+    if (status !== 'pro') {
+      if (status === 'free') showUpgradePrompt(e.currentTarget, 'conversions');
+      return;
+    }
+    closeUpgradePrompt();
     const ext = converterState.mode === 'svg-to-png' ? 'png' : 'svg';
     const url = URL.createObjectURL(converterState.outputBlob);
     const a = document.createElement('a');
@@ -5499,8 +5693,14 @@ function initConverterControls() {
   });
 
   // Copy to clipboard
-  document.getElementById('convCopyClipboard')?.addEventListener('click', async () => {
+  document.getElementById('convCopyClipboard')?.addEventListener('click', async (e) => {
     if (!converterState.outputBlob) return;
+    const status = await requirePro();
+    if (status !== 'pro') {
+      if (status === 'free') showUpgradePrompt(e.currentTarget, 'conversions');
+      return;
+    }
+    closeUpgradePrompt();
     try {
       if (converterState.mode === 'svg-to-png') {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': converterState.outputBlob })]);

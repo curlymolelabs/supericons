@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-group-by">
+  <!-- Bracket left -->
+  <path class="dc-bracket" d="M6 3 L3 3 L3 21 L6 21" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Group items -->
+  <circle class="dc-item dc-item-1" cx="10" cy="5" r="2" fill="#3B82F6" fill-opacity="0.88"/>
+  <circle class="dc-item dc-item-2" cx="10" cy="12" r="2" fill="#3B82F6" fill-opacity="0.88"/>
+  <circle class="dc-item dc-item-3" cx="10" cy="19" r="2" fill="#3B82F6" fill-opacity="0.88"/>
+  <!-- Cluster connector -->
+  <path class="dc-cluster" d="M14 5 L17 12 L14 19" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.63" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Result node -->
+  <circle class="dc-result" cx="20" cy="12" r="2.5" fill="#3B82F6" fill-opacity="1.00" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="1.00"/>
+</svg>

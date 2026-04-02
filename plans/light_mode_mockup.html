@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Light Mode Mockup - Warm Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   MOCKUP: Supericons Light Mode - Warm Redesign
+   ===========================================================
+   Design philosophy: Sand dune warmth, not sterile white.
+   - Cream/linen base instead of gray-white
+   - Warm amber accent glow on interactions
+   - Soft card-style grid cells with gentle elevation
+   - Gradient header with brand personality
+   - Warmer text hierarchy with better contrast
+   =========================================================== */
+
+:root {
+  /* --- CURRENT (Sterile) --- */
+  /* --bg: #eae8e4;           Pure gray-beige, flat */
+  /* --surface: #f5f3f0;      Barely warmer than white */
+  /* --surface-container: #e8e6e2;  All grays blend together */
+
+  /* --- PROPOSED (Warm & Inviting) --- */
+  --bg: #f4efe8;                  /* Warm linen base */
+  --surface: #faf8f4;             /* Creamy white, not pure white */
+  --surface-container: #ede8e0;   /* Warm sand */
+  --surface-container-high: #e4ded4;
+  --surface-container-highest: #dbd4c9;
+  --surface-dim: #e8e2d8;
+  --surface-bright: #fffdf9;      /* Warm white, never pure #fff */
+
+  /* Text: Warm charcoal, not pure black */
+  --text: #2c2520;
+  --text-muted: #4a433c;
+  --text-dim: #8a8278;
+  --text-on-primary: #ffffff;
+
+  /* Brand accent: warm orange with depth */
+  --primary: #e05a00;
+  --primary-hover: #c44e00;
+  --primary-container: #fff0e6;
+  --primary-glow: rgba(224, 90, 0, 0.08);
+
+  /* Borders: warm, not gray */
+  --outline: #c4baad;
+  --outline-variant: #d9d1c6;
+  --ghost-border: rgba(120, 90, 50, 0.08);
+
+  /* Shadows: warm tinted */
+  --shadow-sm: 0 1px 3px rgba(80, 50, 20, 0.06), 0 1px 2px rgba(80, 50, 20, 0.04);
+  --shadow-md: 0 4px 16px rgba(80, 50, 20, 0.08);
+  --shadow-lg: 0 12px 32px rgba(80, 50, 20, 0.10);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--outline-variant);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__logo {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+.header__search {
+  position: relative;
+  flex: 1;
+  max-width: 460px;
+}
+
+.header__search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--text-dim);
+}
+
+.header__search-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 40px 0 40px;
+  border: 1.5px solid var(--outline-variant);
+  border-radius: var(--radius-full);
+  background: var(--surface-bright);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.header__search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.header__search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+  background: #ffffff;
+}
+
+.header__count {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.header__btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.header__btn:hover {
+  background: var(--surface-container);
+  color: var(--text);
+}
+
+/* ---------- LAYOUT ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 320px;
+  min-height: calc(100vh - 56px);
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  padding: 20px 12px;
+  background: var(--surface);
+  border-right: 1px solid var(--ghost-border);
+}
+
+.sidebar__section-title {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  padding: 16px 12px 8px;
+}
+
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-weight: 450;
+}
+
+.sidebar__item:hover {
+  background: var(--surface-dim);
+  color: var(--text);
+}
+
+.sidebar__item--active {
+  background: var(--primary-container);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar__item .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.sidebar__item-count {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.sidebar__item--active .sidebar__item-count {
+  color: var(--primary);
+}
+
+/* ---------- MAIN GRID ---------- */
+.main {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.main__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.main__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.main__subtitle {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.main__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-pill {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-container);
+  border-radius: var(--radius-full);
+}
+
+.theme-pill__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-pill__dot--light {
+  background: var(--surface-bright);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+.theme-pill__dot--dark {
+  background: #44403c;
+}
+
+/* ---------- ICON GRID ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 2px;
+}
+
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px 10px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--ghost-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  min-height: 88px;
+}
+
+.icon-cell:hover {
+  background: var(--surface-bright);
+  border-color: var(--outline-variant);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.icon-cell:hover .icon-cell__icon {
+  color: var(--primary);
+}
+
+.icon-cell.selected {
+  background: var(--primary-container);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-glow), var(--shadow-sm);
+}
+
+.icon-cell.selected .icon-cell__icon {
+  color: var(--primary);
+}
+
+.icon-cell__icon {
+  font-size: 26px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+
+.icon-cell__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.icon-cell__name {
+  font-size: 0.5625rem;
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+/* ---------- CUSTOMIZE PANEL ---------- */
+.panel {
+  background: var(--surface);
+  border-left: 1px solid var(--ghost-border);
+  padding: 0;
+  overflow-y: auto;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ghost-border);
+}
+
+.panel__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.panel__close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.panel__close:hover {
+  background: var(--surface-container);
+  color: var(--text);
+}
+
+.panel__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  margin: 16px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-dim);
+  border: 1px solid var(--ghost-border);
+}
+
+.panel__preview-icon {
+  font-size: 56px;
+  color: var(--text-muted);
+}
+
+.panel__preview-name {
+  text-align: center;
+  padding: 8px 20px 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.panel__preview-meta {
+  text-align: center;
+  padding: 0 20px 16px;
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+}
+
+.panel__pills {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 0 20px 16px;
+  flex-wrap: wrap;
+}
+
+.panel__pill {
+  font-size: 0.625rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline-variant);
+  color: var(--text-dim);
+  background: var(--surface-bright);
+  font-weight: 500;
+}
+
+.panel__section {
+  padding: 16px 20px;
+  border-top: 1px solid var(--ghost-border);
+}
+
+.panel__section-title {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+/* Color picker row */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: #2c2520;
+  border: 2px solid var(--outline-variant);
+  cursor: pointer;
+}
+
+.color-input {
+  flex: 1;
+  height: 36px;
+  border: 1.5px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  background: var(--surface-bright);
+  padding: 0 12px;
+  font-family: 'Inter', monospace;
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+/* Color palette chips */
+.color-palette-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.color-tab {
+  font-size: 0.625rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-bright);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.color-tab--active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.color-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.color-chip {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.color-chip:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Stroke slider */
+.stroke-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.stroke-value {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.stroke-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--surface-container-high);
+  border-radius: 2px;
+  outline: none;
+}
+
+.stroke-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--outline);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Empty state */
+.panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.panel__empty-icon {
+  font-size: 48px;
+  color: var(--outline-variant);
+  margin-bottom: 12px;
+}
+
+.panel__empty-text {
+  font-size: 0.8125rem;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--ghost-border);
+  background: var(--surface);
+}
+
+.footer a {
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-left: 16px;
+}
+
+.footer a:hover {
+  color: var(--primary);
+}
+
+/* ---------- ANNOTATIONS ---------- */
+.annotation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--surface-bright);
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <span class="header__logo">Supericons</span>
+  <div class="header__search">
+    <span class="material-symbols-outlined header__search-icon">search</span>
+    <input type="text" class="header__search-input" placeholder="Search 19,000+ icons..." />
+  </div>
+  <span class="header__count">19,608 icons</span>
+  <div class="header__actions">
+    <button class="header__btn"><span class="material-symbols-outlined" style="font-size:20px">grid_view</span></button>
+    <button class="header__btn"><span class="material-symbols-outlined" style="font-size:20px">tune</span></button>
+    <button class="header__btn"><span class="material-symbols-outlined" style="font-size:20px">light_mode</span></button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar__section-title">Browse</div>
+    <div class="sidebar__item sidebar__item--active">
+      <span class="material-symbols-outlined">apps</span>
+      All Icons
+      <span class="sidebar__item-count">19,608</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">favorite</span>
+      Favorites
+      <span class="sidebar__item-count">0</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">history</span>
+      Recent
+      <span class="sidebar__item-count">48</span>
+    </div>
+
+    <div class="sidebar__section-title">Libraries</div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">widgets</span>
+      Material Symb...
+      <span class="sidebar__item-count">4,211</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">edit</span>
+      Lucide
+      <span class="sidebar__item-count">1,951</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">category</span>
+      Tabler
+      <span class="sidebar__item-count">5,021</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">hexagon</span>
+      Phosphor
+      <span class="sidebar__item-count">1,512</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">shield</span>
+      Heroicons
+      <span class="sidebar__item-count">324</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">grid_view</span>
+      Bootstrap
+      <span class="sidebar__item-count">1,373</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">bolt</span>
+      Ionicons
+      <span class="sidebar__item-count">421</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">circle</span>
+      Iconoir
+      <span class="sidebar__item-count">1,383</span>
+    </div>
+    <div class="sidebar__item">
+      <span class="material-symbols-outlined">apps</span>
+      Simple Icons
+      <span class="sidebar__item-count">3,412</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="main__header">
+      <div>
+        <div class="main__title">All Icons</div>
+        <div class="main__subtitle">Showing 19,608 icons</div>
+      </div>
+      <div class="main__toolbar">
+        <div class="theme-pill">
+          <div class="theme-pill__dot theme-pill__dot--light"></div>
+          <div class="theme-pill__dot theme-pill__dot--dark"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">home</span></div>
+        <span class="icon-cell__name">HOME</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">search</span></div>
+        <span class="icon-cell__name">SEARCH</span>
+      </div>
+      <div class="icon-cell selected">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">favorite</span></div>
+        <span class="icon-cell__name">FAVORITE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">settings</span></div>
+        <span class="icon-cell__name">SETTINGS</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">person</span></div>
+        <span class="icon-cell__name">PERSON</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">mail</span></div>
+        <span class="icon-cell__name">MAIL</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">star</span></div>
+        <span class="icon-cell__name">STAR</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">shopping_cart</span></div>
+        <span class="icon-cell__name">CART</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">calendar_today</span></div>
+        <span class="icon-cell__name">CALENDAR</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">photo_camera</span></div>
+        <span class="icon-cell__name">CAMERA</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">notifications</span></div>
+        <span class="icon-cell__name">NOTIFICATIONS</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">chat</span></div>
+        <span class="icon-cell__name">CHAT</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">cloud</span></div>
+        <span class="icon-cell__name">CLOUD</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">lock</span></div>
+        <span class="icon-cell__name">LOCK</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">download</span></div>
+        <span class="icon-cell__name">DOWNLOAD</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">delete</span></div>
+        <span class="icon-cell__name">DELETE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">edit</span></div>
+        <span class="icon-cell__name">EDIT</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">share</span></div>
+        <span class="icon-cell__name">SHARE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">thumb_up</span></div>
+        <span class="icon-cell__name">LIKE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">bookmark</span></div>
+        <span class="icon-cell__name">BOOKMARK</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">visibility</span></div>
+        <span class="icon-cell__name">VISIBILITY</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">play_arrow</span></div>
+        <span class="icon-cell__name">PLAY</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">pause</span></div>
+        <span class="icon-cell__name">PAUSE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">volume_up</span></div>
+        <span class="icon-cell__name">VOLUME</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">language</span></div>
+        <span class="icon-cell__name">LANGUAGE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">code</span></div>
+        <span class="icon-cell__name">CODE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">dashboard</span></div>
+        <span class="icon-cell__name">DASHBOARD</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">palette</span></div>
+        <span class="icon-cell__name">PALETTE</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">bolt</span></div>
+        <span class="icon-cell__name">BOLT</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">rocket_launch</span></div>
+        <span class="icon-cell__name">ROCKET</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">psychology</span></div>
+        <span class="icon-cell__name">PSYCHOLOGY</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">fingerprint</span></div>
+        <span class="icon-cell__name">FINGERPRINT</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">task_alt</span></div>
+        <span class="icon-cell__name">TASK</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">eco</span></div>
+        <span class="icon-cell__name">ECO</span>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-cell__icon"><span class="material-symbols-outlined">dns</span></div>
+        <span class="icon-cell__name">DNS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMIZE PANEL -->
+  <div class="panel">
+    <div class="panel__header">
+      <span class="panel__title">Customize</span>
+      <button class="panel__close"><span class="material-symbols-outlined" style="font-size:18px">close</span></button>
+    </div>
+
+    <div class="panel__preview">
+      <span class="material-symbols-outlined panel__preview-icon">favorite</span>
+    </div>
+
+    <div class="panel__preview-name">favorite</div>
+    <div class="panel__preview-meta">Material Symbols . SVG . favorite</div>
+
+    <div class="panel__pills">
+      <span class="panel__pill">Lucide</span>
+      <span class="panel__pill">Tabler</span>
+      <span class="panel__pill">Bootstrap</span>
+      <span class="panel__pill">Heroicons</span>
+      <span class="panel__pill">Iconoir</span>
+    </div>
+
+    <div class="panel__section">
+      <div class="panel__section-title">Color</div>
+      <div class="color-row">
+        <div class="color-swatch"></div>
+        <input type="text" class="color-input" value="#2c2520" />
+      </div>
+      <div class="color-palette-tabs">
+        <span class="color-tab color-tab--active">Default</span>
+        <span class="color-tab">Material</span>
+        <span class="color-tab">Tailwind</span>
+        <span class="color-tab">Radix</span>
+        <span class="color-tab">Mono</span>
+      </div>
+      <div class="color-chips">
+        <div class="color-chip" style="background:#78716c"></div>
+        <div class="color-chip" style="background:#a8a29e"></div>
+        <div class="color-chip" style="background:#18181b"></div>
+        <div class="color-chip" style="background:#e05a00"></div>
+        <div class="color-chip" style="background:#dc2626"></div>
+        <div class="color-chip" style="background:#c026d3"></div>
+        <div class="color-chip" style="background:#7c3aed"></div>
+        <div class="color-chip" style="background:#2563eb"></div>
+        <div class="color-chip" style="background:#0891b2"></div>
+        <div class="color-chip" style="background:#059669"></div>
+        <div class="color-chip" style="background:#eab308"></div>
+        <div class="color-chip" style="background:#f472b6"></div>
+      </div>
+    </div>
+
+    <div class="panel__section">
+      <div class="stroke-section">
+        <span class="panel__section-title" style="margin-bottom:0">Stroke Width</span>
+        <span class="stroke-value">1.5px</span>
+      </div>
+      <input type="range" class="stroke-slider" min="0.5" max="3" step="0.25" value="1.5" />
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>SUPERICONS V0.1.0 &nbsp;|&nbsp; CURLY MOLE LABS</div>
+    <div>
+      <a href="#">GITHUB</a>
+      <a href="#">API</a>
+      <a href="#">CONTACT</a>
+    </div>
+  </div>
+</div>
+
+<div class="annotation">
+  Mockup: Warm Light Mode Redesign - Compare with current at localhost:5173
+</div>
+
+</body>
+</html>

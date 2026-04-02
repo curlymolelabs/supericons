@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-counter">
+  <!-- Frame -->
+  <rect class="dc-frame" x="2" y="6" width="20" height="12" rx="2" fill="#3B82F6" fill-opacity="0.13" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.38"/>
+  <!-- Digit blocks -->
+  <rect class="dc-digit dc-digit-1" x="4" y="8" width="4" height="8" rx="1" fill="#3B82F6" fill-opacity="0.55"/>
+  <rect class="dc-digit dc-digit-2" x="10" y="8" width="4" height="8" rx="1" fill="#3B82F6" fill-opacity="1.00"/>
+  <rect class="dc-digit dc-digit-3" x="16" y="8" width="4" height="8" rx="1" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Digit lines (display segments, simplified) -->
+  <line x1="5" y1="12" x2="7" y2="12" stroke="white" stroke-width="1.0" stroke-opacity="1.00"/>
+  <line x1="11" y1="12" x2="13" y2="12" stroke="white" stroke-width="1.0" stroke-opacity="1.00"/>
+  <line x1="17" y1="12" x2="19" y2="12" stroke="white" stroke-width="1.0" stroke-opacity="1.00"/>
+</svg>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Lab: Canvas Layout v2 (Cloud Grouping)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#111114; --surface:#1a1a1e; --chip-bg:#1c1c22; --hover:#2a2a32;
+    --border:rgba(255,255,255,0.08); --border-active:rgba(255,107,53,0.5);
+    --text:#e8e8ec; --sub:#a0a0aa; --dim:#555560;
+    --orange:#ff6b35; --glow:rgba(255,107,53,0.15);
+    --yellow:#fbbf24; --green:#4ade80; --red:#f87171; --purple:#a78bfa;
+    --font:'Inter',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0a0a0c;color:var(--text);font-family:var(--font);display:flex;flex-direction:column;align-items:center;padding:30px 20px;gap:20px;}
+  h1{font-size:1.2rem;font-weight:700;text-align:center;}
+  h1 span{color:var(--orange);}
+  .subtitle{text-align:center;color:var(--dim);font-size:0.68rem;max-width:580px;}
+
+  /* ═══ CANVAS ═══ */
+  .canvas{
+    width:100%;max-width:740px;height:520px;border-radius:8px;border:1px solid var(--border);
+    background:var(--bg);
+    background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size:20px 20px;
+    position:relative;overflow:hidden;
+  }
+
+  /* Icon preview: fixed center */
+  .preview{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:128px;height:128px;display:flex;align-items:center;justify-content:center;
+  }
+  .preview-ring{
+    position:absolute;width:100%;height:100%;border:1.5px dashed rgba(255,107,53,0.2);border-radius:50%;
+  }
+  .preview-icon{
+    font-size:56px;color:var(--text);font-variation-settings:'FILL' 0,'wght' 300;
+    animation:demoPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes demoPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);opacity:0.9;}}
+
+  /* ═══ CLOUD GROUPS: positioned absolutely ═══ */
+  .cloud{position:absolute;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-content:start;}
+  .cloud-label{
+    width:100%;text-align:center;font-size:0.48rem;text-transform:uppercase;
+    letter-spacing:0.1em;color:var(--dim);font-weight:600;margin-bottom:3px;
+    display:flex;align-items:center;justify-content:center;gap:4px;
+  }
+  .cloud-label .dot{width:5px;height:5px;border-radius:50%;}
+
+  /* Top cloud: Motion (wide, 2 rows) */
+  .cloud--motion{top:12px;left:50%;transform:translateX(-50%);max-width:520px;}
+  /* Left cloud: Entrances (organic shape) */
+  .cloud--entrance{left:14px;top:50%;transform:translateY(-50%);max-width:195px;}
+  /* Right cloud: Exits */
+  .cloud--exit{right:14px;top:50%;transform:translateY(-50%);max-width:195px;}
+  /* Bottom cloud: My Animations */
+  .cloud--saved{bottom:12px;left:50%;transform:translateX(-50%);max-width:400px;}
+
+  /* ═══ CHIP ═══ */
+  .chip{
+    display:inline-flex;align-items:center;gap:3px;padding:3px 7px;
+    font-size:0.52rem;font-family:var(--font);font-weight:500;
+    border:1px solid var(--border);border-radius:16px;
+    background:var(--chip-bg);color:var(--sub);cursor:pointer;
+    transition:all 0.15s ease;white-space:nowrap;line-height:1.2;
+  }
+  .chip .material-symbols-outlined{font-size:9px;font-variation-settings:'FILL' 0,'wght' 400;}
+  .chip:hover{background:var(--hover);color:var(--text);transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+  .chip.active{background:var(--glow);border-color:var(--border-active);color:var(--orange);font-weight:600;}
+  .chip-new{font-size:0.38rem;padding:1px 3px;border-radius:3px;background:var(--orange);color:#fff;font-weight:700;line-height:1;margin-left:1px;}
+
+  /* Hover accents */
+  .cloud--motion .chip:hover{border-color:rgba(251,191,36,0.4);box-shadow:0 2px 6px rgba(251,191,36,0.1);}
+  .cloud--entrance .chip:hover{border-color:rgba(74,222,128,0.4);box-shadow:0 2px 6px rgba(74,222,128,0.1);}
+  .cloud--exit .chip:hover{border-color:rgba(248,113,113,0.4);box-shadow:0 2px 6px rgba(248,113,113,0.1);}
+  .cloud--saved .chip:hover{border-color:rgba(167,139,250,0.4);box-shadow:0 2px 6px rgba(167,139,250,0.1);}
+
+  /* ═══ BOTTOM BAR ═══ */
+  .bottom-bar{width:100%;max-width:740px;background:var(--surface);border-radius:0 0 8px 8px;border:1px solid var(--border);border-top:none;margin-top:-20px;}
+  .bar-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 12px;border-top:1px solid var(--border);font-size:0.65rem;color:var(--dim);}
+  .bar-divider{width:1px;height:14px;background:var(--border);margin:0 4px;}
+  .bar-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:0.65rem;font-family:var(--font);border:1px solid var(--border);border-radius:4px;background:var(--chip-bg);color:var(--sub);cursor:pointer;}
+  .bar-btn:hover{border-color:var(--orange);color:var(--orange);}
+  .bar-btn .material-symbols-outlined{font-size:13px;}
+  .trigger-opt{display:flex;align-items:center;gap:3px;cursor:pointer;font-size:0.65rem;}
+  .trigger-opt input{accent-color:var(--orange);width:11px;height:11px;}
+  .size-btn{padding:2px 6px;font-size:0.6rem;font-family:var(--font);border:1px solid var(--border);border-radius:4px;background:var(--chip-bg);color:var(--sub);cursor:pointer;}
+  .size-btn.active{border-color:var(--orange);color:var(--orange);}
+  .size-label{font-size:0.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;}
+
+  /* ═══ NOTES ═══ */
+  .notes{max-width:740px;width:100%;font-size:0.66rem;color:var(--sub);line-height:1.6;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 20px;}
+  .notes h2{font-size:0.85rem;margin-bottom:8px;color:var(--text);}
+  .notes li{margin-bottom:2px;}
+  .notes b{color:var(--text);}
+</style>
+</head>
+<body>
+
+<h1>Motion Lab: <span>Canvas Layout v2</span></h1>
+<p class="subtitle">Organic cloud grouping. Buttons fill their section naturally. 128x128 icon preview fixed center. 4 quadrant clouds with color-coded accents.</p>
+
+<!-- ═══════════ CANVAS ═══════════ -->
+<div class="canvas">
+
+  <!-- TOP: Motion (19 chips, wide cloud) -->
+  <div class="cloud cloud--motion">
+    <div class="cloud-label"><span class="dot" style="background:var(--yellow)"></span>Motion</div>
+    <button class="chip active"><span class="material-symbols-outlined">arrow_upward</span> Bounce</button>
+    <button class="chip"><span class="material-symbols-outlined">cloud</span> Float</button>
+    <button class="chip"><span class="material-symbols-outlined">vibration</span> Shake</button>
+    <button class="chip"><span class="material-symbols-outlined">rotate_right</span> Spin</button>
+    <button class="chip"><span class="material-symbols-outlined">radio_button_checked</span> Pulse</button>
+    <button class="chip"><span class="material-symbols-outlined">open_in_full</span> Pop</button>
+    <button class="chip"><span class="material-symbols-outlined">favorite</span> Heartbeat <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">straighten</span> Rubber Band <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">water_drop</span> Jelly <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">notifications</span> Ring <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">tsunami</span> Wobble <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">attractions</span> Magnetic <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">electric_bolt</span> Recoil <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">swap_horiz</span> Pendulum <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">crop_rotate</span> Whiplash <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">earthquake</span> Tremor <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">flare</span> Neon Glow <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">spa</span> Breathe <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">timer</span> Metronome <span class="chip-new">NEW</span></button>
+  </div>
+
+  <!-- LEFT: Entrances (8 chips, organic cloud) -->
+  <div class="cloud cloud--entrance">
+    <div class="cloud-label"><span class="dot" style="background:var(--green)"></span>Entrances</div>
+    <button class="chip"><span class="material-symbols-outlined">gradient</span> Fade In</button>
+    <button class="chip"><span class="material-symbols-outlined">zoom_in</span> Scale Up</button>
+    <button class="chip"><span class="material-symbols-outlined">arrow_upward</span> Slide Up</button>
+    <button class="chip"><span class="material-symbols-outlined">downloading</span> Spring Land <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">swipe_right_alt</span> Slingshot <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">flash_on</span> Glitch On <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">unfold_more</span> Unfold <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">blur_on</span> Warp In <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">send</span> Telegram <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">filter_vintage</span> Bloom <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">radio_button_checked</span> Shockwave <span class="chip-new">NEW</span></button>
+  </div>
+
+  <!-- CENTER: Icon preview -->
+  <div class="preview">
+    <div class="preview-ring"></div>
+    <span class="material-symbols-outlined preview-icon">send</span>
+  </div>
+
+  <!-- RIGHT: Exits (organic cloud) -->
+  <div class="cloud cloud--exit">
+    <div class="cloud-label"><span class="dot" style="background:var(--red)"></span>Exits</div>
+    <button class="chip"><span class="material-symbols-outlined">gradient</span> Fade Out</button>
+    <button class="chip"><span class="material-symbols-outlined">zoom_out</span> Scale Down</button>
+    <button class="chip"><span class="material-symbols-outlined">arrow_downward</span> Slide Out</button>
+    <button class="chip"><span class="material-symbols-outlined">close_fullscreen</span> Pop Out</button>
+    <button class="chip"><span class="material-symbols-outlined">cyclone</span> Vortex <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">flash_off</span> Glitch Off <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">blur_on</span> Dissolve <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">download</span> Sink <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">compress</span> Implode <span class="chip-new">NEW</span></button>
+    <button class="chip"><span class="material-symbols-outlined">cloud_queue</span> Puff Out <span class="chip-new">NEW</span></button>
+  </div>
+
+  <!-- BOTTOM: My Animations -->
+  <div class="cloud cloud--saved">
+    <div class="cloud-label"><span class="dot" style="background:var(--purple)"></span>My Animations</div>
+    <button class="chip"><span class="material-symbols-outlined">auto_awesome</span> Sparkle</button>
+    <button class="chip"><span class="material-symbols-outlined">swap_horiz</span> Swing</button>
+    <button class="chip"><span class="material-symbols-outlined">electric_bolt</span> Jitter</button>
+    <span style="font-size:0.46rem;color:var(--dim);font-style:italic;padding:2px 6px">+ AI generated</span>
+  </div>
+
+</div>
+
+<!-- ═══════════ BOTTOM BAR ═══════════ -->
+<div class="bottom-bar">
+  <div class="bar-row">
+    <span class="size-label">Size (px)</span>
+    <button class="size-btn">24</button>
+    <button class="size-btn active">48</button>
+    <button class="size-btn">64</button>
+    <button class="size-btn">96</button>
+    <button class="size-btn">128</button>
+    <span class="bar-divider"></span>
+    <button class="bar-btn" style="padding:3px 5px"><span class="material-symbols-outlined">restart_alt</span></button>
+    <button class="bar-btn" style="padding:3px 5px"><span class="material-symbols-outlined">stop</span></button>
+  </div>
+  <div class="bar-row">
+    <span class="material-symbols-outlined" style="font-size:12px;color:var(--dim)">info</span>
+    <label class="trigger-opt"><input type="radio" name="t" value="loop" checked> Loop</label>
+    <label class="trigger-opt"><input type="radio" name="t" value="hover"> Hover</label>
+    <label class="trigger-opt"><input type="radio" name="t" value="click"> Click</label>
+    <span class="bar-divider"></span>
+    <button class="bar-btn"><span class="material-symbols-outlined">download</span> Download SVG</button>
+    <button class="bar-btn"><span class="material-symbols-outlined">content_copy</span> Copy CSS</button>
+  </div>
+</div>
+
+<!-- ═══════════ NOTES ═══════════ -->
+<div class="notes">
+  <h2>Layout Notes</h2>
+  <ul>
+    <li><b>Cloud grouping:</b> Chips wrap naturally within their positioned region. No rigid grid. The organic shape breathes with the content.</li>
+    <li><b>Absolute positioning:</b> Each cloud is anchored to its quadrant edge (top/left/right/bottom) and centers itself. Chips fill inward toward the preview.</li>
+    <li><b>Preset counts:</b> Motion: 19 (6 existing + 13 new). Entrances: 11 (all new). Exits: 10 (all new). Saved: 3 + AI. Total: 43 built-in.</li>
+    <li><b>No scroll needed:</b> The cloud layout naturally wraps pills into 2-3 rows/columns, fitting within the canvas without overflow.</li>
+    <li><b>Color coding:</b> Yellow (Motion), Green (Entrances), Red (Exits), Purple (Saved). Hover accent matches category.</li>
+    <li><b>Properties panel</b> (not shown here) remains on the right side, separate from the canvas.</li>
+  </ul>
+</div>
+
+<script>
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.chip.active').forEach(a => a.classList.remove('active'));
+      c.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

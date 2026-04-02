@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-segment">
+  <!-- Full circle background -->
+  <circle class="dc-bg" cx="12" cy="12" r="9" fill="#3B82F6" fill-opacity="0.13"/>
+  <!-- Segments (4 equal slices) -->
+  <path class="dc-seg dc-seg-1" d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#3B82F6" fill-opacity="0.66"/>
+  <path class="dc-seg dc-seg-2" d="M12 12 L21 12 A9 9 0 0 1 12 21 Z" fill="#3B82F6" fill-opacity="1.00"/>
+  <path class="dc-seg dc-seg-3" d="M12 12 L12 21 A9 9 0 0 1 3 12 Z" fill="#3B82F6" fill-opacity="1.00"/>
+  <path class="dc-seg dc-seg-4" d="M12 12 L3 12 A9 9 0 0 1 12 3 Z" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Dividers -->
+  <line x1="12" y1="3" x2="12" y2="21" stroke="white" stroke-width="1.5" stroke-opacity="1.00"/>
+  <line x1="3" y1="12" x2="21" y2="12" stroke="white" stroke-width="1.5" stroke-opacity="1.00"/>
+</svg>

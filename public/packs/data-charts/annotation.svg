@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-annotation">
+  <!-- Chart line in background -->
+  <polyline class="dc-line" points="3,18 7,14 11,16 15,10 19,12" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.63" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Callout box -->
+  <rect class="dc-callout" x="10" y="2" width="11" height="7" rx="1.5" fill="#3B82F6" fill-opacity="0.26" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00"/>
+  <!-- Callout pointer -->
+  <path class="dc-pointer" d="M14 9 L15 11 L16 9" fill="#3B82F6" fill-opacity="0.26" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="1.00"/>
+  <!-- Text lines inside callout -->
+  <line x1="12" y1="4.5" x2="19" y2="4.5" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00" stroke-linecap="round"/>
+  <line x1="12" y1="6.5" x2="17" y2="6.5" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.88" stroke-linecap="round"/>
+  <!-- Pin dot on chart -->
+  <circle class="dc-pin" cx="15" cy="10" r="1.5" fill="#3B82F6" fill-opacity="1.00"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4B5FD"/>
+      <stop offset="1" stop-color="#5B21B6"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="sq">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg)"/>
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine)" clip-path="url(#sq)"/>
+  <g transform="translate(28, 28)" clip-path="url(#sq-inner)">
+    <svg viewBox="0 0 256 256" width="64" height="64" fill="#fff" fill-opacity="0.95">
+      <path d="M212 56a28 28 0 1 0 28 28a28 28 0 0 0-28-28m0 40a12 12 0 1 1 12-12a12 12 0 0 1-12 12m-60 50.08V40a32 32 0 0 0-64 0v106.08a56 56 0 1 0 64 0M136 104h-32V40a16 16 0 0 1 32 0Z"/>
+    </svg>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-percentage">
+  <!-- Background ring -->
+  <circle class="dc-bg" cx="12" cy="12" r="9" fill="none" stroke="#3B82F6" stroke-width="2" stroke-opacity="0.20"/>
+  <!-- Progress arc (75%) -->
+  <circle class="dc-progress" cx="12" cy="12" r="9" fill="none" stroke="#3B82F6" stroke-width="2" stroke-opacity="1.00" stroke-dasharray="42.41 56.55" stroke-linecap="round" transform="rotate(-90 12 12)"/>
+  <!-- Percentage text hint -->
+  <circle class="dc-center-dot" cx="10" cy="10" r="1.2" fill="#3B82F6" fill-opacity="1.00"/>
+  <line class="dc-slash" x1="15" y1="8" x2="9" y2="16" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00"/>
+  <circle class="dc-center-dot-2" cx="14" cy="14" r="1.2" fill="#3B82F6" fill-opacity="0.88"/>
+</svg>

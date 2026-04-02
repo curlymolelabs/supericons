@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A friendly globe with latitude/longitude lines and a download arrow -->
+  
+      <!-- Globe circle -->
+      <circle cx="120" cy="120" r="80" />
+      <!-- Longitude line (vertical ellipse) -->
+      <ellipse cx="120" cy="120" rx="32" ry="80" fill="none" stroke="var(--hole, #fff)" stroke-width="8" />
+      <!-- Latitude lines -->
+      <path d="M42 104 Q120 88 198 104" fill="none" stroke="var(--hole, #fff)" stroke-width="8" stroke-linecap="round" />
+      <path d="M42 136 Q120 152 198 136" fill="none" stroke="var(--hole, #fff)" stroke-width="8" stroke-linecap="round" />
+      <!-- Equator -->
+      <line x1="40" y1="120" x2="200" y2="120" stroke="var(--hole, #fff)" stroke-width="8" stroke-linecap="round" />
+      <!-- Download arrow badge (bottom-right) -->
+      <circle cx="192" cy="192" r="40" fill="currentColor" />
+      <circle cx="192" cy="192" r="36" fill="var(--hole, #fff)" />
+      <path d="M192 172 L192 200 M178 190 L192 206 L206 190" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+    
+</svg>

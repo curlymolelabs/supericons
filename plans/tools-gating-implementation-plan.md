@@ -8,14 +8,26 @@ Builds the async-safe auth infrastructure that all gates depend on. No UI change
 
 ### [MODIFY] [auth.js](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/auth.js)
 
-1. **Add `authEpoch` counter** (new variable, starts at 0)
-2. **Add `authReadyPromise`** (new variable, resolves when session + subscription are resolved)
-3. **Modify `initAuth()`**: increment epoch, capture it, chain `getSession()` then `fetchSubscription()`. On resolve, check epoch match before updating state. Set up the initial `authReadyPromise`.
-4. **Modify `onAuthStateChange` handler (L24)**: on SIGNED_IN, increment epoch, create new `authReadyPromise`, start `fetchSubscription()` with epoch check. On SIGNED_OUT, increment epoch, reset subscription state, resolve `authReadyPromise` immediately.
-5. **Modify `fetchSubscription()` (L106)**: accept epoch param. On resolve, check if `epoch === authEpoch` before writing `subscriptionStatus`. If mismatch, discard. Add ~5s timeout wrapper.
+1. **Add `authEpoch` counter** (new module-scope variable, starts at 0)
+2. **Add `authReadyPromise`** + its `resolve` handle (new module-scope variables)
+3. **Modify `initAuth()`**: increment epoch, capture it, create initial `authReadyPromise`, chain `getSession()`. If session has no user, resolve `authReadyPromise` immediately (anonymous boot), keep `subscriptionStatus = null`, ensure `creditBalance = 0`, and keep Pro badge / manage-subscription UI hidden. If session has a user, call `fetchSubscriptionForEpoch(capturedEpoch)`. This is the **boot-time owner** of the ready promise.
+4. **Modify `onAuthStateChange` handler (L24)**:
+   - On SIGNED_IN: increment epoch, create **new** `authReadyPromise`, call `fetchSubscriptionForEpoch(capturedEpoch)`
+   - On SIGNED_OUT: increment epoch, reset `subscriptionStatus` to `null`, reset `creditBalance = 0`, update Pro badge / manage-subscription UI to hidden, resolve `authReadyPromise` immediately
+5. **Rename/refactor `fetchSubscription()` (L106) to `fetchSubscriptionForEpoch(epoch)`**:
+   - Accepts epoch as a required param
+   - On resolve: if `epoch !== authEpoch`, discard result silently (do NOT update `subscriptionStatus` or resolve `authReadyPromise`)
+   - On match: update `subscriptionStatus`, preserve existing side effects (`updateProBadge()`, `fetchCreditBalance()` for active Pro, `creditBalance = 0` otherwise), then resolve the current `authReadyPromise`
+   - On failure/timeout (~5s): fail closed with `subscriptionStatus = null`, `creditBalance = 0`, Pro badge / manage-subscription UI hidden, then resolve `authReadyPromise`
 6. **Export `waitForAuth()`**: returns the current `authReadyPromise`. Always resolves, never rejects.
 
-**Test:** Boot app, call `waitForAuth()`, verify it resolves. Sign in, verify subscription fetch completes. Sign out mid-fetch, verify old fetch is discarded.
+**Ownership rules:**
+- **Only `fetchSubscriptionForEpoch()` and the SIGNED_OUT handler may write `subscriptionStatus`** (`fetchSubscriptionForEpoch` only when its epoch matches; SIGNED_OUT always resets to `null`)
+- **Preserve current auth side effects**: whenever subscription state becomes non-Pro or user becomes signed out/anonymous, `creditBalance` resets to `0` and Pro badge / manage-subscription UI stay hidden; active Pro users still fetch credits and show Pro UI
+- **Only `fetchSubscriptionForEpoch()`, the SIGNED_OUT handler, and the anonymous boot path in `initAuth()` may resolve `authReadyPromise`**
+- `initAuth()` (with-user path) and the SIGNED_IN handler create new promises but delegate resolution to `fetchSubscriptionForEpoch()`
+
+**Test:** Boot app as anon, call `waitForAuth()`, verify resolves immediately and Pro UI stays hidden. Sign in, verify subscription fetch completes and active Pro still gets credit balance + Pro badge. Sign out mid-fetch, verify old fetch result is discarded (epoch mismatch), `creditBalance` resets to `0`, and Pro UI hides immediately.
 
 ---
 
@@ -26,14 +38,32 @@ Adds `requirePro()` and extracts pricing data. Still no visible UI changes.
 ### [MODIFY] [store.js](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js)
 
 1. **Import `waitForAuth`** from auth.js (add to existing import at L6)
-2. **Extract shared plan config** to module scope (near L12):
+2. **Extract shared plan config** to module scope (near L14, after Stripe constants):
    ```js
    const PRO_PLANS = {
-     monthly: { key: 'monthly', priceId: STRIPE_PRO_MONTHLY, display: '$4/mo' },
-     annual: { key: 'annual', priceId: STRIPE_PRO_YEARLY, display: '$3/mo' },
+     monthly: {
+       key: 'monthly',
+       priceId: STRIPE_PRO_MONTHLY,
+       amount: '$15',
+       period: '/mo',
+       ctaLabel: '$15/mo',
+     },
+     annual: {
+       key: 'annual',
+       priceId: STRIPE_PRO_YEARLY,
+       amount: '$99',
+       period: '/yr',
+       originalAmount: '$180',
+       ctaLabel: '$99/yr',
+     },
    };
    ```
-   Update `handleProSubscribe()` (L536) and the pricing view (L1829, L1972) to read from `PRO_PLANS` instead of inline values.
+   - `PRO_PLANS` is the **single source of truth** for price IDs and display values
+   - Update `setPeriod()` (L1979-L1988) to read entirely from `PRO_PLANS` instead of inline literals
+   - The pricing HTML template (L1828-L1832) should render initial values from `PRO_PLANS.monthly` when the pricing view mounts, or normalize from `PRO_PLANS` after the pricing DOM is created
+   - Update `handleProSubscribe()` (L536) to use `PRO_PLANS[plan].priceId` instead of the ternary
+   - Upgrade prompts read `PRO_PLANS.monthly.ctaLabel` / `PRO_PLANS.annual.ctaLabel`
+   - Do not add new CTA text changes unless product wants them
 3. **Add `requirePro()`** function:
    ```js
    async function requirePro() {
@@ -64,10 +94,9 @@ Builds the locked export modal experience for non-Pro users.
    - `user-select: none` on both code blocks
    - No Copy/Download buttons rendered. No export handlers bound.
    - Upgrade banner inside modal with Monthly/Annual CTAs:
-     - Monthly button: `handleProSubscribe('monthly')`
-     - Annual button: `handleProSubscribe('annual')`
-     - "Maybe Later" button: closes modal
-   - Prices read from `PRO_PLANS.monthly.display` and `PRO_PLANS.annual.display`
+      - Monthly button: label from `PRO_PLANS.monthly.ctaLabel`, calls `handleProSubscribe('monthly')`
+      - Annual button: label from `PRO_PLANS.annual.ctaLabel`, calls `handleProSubscribe('annual')`
+      - "Maybe Later" button: closes modal
 
 2. **Gate `mlExportBtn` handler** (L3986):
    ```js
@@ -103,8 +132,10 @@ Simplest phase. Two button guards + inline upgrade prompt.
 
 ### [MODIFY] [store.js](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js)
 
-1. **Add `showUpgradePrompt(context)`** (new function):
-   - Renders an inline prompt near the calling button
+1. **Add `showUpgradePrompt(anchorEl, context)`** (new function):
+   - `anchorEl`: the button element the user clicked (determines placement)
+   - `context`: string label for the message (e.g. `'conversions'`)
+   - Renders an inline prompt positioned relative to `anchorEl` (e.g., below or above it using `getBoundingClientRect()`)
    - Message: "Exporting {context} requires a Pro subscription."
    - Monthly/Annual CTA buttons (same pattern as locked modal, reading from `PRO_PLANS`)
    - "Maybe Later" dismisses
@@ -112,18 +143,25 @@ Simplest phase. Two button guards + inline upgrade prompt.
 
 2. **Gate `convDownload` handler** (L5490):
    ```js
-   // Wrap existing handler:
-   const status = await requirePro();
-   if (status !== 'pro') {
-     if (status === 'free') showUpgradePrompt('conversions');
-     return;
-   }
-   // existing download logic
+   // Wrap existing handler (use event param, not `this`, since handlers are arrow functions):
+   convDownloadBtn.addEventListener('click', async (e) => {
+     const status = await requirePro();
+     if (status !== 'pro') {
+       if (status === 'free') showUpgradePrompt(e.currentTarget, 'conversions');
+       return;
+     }
+     // existing download logic
+   });
    ```
 
 3. **Gate `convCopyClipboard` handler** (L5502): Same pattern.
 
-**Test:** As free user, click Download/Copy in Converter. Verify upgrade prompt appears with correct prices. As Pro, verify export works normally.
+**Test:**
+- Free user: click Download. Verify upgrade prompt with correct prices ($15/mo, $99/yr).
+- Free user: click Copy. Same prompt.
+- Free user: click Monthly CTA in prompt. Verify routes to Stripe monthly checkout.
+- Free user: click Annual CTA in prompt. Verify routes to Stripe annual checkout.
+- Pro user: click Download/Copy. Verify export works normally.
 
 ---
 
@@ -151,12 +189,15 @@ Simplest phase. Two button guards + inline upgrade prompt.
 | 10 | Free + Conv Download | Upgrade prompt with Monthly/Annual |
 | 11 | Free + Conv Copy | Upgrade prompt with Monthly/Annual |
 | 12 | Pro + Conv Download | File downloads |
-| 13 | Just signed-in Pro + export | Works (no false negative) |
-| 14 | Sign out mid-fetch + export | Treated as free (epoch guard) |
-| 15 | Network failure + export | Treated as free (fail closed) |
-| 16 | Upgrade prompt prices | Match pricing page (shared config) |
-| 17 | Icon picker export (any user) | Always works, no gate |
-| 18 | `npm run build` | Passes |
+| 13 | Pro + Conv Copy | Copy succeeds |
+| 14 | Free + click "Monthly" in Conv prompt | Stripe monthly checkout |
+| 15 | Free + click "Annual" in Conv prompt | Stripe annual checkout |
+| 16 | Just signed-in Pro + export | Works (no false negative) |
+| 17 | Sign out mid-fetch + export | Auth modal opens (user is now anon). Stale fetch discarded by epoch guard. |
+| 18 | Network failure + export | Treated as free (fail closed) |
+| 19 | Upgrade prompt prices | Match pricing page (shared config) |
+| 20 | Icon picker export (any user) | Always works, no gate |
+| 21 | `npm run build` | Passes |
 
 ---
 

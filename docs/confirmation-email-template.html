@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm your Supericons account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            background: #0e0e0e;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 32px;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 26px;
+            color: #FF4F00;
+            letter-spacing: -0.015em;
+            vertical-align: middle;
+        }
+
+        .card {
+            background: #131313;
+            border: 1px solid #262626;
+            border-radius: 16px;
+            padding: 48px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #FF4F00;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 16px;
+            color: #ffffff;
+        }
+
+        p {
+            color: #cccaca;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 32px;
+        }
+
+        .cta {
+            display: inline-block;
+            background: #FF4F00;
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 14px 32px;
+            border-radius: 99px;
+            transition: opacity 0.2s;
+        }
+
+        .footer {
+            margin-top: 32px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="https://supericons.dev" class="logo">
+            <img src="https://supericons.dev/logo_email_header.png" alt="Supericons" height="34" style="display: block; border: 0; outline: none; text-decoration: none;" />
+        </a>
+        <div class="card">
+            <div class="eyebrow">Account Activation</div>
+            <h1>Confirm your email</h1>
+            <p>Welcome to Supericons. Please confirm your email address to activate your account and start exploring
+                thousands of icons and super cool tools.</p>
+            <a href="{{ .ConfirmationURL }}" class="cta">Confirm Account</a>
+        </div>
+        <div class="footer">
+            If you didn't create a Supericons account, you can safely ignore this email.<br>
+            &copy; 2026 Curly Mole Labs
+        </div>
+    </div>
+</body>
+
+</html>

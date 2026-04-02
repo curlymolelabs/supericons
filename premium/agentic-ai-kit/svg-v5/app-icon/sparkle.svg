@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93C5FD"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="sq">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg)"/>
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine)" clip-path="url(#sq)"/>
+  <g transform="translate(28, 28)" clip-path="url(#sq-inner)">
+    <svg viewBox="0 0 256 256" width="64" height="64" fill="#fff" fill-opacity="0.95">
+      <path d="M208 144a15.78 15.78 0 0 1-10.42 14.94L146 178l-19 51.62a15.92 15.92 0 0 1-29.88 0L78 178l-51.62-19a15.92 15.92 0 0 1 0-29.88L78 110l19-51.62a15.92 15.92 0 0 1 29.88 0L146 110l51.62 19A15.78 15.78 0 0 1 208 144m-56-96h16v16a8 8 0 0 0 16 0V48h16a8 8 0 0 0 0-16h-16V16a8 8 0 0 0-16 0v16h-16a8 8 0 0 0 0 16m88 32h-8v-8a8 8 0 0 0-16 0v8h-8a8 8 0 0 0 0 16h8v8a8 8 0 0 0 16 0v-8h8a8 8 0 0 0 0-16"/>
+    </svg>
+  </g>
+</svg>

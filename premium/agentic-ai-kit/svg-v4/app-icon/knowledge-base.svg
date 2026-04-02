@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg-knowledge-base" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9A8D4"/>
+      <stop offset="1" stop-color="#BE185D"/>
+    </linearGradient>
+    <linearGradient id="shine-knowledge-base" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="squircle-knowledge-base">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg-knowledge-base)"/>
+
+  <!-- Glass highlight -->
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine-knowledge-base)" clip-path="url(#squircle-knowledge-base)"/>
+
+  <!-- Inner shadow (subtle) -->
+  <rect x="4" y="58" width="112" height="58" rx="4" fill="rgba(0,0,0,0.08)" clip-path="url(#squircle-knowledge-base)"/>
+
+  <!-- Icon shape (centered, scaled, white) -->
+  <g transform="translate(30, 30) scale(2.5)" fill="#fff" fill-opacity="0.95">
+    <path fill-rule="evenodd" d="M6.5 2A2.5 2.5 0 004 4.5v15A2.5 2.5 0 006.5 22H20a.75.75 0 00.75-.75v-18a.75.75 0 00-.75-.75H6.5zm1.75 5.25a.75.75 0 000 1.5h7a.75.75 0 000-1.5h-7zm-.75 4.5a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75z" clip-rule="evenodd"/><path d="M4 19.5a2.5 2.5 0 012.5-2.5H19v4H6.5A2.5 2.5 0 014 19.5z"/>
+  </g>
+</svg>

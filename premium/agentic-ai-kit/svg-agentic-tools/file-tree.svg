@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A cute folder with a smaller nested folder peaking out -->
+  
+      <!-- Back folder (larger, shifted right) -->
+      <path d="M56 72 L56 60 Q56 48 68 48 L108 48 Q116 48 120 56 L128 72 L196 72 Q208 72 208 84 L208 196 Q208 208 196 208 L68 208 Q56 208 56 196 Z" />
+      <!-- Tab on back folder -->
+      <!-- Front folder (smaller, shifted left+down) -->
+      <rect x="48" y="96" width="136" height="96" rx="16" fill="var(--hole, #fff)" opacity="0.35" />
+      <!-- Little document icon peaking out -->
+      <rect x="80" y="112" width="48" height="56" rx="8" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="88" y="128" width="32" height="4" rx="2" fill="currentColor" opacity="0.3" />
+      <rect x="88" y="140" width="24" height="4" rx="2" fill="currentColor" opacity="0.3" />
+    
+</svg>

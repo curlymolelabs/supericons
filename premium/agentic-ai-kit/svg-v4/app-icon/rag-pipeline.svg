@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg-rag-pipeline" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9A8D4"/>
+      <stop offset="1" stop-color="#BE185D"/>
+    </linearGradient>
+    <linearGradient id="shine-rag-pipeline" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="squircle-rag-pipeline">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg-rag-pipeline)"/>
+
+  <!-- Glass highlight -->
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine-rag-pipeline)" clip-path="url(#squircle-rag-pipeline)"/>
+
+  <!-- Inner shadow (subtle) -->
+  <rect x="4" y="58" width="112" height="58" rx="4" fill="rgba(0,0,0,0.08)" clip-path="url(#squircle-rag-pipeline)"/>
+
+  <!-- Icon shape (centered, scaled, white) -->
+  <g transform="translate(30, 30) scale(2.5)" fill="#fff" fill-opacity="0.95">
+    <path d="M2 5.5a3 3 0 116 0 3 3 0 01-6 0zm16 0a3 3 0 116 0 3 3 0 01-6 0zM9 17a3 3 0 116 0 3 3 0 01-6 0z"/><path fill-rule="evenodd" d="M8 5.5a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 018 5.5zM5 8.75A.75.75 0 015.75 8a.75.75 0 01.75.75v3.44l4.72 2.724a.75.75 0 01-.75 1.3L5.75 13.19V8.75A.75.75 0 015 8.75zm14 0a.75.75 0 01.75.75v4.44l-4.72 2.724a.75.75 0 01-.75-1.3l4.22-2.437V9.5a.75.75 0 01.75-.75z" clip-rule="evenodd"/>
+  </g>
+</svg>

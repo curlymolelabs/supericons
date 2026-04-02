@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Animation Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c; --surface: #141418; --chip: #1e1e24; --border: rgba(255,255,255,0.08);
+    --text: #e8e8ec; --dim: #666670; --sub: #a0a0aa;
+    --orange: #ff6b35; --yellow: #fbbf24; --green: #4ade80; --red: #f87171; --purple: #a78bfa; --cyan: #22d3ee;
+    --font: 'Inter', sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font); padding:30px 20px; }
+  h1 { font-size:1.3rem; text-align:center; margin-bottom:4px; }
+  h1 span { color:var(--orange); }
+  .subtitle { text-align:center; color:var(--dim); font-size:0.72rem; margin-bottom:30px; max-width:600px; margin-inline:auto; }
+  .section-title { font-size:0.9rem; font-weight:700; margin:30px 0 14px; padding-left:8px; border-left:3px solid var(--orange); display:flex; align-items:center; gap:8px; }
+  .section-title .dot { width:8px; height:8px; border-radius:50%; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:12px; max-width:900px; margin:0 auto; }
+  .card {
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:16px 12px; text-align:center; cursor:pointer; transition:border-color 0.2s;
+  }
+  .card:hover { border-color:rgba(255,107,53,0.3); }
+  .card .icon-wrap {
+    width:56px; height:56px; margin:0 auto 10px; display:flex; align-items:center; justify-content:center;
+  }
+  .card svg { width:32px; height:32px; stroke:var(--text); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+  .card .name { font-size:0.7rem; font-weight:600; margin-bottom:2px; }
+  .card .origin { font-size:0.5rem; color:var(--dim); text-transform:uppercase; letter-spacing:0.06em; }
+  .card .desc { font-size:0.56rem; color:var(--sub); margin-top:6px; line-height:1.4; }
+  .card:hover svg { animation-play-state:running !important; }
+  /* All animations paused by default, play on hover */
+  .card svg { animation-play-state:paused; }
+
+  /* ═══════ MOTION ANIMATIONS ═══════ */
+  .anim-jelly svg { animation:jelly 800ms linear infinite; }
+  @keyframes jelly {
+    0% { transform:skewX(0) scaleY(1); }
+    15% { transform:skewX(-8deg) scaleY(0.92); }
+    30% { transform:skewX(6deg) scaleY(1.06); }
+    45% { transform:skewX(-4deg) scaleY(0.96); }
+    60% { transform:skewX(2deg) scaleY(1.02); }
+    75% { transform:skewX(-1deg) scaleY(0.99); }
+    100% { transform:skewX(0) scaleY(1); }
+  }
+
+  .anim-rubberband svg { animation:rubberband 700ms cubic-bezier(.68,-.55,.27,1.55) infinite; }
+  @keyframes rubberband {
+    0% { transform:scaleX(1) scaleY(1); }
+    30% { transform:scaleX(1.2) scaleY(0.85); }
+    50% { transform:scaleX(0.9) scaleY(1.1); }
+    70% { transform:scaleX(1.05) scaleY(0.95); }
+    100% { transform:scaleX(1) scaleY(1); }
+  }
+
+  .anim-heartbeat svg { animation:heartbeat 900ms ease-in-out infinite; }
+  @keyframes heartbeat {
+    0% { transform:scale(1); }
+    14% { transform:scale(1.18); }
+    28% { transform:scale(1); }
+    42% { transform:scale(1.12); }
+    56% { transform:scale(1); }
+    100% { transform:scale(1); }
+  }
+
+  .anim-ring svg { animation:ring 800ms ease-out infinite; transform-origin:top center; }
+  @keyframes ring {
+    0% { transform:rotate(0); }
+    10% { transform:rotate(18deg); }
+    20% { transform:rotate(-15deg); }
+    30% { transform:rotate(12deg); }
+    40% { transform:rotate(-9deg); }
+    50% { transform:rotate(5deg); }
+    60% { transform:rotate(-2deg); }
+    70% { transform:rotate(0); }
+    100% { transform:rotate(0); }
+  }
+
+  .anim-wobble svg { animation:wobble 900ms ease-in-out infinite; }
+  @keyframes wobble {
+    0% { transform:rotate(0) translateX(0); }
+    15% { transform:rotate(-6deg) translateX(-3px); }
+    30% { transform:rotate(5deg) translateX(2px); }
+    45% { transform:rotate(-3deg) translateX(-1px); }
+    60% { transform:rotate(2deg) translateX(1px); }
+    75% { transform:rotate(-1deg); }
+    100% { transform:rotate(0) translateX(0); }
+  }
+
+  .anim-magnetic svg { animation:magnetic 1s cubic-bezier(.25,.46,.45,.94) infinite; }
+  @keyframes magnetic {
+    0% { transform:translate(0,0) scale(1); }
+    30% { transform:translate(3px,-3px) scale(1.08); }
+    50% { transform:translate(4px,-4px) scale(1.12); }
+    70% { transform:translate(1px,-1px) scale(1.03); }
+    100% { transform:translate(0,0) scale(1); }
+  }
+
+  .anim-recoil svg { animation:recoil 700ms ease-out infinite; }
+  @keyframes recoil {
+    0% { transform:scale(1) rotate(0); }
+    15% { transform:scale(0.85) rotate(-3deg); }
+    40% { transform:scale(1.2) rotate(2deg); }
+    60% { transform:scale(0.97) rotate(-1deg); }
+    80% { transform:scale(1.03); }
+    100% { transform:scale(1) rotate(0); }
+  }
+
+  .anim-pendulum svg { animation:pendulum 1.2s ease-in-out infinite; transform-origin:top center; }
+  @keyframes pendulum {
+    0% { transform:rotate(0); }
+    25% { transform:rotate(20deg); }
+    50% { transform:rotate(0); }
+    75% { transform:rotate(-20deg); }
+    100% { transform:rotate(0); }
+  }
+
+  .anim-whiplash svg { animation:whiplash 600ms cubic-bezier(.68,-.55,.27,1.55) infinite; }
+  @keyframes whiplash {
+    0% { transform:rotate(0) skewX(0); }
+    20% { transform:rotate(-12deg) skewX(8deg); }
+    40% { transform:rotate(8deg) skewX(-5deg); }
+    60% { transform:rotate(-4deg) skewX(3deg); }
+    80% { transform:rotate(2deg) skewX(-1deg); }
+    100% { transform:rotate(0) skewX(0); }
+  }
+
+  .anim-tremor svg { animation:tremor 500ms linear infinite; }
+  @keyframes tremor {
+    0% { transform:translate(0,0); }
+    10% { transform:translate(-2px,1px); }
+    20% { transform:translate(1px,-2px); }
+    30% { transform:translate(-1px,0); }
+    40% { transform:translate(2px,1px); }
+    50% { transform:translate(-1px,-1px); }
+    60% { transform:translate(0,2px); }
+    70% { transform:translate(1px,-1px); }
+    80% { transform:translate(-2px,0); }
+    90% { transform:translate(1px,1px); }
+    100% { transform:translate(0,0); }
+  }
+
+  .anim-neonglow svg { animation:neonglow 1.5s ease-in-out infinite; }
+  @keyframes neonglow {
+    0% { filter:drop-shadow(0 0 1px var(--cyan)); }
+    50% { filter:drop-shadow(0 0 8px var(--cyan)) drop-shadow(0 0 16px var(--cyan)); }
+    100% { filter:drop-shadow(0 0 1px var(--cyan)); }
+  }
+
+  .anim-breathe svg { animation:breathe 3s ease-in-out infinite; }
+  @keyframes breathe {
+    0%,100% { transform:scale(1); opacity:1; }
+    50% { transform:scale(1.06); opacity:0.85; }
+  }
+
+  .anim-metronome svg { animation:metronome 1s ease-in-out infinite; transform-origin:bottom center; }
+  @keyframes metronome {
+    0%,100% { transform:rotate(0); }
+    25% { transform:rotate(15deg); }
+    75% { transform:rotate(-15deg); }
+  }
+
+  /* ═══════ ENTRANCE ANIMATIONS ═══════ */
+  .anim-springland svg { animation:springland 800ms cubic-bezier(.68,-.55,.27,1.55) infinite; }
+  @keyframes springland {
+    0% { transform:translateY(-20px) scale(0.8); opacity:0; }
+    50% { transform:translateY(3px) scale(1.05); opacity:1; }
+    70% { transform:translateY(-2px) scale(0.98); opacity:1; }
+    100% { transform:translateY(0) scale(1); opacity:1; }
+  }
+
+  .anim-slingshot svg { animation:slingshot 900ms cubic-bezier(.175,.885,.32,1.275) infinite; }
+  @keyframes slingshot {
+    0% { transform:translateX(-30px) scaleX(0.7); opacity:0; }
+    40% { transform:translateX(5px) scaleX(1.1); opacity:1; }
+    60% { transform:translateX(-2px) scaleX(0.98); }
+    100% { transform:translateX(0) scaleX(1); opacity:1; }
+  }
+
+  .anim-glitchon svg { animation:glitchon 600ms step-end infinite; }
+  @keyframes glitchon {
+    0% { transform:translate(0) skewX(0); opacity:0; }
+    15% { transform:translate(-3px,2px) skewX(-5deg); opacity:0.6; }
+    30% { transform:translate(2px,-1px) skewX(3deg); opacity:0.3; }
+    45% { transform:translate(-1px,0) skewX(-2deg); opacity:0.8; }
+    60% { transform:translate(1px,1px) skewX(1deg); opacity:0.5; }
+    75% { transform:translate(0) skewX(0); opacity:0.9; }
+    100% { transform:translate(0) skewX(0); opacity:1; }
+  }
+
+  .anim-unfold svg { animation:unfold 800ms ease-out infinite; transform-origin:bottom center; }
+  @keyframes unfold {
+    0% { transform:scaleY(0) rotateX(40deg); opacity:0; }
+    60% { transform:scaleY(1.05) rotateX(-3deg); opacity:1; }
+    80% { transform:scaleY(0.98) rotateX(1deg); }
+    100% { transform:scaleY(1) rotateX(0); opacity:1; }
+  }
+
+  .anim-warp svg { animation:warp 700ms ease-out infinite; }
+  @keyframes warp {
+    0% { transform:scale(3) rotate(15deg); opacity:0; filter:blur(4px); }
+    60% { transform:scale(0.95) rotate(-2deg); opacity:1; filter:blur(0); }
+    80% { transform:scale(1.03) rotate(1deg); }
+    100% { transform:scale(1) rotate(0); opacity:1; filter:blur(0); }
+  }
+
+  .anim-telegram svg { animation:telegram 800ms ease-out infinite; }
+  @keyframes telegram {
+    0% { transform:translateX(-30px) translateY(15px) rotate(-25deg); opacity:0; }
+    50% { transform:translateX(3px) translateY(-2px) rotate(3deg); opacity:1; }
+    70% { transform:translateX(-1px) translateY(1px) rotate(-1deg); }
+    100% { transform:translateX(0) translateY(0) rotate(0); opacity:1; }
+  }
+
+  .anim-bloom svg { animation:bloom 1s ease-out infinite; }
+  @keyframes bloom {
+    0% { transform:scale(0) rotate(-90deg); opacity:0; }
+    50% { transform:scale(1.1) rotate(10deg); opacity:1; }
+    70% { transform:scale(0.95) rotate(-3deg); }
+    100% { transform:scale(1) rotate(0); opacity:1; }
+  }
+
+  .anim-shockwave svg { animation:shockwave 700ms ease-out infinite; }
+  @keyframes shockwave {
+    0% { transform:scale(0.3); opacity:0; }
+    30% { transform:scale(1.25); opacity:1; }
+    50% { transform:scale(0.92); }
+    70% { transform:scale(1.05); }
+    100% { transform:scale(1); opacity:1; }
+  }
+
+  /* ═══════ EXIT ANIMATIONS ═══════ */
+  .anim-vortex svg { animation:vortex 900ms ease-in infinite; }
+  @keyframes vortex {
+    0% { transform:scale(1) rotate(0); opacity:1; }
+    100% { transform:scale(0) rotate(540deg); opacity:0; }
+  }
+
+  .anim-glitchoff svg { animation:glitchoff 600ms step-end infinite; }
+  @keyframes glitchoff {
+    0% { transform:translate(0) skewX(0); opacity:1; }
+    20% { transform:translate(2px,-1px) skewX(3deg); opacity:0.8; }
+    40% { transform:translate(-3px,2px) skewX(-5deg); opacity:0.5; }
+    60% { transform:translate(1px,-2px) skewX(2deg); opacity:0.3; }
+    80% { transform:translate(-1px,1px) skewX(-1deg); opacity:0.15; }
+    100% { transform:translate(0) skewX(0); opacity:0; }
+  }
+
+  .anim-dissolve svg { animation:dissolve 1s ease-in infinite; }
+  @keyframes dissolve {
+    0% { transform:scale(1); opacity:1; filter:blur(0); }
+    100% { transform:scale(1.3); opacity:0; filter:blur(6px); }
+  }
+
+  .anim-sink svg { animation:sink 800ms ease-in infinite; }
+  @keyframes sink {
+    0% { transform:translateY(0) scale(1); opacity:1; }
+    60% { transform:translateY(4px) scale(0.9); opacity:0.7; }
+    100% { transform:translateY(15px) scale(0.6); opacity:0; }
+  }
+
+  .anim-implode svg { animation:implode 600ms cubic-bezier(.55,.06,.68,.19) infinite; }
+  @keyframes implode {
+    0% { transform:scale(1) rotate(0); opacity:1; }
+    40% { transform:scale(1.1) rotate(-5deg); opacity:1; }
+    100% { transform:scale(0) rotate(15deg); opacity:0; }
+  }
+
+  .anim-puffout svg { animation:puffout 700ms ease-out infinite; }
+  @keyframes puffout {
+    0% { transform:scale(1); opacity:1; filter:blur(0); }
+    50% { transform:scale(1.15); opacity:0.6; filter:blur(2px); }
+    100% { transform:scale(1.5); opacity:0; filter:blur(8px); }
+  }
+
+  /* Inline SVG definitions */
+  .svg-send { }
+  .svg-bell { }
+  .svg-heart { }
+  .svg-star { }
+  .svg-bolt { }
+  .svg-gear { }
+</style>
+</head>
+<body>
+
+<h1><span>NextGen</span> Animation Showcase</h1>
+<p class="subtitle">Live demos of unique, physics-inspired animations derived from the NextGen CSS Animation concepts. Hover each card to preview. Each animation uses multi-phase motion: force, reaction, micro-settle.</p>
+
+<!-- ═══ MOTION: Looping Attention Seekers ═══ -->
+<div class="section-title"><span class="dot" style="background:var(--yellow)"></span> Motion (Looping Attention)</div>
+<div class="grid">
+
+  <div class="card anim-jelly">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></div>
+    <div class="name">Jelly</div>
+    <div class="origin">Fluid Dynamics</div>
+    <div class="desc">Gelatin wobble. SkewX + scaleY alternate with viscous damping. Feels like soft matter.</div>
+  </div>
+
+  <div class="card anim-rubberband">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></div>
+    <div class="name">Rubber Band</div>
+    <div class="origin">Elastic Physics</div>
+    <div class="desc">Horizontal stretch with elastic snapback. ScaleX overshoots then oscillates to rest.</div>
+  </div>
+
+  <div class="card anim-heartbeat">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+    <div class="name">Heartbeat</div>
+    <div class="origin">Biological Pulse</div>
+    <div class="desc">Double-thump cardiac rhythm. Two quick scale beats then rest. Feels alive.</div>
+  </div>
+
+  <div class="card anim-ring">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <div class="name">Ring</div>
+    <div class="origin">Pendulum Physics</div>
+    <div class="desc">Bell swing from top pivot. Decreasing amplitude with damped oscillation.</div>
+  </div>
+
+  <div class="card anim-wobble">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+    <div class="name">Wobble</div>
+    <div class="origin">Tectonic / Off-balance</div>
+    <div class="desc">Asymmetric rocking. Rotate + translateX with different amplitudes. Feels unstable.</div>
+  </div>
+
+  <div class="card anim-magnetic">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    <div class="name">Magnetic Pull</div>
+    <div class="origin">Electromagnetic Force</div>
+    <div class="desc">Translate + scale toward invisible pole with spring easing. Snaps back with decay.</div>
+  </div>
+
+  <div class="card anim-recoil">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div class="name">Recoil</div>
+    <div class="origin">Kinetic Physics</div>
+    <div class="desc">Anticipatory contraction (shrink) then explosive expansion. Muscle-like force release.</div>
+  </div>
+
+  <div class="card anim-pendulum">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
+    <div class="name">Pendulum</div>
+    <div class="origin">Gravity / Damping</div>
+    <div class="desc">Swings from top pivot with smooth sinusoidal motion. Clock-like precision.</div>
+  </div>
+
+  <div class="card anim-whiplash">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1"/><line x1="2" y1="2" x2="22" y2="22" opacity="0"/></svg></div>
+    <div class="name">Whiplash</div>
+    <div class="origin">Elastic Skeletal</div>
+    <div class="desc">Rotate + skew with cascading spring. Top leads, bottom follows. Snapping motion.</div>
+  </div>
+
+  <div class="card anim-tremor">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <div class="name">Tremor</div>
+    <div class="origin">Seismic / Tectonic</div>
+    <div class="desc">Asymmetric 2D jitter. Random-feeling translate pattern. Earthquake micro-vibration.</div>
+  </div>
+
+  <div class="card anim-neonglow">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="name">Neon Glow</div>
+    <div class="origin">Plasma / Electric</div>
+    <div class="desc">Pulsing drop-shadow with cyan glow intensity cycling. Charged energy aura.</div>
+  </div>
+
+  <div class="card anim-breathe">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div class="name">Breathe</div>
+    <div class="origin">Biological / Ambient</div>
+    <div class="desc">Ultra-slow 3s scale + opacity cycle. Zen ambient rhythm. Calm, living presence.</div>
+  </div>
+
+  <div class="card anim-metronome">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></div>
+    <div class="name">Metronome</div>
+    <div class="origin">Pendulum / Rhythm</div>
+    <div class="desc">Steady left-right tilt from bottom pivot. Musical timing. Even, predictable rhythm.</div>
+  </div>
+
+</div>
+
+<!-- ═══ ENTRANCES ═══ -->
+<div class="section-title"><span class="dot" style="background:var(--green)"></span> Entrances (One-shot Intros)</div>
+<div class="grid">
+
+  <div class="card anim-springland">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+    <div class="name">Spring Land</div>
+    <div class="origin">Hooke's Law</div>
+    <div class="desc">Falls in with spring overshoot and bounce settle. Weighted landing.</div>
+  </div>
+
+  <div class="card anim-slingshot">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></div>
+    <div class="name">Slingshot</div>
+    <div class="origin">Elastic Launch</div>
+    <div class="desc">Pulls back horizontally then launches forward. ScaleX stretch on release.</div>
+  </div>
+
+  <div class="card anim-glitchon">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+    <div class="name">Glitch On</div>
+    <div class="origin">Digital Artifact</div>
+    <div class="desc">Corrupted entrance. Skew + translate + opacity flicker with step-end timing.</div>
+  </div>
+
+  <div class="card anim-unfold">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <div class="name">Unfold</div>
+    <div class="origin">Origami / Paper</div>
+    <div class="desc">ScaleY from 0 with slight rotateX. Opens from bottom like unfolding paper.</div>
+  </div>
+
+  <div class="card anim-warp">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+    <div class="name">Warp In</div>
+    <div class="origin">Gravitational Lens</div>
+    <div class="desc">Scale from 3x with rotation and blur. Decelerates into focus. Space-time arrival.</div>
+  </div>
+
+  <div class="card anim-telegram">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></div>
+    <div class="name">Telegram</div>
+    <div class="origin">Projectile Physics</div>
+    <div class="desc">Diagonal arc entry (translateX+Y) with rotation. Paper airplane trajectory.</div>
+  </div>
+
+  <div class="card anim-bloom">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10z"/><path d="M12 8v8M8 12h8"/></svg></div>
+    <div class="name">Bloom</div>
+    <div class="origin">Crystalline Growth</div>
+    <div class="desc">Scale from 0 + counter-rotation. Like petals opening or crystal forming.</div>
+  </div>
+
+  <div class="card anim-shockwave">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="name">Shockwave</div>
+    <div class="origin">Pressure Wave</div>
+    <div class="desc">Rapid scale expansion then oscillating contraction. Impact energy ripple.</div>
+  </div>
+
+</div>
+
+<!-- ═══ EXITS ═══ -->
+<div class="section-title"><span class="dot" style="background:var(--red)"></span> Exits (One-shot Outros)</div>
+<div class="grid">
+
+  <div class="card anim-vortex">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+    <div class="name">Vortex</div>
+    <div class="origin">Fluid / Tornado</div>
+    <div class="desc">Scale to 0 with 540-degree rotation. Spiraling drain. Fast and decisive.</div>
+  </div>
+
+  <div class="card anim-glitchoff">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+    <div class="name">Glitch Off</div>
+    <div class="origin">Digital Artifact</div>
+    <div class="desc">Inverse of Glitch On. Corruption intensifies as opacity drops to 0.</div>
+  </div>
+
+  <div class="card anim-dissolve">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+    <div class="name">Dissolve</div>
+    <div class="origin">Ink Bleed</div>
+    <div class="desc">Scale expansion + blur increase + opacity fade. Ink spreading into nothing.</div>
+  </div>
+
+  <div class="card anim-sink">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+    <div class="name">Sink</div>
+    <div class="origin">Gravity Well</div>
+    <div class="desc">Sinks downward while shrinking. Heavy mass pulled by gravity. Ease-in acceleration.</div>
+  </div>
+
+  <div class="card anim-implode">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10z"/></svg></div>
+    <div class="name">Implode</div>
+    <div class="origin">Pressure Collapse</div>
+    <div class="desc">Brief expansion then rapid crush to 0. Anticipation before violent collapse.</div>
+  </div>
+
+  <div class="card anim-puffout">
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+    <div class="name">Puff Out</div>
+    <div class="origin">Atmospheric / Smoke</div>
+    <div class="desc">Gentle scale up + progressive blur + opacity fade. Evaporates like smoke.</div>
+  </div>
+
+</div>
+
+<div style="text-align:center;padding:40px 0 20px;color:var(--dim);font-size:0.65rem;">
+  Total: 13 Motion + 8 Entrances + 6 Exits = <b style="color:var(--orange)">27 new animations</b> (+ 10 existing = 37 total)
+</div>
+
+</body>
+</html>

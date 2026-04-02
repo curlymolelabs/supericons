@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A cute spiral notebook with binding holes along the left edge -->
+  
+      <!-- Notebook body -->
+      <rect x="64" y="32" width="164" height="192" rx="16" />
+      <!-- Spiral binding dots (left edge) -->
+      <circle cx="64" cy="64" r="10" fill="var(--hole, #fff)" />
+      <circle cx="64" cy="96" r="10" fill="var(--hole, #fff)" />
+      <circle cx="64" cy="128" r="10" fill="var(--hole, #fff)" />
+      <circle cx="64" cy="160" r="10" fill="var(--hole, #fff)" />
+      <circle cx="64" cy="192" r="10" fill="var(--hole, #fff)" />
+      <!-- Lines -->
+      <rect x="96" y="72" width="100" height="6" rx="3" fill="var(--hole, #fff)" opacity="0.5" />
+      <rect x="96" y="100" width="80" height="6" rx="3" fill="var(--hole, #fff)" opacity="0.4" />
+      <rect x="96" y="128" width="100" height="6" rx="3" fill="var(--hole, #fff)" opacity="0.5" />
+      <rect x="96" y="156" width="64" height="6" rx="3" fill="var(--hole, #fff)" opacity="0.4" />
+      <!-- Bookmark ribbon peaking from bottom -->
+      <path d="M180 224 L180 204 L192 212 L204 204 L204 224" fill="var(--hole, #fff)" opacity="0.6" />
+    
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg-embedding" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9A8D4"/>
+      <stop offset="1" stop-color="#BE185D"/>
+    </linearGradient>
+    <linearGradient id="shine-embedding" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="squircle-embedding">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg-embedding)"/>
+
+  <!-- Glass highlight -->
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine-embedding)" clip-path="url(#squircle-embedding)"/>
+
+  <!-- Inner shadow (subtle) -->
+  <rect x="4" y="58" width="112" height="58" rx="4" fill="rgba(0,0,0,0.08)" clip-path="url(#squircle-embedding)"/>
+
+  <!-- Icon shape (centered, scaled, white) -->
+  <g transform="translate(30, 30) scale(2.5)" fill="#fff" fill-opacity="0.95">
+    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm.75 2.532a7.501 7.501 0 016.718 6.718H17a.75.75 0 000 1.5h2.468a7.501 7.501 0 01-6.718 6.718V17a.75.75 0 00-1.5 0v2.468A7.501 7.501 0 014.532 12.75H7a.75.75 0 000-1.5H4.532a7.501 7.501 0 016.718-6.718V7a.75.75 0 001.5 0V4.532zM12 10a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"/>
+  </g>
+</svg>

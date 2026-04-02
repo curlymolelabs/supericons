@@ -1,0 +1,1106 @@
+/* Social & Communication Collection: CSS-only hover animations
+   Each animation designed via Socratic method:
+   1. What real-world thing? 2. What motion? 3. Which elements? 4. Same at rest? */
+
+.si-anim svg { overflow: visible; }
+
+/* ===================================================================
+   1. MESSAGE-CIRCLE: A chat bubble. New message arrives.
+   Motion: bubble scales up with a pop, like a notification appearing.
+   Elements: whole bubble. Single shape, unified motion.
+   =================================================================== */
+.si-icon-cell:hover .mbt6e2 .sc-bubble,
+.icon-card:hover .mbt6e2 .sc-bubble {
+  animation: agcrgo 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 12px 18px;
+}
+.si-icon-cell:hover .mbt6e2 svg,
+.icon-card:hover .mbt6e2 svg {
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* ===================================================================
+   2. HEART: A beating organ. Double-pump rhythm.
+   Motion: two quick scale pulses mimicking systole/diastole.
+   Elements: whole heart. Biological unity.
+   =================================================================== */
+.si-icon-cell:hover .vwu29v .sc-heart,
+.icon-card:hover .vwu29v .sc-heart {
+  animation: uftwta 0.65s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .vwu29v svg,
+.icon-card:hover .vwu29v svg {
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
+}
+
+/* ===================================================================
+   3. SHARE: A network broadcast. Signal radiates outward.
+   Motion: nodes pulse OUTWARD staggered (broadcast ripple), links stay.
+   Elements: 3 circles individually (staggered), lines static.
+   =================================================================== */
+.si-icon-cell:hover .ygzoc0 .sc-node-1,
+.icon-card:hover .ygzoc0 .sc-node-1 {
+  animation: pco6sh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 18px 5px;
+}
+.si-icon-cell:hover .ygzoc0 .sc-node-2,
+.icon-card:hover .ygzoc0 .sc-node-2 {
+  animation: pco6sh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s forwards;
+  transform-origin: 6px 12px;
+}
+.si-icon-cell:hover .ygzoc0 .sc-node-3,
+.icon-card:hover .ygzoc0 .sc-node-3 {
+  animation: pco6sh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.16s forwards;
+  transform-origin: 18px 19px;
+}
+.si-icon-cell:hover .ygzoc0 svg,
+.icon-card:hover .ygzoc0 svg {
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* ===================================================================
+   4. USERS: A group of people greeting. Second person arrives.
+   Motion: primary head nods, secondary user slides in from right.
+   Elements: head (nod), user-2/3 (slide in).
+   =================================================================== */
+.si-icon-cell:hover .aqh89i .sc-head,
+.icon-card:hover .aqh89i .sc-head {
+  animation: s3dt66 0.5s ease forwards;
+  transform-origin: 9px 7px;
+}
+.si-icon-cell:hover .aqh89i .sc-user-2,
+.icon-card:hover .aqh89i .sc-user-2 {
+  animation: wfbqfr 0.5s ease 0.1s forwards;
+}
+.si-icon-cell:hover .aqh89i .sc-user-3,
+.icon-card:hover .aqh89i .sc-user-3 {
+  animation: wfbqfr 0.5s ease 0.15s forwards;
+}
+.si-icon-cell:hover .aqh89i svg,
+.icon-card:hover .aqh89i svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.2));
+}
+
+/* ===================================================================
+   5. PHONE: A ringing telephone. Vibrating on a surface.
+   Motion: rapid oscillating rotation (ring vibration pattern).
+   Elements: whole phone. Physical vibration is unified.
+   =================================================================== */
+.si-icon-cell:hover .xgitsv svg,
+.icon-card:hover .xgitsv svg {
+  animation: fksezv 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.3));
+}
+
+/* ===================================================================
+   6. MAIL: An envelope being opened. Flap lifts up.
+   Motion: the V-shaped flap rotates upward (opens), envelope stays.
+   Elements: flap (rotates), envelope body (static).
+   =================================================================== */
+.si-icon-cell:hover .awoobl .sc-flap,
+.icon-card:hover .awoobl .sc-flap {
+  animation: t5rxtz 0.5s ease forwards;
+  transform-origin: 12px 7px;
+}
+.si-icon-cell:hover .awoobl svg,
+.icon-card:hover .awoobl svg {
+  filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.25));
+}
+
+/* ===================================================================
+   7. SEND: Paper plane being thrown. Launches diagonally.
+   Motion: whole plane shoots up-right then returns (throw arc).
+   Elements: whole SVG. Plane is one unified projectile.
+   =================================================================== */
+.si-icon-cell:hover .ezf012 svg,
+.icon-card:hover .ezf012 svg {
+  animation: jt8cpc 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* ===================================================================
+   8. AT-SIGN: An @ mention. Drawing attention.
+   Motion: inner circle spins 360, outer ring stays (focus on the @).
+   Elements: inner circle (spin), outer path (static).
+   =================================================================== */
+.si-icon-cell:hover .qm85pi .sc-at-outer,
+.icon-card:hover .qm85pi .sc-at-outer {
+  animation: vyv0z4 0.5s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .qm85pi .sc-at-inner,
+.icon-card:hover .qm85pi .sc-at-inner {
+  animation: pco6sh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .qm85pi svg,
+.icon-card:hover .qm85pi svg {
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+/* ===================================================================
+   9. THUMBS-UP: Raising your thumb in approval.
+   Motion: whole hand tilts backward (raising gesture) then settles.
+   Elements: whole SVG. Hand + divider are one physical unit.
+   =================================================================== */
+.si-icon-cell:hover .x8bpi8 svg,
+.icon-card:hover .x8bpi8 svg {
+  animation: n841jb 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   10. BOOKMARK: Placing a ribbon bookmark into a book.
+   Motion: flag slides down (drops into page) then bounces up slightly.
+   Elements: whole SVG. Single flag shape.
+   =================================================================== */
+.si-icon-cell:hover .rnt2va svg,
+.icon-card:hover .rnt2va svg {
+  animation: jvsrq6 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.25));
+}
+
+/* ===================================================================
+   11. SMILE: A happy face reacting. Eyes squint, face wiggles.
+   Motion: face tilts side to side (joy wiggle), mouth scales wider.
+   Elements: face (tilt), mouth (scale wider).
+   =================================================================== */
+.si-icon-cell:hover .vcmv3k .sc-face,
+.icon-card:hover .vcmv3k .sc-face {
+  animation: popifi 0.6s ease forwards;
+  transform-origin: center;
+}
+.si-icon-cell:hover .vcmv3k .sc-mouth,
+.icon-card:hover .vcmv3k .sc-mouth {
+  animation: q3av6u 0.5s ease 0.1s forwards;
+  transform-origin: 12px 14px;
+}
+.si-icon-cell:hover .vcmv3k svg,
+.icon-card:hover .vcmv3k svg {
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.25));
+}
+
+/* ===================================================================
+   12. REPLY: Sending a message back. Arrow curves backwards.
+   Motion: whole icon slides left (going back direction) with bounce.
+   Elements: whole SVG. Arrow and curve are one gesture.
+   =================================================================== */
+.si-icon-cell:hover .rtix6c svg,
+.icon-card:hover .rtix6c svg {
+  animation: wzevne 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   13. FORWARD: Passing a message on. Arrow curves forward.
+   Motion: whole icon slides right (forward direction) with bounce.
+   Elements: whole SVG. Arrow and curve are one gesture.
+   =================================================================== */
+.si-icon-cell:hover .d2kv7j svg,
+.icon-card:hover .d2kv7j svg {
+  animation: ae14xh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   14. VIDEO: A camera starting to record. Lens focuses.
+   Motion: lens (triangle) pulses like REC indicator, body stays still.
+   Elements: lens (pulse), body (static).
+   =================================================================== */
+.si-icon-cell:hover .mnem8c .sc-lens,
+.icon-card:hover .mnem8c .sc-lens {
+  animation: vv3zvz 0.6s ease forwards;
+  transform-origin: 19px 12px;
+}
+.si-icon-cell:hover .mnem8c svg,
+.icon-card:hover .mnem8c svg {
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
+}
+
+/* ===================================================================
+   15. MIC: Microphone picking up audio. Capsule vibrates with sound.
+   Motion: capsule vibrates vertically (sound), wave arc pulses.
+   Elements: capsule (vibrate), wave path (opacity pulse).
+   =================================================================== */
+.si-icon-cell:hover .h87r6w .sc-capsule,
+.icon-card:hover .h87r6w .sc-capsule {
+  animation: gzpc46 0.5s ease forwards;
+  transform-origin: 12px 8px;
+}
+.si-icon-cell:hover .h87r6w .sc-wave,
+.icon-card:hover .h87r6w .sc-wave {
+  animation: dmfp5a 0.5s ease 0.1s forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .h87r6w svg,
+.icon-card:hover .h87r6w svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   16. BELL-RING: Notification bell ringing. Pendulum swing.
+   Motion: bell swings like a pendulum from top, waves pulse outward.
+   Elements: bell body (pendulum swing), wave lines (opacity pulse).
+   =================================================================== */
+.si-icon-cell:hover .p0j8ft .sc-bell,
+.icon-card:hover .p0j8ft .sc-bell {
+  animation: o9wofv 0.6s ease forwards;
+  transform-origin: 12px 2px;
+}
+.si-icon-cell:hover .p0j8ft .sc-wave,
+.icon-card:hover .p0j8ft .sc-wave {
+  animation: dmfp5a 0.4s ease 0.15s forwards;
+}
+.si-icon-cell:hover .p0j8ft svg,
+.icon-card:hover .p0j8ft svg {
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, 0.25));
+}
+
+/* ===================================================================
+   17. LINK: Chain links. Testing the connection.
+   Motion: two halves tug in opposite diagonal directions then snap.
+   Elements: chain-1 (up-right), chain-2 (down-left). Opposing pull.
+   =================================================================== */
+.si-icon-cell:hover .t6943d .sc-chain-1,
+.icon-card:hover .t6943d .sc-chain-1 {
+  animation: e9j93c 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .t6943d .sc-chain-2,
+.icon-card:hover .t6943d .sc-chain-2 {
+  animation: fkhkaj 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .t6943d svg,
+.icon-card:hover .t6943d svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   18. MEGAPHONE: Shouting an announcement. Amplified vibration.
+   Motion: horn shakes with increasing amplitude (building volume).
+   Elements: horn (shake), handle stays. Sound direction: rightward.
+   =================================================================== */
+.si-icon-cell:hover .gu2ji5 .sc-horn,
+.icon-card:hover .gu2ji5 .sc-horn {
+  animation: aezi1j 0.5s ease forwards;
+  transform-origin: 5px 10px;
+}
+.si-icon-cell:hover .gu2ji5 svg,
+.icon-card:hover .gu2ji5 svg {
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* ===================================================================
+   19. USER-PLUS: Adding a new friend. Plus icon pops in.
+   Motion: plus lines scale up from center (appear), user body stays.
+   Elements: plus lines (pop scale), user silhouette (static).
+   =================================================================== */
+.si-icon-cell:hover .dewisd .sc-plus,
+.icon-card:hover .dewisd .sc-plus {
+  animation: i9x7mz 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 19px 11px;
+}
+.si-icon-cell:hover .dewisd svg,
+.icon-card:hover .dewisd svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   20. CONTACT-ROUND: Opening a contact card. Card tilts up to read.
+   Motion: card rotates slightly (picked up to read), avatar pulses.
+   Elements: card (tilt), avatar circle (pulse).
+   =================================================================== */
+.si-icon-cell:hover .r6au04 .sc-card,
+.icon-card:hover .r6au04 .sc-card {
+  animation: an2jl0 0.5s ease forwards;
+  transform-origin: 12px 22px;
+}
+.si-icon-cell:hover .r6au04 .sc-avatar,
+.icon-card:hover .r6au04 .sc-avatar {
+  animation: pco6sh 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .r6au04 svg,
+.icon-card:hover .r6au04 svg {
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* ===================== KEYFRAMES ===================== */
+/* Every keyframe is purpose-built. No generic reuse where stories differ. */
+
+/* Message arrive: chat bubble drops in and wobbles like a notification */
+@keyframes agcrgo {
+  0%   { transform: translateY(-6px) rotate(-8deg); }
+  35%  { transform: translateY(2px) rotate(4deg); }
+  55%  { transform: translateY(-1px) rotate(-2deg); }
+  75%  { transform: translateY(0.5px) rotate(1deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Heartbeat: two-pump cardiac rhythm with organic twist */
+@keyframes uftwta {
+  0%   { transform: scale(1) rotate(0deg); }
+  14%  { transform: scale(1.28) rotate(-4deg); }
+  28%  { transform: scale(0.95) rotate(2deg); }
+  42%  { transform: scale(1.2) rotate(-2deg); }
+  56%  { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Node pop: individual network node expanding */
+@keyframes pco6sh {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.45); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* Head nod: person tilting head forward */
+@keyframes s3dt66 {
+  0%   { transform: translateY(0) scale(1); }
+  30%  { transform: translateY(-2px) scale(1.06); }
+  60%  { transform: translateY(1px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Arrive: second person sliding in from right */
+@keyframes wfbqfr {
+  0%   { transform: translateX(3px); opacity: 0.5; }
+  50%  { transform: translateX(-1px); opacity: 1; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Ring vibrate: phone buzzing rapidly */
+@keyframes fksezv {
+  0%   { transform: rotate(0deg) translateX(0); }
+  8%   { transform: rotate(10deg) translateX(1px); }
+  16%  { transform: rotate(-8deg) translateX(-1px); }
+  24%  { transform: rotate(10deg) translateX(1px); }
+  32%  { transform: rotate(-8deg) translateX(-1px); }
+  40%  { transform: rotate(6deg); }
+  50%  { transform: rotate(-4deg); }
+  60%  { transform: rotate(2deg); }
+  70%  { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg) translateX(0); }
+}
+
+/* Flap open: envelope V lifts up and settles */
+@keyframes t5rxtz {
+  0%   { transform: rotateX(0deg); }
+  45%  { transform: rotateX(-40deg); }
+  70%  { transform: rotateX(5deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+/* Launch: projectile arc (up-right then return) */
+@keyframes jt8cpc {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  35%  { transform: translate(5px, -5px) rotate(-8deg); }
+  60%  { transform: translate(-1px, 1px) rotate(2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Mention ping: @ wiggle like someone tagging you */
+@keyframes vyv0z4 {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(8deg); }
+  30%  { transform: rotate(-6deg); }
+  45%  { transform: rotate(5deg); }
+  60%  { transform: rotate(-3deg); }
+  75%  { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Raise thumb: tilting hand backward in approval */
+@keyframes n841jb {
+  0%   { transform: rotate(0deg) translateY(0); }
+  35%  { transform: rotate(-12deg) translateY(-3px); }
+  60%  { transform: rotate(3deg) translateY(1px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* Bookmark place: ribbon dropping into page */
+@keyframes jvsrq6 {
+  0%   { transform: translateY(-4px) scaleY(0.92); }
+  45%  { transform: translateY(2px) scaleY(1.06); }
+  70%  { transform: translateY(-1px) scaleY(0.98); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+/* Joy tilt: happy face wiggling side to side */
+@keyframes popifi {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(6deg); }
+  30%  { transform: rotate(-5deg); }
+  45%  { transform: rotate(4deg); }
+  60%  { transform: rotate(-2deg); }
+  75%  { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Grin: mouth stretching wider */
+@keyframes q3av6u {
+  0%   { transform: scaleX(1) scaleY(1); }
+  40%  { transform: scaleX(1.25) scaleY(1.15); }
+  70%  { transform: scaleX(0.95) scaleY(0.95); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* Swipe left: reply gesture */
+@keyframes wzevne {
+  0%   { transform: translateX(0); }
+  35%  { transform: translateX(-5px); }
+  65%  { transform: translateX(1.5px); }
+  100% { transform: translateX(0); }
+}
+
+/* Swipe right: forward gesture */
+@keyframes ae14xh {
+  0%   { transform: translateX(0); }
+  35%  { transform: translateX(5px); }
+  65%  { transform: translateX(-1.5px); }
+  100% { transform: translateX(0); }
+}
+
+/* Rec blink: recording indicator double-pulse */
+@keyframes vv3zvz {
+  0%   { transform: scale(1); opacity: 1; }
+  20%  { transform: scale(1.3); opacity: 0.7; }
+  40%  { transform: scale(1); opacity: 1; }
+  60%  { transform: scale(1.2); opacity: 0.8; }
+  80%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Audio vibrate: mic capsule picking up sound */
+@keyframes gzpc46 {
+  0%   { transform: scaleY(1); }
+  12%  { transform: scaleY(1.08); }
+  24%  { transform: scaleY(0.94); }
+  36%  { transform: scaleY(1.1); }
+  48%  { transform: scaleY(0.96); }
+  60%  { transform: scaleY(1.06); }
+  72%  { transform: scaleY(0.98); }
+  100% { transform: scaleY(1); }
+}
+
+/* Wave spread: sound wave expanding */
+@keyframes dmfp5a {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.12); opacity: 0.6; }
+  70%  { transform: scale(1.03); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Pendulum: bell swinging from top mount */
+@keyframes o9wofv {
+  0%   { transform: rotate(0deg); }
+  12%  { transform: rotate(16deg); }
+  28%  { transform: rotate(-14deg); }
+  42%  { transform: rotate(10deg); }
+  56%  { transform: rotate(-7deg); }
+  70%  { transform: rotate(4deg); }
+  84%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Pull up-right: chain link testing tension */
+@keyframes e9j93c {
+  0%   { transform: translate(0, 0); }
+  35%  { transform: translate(2.5px, -2.5px); }
+  65%  { transform: translate(-0.5px, 0.5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Pull down-left: opposite chain link */
+@keyframes fkhkaj {
+  0%   { transform: translate(0, 0); }
+  35%  { transform: translate(-2.5px, 2.5px); }
+  65%  { transform: translate(0.5px, -0.5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Broadcast shake: megaphone amplifying sound */
+@keyframes aezi1j {
+  0%   { transform: rotate(0deg); }
+  10%  { transform: rotate(2deg); }
+  20%  { transform: rotate(-3deg); }
+  30%  { transform: rotate(5deg); }
+  40%  { transform: rotate(-6deg); }
+  50%  { transform: rotate(7deg); }
+  60%  { transform: rotate(-5deg); }
+  70%  { transform: rotate(3deg); }
+  80%  { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Plus pop: add friend icon appearing */
+@keyframes i9x7mz {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.5) rotate(90deg); }
+  60%  { transform: scale(0.85) rotate(0deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Card tilt: picking up a contact card to read */
+@keyframes an2jl0 {
+  0%   { transform: rotate(0deg) translateY(0); }
+  40%  { transform: rotate(-4deg) translateY(-2px); }
+  70%  { transform: rotate(1deg) translateY(0.5px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* ===================================================================
+   ICONS 21-50: HOVER RULES
+   =================================================================== */
+
+/* 21. MESSAGE-SQUARE: chat box wobbles like typing indicator */
+.si-icon-cell:hover .r8oqr5 .sc-box,
+.icon-card:hover .r8oqr5 .sc-box {
+  animation: agcrgo 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 12px 20px;
+}
+.si-icon-cell:hover .r8oqr5 svg,
+.icon-card:hover .r8oqr5 svg {
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* 22. INBOX: mail drops into the tray */
+.si-icon-cell:hover .c5p6s9 .sc-shelf,
+.icon-card:hover .c5p6s9 .sc-shelf {
+  animation: r8xn7q 0.5s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .c5p6s9 svg,
+.icon-card:hover .c5p6s9 svg {
+  filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.25));
+}
+
+/* 23. THUMBS-DOWN: whole hand tilts downward (disapproval) */
+.si-icon-cell:hover .trqyth svg,
+.icon-card:hover .trqyth svg {
+  animation: uitf5x 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 24. STAR: twinkle with rotation */
+.si-icon-cell:hover .dqlmd4 .sc-star,
+.icon-card:hover .dqlmd4 .sc-star {
+  animation: g6jm1t 0.6s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .dqlmd4 svg,
+.icon-card:hover .dqlmd4 svg {
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3));
+}
+
+/* 25. FLAG: flag flutters in wind */
+.si-icon-cell:hover .o3u2ao .sc-flag,
+.icon-card:hover .o3u2ao .sc-flag {
+  animation: osrt8f 0.6s ease forwards;
+  transform-origin: 4px 12px;
+}
+.si-icon-cell:hover .o3u2ao svg,
+.icon-card:hover .o3u2ao svg {
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 26. EYE: pupil shifts sideways (looking around) */
+.si-icon-cell:hover .p9jz9e .sc-pupil,
+.icon-card:hover .p9jz9e .sc-pupil {
+  animation: vu5163 0.6s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .p9jz9e .sc-lid,
+.icon-card:hover .p9jz9e .sc-lid {
+  animation: b08fkr 0.6s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .p9jz9e svg,
+.icon-card:hover .p9jz9e svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 27. GLOBE: rotates on vertical axis */
+.si-icon-cell:hover .kfrl05 .sc-meridian,
+.icon-card:hover .kfrl05 .sc-meridian {
+  animation: qqfwv0 0.7s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .kfrl05 svg,
+.icon-card:hover .kfrl05 svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 28. RSS: waves pulse outward staggered from dot */
+.si-icon-cell:hover .j015jx .sc-wave-1,
+.icon-card:hover .j015jx .sc-wave-1 {
+  animation: dmfp5a 0.4s ease forwards;
+}
+.si-icon-cell:hover .j015jx .sc-wave-2,
+.icon-card:hover .j015jx .sc-wave-2 {
+  animation: dmfp5a 0.4s ease 0.12s forwards;
+}
+.si-icon-cell:hover .j015jx .sc-dot,
+.icon-card:hover .j015jx .sc-dot {
+  animation: pco6sh 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 5px 19px;
+}
+.si-icon-cell:hover .j015jx svg,
+.icon-card:hover .j015jx svg {
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 29. WIFI: arcs cascade from top staggered */
+.si-icon-cell:hover .u8uipa .sc-arc-1,
+.icon-card:hover .u8uipa .sc-arc-1 {
+  animation: dmfp5a 0.4s ease forwards;
+}
+.si-icon-cell:hover .u8uipa .sc-arc-2,
+.icon-card:hover .u8uipa .sc-arc-2 {
+  animation: dmfp5a 0.4s ease 0.1s forwards;
+}
+.si-icon-cell:hover .u8uipa .sc-arc-3,
+.icon-card:hover .u8uipa .sc-arc-3 {
+  animation: dmfp5a 0.4s ease 0.2s forwards;
+}
+.si-icon-cell:hover .u8uipa svg,
+.icon-card:hover .u8uipa svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 30. UPLOAD: arrow and shaft shoot upward */
+.si-icon-cell:hover .zyudhg .sc-shaft,
+.icon-card:hover .zyudhg .sc-shaft,
+.si-icon-cell:hover .zyudhg .sc-arrow,
+.icon-card:hover .zyudhg .sc-arrow {
+  animation: whhwcd 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .zyudhg svg,
+.icon-card:hover .zyudhg svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 31. DOWNLOAD: arrow and shaft shoot downward */
+.si-icon-cell:hover .ykwcn6 .sc-shaft,
+.icon-card:hover .ykwcn6 .sc-shaft,
+.si-icon-cell:hover .ykwcn6 .sc-arrow,
+.icon-card:hover .ykwcn6 .sc-arrow {
+  animation: xt2h4h 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .ykwcn6 svg,
+.icon-card:hover .ykwcn6 svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 32. EXTERNAL-LINK: corner+diagonal launch out */
+.si-icon-cell:hover .urtwj5 .sc-corner,
+.icon-card:hover .urtwj5 .sc-corner,
+.si-icon-cell:hover .urtwj5 .sc-diagonal,
+.icon-card:hover .urtwj5 .sc-diagonal {
+  animation: jt8cpc 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .urtwj5 svg,
+.icon-card:hover .urtwj5 svg {
+  filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.25));
+}
+
+/* 33. USER: head nods hello */
+.si-icon-cell:hover .uukgl0 .sc-head,
+.icon-card:hover .uukgl0 .sc-head {
+  animation: s3dt66 0.5s ease forwards;
+  transform-origin: 12px 7px;
+}
+.si-icon-cell:hover .uukgl0 svg,
+.icon-card:hover .uukgl0 svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.2));
+}
+
+/* 34. USER-CHECK: checkmark sweeps in */
+.si-icon-cell:hover .tqwi6f .sc-check,
+.icon-card:hover .tqwi6f .sc-check {
+  animation: btmqdd 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 19px 12px;
+}
+.si-icon-cell:hover .tqwi6f svg,
+.icon-card:hover .tqwi6f svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 35. HEADPHONES: subtle head bob (listening to music) */
+.si-icon-cell:hover .a08yzz svg,
+.icon-card:hover .a08yzz svg {
+  animation: ur9g08 0.5s ease forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+/* 36. VOLUME-2: waves pulse outward staggered */
+.si-icon-cell:hover .hw4hzf .sc-wave-1,
+.icon-card:hover .hw4hzf .sc-wave-1 {
+  animation: dmfp5a 0.4s ease forwards;
+}
+.si-icon-cell:hover .hw4hzf .sc-wave-2,
+.icon-card:hover .hw4hzf .sc-wave-2 {
+  animation: dmfp5a 0.4s ease 0.12s forwards;
+}
+.si-icon-cell:hover .hw4hzf svg,
+.icon-card:hover .hw4hzf svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 37. PHONE-CALL: handset vibrates, waves pulse */
+.si-icon-cell:hover .cdy1m7 .sc-handset,
+.icon-card:hover .cdy1m7 .sc-handset {
+  animation: fksezv 0.5s ease forwards;
+  transform-origin: center;
+}
+.si-icon-cell:hover .cdy1m7 .sc-wave,
+.icon-card:hover .cdy1m7 .sc-wave {
+  animation: dmfp5a 0.4s ease 0.1s forwards;
+}
+.si-icon-cell:hover .cdy1m7 svg,
+.icon-card:hover .cdy1m7 svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.3));
+}
+
+/* 38. PHONE-INCOMING: arrow slides down-left (incoming) */
+.si-icon-cell:hover .fujnyn .sc-indicator,
+.icon-card:hover .fujnyn .sc-indicator,
+.si-icon-cell:hover .fujnyn .sc-arrow,
+.icon-card:hover .fujnyn .sc-arrow {
+  animation: hletfa 0.4s ease forwards;
+}
+.si-icon-cell:hover .fujnyn svg,
+.icon-card:hover .fujnyn svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 39. PHONE-OUTGOING: arrow launches up-right */
+.si-icon-cell:hover .vxg4kw .sc-indicator,
+.icon-card:hover .vxg4kw .sc-indicator,
+.si-icon-cell:hover .vxg4kw .sc-arrow,
+.icon-card:hover .vxg4kw .sc-arrow {
+  animation: jt8cpc 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.si-icon-cell:hover .vxg4kw svg,
+.icon-card:hover .vxg4kw svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 40. CAMERA: shutter click (lens focuses) */
+.si-icon-cell:hover .jqrzoe .sc-lens,
+.icon-card:hover .jqrzoe .sc-lens {
+  animation: ogsrp0 0.4s ease forwards;
+  transform-origin: 12px 13px;
+}
+.si-icon-cell:hover .jqrzoe svg,
+.icon-card:hover .jqrzoe svg {
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+/* 41. HASH: hashtag wobbles (trending) */
+.si-icon-cell:hover .ujegrn svg,
+.icon-card:hover .ujegrn svg {
+  animation: popifi 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 42. RADIO: center dot pulses, waves expand staggered */
+.si-icon-cell:hover .ctqc4x .sc-wave-r1,
+.icon-card:hover .ctqc4x .sc-wave-r1,
+.si-icon-cell:hover .ctqc4x .sc-wave-l1,
+.icon-card:hover .ctqc4x .sc-wave-l1 {
+  animation: dmfp5a 0.4s ease forwards;
+}
+.si-icon-cell:hover .ctqc4x .sc-wave-r2,
+.icon-card:hover .ctqc4x .sc-wave-r2,
+.si-icon-cell:hover .ctqc4x .sc-wave-l2,
+.icon-card:hover .ctqc4x .sc-wave-l2 {
+  animation: dmfp5a 0.4s ease 0.12s forwards;
+}
+.si-icon-cell:hover .ctqc4x .sc-center,
+.icon-card:hover .ctqc4x .sc-center {
+  animation: pco6sh 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .ctqc4x svg,
+.icon-card:hover .ctqc4x svg {
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, 0.25));
+}
+
+/* 43. PODCAST: waves expand, mic dot pulses */
+.si-icon-cell:hover .y7mt3z .sc-wave-1,
+.icon-card:hover .y7mt3z .sc-wave-1 {
+  animation: dmfp5a 0.4s ease forwards;
+}
+.si-icon-cell:hover .y7mt3z .sc-wave-2,
+.icon-card:hover .y7mt3z .sc-wave-2 {
+  animation: dmfp5a 0.4s ease 0.12s forwards;
+}
+.si-icon-cell:hover .y7mt3z .sc-dot,
+.icon-card:hover .y7mt3z .sc-dot {
+  animation: pco6sh 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s forwards;
+  transform-origin: 12px 11px;
+}
+.si-icon-cell:hover .y7mt3z svg,
+.icon-card:hover .y7mt3z svg {
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 44. PEN-LINE: pen tilts like writing */
+.si-icon-cell:hover .zemg7l .sc-pen,
+.icon-card:hover .zemg7l .sc-pen {
+  animation: idqurn 0.5s ease forwards;
+  transform-origin: 4px 20px;
+}
+.si-icon-cell:hover .zemg7l svg,
+.icon-card:hover .zemg7l svg {
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 45. BAN: slash strikes across (block action) */
+.si-icon-cell:hover .dfv6e6 .sc-slash,
+.icon-card:hover .dfv6e6 .sc-slash {
+  animation: oyyp57 0.4s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .dfv6e6 .sc-ring,
+.icon-card:hover .dfv6e6 .sc-ring {
+  animation: vyv0z4 0.5s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .dfv6e6 svg,
+.icon-card:hover .dfv6e6 svg {
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 46. SHIELD: stands firm (reinforces) */
+.si-icon-cell:hover .a4ufrn .sc-shield,
+.icon-card:hover .a4ufrn .sc-shield {
+  animation: b18llv 0.5s ease forwards;
+  transform-origin: 12px 22px;
+}
+.si-icon-cell:hover .a4ufrn svg,
+.icon-card:hover .a4ufrn svg {
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 47. LOCK: shackle jiggles (testing the lock) */
+.si-icon-cell:hover .aedfe5 .sc-shackle,
+.icon-card:hover .aedfe5 .sc-shackle {
+  animation: pwfr44 0.4s ease forwards;
+  transform-origin: 12px 11px;
+}
+.si-icon-cell:hover .aedfe5 svg,
+.icon-card:hover .aedfe5 svg {
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.25));
+}
+
+/* 48. SEARCH: magnifying glass tilts (searching) */
+.si-icon-cell:hover .eyhe5t svg,
+.icon-card:hover .eyhe5t svg {
+  animation: iuts9w 0.5s ease forwards;
+  transform-origin: 11px 11px;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 49. BELL: gentle pendulum swing */
+.si-icon-cell:hover .cxh302 .sc-bell,
+.icon-card:hover .cxh302 .sc-bell {
+  animation: o9wofv 0.6s ease forwards;
+  transform-origin: 12px 2px;
+}
+.si-icon-cell:hover .cxh302 svg,
+.icon-card:hover .cxh302 svg {
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, 0.25));
+}
+
+/* 50. ZAP: lightning strike flash */
+.si-icon-cell:hover .q03ab5 .sc-bolt,
+.icon-card:hover .q03ab5 .sc-bolt {
+  animation: oyyp57-flash 0.4s ease forwards;
+  transform-origin: 12px 12px;
+}
+.si-icon-cell:hover .q03ab5 svg,
+.icon-card:hover .q03ab5 svg {
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.35));
+}
+
+/* ===================================================================
+   NEW KEYFRAMES FOR ICONS 21-50
+   =================================================================== */
+
+/* Inbox: mail item dropping into shelf */
+@keyframes r8xn7q {
+  0%   { transform: translateY(-5px); opacity: 0.6; }
+  50%  { transform: translateY(1px); opacity: 1; }
+  75%  { transform: translateY(-1px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Lower thumb: disapproval gesture tilt */
+@keyframes uitf5x {
+  0%   { transform: rotate(0deg) translateY(0); }
+  35%  { transform: rotate(12deg) translateY(3px); }
+  60%  { transform: rotate(-3deg) translateY(-1px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* Twinkle: star sparkle rotation */
+@keyframes g6jm1t {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  25%  { transform: rotate(18deg); opacity: 0.7; }
+  50%  { transform: rotate(-5deg); opacity: 1; }
+  75%  { transform: rotate(8deg); opacity: 0.85; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+/* Flutter: flag waving in wind */
+@keyframes osrt8f {
+  0%   { transform: skewX(0deg); }
+  15%  { transform: skewX(3deg); }
+  30%  { transform: skewX(-2deg); }
+  45%  { transform: skewX(2deg); }
+  60%  { transform: skewX(-1deg); }
+  75%  { transform: skewX(0.5deg); }
+  100% { transform: skewX(0deg); }
+}
+
+/* Look around: eye tracking */
+@keyframes vu5163 {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(2px); }
+  50%  { transform: translateX(0); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* Blink: eyelid quick blink */
+@keyframes b08fkr {
+  0%   { transform: scaleY(1); }
+  40%  { transform: scaleY(0.1); }
+  60%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
+}
+
+/* Globe spin on vertical axis */
+@keyframes qqfwv0 {
+  0%   { transform: scaleX(1); }
+  25%  { transform: scaleX(0.3); }
+  50%  { transform: scaleX(-1); }
+  75%  { transform: scaleX(0.3); }
+  100% { transform: scaleX(1); }
+}
+
+/* Shoot up: upload gesture */
+@keyframes whhwcd {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(-4px); }
+  65%  { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+/* Shoot down: download gesture */
+@keyframes xt2h4h {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(4px); }
+  65%  { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+
+/* Check sweep: verification mark appearing */
+@keyframes btmqdd {
+  0%   { transform: scale(0.5) rotate(-20deg); opacity: 0.3; }
+  50%  { transform: scale(1.3) rotate(5deg); opacity: 1; }
+  75%  { transform: scale(0.9) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Head bob: listening to music */
+@keyframes ur9g08 {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(4deg); }
+  40%  { transform: rotate(-3deg); }
+  60%  { transform: rotate(3deg); }
+  80%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Slide in from corner: incoming call arrow */
+@keyframes hletfa {
+  0%   { transform: translate(3px, -3px); opacity: 0.5; }
+  50%  { transform: translate(-1px, 1px); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+/* Shutter: camera focus */
+@keyframes ogsrp0 {
+  0%   { transform: scale(1); opacity: 1; }
+  20%  { transform: scale(0.6); opacity: 0.7; }
+  40%  { transform: scale(1.15); opacity: 1; }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Write: pen tilting back and forth */
+@keyframes idqurn {
+  0%   { transform: rotate(0deg) translate(0, 0); }
+  20%  { transform: rotate(-3deg) translate(1px, -1px); }
+  40%  { transform: rotate(2deg) translate(-1px, 0); }
+  60%  { transform: rotate(-2deg) translate(1px, -0.5px); }
+  80%  { transform: rotate(1deg) translate(0, 0); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+
+/* Strike: slash crosses in */
+@keyframes oyyp57 {
+  0%   { transform: rotate(0deg); opacity: 0.5; }
+  40%  { transform: rotate(8deg); opacity: 1; }
+  70%  { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+/* Reinforce: shield planting firmly */
+@keyframes b18llv {
+  0%   { transform: translateY(0) rotate(0deg); }
+  30%  { transform: translateY(-3px) rotate(-2deg); }
+  60%  { transform: translateY(1px) rotate(1deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Jiggle: testing a locked shackle */
+@keyframes pwfr44 {
+  0%   { transform: translateX(0) rotate(0deg); }
+  15%  { transform: translateX(1.5px) rotate(2deg); }
+  30%  { transform: translateX(-1.5px) rotate(-2deg); }
+  45%  { transform: translateX(1px) rotate(1deg); }
+  60%  { transform: translateX(-1px) rotate(-1deg); }
+  75%  { transform: translateX(0.5px); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+/* Search tilt: magnifying glass investigating */
+@keyframes iuts9w {
+  0%   { transform: rotate(0deg) translate(0, 0); }
+  25%  { transform: rotate(-8deg) translate(-2px, -1px); }
+  50%  { transform: rotate(5deg) translate(2px, 0); }
+  75%  { transform: rotate(-3deg) translate(-1px, 0); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+
+/* Lightning strike flash */
+@keyframes oyyp57-flash {
+  0%   { transform: translateY(0); opacity: 1; }
+  15%  { transform: translateY(-3px); opacity: 0.6; }
+  30%  { transform: translateY(5px); opacity: 1; }
+  50%  { transform: translateY(-1px); opacity: 0.8; }
+  70%  { transform: translateY(1px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}

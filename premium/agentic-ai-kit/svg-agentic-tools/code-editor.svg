@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A cute rounded code window with a text cursor inside -->
+  
+      <!-- Window frame: extra rounded for cute feel -->
+      <rect x="32" y="48" width="192" height="176" rx="24" />
+      <!-- Title bar dots (3 little circles) -->
+      <circle cx="64" cy="76" r="8" fill="var(--hole, #fff)" />
+      <circle cx="88" cy="76" r="8" fill="var(--hole, #fff)" />
+      <circle cx="112" cy="76" r="8" fill="var(--hole, #fff)" />
+      <!-- Divider line below title bar -->
+      <rect x="32" y="92" width="192" height="4" fill="var(--hole, #fff)" opacity="0.3" />
+      <!-- Text cursor: blinking bar -->
+      <rect x="72" y="116" width="4" height="40" rx="2" fill="var(--hole, #fff)" />
+      <!-- Code lines (cute short lines) -->
+      <rect x="88" y="120" width="64" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="88" y="140" width="48" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.4" />
+      <rect x="64" y="168" width="80" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="64" y="188" width="56" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.4" />
+    
+</svg>

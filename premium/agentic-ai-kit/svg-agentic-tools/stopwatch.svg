@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A friendly stopwatch with a chunky top button -->
+  
+      <!-- Top button -->
+      <rect x="112" y="20" width="32" height="28" rx="8" />
+      <!-- Button connector -->
+      <rect x="120" y="44" width="16" height="16" />
+      <!-- Watch body -->
+      <circle cx="128" cy="140" r="84" />
+      <!-- Watch face (cutout) -->
+      <circle cx="128" cy="140" r="68" fill="var(--hole, #fff)" opacity="0.15" />
+      <!-- Hour marks (12, 3, 6, 9 positions) -->
+      <rect x="124" y="64" width="8" height="20" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="192" y="136" width="20" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="124" y="196" width="8" height="20" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <rect x="44" y="136" width="20" height="8" rx="4" fill="var(--hole, #fff)" opacity="0.6" />
+      <!-- Hand (pointing to ~2 o'clock) -->
+      <line x1="128" y1="140" x2="172" y2="100" stroke="var(--hole, #fff)" stroke-width="8" stroke-linecap="round" />
+      <!-- Center dot -->
+      <circle cx="128" cy="140" r="8" fill="var(--hole, #fff)" />
+    
+</svg>

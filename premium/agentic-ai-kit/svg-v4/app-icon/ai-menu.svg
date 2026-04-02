@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bg-ai-menu" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93C5FD"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="shine-ai-menu" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="squircle-ai-menu">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#bg-ai-menu)"/>
+
+  <!-- Glass highlight -->
+  <rect x="4" y="4" width="112" height="56" rx="26" fill="url(#shine-ai-menu)" clip-path="url(#squircle-ai-menu)"/>
+
+  <!-- Inner shadow (subtle) -->
+  <rect x="4" y="58" width="112" height="58" rx="4" fill="rgba(0,0,0,0.08)" clip-path="url(#squircle-ai-menu)"/>
+
+  <!-- Icon shape (centered, scaled, white) -->
+  <g transform="translate(30, 30) scale(2.5)" fill="#fff" fill-opacity="0.95">
+    <path fill-rule="evenodd" d="M3.25 6A.75.75 0 014 5.25h16a.75.75 0 010 1.5H4A.75.75 0 013.25 6zm0 6a.75.75 0 01.75-.75h16a.75.75 0 010 1.5H4a.75.75 0 01-.75-.75zm0 6a.75.75 0 01.75-.75h10a.75.75 0 010 1.5H4a.75.75 0 01-.75-.75z" clip-rule="evenodd"/>
+  </g>
+</svg>

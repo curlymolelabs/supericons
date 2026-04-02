@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc g3qlje">
+  <!-- Axis -->
+  <line class="dc-axis" x1="2" y1="21" x2="22" y2="21" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <!-- Candle 1: bearish (down) -->
+  <line class="dc-wick dc-wick-1" x1="5" y1="5" x2="5" y2="18" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.75"/>
+  <rect class="dc-body dc-body-1" x="3.5" y="8" width="3" height="6" rx="0.3" fill="#3B82F6" fill-opacity="0.77"/>
+  <!-- Candle 2: bullish (up, accent) -->
+  <line class="dc-wick dc-wick-2" x1="10" y1="3" x2="10" y2="17" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="1.00"/>
+  <rect class="dc-body dc-body-2" x="8.5" y="6" width="3" height="7" rx="0.3" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Candle 3: bearish -->
+  <line class="dc-wick dc-wick-3" x1="15" y1="7" x2="15" y2="19" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.75"/>
+  <rect class="dc-body dc-body-3" x="13.5" y="10" width="3" height="5" rx="0.3" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Candle 4: bullish -->
+  <line class="dc-wick dc-wick-4" x1="20" y1="4" x2="20" y2="16" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="1.00"/>
+  <rect class="dc-body dc-body-4" x="18.5" y="7" width="3" height="5" rx="0.3" fill="#3B82F6" fill-opacity="1.00"/>
+</svg>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperIcons: Implementation Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e;
+            --surface: #1a1919;
+            --surface-high: #201f1f;
+            --surface-highest: #262626;
+            --text: #ffffff;
+            --text-muted: #adaaaa;
+            --text-dim: #767575;
+            --primary: #FF4F00;
+            --primary-soft: #ff906c;
+            --accent-green: #4ade80;
+            --accent-blue: #60a5fa;
+            --accent-purple: #eb9bfe;
+            --border: #484847;
+            --radius: 0.5rem;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 3rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-soft);
+        }
+        h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        p, li { color: var(--text-muted); font-size: 0.95rem; }
+        p { margin-bottom: 1rem; }
+        strong { color: var(--text); }
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: var(--surface-high);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--primary-soft);
+        }
+        pre {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(72, 72, 71, 0.3);
+        }
+        pre code { background: none; padding: 0; font-size: 0.8rem; color: var(--text-muted); }
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+
+        .build-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--primary);
+            position: relative;
+        }
+        .build-card h2 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .build-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: #000;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .file-tag {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.15em 0.5em;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        .file-tag.new { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); }
+        .file-tag.modify { background: rgba(96, 165, 250, 0.15); color: var(--accent-blue); }
+        .file-path {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .goal-text {
+            font-style: italic;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .verify-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+
+<h1>SuperIcons: Implementation Plan</h1>
+<p style="color: var(--text-dim); margin-bottom: 0.5rem;">Tech stack: <strong>Vite (vanilla JS)</strong>, vanilla CSS, no backend for MVP</p>
+<p style="color: var(--text-dim);">Serves both human designers/developers and AI agents with 60K+ icons, AI semantic search, true variable font axes, component code export, and container preview.</p>
+
+<hr>
+
+<!-- BUILD 1 -->
+<div class="build-card">
+    <h2><span class="build-number">1</span> Foundation & Layout Shell</h2>
+    <p class="goal-text">Ship the empty shell: responsive 3-column layout, design system, header, footer. No icons yet.</p>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">index.html</span></h4>
+    <ul>
+        <li>SEO meta tags (title, description, OG tags)</li>
+        <li>Google Fonts: Space Grotesk, Manrope, Inter, Material Symbols Outlined</li>
+        <li>Root <code>&lt;div id="app"&gt;</code> for Vite</li>
+    </ul>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">style.css</span></h4>
+    <ul>
+        <li>CSS custom properties: full Kinetic Architect color palette, type scale, spacing, radii</li>
+        <li>Reset/normalize</li>
+        <li>3-column grid layout (sidebar 240px | main 1fr | panel 320px)</li>
+        <li>Header, sidebar, icon grid, customization panel, footer</li>
+        <li>Dark theme default, smooth transitions</li>
+    </ul>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">main.js</span></h4>
+    <ul>
+        <li>Sidebar toggle (mobile collapse)</li>
+        <li>Panel toggle (show/hide customize)</li>
+        <li>Placeholder text in grid</li>
+    </ul>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">package.json + vite.config.js</span></h4>
+    <ul><li>Vite dev server config</li></ul>
+</div>
+
+<!-- BUILD 2 -->
+<div class="build-card">
+    <h2><span class="build-number">2</span> Icon Data Pipeline & Rendering</h2>
+    <p class="goal-text">Load real icons: Material Symbols via variable font, Lucide + Tabler via SVG data. Render in a performant virtual grid.</p>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">scripts/build-icons.js</span></h4>
+    <ul>
+        <li>Node script: reads Lucide and Tabler SVGs from npm packages</li>
+        <li>Outputs <code>public/icon-index.json</code> with name, lib, tags, and SVG content</li>
+        <li>Material Symbols handled separately (font-based)</li>
+    </ul>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js</span></h4>
+    <ul>
+        <li>Fetch and parse icon-index.json</li>
+        <li>Render Material Symbols as <code>&lt;span&gt;</code> with variable font</li>
+        <li>Render SVG icons as inline SVG in grid cells</li>
+        <li>Virtual scrolling (IntersectionObserver, only render visible rows)</li>
+        <li>Library sidebar populated with real counts</li>
+    </ul>
+</div>
+
+<!-- BUILD 3 -->
+<div class="build-card">
+    <h2><span class="build-number">3</span> Search & Filtering</h2>
+    <p class="goal-text">Real-time search across all libraries with synonym matching.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js</span></h4>
+    <ul>
+        <li>Search input: debounced keyup (150ms)</li>
+        <li>Filter icons by name substring match</li>
+        <li>Filter by library (sidebar click)</li>
+        <li>Result count display ("Showing 342 of 15,847 icons")</li>
+    </ul>
+
+    <h4><span class="file-tag new">NEW</span> <span class="file-path">data/synonyms.json</span></h4>
+    <ul>
+        <li>~200 hand-curated synonym entries covering common concepts</li>
+    </ul>
+</div>
+
+<!-- BUILD 4 -->
+<div class="build-card">
+    <h2><span class="build-number">4</span> Customization Panel</h2>
+    <p class="goal-text">Full customization: color, gradient, stroke, and Material Symbols 4-axis control.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js + style.css</span></h4>
+    <ul>
+        <li>Color picker: hex input + 16 preset swatches + HSL gradient canvas</li>
+        <li>Gradient builder: linear angle picker + 2-stop gradient</li>
+        <li>Stroke width slider (0.5-3.0px, for SVG icons)</li>
+        <li>Material Symbols axes: 4 sliders (wght, FILL, GRAD, opsz)</li>
+        <li>Apply styles to selected icon preview in real-time</li>
+        <li>Apply styles globally to grid (optional toggle)</li>
+    </ul>
+</div>
+
+<!-- BUILD 5 -->
+<div class="build-card">
+    <h2><span class="build-number">5</span> Export System</h2>
+    <p class="goal-text">Copy/download icons in all formats, including framework component code.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js</span></h4>
+    <ul>
+        <li><strong>Copy SVG:</strong> clipboard API, with customizations baked in</li>
+        <li><strong>Download SVG:</strong> Blob + anchor download</li>
+        <li><strong>Download PNG:</strong> render SVG to canvas, export at 1x/2x/4x</li>
+        <li><strong>Copy as component:</strong> React, Vue, Svelte, HTML, Flutter templates</li>
+        <li>Export format selector in panel</li>
+        <li>Toast notification on copy</li>
+    </ul>
+</div>
+
+<!-- BUILD 6 -->
+<div class="build-card">
+    <h2><span class="build-number">6</span> Container Previewer & Micro-Animations</h2>
+    <p class="goal-text">Preview icons inside real UI containers with animation presets.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js + style.css</span></h4>
+    <ul>
+        <li>Container shapes: none, circle, squircle, rounded-rect, pill, glass</li>
+        <li>Container background color (independent of icon color)</li>
+        <li>Badge/notification dot toggle</li>
+        <li>Dark/light preview background toggle</li>
+        <li>Animation presets: none, spin, pulse, bounce, shake</li>
+        <li><code>@keyframes</code> for each animation</li>
+    </ul>
+</div>
+
+<!-- BUILD 7 -->
+<div class="build-card">
+    <h2><span class="build-number">7</span> Collections & Batch Operations</h2>
+    <p class="goal-text">Save, organize, and batch-export icons.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">main.js</span></h4>
+    <ul>
+        <li>Favorites: heart toggle per icon, stored in localStorage</li>
+        <li>Recents: track last 50 viewed icons</li>
+        <li>"Favorites" and "Recent" pseudo-libraries in sidebar</li>
+        <li>Side-by-side comparison (2-4 icons)</li>
+        <li>Multi-select mode with checkbox overlay</li>
+        <li>Batch ZIP download (JSZip library)</li>
+    </ul>
+</div>
+
+<!-- BUILD 8 -->
+<div class="build-card">
+    <h2><span class="build-number">8</span> Polish, Responsive, SEO</h2>
+    <p class="goal-text">Production-ready quality.</p>
+
+    <h4><span class="file-tag modify">MODIFY</span> <span class="file-path">All files</span></h4>
+    <ul>
+        <li>Responsive: sidebar collapses to hamburger on mobile, panel becomes bottom sheet</li>
+        <li>Keyboard shortcuts: <code>/</code> focus search, <code>Esc</code> clear, arrow keys navigate grid</li>
+        <li>Smooth page transitions, loading skeletons</li>
+        <li>SEO: structured data (JSON-LD), canonical URL, sitemap stub</li>
+        <li>Performance: lazy-load icon grid, compressed assets</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- VERIFICATION -->
+<div class="verify-card">
+    <h2 style="margin-top:0; color: var(--accent-green);">Verification Plan</h2>
+
+    <h3>After each build: Browser audit</h3>
+    <ol>
+        <li>Run <code>npm run dev</code> in <code>supericons/</code></li>
+        <li>Open in browser</li>
+        <li>Visual inspection: layout, colors, typography, interactions</li>
+        <li>Functional check: all features from that build work as specified</li>
+        <li>Gap identification: missing behavior, broken styles, or UX friction</li>
+        <li>Fix all gaps before proceeding to next build</li>
+    </ol>
+
+    <h3>Final verification (after Build 8)</h3>
+    <ul>
+        <li>Full walkthrough recording of all features</li>
+        <li>Performance check (Lighthouse or manual)</li>
+        <li>Responsive check (resize browser window)</li>
+    </ul>
+</div>
+
+<hr>
+
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    SuperIcons Implementation Plan, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

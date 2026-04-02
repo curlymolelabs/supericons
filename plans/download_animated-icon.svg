@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" fill="none" width="64" height="64" id="animated-icon"><style>/* Supericons Motion Lab */
+/* Animation: shake | Trigger: loop | Duration: 900ms */
+
+@keyframes ml-icon {
+  0% {
+    transform: translateX(0px) scale(1.1) rotate(131deg);
+  }
+  15% {
+    transform: translateX(-1.95px) scale(1.1) rotate(131deg);
+  }
+  30% {
+    transform: translateX(1.95px) scale(1.1) rotate(131deg);
+  }
+  45% {
+    transform: translateX(-1.95px) scale(1.1) rotate(131deg);
+  }
+  60% {
+    transform: translateX(1.95px) scale(1.1) rotate(131deg);
+  }
+  75% {
+    transform: translateX(-1.30px) scale(1.1) rotate(131deg);
+  }
+  100% {
+    transform: translateX(0px) scale(1.1) rotate(131deg);
+  }
+}
+#animated-icon {
+  animation: ml-icon 900ms ease-out infinite;
+}
+
+/* Static overrides */
+#animated-icon {
+  transform: scale(1.1) rotate(131deg);
+  transform-origin: center;
+  opacity: 0.8;
+}
+
+</style> <path d="M22.1525 3.55321L11.1772 21.0044L9.50686 12.4078L2.00002 7.89795L22.1525 3.55321Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.45557 12.4436L22.1524 3.55321" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path> </svg>

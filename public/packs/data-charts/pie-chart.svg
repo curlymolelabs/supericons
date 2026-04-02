@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-pie-chart">
+  <!-- Background circle -->
+  <circle class="dc-bg" cx="12" cy="12" r="9" fill="#3B82F6" fill-opacity="0.09"/>
+  <!-- Slice 1: large (60%) -->
+  <path class="dc-slice dc-slice-1" d="M12 3 A9 9 0 0 1 20.19 16.5 L12 12 Z" fill="#3B82F6" fill-opacity="0.66"/>
+  <!-- Slice 2: medium (25%) -->
+  <path class="dc-slice dc-slice-2" d="M20.19 16.5 A9 9 0 0 1 7.5 19.79 L12 12 Z" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Slice 3: small (15%) -->
+  <path class="dc-slice dc-slice-3" d="M7.5 19.79 A9 9 0 0 1 12 3 L12 12 Z" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Thin divider lines -->
+  <line x1="12" y1="12" x2="12" y2="3" stroke="white" stroke-width="0.6" stroke-opacity="1.00"/>
+  <line x1="12" y1="12" x2="20.19" y2="16.5" stroke="white" stroke-width="0.6" stroke-opacity="1.00"/>
+  <line x1="12" y1="12" x2="7.5" y2="19.79" stroke="white" stroke-width="0.6" stroke-opacity="1.00"/>
+  <!-- Thin outer ring -->
+  <circle cx="12" cy="12" r="9" fill="none" stroke="#3B82F6" stroke-width="0.6" stroke-opacity="0.38"/>
+</svg>

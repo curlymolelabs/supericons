@@ -1,0 +1,912 @@
+/* Navigation & Menu Collection: 50 unique CSS-only hover animations
+   Source: Material Symbols (Google Fonts CDN)
+   
+   DESIGN RULE: Every icon uses a fundamentally DIFFERENT motion type.
+   No two icons share the same pattern. Motion vocabulary includes:
+   3D perspective flips, motion blur, brightness flash, stepped rotation,
+   orbit paths, gravity physics, heartbeat pulses, magnetic snaps, etc. */
+
+.si-anim svg { overflow: visible; }
+
+
+/* =====================================================================
+   BATCH 1: Icons 1-20
+   ===================================================================== */
+
+/* 1. MENU: 3D book-open. Folds open on Y axis like opening a book. */
+.si-icon-cell:hover .khey6q svg,
+.icon-card:hover .khey6q svg {
+  animation: cr96dy 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: left center;
+  filter: drop-shadow(0 0 4px rgba(96, 165, 250, 0.3));
+}
+
+/* 2. CLOSE: Brightness flash + 90 snap. Screen goes white then X appears. */
+.si-icon-cell:hover .l1wizt svg,
+.icon-card:hover .l1wizt svg {
+  animation: lemm97 0.4s ease forwards;
+  transform-origin: center;
+}
+
+/* 3. ARROW-BACK: Motion blur slide. Streaks left with directional blur. */
+.si-icon-cell:hover .ex7c3d svg,
+.icon-card:hover .ex7c3d svg {
+  animation: aaxhzt 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 4. ARROW-FORWARD: Motion blur slide right. Mirror of arrow-back. */
+.si-icon-cell:hover .dyst9j svg,
+.icon-card:hover .dyst9j svg {
+  animation: c0xfyq 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 5. CHEVRON-LEFT: Wall bounce. Hits left wall, squashes, rebounds. */
+.si-icon-cell:hover .yrneby svg,
+.icon-card:hover .yrneby svg {
+  animation: tcecph 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: left center;
+}
+
+/* 6. CHEVRON-RIGHT: Wall bounce right. Mirror of chevron-left. */
+.si-icon-cell:hover .s58udc svg,
+.icon-card:hover .s58udc svg {
+  animation: k2wlgq 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: right center;
+}
+
+/* 7. EXPAND-MORE: Gravity drop. Falls with realistic gravity ease. */
+.si-icon-cell:hover .hfiyhc svg,
+.icon-card:hover .hfiyhc svg {
+  animation: cf6cr6 0.5s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+  transform-origin: center top;
+}
+
+/* 8. EXPAND-LESS: Helium rise. Floats up like a balloon. */
+.si-icon-cell:hover .ag2h8k svg,
+.icon-card:hover .ag2h8k svg {
+  animation: xkruzg 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center bottom;
+}
+
+/* 9. HOME: Heartbeat. Two quick warm pulses like arriving home. */
+.si-icon-cell:hover .gm68u1 svg,
+.icon-card:hover .gm68u1 svg {
+  animation: nzw19p 0.6s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.3));
+}
+
+/* 10. SEARCH: Orbit scan. Traces a circular search pattern. */
+.si-icon-cell:hover .rtj91l svg,
+.icon-card:hover .rtj91l svg {
+  animation: jkgevt 0.7s ease forwards;
+  transform-origin: 60% 60%;
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.35));
+}
+
+/* 11. SETTINGS: Notch clicks. Rotates in discrete 20-degree steps. */
+.si-icon-cell:hover .phslsv svg,
+.icon-card:hover .phslsv svg {
+  animation: kvs8s1 0.65s steps(3, end) forwards;
+  transform-origin: center;
+}
+
+/* 12. MORE-VERT: Domino cascade. Tilts through a wave top-to-bottom. */
+.si-icon-cell:hover .mfm1dp svg,
+.icon-card:hover .mfm1dp svg {
+  animation: y46cue 0.55s ease forwards;
+  transform-origin: center top;
+}
+
+/* 13. MORE-HORIZ: Squeeze-stretch. Horizontal rubber-band snap. */
+.si-icon-cell:hover .h70r96 svg,
+.icon-card:hover .h70r96 svg {
+  animation: z55l6b 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 14. APPS: Per-dot staggered pulsation (9 individual dots). */
+.si-icon-cell:hover .neg10d svg,
+.icon-card:hover .neg10d svg {
+  filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.3));
+}
+.si-icon-cell:hover .neg10d .nm-dot-5,
+.icon-card:hover .neg10d .nm-dot-5 {
+  animation: usi85j 0.7s ease both;
+  transform-origin: 480px -480px;
+  animation-delay: 0s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-1,
+.icon-card:hover .neg10d .nm-dot-1 {
+  animation: dvafrz 0.65s ease both;
+  transform-origin: 240px -720px;
+  animation-delay: 0.06s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-8,
+.icon-card:hover .neg10d .nm-dot-8 {
+  animation: r1oudt 0.6s ease both;
+  transform-origin: 480px -240px;
+  animation-delay: 0.12s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-3,
+.icon-card:hover .neg10d .nm-dot-3 {
+  animation: usi85j 0.7s ease both;
+  transform-origin: 720px -720px;
+  animation-delay: 0.17s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-7,
+.icon-card:hover .neg10d .nm-dot-7 {
+  animation: dvafrz 0.65s ease both;
+  transform-origin: 240px -240px;
+  animation-delay: 0.22s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-2,
+.icon-card:hover .neg10d .nm-dot-2 {
+  animation: r1oudt 0.6s ease both;
+  transform-origin: 480px -720px;
+  animation-delay: 0.27s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-6,
+.icon-card:hover .neg10d .nm-dot-6 {
+  animation: usi85j 0.7s ease both;
+  transform-origin: 720px -480px;
+  animation-delay: 0.32s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-9,
+.icon-card:hover .neg10d .nm-dot-9 {
+  animation: dvafrz 0.65s ease both;
+  transform-origin: 720px -240px;
+  animation-delay: 0.37s;
+}
+.si-icon-cell:hover .neg10d .nm-dot-4,
+.icon-card:hover .neg10d .nm-dot-4 {
+  animation: r1oudt 0.6s ease both;
+  transform-origin: 240px -480px;
+  animation-delay: 0.42s;
+}
+
+/* 15. FULLSCREEN: 3D depth punch. Zooms toward viewer in Z-space. */
+.si-icon-cell:hover .t1hflu svg,
+.icon-card:hover .t1hflu svg {
+  animation: ehml87 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 16. FILTER-LIST: Tightening funnel. Narrows progressively. */
+.si-icon-cell:hover .yvi8by svg,
+.icon-card:hover .yvi8by svg {
+  animation: us9zfm 0.55s ease forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.3));
+}
+
+/* 17. SORT: 3D card flip. Full rotation on X axis. */
+.si-icon-cell:hover .yo5jm6 svg,
+.icon-card:hover .yo5jm6 svg {
+  animation: gdame4 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.3));
+}
+
+/* 18. REFRESH: Full 360 spin with mid-pause "catch". */
+.si-icon-cell:hover .ii46oc svg,
+.icon-card:hover .ii46oc svg {
+  animation: jh2llx 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.35));
+}
+
+/* 19. TAB: Peel-up. Lifts corner like peeling a sticky note. */
+.si-icon-cell:hover .teizag svg,
+.icon-card:hover .teizag svg {
+  animation: qhwh3n 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: bottom left;
+}
+
+/* 20. DRAG-INDICATOR: Levitate. Lifts off surface with growing shadow. */
+.si-icon-cell:hover .trbgb4 svg,
+.icon-card:hover .trbgb4 svg {
+  animation: debbkc 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+
+/* =====================================================================
+   BATCH 2: Icons 21-50
+   ===================================================================== */
+
+/* 21. ARROW-UPWARD: Rocket ignition. Crouches down then blasts up. */
+.si-icon-cell:hover .qg3z4c svg,
+.icon-card:hover .qg3z4c svg {
+  animation: wba47p 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 22. ARROW-DOWNWARD: Parachute descent. Floats down with gentle sway. */
+.si-icon-cell:hover .px7jp4 svg,
+.icon-card:hover .px7jp4 svg {
+  animation: wizphe 0.7s ease forwards;
+}
+
+/* 23. SWAP-VERT: Seesaw. Pivots on center like a playground seesaw. */
+.si-icon-cell:hover .zhk6p1 svg,
+.icon-card:hover .zhk6p1 svg {
+  animation: ynqrwp 0.6s ease forwards;
+  transform-origin: center;
+}
+
+/* 24. SWAP-HORIZ: Pendulum. Swings left-right like a metronome. */
+.si-icon-cell:hover .p2yasg svg,
+.icon-card:hover .p2yasg svg {
+  animation: mkbecx 0.65s ease forwards;
+  transform-origin: center top;
+}
+
+/* 25. UNDO: Rewind whirl. Counter-clockwise arc with blur. */
+.si-icon-cell:hover .uvw8ga svg,
+.icon-card:hover .uvw8ga svg {
+  animation: o2hfaz 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 26. REDO: Fast-forward whirl. Clockwise arc with blur. */
+.si-icon-cell:hover .yu91ki svg,
+.icon-card:hover .yu91ki svg {
+  animation: rgvrj7 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 27. MENU-OPEN: Door swing. Opens on left hinge like a door. */
+.si-icon-cell:hover .pan1ky svg,
+.icon-card:hover .pan1ky svg {
+  animation: zql5ne 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: left center;
+}
+
+/* 28. SEGMENT: Venetian blind tilt. Slats rotate open. */
+.si-icon-cell:hover .x8kchj svg,
+.icon-card:hover .x8kchj svg {
+  animation: nbndxd 0.55s ease forwards;
+  transform-origin: left center;
+}
+
+/* 29. DENSITY-MEDIUM: Spring compress. Squashes then over-extends. */
+.si-icon-cell:hover .cjzxal svg,
+.icon-card:hover .cjzxal svg {
+  animation: uelnl2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 30. VIEW-SIDEBAR: Drawer slide. Translates from off-screen left. */
+.si-icon-cell:hover .vc4fg9 svg,
+.icon-card:hover .vc4fg9 svg {
+  animation: lr6rab 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 31. DOCK-TO-RIGHT: Magnetic snap right with velocity blur. */
+.si-icon-cell:hover .i3gudr svg,
+.icon-card:hover .i3gudr svg {
+  animation: r1vfpj 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 32. DOCK-TO-LEFT: Magnetic snap left with velocity blur. */
+.si-icon-cell:hover .i8na7x svg,
+.icon-card:hover .i8na7x svg {
+  animation: fluw9s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 33. GRID-VIEW: Kaleidoscope twist. Quick rotational burst. */
+.si-icon-cell:hover .erdfu1 svg,
+.icon-card:hover .erdfu1 svg {
+  animation: f4iuwc 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.3));
+}
+
+/* 34. VIEW-LIST: Typewriter slide-in with stutter stops. */
+.si-icon-cell:hover .y48i6f svg,
+.icon-card:hover .y48i6f svg {
+  animation: ox3msm 0.6s steps(4, end) forwards;
+  transform-origin: left center;
+}
+
+/* 35. VIEW-MODULE: 3D coin flip on Y axis. */
+.si-icon-cell:hover .pbq25z svg,
+.icon-card:hover .pbq25z svg {
+  animation: c13nz6 0.5s ease forwards;
+  transform-origin: center;
+}
+
+/* 36. DASHBOARD: Jelly wobble. Squash-stretch with overshoot. */
+.si-icon-cell:hover .s8k5f9 svg,
+.icon-card:hover .s8k5f9 svg {
+  animation: iml6to 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+}
+
+/* 37. SPLITSCREEN: Zipper open. Stretches apart vertically. */
+.si-icon-cell:hover .ytw97b svg,
+.icon-card:hover .ytw97b svg {
+  animation: lugfg2 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 38. PIP: Shrink-drift. Shrinks and floats to bottom-right corner. */
+.si-icon-cell:hover .kaxzpz svg,
+.icon-card:hover .kaxzpz svg {
+  animation: pt6zuo 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: bottom right;
+}
+
+/* 39. OPEN-IN-NEW: Diagonal catapult with trail fade. */
+.si-icon-cell:hover .b8a6pk svg,
+.icon-card:hover .b8a6pk svg {
+  animation: je7re9 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 40. LAUNCH: Liftoff with exhaust glow. Rises with brightness burst. */
+.si-icon-cell:hover .qhhgp5 svg,
+.icon-card:hover .qhhgp5 svg {
+  animation: nob0j6 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 41. ZOOM-IN: Lens iris bloom. Brightens and slightly enlarges. */
+.si-icon-cell:hover .rzoaek svg,
+.icon-card:hover .rzoaek svg {
+  animation: hjx7fm 0.5s ease forwards;
+  transform-origin: 40% 40%;
+}
+
+/* 42. ZOOM-OUT: Lens iris dim. Dims and slightly contracts. */
+.si-icon-cell:hover .pc1lka svg,
+.icon-card:hover .pc1lka svg {
+  animation: ylpzol 0.5s ease forwards;
+  transform-origin: 40% 40%;
+}
+
+/* 43. FIRST-PAGE: Book slam left. Whips to start with impact. */
+.si-icon-cell:hover .h52sei svg,
+.icon-card:hover .h52sei svg {
+  animation: lj1ycd 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 44. LAST-PAGE: Book slam right. Whips to end with impact. */
+.si-icon-cell:hover .y9ve0j svg,
+.icon-card:hover .y9ve0j svg {
+  animation: pg94h3 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 45. UNFOLD-MORE: Origami bloom. Grows vertically with 3D depth. */
+.si-icon-cell:hover .rsme7l svg,
+.icon-card:hover .rsme7l svg {
+  animation: dtb44r 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 46. UNFOLD-LESS: Origami crush. Compresses with 3D depth. */
+.si-icon-cell:hover .pxd7xb svg,
+.icon-card:hover .pxd7xb svg {
+  animation: liepoc 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 47. OPEN-IN-FULL: Supernova burst. Rapid expansion with glow. */
+.si-icon-cell:hover .tgs1m9 svg,
+.icon-card:hover .tgs1m9 svg {
+  animation: mamiki 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 48. CLOSE-FULLSCREEN: Black hole collapse. Rapid contraction with dim. */
+.si-icon-cell:hover .xztak0 svg,
+.icon-card:hover .xztak0 svg {
+  animation: plnkxp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 49. DOUBLE-ARROW: Speed demon. Stretches tall and blurs upward. */
+.si-icon-cell:hover .bvjfy0 svg,
+.icon-card:hover .bvjfy0 svg {
+  animation: iz1v0h 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 50. SUBDIRECTORY: L-path waterfall. Flows down then sweeps right. */
+.si-icon-cell:hover .iifsex svg,
+.icon-card:hover .iifsex svg {
+  animation: hzqdrk 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* ===================================================================
+   KEYFRAMES - Each uses a fundamentally different motion type
+   =================================================================== */
+
+/* ---- BATCH 1 KEYFRAMES ---- */
+
+/* 1. Book open: 3D perspective fold */
+@keyframes cr96dy {
+  0%   { transform: perspective(200px) rotateY(0deg); }
+  45%  { transform: perspective(200px) rotateY(-35deg); }
+  75%  { transform: perspective(200px) rotateY(8deg); }
+  100% { transform: perspective(200px) rotateY(0deg); }
+}
+
+/* 2. Flash snap: brightness burst + rotation */
+@keyframes lemm97 {
+  0%   { transform: rotate(0deg); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+  25%  { transform: rotate(45deg); filter: brightness(2) drop-shadow(0 0 8px rgba(239,68,68,0.5)); }
+  50%  { transform: rotate(90deg); filter: brightness(1.5) drop-shadow(0 0 4px rgba(239,68,68,0.3)); }
+  75%  { transform: rotate(88deg); filter: brightness(1) drop-shadow(0 0 2px rgba(239,68,68,0.15)); }
+  100% { transform: rotate(0deg); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+}
+
+/* 3. Motion blur left */
+@keyframes aaxhzt {
+  0%   { transform: translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  30%  { transform: translateX(-10px); filter: blur(2px) drop-shadow(0 0 4px rgba(96,165,250,0.3)); }
+  60%  { transform: translateX(-12px); filter: blur(0) drop-shadow(0 0 2px rgba(96,165,250,0.2)); }
+  80%  { transform: translateX(2px); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  100% { transform: translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+}
+
+/* 4. Motion blur right */
+@keyframes c0xfyq {
+  0%   { transform: translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  30%  { transform: translateX(10px); filter: blur(2px) drop-shadow(0 0 4px rgba(96,165,250,0.3)); }
+  60%  { transform: translateX(12px); filter: blur(0) drop-shadow(0 0 2px rgba(96,165,250,0.2)); }
+  80%  { transform: translateX(-2px); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  100% { transform: translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+}
+
+/* 5. Wall bounce left: hits and squashes */
+@keyframes tcecph {
+  0%   { transform: translateX(0) scaleX(1); }
+  25%  { transform: translateX(-8px) scaleX(1); }
+  40%  { transform: translateX(-9px) scaleX(0.7) scaleY(1.15); }
+  55%  { transform: translateX(-4px) scaleX(1.1) scaleY(0.95); }
+  75%  { transform: translateX(2px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+/* 6. Wall bounce right */
+@keyframes k2wlgq {
+  0%   { transform: translateX(0) scaleX(1); }
+  25%  { transform: translateX(8px) scaleX(1); }
+  40%  { transform: translateX(9px) scaleX(0.7) scaleY(1.15); }
+  55%  { transform: translateX(4px) scaleX(1.1) scaleY(0.95); }
+  75%  { transform: translateX(-2px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+/* 7. Gravity fall: accelerating downward with slight rotation */
+@keyframes cf6cr6 {
+  0%   { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0 0 transparent); }
+  20%  { transform: translateY(1px) rotate(0deg); }
+  50%  { transform: translateY(6px) rotate(3deg); }
+  70%  { transform: translateY(10px) rotate(5deg); filter: drop-shadow(0 0 4px rgba(96,165,250,0.3)); }
+  85%  { transform: translateY(-2px) rotate(-1deg); }
+  100% { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 8. Helium rise: gentle float upward with wobble */
+@keyframes xkruzg {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  20%  { transform: translateY(-2px) rotate(-2deg); }
+  40%  { transform: translateY(-7px) rotate(3deg); opacity: 0.85; }
+  60%  { transform: translateY(-10px) rotate(-2deg); opacity: 0.75; }
+  80%  { transform: translateY(-3px) rotate(1deg); opacity: 0.9; }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+
+/* 9. Heartbeat: two quick scale pulses */
+@keyframes nzw19p {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.2); }
+  24%  { transform: scale(1); }
+  36%  { transform: scale(1.15); }
+  48%  { transform: scale(0.95); }
+  65%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* 10. Orbit scan: traces a small circle */
+@keyframes jkgevt {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  15%  { transform: translate(4px, -3px) rotate(-8deg); }
+  30%  { transform: translate(6px, 1px) rotate(-15deg); }
+  50%  { transform: translate(3px, 5px) rotate(-22deg); }
+  70%  { transform: translate(-2px, 3px) rotate(-12deg); }
+  85%  { transform: translate(-3px, -1px) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* 11. Notch clicks: stepped rotation */
+@keyframes kvs8s1 {
+  0%   { transform: rotate(0deg); filter: drop-shadow(0 0 0 transparent); }
+  33%  { transform: rotate(20deg); filter: drop-shadow(0 0 3px rgba(148,163,184,0.3)); }
+  66%  { transform: rotate(40deg); filter: drop-shadow(0 0 4px rgba(148,163,184,0.4)); }
+  100% { transform: rotate(60deg); filter: drop-shadow(0 0 2px rgba(148,163,184,0.2)); }
+}
+
+/* 12. Domino cascade: perspective tilt forward */
+@keyframes y46cue {
+  0%   { transform: perspective(150px) rotateX(0deg); }
+  35%  { transform: perspective(150px) rotateX(25deg); }
+  55%  { transform: perspective(150px) rotateX(-10deg); }
+  75%  { transform: perspective(150px) rotateX(5deg); }
+  100% { transform: perspective(150px) rotateX(0deg); }
+}
+
+/* 13. Rubber band: horizontal squeeze-stretch */
+@keyframes z55l6b {
+  0%   { transform: scaleX(1) scaleY(1); }
+  20%  { transform: scaleX(1.3) scaleY(0.8); }
+  40%  { transform: scaleX(0.8) scaleY(1.2); }
+  60%  { transform: scaleX(1.15) scaleY(0.9); }
+  80%  { transform: scaleX(0.95) scaleY(1.04); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+/* 14a-c. Apps dot pulse variants */
+@keyframes usi85j {
+  0%   { transform: scale(1); opacity: 1; }
+  30%  { transform: scale(1.45); opacity: 0.6; }
+  55%  { transform: scale(0.85); opacity: 1; }
+  75%  { transform: scale(1.1); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes dvafrz {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  35%  { transform: scale(1.35) rotate(15deg); opacity: 0.65; }
+  60%  { transform: scale(0.9) rotate(-5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes r1oudt {
+  0%   { transform: scale(1); opacity: 1; }
+  20%  { transform: scale(1.3); opacity: 0.7; }
+  35%  { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.25); opacity: 0.75; }
+  70%  { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 15. Depth punch: z-axis zoom toward viewer */
+@keyframes ehml87 {
+  0%   { transform: perspective(200px) translateZ(0px); filter: drop-shadow(0 0 0 transparent); }
+  40%  { transform: perspective(200px) translateZ(30px); filter: drop-shadow(0 0 8px rgba(96,165,250,0.4)); }
+  65%  { transform: perspective(200px) translateZ(-5px); filter: drop-shadow(0 0 2px rgba(96,165,250,0.15)); }
+  100% { transform: perspective(200px) translateZ(0px); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 16. Funnel tighten: narrows with tilt */
+@keyframes us9zfm {
+  0%   { transform: scaleX(1) rotate(0deg); }
+  30%  { transform: scaleX(0.7) rotate(8deg); }
+  55%  { transform: scaleX(0.6) rotate(12deg); }
+  75%  { transform: scaleX(0.85) rotate(4deg); }
+  100% { transform: scaleX(1) rotate(0deg); }
+}
+
+/* 17. 3D flip X: full barrel roll on X axis */
+@keyframes gdame4 {
+  0%   { transform: perspective(300px) rotateX(0deg); }
+  50%  { transform: perspective(300px) rotateX(180deg); }
+  100% { transform: perspective(300px) rotateX(360deg); }
+}
+
+/* 18. Spin with catch: pause at midpoint */
+@keyframes jh2llx {
+  0%   { transform: rotate(0deg); }
+  35%  { transform: rotate(200deg); }
+  42%  { transform: rotate(195deg); }
+  52%  { transform: rotate(200deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 19. Peel up: corner lifts with 3D perspective */
+@keyframes qhwh3n {
+  0%   { transform: perspective(200px) rotateX(0deg) rotateZ(0deg); filter: drop-shadow(0 0 0 transparent); }
+  35%  { transform: perspective(200px) rotateX(-20deg) rotateZ(-5deg); filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+  60%  { transform: perspective(200px) rotateX(-25deg) rotateZ(-3deg); filter: drop-shadow(3px 5px 8px rgba(0,0,0,0.25)); }
+  80%  { transform: perspective(200px) rotateX(-5deg) rotateZ(-1deg); filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.1)); }
+  100% { transform: perspective(200px) rotateX(0deg) rotateZ(0deg); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 20. Levitate: lift off with shadow growth */
+@keyframes debbkc {
+  0%   { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0px 0px rgba(0,0,0,0)); }
+  25%  { transform: translateY(-5px) rotate(2deg); filter: drop-shadow(0 5px 6px rgba(0,0,0,0.15)); }
+  50%  { transform: translateY(-9px) rotate(-1deg); filter: drop-shadow(0 9px 10px rgba(0,0,0,0.22)); }
+  70%  { transform: translateY(-7px) rotate(0.5deg); filter: drop-shadow(0 7px 8px rgba(0,0,0,0.18)); }
+  85%  { transform: translateY(-2px) rotate(-0.3deg); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08)); }
+  100% { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0px 0px rgba(0,0,0,0)); }
+}
+
+
+/* ---- BATCH 2 KEYFRAMES ---- */
+
+/* 21. Rocket ignite: crouch then blast */
+@keyframes wba47p {
+  0%   { transform: translateY(0); filter: brightness(1); }
+  20%  { transform: translateY(4px) scaleY(0.9); filter: brightness(1); }
+  45%  { transform: translateY(-14px) scaleY(1.05); filter: brightness(1.4) drop-shadow(0 6px 8px rgba(251,191,36,0.4)); }
+  65%  { transform: translateY(-8px) scaleY(1); filter: brightness(1.1) drop-shadow(0 3px 4px rgba(251,191,36,0.2)); }
+  85%  { transform: translateY(-1px); filter: brightness(1); }
+  100% { transform: translateY(0); filter: brightness(1); }
+}
+
+/* 22. Parachute: gentle sway descent */
+@keyframes wizphe {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  15%  { transform: translateY(2px) rotate(5deg); }
+  30%  { transform: translateY(5px) rotate(-4deg); opacity: 0.9; }
+  45%  { transform: translateY(8px) rotate(3deg); }
+  60%  { transform: translateY(10px) rotate(-2deg); opacity: 0.85; }
+  75%  { transform: translateY(6px) rotate(1deg); }
+  90%  { transform: translateY(2px) rotate(-0.5deg); opacity: 0.95; }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+
+/* 23. Seesaw: pivot tilt back and forth */
+@keyframes ynqrwp {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-15deg); }
+  40%  { transform: rotate(12deg); }
+  55%  { transform: rotate(-8deg); }
+  70%  { transform: rotate(5deg); }
+  85%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 24. Pendulum: swings from top pivot */
+@keyframes mkbecx {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(20deg); }
+  35%  { transform: rotate(-18deg); }
+  50%  { transform: rotate(13deg); }
+  65%  { transform: rotate(-9deg); }
+  78%  { transform: rotate(5deg); }
+  90%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 25. Rewind whirl: CCW arc with blur */
+@keyframes o2hfaz {
+  0%   { transform: rotate(0deg) translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  25%  { transform: rotate(-20deg) translateX(-4px); filter: blur(1.5px) drop-shadow(0 0 4px rgba(251,191,36,0.3)); }
+  55%  { transform: rotate(-35deg) translateX(-2px); filter: blur(0.5px) drop-shadow(0 0 3px rgba(251,191,36,0.2)); }
+  80%  { transform: rotate(-5deg) translateX(1px); filter: blur(0); }
+  100% { transform: rotate(0deg) translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+}
+
+/* 26. Forward whirl: CW arc with blur */
+@keyframes rgvrj7 {
+  0%   { transform: rotate(0deg) translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+  25%  { transform: rotate(20deg) translateX(4px); filter: blur(1.5px) drop-shadow(0 0 4px rgba(251,191,36,0.3)); }
+  55%  { transform: rotate(35deg) translateX(2px); filter: blur(0.5px) drop-shadow(0 0 3px rgba(251,191,36,0.2)); }
+  80%  { transform: rotate(5deg) translateX(-1px); filter: blur(0); }
+  100% { transform: rotate(0deg) translateX(0); filter: blur(0) drop-shadow(0 0 0 transparent); }
+}
+
+/* 27. Door swing: 3D rotateY from left hinge */
+@keyframes zql5ne {
+  0%   { transform: perspective(200px) rotateY(0deg); }
+  40%  { transform: perspective(200px) rotateY(40deg); }
+  65%  { transform: perspective(200px) rotateY(-10deg); }
+  85%  { transform: perspective(200px) rotateY(3deg); }
+  100% { transform: perspective(200px) rotateY(0deg); }
+}
+
+/* 28. Venetian blind tilt: 3D rotateX tilt */
+@keyframes nbndxd {
+  0%   { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+  35%  { transform: perspective(200px) rotateX(30deg) scaleY(0.85); }
+  60%  { transform: perspective(200px) rotateX(-8deg) scaleY(1.05); }
+  100% { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+}
+
+/* 29. Spring compress: squash then over-extend */
+@keyframes uelnl2 {
+  0%   { transform: scaleY(1) scaleX(1); }
+  25%  { transform: scaleY(0.6) scaleX(1.2); }
+  50%  { transform: scaleY(1.3) scaleX(0.85); }
+  70%  { transform: scaleY(0.9) scaleX(1.05); }
+  85%  { transform: scaleY(1.05) scaleX(0.98); }
+  100% { transform: scaleY(1) scaleX(1); }
+}
+
+/* 30. Drawer slide: from off-screen left with ease */
+@keyframes lr6rab {
+  0%   { transform: translateX(-14px); opacity: 0.3; filter: blur(1px); }
+  40%  { transform: translateX(3px); opacity: 1; filter: blur(0); }
+  60%  { transform: translateX(-1px); opacity: 1; }
+  100% { transform: translateX(0); opacity: 1; filter: blur(0); }
+}
+
+/* 31. Snap right: magnetic acceleration */
+@keyframes r1vfpj {
+  0%   { transform: translateX(0) scaleX(1); filter: blur(0); }
+  15%  { transform: translateX(-2px) scaleX(1); }
+  45%  { transform: translateX(10px) scaleX(0.9); filter: blur(1.5px); }
+  65%  { transform: translateX(12px) scaleX(1.05); filter: blur(0); }
+  80%  { transform: translateX(1px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); filter: blur(0); }
+}
+
+/* 32. Snap left: magnetic acceleration */
+@keyframes fluw9s {
+  0%   { transform: translateX(0) scaleX(1); filter: blur(0); }
+  15%  { transform: translateX(2px) scaleX(1); }
+  45%  { transform: translateX(-10px) scaleX(0.9); filter: blur(1.5px); }
+  65%  { transform: translateX(-12px) scaleX(1.05); filter: blur(0); }
+  80%  { transform: translateX(-1px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); filter: blur(0); }
+}
+
+/* 33. Kaleidoscope: quick twist burst */
+@keyframes f4iuwc {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(45deg) scale(1.08); }
+  50%  { transform: rotate(90deg) scale(0.95); }
+  70%  { transform: rotate(92deg) scale(1.03); }
+  100% { transform: rotate(90deg) scale(1); }
+}
+
+/* 34. Typewriter: stepped slide-in */
+@keyframes ox3msm {
+  0%   { transform: translateX(-12px); opacity: 0.2; }
+  25%  { transform: translateX(-8px); opacity: 0.5; }
+  50%  { transform: translateX(-4px); opacity: 0.75; }
+  75%  { transform: translateX(-1px); opacity: 0.9; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* 35. 3D flip Y: coin flip on vertical axis */
+@keyframes c13nz6 {
+  0%   { transform: perspective(300px) rotateY(0deg); }
+  50%  { transform: perspective(300px) rotateY(180deg); }
+  100% { transform: perspective(300px) rotateY(360deg); }
+}
+
+/* 36. Jelly wobble: squash-stretch liquid feel */
+@keyframes iml6to {
+  0%   { transform: scaleX(1) scaleY(1) skewX(0deg); }
+  15%  { transform: scaleX(1.15) scaleY(0.85) skewX(3deg); }
+  30%  { transform: scaleX(0.85) scaleY(1.15) skewX(-3deg); }
+  45%  { transform: scaleX(1.1) scaleY(0.92) skewX(2deg); }
+  60%  { transform: scaleX(0.95) scaleY(1.05) skewX(-1deg); }
+  80%  { transform: scaleX(1.02) scaleY(0.98) skewX(0.5deg); }
+  100% { transform: scaleX(1) scaleY(1) skewX(0deg); }
+}
+
+/* 37. Zipper open: stretch vertical gap */
+@keyframes lugfg2 {
+  0%   { transform: scaleY(1); filter: drop-shadow(0 0 0 transparent); }
+  30%  { transform: scaleY(1.25); filter: drop-shadow(0 0 4px rgba(34,211,238,0.3)); }
+  50%  { transform: scaleY(1.35); filter: drop-shadow(0 0 6px rgba(34,211,238,0.4)); }
+  70%  { transform: scaleY(1.1); filter: drop-shadow(0 0 3px rgba(34,211,238,0.2)); }
+  100% { transform: scaleY(1); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 38. Shrink drift: shrinks and relocates to corner */
+@keyframes pt6zuo {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  35%  { transform: translate(5px, 5px) scale(0.7); opacity: 0.8; }
+  55%  { transform: translate(6px, 6px) scale(0.65); opacity: 0.75; }
+  75%  { transform: translate(3px, 3px) scale(0.85); opacity: 0.9; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+/* 39. Catapult: diagonal launch with trail */
+@keyframes je7re9 {
+  0%   { transform: translate(0, 0) rotate(0deg); filter: drop-shadow(0 0 0 transparent); }
+  20%  { transform: translate(-2px, 2px) rotate(-5deg); }
+  50%  { transform: translate(8px, -8px) rotate(12deg); filter: drop-shadow(-3px 3px 4px rgba(96,165,250,0.3)); }
+  70%  { transform: translate(3px, -3px) rotate(4deg); filter: drop-shadow(-1px 1px 2px rgba(96,165,250,0.15)); }
+  100% { transform: translate(0, 0) rotate(0deg); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 40. Liftoff with glow: rises with brightness burst */
+@keyframes nob0j6 {
+  0%   { transform: translateY(0) scale(1); filter: brightness(1); }
+  15%  { transform: translateY(3px) scale(0.95); filter: brightness(1); }
+  40%  { transform: translateY(-12px) scale(1.02); filter: brightness(1.6) drop-shadow(0 8px 10px rgba(251,191,36,0.4)); }
+  60%  { transform: translateY(-15px) scale(1); filter: brightness(1.3) drop-shadow(0 6px 6px rgba(251,191,36,0.25)); }
+  80%  { transform: translateY(-4px) scale(1); filter: brightness(1.05); }
+  100% { transform: translateY(0) scale(1); filter: brightness(1); }
+}
+
+/* 41. Iris bloom: brightens with focal zoom */
+@keyframes hjx7fm {
+  0%   { transform: scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+  30%  { transform: scale(1.12) rotate(-8deg); filter: brightness(1.4) drop-shadow(0 0 6px rgba(251,191,36,0.35)); }
+  55%  { transform: scale(1.18) rotate(-12deg); filter: brightness(1.6) drop-shadow(0 0 10px rgba(251,191,36,0.45)); }
+  75%  { transform: scale(1.05) rotate(-4deg); filter: brightness(1.15) drop-shadow(0 0 4px rgba(251,191,36,0.2)); }
+  100% { transform: scale(1) rotate(0deg); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+}
+
+/* 42. Iris dim: contracts with dimming */
+@keyframes ylpzol {
+  0%   { transform: scale(1) rotate(0deg); filter: brightness(1); }
+  30%  { transform: scale(0.88) rotate(8deg); filter: brightness(0.7); }
+  55%  { transform: scale(0.82) rotate(12deg); filter: brightness(0.5); }
+  75%  { transform: scale(0.95) rotate(4deg); filter: brightness(0.85); }
+  100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+}
+
+/* 43. Book slam left: fast whip with impact squash */
+@keyframes lj1ycd {
+  0%   { transform: translateX(0) scaleX(1); filter: blur(0); }
+  30%  { transform: translateX(-12px) scaleX(0.95); filter: blur(2px); }
+  50%  { transform: translateX(-14px) scaleX(0.8) scaleY(1.1); filter: blur(0); }
+  70%  { transform: translateX(-6px) scaleX(1.05); }
+  85%  { transform: translateX(1px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); filter: blur(0); }
+}
+
+/* 44. Book slam right */
+@keyframes pg94h3 {
+  0%   { transform: translateX(0) scaleX(1); filter: blur(0); }
+  30%  { transform: translateX(12px) scaleX(0.95); filter: blur(2px); }
+  50%  { transform: translateX(14px) scaleX(0.8) scaleY(1.1); filter: blur(0); }
+  70%  { transform: translateX(6px) scaleX(1.05); }
+  85%  { transform: translateX(-1px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); filter: blur(0); }
+}
+
+/* 45. Origami bloom: 3D unfold with perspective depth */
+@keyframes dtb44r {
+  0%   { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+  30%  { transform: perspective(200px) rotateX(-20deg) scaleY(1.2); }
+  55%  { transform: perspective(200px) rotateX(8deg) scaleY(1.3); }
+  75%  { transform: perspective(200px) rotateX(-3deg) scaleY(1.1); }
+  100% { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+}
+
+/* 46. Origami crush: 3D fold inward */
+@keyframes liepoc {
+  0%   { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+  30%  { transform: perspective(200px) rotateX(25deg) scaleY(0.7); }
+  55%  { transform: perspective(200px) rotateX(-8deg) scaleY(0.65); }
+  75%  { transform: perspective(200px) rotateX(3deg) scaleY(0.9); }
+  100% { transform: perspective(200px) rotateX(0deg) scaleY(1); }
+}
+
+/* 47. Supernova: expansion with bright glow burst */
+@keyframes mamiki {
+  0%   { transform: scale(1); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+  25%  { transform: scale(1.3); filter: brightness(1.8) drop-shadow(0 0 12px rgba(139,92,246,0.5)); }
+  45%  { transform: scale(1.4); filter: brightness(2) drop-shadow(0 0 16px rgba(139,92,246,0.6)); }
+  65%  { transform: scale(1.15); filter: brightness(1.3) drop-shadow(0 0 6px rgba(139,92,246,0.3)); }
+  85%  { transform: scale(0.97); filter: brightness(1.05); }
+  100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 0 transparent); }
+}
+
+/* 48. Black hole: collapse with dimming */
+@keyframes plnkxp {
+  0%   { transform: scale(1) rotate(0deg); filter: brightness(1); }
+  25%  { transform: scale(0.7) rotate(30deg); filter: brightness(0.6); }
+  45%  { transform: scale(0.5) rotate(60deg); filter: brightness(0.3); }
+  65%  { transform: scale(0.75) rotate(40deg); filter: brightness(0.7); }
+  85%  { transform: scale(0.95) rotate(10deg); filter: brightness(0.95); }
+  100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+}
+
+/* 49. Speed stretch: elongates vertically with motion blur */
+@keyframes iz1v0h {
+  0%   { transform: translateY(0) scaleY(1) scaleX(1); filter: blur(0); }
+  25%  { transform: translateY(-4px) scaleY(1.4) scaleX(0.8); filter: blur(1px); }
+  45%  { transform: translateY(-10px) scaleY(1.6) scaleX(0.7); filter: blur(2px); }
+  65%  { transform: translateY(-5px) scaleY(1.1) scaleX(0.95); filter: blur(0.5px); }
+  85%  { transform: translateY(-1px) scaleY(0.97) scaleX(1.01); filter: blur(0); }
+  100% { transform: translateY(0) scaleY(1) scaleX(1); filter: blur(0); }
+}
+
+/* 50. Waterfall: L-shaped flow path */
+@keyframes hzqdrk {
+  0%   { transform: translate(0, 0); filter: drop-shadow(0 0 0 transparent); opacity: 1; }
+  25%  { transform: translate(0, 7px); filter: drop-shadow(0 0 3px rgba(96,165,250,0.3)); opacity: 0.85; }
+  50%  { transform: translate(4px, 9px); filter: drop-shadow(0 0 5px rgba(96,165,250,0.4)); opacity: 0.8; }
+  70%  { transform: translate(8px, 5px); filter: drop-shadow(0 0 3px rgba(96,165,250,0.2)); opacity: 0.9; }
+  85%  { transform: translate(3px, 1px); opacity: 0.95; }
+  100% { transform: translate(0, 0); filter: drop-shadow(0 0 0 transparent); opacity: 1; }
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-kpi-card">
+  <!-- Card frame -->
+  <rect class="dc-frame" x="2" y="3" width="20" height="18" rx="2" fill="#3B82F6" fill-opacity="0.13" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.38"/>
+  <!-- Value block -->
+  <rect class="dc-value" x="5" y="6" width="8" height="4" rx="0.5" fill="#3B82F6" fill-opacity="1.00"/>
+  <!-- Label line -->
+  <line class="dc-label" x1="5" y1="13" x2="12" y2="13" stroke="#3B82F6" stroke-width="1" stroke-opacity="0.63" stroke-linecap="round"/>
+  <!-- Mini sparkline -->
+  <polyline class="dc-sparkline" points="5,18 8,16 11,17 14,15 17,16 19,14" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="1.00" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Up arrow indicator -->
+  <polyline class="dc-indicator" points="16,8 18,6 20,8" fill="none" stroke="#3B82F6" stroke-width="1" stroke-opacity="1.00" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

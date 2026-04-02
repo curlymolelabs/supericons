@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperIcons: Pro Tools &amp; Credit System Decision Record</title>
+<style>
+  :root { --bg: #0f0e0d; --surface: #1a1816; --card: #221f1c; --border: #3a342f; --text: #e8e0d8; --muted: #9a928a; --orange: #ff6b35; --green: #22c55e; --blue: #60a5fa; --red: #ef4444; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 40px 20px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 2rem; color: var(--orange); margin-bottom: 8px; }
+  .subtitle { color: var(--muted); margin-bottom: 40px; font-size: 0.9rem; }
+  h2 { font-size: 1.3rem; color: var(--text); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 1rem; color: var(--orange); margin: 20px 0 10px; }
+  p, li { color: var(--muted); font-size: 0.9rem; }
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text); }
+  code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; color: var(--orange); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+  .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .decision-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .decision-item .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+  .decision-item .value { font-size: 0.95rem; color: var(--text); font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+  .badge--decided { background: rgba(34,197,94,0.15); color: var(--green); }
+  .badge--tbd { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge--deferred { background: rgba(239,68,68,0.15); color: var(--red); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem; }
+  th { text-align: left; padding: 10px 12px; background: var(--surface); color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .highlight { background: rgba(255,107,53,0.06); border-left: 3px solid var(--orange); padding: 16px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .highlight p { margin-bottom: 0; }
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .tier { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+  .tier h4 { color: var(--text); margin-bottom: 8px; }
+  .tier .price { font-size: 1.4rem; color: var(--orange); font-weight: 700; margin-bottom: 12px; }
+  .tier ul { text-align: left; list-style: none; padding: 0; }
+  .tier li::before { content: "✓ "; color: var(--green); }
+  .tier--pro { border-color: var(--orange); }
+  .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.75rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Pro Tools &amp; Credit System</h1>
+<p class="subtitle">Decision Record. SuperIcons. April 1, 2026</p>
+
+<h2>1. Pro Tools Gatekeeping Strategy</h2>
+
+<div class="highlight">
+  <p><strong>Pattern: Taste-then-Lock.</strong> Let users experience the full creative loop, then gate the export. Sunk cost drives conversion.</p>
+</div>
+
+<div class="card">
+  <h3>What's Free vs. Pro</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Free</th><th>Pro</th></tr></thead>
+    <tbody>
+      <tr><td>Motion Lab UI (presets, sliders, color)</td><td>Full access</td><td>Full access</td></tr>
+      <tr><td>Animation preview</td><td>Full access</td><td>Full access</td></tr>
+      <tr><td>Download SVG</td><td>Locked</td><td>Unlimited</td></tr>
+      <tr><td>Copy CSS</td><td>Locked</td><td>Unlimited</td></tr>
+      <tr><td>AI Agent</td><td>3 free uses (lifetime)</td><td>Credit-based</td></tr>
+      <tr><td>Converter</td><td>Full access</td><td>Full access</td></tr>
+      <tr><td>Premium Collections</td><td>Browse only</td><td>1 pack credit/month</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>2. Credit System Architecture</h2>
+
+<div class="highlight">
+  <p><strong>Principle: Capability-based, not abstract currency.</strong> Users buy "5 AI generations" not "500 credits." Concrete bundles convert better than abstract tokens.</p>
+</div>
+
+<div class="card">
+  <h3>Credit Types</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Source</th><th>Expiry</th><th>Rollover</th></tr></thead>
+    <tbody>
+      <tr><td><code>PACK_CREDIT</code></td><td>1/month with Pro sub</td><td>6 months</td><td>No</td></tr>
+      <tr><td><code>AI_CREDIT</code></td><td>TBD/month with Pro sub</td><td>Monthly reset</td><td>No</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Schema: Append-only Ledger</h3>
+  <p>Credits tracked via immutable ledger, not mutable counters. Enables auditability and dispute resolution.</p>
+<pre style="background:var(--bg);padding:16px;border-radius:8px;color:var(--muted);font-size:0.8rem;overflow-x:auto;">
+credit_ledger
+  id          UUID PRIMARY KEY
+  user_id     UUID REFERENCES auth.users
+  credit_type TEXT ('PACK_CREDIT' | 'AI_CREDIT')
+  amount      INT  (+grant / -debit)
+  reason      TEXT ('monthly_grant' | 'pack_redeem' | 'ai_use' | 'purchase' | 'expired')
+  expires_at  TIMESTAMPTZ
+  created_at  TIMESTAMPTZ DEFAULT now()
+</pre>
+</div>
+
+<h2>3. A La Carte Pricing</h2>
+
+<div class="decision-grid">
+  <div class="decision-item">
+    <div class="label">Pricing Model</div>
+    <div class="value">Capability-based bundles <span class="badge badge--decided">Decided</span></div>
+  </div>
+  <div class="decision-item">
+    <div class="label">Credit Expiry</div>
+    <div class="value">12 months <span class="badge badge--decided">Decided</span></div>
+  </div>
+  <div class="decision-item">
+    <div class="label">AI Credit Price</div>
+    <div class="value">TBD after cost testing <span class="badge badge--tbd">TBD</span></div>
+  </div>
+  <div class="decision-item">
+    <div class="label">Purchase Flow</div>
+    <div class="value">Post-launch <span class="badge badge--deferred">Deferred</span></div>
+  </div>
+</div>
+
+<div class="highlight">
+  <p><strong>Crossover principle:</strong> A la carte should feel expensive relative to Pro. 3-4 months of heavy a la carte use should equal the cost of an annual subscription, creating a natural "I should just subscribe" moment.</p>
+</div>
+
+<h2>4. User Tiers</h2>
+
+<div class="tier-grid">
+  <div class="tier">
+    <h4>Free</h4>
+    <div class="price">$0</div>
+    <ul>
+      <li>21K+ free icons</li>
+      <li>Full Motion Lab UI</li>
+      <li>3 AI Agent uses</li>
+      <li>SVG/PNG converter</li>
+      <li>Browse premium packs</li>
+    </ul>
+  </div>
+  <div class="tier tier--pro">
+    <h4>Pro</h4>
+    <div class="price">$8/mo</div>
+    <ul>
+      <li>Everything in Free</li>
+      <li>Export SVG + CSS</li>
+      <li>AI Agent credits/mo</li>
+      <li>1 pack credit/month</li>
+      <li>Priority support</li>
+    </ul>
+  </div>
+  <div class="tier">
+    <h4>Pack Buyer</h4>
+    <div class="price">$9-19</div>
+    <ul>
+      <li>Specific pack forever</li>
+      <li>No AI credits</li>
+      <li>MCP API access</li>
+      <li>Commercial license</li>
+      <li>Bundle discounts</li>
+    </ul>
+  </div>
+</div>
+
+<h2>5. Implementation Timeline</h2>
+
+<table>
+  <thead><tr><th>Phase</th><th>What</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Now</td><td>Schema design (credit_ledger table)</td><td><span class="badge badge--tbd">Ready to build</span></td></tr>
+    <tr><td>Next</td><td>AI Agent MVP (test cost per generation)</td><td><span class="badge badge--tbd">Planning</span></td></tr>
+    <tr><td>After AI Agent</td><td>Set credit allocation based on real costs</td><td><span class="badge badge--deferred">Blocked</span></td></tr>
+    <tr><td>Post-launch</td><td>A la carte purchase flow via Stripe</td><td><span class="badge badge--deferred">Deferred</span></td></tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  SuperIcons by Curly Mole Labs. Decision record generated April 1, 2026.
+</div>
+
+</div>
+</body>
+</html>

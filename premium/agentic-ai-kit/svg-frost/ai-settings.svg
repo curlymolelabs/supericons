@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <!-- Glass background gradient -->
+    <linearGradient id="aisettings_bg" x1="20" y1="8" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1e3a5f" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#0d1b2a" stop-opacity="0.95"/>
+    </linearGradient>
+    <!-- Border gradient (frosted edge) -->
+    <linearGradient id="aisettings_border" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- Inner glow -->
+    <radialGradient id="aisettings_glow" cx="60" cy="50" r="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#90CAF9" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#90CAF9" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Specular highlight (top shine) -->
+    <linearGradient id="aisettings_shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clip for squircle -->
+    <clipPath id="aisettings_clip">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+    <!-- Drop shadow filter -->
+    <filter id="aisettings_shadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#64B5F6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Ambient shadow -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="transparent" filter="url(#aisettings_shadow)"/>
+
+  <!-- Layer 2: Glass background -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#aisettings_bg)"/>
+
+  <!-- Layer 3: Frosted border -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="none" stroke="url(#aisettings_border)" stroke-width="1"/>
+
+  <!-- Layer 4: Inner glow -->
+  <circle cx="60" cy="50" r="50" fill="url(#aisettings_glow)" clip-path="url(#aisettings_clip)"/>
+
+  <!-- Layer 5: Specular top shine -->
+  <rect x="4" y="4" width="112" height="56" fill="url(#aisettings_shine)" clip-path="url(#aisettings_clip)"/>
+
+  <!-- Layer 6: Icon (scaled from 256x256 to 64x64, centered in glass) -->
+  <g transform="translate(28, 28) scale(0.25)" fill="#64B5F6" fill-opacity="0.9">
+    <path d="M216 130.16q.06-2.16 0-4.32l14.92-18.64a8 8 0 0 0 1.48-7.06a107.6 107.6 0 0 0-10.88-26.25a8 8 0 0 0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186 40.54a8 8 0 0 0-3.94-6a107.3 107.3 0 0 0-26.25-10.86a8 8 0 0 0-7.06 1.48L130.16 40h-4.32L107.2 25.11a8 8 0 0 0-7.06-1.48a107.6 107.6 0 0 0-26.25 10.88a8 8 0 0 0-3.93 6l-2.64 23.76q-1.56 1.49-3 3L40.54 70a8 8 0 0 0-6 3.94a107.7 107.7 0 0 0-10.87 26.25a8 8 0 0 0 1.49 7.06L40 125.84v4.32L25.11 148.8a8 8 0 0 0-1.48 7.06a107.6 107.6 0 0 0 10.88 26.25a8 8 0 0 0 6 3.93l23.72 2.64q1.49 1.56 3 3L70 215.46a8 8 0 0 0 3.94 6a107.7 107.7 0 0 0 26.25 10.87a8 8 0 0 0 7.06-1.49L125.84 216q2.16.06 4.32 0l18.64 14.92a8 8 0 0 0 7.06 1.48a107.2 107.2 0 0 0 26.25-10.88a8 8 0 0 0 3.93-6l2.64-23.72q1.56-1.48 3-3l23.78-2.8a8 8 0 0 0 6-3.94a107.7 107.7 0 0 0 10.87-26.25a8 8 0 0 0-1.49-7.06ZM128 168a40 40 0 1 1 40-40a40 40 0 0 1-40 40"/>
+  </g>
+</svg>

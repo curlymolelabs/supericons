@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Icon Bundle: Design Workflow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e; --surface: #1a1919; --surface-high: #201f1f;
+            --text: #ffffff; --text-muted: #adaaaa; --text-dim: #767575;
+            --primary: #FF4F00; --primary-soft: #ff906c;
+            --green: #4ade80; --yellow: #fbbf24; --purple: #c084fc;
+            --border: #484847; --radius: 0.5rem;
+        }
+        body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 3rem 2rem; max-width: 960px; margin: 0 auto; }
+        h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.03em; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem; color: var(--primary); }
+        h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-soft); }
+        h4 { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 1.25rem; margin-bottom: 0.4rem; }
+        p, li { color: var(--text-muted); font-size: 0.9rem; }
+        p { margin-bottom: 0.75rem; }
+        strong { color: var(--text); }
+        ul, ol { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        li { margin-bottom: 0.35rem; }
+        hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
+        a { color: var(--primary); text-decoration: none; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        th { font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; color: var(--text-dim); text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+        td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(72,72,71,0.2); color: var(--text-muted); vertical-align: top; }
+        tr:hover td { background: var(--surface); }
+        .num { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: #000; width: 1.6rem; height: 1.6rem; border-radius: 50%; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; margin-right: 0.5rem; }
+        .verdict { background: var(--surface); border-left: 3px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.5rem 0; }
+        .verdict p { margin: 0; }
+        .phase-tag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.2em 0.6em; border-radius: 9999px; margin-left: 0.5rem; vertical-align: middle; }
+        .phase-empathize { background: rgba(192,132,252,0.15); color: var(--purple); border: 1px solid rgba(192,132,252,0.3); }
+        .phase-define { background: rgba(251,191,36,0.15); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+        .phase-ideate { background: rgba(255,79,0,0.15); color: var(--primary-soft); border: 1px solid rgba(255,79,0,0.3); }
+        .phase-prototype { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+        .phase-test { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+        .gate { background: var(--surface-high); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; }
+        .gate::before { content: 'SOCRATIC GATE'; display: block; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; color: var(--yellow); margin-bottom: 0.4rem; }
+        .gate p { margin: 0; font-style: italic; }
+        code { background: var(--surface-high); padding: 0.15em 0.4em; border-radius: 3px; font-size: 0.82em; }
+        .step-grid { display: grid; grid-template-columns: 2.5rem 1fr; gap: 0 1rem; align-items: start; margin: 1rem 0; }
+        .step-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--primary); line-height: 1.2; }
+        .step-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 0.5rem; }
+        .hero-sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.25rem 0; }
+        .checklist li::before { content: ''; width: 14px; height: 14px; border: 1px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 0.2rem; }
+        @media (max-width: 600px) { body { padding: 2rem 1rem; } h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+
+<h1>Premium Icon Bundle</h1>
+<p class="hero-sub">Design Workflow: 10-Step Process</p>
+<p class="hero-sub">IDEO Design Thinking + Socratic Prompting</p>
+
+<hr>
+
+<!-- PHASE 1: EMPATHIZE -->
+<h2>Phase 1: Empathize <span class="phase-tag phase-empathize">Who and Why</span></h2>
+
+<div class="step-grid">
+    <span class="step-num">01</span>
+    <div>
+        <div class="step-title">Define the Buyer Persona</div>
+        <p>Before drawing a single pixel, answer:</p>
+        <ul>
+            <li><strong>Who</strong> is buying this bundle? (e.g., "indie dev building an agentic AI tool")</li>
+            <li><strong>What stack</strong> are they using? (React? Flutter? Figma?)</li>
+            <li><strong>What design skill</strong> do they have? (Can they modify SVGs?)</li>
+            <li><strong>What are they building?</strong> (SaaS dashboard? Mobile app?)</li>
+            <li><strong>Budget sensitivity?</strong> ($19 impulse buy vs. $49 considered purchase)</li>
+        </ul>
+        <p><strong>Deliverable:</strong> A one-paragraph buyer brief.</p>
+    </div>
+</div>
+
+<div class="step-grid">
+    <span class="step-num">02</span>
+    <div>
+        <div class="step-title">Map the Buyer's Journey</div>
+        <p>Walk through the user's actual app and identify where icons appear:</p>
+        <p><code>Launch &rarr; Sidebar Nav &rarr; Dashboard &rarr; Data Display &rarr; Settings &rarr; Empty States &rarr; Errors &rarr; Onboarding</code></p>
+        <p>For each screen, ask: What icons does this screen require? What "gap" icons do not exist in any free library?</p>
+        <p><strong>Deliverable:</strong> A screen-by-screen icon inventory.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PHASE 2: DEFINE -->
+<h2>Phase 2: Define <span class="phase-tag phase-define">What Exactly</span></h2>
+
+<div class="step-grid">
+    <span class="step-num">03</span>
+    <div>
+        <div class="step-title">List Every Icon Needed</div>
+        <p>Create a flat list grouped by function. Target: <strong>30-50 icons</strong> per bundle.</p>
+        <table>
+            <thead><tr><th>Group</th><th>Example Icons</th><th>Count</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Navigation</strong></td><td>home, menu, back, search, close, settings</td><td>6</td></tr>
+                <tr><td><strong>Status</strong></td><td>success, error, warning, info, loading, offline</td><td>6</td></tr>
+                <tr><td><strong>Actions</strong></td><td>add, edit, delete, save, copy, share, download</td><td>7</td></tr>
+                <tr><td><strong>Domain-Specific</strong></td><td>(unique to this bundle's theme)</td><td>10-15</td></tr>
+                <tr><td><strong>Empty States</strong></td><td>no-data, no-results, first-time, maintenance</td><td>4</td></tr>
+            </tbody>
+        </table>
+        <div class="gate"><p>"Does this icon already exist in the free Supericons library in a matching style? If yes, do not include it. The bundle must contain icons you cannot trivially find for free."</p></div>
+    </div>
+</div>
+
+<div class="step-grid">
+    <span class="step-num">04</span>
+    <div>
+        <div class="step-title">Define the Visual Brief</div>
+        <p>Lock down ALL design parameters before any icon is drawn:</p>
+        <table>
+            <thead><tr><th>Parameter</th><th>Options</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Grid</strong></td><td>24x24 or 20x20</td></tr>
+                <tr><td><strong>Stroke width</strong></td><td>1px (thin), 1.5px (standard), 2px (bold)</td></tr>
+                <tr><td><strong>Corner radius</strong></td><td>Sharp (0), Slight (1px), Rounded (2px), Full</td></tr>
+                <tr><td><strong>Cap style</strong></td><td>Round, Square, or Butt</td></tr>
+                <tr><td><strong>Join style</strong></td><td>Round, Miter, or Bevel</td></tr>
+                <tr><td><strong>Fill style</strong></td><td>Outline, Solid, Duotone, or Mixed</td></tr>
+                <tr><td><strong>Style reference</strong></td><td>"Like Lucide", "Like SF Symbols", "Like Phosphor Thin"</td></tr>
+            </tbody>
+        </table>
+        <div class="gate"><p>"If I place any 3 icons from this set side by side, do they look like they were designed by the same person in the same session?"</p></div>
+        <p><strong>Deliverable:</strong> A one-page visual spec sheet with a reference "key icon."</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PHASE 3: IDEATE -->
+<h2>Phase 3: Ideate <span class="phase-tag phase-ideate">Design the Proof</span></h2>
+
+<div class="step-grid">
+    <span class="step-num">05</span>
+    <div>
+        <div class="step-title">Draw the Key Icon</div>
+        <p>Pick the single most representative icon and design it first. This icon establishes the stroke weight, padding, corner radius, and detail level for the entire set.</p>
+        <ol>
+            <li>Set up a 24x24 artboard with 2px padding zone (20x20 live area)</li>
+            <li>Draw using paths only (no text, no embedded images)</li>
+            <li>Preview at 16px, 24px, 32px, 48px for legibility</li>
+            <li>Test on dark (#111) and light (#faf8f4) backgrounds</li>
+        </ol>
+        <div class="gate"><p>"At 16x16, can a user still identify what this icon represents without a label?"</p></div>
+    </div>
+</div>
+
+<div class="step-grid">
+    <span class="step-num">06</span>
+    <div>
+        <div class="step-title">Draw 5 Proof Icons</div>
+        <p>Before committing to 30-50, draw 5 more spanning different structural types:</p>
+        <table>
+            <thead><tr><th>Type</th><th>Example</th><th>Tests</th></tr></thead>
+            <tbody>
+                <tr><td>Simple geometric</td><td>circle-check, square</td><td>Stroke consistency</td></tr>
+                <tr><td>Complex composite</td><td>dashboard (multi-shape)</td><td>Visual weight balance</td></tr>
+                <tr><td>Organic/curved</td><td>leaf, brain, cloud</td><td>Corner radius consistency</td></tr>
+                <tr><td>Directional</td><td>arrow, chevron, send</td><td>Optical alignment</td></tr>
+                <tr><td>Text-adjacent</td><td>alert-badge, notification</td><td>Small detail legibility</td></tr>
+            </tbody>
+        </table>
+        <div class="gate"><p>"Do these 6 icons feel like a family? Could I swap any one for a Lucide icon and it would look out of place?" If a free icon blends in, your style is not differentiated enough to charge for.</p></div>
+    </div>
+</div>
+
+<hr>
+
+<!-- PHASE 4: PROTOTYPE -->
+<h2>Phase 4: Prototype <span class="phase-tag phase-prototype">Full Production</span></h2>
+
+<div class="step-grid">
+    <span class="step-num">07</span>
+    <div>
+        <div class="step-title">Produce the Full Set</div>
+        <p>Per-icon production checklist:</p>
+        <ul class="checklist">
+            <li>Drawn on correct grid (24x24 with 2px padding)</li>
+            <li>Stroke width matches spec</li>
+            <li>Corner radius matches spec</li>
+            <li>All paths properly closed</li>
+            <li>No stray points or invisible paths</li>
+            <li>Icon centered horizontally and vertically</li>
+            <li><code>viewBox="0 0 24 24"</code> set correctly</li>
+            <li><code>fill="none" stroke="currentColor"</code> for outline icons</li>
+            <li>Preview at 16px, 24px, 48px: all legible</li>
+            <li>Dark and light background tests pass</li>
+        </ul>
+    </div>
+</div>
+
+<div class="step-grid">
+    <span class="step-num">08</span>
+    <div>
+        <div class="step-title">Optimize and Export</div>
+        <p><strong>SVG Optimization:</strong> SVGO cleanup, strip fixed width/height, ensure <code>stroke="currentColor"</code>, remove inline styles, validate in browser.</p>
+        <p><strong>Bundle contents:</strong></p>
+        <table>
+            <thead><tr><th>Folder</th><th>Contents</th></tr></thead>
+            <tbody>
+                <tr><td><code>/svg/</code></td><td>All raw optimized SVGs</td></tr>
+                <tr><td><code>/react/</code></td><td>JSX components (auto-generated)</td></tr>
+                <tr><td><code>/vue/</code></td><td>SFC components</td></tr>
+                <tr><td><code>preview.html</code></td><td>Visual grid gallery</td></tr>
+                <tr><td><code>LICENSE.md</code></td><td>Proprietary license</td></tr>
+                <tr><td><code>README.md</code></td><td>Usage guide</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr>
+
+<!-- PHASE 5: TEST -->
+<h2>Phase 5: Test <span class="phase-tag phase-test">Validate and Ship</span></h2>
+
+<div class="step-grid">
+    <span class="step-num">09</span>
+    <div>
+        <div class="step-title">Quality Audit</div>
+        <p><strong>Visual audit:</strong> Print all icons on one sheet at 4x. Circle any that feel "off." Show to 2-3 people: "Do these look like one set?"</p>
+        <p><strong>Technical audit:</strong></p>
+        <ul class="checklist">
+            <li>All SVGs valid XML</li>
+            <li>All use <code>currentColor</code> (no hardcoded hex)</li>
+            <li>Consistent <code>viewBox</code></li>
+            <li>No icon exceeds 2KB (target: under 500 bytes)</li>
+            <li>Total ZIP under 500KB</li>
+        </ul>
+        <div class="gate"><p>"Would I pay $29 for this bundle if I found it on Gumroad?" If the honest answer is "maybe," add more icons or improve quality until the answer is "yes, immediately."</p></div>
+    </div>
+</div>
+
+<div class="step-grid">
+    <span class="step-num">10</span>
+    <div>
+        <div class="step-title">Package and List</div>
+        <p><strong>Listing requirements:</strong></p>
+        <ul>
+            <li>Hero image: 1200x630, 12-16 icons on dark grid</li>
+            <li>Bundle name, description, icon count, formats</li>
+            <li>Live preview in Supericons app ("Premium" library filter)</li>
+            <li>Price: $19-29 individual, $49-79 team/unlimited</li>
+        </ul>
+    </div>
+</div>
+
+<hr>
+
+<h2>Summary</h2>
+<table>
+    <thead><tr><th>#</th><th>Step</th><th>Phase</th><th>Deliverable</th></tr></thead>
+    <tbody>
+        <tr><td>01</td><td>Define buyer persona</td><td style="color:var(--purple)">Empathize</td><td>One-paragraph buyer brief</td></tr>
+        <tr><td>02</td><td>Map buyer's journey</td><td style="color:var(--purple)">Empathize</td><td>Screen-by-screen icon inventory</td></tr>
+        <tr><td>03</td><td>List every icon needed</td><td style="color:var(--yellow)">Define</td><td>Grouped icon list (30-50)</td></tr>
+        <tr><td>04</td><td>Define visual brief</td><td style="color:var(--yellow)">Define</td><td>One-page spec sheet</td></tr>
+        <tr><td>05</td><td>Draw the key icon</td><td style="color:var(--primary-soft)">Ideate</td><td>1 reference icon</td></tr>
+        <tr><td>06</td><td>Draw 5 proof icons</td><td style="color:var(--primary-soft)">Ideate</td><td>6-icon proof sheet</td></tr>
+        <tr><td>07</td><td>Produce full set</td><td style="color:var(--green)">Prototype</td><td>All 30-50 icons</td></tr>
+        <tr><td>08</td><td>Optimize and export</td><td style="color:var(--green)">Prototype</td><td>Multi-format bundle</td></tr>
+        <tr><td>09</td><td>Quality audit</td><td style="color:#38bdf8">Test</td><td>Audit checklist passed</td></tr>
+        <tr><td>10</td><td>Package and list</td><td style="color:#38bdf8">Test</td><td>ZIP + listing assets</td></tr>
+    </tbody>
+</table>
+
+<br>
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    Supericons Premium Bundle Workflow, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

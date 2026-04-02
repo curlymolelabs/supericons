@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Premium Collection Mockup | Supericons</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 40px;
+      margin: 0;
+    }
+    .header {
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      margin: 0 0 10px 0;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+      max-width: 800px;
+    }
+    .icon-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .icon-card:hover {
+      background: #334155;
+      transform: translateY(-2px);
+    }
+    /* Sizing per collection-production.md */
+    .collection-detail__icon-preview {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .collection-detail__icon-preview svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 1.5; /* Minimalist aesthetic / 1.5 thin lines */
+      stroke: var(--text);
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .icon-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Workflow Specific CSS: collection-production.md & icon-curation.md */
+    .si-anim svg {
+      overflow: visible; /* Needed for transform scaling without clipping */
+    }
+
+    /* Global Glow + Stroke Color for all icons on hover */
+    .icon-card:hover .si-anim svg {
+      filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.5));
+      stroke: var(--accent);
+    }
+
+    /* 1. Heart (double beat) */
+    .si-anim--heart .mk-heart { transform-origin: center; }
+    .icon-card:hover .si-anim--heart .mk-heart {
+      animation: mk-double-beat 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes mk-double-beat {
+      0% { transform: scale(1); }
+      20% { transform: scale(1.25); }
+      40% { transform: scale(0.9); }
+      60% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* 2. Message Circle (bob + dot cascade) */
+    .si-anim--message .mk-bubble { transform-origin: bottom center; }
+    .si-anim--message .mk-dot { opacity: 0; transform: translateY(4px); transform-origin: center; stroke: none; fill: var(--text); }
+    .icon-card:hover .si-anim--message .mk-bubble { animation: mk-bob 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .icon-card:hover .si-anim--message .mk-dot { fill: var(--accent); }
+    .icon-card:hover .si-anim--message .mk-dot-1 { animation: mk-pop-dot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards; }
+    .icon-card:hover .si-anim--message .mk-dot-2 { animation: mk-pop-dot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards; }
+    .icon-card:hover .si-anim--message .mk-dot-3 { animation: mk-pop-dot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; }
+    @keyframes mk-bob {
+      30% { transform: scaleY(0.9) translateY(2px); }
+      70% { transform: scaleY(1.05) translateY(-2px); }
+      100% { transform: scaleY(1) translateY(0); }
+    }
+    @keyframes mk-pop-dot { to { opacity: 1; transform: translateY(0); } }
+
+    /* 3. Send (fly out and in with overshoot) */
+    .si-anim--send .mk-arrow { transform-origin: center; }
+    .icon-card:hover .si-anim--send .mk-arrow {
+      animation: mk-fly 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes mk-fly {
+      25% { transform: translate(10px, -10px) scale(0.8); opacity: 0; }
+      26% { transform: translate(-10px, 10px) scale(0.8); opacity: 0; }
+      70% { transform: translate(2px, -2px) scale(1.05); opacity: 1; }
+      100% { transform: translate(0, 0) scale(1); opacity: 1; }
+    }
+
+    /* 4. Bell (ring with independent clapper swinging counter) */
+    .si-anim--bell .mk-bell { transform-origin: top center; }
+    .si-anim--bell .mk-clapper { transform-origin: top center; }
+    .icon-card:hover .si-anim--bell .mk-bell { animation: mk-ring-bell 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .icon-card:hover .si-anim--bell .mk-clapper { animation: mk-ring-clapper 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes mk-ring-bell {
+      20% { transform: rotate(15deg); } 40% { transform: rotate(-15deg); } 60% { transform: rotate(10deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0); }
+    }
+    @keyframes mk-ring-clapper {
+      20% { transform: translateX(-2px); } 40% { transform: translateX(2px); } 60% { transform: translateX(-1px); } 80% { transform: translateX(1px); } 100% { transform: translateX(0); }
+    }
+
+    /* 5. User Plus (user bobs, plus rotates in) */
+    .si-anim--user-plus .mk-head { transform-origin: center; }
+    .si-anim--user-plus .mk-plus { stroke-dasharray: 10; stroke-dashoffset: 10; transform-origin: 20px 11px; }
+    .icon-card:hover .si-anim--user-plus .mk-head { animation: mk-nod 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .icon-card:hover .si-anim--user-plus .mk-plus { animation: mk-spin-plus 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards; }
+    @keyframes mk-nod { 40% { transform: translateY(-3px); } 100% { transform: translateY(0); } }
+    @keyframes mk-spin-plus { 0% { stroke-dashoffset: 10; transform: rotate(-90deg) scale(0); } 100% { stroke-dashoffset: 0; transform: rotate(0) scale(1); } }
+
+    /* 6. Settings (elastic spin) */
+    .si-anim--settings .mk-gear { transform-origin: center; }
+    .icon-card:hover .si-anim--settings .mk-gear {
+      animation: mk-elastic-spin 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+    @keyframes mk-elastic-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(180deg); }
+    }
+
+    /* 7. Search (scan around) */
+    .si-anim--search svg { transform-origin: center; }
+    .icon-card:hover .si-anim--search svg { animation: mk-scan 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes mk-scan {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-3px, -3px) scale(0.9); }
+      50% { transform: translate(3px, 3px) scale(0.9); }
+      75% { transform: translate(0, 0) scale(1.15); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* 8. Star (sparkle draw + rotation) */
+    .si-anim--star .mk-star { stroke-dasharray: 100; stroke-dashoffset: 0; transform-origin: center; }
+    .icon-card:hover .si-anim--star .mk-star {
+      animation: mk-sparkle 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes mk-sparkle {
+      0% { stroke-dashoffset: 100; transform: scale(0.5) rotate(-45deg); opacity: 0; }
+      40% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+      100% { stroke-dashoffset: 0; transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    /* 9. Mail (squish body, flap open) */
+    .si-anim--mail .mk-flap { transform-origin: top; }
+    .si-anim--mail .mk-envelope { transform-origin: bottom; }
+    .icon-card:hover .si-anim--mail .mk-envelope { animation: mk-squish 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .icon-card:hover .si-anim--mail .mk-flap { animation: mk-mail-open 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes mk-squish { 30% { transform: scaleY(0.9); } 100% { transform: scaleY(1); } }
+    @keyframes mk-mail-open { 30% { transform: translateY(-3px) scaleY(0.5); opacity: 0.7; } 100% { transform: translateY(0) scaleY(1); opacity: 1; } }
+
+    /* 10. Link (slam and connect) */
+    .si-anim--link .mk-chain-1 { transform-origin: center; }
+    .si-anim--link .mk-chain-2 { transform-origin: center; }
+    .icon-card:hover .si-anim--link .mk-chain-1 { animation: mk-slam-1 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .icon-card:hover .si-anim--link .mk-chain-2 { animation: mk-slam-2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes mk-slam-1 { 30% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 100% { transform: translate(0, 0); } }
+    @keyframes mk-slam-2 { 30% { transform: translate(2px, 2px); } 60% { transform: translate(-2px, -2px); } 100% { transform: translate(0, 0); } }
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Supericons Mockup Collection</h1>
+    <p style="color:var(--text-muted); max-width:600px; line-height: 1.5;">
+      10 curated layout icons demonstrating the Socratic animation workflows and premium CSS implementation rules.
+      Hover over each icon to view the 0.3s–0.8s responsive micro-animations and filtered drop-shadows.
+    </p>
+  </div>
+
+  <div class="collection-grid">
+    
+    <!-- 1. Heart -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--heart">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-heart" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </div>
+      <div class="icon-name">heart</div>
+    </div>
+
+    <!-- 2. Message Circle -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--message">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-bubble" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          <circle class="mk-dot mk-dot-1" cx="8" cy="12" r="1.5"></circle>
+          <circle class="mk-dot mk-dot-2" cx="12" cy="12" r="1.5"></circle>
+          <circle class="mk-dot mk-dot-3" cx="16" cy="12" r="1.5"></circle>
+        </svg>
+      </div>
+      <div class="icon-name">message-circle</div>
+    </div>
+
+    <!-- 3. Send -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--send">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-arrow" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+      </div>
+      <div class="icon-name">send</div>
+    </div>
+
+    <!-- 4. Bell -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--bell">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-bell" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path class="mk-clapper" d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+      </div>
+      <div class="icon-name">bell</div>
+    </div>
+
+    <!-- 5. User Plus -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--user-plus">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-user" d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle class="mk-head" cx="8.5" cy="7" r="4"></circle>
+          <line class="mk-plus" x1="20" y1="8" x2="20" y2="14"></line>
+          <line class="mk-plus" x1="23" y1="11" x2="17" y2="11"></line>
+        </svg>
+      </div>
+      <div class="icon-name">user-plus</div>
+    </div>
+
+    <!-- 6. Settings -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--settings">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path class="mk-gear" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </div>
+      <div class="icon-name">settings</div>
+    </div>
+
+    <!-- 7. Search -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--search">
+        <svg viewBox="0 0 24 24">
+          <circle class="mk-glass" cx="11" cy="11" r="8"></circle>
+          <line class="mk-handle" x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <div class="icon-name">search</div>
+    </div>
+
+    <!-- 8. Star -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--star">
+        <svg viewBox="0 0 24 24">
+          <polygon class="mk-star" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </div>
+      <div class="icon-name">star</div>
+    </div>
+
+    <!-- 9. Mail -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--mail">
+        <svg viewBox="0 0 24 24">
+          <rect class="mk-envelope" x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+          <path class="mk-flap" d="M22 4l-10 8L2 4"></path>
+        </svg>
+      </div>
+      <div class="icon-name">mail</div>
+    </div>
+
+    <!-- 10. Link -->
+    <div class="icon-card">
+      <div class="collection-detail__icon-preview si-anim si-anim--link">
+        <svg viewBox="0 0 24 24">
+          <path class="mk-chain-1" d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path class="mk-chain-2" d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+      </div>
+      <div class="icon-name">link</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

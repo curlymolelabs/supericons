@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperIcons Analytics Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0e0e0e; color: #e0e0e0; padding: 2rem; line-height: 1.6; }
+        h1 { color: #ff6b35; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        h2 { color: #ff6b35; margin: 2rem 0 0.75rem; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+        h3 { color: #ccc; margin: 1.2rem 0 0.5rem; font-size: 1.05rem; }
+        a { color: #ff6b35; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+        th, td { text-align: left; padding: 0.5rem 0.75rem; border: 1px solid #333; font-size: 0.9rem; }
+        th { background: #1a1a1a; color: #ff6b35; font-weight: 600; }
+        td { background: #141414; }
+        code { background: #1a1a1a; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; color: #ff9966; }
+        pre { background: #1a1a1a; padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0.75rem 0; }
+        pre code { padding: 0; background: none; }
+        .badge { display: inline-block; background: #ff6b35; color: #0e0e0e; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .card { background: #141414; border: 1px solid #333; border-radius: 8px; padding: 1.25rem; margin: 1rem 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .step { counter-increment: step; }
+        .step::before { content: counter(step) ". "; color: #ff6b35; font-weight: 700; }
+        ol { counter-reset: step; list-style: none; padding: 0; }
+        ol li { padding: 0.3rem 0; }
+        .container { max-width: 900px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<h1>SuperIcons Analytics Guide</h1>
+<p style="color:#888; margin-bottom: 1.5rem;">Reference for Umami Cloud integration. Bookmark this page.</p>
+
+<div class="card">
+    <h3>Quick Access</h3>
+    <p><strong>Dashboard:</strong> <a href="https://cloud.umami.is" target="_blank">cloud.umami.is</a></p>
+    <p><strong>Login:</strong> mrcurlymole@gmail.com</p>
+    <p><strong>Data Region:</strong> United States</p>
+    <p><strong>Limit:</strong> 10,000 pageviews/month <span class="badge">FREE</span></p>
+</div>
+
+<h2>What Is Being Tracked</h2>
+
+<h3>Automatic (built-in)</h3>
+<table>
+    <tr><th>Metric</th><th>Description</th></tr>
+    <tr><td>Page views</td><td>Total and unique page loads</td></tr>
+    <tr><td>Visitors</td><td>Unique visitors (cookie-free)</td></tr>
+    <tr><td>Bounce rate</td><td>% who leave without interaction</td></tr>
+    <tr><td>Referrers</td><td>Where traffic comes from</td></tr>
+    <tr><td>Countries</td><td>Visitor geography</td></tr>
+    <tr><td>Devices</td><td>Desktop vs mobile vs tablet</td></tr>
+    <tr><td>Real-time</td><td>Live active visitors</td></tr>
+</table>
+
+<h3>Custom Events (coded in main.js)</h3>
+<table>
+    <tr><th>Event</th><th>Trigger</th><th>Data Fields</th></tr>
+    <tr><td><code>search</code></td><td>User types 2+ chars</td><td>query, results count</td></tr>
+    <tr><td><code>icon-copy</code></td><td>SVG or component copied</td><td>lib, id, format (svg/react/vue/svelte)</td></tr>
+    <tr><td><code>icon-download</code></td><td>SVG downloaded</td><td>lib, id, format</td></tr>
+    <tr><td><code>contact-submit</code></td><td>Contact form sent</td><td>(count only)</td></tr>
+</table>
+
+<h2>How to Read Your Stats</h2>
+
+<h3>Steps</h3>
+<ol>
+    <li class="step">Go to <a href="https://cloud.umami.is" target="_blank">cloud.umami.is</a> and log in</li>
+    <li class="step">Click <strong>Supericons</strong> in the website list</li>
+    <li class="step">Top bar: visitors, views, bounce rate, avg time</li>
+    <li class="step">Click <strong>Events</strong> tab for custom events</li>
+    <li class="step">Click any event to expand data fields</li>
+</ol>
+
+<h2>Key Questions Answered</h2>
+<table>
+    <tr><th>Question</th><th>Where to Look</th></tr>
+    <tr><td>How many visitors today?</td><td>Dashboard overview</td></tr>
+    <tr><td>Where do visitors come from?</td><td>Referrers tab</td></tr>
+    <tr><td>What do people search for?</td><td>Events > search > query</td></tr>
+    <tr><td>Which icons are most copied?</td><td>Events > icon-copy > id</td></tr>
+    <tr><td>React or Vue?</td><td>Events > icon-copy > format</td></tr>
+    <tr><td>Which library is most popular?</td><td>Events > icon-copy > lib</td></tr>
+</table>
+
+<h2>Upgrade Path</h2>
+<div class="grid">
+    <div class="card">
+        <h3>Free <span class="badge">CURRENT</span></h3>
+        <p>10K views/month, 3 sites, 1 year retention</p>
+    </div>
+    <div class="card">
+        <h3>Growth ($9/mo)</h3>
+        <p>100K views/month, 10 sites, unlimited retention</p>
+    </div>
+    <div class="card">
+        <h3>Business ($29/mo)</h3>
+        <p>1M views/month, 100 sites, team access</p>
+    </div>
+</div>
+
+<h2>Trending Leaderboard (Feature Flag)</h2>
+<p>The sidebar has a hidden "Trending" section showing top 10 most-used icons. Controlled by a feature flag in <code>main.js</code>:</p>
+<pre><code>const FEATURE_FLAGS = {
+  leaderboard: false, // change to true to show
+};</code></pre>
+<p>Data is captured from day 1 regardless of the flag. Flip to <code>true</code>, rebuild, and redeploy when ready.</p>
+
+<h2>Supabase Icon Stats (Internal Tracking)</h2>
+<p>Every copy/download is recorded to the CML Supabase <code>icon_stats</code> table for leaderboard data.</p>
+<table>
+    <tr><th>Column</th><th>Example</th></tr>
+    <tr><td><code>icon_id</code></td><td>heart</td></tr>
+    <tr><td><code>lib</code></td><td>lucide</td></tr>
+    <tr><td><code>action</code></td><td>copy or download</td></tr>
+    <tr><td><code>format</code></td><td>svg, react, vue, svelte</td></tr>
+    <tr><td><code>created_at</code></td><td>auto timestamp</td></tr>
+</table>
+<p><strong>To view raw data:</strong> Supabase dashboard > Table Editor > <code>icon_stats</code></p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,934 @@
+/* E-Commerce Collection: CSS-only hover animations
+   Socratic design: 1. What real-world thing? 2. What motion? 3. Which elements? 4. Same at rest? */
+
+.si-anim svg { overflow: visible; }
+
+/* ===================================================================
+   1. SHOPPING-CART: A shopping cart. Adding items makes it bounce.
+   Motion: cart body bounces down then up (item dropped in).
+   Elements: whole SVG. Cart is one unified object.
+   =================================================================== */
+.si-icon-cell:hover .ahpx83 svg,
+.icon-card:hover .ahpx83 svg {
+  animation: l2ldj2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   2. SHOPPING-BAG: Picking up a bag from the counter.
+   Motion: bag lifts up slightly and tilts (picked up gesture).
+   Elements: whole SVG. Bag is one object.
+   =================================================================== */
+.si-icon-cell:hover .muuwdc svg,
+.icon-card:hover .muuwdc svg {
+  animation: mexztb 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+/* ===================================================================
+   3. STORE: A storefront. Awning wiggles like opening for business.
+   Motion: whole store wobbles side to side (door opening vibe).
+   Elements: whole SVG. Storefront is one unit.
+   =================================================================== */
+.si-icon-cell:hover .u6ictk svg,
+.icon-card:hover .u6ictk svg {
+  animation: xe3uf6 0.6s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.25));
+}
+
+/* ===================================================================
+   4. TAG: A price tag hanging from a shelf. Sways on hover.
+   Motion: pendulum swing from top (hanging tag).
+   Elements: whole SVG. Tag is one dangling object.
+   =================================================================== */
+.si-icon-cell:hover .o347qo svg,
+.icon-card:hover .o347qo svg {
+  animation: xyk7bf 0.6s ease forwards;
+  transform-origin: 8px 4px;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* ===================================================================
+   5. COUPON: Tearing off a coupon. Slides sideways.
+   Motion: slides right slightly (tear-off gesture), then snaps back.
+   Elements: whole SVG. Coupon is one piece of paper.
+   =================================================================== */
+.si-icon-cell:hover .y4ae4h svg,
+.icon-card:hover .y4ae4h svg {
+  animation: t9y7i6 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* ===================================================================
+   6. SALE: A sale badge. Pops with excitement.
+   Motion: scale pop (attention grabber for discounts).
+   Elements: whole SVG. Badge is one unified symbol.
+   =================================================================== */
+.si-icon-cell:hover .k4kcrh svg,
+.icon-card:hover .k4kcrh svg {
+  animation: a9url6 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
+}
+
+/* ===================================================================
+   7. WALLET: Opening a wallet. Tilts open to show contents.
+   Motion: tilts backward (opening lid), then settles.
+   Elements: whole SVG. Wallet is one folding object.
+   =================================================================== */
+.si-icon-cell:hover .bajixg svg,
+.icon-card:hover .bajixg svg {
+  animation: inb2h9 0.5s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   8. BANK-CARD: Swiping a credit card through a reader.
+   Motion: slides right (swipe gesture), returns.
+   Elements: whole SVG. Card is one physical object.
+   =================================================================== */
+.si-icon-cell:hover .uk7jca svg,
+.icon-card:hover .uk7jca svg {
+  animation: qfi2qz 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   9. COIN: A coin being flipped. Rotates on Y axis.
+   Motion: quick Y-axis rotation (coin flip wobble via scaleX).
+   Elements: whole SVG. Coin is one disc.
+   =================================================================== */
+.si-icon-cell:hover .lc4cm9 svg,
+.icon-card:hover .lc4cm9 svg {
+  animation: we9eax 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.3));
+}
+
+/* ===================================================================
+   10. CASH: Bills fanning out. Spread gesture.
+   Motion: slight rotation spread (bills fanning).
+   Elements: whole SVG. Stack of bills.
+   =================================================================== */
+.si-icon-cell:hover .raj1sb svg,
+.icon-card:hover .raj1sb svg {
+  animation: pnssan 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* ===================================================================
+   11. BILL: A receipt unrolling. Slides downward.
+   Motion: stretches down slightly (paper unrolling).
+   Elements: whole SVG. Bill is one sheet.
+   =================================================================== */
+.si-icon-cell:hover .aytzvm svg,
+.icon-card:hover .aytzvm svg {
+  animation: hz8n0x 0.5s ease forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   12. GIFT: A gift box being opened. Lid lifts with ribbon bounce.
+   Motion: whole box bounces up with joy (unwrapping excitement).
+   Elements: whole SVG. Gift box is one package.
+   =================================================================== */
+.si-icon-cell:hover .rydsjk svg,
+.icon-card:hover .rydsjk svg {
+  animation: i6s5fk 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 4px rgba(192, 132, 252, 0.3));
+}
+
+/* ===================================================================
+   13. BASKET: A basket being carried. Wobbles while walking.
+   Motion: tilts side to side (carrying wobble).
+   Elements: whole SVG. Basket is one vessel.
+   =================================================================== */
+.si-icon-cell:hover .ktaw7u svg,
+.icon-card:hover .ktaw7u svg {
+  animation: ukrt7j 0.6s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* ===================================================================
+   14. BARCODE: Scanner laser sweeps across the code.
+   Motion: quick horizontal scale pulse (laser sweep effect).
+   Elements: whole SVG. Barcode is one scannable area.
+   =================================================================== */
+.si-icon-cell:hover .uhn4v0 svg,
+.icon-card:hover .uhn4v0 svg {
+  animation: u8ch3t 0.4s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* ===================================================================
+   15. QRCODE: Phone scanning a QR code. Focus zoom.
+   Motion: quick scale-in (camera focusing) then settle.
+   Elements: whole SVG. QR code is one pattern.
+   =================================================================== */
+.si-icon-cell:hover .nrtlzl svg,
+.icon-card:hover .nrtlzl svg {
+  animation: ebfq5z 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   16. TRUCK: A delivery truck driving. Moves forward.
+   Motion: translates right (driving), bounces slightly (road bumps).
+   Elements: whole SVG. Truck is one vehicle.
+   =================================================================== */
+.si-icon-cell:hover .fongtp svg,
+.icon-card:hover .fongtp svg {
+  animation: n5cux2 0.5s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* ===================================================================
+   17. PACKAGE: A package arriving. Drops in and lands.
+   Motion: drops from above with bounce (delivery landing).
+   Elements: whole SVG. Package is one box.
+   =================================================================== */
+.si-icon-cell:hover .t13f1y svg,
+.icon-card:hover .t13f1y svg {
+  animation: jkrgsg 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* ===================================================================
+   18. PERCENTAGE: A discount percentage spinning. Attention grab.
+   Motion: tilts and pops (discount emphasis flash).
+   Elements: whole SVG. Percent sign is one symbol.
+   =================================================================== */
+.si-icon-cell:hover .omcm3t svg,
+.icon-card:hover .omcm3t svg {
+  animation: mcqz67 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
+}
+
+/* ===================================================================
+   19. STAR: A review star twinkling. Rating action.
+   Motion: rotates and scales (twinkle sparkle).
+   Elements: whole SVG. Star is one shape.
+   =================================================================== */
+.si-icon-cell:hover .tbk10a svg,
+.icon-card:hover .tbk10a svg {
+  animation: hpl4pf 0.6s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3));
+}
+
+/* ===================================================================
+   20. HEART: A wishlisted item. Heart pulses.
+   Motion: double-beat heartbeat (love/wishlist reaction).
+   Elements: whole SVG. Heart is one organ.
+   =================================================================== */
+.si-icon-cell:hover .r34qcz svg,
+.icon-card:hover .r34qcz svg {
+  animation: t6m91d 0.65s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
+}
+
+
+/* ===================== KEYFRAMES ===================== */
+
+/* 1. Cart bounce: item dropped into cart, sinks then springs */
+@keyframes l2ldj2 {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(3px); }
+  50%  { transform: translateY(-4px); }
+  75%  { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+/* 2. Bag lift: picking up a shopping bag */
+@keyframes mexztb {
+  0%   { transform: translateY(0) rotate(0deg); }
+  40%  { transform: translateY(-5px) rotate(-3deg); }
+  70%  { transform: translateY(1px) rotate(1deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* 3. Store welcome: door opening side-to-side */
+@keyframes xe3uf6 {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(3deg); }
+  30%  { transform: rotate(-2.5deg); }
+  45%  { transform: rotate(2deg); }
+  60%  { transform: rotate(-1.5deg); }
+  75%  { transform: rotate(0.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 4. Tag sway: price tag pendulum from hook */
+@keyframes xyk7bf {
+  0%   { transform: rotate(0deg); }
+  12%  { transform: rotate(14deg); }
+  28%  { transform: rotate(-12deg); }
+  42%  { transform: rotate(8deg); }
+  56%  { transform: rotate(-5deg); }
+  70%  { transform: rotate(3deg); }
+  84%  { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 5. Coupon tear: ripping off a coupon */
+@keyframes t9y7i6 {
+  0%   { transform: translateX(0); }
+  35%  { transform: translateX(5px); }
+  65%  { transform: translateX(-1.5px); }
+  100% { transform: translateX(0); }
+}
+
+/* 6. Sale pop: attention-grabbing discount badge */
+@keyframes a9url6 {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.25) rotate(-5deg); }
+  50%  { transform: scale(0.92) rotate(3deg); }
+  75%  { transform: scale(1.08) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 7. Wallet open: tilting open to show contents */
+@keyframes inb2h9 {
+  0%   { transform: rotate(0deg) translateY(0); }
+  40%  { transform: rotate(-6deg) translateY(-2px); }
+  70%  { transform: rotate(2deg) translateY(0.5px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* 8. Card swipe: swiping through a reader */
+@keyframes qfi2qz {
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(6px); }
+  60%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* 9. Coin flip: simulated Y-rotation via scaleX */
+@keyframes we9eax {
+  0%   { transform: scaleX(1) rotate(0deg); }
+  20%  { transform: scaleX(0.3) rotate(5deg); }
+  40%  { transform: scaleX(1) rotate(-3deg); }
+  60%  { transform: scaleX(0.5) rotate(2deg); }
+  80%  { transform: scaleX(1) rotate(-1deg); }
+  100% { transform: scaleX(1) rotate(0deg); }
+}
+
+/* 10. Cash fan: bills spreading out */
+@keyframes pnssan {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-3deg) scale(1.05); }
+  50%  { transform: rotate(2deg) scale(1.02); }
+  75%  { transform: rotate(-1deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* 11. Bill unroll: receipt printing downward */
+@keyframes hz8n0x {
+  0%   { transform: scaleY(1); }
+  30%  { transform: scaleY(1.08); }
+  60%  { transform: scaleY(0.97); }
+  100% { transform: scaleY(1); }
+}
+
+/* 12. Gift unwrap: excited box bounce */
+@keyframes i6s5fk {
+  0%   { transform: translateY(0) scale(1); }
+  20%  { transform: translateY(-6px) scale(1.08); }
+  40%  { transform: translateY(2px) scale(0.95); }
+  60%  { transform: translateY(-2px) scale(1.04); }
+  80%  { transform: translateY(1px) scale(0.99); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 13. Basket wobble: being carried, tilts side to side */
+@keyframes ukrt7j {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(5deg); }
+  30%  { transform: rotate(-4deg); }
+  45%  { transform: rotate(3deg); }
+  60%  { transform: rotate(-2deg); }
+  75%  { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 14. Barcode scan: laser line sweep */
+@keyframes u8ch3t {
+  0%   { transform: scaleX(1); opacity: 1; }
+  30%  { transform: scaleX(1.08); opacity: 0.85; }
+  60%  { transform: scaleX(0.96); opacity: 0.95; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+
+/* 15. QR focus: camera locking on */
+@keyframes ebfq5z {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.15); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* 16. Truck drive: vehicle moving forward on road */
+@keyframes n5cux2 {
+  0%   { transform: translateX(0) translateY(0); }
+  20%  { transform: translateX(4px) translateY(-1px); }
+  40%  { transform: translateX(3px) translateY(0); }
+  60%  { transform: translateX(1px) translateY(-0.5px); }
+  80%  { transform: translateX(-1px) translateY(0); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* 17. Package land: delivery box arriving */
+@keyframes jkrgsg {
+  0%   { transform: translateY(-8px) scale(0.9); }
+  40%  { transform: translateY(2px) scale(1.05); }
+  65%  { transform: translateY(-1px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 18. Percent pop: discount emphasis */
+@keyframes mcqz67 {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.3) rotate(-8deg); }
+  55%  { transform: scale(0.9) rotate(4deg); }
+  75%  { transform: scale(1.1) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 19. Star twinkle: rating sparkle */
+@keyframes hpl4pf {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  25%  { transform: scale(1.2) rotate(15deg); opacity: 0.85; }
+  50%  { transform: scale(0.9) rotate(-5deg); opacity: 1; }
+  75%  { transform: scale(1.1) rotate(5deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 20. Heartbeat: wishlist double-pump */
+@keyframes t6m91d {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.25); }
+  28%  { transform: scale(0.95); }
+  42%  { transform: scale(1.18); }
+  56%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+
+/* ===================== BATCH 2 (Icons 21-50) ===================== */
+
+/* 21. CARD-PAY: Contactless tap payment */
+.si-icon-cell:hover .i1tjay svg,
+.icon-card:hover .i1tjay svg {
+  animation: z20ufy 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 22. CARD-REFUND: Money returning to card */
+.si-icon-cell:hover .abma6x svg,
+.icon-card:hover .abma6x svg {
+  animation: zoyj7z 0.5s ease forwards;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 23. PIGGY-BANK: Dropping a coin into piggy bank */
+.si-icon-cell:hover .a8vx6b svg,
+.icon-card:hover .a8vx6b svg {
+  animation: v4z8wx 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 24. RECEIVE-MONEY: Income arriving */
+.si-icon-cell:hover .za0cda svg,
+.icon-card:hover .za0cda svg {
+  animation: tgoi2x 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 25. CART-REMOVE: Removing item from cart, slides out */
+.si-icon-cell:hover .ykcdvb svg,
+.icon-card:hover .ykcdvb svg {
+  animation: dh78we 0.4s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 26. SHOPPING-BAG-ALT: Bag swings while walking */
+.si-icon-cell:hover .g0iw3g svg,
+.icon-card:hover .g0iw3g svg {
+  animation: igo4to 0.6s ease forwards;
+  transform-origin: 12px 4px;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+/* 27. GIFT-CARD: Card slides out of envelope */
+.si-icon-cell:hover .j9bbgb svg,
+.icon-card:hover .j9bbgb svg {
+  animation: k5rydh 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, 0.25));
+}
+
+/* 28. GIFT-ALT: Gift wobbles with excitement */
+.si-icon-cell:hover .mxcc5m svg,
+.icon-card:hover .mxcc5m svg {
+  animation: r0rilf 0.5s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(192, 132, 252, 0.25));
+}
+
+/* 29. WALLET-ALT: Wallet flips open */
+.si-icon-cell:hover .b1bhl3 svg,
+.icon-card:hover .b1bhl3 svg {
+  animation: snjdtm 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 30. COIN-STACK: Coins stacking up */
+.si-icon-cell:hover .rr3i8n svg,
+.icon-card:hover .rr3i8n svg {
+  animation: v3r3rp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.3));
+}
+
+/* 31. AUCTION: Gavel strikes down */
+.si-icon-cell:hover .apxile svg,
+.icon-card:hover .apxile svg {
+  animation: wk9ebl 0.4s ease forwards;
+  transform-origin: 18px 6px;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 32. AWARD: Trophy lifts with pride */
+.si-icon-cell:hover .qhnywr svg,
+.icon-card:hover .qhnywr svg {
+  animation: geo6f7 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3));
+}
+
+/* 33. PRICE-TAG: Tag dangles on product */
+.si-icon-cell:hover .dudxjy svg,
+.icon-card:hover .dudxjy svg {
+  animation: ngp3c3 0.6s ease forwards;
+  transform-origin: 16px 4px;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 34. CELEBRATE: Confetti burst */
+.si-icon-cell:hover .ujiruu svg,
+.icon-card:hover .ujiruu svg {
+  animation: d50hzc 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(192, 132, 252, 0.3));
+}
+
+/* 35. VIP: Crown tilts with royalty */
+.si-icon-cell:hover .jcikbr svg,
+.icon-card:hover .jcikbr svg {
+  animation: lk9ai9 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.35));
+}
+
+/* 36. TOKEN: Loyalty token spins */
+.si-icon-cell:hover .cjq0on svg,
+.icon-card:hover .cjq0on svg {
+  animation: n5y9he 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 37. BARCODE-SCAN: Active scanner sweep */
+.si-icon-cell:hover .h1atbf svg,
+.icon-card:hover .h1atbf svg {
+  animation: g6brsl 0.4s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.3));
+}
+
+/* 38. SCAN: General scanner viewfinder locks on */
+.si-icon-cell:hover .ks441k svg,
+.icon-card:hover .ks441k svg {
+  animation: lhlsuj 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 39. INVOICE: Paper slides out of printer */
+.si-icon-cell:hover .e1bm4k svg,
+.icon-card:hover .e1bm4k svg {
+  animation: yi9koy 0.5s ease forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(148, 163, 184, 0.25));
+}
+
+/* 40. CRATE: Shipping crate drops and lands */
+.si-icon-cell:hover .ma3iwa svg,
+.icon-card:hover .ma3iwa svg {
+  animation: cyaczs 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.25));
+}
+
+/* 41. LOCK: Padlock closes with click */
+.si-icon-cell:hover .f5000s svg,
+.icon-card:hover .f5000s svg {
+  animation: uf4ck9 0.35s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 42. UNLOCK: Padlock shackle pops open */
+.si-icon-cell:hover .rym50w svg,
+.icon-card:hover .rym50w svg {
+  animation: l3n7qm 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 43. SHIELD: Payment protection pulse */
+.si-icon-cell:hover .m68rul svg,
+.icon-card:hover .m68rul svg {
+  animation: sfxaw9 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(96, 165, 250, 0.3));
+}
+
+/* 44. CERTIFICATE: Seal of authenticity stamp */
+.si-icon-cell:hover .iu012h svg,
+.icon-card:hover .iu012h svg {
+  animation: t0qwml 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.25));
+}
+
+/* 45. SETTINGS: Gear rotates for configuration */
+.si-icon-cell:hover .aukq5x svg,
+.icon-card:hover .aukq5x svg {
+  animation: ce7huf 0.6s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(148, 163, 184, 0.25));
+}
+
+/* 46. CLOCK: Clock hand ticks */
+.si-icon-cell:hover .kucbc1 svg,
+.icon-card:hover .kucbc1 svg {
+  animation: zww5rp 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 47. INFO: Information circle pulses */
+.si-icon-cell:hover .m8takq svg,
+.icon-card:hover .m8takq svg {
+  animation: dnbnv6 0.45s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.25));
+}
+
+/* 48. LOCATION: Pin drops into map */
+.si-icon-cell:hover .l4o51x svg,
+.icon-card:hover .l4o51x svg {
+  animation: s9gp9j 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.25));
+}
+
+/* 49. LOYAL-CUSTOMER: Customer glows with loyalty stars */
+.si-icon-cell:hover .dho11o svg,
+.icon-card:hover .dho11o svg {
+  animation: cdt6sp 0.5s ease forwards;
+  transform-origin: center;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3));
+}
+
+/* 50. CUSTOMERS: Group gathers together */
+.si-icon-cell:hover .dzkqvo svg,
+.icon-card:hover .dzkqvo svg {
+  animation: phq0u9 0.5s ease forwards;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+
+/* ===================== BATCH 2 KEYFRAMES ===================== */
+
+/* 21. Tap payment: card taps down then lifts */
+@keyframes z20ufy {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(3px); }
+  60%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* 22. Refund slide: slides left (money returning) */
+@keyframes zoyj7z {
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(-5px); }
+  60%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+/* 23. Piggy clink: coin drops in, piggy bounces */
+@keyframes v4z8wx {
+  0%   { transform: translateY(0) rotate(0deg); }
+  25%  { transform: translateY(2px) rotate(-2deg); }
+  50%  { transform: translateY(-3px) rotate(2deg); }
+  75%  { transform: translateY(1px) rotate(-0.5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* 24. Income drop: money arriving from above */
+@keyframes tgoi2x {
+  0%   { transform: translateY(-6px); opacity: 0.7; }
+  50%  { transform: translateY(2px); opacity: 1; }
+  75%  { transform: translateY(-1px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* 25. Cart shake: rejection/removal shake */
+@keyframes dh78we {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-3px); }
+  30%  { transform: translateX(3px); }
+  45%  { transform: translateX(-2px); }
+  60%  { transform: translateX(2px); }
+  75%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+/* 26. Bag swing: pendulum from handle */
+@keyframes igo4to {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(10deg); }
+  30%  { transform: rotate(-8deg); }
+  45%  { transform: rotate(6deg); }
+  60%  { transform: rotate(-4deg); }
+  75%  { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 27. Card slides up from envelope */
+@keyframes k5rydh {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-5px); }
+  70%  { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+/* 28. Gift wiggle: excited wobble */
+@keyframes r0rilf {
+  0%   { transform: rotate(0deg); }
+  12%  { transform: rotate(6deg); }
+  25%  { transform: rotate(-5deg); }
+  37%  { transform: rotate(4deg); }
+  50%  { transform: rotate(-3deg); }
+  62%  { transform: rotate(2deg); }
+  75%  { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 29. Wallet flip: opens from middle */
+@keyframes snjdtm {
+  0%   { transform: scaleY(1); }
+  30%  { transform: scaleY(0.85); }
+  50%  { transform: scaleY(1.08); }
+  75%  { transform: scaleY(0.97); }
+  100% { transform: scaleY(1); }
+}
+
+/* 30. Stack grow: coins piling up */
+@keyframes v3r3rp {
+  0%   { transform: translateY(0) scale(1); }
+  30%  { transform: translateY(-4px) scale(1.06); }
+  60%  { transform: translateY(1px) scale(0.97); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 31. Gavel strike: auctioneer hammer comes down */
+@keyframes wk9ebl {
+  0%   { transform: rotate(0deg); }
+  30%  { transform: rotate(-15deg); }
+  55%  { transform: rotate(3deg); }
+  75%  { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 32. Award rise: trophy lifts overhead */
+@keyframes geo6f7 {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-5px) scale(1.1); }
+  65%  { transform: translateY(1px) scale(0.97); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 33. Tag dangle: price tag swings on hook */
+@keyframes ngp3c3 {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(12deg); }
+  30%  { transform: rotate(-10deg); }
+  45%  { transform: rotate(7deg); }
+  60%  { transform: rotate(-4deg); }
+  75%  { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 34. Confetti burst: celebration pop outward */
+@keyframes d50hzc {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.2) rotate(5deg); }
+  50%  { transform: scale(0.92) rotate(-3deg); }
+  75%  { transform: scale(1.06) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 35. VIP glow: premium emphasis */
+@keyframes lk9ai9 {
+  0%   { transform: scale(1); opacity: 1; }
+  30%  { transform: scale(1.12); opacity: 0.9; }
+  60%  { transform: scale(0.96); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 36. Token spin: loyalty coin rotates */
+@keyframes n5y9he {
+  0%   { transform: scaleX(1); }
+  25%  { transform: scaleX(0.2); }
+  50%  { transform: scaleX(1); }
+  75%  { transform: scaleX(0.4); }
+  100% { transform: scaleX(1); }
+}
+
+/* 37. Scanner pulse: active scanning flash */
+@keyframes g6brsl {
+  0%   { transform: scale(1); opacity: 1; }
+  25%  { transform: scale(1.06); opacity: 0.8; }
+  50%  { transform: scale(0.97); opacity: 1; }
+  75%  { transform: scale(1.03); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 38. Scan lock: viewfinder focuses in */
+@keyframes lhlsuj {
+  0%   { transform: scale(1.1); }
+  40%  { transform: scale(0.95); }
+  70%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* 39. Invoice print: paper slides down */
+@keyframes yi9koy {
+  0%   { transform: scaleY(1) translateY(0); }
+  30%  { transform: scaleY(1.06) translateY(2px); }
+  60%  { transform: scaleY(0.98) translateY(-1px); }
+  100% { transform: scaleY(1) translateY(0); }
+}
+
+/* 40. Crate thud: heavy box drops */
+@keyframes cyaczs {
+  0%   { transform: translateY(-6px) scale(0.92); }
+  40%  { transform: translateY(2px) scale(1.04); }
+  65%  { transform: translateY(-1px) scale(0.99); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 41. Lock click: padlock engages shut */
+@keyframes uf4ck9 {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08); }
+  50%  { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+/* 42. Unlock pop: shackle springs open */
+@keyframes l3n7qm {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-4px) scale(1.1); }
+  65%  { transform: translateY(1px) scale(0.96); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 43. Shield pulse: protection active */
+@keyframes sfxaw9 {
+  0%   { transform: scale(1); opacity: 1; }
+  25%  { transform: scale(1.1); opacity: 0.85; }
+  50%  { transform: scale(0.95); opacity: 1; }
+  75%  { transform: scale(1.04); opacity: 0.95; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 44. Stamp down: certification stamp */
+@keyframes t0qwml {
+  0%   { transform: scale(1.15) translateY(-3px); }
+  35%  { transform: scale(0.95) translateY(1px); }
+  60%  { transform: scale(1.03) translateY(-0.5px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* 45. Gear turn: settings adjustment */
+@keyframes ce7huf {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(45deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 46. Clock tick: time stepping */
+@keyframes zww5rp {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(8deg); }
+  40%  { transform: rotate(-6deg); }
+  60%  { transform: rotate(4deg); }
+  80%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 47. Info pulse: attention notification */
+@keyframes dnbnv6 {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.15); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* 48. Pin drop: location marker landing */
+@keyframes s9gp9j {
+  0%   { transform: translateY(-10px) scale(0.85); }
+  40%  { transform: translateY(2px) scale(1.05); }
+  65%  { transform: translateY(-2px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 49. Loyal glow: customer rating shine */
+@keyframes cdt6sp {
+  0%   { transform: scale(1); opacity: 1; }
+  30%  { transform: scale(1.1); opacity: 0.85; }
+  55%  { transform: scale(0.97); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 50. Group gather: people clustering */
+@keyframes phq0u9 {
+  0%   { transform: scaleX(1.08); }
+  35%  { transform: scaleX(0.95); }
+  65%  { transform: scaleX(1.03); }
+  100% { transform: scaleX(1); }
+}

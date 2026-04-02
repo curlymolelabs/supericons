@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Kit: Frost Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060610;
+            background-image: radial-gradient(ellipse at 30% 20%, rgba(30,58,95,0.3) 0%, transparent 60%),
+                              radial-gradient(ellipse at 70% 80%, rgba(45,27,78,0.3) 0%, transparent 60%);
+            color: #e5e5e5; min-height: 100vh;
+        }
+        .hero {
+            text-align: center; padding: 4rem 2rem 2rem;
+        }
+        .hero .badge {
+            display: inline-block; padding: 0.3rem 0.9rem; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; margin-bottom: 1rem;
+            background: linear-gradient(135deg, rgba(100,181,246,0.3), rgba(179,157,219,0.3));
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #90CAF9;
+            backdrop-filter: blur(8px);
+        }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #64B5F6 0%, #CE93D8 50%, #4DB6AC 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 0.8rem; color: #555; margin-top: 0.5rem; }
+        .stats {
+            display: flex; gap: 2rem; justify-content: center; margin-top: 1.5rem;
+        }
+        .stat { text-align: center; }
+        .stat .num { font-size: 1.2rem; font-weight: 700; color: #90CAF9; }
+        .stat .label { font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .controls {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(16px);
+            background: rgba(6,6,16,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 0.8rem 2rem; display: flex; justify-content: center; gap: 2rem;
+        }
+        button {
+            font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 500;
+            padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #666;
+            transition: all 0.2s;
+        }
+        button:hover { background: rgba(255,255,255,0.05); color: #ccc; }
+        button.active { background: rgba(100,181,246,0.15); color: #90CAF9; border-color: rgba(100,181,246,0.3); }
+
+        .section-title {
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: #444; padding: 2rem 2.5rem 0.5rem;
+            max-width: 1100px; margin: 0 auto;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .grid {
+            display: flex; flex-wrap: wrap; gap: 1.5rem;
+            padding: 1.5rem 2.5rem; max-width: 1100px; margin: 0 auto;
+        }
+        .cell {
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .cell:hover { transform: translateY(-4px) scale(1.05); }
+        .icon-wrap { transition: all 0.2s; }
+        .label {
+            font-size: 0.55rem; font-family: 'SF Mono', Consolas, monospace;
+            color: #333; opacity: 0; transition: all 0.25s; transform: translateY(4px);
+        }
+        .cell:hover .label { opacity: 1; transform: translateY(0); color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">Frost Theme</div>
+    <h1>Agentic AI Kit</h1>
+    <p>Glassmorphism icons for modern AI tool interfaces. Phosphor geometry + original 6-layer frost styling.</p>
+    <div class="stats">
+        <div class="stat"><div class="num">18</div><div class="label">Icons</div></div>
+        <div class="stat"><div class="num">6</div><div class="label">Layers</div></div>
+        <div class="stat"><div class="num">7</div><div class="label">Groups</div></div>
+    </div>
+</div>
+
+<div class="controls">
+    <div style="display:flex;align-items:center;gap:0.4rem">
+        <span style="font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#444">Size</span>
+        <button onclick="setSize(48,this)">48</button>
+        <button onclick="setSize(64,this)">64</button>
+        <button class="active" onclick="setSize(96,this)">96</button>
+        <button onclick="setSize(128,this)">128</button>
+    </div>
+</div>
+
+<div id="content"></div>
+
+<script>
+const iconGroups = {
+    'Core Navigation': ['ai-home','ai-search','ai-settings','ai-history'],
+    'Agent and Workflow': ['agent','tool-use','chain','orchestrator'],
+    'Prompt and Context': ['prompt','conversation','system-prompt'],
+    'RAG and Data': ['embedding','vector-db','knowledge-base'],
+    'Model and Configuration': ['model','sparkle'],
+    'Safety and Monitoring': ['guardrail','latency'],
+};
+let currentSize = 96;
+const cache = {};
+
+async function load() {
+    const content = document.getElementById('content');
+    content.innerHTML = '';
+    for (const [group, names] of Object.entries(iconGroups)) {
+        const title = document.createElement('div');
+        title.className = 'section-title';
+        title.textContent = group;
+        content.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        for (const name of names) {
+            if (!cache[name]) {
+                try {
+                    const r = await fetch(`svg-frost/${name}.svg`);
+                    cache[name] = await r.text();
+                } catch { continue; }
+            }
+
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+
+            const wrap = document.createElement('div');
+            wrap.className = 'icon-wrap';
+            wrap.innerHTML = cache[name];
+            const svg = wrap.querySelector('svg');
+            if (svg) { svg.setAttribute('width', currentSize); svg.setAttribute('height', currentSize); }
+
+            const label = document.createElement('div');
+            label.className = 'label';
+            label.textContent = name;
+
+            cell.appendChild(wrap);
+            cell.appendChild(label);
+            grid.appendChild(cell);
+        }
+        content.appendChild(grid);
+    }
+}
+
+function setSize(s, btn) {
+    currentSize = s;
+    document.querySelectorAll('.icon-wrap svg').forEach(svg => {
+        svg.setAttribute('width', s); svg.setAttribute('height', s);
+    });
+    document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+load();
+</script>
+</body>
+</html>

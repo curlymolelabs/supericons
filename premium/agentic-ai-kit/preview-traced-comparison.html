@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image-to-SVG Pipeline: Comparison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e5e5e5;
+            min-height: 100vh; padding: 2rem;
+        }
+        .hero {
+            text-align: center; padding: 3rem 0 2rem;
+        }
+        .hero .badge {
+            display: inline-block; padding: 0.3rem 0.8rem; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; background: linear-gradient(135deg, #34D399, #60A5FA);
+            color: #000; margin-bottom: 1rem;
+        }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; letter-spacing: -0.04em; }
+        .hero p { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
+
+        .comparison-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2rem; max-width: 1000px; margin: 2rem auto;
+        }
+        .card {
+            background: #111118; border: 1px solid #1e1e2a;
+            border-radius: 16px; overflow: hidden;
+        }
+        .card h3 {
+            padding: 0.75rem 1rem; font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em; color: #666;
+            border-bottom: 1px solid #1e1e2a;
+        }
+        .card-body {
+            padding: 1.5rem; display: flex; flex-direction: column;
+            align-items: center; gap: 1rem;
+        }
+
+        .label {
+            font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.12em; color: #444; margin-top: 0.5rem;
+        }
+        .icon-row {
+            display: flex; gap: 2rem; align-items: center; justify-content: center;
+            width: 100%;
+        }
+        .icon-col {
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+        }
+        .icon-wrap svg, .icon-wrap img {
+            width: 96px; height: 96px;
+        }
+        .icon-wrap svg { fill: #e5e5e5; }
+
+        .verdict {
+            font-size: 0.7rem; padding: 0.3rem 0.6rem; border-radius: 6px;
+            font-weight: 600;
+        }
+        .verdict.good { background: rgba(52, 211, 153, 0.15); color: #34D399; }
+        .verdict.ok { background: rgba(251, 191, 36, 0.15); color: #FBBF24; }
+        .verdict.bad { background: rgba(248, 113, 113, 0.15); color: #F87171; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">Pipeline Test</div>
+    <h1>Image to SVG Comparison</h1>
+    <p>AI reference image (left) vs Traced SVG (center) vs Hand-composed V1 (right)</p>
+</div>
+
+<div class="comparison-grid">
+    <!-- File Tree -->
+    <div class="card">
+        <h3>File Tree</h3>
+        <div class="card-body">
+            <div class="icon-row">
+                <div class="icon-col">
+                    <div class="label">AI Reference</div>
+                    <div class="icon-wrap">
+                        <img src="data:image/png;base64," alt="ref" id="ref-file-tree" />
+                    </div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Traced SVG</div>
+                    <div class="icon-wrap" id="traced-file-tree"></div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Hand V1</div>
+                    <div class="icon-wrap" id="hand-file-tree"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbulb -->
+    <div class="card">
+        <h3>Lightbulb</h3>
+        <div class="card-body">
+            <div class="icon-row">
+                <div class="icon-col">
+                    <div class="label">AI Reference</div>
+                    <div class="icon-wrap">
+                        <img src="data:image/png;base64," alt="ref" id="ref-lightbulb" />
+                    </div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Traced SVG</div>
+                    <div class="icon-wrap" id="traced-lightbulb"></div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Hand V1</div>
+                    <div class="icon-wrap" id="hand-lightbulb"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Magic Wand -->
+    <div class="card">
+        <h3>Magic Wand</h3>
+        <div class="card-body">
+            <div class="icon-row">
+                <div class="icon-col">
+                    <div class="label">AI Reference</div>
+                    <div class="icon-wrap">
+                        <img src="data:image/png;base64," alt="ref" id="ref-magic-wand" />
+                    </div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Traced SVG</div>
+                    <div class="icon-wrap" id="traced-magic-wand"></div>
+                </div>
+                <div class="icon-col">
+                    <div class="label">Hand V1</div>
+                    <div class="icon-wrap" id="hand-magic-wand"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const icons = ['file-tree','lightbulb','magic-wand'];
+async function load() {
+    for (const name of icons) {
+        // Load traced SVG
+        try {
+            const r = await fetch(`svg-traced/${name}.svg`);
+            const svg = await r.text();
+            const el = document.getElementById(`traced-${name}`);
+            if (el) { el.innerHTML = svg; const s = el.querySelector('svg'); if(s){s.style.width='96px';s.style.height='96px';} }
+        } catch(e) {}
+
+        // Load hand-composed SVG
+        try {
+            const r = await fetch(`svg-agentic-tools/${name}.svg`);
+            const svg = await r.text();
+            const el = document.getElementById(`hand-${name}`);
+            if (el) { el.innerHTML = svg; const s = el.querySelector('svg'); if(s){s.style.width='96px';s.style.height='96px';} }
+        } catch(e) {}
+    }
+}
+load();
+</script>
+</body>
+</html>

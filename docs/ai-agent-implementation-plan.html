@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Lab AI Agent: Implementation Plan v2</title>
+<style>
+  :root { --bg: #0f0e0d; --surface: #1a1816; --card: #221f1c; --border: #3a342f; --text: #e8e0d8; --muted: #9a928a; --dim: #6b635b; --orange: #ff6b35; --green: #22c55e; --blue: #60a5fa; --purple: #a855f7; --red: #ef4444; --cyan: #22d3ee; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; color: var(--orange); margin-bottom: 4px; }
+  .subtitle { color: var(--muted); margin-bottom: 48px; font-size: 0.9rem; }
+  h2 { font-size: 1.3rem; color: var(--text); margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--orange); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  h3 { font-size: 1rem; color: var(--orange); margin: 20px 0 10px; }
+  p, li { color: var(--muted); font-size: 0.88rem; }
+  p { margin-bottom: 12px; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 4px; }
+  strong { color: var(--text); }
+  code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; color: var(--orange); }
+  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 0.78rem; color: var(--muted); margin: 12px 0; line-height: 1.5; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.82rem; }
+  th { text-align: left; padding: 10px 12px; background: var(--surface); color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .highlight { background: rgba(255,107,53,0.06); border-left: 3px solid var(--orange); padding: 16px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; vertical-align: middle; }
+  .badge--green { background: rgba(34,197,94,0.15); color: var(--green); }
+  .badge--orange { background: rgba(255,107,53,0.15); color: var(--orange); }
+  .badge--blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge--purple { background: rgba(168,85,247,0.15); color: var(--purple); }
+
+  /* ---- Wireframe ---- */
+  .wireframe { background: var(--surface); border: 2px solid var(--border); border-radius: 16px; padding: 0; overflow: hidden; max-width: 720px; margin: 20px auto; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 0.72rem; }
+  .wf-header { background: var(--card); padding: 8px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .wf-header span { color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.7rem; }
+  .wf-body { display: grid; grid-template-columns: 1fr 220px; min-height: 280px; }
+  .wf-canvas { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--border); position: relative; background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 16px 16px; }
+  .wf-icon-preview { width: 80px; height: 80px; border: 2px dashed rgba(255,107,53,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .wf-icon-preview svg { width: 48px; height: 48px; color: var(--text); animation: wf-bounce 1.5s ease infinite; }
+  @keyframes wf-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .wf-props { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .wf-props-title { color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.65rem; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .wf-prop-row { display: flex; justify-content: space-between; align-items: center; }
+  .wf-prop-label { color: var(--dim); }
+  .wf-prop-val { color: var(--text); }
+  .wf-slider { height: 3px; background: var(--border); border-radius: 2px; flex: 1; margin: 0 6px; position: relative; }
+  .wf-slider::after { content: ''; position: absolute; width: 8px; height: 8px; background: var(--orange); border-radius: 50%; top: -2.5px; left: 60%; }
+  .wf-bottombar { border-top: 1px solid var(--border); padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; grid-column: 1 / -1; }
+  .wf-triggers { display: flex; gap: 6px; }
+  .wf-trigger { padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); background: none; font-size: 0.7rem; }
+  .wf-trigger.active { border-color: var(--orange); color: var(--orange); }
+
+  /* AI Panel */
+  .wf-ai-panel { grid-column: 1 / -1; border-top: 1px solid var(--orange); background: rgba(255,107,53,0.03); padding: 16px; }
+  .wf-ai-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .wf-ai-title span:first-child { color: var(--orange); font-weight: 600; }
+  .wf-ai-title span:last-child { color: var(--dim); font-size: 0.65rem; }
+
+  /* Guide Chips */
+  .wf-chips { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .wf-chip { display: flex; align-items: center; gap: 3px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; font-size: 0.65rem; color: var(--dim); background: var(--card); cursor: pointer; }
+  .wf-chip.selected { border-color: var(--orange); color: var(--orange); background: rgba(255,107,53,0.08); }
+  .wf-chip::after { content: '▾'; font-size: 0.55rem; margin-left: 2px; }
+
+  .wf-ai-input { display: flex; gap: 6px; margin-bottom: 12px; }
+  .wf-ai-input input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text); font-size: 0.75rem; outline: none; }
+  .wf-ai-input input:focus { border-color: var(--orange); }
+  .wf-ai-send { background: var(--orange); border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+  .wf-result { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .wf-result-desc { color: var(--text); font-weight: 500; margin-bottom: 8px; font-size: 0.78rem; }
+  .wf-result-meta { display: flex; gap: 16px; margin-bottom: 10px; flex-wrap: wrap; }
+  .wf-result-meta span { color: var(--dim); font-size: 0.7rem; }
+  .wf-result-meta strong { color: var(--muted); }
+  .wf-result-actions { display: flex; gap: 8px; }
+  .wf-btn { padding: 4px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: none; }
+  .wf-btn--accept { background: var(--green); color: #fff; border-color: var(--green); }
+  .wf-btn--regen { color: var(--orange); border-color: var(--orange); }
+  .wf-btn--dismiss { color: var(--dim); }
+
+  /* Save Modal overlay */
+  .wf-modal { background: rgba(0,0,0,0.6); border: 1px solid var(--orange); border-radius: 10px; padding: 16px; margin-top: 12px; }
+  .wf-modal-title { color: var(--orange); font-weight: 600; font-size: 0.8rem; margin-bottom: 8px; }
+  .wf-modal-row { display: flex; gap: 6px; }
+  .wf-modal-row input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text); font-size: 0.75rem; }
+  .wf-modal-row button { background: var(--green); border: none; color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
+
+  /* ---- Mind Map ---- */
+  .mindmap { width: 100%; margin: 24px 0; display: flex; flex-direction: column; align-items: center; }
+  .mm-root { background: var(--orange); color: #fff; padding: 10px 24px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; }
+  .mm-connector { width: 2px; height: 24px; background: var(--border); }
+  .mm-branches { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .mm-branch { display: flex; flex-direction: column; align-items: center; width: 180px; }
+  .mm-branch-head { padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; text-align: center; }
+  .mm-branch-head.frontend { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .mm-branch-head.backend { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+  .mm-branch-head.database { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .mm-branch-head.providers { background: rgba(255,107,53,0.15); color: var(--orange); border: 1px solid rgba(255,107,53,0.3); }
+  .mm-branch-head.save { background: rgba(34,211,238,0.15); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+  .mm-items { list-style: none; padding: 0; margin-top: 8px; width: 100%; }
+  .mm-items li { padding: 3px 10px; font-size: 0.68rem; color: var(--muted); border-left: 2px solid var(--border); margin-left: 50%; margin-bottom: 2px; }
+  .mm-sub-connector { width: 2px; height: 12px; background: var(--border); }
+
+  /* ---- Flow Diagram ---- */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 24px 0; }
+  .flow-box { padding: 10px 20px; border-radius: 10px; font-size: 0.78rem; font-weight: 500; text-align: center; min-width: 200px; max-width: 360px; }
+  .flow-box.user { background: rgba(96,165,250,0.12); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .flow-box.gate { background: rgba(255,107,53,0.12); color: var(--orange); border: 1px solid rgba(255,107,53,0.3); }
+  .flow-box.edge { background: rgba(168,85,247,0.12); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+  .flow-box.llm { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .flow-box.save { background: rgba(34,211,238,0.12); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+  .flow-arrow-down { width: 2px; height: 20px; background: var(--border); position: relative; }
+  .flow-arrow-down::after { content: ''; position: absolute; bottom: -4px; left: -3px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid var(--border); }
+  .flow-branch { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; justify-content: center; }
+  .flow-branch-line { display: flex; flex-direction: column; align-items: center; }
+  .flow-label { font-size: 0.65rem; color: var(--dim); margin-bottom: 4px; }
+  .flow-small { padding: 8px 16px; border-radius: 8px; font-size: 0.72rem; text-align: center; }
+
+  /* Technique Grid */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .tech-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+  .tech-card-name { color: var(--text); font-weight: 600; font-size: 0.8rem; margin-bottom: 4px; }
+  .tech-card-desc { color: var(--dim); font-size: 0.7rem; line-height: 1.4; }
+  .tech-card-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 0.6rem; font-weight: 600; margin-top: 4px; }
+  .tech-card-tag.transform { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .tech-card-tag.svg { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .tech-card-tag.physics { background: rgba(255,107,53,0.15); color: var(--orange); }
+  .tech-card-tag.cinematic { background: rgba(34,211,238,0.15); color: var(--cyan); }
+  .tech-card-tag.compound { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.75rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Motion Lab AI Agent <span style="font-size:0.7rem;color:var(--dim);font-weight:400">v2</span></h1>
+<p class="subtitle">Implementation Plan. SuperIcons. April 2026</p>
+
+<!-- ===== SECTION 1: OVERVIEW ===== -->
+<h2><span class="num">1</span> Overview</h2>
+<p>AI-powered animation assistant inside Motion Lab. Users describe animations in natural language with optional structured guides. The AI generates the animation, previews it live, and accepted results are saved to <strong>"My Animations"</strong> in Supabase for reuse.</p>
+
+<div class="highlight">
+  <p><strong>Three principles:</strong> (1) LLM provider never hardcoded, configured via env. (2) Accepted animations become persistent preset buttons. (3) Guided input chips help users write better prompts without constraining power users.</p>
+</div>
+
+<!-- ===== SECTION 2: PROVIDERS ===== -->
+<h2><span class="num">2</span> LLM Provider Matrix</h2>
+
+<div class="card">
+<table>
+  <thead><tr><th>Provider</th><th>Model</th><th>Context</th><th>API</th><th>In (1M tok)</th><th>Out (1M tok)</th></tr></thead>
+  <tbody>
+    <tr><td><strong>xAI</strong> <span class="badge badge--orange">Flagship</span></td><td>grok-4.20</td><td>2M</td><td>OAI-compat</td><td>~$3.00</td><td>~$15.00</td></tr>
+    <tr><td><strong>OpenAI</strong></td><td>gpt-5.4-mini</td><td>128K</td><td>Native</td><td>~$0.40</td><td>~$1.60</td></tr>
+    <tr><td><strong>DeepSeek</strong> <span class="badge badge--green">Cheapest</span></td><td>deepseek-chat V3.2</td><td>128K</td><td>OAI-compat</td><td>~$0.27</td><td>~$1.10</td></tr>
+    <tr><td><strong>MiniMax</strong></td><td>M2.7</td><td>128K</td><td>OAI-compat</td><td>~$0.50</td><td>~$2.00</td></tr>
+  </tbody>
+</table>
+</div>
+
+<pre>
+LLM_PROVIDER=deepseek        # xai | openai | deepseek | minimax
+LLM_MODEL=deepseek-chat
+LLM_API_KEY=sk-xxx
+LLM_BASE_URL=                # optional override
+</pre>
+
+<!-- ===== SECTION 3: WIREFRAME ===== -->
+<h2><span class="num">3</span> Wireframe: AI Agent Panel</h2>
+
+<div class="wireframe">
+  <div class="wf-header">
+    <span>Motion Lab</span>
+    <span style="color:var(--orange)">AI Agent v2</span>
+  </div>
+  <div class="wf-body">
+    <div class="wf-canvas">
+      <div class="wf-icon-preview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="wf-props">
+      <div class="wf-props-title">Properties</div>
+      <div class="wf-prop-row"><span class="wf-prop-label">Scale</span><div class="wf-slider"></div><span class="wf-prop-val">100%</span></div>
+      <div class="wf-prop-row"><span class="wf-prop-label">Rotate</span><div class="wf-slider"></div><span class="wf-prop-val">0deg</span></div>
+      <div class="wf-prop-row"><span class="wf-prop-label">Opacity</span><div class="wf-slider"></div><span class="wf-prop-val">1.00</span></div>
+    </div>
+
+    <div class="wf-bottombar">
+      <div class="wf-triggers">
+        <span class="wf-trigger active">Loop</span>
+        <span class="wf-trigger">Hover</span>
+        <span class="wf-trigger">Click</span>
+      </div>
+    </div>
+
+    <div class="wf-ai-panel">
+      <div class="wf-ai-title">
+        <span>&#10024; AI Animation Assistant</span>
+        <span>3 credits remaining</span>
+      </div>
+
+      <!-- Guide Chips -->
+      <div class="wf-chips">
+        <span class="wf-chip selected">Hover</span>
+        <span class="wf-chip selected">Bouncy</span>
+        <span class="wf-chip">Speed</span>
+        <span class="wf-chip">Mood</span>
+      </div>
+
+      <div class="wf-ai-input">
+        <input type="text" value="make it bounce with elastic feel" />
+        <button class="wf-ai-send">&#x2192;</button>
+      </div>
+
+      <!-- Result Card -->
+      <div class="wf-result">
+        <div class="wf-result-desc">"Elastic bounce with overshoot on hover"</div>
+        <div class="wf-result-meta">
+          <span>Duration: <strong>0.6s</strong></span>
+          <span>Easing: <strong>spring</strong></span>
+          <span>Trigger: <strong>hover</strong></span>
+        </div>
+        <div class="wf-result-actions">
+          <button class="wf-btn wf-btn--accept">&#10003; Accept</button>
+          <button class="wf-btn wf-btn--regen">&#8635; Regenerate</button>
+          <button class="wf-btn wf-btn--dismiss">Dismiss</button>
+        </div>
+      </div>
+
+      <!-- Save Modal (shown after Accept) -->
+      <div class="wf-modal">
+        <div class="wf-modal-title">Save to My Animations</div>
+        <div class="wf-modal-row">
+          <input type="text" value="Elastic Bounce" placeholder="Name your animation..." />
+          <button>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: GUIDED INPUT ===== -->
+<h2><span class="num">4</span> Guided Input Chips</h2>
+
+<div class="card">
+<table>
+  <thead><tr><th>Chip</th><th>Options</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Trigger</strong></td><td>On hover, On click, Loop, On scroll</td><td>When the animation plays</td></tr>
+    <tr><td><strong>Style</strong></td><td>Smooth, Bouncy, Sharp, Organic, Glitchy, Playful, Dramatic</td><td>Movement character</td></tr>
+    <tr><td><strong>Speed</strong></td><td>Slow (1.5s+), Medium (0.5-1s), Fast (0.2-0.5s)</td><td>Duration range</td></tr>
+    <tr><td><strong>Mood</strong></td><td>Subtle, Energetic, Elegant, Chaotic, Minimal</td><td>Intensity and feel</td></tr>
+  </tbody>
+</table>
+<p style="margin-top:8px;font-size:0.75rem;">Chips auto-append structured metadata to the prompt. Power users ignore them and type freely.</p>
+</div>
+
+<!-- ===== SECTION 5: USER FLOW ===== -->
+<h2><span class="num">5</span> User Flow: Generate, Preview, Save</h2>
+
+<div class="flow">
+  <div class="flow-box user">Click AI Agent button</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box gate">Credit / free-use check</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box user">Select guide chips (optional) + type prompt</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box edge">POST /functions/v1/ai-animate<br><span style="font-size:0.6rem;color:var(--dim)">{prompt, svgMarkup, currentState, chips}</span></div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box edge">Edge Function: JWT, credits, system prompt</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box llm">LLM Provider (env-configured)</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box edge">Parse JSON, validate schema, deduct credit</div>
+  <div class="flow-arrow-down"></div>
+  <div class="flow-box user">Apply animation to live preview</div>
+  <div class="flow-arrow-down"></div>
+
+  <div class="flow-branch">
+    <div class="flow-branch-line">
+      <div class="flow-label" style="color:var(--green);">Accept</div>
+      <div class="flow-small" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.3);">Name modal</div>
+      <div class="flow-arrow-down"></div>
+      <div class="flow-small save" style="background:rgba(34,211,238,0.1);color:var(--cyan);border:1px solid rgba(34,211,238,0.3);">Save to Supabase<br>user_animations table</div>
+      <div class="flow-arrow-down"></div>
+      <div class="flow-small save" style="background:rgba(34,211,238,0.1);color:var(--cyan);border:1px solid rgba(34,211,238,0.3);">Appears in<br>"My Animations"</div>
+    </div>
+    <div class="flow-branch-line">
+      <div class="flow-label" style="color:var(--orange);">Regenerate</div>
+      <div class="flow-small" style="background:rgba(255,107,53,0.1);color:var(--orange);border:1px solid rgba(255,107,53,0.3);">Re-send with<br>"try different"<br>(costs 1 credit)</div>
+    </div>
+    <div class="flow-branch-line">
+      <div class="flow-label" style="color:var(--dim);">Dismiss</div>
+      <div class="flow-small" style="background:rgba(107,99,91,0.1);color:var(--dim);border:1px solid rgba(107,99,91,0.3);">Discard<br>no refund</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 6: ANIMATION TECHNIQUES ===== -->
+<h2><span class="num">6</span> Animation Techniques (System Prompt v2)</h2>
+
+<h3>Transform-based (GPU-accelerated)</h3>
+<div class="tech-grid">
+  <div class="tech-card"><div class="tech-card-name">Bounce</div><div class="tech-card-desc">translateY with overshoot spring easing</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Shake</div><div class="tech-card-desc">translateX oscillation with decreasing amplitude</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Spin</div><div class="tech-card-desc">rotate(360deg) linear full rotation</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Pulse</div><div class="tech-card-desc">scale(1.15) rhythmic breathing</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Wobble</div><div class="tech-card-desc">Small rotate angles, off-balance rocking</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Float</div><div class="tech-card-desc">Gentle translateY oscillation, levitation</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">3D Flip</div><div class="tech-card-desc">rotateY(360deg) with perspective, adds depth</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Swing</div><div class="tech-card-desc">Rotate from top-center origin, pendulum motion</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Pop-in</div><div class="tech-card-desc">scale(0) to scale(1) with spring overshoot</div><span class="tech-card-tag transform">Transform</span></div>
+  <div class="tech-card"><div class="tech-card-name">Slide</div><div class="tech-card-desc">translateX/Y from off-stage</div><span class="tech-card-tag transform">Transform</span></div>
+</div>
+
+<h3>SVG-specific</h3>
+<div class="tech-grid">
+  <div class="tech-card"><div class="tech-card-name">Stroke Draw</div><div class="tech-card-desc">stroke-dashoffset from path length to 0, hand-drawn feel</div><span class="tech-card-tag svg">SVG</span></div>
+  <div class="tech-card"><div class="tech-card-name">Typewriter Reveal</div><div class="tech-card-desc">clip-path inset sweep, left-to-right reveal</div><span class="tech-card-tag svg">SVG</span></div>
+  <div class="tech-card"><div class="tech-card-name">Neon Glow</div><div class="tech-card-desc">Animated filter drop-shadow with color cycling</div><span class="tech-card-tag svg">SVG</span></div>
+</div>
+
+<h3>Physics-based</h3>
+<div class="tech-grid">
+  <div class="tech-card"><div class="tech-card-name">Elastic Squish</div><div class="tech-card-desc">Offset scaleX+scaleY with spring curves, rubber object feel</div><span class="tech-card-tag physics">Physics</span></div>
+  <div class="tech-card"><div class="tech-card-name">Jelly Wobble</div><div class="tech-card-desc">Alternating skewX + scaleY at high frequency, gelatin</div><span class="tech-card-tag physics">Physics</span></div>
+  <div class="tech-card"><div class="tech-card-name">Rubber Band Snap</div><div class="tech-card-desc">Overshoot + decreasing bounce amplitude</div><span class="tech-card-tag physics">Physics</span></div>
+  <div class="tech-card"><div class="tech-card-name">Pendulum</div><div class="tech-card-desc">Rotate from top origin with damped oscillation</div><span class="tech-card-tag physics">Physics</span></div>
+  <div class="tech-card"><div class="tech-card-name">Magnetic Pull</div><div class="tech-card-desc">Translate toward interaction point, scale increase</div><span class="tech-card-tag physics">Physics</span></div>
+</div>
+
+<h3>Cinematic</h3>
+<div class="tech-grid">
+  <div class="tech-card"><div class="tech-card-name">Glitch Flicker</div><div class="tech-card-desc">Rapid opacity + translateX jitter + clip-path slice</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+  <div class="tech-card"><div class="tech-card-name">Dissolve Scatter</div><div class="tech-card-desc">Each path translates outward + fades, explosion</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+  <div class="tech-card"><div class="tech-card-name">Ink Bleed</div><div class="tech-card-desc">Scale from 0 + blur animation, ink spreading</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+  <div class="tech-card"><div class="tech-card-name">Origami Fold</div><div class="tech-card-desc">RotateX on segments with edge origins, paper fold</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+  <div class="tech-card"><div class="tech-card-name">Stagger Cascade</div><div class="tech-card-desc">nth-child delay + translateY + opacity, sequential</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+  <div class="tech-card"><div class="tech-card-name">Breathe</div><div class="tech-card-desc">Very slow scale(1.03) ease-in-out, zen ambient</div><span class="tech-card-tag cinematic">Cinematic</span></div>
+</div>
+
+<h3>Compound (AI combines 2-3)</h3>
+<div class="tech-grid">
+  <div class="tech-card"><div class="tech-card-name">Draw + Breathe</div><div class="tech-card-desc">Draws itself then gently pulses forever</div><span class="tech-card-tag compound">Compound</span></div>
+  <div class="tech-card"><div class="tech-card-name">Pop + Jelly</div><div class="tech-card-desc">Scales up with elastic squish on landing</div><span class="tech-card-tag compound">Compound</span></div>
+  <div class="tech-card"><div class="tech-card-name">Stagger + Flip</div><div class="tech-card-desc">Each element flips in sequence</div><span class="tech-card-tag compound">Compound</span></div>
+  <div class="tech-card"><div class="tech-card-name">Glitch + Neon</div><div class="tech-card-desc">Flicker + glow, cyberpunk aesthetic</div><span class="tech-card-tag compound">Compound</span></div>
+  <div class="tech-card"><div class="tech-card-name">Slide + Fade</div><div class="tech-card-desc">Slides in with opacity transition</div><span class="tech-card-tag compound">Compound</span></div>
+  <div class="tech-card"><div class="tech-card-name">Bounce + Spin</div><div class="tech-card-desc">Bounces while rotating</div><span class="tech-card-tag compound">Compound</span></div>
+</div>
+
+<!-- ===== SECTION 7: MIND MAP ===== -->
+<h2><span class="num">7</span> System Mind Map</h2>
+
+<div class="mindmap">
+  <div class="mm-root">Motion Lab AI Agent v2</div>
+  <div class="mm-connector"></div>
+
+  <div class="mm-branches">
+    <div class="mm-branch">
+      <div class="mm-sub-connector"></div>
+      <div class="mm-branch-head frontend">Frontend</div>
+      <ul class="mm-items">
+        <li>Guide chips (4 types)</li>
+        <li>Prompt textarea</li>
+        <li>Loading state</li>
+        <li>Result card + preview</li>
+        <li>Accept/Regen/Dismiss</li>
+        <li>Name modal</li>
+        <li>Credit counter</li>
+        <li>My Animations panel</li>
+      </ul>
+    </div>
+
+    <div class="mm-branch">
+      <div class="mm-sub-connector"></div>
+      <div class="mm-branch-head backend">Edge Functions</div>
+      <ul class="mm-items">
+        <li>ai-animate (gen)</li>
+        <li>save-animation</li>
+        <li>JWT verification</li>
+        <li>Credit check/deduct</li>
+        <li>Provider router (env)</li>
+        <li>System prompt v2</li>
+        <li>JSON validation</li>
+      </ul>
+    </div>
+
+    <div class="mm-branch">
+      <div class="mm-sub-connector"></div>
+      <div class="mm-branch-head database">Database</div>
+      <ul class="mm-items">
+        <li>credit_ledger</li>
+        <li>user_animations (new)</li>
+        <li>RLS policies</li>
+        <li>Balance query</li>
+        <li>Expiry filtering</li>
+      </ul>
+    </div>
+
+    <div class="mm-branch">
+      <div class="mm-sub-connector"></div>
+      <div class="mm-branch-head providers">LLM Providers</div>
+      <ul class="mm-items">
+        <li>xAI Grok 4.20</li>
+        <li>OpenAI GPT-5.4 mini</li>
+        <li>DeepSeek V3.2</li>
+        <li>MiniMax M2.7</li>
+        <li>Env-based switching</li>
+      </ul>
+    </div>
+
+    <div class="mm-branch">
+      <div class="mm-sub-connector"></div>
+      <div class="mm-branch-head save">Save Flow</div>
+      <ul class="mm-items">
+        <li>Accept trigger</li>
+        <li>Name input modal</li>
+        <li>Supabase insert</li>
+        <li>My Animations render</li>
+        <li>Reuse on any icon</li>
+        <li>Phase 2: sharing</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 8: VERIFICATION ===== -->
+<h2><span class="num">8</span> Verification Plan</h2>
+
+<div class="card">
+<table>
+  <thead><tr><th>Test</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>JSON parsing</td><td><span class="badge badge--purple">Unit</span></td><td>Mock LLM response, verify keyframe extraction</td></tr>
+    <tr><td>Credit deduction</td><td><span class="badge badge--purple">Unit</span></td><td>Balance decreases, respects expiry</td></tr>
+    <tr><td>Provider adapter</td><td><span class="badge badge--purple">Unit</span></td><td>Correct base URL for all 4 providers</td></tr>
+    <tr><td>RLS: credits</td><td><span class="badge badge--purple">Unit</span></td><td>User A cannot read user B's credits</td></tr>
+    <tr><td>RLS: animations</td><td><span class="badge badge--purple">Unit</span></td><td>User A cannot read user B's saved animations</td></tr>
+    <tr><td>Guide chips</td><td><span class="badge badge--blue">Manual</span></td><td>Chips append structured data to prompt</td></tr>
+    <tr><td>E2E generation</td><td><span class="badge badge--blue">Manual</span></td><td>Type prompt, verify animation on preview</td></tr>
+    <tr><td>Save flow</td><td><span class="badge badge--blue">Manual</span></td><td>Accept, name, verify in My Animations</td></tr>
+    <tr><td>Reload persist</td><td><span class="badge badge--blue">Manual</span></td><td>Refresh, My Animations still populated</td></tr>
+    <tr><td>Free user gate</td><td><span class="badge badge--blue">Manual</span></td><td>Upgrade prompt after 3 free uses</td></tr>
+    <tr><td>Provider switch</td><td><span class="badge badge--blue">Manual</span></td><td>Change env, verify routing works</td></tr>
+    <tr><td>Cost benchmark</td><td><span class="badge badge--orange">Perf</span></td><td>50 prompts per provider, measure cost</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  SuperIcons Motion Lab AI Agent v2. Implementation plan generated April 1, 2026.
+</div>
+
+</div>
+</body>
+</html>

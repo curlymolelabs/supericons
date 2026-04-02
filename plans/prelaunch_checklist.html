@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Pre-Launch Checklist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0e0e10;
+      --card: #18181b;
+      --card-border: #27272a;
+      --text: #f4f4f5;
+      --text-dim: #a1a1aa;
+      --text-muted: #71717a;
+      --p0: #ef4444;
+      --p0-bg: rgba(239, 68, 68, 0.08);
+      --p0-border: rgba(239, 68, 68, 0.25);
+      --p1: #f59e0b;
+      --p1-bg: rgba(245, 158, 11, 0.08);
+      --p1-border: rgba(245, 158, 11, 0.25);
+      --p2: #3b82f6;
+      --p2-bg: rgba(59, 130, 246, 0.08);
+      --p2-border: rgba(59, 130, 246, 0.25);
+      --p3: #6b7280;
+      --p3-bg: rgba(107, 114, 128, 0.08);
+      --p3-border: rgba(107, 114, 128, 0.25);
+      --green: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.12);
+      --accent: #f97316;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .header__logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .header__title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header__subtitle {
+      color: var(--text-dim);
+      font-size: 15px;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .progress-bar__track {
+      flex: 1;
+      height: 8px;
+      background: #27272a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar__fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #fb923c);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .progress-bar__text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .progress-bar__text strong {
+      color: var(--text);
+      font-size: 20px;
+    }
+
+    /* Priority stats */
+    .priority-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .priority-stat {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .priority-stat:hover { transform: translateY(-2px); }
+    .priority-stat[data-priority="p0"] { border-color: var(--p0-border); }
+    .priority-stat[data-priority="p1"] { border-color: var(--p1-border); }
+    .priority-stat[data-priority="p2"] { border-color: var(--p2-border); }
+    .priority-stat[data-priority="p3"] { border-color: var(--p3-border); }
+    .priority-stat__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .priority-stat[data-priority="p0"] .priority-stat__label { color: var(--p0); }
+    .priority-stat[data-priority="p1"] .priority-stat__label { color: var(--p1); }
+    .priority-stat[data-priority="p2"] .priority-stat__label { color: var(--p2); }
+    .priority-stat[data-priority="p3"] .priority-stat__label { color: var(--p3); }
+    .priority-stat__count {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .priority-stat__of {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 36px;
+    }
+    .section__header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .section__badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .section[data-priority="p0"] .section__badge { background: var(--p0-bg); color: var(--p0); border: 1px solid var(--p0-border); }
+    .section[data-priority="p1"] .section__badge { background: var(--p1-bg); color: var(--p1); border: 1px solid var(--p1-border); }
+    .section[data-priority="p2"] .section__badge { background: var(--p2-bg); color: var(--p2); border: 1px solid var(--p2-border); }
+    .section[data-priority="p3"] .section__badge { background: var(--p3-bg); color: var(--p3); border: 1px solid var(--p3-border); }
+    .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      flex: 1;
+    }
+    .section__count {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .section__chevron {
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      font-size: 20px;
+    }
+    .section.collapsed .section__chevron { transform: rotate(-90deg); }
+    .section.collapsed .section__body { display: none; }
+
+    /* Subsection */
+    .subsection {
+      margin-bottom: 20px;
+    }
+    .subsection__title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    /* Checklist item */
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .item:hover { background: rgba(255,255,255,0.03); }
+    .item.checked { opacity: 0.5; }
+    .item.checked .item__title { text-decoration: line-through; }
+
+    .item__checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #3f3f46;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .item.checked .item__checkbox {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .item.checked .item__checkbox::after {
+      content: '\2713';
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .item__content { flex: 1; }
+    .item__title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .item__desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .priority-stats { grid-template-columns: repeat(2, 1fr); }
+      .header__title { font-size: 24px; }
+      .container { padding: 32px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header__logo">Supericons</div>
+      <h1 class="header__title">Pre-Launch Checklist</h1>
+      <p class="header__subtitle">MCP Premium, Auth, Payments, and Deployment</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-bar__track">
+        <div class="progress-bar__fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="progress-bar__text"><strong id="progressPct">0%</strong> complete</div>
+    </div>
+
+    <div class="priority-stats" id="priorityStats">
+      <div class="priority-stat" data-priority="p0">
+        <div class="priority-stat__label">P0 Blocking</div>
+        <div class="priority-stat__count" id="statP0">0</div>
+        <div class="priority-stat__of" id="statP0Total">/ 0</div>
+      </div>
+      <div class="priority-stat" data-priority="p1">
+        <div class="priority-stat__label">P1 High</div>
+        <div class="priority-stat__count" id="statP1">0</div>
+        <div class="priority-stat__of" id="statP1Total">/ 0</div>
+      </div>
+      <div class="priority-stat" data-priority="p2">
+        <div class="priority-stat__label">P2 Medium</div>
+        <div class="priority-stat__count" id="statP2">0</div>
+        <div class="priority-stat__of" id="statP2Total">/ 0</div>
+      </div>
+      <div class="priority-stat" data-priority="p3">
+        <div class="priority-stat__label">P3 Low</div>
+        <div class="priority-stat__count" id="statP3">0</div>
+        <div class="priority-stat__of" id="statP3Total">/ 0</div>
+      </div>
+    </div>
+
+    <div id="checklist"></div>
+
+    <div class="footer">
+      Supericons v0.1.0 &middot; Curly Mole Labs &middot; Last updated <span id="lastUpdated"></span>
+    </div>
+  </div>
+
+  <script>
+    const DATA = [
+      {
+        priority: 'p0', title: 'Blocking (Must fix before launch)', subsections: [
+          { name: 'Security', items: [
+            { id: 'sec1', title: 'Audit all Edge Functions for JWT gate issue', desc: 'create-checkout, create-portal, serve-premium-asset, download-pack, redeem-credit may have the same "Invalid JWT" error. Each function that handles auth internally should have gateway JWT verification OFF.' },
+            { id: 'sec2', title: 'Rotate exposed API key', desc: 'The key si_18f7e375... was visible in console logs and screenshots. Generate a new key and revoke this one.' },
+            { id: 'sec3', title: 'Verify RLS policies cover all tables', desc: 'Confirm si_api_keys, si_subscriptions, si_purchases, si_products, si_credits all have proper RLS with correct policies.' },
+            { id: 'sec4', title: 'Remove management token from MCP config', desc: 'The sbp_a0f71e... Supabase management token in mcp_config.json must not be committed to any public repo.' },
+          ]},
+          { name: 'Payment Flow', items: [
+            { id: 'pay1', title: 'Test Stripe checkout end-to-end', desc: 'Single pack purchase: product selection, Stripe redirect, webhook processing, purchase record creation. Use Stripe test cards.' },
+            { id: 'pay2', title: 'Test Stripe subscription end-to-end', desc: 'Pro monthly/annual: checkout, webhook, subscription record creation, portal access for cancellation.' },
+            { id: 'pay3', title: 'Verify webhook idempotency', desc: 'stripe-webhook must handle duplicate events gracefully (no double-inserts).' },
+            { id: 'pay4', title: 'Test credit redemption flow', desc: 'Pro users with credits: redeem credit for a pack, verify purchase record created without Stripe charge.' },
+          ]},
+          { name: 'Data Integrity', items: [
+            { id: 'dat1', title: 'Verify all 8 premium collections (50 icons each)', desc: 'Confirm SVGs and CSS files are uploaded to Supabase Storage for: ai-agentic, data-charts, ecommerce, media-playback, navigation-menus, security-auth, social-communication, status-feedback.' },
+            { id: 'dat2', title: 'Verify manifest.json is complete', desc: 'All 8 collections have correct classMap entries for CSS reverse-mapping in the MCP server.' },
+          ]},
+        ]
+      },
+      {
+        priority: 'p1', title: 'High Priority (Should fix before launch)', subsections: [
+          { name: 'Production Build', items: [
+            { id: 'bld1', title: 'Run npm run build', desc: 'dist/ is stale. The production bundle still has the old isPro() gate and missing auth changes.' },
+            { id: 'bld2', title: 'Deploy updated dist/ to hosting', desc: 'After building, deploy to your hosting provider (Vercel, Netlify, etc.).' },
+            { id: 'bld3', title: 'Verify production site loads correctly', desc: 'Check all pages: icon grid, collections, pricing, dashboard, motion lab, converter.' },
+          ]},
+          { name: 'MCP Package', items: [
+            { id: 'mcp1', title: 'Publish supericons-mcp to npm', desc: 'Current v0.1.0 has broken auth (3 REST calls). Bump to 0.2.0 with the new Edge Function auth and publish.' },
+            { id: 'mcp2', title: 'Update MCP package.json metadata', desc: 'Add keywords, repository URL, author, license fields for npm discoverability.' },
+            { id: 'mcp3', title: 'Test npx supericons-mcp installs and runs', desc: 'After publishing, verify the npm package works for external users with and without API keys.' },
+          ]},
+          { name: 'Edge Function Deployment', items: [
+            { id: 'efn1', title: 'Verify validate-mcp-key is deployed', desc: 'Confirm the function exists and responds correctly on production.' },
+            { id: 'efn2', title: 'Verify api-keys is deployed with latest code', desc: 'Confirm the pack-buyer guard update is live on production.' },
+            { id: 'efn3', title: 'Check all Edge Functions are deployed', desc: 'Ensure local code matches deployed versions for all 8 functions.' },
+          ]},
+        ]
+      },
+      {
+        priority: 'p2', title: 'Medium Priority (Fix within first week)', subsections: [
+          { name: 'Per-Collection Gating', items: [
+            { id: 'gat1', title: 'Test pack-buyer access via MCP', desc: 'Create a test account with 1 purchased pack. Verify MCP returns only that pack (not all 400 icons).' },
+            { id: 'gat2', title: 'Test bundle-buyer access via MCP', desc: 'Create a test account with bundle purchase. Verify all 8 packs are accessible.' },
+            { id: 'gat3', title: 'Test revoked key behavior', desc: 'Revoke an API key and verify the MCP server correctly rejects it.' },
+            { id: 'gat4', title: 'Test expired subscription downgrade', desc: 'Let a Pro subscription expire and verify MCP downgrades to free-only.' },
+          ]},
+          { name: 'UX Polish', items: [
+            { id: 'ux1', title: 'Fix "Failed to load API keys" on page load', desc: 'The GET request to api-keys may fail on first load due to auth timing. Ensure keys load reliably.' },
+            { id: 'ux2', title: 'Add loading state to Generate Key button', desc: 'Disable button and show spinner while the Edge Function processes.' },
+            { id: 'ux3', title: 'Add success toast after key generation', desc: 'Show a confirmation toast after the key modal is dismissed.' },
+            { id: 'ux4', title: 'Handle clipboard copy failure gracefully', desc: 'If clipboard API is blocked, show the key in a selectable text field.' },
+          ]},
+          { name: 'Documentation', items: [
+            { id: 'doc1', title: 'Write MCP setup guide', desc: 'Instructions for Cursor, Claude, VS Code, Windsurf, Antigravity. Cover free and premium setup.' },
+            { id: 'doc2', title: 'Write API documentation', desc: 'Document the REST API for programmatic access beyond MCP.' },
+            { id: 'doc3', title: 'Update README.md', desc: 'Project overview, architecture, setup instructions for contributors.' },
+          ]},
+        ]
+      },
+      {
+        priority: 'p3', title: 'Low Priority (Nice to have)', subsections: [
+          { name: 'Analytics', items: [
+            { id: 'anl1', title: 'Track MCP usage in dashboard', desc: 'last_used timestamp is updated on validation. Add a dashboard view showing API key usage stats.' },
+            { id: 'anl2', title: 'Track premium icon access patterns', desc: 'Which collections are most popular via MCP? Inform future collection development.' },
+          ]},
+          { name: 'Performance', items: [
+            { id: 'prf1', title: 'Add caching to validate-mcp-key', desc: 'Cache validated keys for 5-10 minutes to reduce Edge Function invocations.' },
+            { id: 'prf2', title: 'Optimize MCP startup time', desc: 'Loading 17,000+ icons on startup. Consider lazy-loading or caching the icon index.' },
+          ]},
+          { name: 'Future Features', items: [
+            { id: 'fut1', title: 'Rate limiting on API keys', desc: 'Prevent abuse of premium icon access.' },
+            { id: 'fut2', title: 'API key scoping', desc: 'Allow users to create read-only vs full-access keys.' },
+            { id: 'fut3', title: 'Usage dashboard in My Purchases', desc: 'Show API call count, last used, and collections accessed per key.' },
+          ]},
+        ]
+      },
+    ];
+
+    const STORAGE_KEY = 'supericons-prelaunch-checklist';
+
+    function loadChecked() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+    }
+    function saveChecked(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function render() {
+      const state = loadChecked();
+      const container = document.getElementById('checklist');
+      container.innerHTML = '';
+      let totalItems = 0, totalChecked = 0;
+      const stats = { p0: [0,0], p1: [0,0], p2: [0,0], p3: [0,0] };
+
+      DATA.forEach(section => {
+        const sec = document.createElement('div');
+        sec.className = 'section';
+        sec.dataset.priority = section.priority;
+
+        let sectionTotal = 0, sectionChecked = 0;
+        section.subsections.forEach(sub => {
+          sub.items.forEach(item => {
+            sectionTotal++;
+            if (state[item.id]) sectionChecked++;
+          });
+        });
+        totalItems += sectionTotal;
+        totalChecked += sectionChecked;
+        stats[section.priority] = [sectionChecked, sectionTotal];
+
+        sec.innerHTML = `
+          <div class="section__header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span class="section__badge">${section.priority}</span>
+            <span class="section__title">${section.title}</span>
+            <span class="section__count">${sectionChecked}/${sectionTotal}</span>
+            <span class="section__chevron">&#9662;</span>
+          </div>
+          <div class="section__body">
+            ${section.subsections.map(sub => `
+              <div class="subsection">
+                <div class="subsection__title">${sub.name}</div>
+                ${sub.items.map(item => `
+                  <div class="item ${state[item.id] ? 'checked' : ''}" data-id="${item.id}">
+                    <div class="item__checkbox"></div>
+                    <div class="item__content">
+                      <div class="item__title">${item.title}</div>
+                      <div class="item__desc">${item.desc}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `).join('')}
+          </div>
+        `;
+        container.appendChild(sec);
+      });
+
+      // Click handlers
+      container.querySelectorAll('.item').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.dataset.id;
+          const s = loadChecked();
+          s[id] = !s[id];
+          saveChecked(s);
+          render();
+        });
+      });
+
+      // Progress
+      const pct = totalItems ? Math.round((totalChecked / totalItems) * 100) : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressPct').textContent = pct + '%';
+
+      // Stats
+      ['p0','p1','p2','p3'].forEach(p => {
+        document.getElementById('stat' + p.charAt(0).toUpperCase() + p.charAt(1)).textContent = stats[p][0];
+        document.getElementById('stat' + p.charAt(0).toUpperCase() + p.charAt(1) + 'Total').textContent = '/ ' + stats[p][1];
+      });
+
+      document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    render();
+  </script>
+</body>
+</html>

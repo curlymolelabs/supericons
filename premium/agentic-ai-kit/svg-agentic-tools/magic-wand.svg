@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A cute magic wand with a star tip and floating sparkles -->
+  
+      <!-- Wand stick (diagonal, thick, rounded) -->
+      <rect x="36" y="148" width="160" height="20" rx="10" transform="rotate(-45 128 128)" />
+      <!-- Handle grip (darker band) -->
+      <rect x="36" y="148" width="48" height="20" rx="10" transform="rotate(-45 128 128)" fill="var(--hole, #fff)" opacity="0.2" />
+      <!-- Star at tip -->
+      <path d="M68 56 L76 40 L84 56 L100 60 L88 72 L92 88 L76 80 L60 88 L64 72 L52 60 Z" />
+      <!-- Sparkle 1 (small diamond) -->
+      <path d="M164 48 L168 36 L172 48 L184 52 L172 56 L168 68 L164 56 L152 52 Z" />
+      <!-- Sparkle 2 (tiny) -->
+      <path d="M140 84 L142 78 L144 84 L150 86 L144 88 L142 94 L140 88 L134 86 Z" />
+      <!-- Sparkle 3 (mini dot) -->
+      <circle cx="192" cy="72" r="6" />
+    
+</svg>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Watermark Styles Demo</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0e0e10; color: #e0e0e0;
+    min-height: 100vh; padding: 32px;
+  }
+  h1 { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .subtitle { font-size: 0.8rem; color: #888; margin-bottom: 28px; }
+  .section-title {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: #f05a28; margin-bottom: 16px; margin-top: 32px;
+  }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+  .demo-card {
+    background: #1a1a1e; border: 1px solid #2a2a2e; border-radius: 12px;
+    padding: 16px; text-align: center; width: 200px;
+  }
+  .demo-card h3 { font-size: 0.8rem; color: #fff; margin-bottom: 12px; }
+  .demo-card .note { font-size: 0.65rem; color: #666; margin-top: 8px; }
+  .icon-frame {
+    width: 120px; height: 120px; margin: 0 auto 8px;
+    background: #111114; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .icon-frame svg { width: 80px; height: 80px; }
+  .icon-frame-sm {
+    width: 40px; height: 40px; margin: 8px auto;
+    background: #111114; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .icon-frame-sm svg { width: 28px; height: 28px; }
+
+  /* Watermark styles */
+  .wm-diagonal {
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 8px,
+      rgba(255,255,255,0.06) 8px, rgba(255,255,255,0.06) 9px
+    );
+  }
+  .wm-diagonal-sm {
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 4px,
+      rgba(255,255,255,0.08) 4px, rgba(255,255,255,0.08) 5px
+    );
+  }
+  .wm-text {
+    position: absolute; inset: 0; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.15); transform: rotate(-30deg);
+    text-transform: uppercase; user-select: none;
+  }
+  .wm-text-sm {
+    position: absolute; inset: 0; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 6px; font-weight: 800;
+    color: rgba(255,255,255,0.18); transform: rotate(-30deg);
+    user-select: none;
+  }
+  .wm-bar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 18px;
+    background: rgba(0,0,0,0.6); pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7px; font-weight: 700; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5); text-transform: uppercase;
+  }
+  .wm-bar-sm {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
+    background: rgba(0,0,0,0.5); pointer-events: none;
+  }
+  .wm-cross {
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .wm-cross::before, .wm-cross::after {
+    content: ''; position: absolute;
+    background: rgba(255, 80, 40, 0.12);
+  }
+  .wm-cross::before {
+    width: 200%; height: 1.5px; top: 50%; left: -50%;
+    transform: rotate(-35deg);
+  }
+  .wm-cross::after {
+    width: 200%; height: 1.5px; top: 50%; left: -50%;
+    transform: rotate(35deg);
+  }
+  .wm-lock {
+    position: absolute; top: 4px; right: 4px; pointer-events: none;
+    width: 16px; height: 16px; opacity: 0.5;
+  }
+  .wm-lock-sm {
+    position: absolute; top: 2px; right: 2px; pointer-events: none;
+    width: 8px; height: 8px; opacity: 0.5;
+  }
+  .wm-tint {
+    position: absolute; inset: 0; pointer-events: none;
+    background: rgba(14, 14, 16, 0.35);
+    border-radius: inherit;
+  }
+
+  .compared { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .vs-label { font-size: 0.6rem; color: #555; }
+</style>
+</head>
+<body>
+
+<h1>Premium Icon Watermark Exploration</h1>
+<p class="subtitle">Comparing watermark approaches at 120px (preview) and 28px (production grid) sizes</p>
+
+<div class="section-title">No watermark (current state, for reference)</div>
+<div class="row" id="row-none"></div>
+
+<div class="section-title">Style A: Diagonal line pattern</div>
+<div class="row" id="row-diagonal"></div>
+
+<div class="section-title">Style B: "PREVIEW" text overlay</div>
+<div class="row" id="row-text"></div>
+
+<div class="section-title">Style C: Bottom bar label</div>
+<div class="row" id="row-bar"></div>
+
+<div class="section-title">Style D: X-cross lines</div>
+<div class="row" id="row-cross"></div>
+
+<div class="section-title">Style E: Dimmed tint + lock badge</div>
+<div class="row" id="row-tint"></div>
+
+<script>
+const ICONS = [
+  { name: 'ai-help', pack: 'ai-agentic' },
+  { name: 'agent-workflow', pack: 'ai-agentic' }
+];
+
+const LOCK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,150,50,0.9)" stroke-width="2.5" stroke-linecap="round">
+  <rect x="5" y="11" width="14" height="10" rx="2" fill="rgba(255,150,50,0.15)"/>
+  <path d="M8 11V7a4 4 0 018 0v4"/>
+</svg>`;
+
+async function init() {
+  const svgs = {};
+  for (const icon of ICONS) {
+    const resp = await fetch(`/packs/${icon.pack}/${icon.name}.svg`);
+    svgs[icon.name] = await resp.text();
+  }
+
+  // No watermark
+  for (const icon of ICONS) {
+    addCard('row-none', icon.name, svgs[icon.name], '', '', 'Original (no protection)');
+  }
+
+  // Diagonal lines
+  for (const icon of ICONS) {
+    addCard('row-diagonal', icon.name, svgs[icon.name],
+      '<div class="wm-diagonal"></div>',
+      '<div class="wm-diagonal-sm"></div>',
+      'Subtle, non-destructive');
+  }
+
+  // Text overlay
+  for (const icon of ICONS) {
+    addCard('row-text', icon.name, svgs[icon.name],
+      '<div class="wm-text">PREVIEW</div>',
+      '<div class="wm-text-sm">PRE</div>',
+      'Clear intent signal');
+  }
+
+  // Bottom bar
+  for (const icon of ICONS) {
+    addCard('row-bar', icon.name, svgs[icon.name],
+      '<div class="wm-bar">preview</div>',
+      '<div class="wm-bar-sm"></div>',
+      'Non-intrusive, professional');
+  }
+
+  // X-cross
+  for (const icon of ICONS) {
+    addCard('row-cross', icon.name, svgs[icon.name],
+      '<div class="wm-cross"></div>',
+      '<div class="wm-cross"></div>',
+      'Prevents clean screenshot');
+  }
+
+  // Tint + lock
+  for (const icon of ICONS) {
+    addCard('row-tint', icon.name, svgs[icon.name],
+      `<div class="wm-tint"></div><div class="wm-lock">${LOCK_SVG}</div>`,
+      `<div class="wm-tint"></div><div class="wm-lock-sm">${LOCK_SVG}</div>`,
+      'Clear premium signal');
+  }
+}
+
+function addCard(rowId, name, svgText, wmLg, wmSm, note) {
+  const row = document.getElementById(rowId);
+  const card = document.createElement('div');
+  card.className = 'demo-card';
+  card.innerHTML = `
+    <h3>${name}</h3>
+    <div class="icon-frame">
+      <div class="svg-host"></div>
+      ${wmLg}
+    </div>
+    <div class="compared">
+      <div>
+        <div class="icon-frame-sm">
+          <div class="svg-host-sm"></div>
+          ${wmSm}
+        </div>
+        <div class="vs-label">28px</div>
+      </div>
+    </div>
+    <div class="note">${note}</div>
+  `;
+
+  const host = card.querySelector('.svg-host');
+  host.innerHTML = svgText;
+  const svg = host.querySelector('svg');
+  if (svg) { svg.style.width = '80px'; svg.style.height = '80px'; }
+
+  const hostSm = card.querySelector('.svg-host-sm');
+  hostSm.innerHTML = svgText;
+  const svgSm = hostSm.querySelector('svg');
+  if (svgSm) { svgSm.style.width = '28px'; svgSm.style.height = '28px'; }
+
+  row.appendChild(card);
+}
+
+init();
+</script>
+</body>
+</html>

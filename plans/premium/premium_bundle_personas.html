@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Bundle Buyer Personas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e; --surface: #1a1919; --surface-high: #201f1f;
+            --text: #ffffff; --text-muted: #adaaaa; --text-dim: #767575;
+            --primary: #FF4F00; --primary-soft: #ff906c;
+            --green: #4ade80; --yellow: #fbbf24; --red: #ff716c; --purple: #c084fc; --blue: #38bdf8;
+            --border: #484847; --radius: 0.5rem;
+        }
+        body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 3rem 2rem; max-width: 960px; margin: 0 auto; }
+        h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.03em; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; margin-top: 0; margin-bottom: 0.5rem; color: var(--text); }
+        h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-soft); }
+        p, li { color: var(--text-muted); font-size: 0.9rem; }
+        p { margin-bottom: 0.6rem; }
+        strong { color: var(--text); }
+        ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        li { margin-bottom: 0.3rem; }
+        hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2rem 0; }
+        a { color: var(--primary); text-decoration: none; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        th { font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; color: var(--text-dim); text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+        td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(72,72,71,0.2); color: var(--text-muted); vertical-align: top; }
+        tr:hover td { background: var(--surface); }
+        .hero-sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+        .persona-card {
+            background: var(--surface);
+            border: 1px solid rgba(72,72,71,0.3);
+            border-radius: var(--radius);
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+        .persona-card::before {
+            position: absolute; top: 1.25rem; right: 1.5rem;
+            font-family: 'Inter', sans-serif; font-size: 0.55rem; font-weight: 700;
+            letter-spacing: 0.1em; padding: 0.2em 0.7em; border-radius: 9999px;
+        }
+        .persona-card.rank-1 { border-color: var(--primary); }
+        .persona-card.rank-1::before { content: '#1 HIGHEST DEMAND'; background: var(--primary); color: #000; }
+        .persona-card.rank-2::before { content: '#2'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-3::before { content: '#3'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-4::before { content: '#4'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-5::before { content: '#5'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-6::before { content: '#6'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-7::before { content: '#7'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-8::before { content: '#8'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-9::before { content: '#9'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+        .persona-card.rank-10::before { content: '#10'; background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+
+        .bundle-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+        .price-tag { display: inline-block; background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.25); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; padding: 0.15em 0.6em; border-radius: 9999px; margin-left: 0.5rem; }
+        .demand-tag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15em 0.6em; border-radius: 9999px; margin-left: 0.3rem; }
+        .demand-explosive { background: rgba(255,79,0,0.15); color: var(--primary-soft); border: 1px solid rgba(255,79,0,0.3); }
+        .demand-veryhigh { background: rgba(251,191,36,0.15); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+        .demand-high { background: rgba(192,132,252,0.12); color: var(--purple); border: 1px solid rgba(192,132,252,0.25); }
+        .demand-growing { background: rgba(56,189,248,0.12); color: var(--blue); border: 1px solid rgba(56,189,248,0.25); }
+        .demand-stable { background: var(--surface-high); color: var(--text-dim); border: 1px solid var(--border); }
+
+        .section-label { font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.25rem; display: block; }
+        .gap-list { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; }
+        .gap-item { background: var(--surface-high); border: 1px solid var(--border); border-radius: 4px; padding: 0.2em 0.5em; font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--text-muted); }
+
+        .verdict { background: var(--surface); border-left: 3px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.5rem 0; }
+        .verdict p { margin: 0; }
+
+        @media (max-width: 600px) { body { padding: 2rem 1rem; } h1 { font-size: 1.8rem; } .persona-card { padding: 1.25rem; } }
+    </style>
+</head>
+<body>
+
+<h1>Buyer Personas</h1>
+<p class="hero-sub">Phase 1, Step 01 &mdash; Premium Bundle Workflow</p>
+<p class="hero-sub">10 high-demand icon bundles ranked by market momentum. Research: March 2026.</p>
+
+<hr>
+
+<p><strong>Selection criteria:</strong> (1) What are vibe coders, indie hackers, and solopreneurs actually building right now? (2) Which categories have icons that do NOT exist in the 9 free Supericons libraries? (3) Are builders in this category already paying $19-49 for UI kits and templates?</p>
+
+<hr>
+
+<!-- BUNDLE 01 -->
+<div class="persona-card rank-1">
+    <div class="bundle-name">01. Agentic AI Kit <span class="price-tag">$29</span> <span class="demand-tag demand-explosive">Explosive</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Solo dev or small team building an AI-powered product (chatbot, coding assistant, agent orchestrator, RAG pipeline, LLM wrapper). Uses React/Next.js or Svelte. Cannot design icons. Budget: $29 impulse buy.</p>
+    <span class="section-label">Why Now</span>
+    <p>Vibe coding exploded since Karpathy coined the term in early 2025. Every new AI app needs icons for concepts that did not exist 18 months ago. Zero icon coverage in free libraries.</p>
+    <span class="section-label">Gap Icons (not in free libraries)</span>
+    <div class="gap-list">
+        <span class="gap-item">agent workflow</span>
+        <span class="gap-item">prompt template</span>
+        <span class="gap-item">token counter</span>
+        <span class="gap-item">embedding vector</span>
+        <span class="gap-item">RAG pipeline</span>
+        <span class="gap-item">model selector</span>
+        <span class="gap-item">guardrail</span>
+        <span class="gap-item">context window</span>
+        <span class="gap-item">fine-tune knob</span>
+        <span class="gap-item">tool-use connector</span>
+    </div>
+</div>
+
+<!-- BUNDLE 02 -->
+<div class="persona-card rank-2">
+    <div class="bundle-name">02. SaaS Dashboard Essentials <span class="price-tag">$19</span> <span class="demand-tag demand-veryhigh">Very High</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Solopreneur or indie hacker launching a micro-SaaS (client portal, CRM, analytics dashboard, subscription management). Uses Tailwind + shadcn/ui. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>Micro-SaaS projected at $59.6B by 2030. AI builders (Lovable, Bolt) scaffold apps instantly, but the generated UIs use generic placeholder icons. Builders need polish.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">onboarding wizard</span>
+        <span class="gap-item">subscription tier</span>
+        <span class="gap-item">usage meter</span>
+        <span class="gap-item">team invite</span>
+        <span class="gap-item">billing portal</span>
+        <span class="gap-item">churn indicator</span>
+        <span class="gap-item">feature flag</span>
+        <span class="gap-item">A/B test</span>
+        <span class="gap-item">webhook</span>
+        <span class="gap-item">audit log</span>
+    </div>
+</div>
+
+<!-- BUNDLE 03 -->
+<div class="persona-card rank-3">
+    <div class="bundle-name">03. Creator Economy &amp; Content Tools <span class="price-tag">$19</span> <span class="demand-tag demand-high">High</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Creator building a content repurposing tool, social scheduler, newsletter platform, or course builder. Target audience: influencers, coaches, solopreneurs. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>AI content repurposing is one of the fastest-growing micro-SaaS categories. Tools that transform one piece of content into multiple formats are in massive demand.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">thread</span>
+        <span class="gap-item">reel</span>
+        <span class="gap-item">carousel post</span>
+        <span class="gap-item">story frame</span>
+        <span class="gap-item">podcast waveform</span>
+        <span class="gap-item">content calendar</span>
+        <span class="gap-item">repurpose arrow</span>
+        <span class="gap-item">audience segment</span>
+        <span class="gap-item">engagement rate</span>
+        <span class="gap-item">link-in-bio</span>
+    </div>
+</div>
+
+<!-- BUNDLE 04 -->
+<div class="persona-card rank-4">
+    <div class="bundle-name">04. FinTech &amp; Crypto <span class="price-tag">$29</span> <span class="demand-tag demand-high">High</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Developer building a financial product (payment gateway, crypto wallet, portfolio tracker, invoice tool). Icons must communicate trust. Uses React or Flutter. Budget: $29.</p>
+    <span class="section-label">Why Now</span>
+    <p>Embedded finance and crypto continue to grow. Every fintech app needs concepts like escrow, staking, and gas fees that free libraries do not cover.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">transaction pending</span>
+        <span class="gap-item">payment failed</span>
+        <span class="gap-item">auto-debit</span>
+        <span class="gap-item">escrow lock</span>
+        <span class="gap-item">staking yield</span>
+        <span class="gap-item">gas fee</span>
+        <span class="gap-item">swap</span>
+        <span class="gap-item">liquidity pool</span>
+        <span class="gap-item">invoice draft</span>
+        <span class="gap-item">payout schedule</span>
+    </div>
+</div>
+
+<!-- BUNDLE 05 -->
+<div class="persona-card rank-5">
+    <div class="bundle-name">05. Health &amp; Wellness <span class="price-tag">$19</span> <span class="demand-tag demand-growing">Growing</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Builder creating a telehealth platform, fitness app, mental health tracker, or clinic appointment scheduler. Needs clear but not clinical icons. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>Niche appointment scheduling for healthcare is a top micro-SaaS opportunity. Telehealth and mental health apps are growing categories.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">telehealth call</span>
+        <span class="gap-item">intake form</span>
+        <span class="gap-item">prescription refill</span>
+        <span class="gap-item">insurance card</span>
+        <span class="gap-item">vital sign</span>
+        <span class="gap-item">therapy session</span>
+        <span class="gap-item">mood tracker</span>
+        <span class="gap-item">sleep score</span>
+        <span class="gap-item">hydration</span>
+        <span class="gap-item">meditation timer</span>
+    </div>
+</div>
+
+<!-- BUNDLE 06 -->
+<div class="persona-card rank-6">
+    <div class="bundle-name">06. E-commerce &amp; Marketplace <span class="price-tag">$19</span> <span class="demand-tag demand-stable">Stable</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Shopify developer or marketplace builder creating a custom storefront or product comparison tool. Uses React or Vue. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>Social commerce and AI-powered product recommendations drive a new wave of storefronts. Builders need icons beyond basic "cart" and "bag."</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">compare overlay</span>
+        <span class="gap-item">size guide</span>
+        <span class="gap-item">stock countdown</span>
+        <span class="gap-item">flash sale badge</span>
+        <span class="gap-item">pre-order lock</span>
+        <span class="gap-item">return window</span>
+        <span class="gap-item">review star-half</span>
+        <span class="gap-item">bundle deal</span>
+        <span class="gap-item">subscription box</span>
+        <span class="gap-item">curbside pickup</span>
+    </div>
+</div>
+
+<!-- BUNDLE 07 -->
+<div class="persona-card rank-7">
+    <div class="bundle-name">07. DevOps &amp; Infrastructure <span class="price-tag">$29</span> <span class="demand-tag demand-stable">Stable</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Platform engineer or DevOps developer building an internal tool, status page, or CI/CD dashboard. Needs infrastructure-specific icons. Budget: $29.</p>
+    <span class="section-label">Why Now</span>
+    <p>Cloud-native is the norm. Internal tooling needs a consistent visual language for pipelines, containers, and observability. "Technical Mono" aesthetic is trending.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">CI/CD pipeline</span>
+        <span class="gap-item">container pod</span>
+        <span class="gap-item">deploy arrow</span>
+        <span class="gap-item">rollback</span>
+        <span class="gap-item">canary release</span>
+        <span class="gap-item">health check</span>
+        <span class="gap-item">log stream</span>
+        <span class="gap-item">secret vault</span>
+        <span class="gap-item">edge function</span>
+        <span class="gap-item">rate limiter</span>
+    </div>
+</div>
+
+<!-- BUNDLE 08 -->
+<div class="persona-card rank-8">
+    <div class="bundle-name">08. Education &amp; Learning <span class="price-tag">$19</span> <span class="demand-tag demand-growing">Growing</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Educator or edtech solopreneur building a course platform, quiz app, or student management system. Needs modern educational icons. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>AI course outline generators are a trending micro-SaaS. Online education continues to grow. Builders need icons that feel modern, not clip-art.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">lesson module</span>
+        <span class="gap-item">quiz question</span>
+        <span class="gap-item">flashcard</span>
+        <span class="gap-item">progress milestone</span>
+        <span class="gap-item">certificate badge</span>
+        <span class="gap-item">peer review</span>
+        <span class="gap-item">cohort</span>
+        <span class="gap-item">live session</span>
+        <span class="gap-item">assignment due</span>
+        <span class="gap-item">knowledge graph</span>
+    </div>
+</div>
+
+<!-- BUNDLE 09 -->
+<div class="persona-card rank-9">
+    <div class="bundle-name">09. Real Estate &amp; PropTech <span class="price-tag">$19</span> <span class="demand-tag demand-growing">Niche</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Builder creating a property management tool, rental marketplace, HOA communication app, or maintenance logger. Budget: $19.</p>
+    <span class="section-label">Why Now</span>
+    <p>Maintenance loggers and HOA communication managers are highlighted as top micro-SaaS opportunities for 2025-2026. Specific icon needs that no free library covers.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">floor plan</span>
+        <span class="gap-item">lease agreement</span>
+        <span class="gap-item">maintenance request</span>
+        <span class="gap-item">tenant portal</span>
+        <span class="gap-item">rent due</span>
+        <span class="gap-item">property inspection</span>
+        <span class="gap-item">HOA vote</span>
+        <span class="gap-item">amenity map</span>
+        <span class="gap-item">unit vacancy</span>
+        <span class="gap-item">move-in checklist</span>
+    </div>
+</div>
+
+<!-- BUNDLE 10 -->
+<div class="persona-card rank-10">
+    <div class="bundle-name">10. Automation &amp; Workflow <span class="price-tag">$29</span> <span class="demand-tag demand-growing">Growing</span></div>
+    <span class="section-label">Buyer</span>
+    <p>Builder creating a Zapier-like automation tool, workflow builder, or no-code integration platform. Needs abstract visual concepts for triggers, conditions, and connectors. Budget: $29.</p>
+    <span class="section-label">Why Now</span>
+    <p>Low-code/no-code expanding rapidly. AI agents drive demand for visual workflow builders. Every automation tool needs "if this, then that" visual language.</p>
+    <span class="section-label">Gap Icons</span>
+    <div class="gap-list">
+        <span class="gap-item">trigger bolt</span>
+        <span class="gap-item">condition branch</span>
+        <span class="gap-item">action node</span>
+        <span class="gap-item">loop cycle</span>
+        <span class="gap-item">delay timer</span>
+        <span class="gap-item">webhook receiver</span>
+        <span class="gap-item">API connector</span>
+        <span class="gap-item">data mapper</span>
+        <span class="gap-item">error handler</span>
+        <span class="gap-item">parallel path</span>
+    </div>
+</div>
+
+<hr>
+
+<h2>Summary Matrix</h2>
+<table>
+    <thead><tr><th>#</th><th>Bundle</th><th>Target</th><th>Price</th><th>Gap</th><th>Demand</th></tr></thead>
+    <tbody>
+        <tr><td>01</td><td><strong>Agentic AI Kit</strong></td><td>AI/LLM builders</td><td style="color:var(--green)">$29</td><td>Very High</td><td style="color:var(--primary)">Explosive</td></tr>
+        <tr><td>02</td><td><strong>SaaS Dashboard</strong></td><td>Micro-SaaS founders</td><td style="color:var(--green)">$19</td><td>High</td><td style="color:var(--yellow)">Very High</td></tr>
+        <tr><td>03</td><td><strong>Creator Economy</strong></td><td>Content tool builders</td><td style="color:var(--green)">$19</td><td>High</td><td style="color:var(--purple)">High</td></tr>
+        <tr><td>04</td><td><strong>FinTech/Crypto</strong></td><td>Finance product devs</td><td style="color:var(--green)">$29</td><td>High</td><td style="color:var(--purple)">High</td></tr>
+        <tr><td>05</td><td><strong>Health/Wellness</strong></td><td>Telehealth builders</td><td style="color:var(--green)">$19</td><td>Med-High</td><td style="color:var(--blue)">Growing</td></tr>
+        <tr><td>06</td><td><strong>E-commerce</strong></td><td>Storefront builders</td><td style="color:var(--green)">$19</td><td>Medium</td><td>Stable</td></tr>
+        <tr><td>07</td><td><strong>DevOps/Infra</strong></td><td>Platform engineers</td><td style="color:var(--green)">$29</td><td>High</td><td>Stable</td></tr>
+        <tr><td>08</td><td><strong>Education</strong></td><td>Edtech builders</td><td style="color:var(--green)">$19</td><td>Medium</td><td style="color:var(--blue)">Growing</td></tr>
+        <tr><td>09</td><td><strong>Real Estate</strong></td><td>PropTech builders</td><td style="color:var(--green)">$19</td><td>Medium</td><td style="color:var(--blue)">Niche</td></tr>
+        <tr><td>10</td><td><strong>Automation</strong></td><td>No-code builders</td><td style="color:var(--green)">$29</td><td>Very High</td><td style="color:var(--blue)">Growing</td></tr>
+    </tbody>
+</table>
+
+<div class="verdict">
+    <p><strong>Recommended first build:</strong> Bundle 01 (Agentic AI Kit). Highest demand, highest gap score, strongest alignment with Supericons' AI-forward brand positioning.</p>
+</div>
+
+<br>
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    Supericons Premium Bundle Personas, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

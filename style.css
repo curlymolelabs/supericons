@@ -6786,3 +6786,93 @@ body.theme-light .ml__dial-needle::after {
   color: var(--si-primary);
   background: rgba(0, 212, 255, 0.05);
 }
+.ml-modal__code--locked {
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ml-modal__upgrade {
+  border-top: 1px solid var(--si-ghost-border);
+  background: var(--si-surface-container);
+}
+.si-upsell {
+  padding: 16px;
+}
+.si-upsell__eyebrow {
+  font-size: 0.68rem;
+  font-family: var(--si-font-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--si-primary);
+  margin-bottom: 6px;
+}
+.si-upsell__title {
+  font-size: 0.95rem;
+  font-family: var(--si-font-headline);
+  font-weight: 600;
+  color: var(--si-text);
+  margin-bottom: 6px;
+}
+.si-upsell__body {
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--si-text-muted);
+}
+.si-upsell__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.si-upsell__cta,
+.si-upsell__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: var(--si-radius-sm);
+  border: 1px solid var(--si-ghost-border);
+  font-size: 0.78rem;
+  font-family: var(--si-font-label);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--si-transition-fast);
+}
+.si-upsell__cta {
+  background: var(--si-surface-container-high);
+  color: var(--si-text);
+}
+.si-upsell__cta:hover {
+  border-color: var(--si-primary);
+  color: var(--si-primary);
+}
+.si-upsell__cta--primary {
+  background: var(--si-primary);
+  border-color: var(--si-primary);
+  color: var(--si-text-on-primary);
+}
+.si-upsell__cta--primary:hover {
+  background: var(--si-primary-soft);
+  border-color: var(--si-primary-soft);
+  color: var(--si-text-on-primary);
+}
+.si-upsell__dismiss {
+  margin-top: 12px;
+  background: transparent;
+  color: var(--si-text-dim);
+}
+.si-upsell__dismiss:hover {
+  border-color: var(--si-outline);
+  color: var(--si-text);
+}
+.conv__upgrade-prompt {
+  position: fixed;
+  z-index: 10000;
+  width: min(320px, calc(100vw - 24px));
+  background: var(--si-surface);
+  border: 1px solid var(--si-outline-variant);
+  border-radius: var(--si-radius-lg);
+  box-shadow: var(--si-shadow-lg);
+}

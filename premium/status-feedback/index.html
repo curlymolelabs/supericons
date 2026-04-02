@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supericons: Status &amp; Feedback Animated Pack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="status-feedback.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e;
+            --surface: #1a1919;
+            --surface-high: #222;
+            --text: #fff;
+            --text-muted: #aaa;
+            --text-dim: #666;
+            --primary: #FF4F00;
+            --green: #4ade80;
+            --red: #ff6b6b;
+            --border: #333;
+            --radius: 0.75rem;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 3rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.25rem;
+        }
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 2.5rem;
+        }
+        .subtitle span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+        }
+        body.light {
+            --bg: #faf8f4;
+            --surface: #f0ede6;
+            --surface-high: #e8e4dc;
+            --text: #2a2520;
+            --text-muted: #6b6560;
+            --text-dim: #9a948e;
+            --border: #d5d0c8;
+        }
+
+        /* Icon grid */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .icon-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .icon-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 79, 0, 0.08);
+        }
+        .icon-card::after {
+            content: 'hover to play';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            padding: 0.4rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .icon-card:hover::after { opacity: 1; }
+
+        .icon-preview {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+        }
+        .icon-preview svg {
+            width: 48px;
+            height: 48px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+        .icon-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .icon-purpose {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+        }
+        .icon-tag {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.15em 0.5em;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        .tag-success { background: rgba(74,222,128,0.15); color: var(--green); }
+        .tag-error { background: rgba(255,107,107,0.15); color: var(--red); }
+        .tag-loading { background: rgba(255,79,0,0.12); color: var(--primary); }
+        .tag-action { background: rgba(96,165,250,0.15); color: #60a5fa; }
+        .tag-feedback { background: rgba(192,132,252,0.15); color: #c084fc; }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 1rem;
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="document.body.classList.toggle('light'); this.textContent = document.body.classList.contains('light') ? 'Dark Mode' : 'Light Mode'">Light Mode</button>
+
+<h1>Status &amp; Feedback</h1>
+<p class="subtitle">Animated Icon Pack &mdash; <span>10 icons</span> &mdash; CSS only, zero JS, hover to play</p>
+
+<div class="icon-grid">
+
+    <!-- 1. Success Check -->
+    <div class="icon-card">
+        <span class="icon-tag tag-success">success</span>
+        <div class="icon-preview si-anim si-anim--check">
+            <svg viewBox="0 0 24 24">
+                <circle class="si-check-circle" cx="12" cy="12" r="10" />
+                <path class="si-check-tick" d="m9 12 2 2 4-4" />
+            </svg>
+        </div>
+        <div class="icon-name">Checkmark</div>
+        <div class="icon-purpose">Circle draws in, then checkmark appears with a subtle bounce. Use for success confirmations.</div>
+    </div>
+
+    <!-- 2. Error X -->
+    <div class="icon-card">
+        <span class="icon-tag tag-error">error</span>
+        <div class="icon-preview si-anim si-anim--error">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path class="si-error-x1" d="m15 9-6 6" />
+                <path class="si-error-x2" d="m9 9 6 6" />
+            </svg>
+        </div>
+        <div class="icon-name">Error</div>
+        <div class="icon-purpose">Shakes urgently on hover to alert the user. Use for error states and validation failures.</div>
+    </div>
+
+    <!-- 3. Spinner -->
+    <div class="icon-card">
+        <span class="icon-tag tag-loading">loading</span>
+        <div class="icon-preview si-anim si-anim--spinner">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" />
+                <path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" />
+                <path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" />
+                <path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" />
+            </svg>
+        </div>
+        <div class="icon-name">Spinner</div>
+        <div class="icon-purpose">Smooth infinite rotation. Use for loading states and async operations.</div>
+    </div>
+
+    <!-- 4. Bell -->
+    <div class="icon-card">
+        <span class="icon-tag tag-feedback">notification</span>
+        <div class="icon-preview si-anim si-anim--bell">
+            <svg viewBox="0 0 24 24">
+                <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                <path class="si-bell-body" d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+            </svg>
+        </div>
+        <div class="icon-name">Bell</div>
+        <div class="icon-purpose">Swings like a real bell on hover. Use for notifications and alerts.</div>
+    </div>
+
+    <!-- 5. Upload -->
+    <div class="icon-card">
+        <span class="icon-tag tag-action">transfer</span>
+        <div class="icon-preview si-anim si-anim--upload">
+            <svg viewBox="0 0 24 24">
+                <path class="si-upload-arrow" d="M12 3v12" />
+                <path class="si-upload-arrow" d="m17 8-5-5-5 5" />
+                <path class="si-upload-tray" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            </svg>
+        </div>
+        <div class="icon-name">Upload</div>
+        <div class="icon-purpose">Arrow slides up and fades, looping. Use for active upload progress.</div>
+    </div>
+
+    <!-- 6. Download -->
+    <div class="icon-card">
+        <span class="icon-tag tag-action">transfer</span>
+        <div class="icon-preview si-anim si-anim--download">
+            <svg viewBox="0 0 24 24">
+                <path class="si-download-arrow" d="M12 15V3" />
+                <path class="si-download-tray" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path class="si-download-arrow" d="m7 10 5 5 5-5" />
+            </svg>
+        </div>
+        <div class="icon-name">Download</div>
+        <div class="icon-purpose">Arrow bounces down into tray. Use for download actions and completions.</div>
+    </div>
+
+    <!-- 7. Heart -->
+    <div class="icon-card">
+        <span class="icon-tag tag-feedback">reaction</span>
+        <div class="icon-preview si-anim si-anim--heart">
+            <svg viewBox="0 0 24 24">
+                <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+            </svg>
+        </div>
+        <div class="icon-name">Heart</div>
+        <div class="icon-purpose">Double-beat pulse like a real heartbeat. Use for like, favorite, and love actions.</div>
+    </div>
+
+    <!-- 8. Trash -->
+    <div class="icon-card">
+        <span class="icon-tag tag-error">destructive</span>
+        <div class="icon-preview si-anim si-anim--trash">
+            <svg viewBox="0 0 24 24">
+                <path class="si-trash-lines" d="M10 11v6" />
+                <path class="si-trash-lines" d="M14 11v6" />
+                <path class="si-trash-body" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                <path class="si-trash-lid" d="M3 6h18" />
+                <path class="si-trash-lid" d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+        </div>
+        <div class="icon-name">Trash</div>
+        <div class="icon-purpose">Lid lifts up, body wobbles. Use for delete actions and destructive warnings.</div>
+    </div>
+
+    <!-- 9. Refresh -->
+    <div class="icon-card">
+        <span class="icon-tag tag-loading">sync</span>
+        <div class="icon-preview si-anim si-anim--refresh">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M21 3v5h-5" />
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                <path d="M8 16H3v5" />
+            </svg>
+        </div>
+        <div class="icon-name">Refresh</div>
+        <div class="icon-purpose">Smooth continuous rotation. Use for syncing data and refresh actions.</div>
+    </div>
+
+    <!-- 10. Eye -->
+    <div class="icon-card">
+        <span class="icon-tag tag-action">visibility</span>
+        <div class="icon-preview si-anim si-anim--eye">
+            <svg viewBox="0 0 24 24">
+                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                <circle class="si-eye-pupil" cx="12" cy="12" r="3" />
+            </svg>
+        </div>
+        <div class="icon-name">Eye</div>
+        <div class="icon-purpose">Blinks closed and reopens. Use for visibility toggles and show/hide actions.</div>
+    </div>
+
+</div>
+
+<footer>
+    Supericons Status &amp; Feedback Pack &mdash; Curly Mole Labs, March 2026
+</footer>
+
+</body>
+</html>

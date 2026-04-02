@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <filter id="v3-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+    </filter>
+    <linearGradient id="v3-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--v3-grad-start, #FF4F00)" />
+      <stop offset="100%" stop-color="var(--v3-grad-end, #7928CA)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Layer 1: Ambient Drop Shadow (Depth) -->
+  <g stroke="var(--v3-shadow-col, #000)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, 1)" filter="url(#v3-glow)" opacity="0.6">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 6v2"/>
+    <path d="M12 16v2"/>
+    <path d="M9 10a3 3 0 013-2c1.66 0 3 .67 3 2s-1.34 2-3 2-3 .67-3 2 1.34 2 3 2a3 3 0 003-2"/>
+  </g>
+
+  <!-- Layer 2: Neon Bloom (Emission) -->
+  <g stroke="url(#v3-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#v3-glow)" opacity="var(--v3-glow-opacity, 0.6)">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 6v2"/>
+    <path d="M12 16v2"/>
+    <path d="M9 10a3 3 0 013-2c1.66 0 3 .67 3 2s-1.34 2-3 2-3 .67-3 2 1.34 2 3 2a3 3 0 003-2"/>
+  </g>
+
+  <!-- Layer 3: Glassy Duotone Fill -->
+  <g fill="url(#v3-grad)" opacity="var(--v3-fill-opacity, 0.15)">
+    <circle cx="12" cy="12" r="9"/>
+  </g>
+
+  <!-- Layer 4: Solid Core Material (The actual icon structure) -->
+  <g stroke="var(--v3-core-col, #ffffff)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 6v2"/>
+    <path d="M12 16v2"/>
+    <path d="M9 10a3 3 0 013-2c1.66 0 3 .67 3 2s-1.34 2-3 2-3 .67-3 2 1.34 2 3 2a3 3 0 003-2"/>
+  </g>
+
+  <!-- Layer 5: Specular Rim Light (Tactile 3D Plastic/Metal bevel) -->
+  <g stroke="var(--v3-rim-col, rgba(255,255,255,0.7))" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.35, -0.35)">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 6v2"/>
+    <path d="M12 16v2"/>
+    <path d="M9 10a3 3 0 013-2c1.66 0 3 .67 3 2s-1.34 2-3 2-3 .67-3 2 1.34 2 3 2a3 3 0 003-2"/>
+  </g>
+</svg>

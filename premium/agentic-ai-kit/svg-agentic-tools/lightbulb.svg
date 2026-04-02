@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+  <!-- A friendly lightbulb with rounded glass and visible filament -->
+  
+      <!-- Bulb glass (top rounded, tapers to base) -->
+      <path d="M128 24 Q188 24 188 96 Q188 144 160 164 L160 184 L96 184 L96 164 Q68 144 68 96 Q68 24 128 24 Z" />
+      <!-- Base/screw (bottom rectangle with ridges) -->
+      <rect x="96" y="184" width="64" height="16" rx="4" fill="var(--hole, #fff)" opacity="0.3" />
+      <rect x="100" y="200" width="56" height="12" rx="4" />
+      <rect x="96" y="212" width="64" height="4" rx="2" fill="var(--hole, #fff)" opacity="0.3" />
+      <rect x="104" y="216" width="48" height="16" rx="8" />
+      <!-- Filament (cute squiggle inside) -->
+      <path d="M112 120 Q120 96 128 120 Q136 144 144 120" fill="none" stroke="var(--hole, #fff)" stroke-width="8" stroke-linecap="round" />
+      <!-- Rays (small lines radiating outward) -->
+      <line x1="128" y1="4" x2="128" y2="16" stroke="var(--hole, #fff)" stroke-width="6" stroke-linecap="round" opacity="0" />
+    
+</svg>

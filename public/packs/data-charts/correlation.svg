@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="si-icon si-anim-dc si-dc-correlation">
+  <!-- Axis -->
+  <line class="dc-axis" x1="3" y1="20" x2="21" y2="20" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <line class="dc-axis" x1="3" y1="4" x2="3" y2="20" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="0.50"/>
+  <!-- Line A -->
+  <polyline class="dc-line-a" points="4,17 8,14 12,9 16,11 20,5" fill="none" stroke="#3B82F6" stroke-width="1" stroke-opacity="1.00" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Line B -->
+  <polyline class="dc-line-b" points="4,15 8,12 12,13 16,8 20,7" fill="none" stroke="#3B82F6" stroke-width="1" stroke-opacity="0.88" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 1.5"/>
+  <!-- Convergence dot -->
+  <circle class="dc-converge" cx="16" cy="9.5" r="2" fill="#3B82F6" fill-opacity="0.33" stroke="#3B82F6" stroke-width="1.0" stroke-opacity="1.00"/>
+</svg>

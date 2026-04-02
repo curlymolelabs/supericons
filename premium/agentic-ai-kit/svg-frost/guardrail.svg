@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <!-- Glass background gradient -->
+    <linearGradient id="guardrail_bg" x1="20" y1="8" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3e1f2d" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#240f1a" stop-opacity="0.95"/>
+    </linearGradient>
+    <!-- Border gradient (frosted edge) -->
+    <linearGradient id="guardrail_border" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- Inner glow -->
+    <radialGradient id="guardrail_glow" cx="60" cy="50" r="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8BBD0" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#F8BBD0" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Specular highlight (top shine) -->
+    <linearGradient id="guardrail_shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clip for squircle -->
+    <clipPath id="guardrail_clip">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+    <!-- Drop shadow filter -->
+    <filter id="guardrail_shadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#F48FB1" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Ambient shadow -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="transparent" filter="url(#guardrail_shadow)"/>
+
+  <!-- Layer 2: Glass background -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#guardrail_bg)"/>
+
+  <!-- Layer 3: Frosted border -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="none" stroke="url(#guardrail_border)" stroke-width="1"/>
+
+  <!-- Layer 4: Inner glow -->
+  <circle cx="60" cy="50" r="50" fill="url(#guardrail_glow)" clip-path="url(#guardrail_clip)"/>
+
+  <!-- Layer 5: Specular top shine -->
+  <rect x="4" y="4" width="112" height="56" fill="url(#guardrail_shine)" clip-path="url(#guardrail_clip)"/>
+
+  <!-- Layer 6: Icon (scaled from 256x256 to 64x64, centered in glass) -->
+  <g transform="translate(28, 28) scale(0.25)" fill="#F48FB1" fill-opacity="0.9">
+    <path d="M208 40H48a16 16 0 0 0-16 16v56c0 52.72 25.52 84.67 46.93 102.19c23.06 18.86 46 25.26 47 25.53a8 8 0 0 0 4.2 0c1-.27 23.91-6.67 47-25.53C198.48 196.67 224 164.72 224 112V56a16 16 0 0 0-16-16m-34.32 69.66l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32Z"/>
+  </g>
+</svg>

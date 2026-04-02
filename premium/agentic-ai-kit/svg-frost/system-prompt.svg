@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <!-- Glass background gradient -->
+    <linearGradient id="systemprompt_bg" x1="20" y1="8" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1a3347" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#0d1f30" stop-opacity="0.95"/>
+    </linearGradient>
+    <!-- Border gradient (frosted edge) -->
+    <linearGradient id="systemprompt_border" x1="60" y1="4" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05"/>
+    </linearGradient>
+    <!-- Inner glow -->
+    <radialGradient id="systemprompt_glow" cx="60" cy="50" r="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#81D4FA" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#81D4FA" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Specular highlight (top shine) -->
+    <linearGradient id="systemprompt_shine" x1="60" y1="4" x2="60" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clip for squircle -->
+    <clipPath id="systemprompt_clip">
+      <rect x="4" y="4" width="112" height="112" rx="26"/>
+    </clipPath>
+    <!-- Drop shadow filter -->
+    <filter id="systemprompt_shadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#4FC3F7" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Ambient shadow -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="transparent" filter="url(#systemprompt_shadow)"/>
+
+  <!-- Layer 2: Glass background -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="url(#systemprompt_bg)"/>
+
+  <!-- Layer 3: Frosted border -->
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="none" stroke="url(#systemprompt_border)" stroke-width="1"/>
+
+  <!-- Layer 4: Inner glow -->
+  <circle cx="60" cy="50" r="50" fill="url(#systemprompt_glow)" clip-path="url(#systemprompt_clip)"/>
+
+  <!-- Layer 5: Specular top shine -->
+  <rect x="4" y="4" width="112" height="56" fill="url(#systemprompt_shine)" clip-path="url(#systemprompt_clip)"/>
+
+  <!-- Layer 6: Icon (scaled from 256x256 to 64x64, centered in glass) -->
+  <g transform="translate(28, 28) scale(0.25)" fill="#4FC3F7" fill-opacity="0.9">
+    <path d="M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16m-91 94.25l-40 32a8 8 0 1 1-10-12.5L107.19 128L75 102.25a8 8 0 1 1 10-12.5l40 32a8 8 0 0 1 0 12.5M176 168h-40a8 8 0 0 1 0-16h40a8 8 0 0 1 0 16"/>
+  </g>
+</svg>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Kit V4: Premium Filled + App Icon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --border: #1e1e2a;
+            --text: #e5e5e5;
+            --muted: #666680;
+        }
+
+        body.light {
+            --bg: #f5f5f7;
+            --surface: #ffffff;
+            --border: #e5e5ea;
+            --text: #1d1d1f;
+            --muted: #86868b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 2rem;
+        }
+        .hero .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, #C4B5FD, #1D4ED8);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Controls */
+        .controls {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background: color-mix(in srgb, var(--bg) 80%, transparent);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; align-items: center;
+        }
+        .control-group {
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .control-label {
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.12em; color: var(--muted); margin-right: 0.3rem;
+        }
+        button {
+            font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500;
+            padding: 0.45em 0.9em; border-radius: 6px; cursor: pointer;
+            border: 1px solid var(--border); background: transparent; color: var(--muted);
+            transition: all 0.15s;
+        }
+        button:hover { background: var(--border); color: var(--text); }
+        button.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+        /* Format Toggle */
+        .format-toggle {
+            display: flex;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .format-toggle button {
+            border: none; border-radius: 0;
+            padding: 0.5em 1.2em;
+        }
+        .format-toggle button.active {
+            background: linear-gradient(135deg, #818CF8, #5B21B6);
+            color: #fff;
+        }
+
+        /* Section */
+        .section-header {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.14em;
+            color: var(--muted);
+            padding: 2.5rem 2rem 0.75rem;
+            max-width: 1200px; margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Grid */
+        .icon-grid {
+            display: grid;
+            gap: 1.25rem;
+            padding: 1.5rem 2rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .icon-grid.filled-mode {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+        .icon-grid.app-icon-mode {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        }
+
+        .icon-cell {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 1.5rem 0.5rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+        .icon-cell:hover {
+            background: color-mix(in srgb, var(--text) 4%, transparent);
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .icon-wrapper {
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .icon-cell:hover .icon-wrapper { transform: scale(1.08); }
+
+        .icon-wrapper svg { transition: all 0.2s; }
+
+        /* Filled mode: icons inherit currentColor */
+        .icon-wrapper.filled svg {
+            fill: var(--text);
+        }
+        body.light .icon-wrapper.filled svg {
+            fill: #1d1d1f;
+        }
+
+        .icon-name {
+            font-size: 0.6rem;
+            font-family: 'SF Mono', Consolas, monospace;
+            color: var(--muted);
+            margin-top: 0.75rem;
+            text-align: center;
+            opacity: 0; transform: translateY(4px);
+            transition: all 0.2s;
+        }
+        .icon-cell:hover .icon-name { opacity: 1; transform: translateY(0); }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 0.65rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Stats bar */
+        .stats {
+            display: flex; justify-content: center; gap: 2rem;
+            padding: 1.5rem; font-size: 0.75rem; color: var(--muted);
+        }
+        .stat-num { font-weight: 700; color: var(--text); font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">V4 Premium</div>
+    <h1>Agentic AI Kit</h1>
+    <p>40 production-quality icons in 2 formats. Filled icons for inline UI. Gradient app-icons for marketing and docs. 3-palette color system.</p>
+</div>
+
+<div class="stats">
+    <div><span class="stat-num">40</span> icons</div>
+    <div><span class="stat-num">2</span> formats</div>
+    <div><span class="stat-num">80</span> total assets</div>
+    <div><span class="stat-num">3</span> color palettes</div>
+</div>
+
+<div class="controls">
+    <div class="control-group">
+        <span class="control-label">Format</span>
+        <div class="format-toggle">
+            <button class="active" onclick="setFormat('filled')">Filled (Inline)</button>
+            <button onclick="setFormat('app-icon')">App Icon (Squircle)</button>
+        </div>
+    </div>
+    <div class="control-group">
+        <span class="control-label">Theme</span>
+        <button class="active" onclick="setTheme('dark')">Dark</button>
+        <button onclick="setTheme('light')">Light</button>
+    </div>
+    <div class="control-group">
+        <span class="control-label">Size</span>
+        <button onclick="setSize(24)">24</button>
+        <button onclick="setSize(32)">32</button>
+        <button class="active" onclick="setSize(48)">48</button>
+        <button onclick="setSize(64)">64</button>
+        <button onclick="setSize(96)">96</button>
+    </div>
+</div>
+
+<div id="gallery"></div>
+
+<footer>Supericons Agentic AI Kit V4 &middot; 40 icons x 2 formats = 80 assets &middot; Curly Mole Labs 2026</footer>
+
+<script>
+const groups = {
+    'Core Navigation': ['ai-home','ai-search','ai-settings','ai-history','ai-help','ai-menu'],
+    'Agent and Workflow': ['agent','agent-workflow','agent-group','tool-use','chain','orchestrator','agent-loop','agent-stop'],
+    'Prompt and Context': ['prompt','prompt-template','system-prompt','context-window','conversation','regenerate','streaming'],
+    'RAG and Data': ['embedding','chunk','retrieve','rag-pipeline','vector-db','knowledge-base','document-index'],
+    'Model and Configuration': ['model','model-selector','temperature','token-counter','fine-tune','max-tokens'],
+    'Safety and Monitoring': ['guardrail','safety-filter','token-cost','latency'],
+    'Status and Empty States': ['sparkle','empty-agent'],
+};
+
+let currentFormat = 'filled';
+let currentSize = 48;
+const svgCache = {};
+
+async function fetchSvg(name, format) {
+    const key = `${format}/${name}`;
+    if (svgCache[key]) return svgCache[key];
+    try {
+        const res = await fetch(`svg-v4/${format}/${name}.svg`);
+        if (!res.ok) return null;
+        const text = await res.text();
+        svgCache[key] = text;
+        return text;
+    } catch { return null; }
+}
+
+async function renderGallery() {
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = '';
+
+    for (const [groupName, names] of Object.entries(groups)) {
+        const header = document.createElement('div');
+        header.className = 'section-header';
+        header.textContent = groupName;
+        gallery.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.className = `icon-grid ${currentFormat === 'filled' ? 'filled-mode' : 'app-icon-mode'}`;
+        gallery.appendChild(grid);
+
+        for (const name of names) {
+            const svgText = await fetchSvg(name, currentFormat);
+            if (!svgText) continue;
+
+            const cell = document.createElement('div');
+            cell.className = 'icon-cell';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = `icon-wrapper ${currentFormat === 'filled' ? 'filled' : ''}`;
+            wrapper.innerHTML = svgText;
+
+            const svg = wrapper.querySelector('svg');
+            if (svg) {
+                svg.setAttribute('width', currentSize);
+                svg.setAttribute('height', currentSize);
+                if (currentFormat === 'app-icon') {
+                    svg.style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.25))';
+                    svg.style.overflow = 'visible';
+                }
+            }
+
+            const label = document.createElement('div');
+            label.className = 'icon-name';
+            label.textContent = name;
+
+            cell.appendChild(wrapper);
+            cell.appendChild(label);
+            grid.appendChild(cell);
+        }
+    }
+}
+
+function setFormat(format) {
+    currentFormat = format;
+    const btns = document.querySelectorAll('.format-toggle button');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderGallery();
+}
+
+function setTheme(theme) {
+    document.body.className = theme === 'light' ? 'light' : '';
+    const btns = event.target.parentElement.querySelectorAll('button');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function setSize(size) {
+    currentSize = size;
+    document.querySelectorAll('.icon-wrapper svg').forEach(svg => {
+        svg.setAttribute('width', size);
+        svg.setAttribute('height', size);
+    });
+    const btns = event.target.parentElement.querySelectorAll('button');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+renderGallery();
+</script>
+</body>
+</html>

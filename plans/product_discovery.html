@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperIcons: Product Discovery Proposal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Manrope:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0e0e0e;
+            --surface: #1a1919;
+            --surface-high: #201f1f;
+            --surface-highest: #262626;
+            --text: #ffffff;
+            --text-muted: #adaaaa;
+            --text-dim: #767575;
+            --primary: #FF4F00;
+            --primary-soft: #ff906c;
+            --accent-red: #ff716c;
+            --accent-purple: #eb9bfe;
+            --border: #484847;
+            --radius: 0.5rem;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 3rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-soft);
+        }
+        h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        p, li { color: var(--text-muted); font-size: 0.95rem; }
+        p { margin-bottom: 1rem; }
+        strong { color: var(--text); }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote {
+            border-left: 3px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--surface);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        blockquote p { margin-bottom: 0.5rem; }
+        blockquote p:last-child { margin-bottom: 0; }
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: var(--surface-high);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--primary-soft);
+        }
+        pre {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(72, 72, 71, 0.3);
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(72, 72, 71, 0.2);
+            color: var(--text-muted);
+            vertical-align: top;
+        }
+        tr:hover td { background: var(--surface); }
+        .hero-quote {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+        .gap-card {
+            background: var(--surface);
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            border-left: 3px solid var(--accent-red);
+        }
+        .gap-card strong { color: var(--accent-red); }
+        .moat-card {
+            background: var(--surface);
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            border-left: 3px solid var(--accent-purple);
+        }
+        .section-number {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            width: 1.75rem;
+            height: 1.75rem;
+            text-align: center;
+            line-height: 1.75rem;
+            border-radius: 50%;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--surface-highest);
+            color: var(--text-dim);
+            padding: 0.2em 0.6em;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .arch-box {
+            background: var(--surface);
+            border: 1px solid rgba(72, 72, 71, 0.3);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: pre;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>SuperIcons</h1>
+<p class="hero-quote">Copy the leader. Outclass every detail. Build a money spinner.</p>
+
+<hr>
+
+<h2><span class="section-number">1</span> The Incumbent: IconStack</h2>
+
+<p><a href="https://iconstack.lovable.app/" target="_blank">iconstack.lovable.app</a></p>
+
+<h4>What they do well</h4>
+<ul>
+    <li>51,378 icons from 20+ open-source libraries (Tabler, Lucide, Phosphor, Material Design, Fluent UI, Carbon, Bootstrap, Heroicons, etc.)</li>
+    <li>Clean dark-themed three-column layout (Libraries | Grid | Customize)</li>
+    <li>Color picker with hex input and presets</li>
+    <li>Stroke width slider (0.5px to 3.0px)</li>
+    <li>Export: Copy SVG, Copy XML, Download SVG, Download PNG</li>
+    <li>Social proof banner ("6,084 designers browsing")</li>
+    <li>Built with Lovable (AI app builder), shipped fast</li>
+</ul>
+
+<hr>
+
+<h2><span class="section-number">2</span> Socratic Analysis: 5 Design-Thinking Lenses</h2>
+
+<h3>Lens 1: Empathize</h3>
+<p>Who is the user and what do they actually need?</p>
+
+<table>
+    <thead><tr><th>User</th><th>Need</th><th>IconStack Serves?</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Designer</strong> (Figma/design tool)</td><td>Browse, pick, customize, drop into mockup</td><td>Partially. No background/container styling.</td></tr>
+        <tr><td><strong>Developer</strong> (React/Vue/Svelte)</td><td>Copy a component snippet, not raw SVG</td><td>No. Raw SVG only.</td></tr>
+        <tr><td><strong>Indie Builder</strong> (solopreneur)</td><td>Grab a set of matching icons for entire app</td><td>No. One-at-a-time only.</td></tr>
+    </tbody>
+</table>
+
+<blockquote>
+    <p><strong>Socratic question:</strong> <em>"If I am a developer building a React app, how many extra steps do I need after leaving IconStack before the icon is in my code?"</em></p>
+    <p><strong>Answer:</strong> At least 3: copy SVG, create a component file, add props/className support, import it. That friction is the gap.</p>
+</blockquote>
+
+<h3>Lens 2: Define</h3>
+<p>IconStack solved <strong>discovery</strong> (finding icons across libraries). But they stopped short of solving <strong>integration</strong> (getting icons into your actual project with zero friction).</p>
+<blockquote>
+    <p><strong>SuperIcons' problem statement:</strong> "Developers and designers waste 5-15 minutes per icon going from browse to production. We cut that to 5 seconds."</p>
+</blockquote>
+
+<h3>Lens 3: Ideate</h3>
+<p><strong>6 critical gaps discovered during live research:</strong></p>
+
+<div class="gap-card"><strong>1. Fake variable axes.</strong> Their stroke slider is a generic SVG transform. Material Symbols' true 4-axis system (Weight, Fill, Grade, Optical Size) is not exposed.</div>
+<div class="gap-card"><strong>2. No batch/set operations.</strong> You cannot select 10 icons and download them as a coordinated set. Every icon is a separate click-download-repeat loop.</div>
+<div class="gap-card"><strong>3. No component export.</strong> Zero support for framework-specific code. A React developer gets raw SVG, not <code>&lt;HomeIcon&gt;</code>.</div>
+<div class="gap-card"><strong>4. No container styling.</strong> Cannot preview icons inside circles, squircles, badges, or glassmorphic containers.</div>
+<div class="gap-card"><strong>5. Dumb search.</strong> Keyword match only. Searching "security" won't find "shield," "lock," or "key."</div>
+<div class="gap-card"><strong>6. No persistence.</strong> No collections, no project folders, no "recently used." Every visit starts from zero.</div>
+
+<h3>Lens 4: Prototype</h3>
+<p><strong>The "5-Second Icon" workflow:</strong></p>
+<pre><code>Search "dashboard"
+  -> AI shows 40 results across all libraries
+  -> Click icon
+  -> Right panel shows:
+      - Live preview with background options
+      - True variable font axes for Material Symbols
+      - Color with gradient support
+      - Framework picker: React | Vue | Svelte | HTML | Flutter
+      - One-click copy component code
+  -> Or: add to collection for batch export later</code></pre>
+
+<h3>Lens 5: Test (Revenue Model)</h3>
+<table>
+    <thead><tr><th>Revenue Stream</th><th>Model</th><th>Rationale</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Freemium collections</strong></td><td>Free: 3 collections, 50 icons each. Pro: unlimited.</td><td>Hook and expand.</td></tr>
+        <tr><td><strong>Pro export</strong></td><td>Free: SVG/PNG. Pro: React/Vue/Svelte, icon fonts, Figma plugin.</td><td>Developers will pay.</td></tr>
+        <tr><td><strong>Team workspaces</strong></td><td>$12/seat/month</td><td>Agency and team collaboration.</td></tr>
+        <tr><td><strong>API access</strong></td><td>Usage-based ($0.001/call)</td><td>Headless CMS, design tools, AI agents.</td></tr>
+        <tr><td><strong>Premium icon packs</strong></td><td>One-time purchase ($19-49)</td><td>Curated themed packs.</td></tr>
+        <tr><td><strong>Sponsored libraries</strong></td><td>B2B</td><td>Icon library creators pay for featured placement.</td></tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2><span class="section-number">3</span> Feature Matrix</h2>
+
+<table>
+    <thead><tr><th>Feature</th><th>IconStack</th><th>SuperIcons</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Icon count</strong></td><td>51,378 from 20 libraries</td><td>60,000+ from 25+ libraries</td></tr>
+        <tr><td><strong>Search</strong></td><td>Keyword match</td><td><strong>AI semantic search</strong> + tags + synonyms</td></tr>
+        <tr><td><strong>Color</strong></td><td>Hex picker + presets</td><td>Hex + <strong>gradient builder</strong> + recent colors</td></tr>
+        <tr><td><strong>Stroke</strong></td><td>Generic SVG transform</td><td><strong>True 4-axis Material Symbols</strong> + generic stroke</td></tr>
+        <tr><td><strong>Container</strong></td><td>None</td><td><strong>Live container preview</strong>: circle, squircle, glass, badge</td></tr>
+        <tr><td><strong>Animation</strong></td><td>None</td><td><strong>CSS animation presets</strong>: spin, pulse, bounce, shake</td></tr>
+        <tr><td><strong>Export formats</strong></td><td>SVG, PNG, XML</td><td>SVG, PNG, XML, <strong>WebP, ICO, PDF, Base64</strong></td></tr>
+        <tr><td><strong>Code export</strong></td><td>None</td><td><strong>React, Vue, Svelte, Angular, Flutter</strong></td></tr>
+        <tr><td><strong>Batch</strong></td><td>One-at-a-time</td><td><strong>Multi-select + ZIP download</strong></td></tr>
+        <tr><td><strong>Collections</strong></td><td>None</td><td><strong>Project-based collections</strong></td></tr>
+        <tr><td><strong>Comparison</strong></td><td>None</td><td><strong>Side-by-side compare</strong> 2-4 icons</td></tr>
+        <tr><td><strong>Persistence</strong></td><td>None</td><td><strong>Recent, favorites, history</strong></td></tr>
+        <tr><td><strong>API</strong></td><td>None</td><td><strong>REST API</strong> for programmatic access</td></tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2><span class="section-number">4</span> Unique Differentiators</h2>
+
+<div class="moat-card">
+    <h3 style="margin-top:0;">4.1 "True Variable" Material Symbols</h3>
+    <p>The <strong>only</strong> icon tool exposing all 4 axes of Material Symbols as interactive sliders with real-time preview. Technically non-trivial, creating a genuine moat.</p>
+</div>
+
+<div class="moat-card">
+    <h3 style="margin-top:0;">4.2 "Icon DNA" (AI Semantic Graph)</h3>
+    <p>Every icon tagged with category, mood, synonyms, and use-cases. Powers searches like <em>"icons that feel corporate and relate to money"</em> across all libraries.</p>
+</div>
+
+<div class="moat-card">
+    <h3 style="margin-top:0;">4.3 "Copy as Component"</h3>
+    <p>One click copies framework-ready code for React, Vue, Svelte, Flutter. Cuts integration from 5 minutes to 5 seconds.</p>
+</div>
+
+<div class="moat-card">
+    <h3 style="margin-top:0;">4.4 Container Previewer</h3>
+    <p>See icons inside real UI contexts: circles, squircles, glassmorphic cards, with notification dots, dark/light toggle.</p>
+</div>
+
+<hr>
+
+<h2><span class="section-number">5</span> Technical Architecture</h2>
+
+<div class="arch-box">+---------------------------------------------+
+|              SuperIcons Frontend             |
+|  Vite + vanilla JS | Static hosting (CDN)   |
++---------------------------------------------+
+|  Icon Data Layer (JSON index, lazy-loaded)  |
+|  - 60K+ icon metadata (name, tags, library) |
+|  - SVG content (fetched on demand)          |
+|  - Semantic search index (client-side)      |
++---------------------------------------------+
+|  Material Symbols Variable Font             |
+|  - Loaded from Google Fonts CDN             |
+|  - 4-axis manipulation via CSS              |
++---------------------------------------------+
+|  API Layer (optional, Phase 2)              |
+|  - Supabase for auth + collections          |
+|  - Edge functions for PNG/WebP rendering    |
+|  - REST endpoints for headless access       |
++---------------------------------------------+</div>
+
+<h3>Phase 1 (MVP, 2-3 weeks)</h3>
+<ul>
+    <li>Static site, no backend</li>
+    <li>60K+ icons from open-source libraries (pre-processed JSON index)</li>
+    <li>AI semantic search (client-side, using pre-built tag graph)</li>
+    <li>Full customization panel (color, gradient, stroke, container, animation)</li>
+    <li>Copy as: SVG, PNG, React, Vue, Svelte, HTML</li>
+    <li>Local storage for recents/favorites</li>
+</ul>
+
+<h3>Phase 2 (Growth, +2 weeks)</h3>
+<ul>
+    <li>Supabase auth for persistent collections</li>
+    <li>Batch export (ZIP, sprite sheet, icon font)</li>
+    <li>API access, Figma plugin</li>
+</ul>
+
+<h3>Phase 3 (Monetization, +2 weeks)</h3>
+<ul>
+    <li>Pro tier ($8/mo): unlimited collections, component export, API</li>
+    <li>Team tier ($12/seat/mo): shared workspaces</li>
+    <li>Premium icon packs ($19-49 one-time)</li>
+</ul>
+
+<hr>
+
+<h2><span class="section-number">6</span> Competitive Moat</h2>
+
+<table>
+    <thead><tr><th>Moat</th><th>Why It's Hard to Copy</th></tr></thead>
+    <tbody>
+        <tr><td><strong>AI semantic search</strong></td><td>Requires curating a synonym/tag graph for 60K+ icons. Tedious, valuable data work.</td></tr>
+        <tr><td><strong>True variable font axes</strong></td><td>Technical complexity (font-variation-settings, per-glyph rendering).</td></tr>
+        <tr><td><strong>Component export</strong></td><td>Requires maintaining code templates for 6+ frameworks.</td></tr>
+        <tr><td><strong>Container previewer</strong></td><td>Pure UX innovation. Simple concept but nobody has built it.</td></tr>
+        <tr><td><strong>Icon DNA tagging</strong></td><td>Data moat: once 60K icons are semantically tagged, catching up is expensive.</td></tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2><span class="section-number">7</span> Domain Candidates</h2>
+
+<table>
+    <thead><tr><th>Domain</th><th>Price Range</th><th>Notes</th></tr></thead>
+    <tbody>
+        <tr><td>supericons.dev</td><td>~$12/yr</td><td>Developer-friendly TLD</td></tr>
+        <tr><td>supericons.app</td><td>~$15/yr</td><td>Modern, app-focused</td></tr>
+        <tr><td>supericons.io</td><td>~$30/yr</td><td>Established tech TLD</td></tr>
+        <tr><td>supericons.co</td><td>~$25/yr</td><td>Clean, professional</td></tr>
+        <tr><td>getsupericons.com</td><td>~$10/yr</td><td>SEO-friendly fallback</td></tr>
+    </tbody>
+</table>
+
+<hr>
+
+<footer style="text-align:center; padding: 2rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;">
+    SuperIcons Product Discovery, March 2026. Curly Mole Labs.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas VM vs Live CSS - Trial Preview | Supericons</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--si-bg);
+      font-family: var(--si-font-body);
+      padding: 40px 24px;
+      gap: 40px;
+    }
+    .trial-header { text-align: center; }
+    .trial-header h1 {
+      font-family: var(--si-font-display);
+      font-size: 1.5rem;
+      color: var(--si-text);
+      margin-bottom: 8px;
+    }
+    .trial-header p {
+      font-size: 0.85rem;
+      color: var(--si-text-muted);
+    }
+    .trial-grid {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+    .trial-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .trial-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .trial-badge--live { background: rgba(74,222,128,0.12); color: #4ade80; }
+    .trial-badge--canvas { background: rgba(251,146,60,0.12); color: #fb923c; }
+    .trial-col__label {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--si-text-muted);
+    }
+    .trial-col__label--live { color: #4ade80; }
+    .trial-col__label--canvas { color: #fb923c; }
+    .trial-note {
+      font-size: 0.75rem;
+      color: var(--si-text-dim);
+      text-align: center;
+      max-width: 520px;
+    }
+    /* Disable card hover effects: no bg change, no expansion, no glow */
+    .collection-detail__icon-cell:hover {
+      border-color: var(--si-ghost-border);
+      background: var(--si-surface-container);
+      box-shadow: none;
+    }
+    .collection-detail__icon-cell:hover .collection-detail__icon-purpose {
+      max-height: 0;
+      opacity: 0;
+    }
+    /* Canvas styling: exact 28x28 inside the 40x40 preview container */
+    .collection-detail__icon-preview canvas {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="trial-header">
+    <h1>Canvas VM vs Live CSS - Trial Run</h1>
+    <p>Comparing live CSS hover animation vs Canvas2D renderer at exact production dimensions.</p>
+    <p style="margin-top:6px; font-size:0.75rem; color: var(--si-text-dim)">Icon: <strong>agent-workflow</strong> &mdash; Hover each card to activate</p>
+  </div>
+
+  <div class="trial-grid">
+    <!-- LEFT: Live CSS animation (reference) -->
+    <div class="trial-col">
+      <span class="trial-badge trial-badge--live">Live CSS</span>
+      <div class="collection-detail__icon-cell si-icon-cell">
+        <div class="collection-detail__icon-preview si-anim si-anim--agent-workflow">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="si-grad-agwf-live" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00D4FF"/>
+                <stop offset="100%" stop-color="#7B61FF"/>
+              </linearGradient>
+            </defs>
+            <circle class="si-agwf-n1" cx="4" cy="12" r="2.5" fill="url(#si-grad-agwf-live)"/>
+            <circle class="si-agwf-n2" cx="12" cy="6" r="2.5" fill="url(#si-grad-agwf-live)" opacity="0.7"/>
+            <circle class="si-agwf-n3" cx="12" cy="18" r="2.5" fill="#7B61FF" opacity="0.6"/>
+            <circle class="si-agwf-n4" cx="20" cy="12" r="2.5" fill="#00D4FF" opacity="0.8"/>
+            <path class="si-agwf-link1" d="M6 11l4-4" stroke="url(#si-grad-agwf-live)" stroke-width="1" opacity="0.5"/>
+            <path class="si-agwf-link2" d="M6 13l4 4" stroke="url(#si-grad-agwf-live)" stroke-width="1" opacity="0.5"/>
+            <path class="si-agwf-link3" d="M14 7l4 4" stroke="url(#si-grad-agwf-live)" stroke-width="1" opacity="0.5"/>
+            <path class="si-agwf-link4" d="M14 17l4-4" stroke="url(#si-grad-agwf-live)" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <span class="collection-detail__icon-name">agent-workflow</span>
+        <span class="collection-detail__icon-purpose">Live CSS hover animation</span>
+      </div>
+      <span class="trial-col__label trial-col__label--live">Original - SVG + CSS</span>
+    </div>
+
+    <!-- RIGHT: Canvas VM renderer -->
+    <div class="trial-col">
+      <span class="trial-badge trial-badge--canvas">Canvas VM</span>
+      <div class="collection-detail__icon-cell" id="canvasCell">
+        <div class="collection-detail__icon-preview">
+          <canvas id="iconCanvas" width="28" height="28"></canvas>
+        </div>
+        <span class="collection-detail__icon-name">agent-workflow</span>
+        <span class="collection-detail__icon-purpose">Canvas2D (no SVG in DOM)</span>
+      </div>
+      <span class="trial-col__label trial-col__label--canvas">Canvas VM - Zero source exposed</span>
+    </div>
+  </div>
+
+  <p class="trial-note">
+    Both cards use identical <code>.collection-detail__icon-cell</code> CSS.
+    The Canvas card renders via pure JS <code>requestAnimationFrame</code> + Canvas2D API.
+    Right-click inspect: no <code>&lt;svg&gt;</code>, no <code>&lt;path&gt;</code>, no CSS animation classes.
+  </p>
+
+  <!-- Load the animation CSS for the live cell -->
+  <link rel="stylesheet" href="/packs/ai-agentic/ai-agentic.css">
+
+  <!-- Canvas renderer -->
+  <script src="/scripts/canvas-renderer.js"></script>
+  <script>
+    const canvas = document.getElementById('iconCanvas');
+    const cell = document.getElementById('canvasCell');
+
+    // Get the exact background color from the cell
+    const cellStyles = window.getComputedStyle(cell);
+    const bg = cellStyles.backgroundColor || '#1a1919';
+
+    const renderer = new IconCanvasRenderer(canvas, { bg: '#1a1919' });
+
+    cell.addEventListener('mouseenter', () => renderer.hover());
+    cell.addEventListener('mouseleave', () => renderer.reset());
+  </script>
+</body>
+</html>

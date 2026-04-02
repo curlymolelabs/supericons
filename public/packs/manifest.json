@@ -1,0 +1,4927 @@
+{
+  "status-feedback": {
+    "name": "Status & Feedback",
+    "description": "App state animations: loading, success, error, notifications, reactions",
+    "css": "status-feedback.css",
+    "icons": [
+      {
+        "name": "circle-check",
+        "purpose": "Circle draws in, then checkmark draws with a subtle bounce.",
+        "tags": [
+          "success",
+          "check",
+          "done",
+          "complete",
+          "ok"
+        ],
+        "category": "success"
+      },
+      {
+        "name": "circle-x",
+        "purpose": "Error shake with X slashing in from corners.",
+        "tags": [
+          "error",
+          "fail",
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "category": "error"
+      },
+      {
+        "name": "alert-triangle",
+        "purpose": "Triangle wobbles with pulsing exclamation mark.",
+        "tags": [
+          "warning",
+          "caution",
+          "alert",
+          "danger"
+        ],
+        "category": "warning"
+      },
+      {
+        "name": "info-circle",
+        "purpose": "Info dot bounces while body text fades in.",
+        "tags": [
+          "info",
+          "information",
+          "tip",
+          "hint"
+        ],
+        "category": "info"
+      },
+      {
+        "name": "help-circle",
+        "purpose": "Question mark wobbles curiously side to side.",
+        "tags": [
+          "help",
+          "question",
+          "faq",
+          "support"
+        ],
+        "category": "help"
+      },
+      {
+        "name": "ban",
+        "purpose": "Circle pulses while strike-through sweeps across.",
+        "tags": [
+          "blocked",
+          "forbidden",
+          "banned",
+          "restricted"
+        ],
+        "category": "blocked"
+      },
+      {
+        "name": "clock",
+        "purpose": "Clock hand ticks around in steps.",
+        "tags": [
+          "time",
+          "pending",
+          "scheduled",
+          "wait",
+          "clock"
+        ],
+        "category": "time"
+      },
+      {
+        "name": "hourglass",
+        "purpose": "Hourglass flips 180 degrees smoothly.",
+        "tags": [
+          "processing",
+          "waiting",
+          "loading",
+          "timer"
+        ],
+        "category": "waiting"
+      },
+      {
+        "name": "loader-2",
+        "purpose": "Smooth continuous spin for active loading.",
+        "tags": [
+          "loading",
+          "spinner",
+          "processing",
+          "busy"
+        ],
+        "category": "loading"
+      },
+      {
+        "name": "refresh",
+        "purpose": "Single bouncy 360-degree spin.",
+        "tags": [
+          "refresh",
+          "sync",
+          "retry",
+          "reload",
+          "update"
+        ],
+        "category": "sync"
+      },
+      {
+        "name": "progress-check",
+        "purpose": "Arcs draw sequentially, then checkmark pops in.",
+        "tags": [
+          "progress",
+          "complete",
+          "done",
+          "tasks"
+        ],
+        "category": "progress"
+      },
+      {
+        "name": "bell",
+        "purpose": "Bell rings side to side from its hinge point.",
+        "tags": [
+          "notification",
+          "alert",
+          "bell",
+          "ring",
+          "alarm"
+        ],
+        "category": "notification"
+      },
+      {
+        "name": "eye",
+        "purpose": "Pupil focuses and lids blink once.",
+        "tags": [
+          "visible",
+          "show",
+          "view",
+          "public",
+          "watch"
+        ],
+        "category": "visible"
+      },
+      {
+        "name": "eye-off",
+        "purpose": "Slash draws across while pupil shrinks.",
+        "tags": [
+          "hidden",
+          "private",
+          "invisible",
+          "hide"
+        ],
+        "category": "hidden"
+      },
+      {
+        "name": "thumb-up",
+        "purpose": "Thumb pops up with a bouncy rotation.",
+        "tags": [
+          "approve",
+          "like",
+          "upvote",
+          "good",
+          "positive"
+        ],
+        "category": "positive"
+      },
+      {
+        "name": "thumb-down",
+        "purpose": "Thumb drops down with gravity effect.",
+        "tags": [
+          "reject",
+          "dislike",
+          "downvote",
+          "bad",
+          "negative"
+        ],
+        "category": "negative"
+      },
+      {
+        "name": "star",
+        "purpose": "Star spins with a sparkle flash.",
+        "tags": [
+          "favorite",
+          "star",
+          "rate",
+          "bookmark",
+          "special"
+        ],
+        "category": "favorite"
+      },
+      {
+        "name": "shield-check",
+        "purpose": "Shield outline draws in, then checkmark appears.",
+        "tags": [
+          "verified",
+          "secure",
+          "safe",
+          "protected",
+          "trust"
+        ],
+        "category": "secure"
+      },
+      {
+        "name": "trophy",
+        "purpose": "Trophy rises up with a celebratory bounce.",
+        "tags": [
+          "achievement",
+          "trophy",
+          "win",
+          "award",
+          "champion"
+        ],
+        "category": "achievement"
+      },
+      {
+        "name": "sparkles",
+        "purpose": "Stars twinkle at different intervals.",
+        "tags": [
+          "new",
+          "featured",
+          "special",
+          "magic",
+          "sparkle"
+        ],
+        "category": "special"
+      },
+      {
+        "name": "power",
+        "purpose": "Button press with scale-down/up pulse.",
+        "tags": [
+          "power",
+          "on",
+          "off",
+          "shutdown",
+          "toggle"
+        ],
+        "category": "power"
+      },
+      {
+        "name": "toggle-right",
+        "purpose": "Slides right with opacity transition.",
+        "tags": [
+          "toggle",
+          "switch",
+          "enable",
+          "active",
+          "on"
+        ],
+        "category": "toggle"
+      },
+      {
+        "name": "bookmark",
+        "purpose": "Drops into place from above with bounce.",
+        "tags": [
+          "bookmark",
+          "save",
+          "read-later",
+          "mark"
+        ],
+        "category": "bookmark"
+      },
+      {
+        "name": "pinned",
+        "purpose": "Pin pushes down with a slight rotation.",
+        "tags": [
+          "pin",
+          "pinned",
+          "sticky",
+          "attach",
+          "tack"
+        ],
+        "category": "pin"
+      },
+      {
+        "name": "flag",
+        "purpose": "Flag waves gently in the wind.",
+        "tags": [
+          "flag",
+          "flagged",
+          "report",
+          "mark",
+          "important"
+        ],
+        "category": "flag"
+      },
+      {
+        "name": "archive",
+        "purpose": "Slides down into the archive box.",
+        "tags": [
+          "archive",
+          "store",
+          "file",
+          "backup",
+          "save"
+        ],
+        "category": "archive"
+      },
+      {
+        "name": "trash",
+        "purpose": "Trash can shakes before discarding.",
+        "tags": [
+          "delete",
+          "trash",
+          "remove",
+          "discard",
+          "bin"
+        ],
+        "category": "delete"
+      },
+      {
+        "name": "send",
+        "purpose": "Paper plane launches diagonally.",
+        "tags": [
+          "send",
+          "submit",
+          "dispatch",
+          "deliver",
+          "mail"
+        ],
+        "category": "send"
+      },
+      {
+        "name": "cloud-check",
+        "purpose": "Cloud floats while checkmark draws in.",
+        "tags": [
+          "cloud",
+          "synced",
+          "backup",
+          "upload",
+          "saved"
+        ],
+        "category": "cloud"
+      },
+      {
+        "name": "wifi",
+        "purpose": "Signal waves pulse outward sequentially.",
+        "tags": [
+          "wifi",
+          "connected",
+          "online",
+          "signal",
+          "network"
+        ],
+        "category": "connection"
+      },
+      {
+        "name": "bolt",
+        "purpose": "Lightning flash with rapid scale burst.",
+        "tags": [
+          "instant",
+          "flash",
+          "quick",
+          "electric",
+          "power"
+        ],
+        "category": "instant"
+      },
+      {
+        "name": "flame",
+        "purpose": "Flame flickers with scale oscillation.",
+        "tags": [
+          "hot",
+          "trending",
+          "fire",
+          "popular",
+          "viral"
+        ],
+        "category": "hot"
+      },
+      {
+        "name": "heart",
+        "purpose": "Heart beats with a realistic pulse rhythm.",
+        "tags": [
+          "love",
+          "heart",
+          "favorite",
+          "like",
+          "care"
+        ],
+        "category": "love"
+      },
+      {
+        "name": "link",
+        "purpose": "Chain link rotates with a connecting motion.",
+        "tags": [
+          "link",
+          "connected",
+          "url",
+          "chain",
+          "attach"
+        ],
+        "category": "linked"
+      },
+      {
+        "name": "lock",
+        "purpose": "Lock rattles as if someone is trying to open it.",
+        "tags": [
+          "locked",
+          "secure",
+          "restricted",
+          "private",
+          "closed"
+        ],
+        "category": "locked"
+      },
+      {
+        "name": "lock-open",
+        "purpose": "Shackle pops up with a spring bounce.",
+        "tags": [
+          "unlocked",
+          "open",
+          "access",
+          "free",
+          "available"
+        ],
+        "category": "unlocked"
+      },
+      {
+        "name": "mail-check",
+        "purpose": "Envelope compresses then checkmark pops out.",
+        "tags": [
+          "email",
+          "confirmed",
+          "verified",
+          "inbox",
+          "mail"
+        ],
+        "category": "email"
+      },
+      {
+        "name": "message-check",
+        "purpose": "Chat bubble pops open with elastic bounce.",
+        "tags": [
+          "message",
+          "delivered",
+          "sent",
+          "chat",
+          "confirmed"
+        ],
+        "category": "message"
+      },
+      {
+        "name": "mood-smile",
+        "purpose": "Smile widens while face nods approvingly.",
+        "tags": [
+          "happy",
+          "positive",
+          "satisfied",
+          "good",
+          "smile"
+        ],
+        "category": "happy"
+      },
+      {
+        "name": "mood-sad",
+        "purpose": "Face droops downward sadly.",
+        "tags": [
+          "sad",
+          "unhappy",
+          "negative",
+          "disappointed",
+          "frown"
+        ],
+        "category": "sad"
+      },
+      {
+        "name": "arrow-up",
+        "purpose": "Arrow bounces upward.",
+        "tags": [
+          "up",
+          "increase",
+          "upgrade",
+          "rise",
+          "ascend"
+        ],
+        "category": "increase"
+      },
+      {
+        "name": "arrow-down",
+        "purpose": "Arrow drops downward.",
+        "tags": [
+          "down",
+          "decrease",
+          "downgrade",
+          "fall",
+          "descend"
+        ],
+        "category": "decrease"
+      },
+      {
+        "name": "trending-up",
+        "purpose": "Line traces upward, arrowhead appears.",
+        "tags": [
+          "growth",
+          "trending",
+          "rising",
+          "gain",
+          "profit"
+        ],
+        "category": "growth"
+      },
+      {
+        "name": "trending-down",
+        "purpose": "Line traces downward, arrowhead appears.",
+        "tags": [
+          "decline",
+          "falling",
+          "loss",
+          "drop",
+          "decrease"
+        ],
+        "category": "decline"
+      },
+      {
+        "name": "list-check",
+        "purpose": "Checkmarks cascade in one by one.",
+        "tags": [
+          "checklist",
+          "tasks",
+          "complete",
+          "todo",
+          "done"
+        ],
+        "category": "checklist"
+      },
+      {
+        "name": "clipboard-check",
+        "purpose": "Clipboard stamps down with bounce.",
+        "tags": [
+          "clipboard",
+          "copy",
+          "verified",
+          "paste",
+          "done"
+        ],
+        "category": "clipboard"
+      },
+      {
+        "name": "filter",
+        "purpose": "Funnel narrows and widens.",
+        "tags": [
+          "filter",
+          "sort",
+          "refine",
+          "narrow",
+          "results"
+        ],
+        "category": "filter"
+      },
+      {
+        "name": "sort-ascending",
+        "purpose": "Bars slide in from right, sorted by size.",
+        "tags": [
+          "sort",
+          "order",
+          "ascending",
+          "arrange",
+          "rank"
+        ],
+        "category": "sort"
+      },
+      {
+        "name": "circle-dot",
+        "purpose": "Outer ring pulses like radar, dot throbs.",
+        "tags": [
+          "active",
+          "recording",
+          "live",
+          "dot",
+          "target"
+        ],
+        "category": "active"
+      },
+      {
+        "name": "rosette-discount-check",
+        "purpose": "Badge spins with elastic bounce.",
+        "tags": [
+          "badge",
+          "certified",
+          "verified",
+          "award",
+          "seal"
+        ],
+        "category": "badge"
+      }
+    ],
+    "icon_count": 50,
+    "classMap": {
+      "circle-check": "u3cn0o",
+      "circle-x": "h7cmcm",
+      "alert-triangle": "oscbag",
+      "info-circle": "w1l339",
+      "help-circle": "i134pb",
+      "ban": "zjbzhs",
+      "clock": "lavfr1",
+      "hourglass": "yv1xld",
+      "loader-2": "t8ub4c",
+      "refresh": "bz7gek",
+      "progress-check": "gyf67b",
+      "bell": "uaeinw",
+      "eye": "jckovp",
+      "eye-off": "gtpe9w",
+      "thumb-up": "eozvz2",
+      "thumb-down": "nv2su4",
+      "star": "owp7es",
+      "shield-check": "kf21h9",
+      "trophy": "duy6zc",
+      "sparkles": "e94pmb",
+      "power": "h65v1p",
+      "toggle-right": "i65p52",
+      "bookmark": "y3fb9q",
+      "pinned": "m0my97",
+      "flag": "yc7rk2",
+      "archive": "v47b3g",
+      "trash": "xe1ydo",
+      "send": "hy1mww",
+      "cloud-check": "to055j",
+      "wifi": "z5ay37",
+      "bolt": "nodtp2",
+      "flame": "a20wb7",
+      "heart": "cssx0n",
+      "link": "bre4ci",
+      "lock": "uupi0x",
+      "lock-open": "xlpf4g",
+      "mail-check": "hu89pm",
+      "message-check": "i1t94w",
+      "mood-smile": "kqh9dv",
+      "mood-sad": "lgepcq",
+      "arrow-up": "l09f4h",
+      "arrow-down": "n3hvg3",
+      "trending-up": "y0vwvw",
+      "trending-down": "gm0cm7",
+      "list-check": "ms4ie3",
+      "clipboard-check": "itspkm",
+      "filter": "dtgdfh",
+      "sort-ascending": "agwyic",
+      "circle-dot": "b3g8aq",
+      "rosette-discount-check": "ct77zz"
+    }
+  },
+  "ai-agentic": {
+    "name": "Agentic AI",
+    "description": "AI agent interfaces: models, prompts, pipelines, embeddings, safety",
+    "css": "ai-agentic.css",
+    "icons": [
+      {
+        "name": "agent",
+        "purpose": "Pulse animation for active AI agent presence.",
+        "tags": [
+          "agent",
+          "ai",
+          "assistant",
+          "bot"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "agent-group",
+        "purpose": "Scale and tilt for multi-agent coordination.",
+        "tags": [
+          "multi-agent",
+          "team",
+          "swarm",
+          "group"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "agent-loop",
+        "purpose": "Continuous rotation for autonomous agent cycles.",
+        "tags": [
+          "loop",
+          "cycle",
+          "autonomous",
+          "iterate"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "agent-stop",
+        "purpose": "Shake to indicate agent halt or interruption.",
+        "tags": [
+          "stop",
+          "halt",
+          "interrupt",
+          "kill"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "agent-workflow",
+        "purpose": "Float animation for workflow step progression.",
+        "tags": [
+          "workflow",
+          "pipeline",
+          "steps",
+          "orchestration"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "ai-help",
+        "purpose": "Bounce for AI help suggestion.",
+        "tags": [
+          "help",
+          "assist",
+          "support",
+          "question"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "ai-history",
+        "purpose": "Reverse spin for conversation history.",
+        "tags": [
+          "history",
+          "past",
+          "log",
+          "timeline"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "ai-home",
+        "purpose": "Pop animation for AI dashboard home.",
+        "tags": [
+          "home",
+          "dashboard",
+          "main",
+          "hub"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "ai-menu",
+        "purpose": "Slide animation for AI menu toggle.",
+        "tags": [
+          "menu",
+          "navigation",
+          "sidebar",
+          "options"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "ai-search",
+        "purpose": "Zoom and tilt for AI-powered search.",
+        "tags": [
+          "search",
+          "find",
+          "query",
+          "lookup"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "ai-settings",
+        "purpose": "Gear rotation for AI configuration.",
+        "tags": [
+          "settings",
+          "config",
+          "preferences",
+          "tune"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "chain",
+        "purpose": "Pull animation for chained operations.",
+        "tags": [
+          "chain",
+          "link",
+          "sequence",
+          "connect"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "chunk",
+        "purpose": "Scale split for text chunking.",
+        "tags": [
+          "chunk",
+          "split",
+          "segment",
+          "partition"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "context-window",
+        "purpose": "Expand animation for context window sizing.",
+        "tags": [
+          "context",
+          "window",
+          "scope",
+          "range"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "conversation",
+        "purpose": "Pop-in for new conversation bubble.",
+        "tags": [
+          "chat",
+          "conversation",
+          "dialog",
+          "thread"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "document-index",
+        "purpose": "Slide for document indexing.",
+        "tags": [
+          "document",
+          "index",
+          "catalog",
+          "library"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "embedding",
+        "purpose": "Continuous pulse for vector embedding.",
+        "tags": [
+          "embedding",
+          "vector",
+          "encode",
+          "represent"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "empty-agent",
+        "purpose": "Fade for empty/idle agent state.",
+        "tags": [
+          "empty",
+          "idle",
+          "inactive",
+          "placeholder"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "fine-tune",
+        "purpose": "Dial turn for fine-tuning parameters.",
+        "tags": [
+          "fine-tune",
+          "train",
+          "adapt",
+          "customize"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "guardrail",
+        "purpose": "Shield pulse for safety guardrails.",
+        "tags": [
+          "guardrail",
+          "safety",
+          "constraint",
+          "boundary"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "knowledge-base",
+        "purpose": "Glow pulse for knowledge retrieval.",
+        "tags": [
+          "knowledge",
+          "database",
+          "corpus",
+          "source"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "latency",
+        "purpose": "Tick animation for response latency.",
+        "tags": [
+          "latency",
+          "speed",
+          "delay",
+          "time"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "max-tokens",
+        "purpose": "Bounce for token limit indicator.",
+        "tags": [
+          "tokens",
+          "limit",
+          "max",
+          "capacity"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "model",
+        "purpose": "3D rotate for model selection.",
+        "tags": [
+          "model",
+          "llm",
+          "neural",
+          "brain"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "model-selector",
+        "purpose": "Slide for switching between models.",
+        "tags": [
+          "selector",
+          "switch",
+          "choose",
+          "pick"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "orchestrator",
+        "purpose": "Conducting sway for orchestration.",
+        "tags": [
+          "orchestrator",
+          "conductor",
+          "manager",
+          "coordinator"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "prompt",
+        "purpose": "Typing blink for prompt input.",
+        "tags": [
+          "prompt",
+          "input",
+          "instruction",
+          "query"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "prompt-template",
+        "purpose": "Pop for template selection.",
+        "tags": [
+          "template",
+          "preset",
+          "pattern",
+          "scaffold"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "rag-pipeline",
+        "purpose": "Flow animation for RAG retrieval.",
+        "tags": [
+          "rag",
+          "retrieval",
+          "augmented",
+          "generation"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "regenerate",
+        "purpose": "Full spin for response regeneration.",
+        "tags": [
+          "regenerate",
+          "retry",
+          "redo",
+          "refresh"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "retrieve",
+        "purpose": "Pull-up for document retrieval.",
+        "tags": [
+          "retrieve",
+          "fetch",
+          "get",
+          "extract"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "safety-filter",
+        "purpose": "Scan animation for content filtering.",
+        "tags": [
+          "filter",
+          "moderate",
+          "scan",
+          "check"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "sparkle",
+        "purpose": "Flash and rotate for AI magic/generation.",
+        "tags": [
+          "sparkle",
+          "magic",
+          "generate",
+          "create"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "streaming",
+        "purpose": "Continuous float for token streaming.",
+        "tags": [
+          "stream",
+          "realtime",
+          "live",
+          "flow"
+        ],
+        "category": "interface"
+      },
+      {
+        "name": "system-prompt",
+        "purpose": "Pulse for system-level instructions.",
+        "tags": [
+          "system",
+          "instructions",
+          "role",
+          "persona"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "temperature",
+        "purpose": "Rise animation for temperature control.",
+        "tags": [
+          "temperature",
+          "creativity",
+          "randomness",
+          "sampling"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "token-cost",
+        "purpose": "Shake for cost awareness.",
+        "tags": [
+          "cost",
+          "pricing",
+          "usage",
+          "billing"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "token-counter",
+        "purpose": "Scale tick for counting tokens.",
+        "tags": [
+          "counter",
+          "count",
+          "tally",
+          "measure"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "tool-use",
+        "purpose": "Wrench turn for tool invocation.",
+        "tags": [
+          "tool",
+          "function",
+          "api",
+          "action"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "vector-db",
+        "purpose": "Continuous pulse for vector database.",
+        "tags": [
+          "vector",
+          "database",
+          "storage",
+          "index"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "batch-process",
+        "purpose": "Stagger animation for parallel processing.",
+        "tags": [
+          "batch",
+          "parallel",
+          "bulk",
+          "queue"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "hallucination",
+        "purpose": "Flicker for hallucination detection.",
+        "tags": [
+          "hallucination",
+          "confabulation",
+          "error",
+          "false"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "reasoning",
+        "purpose": "Connect animation for reasoning chains.",
+        "tags": [
+          "reasoning",
+          "chain-of-thought",
+          "logic",
+          "inference"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "function-call",
+        "purpose": "Invoke slide for function calling.",
+        "tags": [
+          "function",
+          "call",
+          "invoke",
+          "execute"
+        ],
+        "category": "core"
+      },
+      {
+        "name": "multimodal",
+        "purpose": "Multi-shift for multimodal inputs.",
+        "tags": [
+          "multimodal",
+          "vision",
+          "audio",
+          "text"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "alignment",
+        "purpose": "Lock-on for AI alignment.",
+        "tags": [
+          "alignment",
+          "safety",
+          "values",
+          "ethics"
+        ],
+        "category": "safety"
+      },
+      {
+        "name": "attention",
+        "purpose": "Focus fade for attention mechanism.",
+        "tags": [
+          "attention",
+          "focus",
+          "heads",
+          "weights"
+        ],
+        "category": "model"
+      },
+      {
+        "name": "tokenizer",
+        "purpose": "Split scale for tokenization.",
+        "tags": [
+          "tokenizer",
+          "encode",
+          "decode",
+          "bpe"
+        ],
+        "category": "pipeline"
+      },
+      {
+        "name": "benchmark",
+        "purpose": "Rise animation for benchmark scores.",
+        "tags": [
+          "benchmark",
+          "eval",
+          "score",
+          "test"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "eval-metrics",
+        "purpose": "Spin for evaluation metrics.",
+        "tags": [
+          "metrics",
+          "evaluation",
+          "measure",
+          "accuracy"
+        ],
+        "category": "metrics"
+      }
+    ],
+    "classMap": {
+      "sparkle": "xznek0",
+      "agent-loop": "f91tcy",
+      "streaming": "xxyxwf",
+      "guardrail": "tihxmg",
+      "rag-pipeline": "kk8xwh",
+      "embedding": "upo7wq",
+      "model": "iemvrk",
+      "prompt": "iksow0",
+      "regenerate": "j474hh",
+      "reasoning": "nzis6r",
+      "agent": "qn0atl",
+      "agent-group": "wtegtf",
+      "agent-stop": "cu4kkk",
+      "agent-workflow": "sidg38",
+      "ai-help": "zrffi6",
+      "ai-history": "uapabx",
+      "ai-home": "x2xlvb",
+      "ai-menu": "ldi6tn",
+      "ai-search": "jkzjn2",
+      "ai-settings": "ixp7b2",
+      "chain": "wium09",
+      "chunk": "sh6z0l",
+      "context-window": "gvomgg",
+      "conversation": "lq26fd",
+      "document-index": "jefa0y",
+      "empty-agent": "qtp9ey",
+      "fine-tune": "p11kol",
+      "knowledge-base": "hfavei",
+      "latency": "pybboo",
+      "max-tokens": "hwsrw9",
+      "model-selector": "cuw02l",
+      "orchestrator": "f2957m",
+      "prompt-template": "zcezjm",
+      "retrieve": "vavcq0",
+      "safety-filter": "hw58k7",
+      "system-prompt": "cfmews",
+      "temperature": "esk68q",
+      "token-cost": "osp89u",
+      "token-counter": "h8xl8q",
+      "tool-use": "o57xsn",
+      "vector-db": "pwgkw8",
+      "batch-process": "bv52ey",
+      "hallucination": "v7rz3j",
+      "function-call": "envg1l",
+      "multimodal": "p25f9w",
+      "alignment": "g2yten",
+      "attention": "cybhkq",
+      "tokenizer": "f8cvek",
+      "benchmark": "zp155h",
+      "eval-metrics": "pikypw"
+    }
+  },
+  "data-charts": {
+    "name": "Data & Charts",
+    "description": "Data visualization icons: charts, metrics, analytics, operations",
+    "css": "data-charts.css",
+    "icons": [
+      {
+        "name": "bar-chart",
+        "purpose": "Bars grow staggered from bottom.",
+        "tags": [
+          "bar",
+          "chart",
+          "graph",
+          "vertical"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "line-chart",
+        "purpose": "Line draws L-to-R with dots popping.",
+        "tags": [
+          "line",
+          "chart",
+          "trend",
+          "graph"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "pie-chart",
+        "purpose": "Slices fan from center.",
+        "tags": [
+          "pie",
+          "chart",
+          "proportion",
+          "share"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "donut-chart",
+        "purpose": "Arcs draw clockwise.",
+        "tags": [
+          "donut",
+          "ring",
+          "chart",
+          "circular"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "area-chart",
+        "purpose": "Fill rises like water.",
+        "tags": [
+          "area",
+          "chart",
+          "filled",
+          "surface"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "scatter-plot",
+        "purpose": "Dots scatter then settle.",
+        "tags": [
+          "scatter",
+          "plot",
+          "dots",
+          "correlation"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "horizontal-chart",
+        "purpose": "Bars extend staggered from left.",
+        "tags": [
+          "horizontal",
+          "bar",
+          "chart",
+          "rank"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "candlestick",
+        "purpose": "Bodies fill, wicks draw.",
+        "tags": [
+          "candlestick",
+          "stock",
+          "trading",
+          "ohlc"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "histogram",
+        "purpose": "Wave pattern slide up.",
+        "tags": [
+          "histogram",
+          "distribution",
+          "frequency",
+          "bins"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "treemap",
+        "purpose": "Tiles cascade in.",
+        "tags": [
+          "treemap",
+          "hierarchy",
+          "nested",
+          "proportion"
+        ],
+        "category": "charts"
+      },
+      {
+        "name": "trending-up",
+        "purpose": "Arrow draws upward with glow.",
+        "tags": [
+          "trending",
+          "up",
+          "growth",
+          "increase"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "trending-down",
+        "purpose": "Arrow draws downward.",
+        "tags": [
+          "trending",
+          "down",
+          "decline",
+          "decrease"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "gauge",
+        "purpose": "Needle sweeps to target.",
+        "tags": [
+          "gauge",
+          "meter",
+          "speedometer",
+          "dial"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "percentage",
+        "purpose": "Arc fills to position.",
+        "tags": [
+          "percentage",
+          "percent",
+          "progress",
+          "ratio"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "counter",
+        "purpose": "Digits ticker upward.",
+        "tags": [
+          "counter",
+          "number",
+          "count",
+          "tally"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "kpi-card",
+        "purpose": "Card slides, value pops.",
+        "tags": [
+          "kpi",
+          "card",
+          "metric",
+          "indicator"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "comparison",
+        "purpose": "Two bars race to fill.",
+        "tags": [
+          "comparison",
+          "compare",
+          "versus",
+          "diff"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "delta",
+        "purpose": "Arrow bounces for change.",
+        "tags": [
+          "delta",
+          "change",
+          "difference",
+          "variance"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "target",
+        "purpose": "Rings pulse inward.",
+        "tags": [
+          "target",
+          "goal",
+          "aim",
+          "bullseye"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "score",
+        "purpose": "Badge scales, center pops.",
+        "tags": [
+          "score",
+          "rating",
+          "grade",
+          "points"
+        ],
+        "category": "metrics"
+      },
+      {
+        "name": "table",
+        "purpose": "Rows slide in staggered.",
+        "tags": [
+          "table",
+          "grid",
+          "rows",
+          "data"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "grid-view",
+        "purpose": "Cells tile cascade.",
+        "tags": [
+          "grid",
+          "view",
+          "cells",
+          "layout"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "database",
+        "purpose": "Layers stack down.",
+        "tags": [
+          "database",
+          "db",
+          "storage",
+          "cylinder"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "spreadsheet",
+        "purpose": "Active cell pulses.",
+        "tags": [
+          "spreadsheet",
+          "excel",
+          "sheet",
+          "cells"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "data-flow",
+        "purpose": "Nodes appear, connectors draw.",
+        "tags": [
+          "dataflow",
+          "pipeline",
+          "nodes",
+          "graph"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "pivot-table",
+        "purpose": "Grid cells fade in staggered.",
+        "tags": [
+          "pivot",
+          "table",
+          "cross-tab",
+          "matrix"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "filter",
+        "purpose": "Particles flow through funnel.",
+        "tags": [
+          "filter",
+          "funnel",
+          "refine",
+          "narrow"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "sort-asc",
+        "purpose": "Bars reorder upward.",
+        "tags": [
+          "sort",
+          "ascending",
+          "order",
+          "rank"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "sort-desc",
+        "purpose": "Bars reorder downward.",
+        "tags": [
+          "sort",
+          "descending",
+          "reverse",
+          "rank"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "group-by",
+        "purpose": "Items cluster together.",
+        "tags": [
+          "group",
+          "cluster",
+          "aggregate",
+          "bucket"
+        ],
+        "category": "data"
+      },
+      {
+        "name": "dashboard",
+        "purpose": "Panels tile, mini-charts draw.",
+        "tags": [
+          "dashboard",
+          "overview",
+          "panels",
+          "widgets"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "funnel",
+        "purpose": "Stages narrow top to bottom.",
+        "tags": [
+          "funnel",
+          "conversion",
+          "pipeline",
+          "stages"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "heatmap",
+        "purpose": "Cells warm up in wave.",
+        "tags": [
+          "heatmap",
+          "heat",
+          "intensity",
+          "density"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "correlation",
+        "purpose": "Lines converge, dot pulses.",
+        "tags": [
+          "correlation",
+          "relationship",
+          "covariance",
+          "link"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "regression",
+        "purpose": "Dots appear, best-fit draws.",
+        "tags": [
+          "regression",
+          "trend",
+          "predict",
+          "model"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "anomaly",
+        "purpose": "One dot flashes for alert.",
+        "tags": [
+          "anomaly",
+          "outlier",
+          "spike",
+          "unusual"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "forecast",
+        "purpose": "Solid draws, dashed extends.",
+        "tags": [
+          "forecast",
+          "predict",
+          "future",
+          "projection"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "segment",
+        "purpose": "Circle splits into segments.",
+        "tags": [
+          "segment",
+          "partition",
+          "slice",
+          "cohort"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "distribution",
+        "purpose": "Curve draws, area fills.",
+        "tags": [
+          "distribution",
+          "bell",
+          "normal",
+          "spread"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "timeline",
+        "purpose": "Points appear staggered.",
+        "tags": [
+          "timeline",
+          "history",
+          "events",
+          "sequence"
+        ],
+        "category": "analytics"
+      },
+      {
+        "name": "export",
+        "purpose": "Arrow launches from chart.",
+        "tags": [
+          "export",
+          "download",
+          "save",
+          "output"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "import",
+        "purpose": "Document drops in.",
+        "tags": [
+          "import",
+          "upload",
+          "ingest",
+          "input"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "refresh-data",
+        "purpose": "Arrows spin, bars re-grow.",
+        "tags": [
+          "refresh",
+          "reload",
+          "update",
+          "sync"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "zoom-in",
+        "purpose": "Magnifier scales up.",
+        "tags": [
+          "zoom",
+          "in",
+          "magnify",
+          "enlarge"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "zoom-out",
+        "purpose": "Magnifier scales down.",
+        "tags": [
+          "zoom",
+          "out",
+          "shrink",
+          "reduce"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "drill-down",
+        "purpose": "Sub-bars expand below.",
+        "tags": [
+          "drill",
+          "detail",
+          "expand",
+          "explore"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "annotation",
+        "purpose": "Callout pops with pointer.",
+        "tags": [
+          "annotation",
+          "note",
+          "comment",
+          "label"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "snapshot",
+        "purpose": "Frame captures, flash.",
+        "tags": [
+          "snapshot",
+          "capture",
+          "screenshot",
+          "freeze"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "real-time",
+        "purpose": "Dot pulses, line extends.",
+        "tags": [
+          "realtime",
+          "live",
+          "streaming",
+          "monitor"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "sync-data",
+        "purpose": "Arrows chase, nodes pulse.",
+        "tags": [
+          "sync",
+          "synchronize",
+          "transfer",
+          "exchange"
+        ],
+        "category": "operations"
+      }
+    ],
+    "classMap": {
+      "bar-chart": "zhe4xf",
+      "line-chart": "m3jmej",
+      "pie-chart": "aejj68",
+      "donut-chart": "imjihk",
+      "area-chart": "k1k4ap",
+      "scatter-plot": "hg4wk2",
+      "horizontal-chart": "hed5zr",
+      "candlestick": "xwmzxg",
+      "histogram": "g255bx",
+      "treemap": "u8vgov",
+      "trending-up": "mjqwll",
+      "trending-down": "ts9r1n",
+      "gauge": "dhelx3",
+      "percentage": "aq50cx",
+      "counter": "a5s2pb",
+      "kpi-card": "k1zwps",
+      "comparison": "n226s5",
+      "delta": "vhbh68",
+      "target": "g470sl",
+      "score": "zc6fdj",
+      "table": "j52uf2",
+      "grid-view": "pelqtk",
+      "database": "wb54ui",
+      "spreadsheet": "c6p5uh",
+      "data-flow": "pc2h65",
+      "pivot-table": "k0gyr8",
+      "filter": "eerdyd",
+      "sort-asc": "wq7vnl",
+      "sort-desc": "o5z2nb",
+      "group-by": "mzpp0v",
+      "dashboard": "f9vkx5",
+      "funnel": "iwl2j4",
+      "heatmap": "rjdgal",
+      "correlation": "o7ppf4",
+      "regression": "nssm1j",
+      "anomaly": "y3ctcl",
+      "forecast": "di47f1",
+      "segment": "sz8j5d",
+      "distribution": "jlkslo",
+      "timeline": "iaxii3",
+      "export": "hkc20g",
+      "import": "jeccue",
+      "refresh-data": "oylkv3",
+      "zoom-in": "nb8iaz",
+      "zoom-out": "l9a8uc",
+      "drill-down": "qn0vg9",
+      "annotation": "nqi9mu",
+      "snapshot": "b1u72z",
+      "real-time": "jaziz7",
+      "sync-data": "kslva6"
+    }
+  },
+  "social-communication": {
+    "name": "Social & Communication",
+    "description": "Reactions, messaging, and sharing animations",
+    "css": "social-communication.css",
+    "icons": [
+      {
+        "name": "message-circle",
+        "purpose": "Chat bubble drops in with wobble.",
+        "tags": [
+          "chat",
+          "message",
+          "bubble",
+          "conversation"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "heart",
+        "purpose": "Double-beat heartbeat with organic twist.",
+        "tags": [
+          "like",
+          "love",
+          "favorite",
+          "reaction"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "share",
+        "purpose": "Network nodes pop outward in staggered broadcast.",
+        "tags": [
+          "share",
+          "network",
+          "broadcast",
+          "distribute"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "users",
+        "purpose": "Head nods, second user slides in.",
+        "tags": [
+          "group",
+          "team",
+          "people",
+          "community"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "phone",
+        "purpose": "Phone vibrates like ringing.",
+        "tags": [
+          "call",
+          "phone",
+          "ring",
+          "contact"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "mail",
+        "purpose": "Envelope flap rotates open.",
+        "tags": [
+          "email",
+          "mail",
+          "inbox",
+          "letter"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "send",
+        "purpose": "Paper plane launches diagonally.",
+        "tags": [
+          "send",
+          "submit",
+          "dispatch",
+          "deliver"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "at-sign",
+        "purpose": "Outer @ wiggles, inner dot pulses.",
+        "tags": [
+          "mention",
+          "email",
+          "handle",
+          "address"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "thumbs-up",
+        "purpose": "Whole hand tilts backward in approval.",
+        "tags": [
+          "approve",
+          "like",
+          "agree",
+          "positive"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "bookmark",
+        "purpose": "Ribbon drops into page and bounces.",
+        "tags": [
+          "save",
+          "bookmark",
+          "flag",
+          "pin"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "smile",
+        "purpose": "Face tilts with joy, mouth grins wider.",
+        "tags": [
+          "emoji",
+          "happy",
+          "react",
+          "mood"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "reply",
+        "purpose": "Arrow swipes left.",
+        "tags": [
+          "reply",
+          "respond",
+          "back",
+          "return"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "forward",
+        "purpose": "Arrow swipes right.",
+        "tags": [
+          "forward",
+          "pass",
+          "redirect",
+          "next"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "video",
+        "purpose": "Lens double-blinks like REC indicator.",
+        "tags": [
+          "video",
+          "camera",
+          "record",
+          "stream"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "mic",
+        "purpose": "Capsule vibrates with audio, wave spreads.",
+        "tags": [
+          "microphone",
+          "audio",
+          "voice",
+          "record"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "bell-ring",
+        "purpose": "Bell swings as pendulum, waves pulse.",
+        "tags": [
+          "notification",
+          "alert",
+          "ring",
+          "alarm"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "link",
+        "purpose": "Chain links tug apart in opposite diagonals.",
+        "tags": [
+          "link",
+          "url",
+          "chain",
+          "connect"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "megaphone",
+        "purpose": "Horn shakes with building amplitude.",
+        "tags": [
+          "announce",
+          "broadcast",
+          "promote",
+          "loud"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "user-plus",
+        "purpose": "Plus pops in with rotation.",
+        "tags": [
+          "add",
+          "invite",
+          "follow",
+          "friend"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "contact-round",
+        "purpose": "Card tilts up, avatar pulses.",
+        "tags": [
+          "contact",
+          "profile",
+          "vcard",
+          "info"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "message-square",
+        "purpose": "Chat box wobbles like typing arrived.",
+        "tags": [
+          "chat",
+          "text",
+          "square",
+          "dm"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "inbox",
+        "purpose": "Mail drops into tray shelf.",
+        "tags": [
+          "inbox",
+          "receive",
+          "mailbox",
+          "tray"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "thumbs-down",
+        "purpose": "Hand tilts downward in disapproval.",
+        "tags": [
+          "dislike",
+          "reject",
+          "disagree",
+          "negative"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "star",
+        "purpose": "Star twinkles with rotation and opacity.",
+        "tags": [
+          "favorite",
+          "rate",
+          "star",
+          "top"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "flag",
+        "purpose": "Flag flutters like wind.",
+        "tags": [
+          "report",
+          "flag",
+          "mark",
+          "priority"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "eye",
+        "purpose": "Pupil shifts sideways, lid blinks.",
+        "tags": [
+          "view",
+          "seen",
+          "watch",
+          "visible"
+        ],
+        "category": "reactions"
+      },
+      {
+        "name": "globe",
+        "purpose": "Meridian spins on vertical axis.",
+        "tags": [
+          "world",
+          "public",
+          "global",
+          "web"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "rss",
+        "purpose": "Waves pulse outward staggered from dot.",
+        "tags": [
+          "feed",
+          "subscribe",
+          "rss",
+          "news"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "wifi",
+        "purpose": "Arcs cascade from top staggered.",
+        "tags": [
+          "wifi",
+          "signal",
+          "wireless",
+          "online"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "upload",
+        "purpose": "Arrow shoots upward.",
+        "tags": [
+          "upload",
+          "share",
+          "cloud",
+          "send"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "download",
+        "purpose": "Arrow shoots downward.",
+        "tags": [
+          "download",
+          "save",
+          "get",
+          "receive"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "external-link",
+        "purpose": "Corner and diagonal launch outward.",
+        "tags": [
+          "external",
+          "open",
+          "new-tab",
+          "link"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "user",
+        "purpose": "Head nods hello.",
+        "tags": [
+          "user",
+          "profile",
+          "account",
+          "person"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "user-check",
+        "purpose": "Checkmark sweeps in with verification.",
+        "tags": [
+          "verified",
+          "approved",
+          "confirmed",
+          "trusted"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "headphones",
+        "purpose": "Head bobs to music.",
+        "tags": [
+          "headphones",
+          "audio",
+          "listen",
+          "music"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "volume-2",
+        "purpose": "Sound waves pulse outward staggered.",
+        "tags": [
+          "volume",
+          "speaker",
+          "sound",
+          "audio"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "phone-call",
+        "purpose": "Handset vibrates, signal waves pulse.",
+        "tags": [
+          "call",
+          "active",
+          "talking",
+          "connected"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "phone-incoming",
+        "purpose": "Arrow slides in from corner.",
+        "tags": [
+          "incoming",
+          "receive",
+          "answer",
+          "call"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "phone-outgoing",
+        "purpose": "Arrow launches outward.",
+        "tags": [
+          "outgoing",
+          "dial",
+          "calling",
+          "connect"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "camera",
+        "purpose": "Lens focus-contracts then expands (shutter).",
+        "tags": [
+          "camera",
+          "photo",
+          "selfie",
+          "capture"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "hash",
+        "purpose": "Hashtag wobbles (trending).",
+        "tags": [
+          "hashtag",
+          "tag",
+          "trending",
+          "topic"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "radio",
+        "purpose": "Center pulses, waves expand staggered.",
+        "tags": [
+          "radio",
+          "broadcast",
+          "live",
+          "signal"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "podcast",
+        "purpose": "Waves expand, mic dot pulses.",
+        "tags": [
+          "podcast",
+          "episode",
+          "listen",
+          "show"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "pen-line",
+        "purpose": "Pen tilts like writing.",
+        "tags": [
+          "compose",
+          "write",
+          "edit",
+          "draft"
+        ],
+        "category": "messaging"
+      },
+      {
+        "name": "ban",
+        "purpose": "Slash strikes across, ring shakes.",
+        "tags": [
+          "block",
+          "ban",
+          "restrict",
+          "forbidden"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "shield",
+        "purpose": "Shield plants firmly (reinforces).",
+        "tags": [
+          "privacy",
+          "security",
+          "protect",
+          "safe"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "lock",
+        "purpose": "Shackle jiggles testing the lock.",
+        "tags": [
+          "lock",
+          "private",
+          "secure",
+          "closed"
+        ],
+        "category": "people"
+      },
+      {
+        "name": "search",
+        "purpose": "Magnifying glass tilts investigating.",
+        "tags": [
+          "search",
+          "find",
+          "lookup",
+          "discover"
+        ],
+        "category": "sharing"
+      },
+      {
+        "name": "bell",
+        "purpose": "Bell swings as gentle pendulum.",
+        "tags": [
+          "notification",
+          "alert",
+          "bell",
+          "remind"
+        ],
+        "category": "communication"
+      },
+      {
+        "name": "zap",
+        "purpose": "Lightning bolt strikes with flash.",
+        "tags": [
+          "instant",
+          "flash",
+          "quick",
+          "electric"
+        ],
+        "category": "reactions"
+      }
+    ],
+    "classMap": {
+      "message-circle": "mbt6e2",
+      "heart": "vwu29v",
+      "share": "ygzoc0",
+      "users": "aqh89i",
+      "phone": "xgitsv",
+      "mail": "awoobl",
+      "send": "ezf012",
+      "at-sign": "qm85pi",
+      "thumbs-up": "x8bpi8",
+      "bookmark": "rnt2va",
+      "smile": "vcmv3k",
+      "reply": "rtix6c",
+      "forward": "d2kv7j",
+      "video": "mnem8c",
+      "mic": "h87r6w",
+      "bell-ring": "p0j8ft",
+      "link": "t6943d",
+      "megaphone": "gu2ji5",
+      "user-plus": "dewisd",
+      "contact-round": "r6au04",
+      "message-square": "r8oqr5",
+      "inbox": "c5p6s9",
+      "thumbs-down": "trqyth",
+      "star": "dqlmd4",
+      "flag": "o3u2ao",
+      "eye": "p9jz9e",
+      "globe": "kfrl05",
+      "rss": "j015jx",
+      "wifi": "u8uipa",
+      "upload": "zyudhg",
+      "download": "ykwcn6",
+      "external-link": "urtwj5",
+      "user": "uukgl0",
+      "user-check": "tqwi6f",
+      "headphones": "a08yzz",
+      "volume-2": "hw4hzf",
+      "phone-call": "cdy1m7",
+      "phone-incoming": "fujnyn",
+      "phone-outgoing": "vxg4kw",
+      "camera": "jqrzoe",
+      "hash": "ujegrn",
+      "radio": "ctqc4x",
+      "podcast": "y7mt3z",
+      "pen-line": "zemg7l",
+      "ban": "dfv6e6",
+      "shield": "a4ufrn",
+      "lock": "aedfe5",
+      "search": "eyhe5t",
+      "bell": "cxh302",
+      "zap": "q03ab5"
+    }
+  },
+  "ecommerce": {
+    "name": "E-Commerce",
+    "description": "Shopping, payments, delivery, and retail animations",
+    "css": "e-commerce.css",
+    "icons": [
+      {
+        "name": "shopping-cart",
+        "purpose": "Cart bounces like adding an item.",
+        "tags": [
+          "cart",
+          "shop",
+          "add",
+          "buy"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "shopping-bag",
+        "purpose": "Bag lifts up like picking it up.",
+        "tags": [
+          "bag",
+          "shop",
+          "purchase",
+          "retail"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "store",
+        "purpose": "Storefront wobbles like opening for business.",
+        "tags": [
+          "store",
+          "shop",
+          "retail",
+          "front"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "tag",
+        "purpose": "Tag sways like hanging from a shelf.",
+        "tags": [
+          "tag",
+          "price",
+          "label",
+          "product"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "coupon",
+        "purpose": "Coupon slides out like tearing off.",
+        "tags": [
+          "coupon",
+          "voucher",
+          "discount",
+          "promo"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "sale",
+        "purpose": "Sale badge pops with excitement.",
+        "tags": [
+          "sale",
+          "discount",
+          "deal",
+          "offer"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "wallet",
+        "purpose": "Wallet tilts open to show contents.",
+        "tags": [
+          "wallet",
+          "pay",
+          "money",
+          "balance"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "bank-card",
+        "purpose": "Card swipes through a reader.",
+        "tags": [
+          "card",
+          "credit",
+          "debit",
+          "payment"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "coin",
+        "purpose": "Coin flips on its edge.",
+        "tags": [
+          "coin",
+          "money",
+          "currency",
+          "token"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "cash",
+        "purpose": "Bills fan out from a stack.",
+        "tags": [
+          "cash",
+          "bills",
+          "money",
+          "currency"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "bill",
+        "purpose": "Bill unrolls downward like printing.",
+        "tags": [
+          "bill",
+          "receipt",
+          "invoice",
+          "order"
+        ],
+        "category": "ordering"
+      },
+      {
+        "name": "gift",
+        "purpose": "Gift box bounces with unwrapping excitement.",
+        "tags": [
+          "gift",
+          "present",
+          "reward",
+          "bonus"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "basket",
+        "purpose": "Basket wobbles like being carried.",
+        "tags": [
+          "basket",
+          "cart",
+          "carry",
+          "collect"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "barcode",
+        "purpose": "Scanner laser sweeps across.",
+        "tags": [
+          "barcode",
+          "scan",
+          "product",
+          "sku"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "qrcode",
+        "purpose": "QR code focus-zooms like scanning.",
+        "tags": [
+          "qr",
+          "scan",
+          "code",
+          "mobile"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "truck",
+        "purpose": "Truck drives forward for delivery.",
+        "tags": [
+          "truck",
+          "delivery",
+          "shipping",
+          "transport"
+        ],
+        "category": "delivery"
+      },
+      {
+        "name": "package",
+        "purpose": "Package drops in and lands with bounce.",
+        "tags": [
+          "package",
+          "box",
+          "parcel",
+          "shipment"
+        ],
+        "category": "delivery"
+      },
+      {
+        "name": "percentage",
+        "purpose": "Percentage spins for discount emphasis.",
+        "tags": [
+          "percent",
+          "discount",
+          "off",
+          "deal"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "star",
+        "purpose": "Star twinkles for review/rating.",
+        "tags": [
+          "star",
+          "rating",
+          "review",
+          "favorite"
+        ],
+        "category": "feedback"
+      },
+      {
+        "name": "heart",
+        "purpose": "Heart pulses for wishlisted item.",
+        "tags": [
+          "heart",
+          "wishlist",
+          "love",
+          "favorite"
+        ],
+        "category": "feedback"
+      },
+      {
+        "name": "card-pay",
+        "purpose": "Card taps for contactless payment.",
+        "tags": [
+          "card",
+          "pay",
+          "contactless",
+          "tap"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "card-refund",
+        "purpose": "Money slides back to card for refund.",
+        "tags": [
+          "refund",
+          "return",
+          "money-back",
+          "chargeback"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "piggy-bank",
+        "purpose": "Piggy bank bounces when coin drops in.",
+        "tags": [
+          "savings",
+          "piggy",
+          "bank",
+          "deposit"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "receive-money",
+        "purpose": "Income arrives from above.",
+        "tags": [
+          "receive",
+          "income",
+          "revenue",
+          "earnings"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "cart-remove",
+        "purpose": "Cart shakes when item is removed.",
+        "tags": [
+          "cart",
+          "remove",
+          "delete",
+          "clear"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "shopping-bag-alt",
+        "purpose": "Bag swings like being carried.",
+        "tags": [
+          "bag",
+          "shopping",
+          "carry",
+          "purchase"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "gift-card",
+        "purpose": "Gift card slides out of envelope.",
+        "tags": [
+          "gift-card",
+          "voucher",
+          "prepaid",
+          "credit"
+        ],
+        "category": "loyalty"
+      },
+      {
+        "name": "gift-alt",
+        "purpose": "Gift wobbles with excitement.",
+        "tags": [
+          "gift",
+          "present",
+          "surprise",
+          "reward"
+        ],
+        "category": "shopping"
+      },
+      {
+        "name": "wallet-alt",
+        "purpose": "Wallet flips open.",
+        "tags": [
+          "wallet",
+          "billfold",
+          "money",
+          "finance"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "coin-stack",
+        "purpose": "Coins stack up with growing motion.",
+        "tags": [
+          "coins",
+          "stack",
+          "savings",
+          "accumulate"
+        ],
+        "category": "payment"
+      },
+      {
+        "name": "auction",
+        "purpose": "Gavel strikes down for winning bid.",
+        "tags": [
+          "auction",
+          "bid",
+          "gavel",
+          "hammer"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "award",
+        "purpose": "Trophy lifts with pride.",
+        "tags": [
+          "award",
+          "trophy",
+          "prize",
+          "achievement"
+        ],
+        "category": "loyalty"
+      },
+      {
+        "name": "price-tag",
+        "purpose": "Price tag dangles on product.",
+        "tags": [
+          "price",
+          "tag",
+          "label",
+          "cost"
+        ],
+        "category": "pricing"
+      },
+      {
+        "name": "celebrate",
+        "purpose": "Confetti bursts for order success.",
+        "tags": [
+          "celebrate",
+          "confetti",
+          "success",
+          "party"
+        ],
+        "category": "feedback"
+      },
+      {
+        "name": "vip",
+        "purpose": "VIP badge glows with premium status.",
+        "tags": [
+          "vip",
+          "premium",
+          "exclusive",
+          "member"
+        ],
+        "category": "loyalty"
+      },
+      {
+        "name": "token",
+        "purpose": "Loyalty token spins like a coin.",
+        "tags": [
+          "token",
+          "loyalty",
+          "points",
+          "rewards"
+        ],
+        "category": "loyalty"
+      },
+      {
+        "name": "barcode-scan",
+        "purpose": "Scanner actively sweeps the barcode.",
+        "tags": [
+          "barcode",
+          "scanner",
+          "checkout",
+          "pos"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "scan",
+        "purpose": "Viewfinder locks on target.",
+        "tags": [
+          "scan",
+          "capture",
+          "read",
+          "detect"
+        ],
+        "category": "operations"
+      },
+      {
+        "name": "invoice",
+        "purpose": "Invoice slides out like printing.",
+        "tags": [
+          "invoice",
+          "bill",
+          "statement",
+          "receipt"
+        ],
+        "category": "ordering"
+      },
+      {
+        "name": "crate",
+        "purpose": "Shipping crate drops with a thud.",
+        "tags": [
+          "crate",
+          "box",
+          "container",
+          "freight"
+        ],
+        "category": "delivery"
+      },
+      {
+        "name": "lock",
+        "purpose": "Padlock clicks shut for secure payment.",
+        "tags": [
+          "lock",
+          "secure",
+          "protected",
+          "safe"
+        ],
+        "category": "security"
+      },
+      {
+        "name": "unlock",
+        "purpose": "Padlock pops open for access.",
+        "tags": [
+          "unlock",
+          "open",
+          "access",
+          "authorize"
+        ],
+        "category": "security"
+      },
+      {
+        "name": "shield",
+        "purpose": "Shield pulses for payment protection.",
+        "tags": [
+          "shield",
+          "protect",
+          "guard",
+          "insurance"
+        ],
+        "category": "security"
+      },
+      {
+        "name": "certificate",
+        "purpose": "Authenticity seal stamps down.",
+        "tags": [
+          "certificate",
+          "verified",
+          "authentic",
+          "certified"
+        ],
+        "category": "security"
+      },
+      {
+        "name": "settings",
+        "purpose": "Gear rotates for store configuration.",
+        "tags": [
+          "settings",
+          "config",
+          "preferences",
+          "manage"
+        ],
+        "category": "utility"
+      },
+      {
+        "name": "clock",
+        "purpose": "Clock ticks for delivery timing.",
+        "tags": [
+          "clock",
+          "time",
+          "hours",
+          "schedule"
+        ],
+        "category": "utility"
+      },
+      {
+        "name": "info",
+        "purpose": "Info circle pulses for product details.",
+        "tags": [
+          "info",
+          "details",
+          "about",
+          "help"
+        ],
+        "category": "utility"
+      },
+      {
+        "name": "location",
+        "purpose": "Pin drops into map for store location.",
+        "tags": [
+          "location",
+          "map",
+          "address",
+          "store-locator"
+        ],
+        "category": "delivery"
+      },
+      {
+        "name": "loyal-customer",
+        "purpose": "Customer glows for loyalty program.",
+        "tags": [
+          "customer",
+          "loyal",
+          "member",
+          "vip"
+        ],
+        "category": "loyalty"
+      },
+      {
+        "name": "customers",
+        "purpose": "Group gathers for customer base.",
+        "tags": [
+          "customers",
+          "group",
+          "audience",
+          "buyers"
+        ],
+        "category": "utility"
+      }
+    ],
+    "classMap": {
+      "shopping-cart": "ahpx83",
+      "shopping-bag": "muuwdc",
+      "store": "u6ictk",
+      "tag": "o347qo",
+      "coupon": "y4ae4h",
+      "sale": "k4kcrh",
+      "wallet": "bajixg",
+      "bank-card": "uk7jca",
+      "coin": "lc4cm9",
+      "cash": "raj1sb",
+      "bill": "aytzvm",
+      "gift": "rydsjk",
+      "basket": "ktaw7u",
+      "barcode": "uhn4v0",
+      "qrcode": "nrtlzl",
+      "truck": "fongtp",
+      "package": "t13f1y",
+      "percentage": "omcm3t",
+      "star": "tbk10a",
+      "heart": "r34qcz",
+      "card-pay": "i1tjay",
+      "card-refund": "abma6x",
+      "piggy-bank": "a8vx6b",
+      "receive-money": "za0cda",
+      "cart-remove": "ykcdvb",
+      "shopping-bag-alt": "g0iw3g",
+      "gift-card": "j9bbgb",
+      "gift-alt": "mxcc5m",
+      "wallet-alt": "b1bhl3",
+      "coin-stack": "rr3i8n",
+      "auction": "apxile",
+      "award": "qhnywr",
+      "price-tag": "dudxjy",
+      "celebrate": "ujiruu",
+      "vip": "jcikbr",
+      "token": "cjq0on",
+      "barcode-scan": "h1atbf",
+      "scan": "ks441k",
+      "invoice": "e1bm4k",
+      "crate": "ma3iwa",
+      "lock": "f5000s",
+      "unlock": "rym50w",
+      "shield": "m68rul",
+      "certificate": "iu012h",
+      "settings": "aukq5x",
+      "clock": "kucbc1",
+      "info": "m8takq",
+      "location": "l4o51x",
+      "loyal-customer": "dho11o",
+      "customers": "dzkqvo"
+    }
+  },
+  "navigation-menus": {
+    "name": "Navigation & Menu",
+    "slug": "navigation-menus",
+    "purpose": "App navigation, menus, arrows, and UI control animations",
+    "tags": [
+      "navigation",
+      "menu",
+      "arrows",
+      "ui",
+      "controls",
+      "material"
+    ],
+    "price": 5,
+    "source": "Material Symbols",
+    "css": "navigation-menu.css",
+    "icons": [
+      {
+        "name": "menu",
+        "purpose": "Hamburger menu lines spread on hover.",
+        "tags": [
+          "menu",
+          "hamburger",
+          "nav",
+          "sidebar"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "close",
+        "purpose": "X button spins on click feedback.",
+        "tags": [
+          "close",
+          "dismiss",
+          "cancel",
+          "x"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "arrow-back",
+        "purpose": "Arrow slides left for go-back.",
+        "tags": [
+          "back",
+          "arrow",
+          "left",
+          "return"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "arrow-forward",
+        "purpose": "Arrow slides right for proceed.",
+        "tags": [
+          "forward",
+          "arrow",
+          "right",
+          "next"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "chevron-left",
+        "purpose": "Chevron nudges left for pagination.",
+        "tags": [
+          "chevron",
+          "left",
+          "previous",
+          "pagination"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "chevron-right",
+        "purpose": "Chevron nudges right for pagination.",
+        "tags": [
+          "chevron",
+          "right",
+          "next",
+          "pagination"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "expand-more",
+        "purpose": "Dropdown chevron rotates to open.",
+        "tags": [
+          "expand",
+          "dropdown",
+          "down",
+          "open"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "expand-less",
+        "purpose": "Collapse chevron bounces up to close.",
+        "tags": [
+          "collapse",
+          "up",
+          "close",
+          "minimize"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "home",
+        "purpose": "House bounces like arriving home.",
+        "tags": [
+          "home",
+          "house",
+          "main",
+          "dashboard"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "search",
+        "purpose": "Magnifier zooms in for search action.",
+        "tags": [
+          "search",
+          "find",
+          "magnify",
+          "lookup"
+        ],
+        "category": "search"
+      },
+      {
+        "name": "settings",
+        "purpose": "Gear rotates for configuration.",
+        "tags": [
+          "settings",
+          "gear",
+          "config",
+          "preferences"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "more-vert",
+        "purpose": "Vertical dots pulse for options.",
+        "tags": [
+          "more",
+          "dots",
+          "vertical",
+          "options"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "more-horiz",
+        "purpose": "Horizontal dots stretch for options.",
+        "tags": [
+          "more",
+          "dots",
+          "horizontal",
+          "ellipsis"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "apps",
+        "purpose": "Grid dots pop for app launcher.",
+        "tags": [
+          "apps",
+          "grid",
+          "launcher",
+          "dashboard"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "fullscreen",
+        "purpose": "Corners expand for fullscreen.",
+        "tags": [
+          "fullscreen",
+          "expand",
+          "maximize",
+          "enlarge"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "filter-list",
+        "purpose": "Lines slide for filter action.",
+        "tags": [
+          "filter",
+          "list",
+          "narrow",
+          "refine"
+        ],
+        "category": "search"
+      },
+      {
+        "name": "sort",
+        "purpose": "Bars shuffle for sort action.",
+        "tags": [
+          "sort",
+          "order",
+          "arrange",
+          "organize"
+        ],
+        "category": "search"
+      },
+      {
+        "name": "refresh",
+        "purpose": "Arrow spins 360 for reload.",
+        "tags": [
+          "refresh",
+          "reload",
+          "sync",
+          "update"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "tab",
+        "purpose": "Tab slides forward for selection.",
+        "tags": [
+          "tab",
+          "switch",
+          "panel",
+          "section"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "drag-indicator",
+        "purpose": "Dots jiggle for drag affordance.",
+        "tags": [
+          "drag",
+          "handle",
+          "grip",
+          "reorder"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "arrow-upward",
+        "purpose": "Arrow thrusts upward like a rocket.",
+        "tags": [
+          "arrow",
+          "up",
+          "ascend",
+          "upload"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "arrow-downward",
+        "purpose": "Arrow plunges down with gravity.",
+        "tags": [
+          "arrow",
+          "down",
+          "descend",
+          "download"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "swap-vert",
+        "purpose": "Elevator swap goes up then down.",
+        "tags": [
+          "swap",
+          "vertical",
+          "exchange",
+          "reorder"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "swap-horiz",
+        "purpose": "Card shuffle slides left then right.",
+        "tags": [
+          "swap",
+          "horizontal",
+          "exchange",
+          "switch"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "undo",
+        "purpose": "Time rewind traces a counter-clockwise arc.",
+        "tags": [
+          "undo",
+          "back",
+          "revert",
+          "history"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "redo",
+        "purpose": "Time forward traces a clockwise arc.",
+        "tags": [
+          "redo",
+          "forward",
+          "repeat",
+          "history"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "menu-open",
+        "purpose": "Page peels open from the right edge.",
+        "tags": [
+          "menu",
+          "open",
+          "sidebar",
+          "panel"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "segment",
+        "purpose": "Layers fan out like playing cards.",
+        "tags": [
+          "segment",
+          "sections",
+          "layers",
+          "divide"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "density-medium",
+        "purpose": "Accordion compresses then springs apart.",
+        "tags": [
+          "density",
+          "spacing",
+          "compact",
+          "comfortable"
+        ],
+        "category": "menu"
+      },
+      {
+        "name": "view-sidebar",
+        "purpose": "Drawer slides open from left edge.",
+        "tags": [
+          "sidebar",
+          "panel",
+          "drawer",
+          "navigation"
+        ],
+        "category": "sidebar"
+      },
+      {
+        "name": "dock-to-right",
+        "purpose": "Panel snaps magnetically to right.",
+        "tags": [
+          "dock",
+          "right",
+          "snap",
+          "panel"
+        ],
+        "category": "sidebar"
+      },
+      {
+        "name": "dock-to-left",
+        "purpose": "Panel snaps magnetically to left.",
+        "tags": [
+          "dock",
+          "left",
+          "snap",
+          "panel"
+        ],
+        "category": "sidebar"
+      },
+      {
+        "name": "grid-view",
+        "purpose": "Tiles shimmy with a wiggly shake.",
+        "tags": [
+          "grid",
+          "tiles",
+          "gallery",
+          "mosaic"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "view-list",
+        "purpose": "Lines cascade in like a typewriter.",
+        "tags": [
+          "list",
+          "rows",
+          "text",
+          "lines"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "view-module",
+        "purpose": "Blocks rearrange with perspective tilt.",
+        "tags": [
+          "module",
+          "blocks",
+          "cards",
+          "layout"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "dashboard",
+        "purpose": "Wobble toy rocks with decreasing amplitude.",
+        "tags": [
+          "dashboard",
+          "overview",
+          "widgets",
+          "panels"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "splitscreen",
+        "purpose": "Scissors apart into two halves.",
+        "tags": [
+          "split",
+          "screen",
+          "divide",
+          "dual"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "pip",
+        "purpose": "Floats into corner like picture-in-picture.",
+        "tags": [
+          "pip",
+          "picture",
+          "float",
+          "overlay"
+        ],
+        "category": "layout"
+      },
+      {
+        "name": "open-in-new",
+        "purpose": "Window launches diagonally outward.",
+        "tags": [
+          "open",
+          "new",
+          "external",
+          "link"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "launch",
+        "purpose": "Rocket lifts off with a tilt trail.",
+        "tags": [
+          "launch",
+          "open",
+          "external",
+          "go"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "zoom-in",
+        "purpose": "Iris opens wider with warm glow.",
+        "tags": [
+          "zoom",
+          "in",
+          "magnify",
+          "enlarge"
+        ],
+        "category": "zoom"
+      },
+      {
+        "name": "zoom-out",
+        "purpose": "Iris contracts tighter to shrink.",
+        "tags": [
+          "zoom",
+          "out",
+          "reduce",
+          "shrink"
+        ],
+        "category": "zoom"
+      },
+      {
+        "name": "first-page",
+        "purpose": "Book slams shut to front cover.",
+        "tags": [
+          "first",
+          "page",
+          "beginning",
+          "start"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "last-page",
+        "purpose": "Book flips to back cover.",
+        "tags": [
+          "last",
+          "page",
+          "end",
+          "finish"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "unfold-more",
+        "purpose": "Origami unfolds, stretching vertically.",
+        "tags": [
+          "unfold",
+          "expand",
+          "reveal",
+          "more"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "unfold-less",
+        "purpose": "Origami folds, compressing vertically.",
+        "tags": [
+          "fold",
+          "collapse",
+          "hide",
+          "less"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "open-in-full",
+        "purpose": "Explodes outward from center.",
+        "tags": [
+          "open",
+          "full",
+          "maximize",
+          "expand"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "close-fullscreen",
+        "purpose": "Implodes inward to center.",
+        "tags": [
+          "close",
+          "fullscreen",
+          "minimize",
+          "shrink"
+        ],
+        "category": "action"
+      },
+      {
+        "name": "double-arrow",
+        "purpose": "Speed races upward with afterimage.",
+        "tags": [
+          "double",
+          "arrow",
+          "fast",
+          "skip"
+        ],
+        "category": "directional"
+      },
+      {
+        "name": "subdirectory-arrow-right",
+        "purpose": "Water flows through a pipe bend.",
+        "tags": [
+          "subdirectory",
+          "child",
+          "nested",
+          "branch"
+        ],
+        "category": "directional"
+      }
+    ],
+    "classMap": {
+      "menu": "khey6q",
+      "close": "l1wizt",
+      "arrow-back": "ex7c3d",
+      "arrow-forward": "dyst9j",
+      "chevron-left": "yrneby",
+      "chevron-right": "s58udc",
+      "expand-more": "hfiyhc",
+      "expand-less": "ag2h8k",
+      "home": "gm68u1",
+      "search": "rtj91l",
+      "settings": "phslsv",
+      "more-vert": "mfm1dp",
+      "more-horiz": "h70r96",
+      "apps": "neg10d",
+      "fullscreen": "t1hflu",
+      "filter-list": "yvi8by",
+      "sort": "yo5jm6",
+      "refresh": "ii46oc",
+      "tab": "teizag",
+      "drag-indicator": "trbgb4",
+      "arrow-upward": "qg3z4c",
+      "arrow-downward": "px7jp4",
+      "swap-vert": "zhk6p1",
+      "swap-horiz": "p2yasg",
+      "undo": "uvw8ga",
+      "redo": "yu91ki",
+      "menu-open": "pan1ky",
+      "segment": "x8kchj",
+      "density-medium": "cjzxal",
+      "view-sidebar": "vc4fg9",
+      "dock-to-right": "i3gudr",
+      "dock-to-left": "i8na7x",
+      "grid-view": "erdfu1",
+      "view-list": "y48i6f",
+      "view-module": "pbq25z",
+      "dashboard": "s8k5f9",
+      "splitscreen": "ytw97b",
+      "pip": "kaxzpz",
+      "open-in-new": "b8a6pk",
+      "launch": "qhhgp5",
+      "zoom-in": "rzoaek",
+      "zoom-out": "pc1lka",
+      "first-page": "h52sei",
+      "last-page": "y9ve0j",
+      "unfold-more": "rsme7l",
+      "unfold-less": "pxd7xb",
+      "open-in-full": "tgs1m9",
+      "close-fullscreen": "xztak0",
+      "double-arrow": "bvjfy0",
+      "subdirectory-arrow-right": "iifsex"
+    }
+  },
+  "media-playback": {
+    "name": "Media & Playback",
+    "description": "Playback controls, audio, video, and media display animations",
+    "css": "media-playback.css",
+    "icons": [
+      {
+        "name": "play-button",
+        "purpose": "Play triangle thrusts forward like pressing play.",
+        "tags": [
+          "play",
+          "start",
+          "begin",
+          "resume"
+        ],
+        "category": "playback"
+      },
+      {
+        "name": "pause-button",
+        "purpose": "Pause bars spread apart then snap back.",
+        "tags": [
+          "pause",
+          "hold",
+          "wait",
+          "freeze"
+        ],
+        "category": "playback"
+      },
+      {
+        "name": "stop-square",
+        "purpose": "Stop square slams down with impact squash.",
+        "tags": [
+          "stop",
+          "end",
+          "halt",
+          "terminate"
+        ],
+        "category": "playback"
+      },
+      {
+        "name": "skip-forward",
+        "purpose": "Double-tap jolts forward to next track.",
+        "tags": [
+          "skip",
+          "next",
+          "forward",
+          "advance"
+        ],
+        "category": "playback"
+      },
+      {
+        "name": "skip-back",
+        "purpose": "Double-tap jolts backward to previous track.",
+        "tags": [
+          "skip",
+          "previous",
+          "back",
+          "rewind"
+        ],
+        "category": "playback"
+      },
+      {
+        "name": "volume-up",
+        "purpose": "Sound wave ripples outward from speaker.",
+        "tags": [
+          "volume",
+          "loud",
+          "sound",
+          "speaker"
+        ],
+        "category": "audio"
+      },
+      {
+        "name": "volume-mute",
+        "purpose": "Shakes in denial then briefly dims.",
+        "tags": [
+          "mute",
+          "silent",
+          "off",
+          "quiet"
+        ],
+        "category": "audio"
+      },
+      {
+        "name": "equalizer-bars",
+        "purpose": "Audio bars dance with squash-stretch.",
+        "tags": [
+          "equalizer",
+          "levels",
+          "bars",
+          "spectrum"
+        ],
+        "category": "audio"
+      },
+      {
+        "name": "playlist-queue",
+        "purpose": "Playlist lines cascade in from left.",
+        "tags": [
+          "queue",
+          "playlist",
+          "list",
+          "tracks"
+        ],
+        "category": "audio"
+      },
+      {
+        "name": "shuffle-mix",
+        "purpose": "Card shuffle crossover with blur.",
+        "tags": [
+          "shuffle",
+          "random",
+          "mix",
+          "reorder"
+        ],
+        "category": "transport"
+      },
+      {
+        "name": "repeat-loop",
+        "purpose": "Traces an infinity-loop figure-8 path.",
+        "tags": [
+          "repeat",
+          "loop",
+          "cycle",
+          "again"
+        ],
+        "category": "transport"
+      },
+      {
+        "name": "fullscreen-expand",
+        "purpose": "3D depth punch zooms toward viewer.",
+        "tags": [
+          "fullscreen",
+          "expand",
+          "maximize",
+          "enlarge"
+        ],
+        "category": "display"
+      },
+      {
+        "name": "picture-in-pip",
+        "purpose": "Shrinks and drifts to bottom-right corner.",
+        "tags": [
+          "pip",
+          "picture",
+          "overlay",
+          "float"
+        ],
+        "category": "display"
+      },
+      {
+        "name": "captions-cc",
+        "purpose": "Typewriter reveal with stutter stops.",
+        "tags": [
+          "captions",
+          "subtitles",
+          "cc",
+          "text"
+        ],
+        "category": "display"
+      },
+      {
+        "name": "speed-rate",
+        "purpose": "Velocity stretch with motion blur.",
+        "tags": [
+          "speed",
+          "rate",
+          "playback",
+          "tempo"
+        ],
+        "category": "transport"
+      },
+      {
+        "name": "record-dot",
+        "purpose": "Heartbeat double-pulse recording indicator.",
+        "tags": [
+          "record",
+          "rec",
+          "dot",
+          "capture"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "live-pulse",
+        "purpose": "Signal beacon radiating brightness pulses.",
+        "tags": [
+          "live",
+          "streaming",
+          "broadcast",
+          "signal"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "cast-screen",
+        "purpose": "3D perspective tilt with wireless signal glow.",
+        "tags": [
+          "cast",
+          "stream",
+          "chromecast",
+          "wireless"
+        ],
+        "category": "display"
+      },
+      {
+        "name": "download-media",
+        "purpose": "Gravity fall with bounce for download.",
+        "tags": [
+          "download",
+          "save",
+          "get",
+          "fetch"
+        ],
+        "category": "transport"
+      },
+      {
+        "name": "share-clip",
+        "purpose": "Liftoff arc parabolic rise and return.",
+        "tags": [
+          "share",
+          "send",
+          "distribute",
+          "forward"
+        ],
+        "category": "transport"
+      },
+      {
+        "name": "audio-track",
+        "purpose": "Waveform vertical pulse pattern.",
+        "tags": [
+          "audio",
+          "file",
+          "track",
+          "wav"
+        ],
+        "category": "production"
+      },
+      {
+        "name": "radio-tower",
+        "purpose": "Signal tower emitting glow pulses.",
+        "tags": [
+          "tower",
+          "signal",
+          "broadcast",
+          "antenna"
+        ],
+        "category": "production"
+      },
+      {
+        "name": "spatial-audio",
+        "purpose": "3D orbit tracing circular surround path.",
+        "tags": [
+          "spatial",
+          "surround",
+          "3d",
+          "immersive"
+        ],
+        "category": "production"
+      },
+      {
+        "name": "noise-control",
+        "purpose": "High-frequency tremor micro vibrations.",
+        "tags": [
+          "noise",
+          "cancel",
+          "control",
+          "filter"
+        ],
+        "category": "production"
+      },
+      {
+        "name": "hearing",
+        "purpose": "Ear tilts inward like leaning to listen.",
+        "tags": [
+          "hearing",
+          "ear",
+          "listen",
+          "accessibility"
+        ],
+        "category": "production"
+      },
+      {
+        "name": "slow-motion",
+        "purpose": "Time-stretch horizontal elongation.",
+        "tags": [
+          "slow",
+          "motion",
+          "timelapse",
+          "speed"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "video-settings",
+        "purpose": "Notch gear clicks through positions.",
+        "tags": [
+          "settings",
+          "config",
+          "video",
+          "gear"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "video-library",
+        "purpose": "Card fan spreads like video thumbnails.",
+        "tags": [
+          "library",
+          "collection",
+          "videos",
+          "gallery"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "theaters",
+        "purpose": "3D curtain reveal opens like theater.",
+        "tags": [
+          "theater",
+          "cinema",
+          "widescreen",
+          "premiere"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "movie-filter",
+        "purpose": "Hue rotation through color filter tones.",
+        "tags": [
+          "filter",
+          "color",
+          "grade",
+          "effect"
+        ],
+        "category": "video"
+      },
+      {
+        "name": "replay-10",
+        "purpose": "Counter-clockwise rewind spin with blur.",
+        "tags": [
+          "replay",
+          "rewind",
+          "back",
+          "10s"
+        ],
+        "category": "state"
+      },
+      {
+        "name": "forward-30",
+        "purpose": "Clockwise fast-spin with blur.",
+        "tags": [
+          "forward",
+          "skip",
+          "ahead",
+          "30s"
+        ],
+        "category": "state"
+      },
+      {
+        "name": "playlist-add",
+        "purpose": "Slide-in from below with bounce.",
+        "tags": [
+          "add",
+          "playlist",
+          "queue",
+          "insert"
+        ],
+        "category": "state"
+      },
+      {
+        "name": "playlist-remove",
+        "purpose": "Slide-out to right for removal.",
+        "tags": [
+          "remove",
+          "delete",
+          "playlist",
+          "dequeue"
+        ],
+        "category": "state"
+      },
+      {
+        "name": "queue-play",
+        "purpose": "Spring pop bounces with playful energy.",
+        "tags": [
+          "queue",
+          "play",
+          "next",
+          "up-next"
+        ],
+        "category": "state"
+      },
+      {
+        "name": "podcast",
+        "purpose": "Mic pendulum wobble like talking.",
+        "tags": [
+          "podcast",
+          "show",
+          "episode",
+          "talk"
+        ],
+        "category": "media"
+      },
+      {
+        "name": "radio",
+        "purpose": "Dial tune rotates like tuning frequency.",
+        "tags": [
+          "radio",
+          "fm",
+          "am",
+          "tune"
+        ],
+        "category": "media"
+      },
+      {
+        "name": "audiobook",
+        "purpose": "3D page flip from book spine.",
+        "tags": [
+          "audiobook",
+          "book",
+          "narration",
+          "read"
+        ],
+        "category": "media"
+      },
+      {
+        "name": "lyrics",
+        "purpose": "Karaoke-style upward text scroll.",
+        "tags": [
+          "lyrics",
+          "words",
+          "karaoke",
+          "sing"
+        ],
+        "category": "media"
+      },
+      {
+        "name": "library-music",
+        "purpose": "Record shelf rocks from base.",
+        "tags": [
+          "library",
+          "music",
+          "collection",
+          "archive"
+        ],
+        "category": "media"
+      },
+      {
+        "name": "screen-record",
+        "purpose": "Double-blink red like recording.",
+        "tags": [
+          "screen",
+          "record",
+          "capture",
+          "screencast"
+        ],
+        "category": "capture"
+      },
+      {
+        "name": "voice-memo",
+        "purpose": "Speak pulse expands in speech rhythm.",
+        "tags": [
+          "voice",
+          "memo",
+          "dictation",
+          "record"
+        ],
+        "category": "capture"
+      },
+      {
+        "name": "camera-roll",
+        "purpose": "Film strip advances upward in steps.",
+        "tags": [
+          "camera",
+          "roll",
+          "film",
+          "strip"
+        ],
+        "category": "capture"
+      },
+      {
+        "name": "photo-camera",
+        "purpose": "Shutter click flash with recoil.",
+        "tags": [
+          "photo",
+          "camera",
+          "snapshot",
+          "capture"
+        ],
+        "category": "capture"
+      },
+      {
+        "name": "screenshot",
+        "purpose": "Screen brightness burst flash.",
+        "tags": [
+          "screenshot",
+          "capture",
+          "grab",
+          "snap"
+        ],
+        "category": "capture"
+      },
+      {
+        "name": "surround-sound",
+        "purpose": "Concentric ripple wave expands outward.",
+        "tags": [
+          "surround",
+          "sound",
+          "5.1",
+          "spatial"
+        ],
+        "category": "output"
+      },
+      {
+        "name": "airplay",
+        "purpose": "Anti-gravity float beam upward lift.",
+        "tags": [
+          "airplay",
+          "stream",
+          "mirror",
+          "beam"
+        ],
+        "category": "output"
+      },
+      {
+        "name": "speaker-group",
+        "purpose": "Stereo split spreads apart and returns.",
+        "tags": [
+          "speaker",
+          "group",
+          "multi",
+          "stereo"
+        ],
+        "category": "output"
+      },
+      {
+        "name": "aspect-ratio",
+        "purpose": "Frame morph stretches width then height.",
+        "tags": [
+          "aspect",
+          "ratio",
+          "resize",
+          "format"
+        ],
+        "category": "output"
+      },
+      {
+        "name": "high-quality",
+        "purpose": "Premium badge brightness sweep shine.",
+        "tags": [
+          "hq",
+          "quality",
+          "hd",
+          "premium"
+        ],
+        "category": "output"
+      }
+    ],
+    "classMap": {
+      "play-button": "cubub9",
+      "pause-button": "zyjbb7",
+      "stop-square": "qyuyif",
+      "skip-forward": "m7vzko",
+      "skip-back": "bytftf",
+      "volume-up": "lng4wn",
+      "volume-mute": "jw0nsq",
+      "equalizer-bars": "mk522g",
+      "playlist-queue": "luajzn",
+      "shuffle-mix": "uir875",
+      "repeat-loop": "aatg2r",
+      "fullscreen-expand": "advmzq",
+      "picture-in-pip": "f5nvmy",
+      "captions-cc": "cxbhth",
+      "speed-rate": "wu42q4",
+      "record-dot": "h4drdr",
+      "live-pulse": "sk6v7u",
+      "cast-screen": "hhahiy",
+      "download-media": "r2gj03",
+      "share-clip": "b060kw",
+      "audio-track": "fxuuhs",
+      "radio-tower": "woy2w2",
+      "spatial-audio": "cwtwp4",
+      "noise-control": "cjvc8n",
+      "hearing": "z3j8yw",
+      "slow-motion": "zw95ty",
+      "video-settings": "rpajgh",
+      "video-library": "o5weq9",
+      "theaters": "qggxue",
+      "movie-filter": "iiknnu",
+      "replay-10": "fssu5s",
+      "forward-30": "f46hn8",
+      "playlist-add": "vedchc",
+      "playlist-remove": "y9fjmj",
+      "queue-play": "itxl9t",
+      "podcast": "lccnqi",
+      "radio": "mp8xxh",
+      "audiobook": "qiz2hr",
+      "lyrics": "gnocj0",
+      "library-music": "qmaapc",
+      "screen-record": "omi56c",
+      "voice-memo": "ad47hv",
+      "camera-roll": "zglr5z",
+      "photo-camera": "aei6mg",
+      "screenshot": "pw3xcf",
+      "surround-sound": "drbehf",
+      "airplay": "xfp2f5",
+      "speaker-group": "dbqz5u",
+      "aspect-ratio": "gzfdm2",
+      "high-quality": "g073uh"
+    }
+  },
+  "security-auth": {
+    "name": "Security & Auth",
+    "description": "Login flows, permissions, and trust signal animations",
+    "css": "security-auth.css",
+    "icons": [
+      {
+        "name": "lock-closed",
+        "purpose": "Deadbolt drops with heavy metallic clunk.",
+        "tags": [
+          "lock",
+          "secure",
+          "closed",
+          "protect"
+        ],
+        "category": "access"
+      },
+      {
+        "name": "lock-open",
+        "purpose": "Shackle pops upward with spring energy.",
+        "tags": [
+          "unlock",
+          "open",
+          "access",
+          "release"
+        ],
+        "category": "access"
+      },
+      {
+        "name": "key-turn",
+        "purpose": "Tumbler rotation like key in cylinder.",
+        "tags": [
+          "key",
+          "unlock",
+          "password",
+          "credential"
+        ],
+        "category": "access"
+      },
+      {
+        "name": "shield-check",
+        "purpose": "Shield absorbs impact then radiates.",
+        "tags": [
+          "shield",
+          "verified",
+          "secure",
+          "protected"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "fingerprint-scan",
+        "purpose": "Biometric laser sweep vertically.",
+        "tags": [
+          "fingerprint",
+          "biometric",
+          "scan",
+          "touch-id"
+        ],
+        "category": "identity"
+      },
+      {
+        "name": "face-id",
+        "purpose": "Contracts to focus then confirms with glow.",
+        "tags": [
+          "face",
+          "recognition",
+          "biometric",
+          "face-id"
+        ],
+        "category": "identity"
+      },
+      {
+        "name": "two-factor-code",
+        "purpose": "Stepped digit cascade like rolling OTP.",
+        "tags": [
+          "2fa",
+          "otp",
+          "code",
+          "mfa"
+        ],
+        "category": "identity"
+      },
+      {
+        "name": "password-eye",
+        "purpose": "Iris dilates like revealing hidden text.",
+        "tags": [
+          "visibility",
+          "password",
+          "show",
+          "hide"
+        ],
+        "category": "access"
+      },
+      {
+        "name": "encrypt-scramble",
+        "purpose": "Multi-axis scramble with blur like encryption.",
+        "tags": [
+          "encrypt",
+          "scramble",
+          "cipher",
+          "hash"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "firewall-wall",
+        "purpose": "Barrier rises from base like wall erection.",
+        "tags": [
+          "firewall",
+          "block",
+          "wall",
+          "defense"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "vpn-tunnel",
+        "purpose": "3D perspective pulls into vanishing tunnel.",
+        "tags": [
+          "vpn",
+          "tunnel",
+          "private",
+          "network"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "audit-log",
+        "purpose": "Authority stamp drops with impact.",
+        "tags": [
+          "audit",
+          "log",
+          "trail",
+          "record"
+        ],
+        "category": "compliance"
+      },
+      {
+        "name": "permission-grid",
+        "purpose": "Grid cells illuminate in cascade.",
+        "tags": [
+          "permission",
+          "role",
+          "grid",
+          "matrix"
+        ],
+        "category": "compliance"
+      },
+      {
+        "name": "token-chip",
+        "purpose": "Electricity traces through with brightness.",
+        "tags": [
+          "token",
+          "chip",
+          "hardware",
+          "key"
+        ],
+        "category": "identity"
+      },
+      {
+        "name": "certificate-seal",
+        "purpose": "3D wax seal emboss press.",
+        "tags": [
+          "certificate",
+          "seal",
+          "ssl",
+          "tls"
+        ],
+        "category": "compliance"
+      },
+      {
+        "name": "backup-cloud",
+        "purpose": "Rises with momentum toward cloud.",
+        "tags": [
+          "backup",
+          "cloud",
+          "upload",
+          "save"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "restore-clock",
+        "purpose": "Counter-clockwise rewind with blur.",
+        "tags": [
+          "restore",
+          "recover",
+          "history",
+          "undo"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "scan-virus",
+        "purpose": "Tremor with escalating red flash.",
+        "tags": [
+          "virus",
+          "scan",
+          "malware",
+          "threat"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "alert-breach",
+        "purpose": "Rapid alarm shake with red glow.",
+        "tags": [
+          "alert",
+          "breach",
+          "warning",
+          "alarm"
+        ],
+        "category": "protection"
+      },
+      {
+        "name": "compliance-check",
+        "purpose": "Tilts then firms with green confirmation.",
+        "tags": [
+          "compliance",
+          "check",
+          "verify",
+          "approve"
+        ],
+        "category": "compliance"
+      },
+      {
+        "name": "passkey",
+        "purpose": "FIDO key slides in with 3D rotation like inserting into USB.",
+        "tags": [
+          "passkey",
+          "fido",
+          "webauthn",
+          "hardware"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "login",
+        "purpose": "Door swings open with perspective like granting entry.",
+        "tags": [
+          "login",
+          "signin",
+          "enter",
+          "access"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "logout",
+        "purpose": "Exits with motion blur like being ejected.",
+        "tags": [
+          "logout",
+          "signout",
+          "exit",
+          "leave"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "person-verified",
+        "purpose": "Identity confirmed with green radiance burst.",
+        "tags": [
+          "verified",
+          "user",
+          "person",
+          "trusted"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "id-badge",
+        "purpose": "Badge swipes through reader with 3D Y-tilt.",
+        "tags": [
+          "badge",
+          "id",
+          "card",
+          "credential"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "admin-panel",
+        "purpose": "Gear rotates with authority brightness pulses.",
+        "tags": [
+          "admin",
+          "panel",
+          "settings",
+          "control"
+        ],
+        "category": "authentication"
+      },
+      {
+        "name": "https-lock",
+        "purpose": "SSL pulse outward like establishing encryption.",
+        "tags": [
+          "https",
+          "ssl",
+          "tls",
+          "secure"
+        ],
+        "category": "encryption"
+      },
+      {
+        "name": "privacy-tip",
+        "purpose": "Leans forward like whispering a secret.",
+        "tags": [
+          "privacy",
+          "tip",
+          "info",
+          "confidential"
+        ],
+        "category": "encryption"
+      },
+      {
+        "name": "security-update",
+        "purpose": "Shield rotates with ascending green glow.",
+        "tags": [
+          "update",
+          "patch",
+          "refresh",
+          "defense"
+        ],
+        "category": "encryption"
+      },
+      {
+        "name": "no-encryption",
+        "purpose": "Fractures with violent jitter like broken cipher.",
+        "tags": [
+          "broken",
+          "unsafe",
+          "unencrypted",
+          "vulnerable"
+        ],
+        "category": "encryption"
+      },
+      {
+        "name": "policy",
+        "purpose": "Scroll unfurls from top like an ancient decree.",
+        "tags": [
+          "policy",
+          "rules",
+          "terms",
+          "governance"
+        ],
+        "category": "encryption"
+      },
+      {
+        "name": "safety-check",
+        "purpose": "Double heartbeat pulse confirming safety.",
+        "tags": [
+          "safety",
+          "health",
+          "check",
+          "vital"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "gpp-good",
+        "purpose": "Shield expands with radiating green energy.",
+        "tags": [
+          "good",
+          "secure",
+          "protected",
+          "safe"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "gpp-bad",
+        "purpose": "Trembles with escalating red breach pulse.",
+        "tags": [
+          "bad",
+          "insecure",
+          "compromised",
+          "danger"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "gpp-maybe",
+        "purpose": "Wobbles with uncertain amber glow.",
+        "tags": [
+          "maybe",
+          "uncertain",
+          "caution",
+          "review"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "monitoring",
+        "purpose": "Full radar sweep with trailing brightness arc.",
+        "tags": [
+          "monitor",
+          "watch",
+          "observe",
+          "surveil"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "emergency-share",
+        "purpose": "Triple-flash SOS distress beacon.",
+        "tags": [
+          "emergency",
+          "sos",
+          "distress",
+          "urgent"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "report-flag",
+        "purpose": "Plants into ground with authority stance.",
+        "tags": [
+          "report",
+          "flag",
+          "incident",
+          "alert"
+        ],
+        "category": "monitoring"
+      },
+      {
+        "name": "door-lock",
+        "purpose": "Bolt slides horizontally like deadbolt engaging.",
+        "tags": [
+          "door",
+          "entry",
+          "lock",
+          "physical"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "meeting-room",
+        "purpose": "Pulses with welcome green access glow.",
+        "tags": [
+          "room",
+          "access",
+          "meeting",
+          "office"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "device-trust",
+        "purpose": "Cascading pulse like trust propagating across devices.",
+        "tags": [
+          "device",
+          "trust",
+          "mdm",
+          "manage"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "phone-lock",
+        "purpose": "3D Y-fold like phone screen locking.",
+        "tags": [
+          "phone",
+          "mobile",
+          "lock",
+          "screen"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "laptop-secure",
+        "purpose": "3D X-fold like closing a laptop lid.",
+        "tags": [
+          "laptop",
+          "notebook",
+          "secure",
+          "close"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "desktop-access",
+        "purpose": "Dark to bright power-on with waking glow.",
+        "tags": [
+          "desktop",
+          "workstation",
+          "monitor",
+          "wake"
+        ],
+        "category": "access-control"
+      },
+      {
+        "name": "dns-security",
+        "purpose": "Steps through nodes like DNS resolution chain.",
+        "tags": [
+          "dns",
+          "resolve",
+          "domain",
+          "lookup"
+        ],
+        "category": "network"
+      },
+      {
+        "name": "network-node",
+        "purpose": "Pulses outward in concentric rings like broadcasting.",
+        "tags": [
+          "router",
+          "network",
+          "node",
+          "broadcast"
+        ],
+        "category": "network"
+      },
+      {
+        "name": "cloud-done",
+        "purpose": "Compresses then expands with green check seal.",
+        "tags": [
+          "cloud",
+          "done",
+          "verified",
+          "complete"
+        ],
+        "category": "network"
+      },
+      {
+        "name": "api-key",
+        "purpose": "Brackets contract inward then snap outward.",
+        "tags": [
+          "api",
+          "key",
+          "endpoint",
+          "interface"
+        ],
+        "category": "network"
+      },
+      {
+        "name": "terminal-access",
+        "purpose": "Blinks with command-line cursor rhythm.",
+        "tags": [
+          "terminal",
+          "cli",
+          "console",
+          "shell"
+        ],
+        "category": "network"
+      },
+      {
+        "name": "data-guard",
+        "purpose": "3D multi-axis vault close with mechanical weight.",
+        "tags": [
+          "data",
+          "guard",
+          "vault",
+          "storage"
+        ],
+        "category": "network"
+      }
+    ],
+    "classMap": {
+      "lock-closed": "scd9j1",
+      "lock-open": "fdf3sg",
+      "key-turn": "i6bk27",
+      "shield-check": "slirm7",
+      "fingerprint-scan": "tgvfw1",
+      "face-id": "p5mmps",
+      "two-factor-code": "cbfuif",
+      "password-eye": "zu04w9",
+      "encrypt-scramble": "kjzm2b",
+      "firewall-wall": "mnv3on",
+      "vpn-tunnel": "md9mh6",
+      "audit-log": "g7i95e",
+      "permission-grid": "wteavk",
+      "token-chip": "hra8w8",
+      "certificate-seal": "q91nh5",
+      "backup-cloud": "brsi22",
+      "restore-clock": "goc13c",
+      "scan-virus": "o1yrc1",
+      "alert-breach": "p70cpe",
+      "compliance-check": "f0hbd5",
+      "passkey": "ml7kt5",
+      "login": "e0auka",
+      "logout": "p2p06h",
+      "person-verified": "korvic",
+      "id-badge": "xb7u5d",
+      "admin-panel": "xaismc",
+      "https-lock": "u1epdc",
+      "privacy-tip": "fyslrd",
+      "security-update": "wosk5y",
+      "no-encryption": "mfx3jq",
+      "policy": "dntd3p",
+      "safety-check": "jpc3xs",
+      "gpp-good": "ysxs5e",
+      "gpp-bad": "wd42q3",
+      "gpp-maybe": "wdzr3e",
+      "monitoring": "r3kp6x",
+      "emergency-share": "ff7jvu",
+      "report-flag": "u4qwkq",
+      "door-lock": "xj3ydo",
+      "meeting-room": "f1u24y",
+      "device-trust": "vmqzn3",
+      "phone-lock": "t3vi7w",
+      "laptop-secure": "vxld77",
+      "desktop-access": "p40xmt",
+      "dns-security": "p515sh",
+      "network-node": "j5rd9z",
+      "cloud-done": "ywdkmn",
+      "api-key": "tpwnmb",
+      "terminal-access": "d2l01n",
+      "data-guard": "wa7g98"
+    }
+  }
+}
