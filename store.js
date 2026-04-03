@@ -2773,7 +2773,7 @@ function renderMotionLab() {
             <button class="ml__reset-anim-btn" id="mlResetAnimBtn" data-tip="Reset animation">
               <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span>
             </button>
-            <button class="ml__play-btn" id="mlPlayBtn" data-tip="Stop / Play">
+            <button class="ml__play-btn" id="mlPlayBtn" data-tip="Click or hover an animation button to preview it.">
               <span class="material-symbols-outlined" style="font-size:16px">stop</span>
             </button>
           </div>
@@ -2936,8 +2936,6 @@ function initMotionLabLoading() {
     motionLab.svgText = '';
     motionLab.elements = [];
     motionLab.selectedIds.clear();
-    motionLab.tracks = {};
-    motionLab.activePreset = null;
     motionLab.intensity = 100;
     motionLab.playback.mode = 'loop';
     motionLab.assetProfile = null;
@@ -2962,7 +2960,7 @@ function initMotionLabLoading() {
     if (intensityVal) intensityVal.textContent = '100%';
     if (speedVal) speedVal.textContent = '500ms';
 
-    document.querySelectorAll('.ml__preset-btn').forEach(b => b.classList.remove('active'));
+    clearMotionLabActivePresetAnimation();
 
     // Remove injected animation style
     const styleEl = document.getElementById('mlAnimStyle');
@@ -3101,6 +3099,7 @@ function loadSvgIntoMotionLab(svgText) {
   motionLab.tracks = {};
   motionLab.elements = [];
   motionLab.activePreset = null;
+  motionLab.isStopped = true;
   motionLab.fillColor = null;
   motionLab.strokeColor = null;
   motionLab.assetProfile = null;
@@ -3127,6 +3126,7 @@ function loadSvgIntoMotionLab(svgText) {
   if (stage) stage.style.display = '';
   if (bottomBar) bottomBar.style.display = '';
   if (playbackSection) playbackSection.style.display = '';
+  syncMotionLabPlayButton({ hasAnimation: false, isStopped: true });
   if (preview) {
     preview.style.display = 'flex';
     preview.innerHTML = '';
@@ -3297,6 +3297,54 @@ function analyzeMotionLabSvgProfile(svgEl) {
 
 function updateMotionLabAssetProfileHint(profile = motionLab.assetProfile) {
   return profile;
+}
+
+function hasMotionLabAnimationTracks() {
+  return Object.values(motionLab.tracks).some(track => {
+    return Array.isArray(track?.keyframes) && track.keyframes.length > 0;
+  });
+}
+
+function syncMotionLabPlayButton({ hasAnimation = hasMotionLabAnimationTracks(), isStopped = !hasAnimation || motionLab.isStopped } = {}) {
+  const playBtn = document.getElementById('mlPlayBtn');
+  if (!playBtn) return;
+
+  const icon = playBtn.querySelector('.material-symbols-outlined');
+  const shouldShowPlay = !hasAnimation || isStopped;
+
+  motionLab.isStopped = shouldShowPlay;
+  if (icon) {
+    icon.textContent = shouldShowPlay ? 'play_arrow' : 'stop';
+  }
+  playBtn.classList.toggle('ml__play-btn--active', shouldShowPlay);
+}
+
+function clearMotionLabPresetSelection(scope = document) {
+  scope.querySelectorAll('.ml__preset-btn').forEach((btn) => btn.classList.remove('active'));
+}
+
+function clearMotionLabActivePresetAnimation({ restoreBaseCss = true, clearInlineAnimation = true } = {}) {
+  motionLab.tracks = {};
+  motionLab.activePreset = null;
+  motionLab.isStopped = true;
+  clearMotionLabPresetSelection();
+
+  const styleEl = document.getElementById('mlAnimStyle');
+  if (styleEl) {
+    styleEl.textContent = restoreBaseCss ? getMotionLabBaseTransformCss('mlPreview') : '';
+  }
+
+  if (clearInlineAnimation) {
+    const svgEl = document.querySelector('#mlPreview svg');
+    if (svgEl) {
+      svgEl.style.animation = '';
+      svgEl.querySelectorAll('*').forEach((el) => {
+        el.style.animation = '';
+      });
+    }
+  }
+
+  syncMotionLabPlayButton({ hasAnimation: false, isStopped: true });
 }
 
 function wrapMotionLabDrawableChildren(svgEl) {
@@ -3537,6 +3585,50 @@ function updatePropsPanel() {
 
   // ── Color helpers (Fill + Stroke) ──────────────────────────────
   const SHAPE_TAGS = 'path, circle, rect, polygon, polyline, line, ellipse';
+  const TABLER_BOUNDS_PATH_D = 'm00h24v24h0z';
+
+  function normalizeMotionLabPathData(d = '') {
+    return String(d).replace(/\s+/g, '').toLowerCase();
+  }
+
+  function shouldSkipFillRecolor(origEl) {
+    if (!origEl) return true;
+
+    const ownFill = (origEl.getAttribute('fill') || '').trim().toLowerCase();
+    if (ownFill === 'none') return true;
+    if (ownFill) return false;
+
+    // MingCute line icons place an invisible layout/helper path inside
+    // a parent <g fill="none">, while the visible glyph path sets its own fill.
+    // Respect inherited fill="none" so we do not paint that helper box.
+    let ancestor = origEl.parentElement;
+    while (ancestor && ancestor.tagName?.toLowerCase() !== 'svg') {
+      const inheritedFill = (ancestor.getAttribute('fill') || '').trim().toLowerCase();
+      if (inheritedFill === 'none') return true;
+      if (inheritedFill) return false;
+      ancestor = ancestor.parentElement;
+    }
+
+    return false;
+  }
+
+  function shouldSkipStrokeRecolor(origEl) {
+    if (!origEl) return true;
+
+    const origStroke = (origEl.getAttribute('stroke') || '').trim().toLowerCase();
+    if (origStroke === 'none') return true;
+
+    // Tabler outline icons include an invisible bounds helper path:
+    // <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    if (
+      origEl.tagName?.toLowerCase() === 'path' &&
+      normalizeMotionLabPathData(origEl.getAttribute('d')) === TABLER_BOUNDS_PATH_D
+    ) {
+      return true;
+    }
+
+    return false;
+  }
 
   function applyFillToSvg(color) {
     motionLab.fillColor = color || null;
@@ -3547,9 +3639,7 @@ function updatePropsPanel() {
       const origDoc = new DOMParser().parseFromString(motionLab.svgText, 'image/svg+xml');
       const origEls = origDoc.querySelectorAll(SHAPE_TAGS);
       svgEl.querySelectorAll(SHAPE_TAGS).forEach((el, i) => {
-        const origFill = origEls[i]?.getAttribute('fill');
-        // Skip elements with fill="none" (outline paths)
-        if (origFill === 'none') return;
+        if (shouldSkipFillRecolor(origEls[i])) return;
         el.setAttribute('fill', color);
       });
       // Set SVG root color for currentColor-based icons (affects fill channel)
@@ -3578,14 +3668,16 @@ function updatePropsPanel() {
     const isStrokeBased = rootStroke === 'currentColor' || (rootStroke && rootStroke !== 'none');
 
     if (color) {
+      const origEls = origDoc.querySelectorAll(SHAPE_TAGS);
       if (isStrokeBased) {
-        // Stroke-based icons (Lucide, Tabler, Iconoir): apply to all shape elements
-        svgEl.querySelectorAll(SHAPE_TAGS).forEach(el => {
+        // Stroke-based icons (Lucide, Tabler, Iconoir): recolor visible strokes only.
+        // Tabler ships an invisible bounds helper path that must remain stroke="none".
+        svgEl.querySelectorAll(SHAPE_TAGS).forEach((el, i) => {
+          if (shouldSkipStrokeRecolor(origEls[i])) return;
           el.setAttribute('stroke', color);
         });
       } else {
         // Fill-based icons (Phosphor, Material): only apply to paths that had strokes
-        const origEls = origDoc.querySelectorAll(SHAPE_TAGS);
         svgEl.querySelectorAll(SHAPE_TAGS).forEach((el, i) => {
           const origStroke = origEls[i]?.getAttribute('stroke');
           if (!origStroke || origStroke === 'none') return;
@@ -4075,12 +4167,19 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
 
   // Preview always uses loop-style CSS (trigger only affects export)
   const css = generateFullCSS(true);
-  const hasAnimation = css.trim().length > 0;
+  const hasAnimation = hasMotionLabAnimationTracks();
+
+  if (!hasAnimation) {
+    styleEl.textContent = getMotionLabBaseTransformCss('mlPreview');
+    syncMotionLabPlayButton({ hasAnimation: false, isStopped: true });
+    return;
+  }
 
   // If user explicitly stopped playback and this is NOT a play/preset action,
   // strip animation CSS so icon stays still.
   if (motionLab.isStopped && !forcePlay) {
     styleEl.textContent = getMotionLabBaseTransformCss('mlPreview');
+    syncMotionLabPlayButton({ hasAnimation: true, isStopped: true });
     return;
   }
 
@@ -4097,20 +4196,7 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
   // Keep preview and export aligned on the same SVG transform foundation
   styleEl.textContent = getMotionLabBaseTransformCss('mlPreview') + css;
 
-  // Sync the stop/play button to reflect animation state
-  const playBtn = document.getElementById('mlPlayBtn');
-  if (playBtn) {
-    const icon = playBtn.querySelector('.material-symbols-outlined');
-    if (hasAnimation) {
-      motionLab.isStopped = false;
-      if (icon) icon.textContent = 'stop';
-      playBtn.classList.remove('ml__play-btn--active');
-    } else {
-      motionLab.isStopped = true;
-      if (icon) icon.textContent = 'play_arrow';
-      playBtn.classList.add('ml__play-btn--active');
-    }
-  }
+  syncMotionLabPlayButton({ hasAnimation: true, isStopped: false });
 
   // Apply non-scaling-stroke if any animation track uses scale transforms.
   // This prevents Pulse/Pop from bloating stroke-width on fill-based icons.
@@ -4230,8 +4316,7 @@ function initMotionLabControls() {
   if (resetAnimBtn) {
     resetAnimBtn.addEventListener('click', () => {
       // Clear animation state
-      motionLab.tracks = {};
-      motionLab.activePreset = null;
+      clearMotionLabActivePresetAnimation();
       motionLab.intensity = 100;
       motionLab.playback.duration = 500;
 
@@ -4245,33 +4330,15 @@ function initMotionLabControls() {
       if (intensityVal) intensityVal.textContent = '100%';
       if (speedVal) speedVal.textContent = '500ms';
 
-      // Deselect all preset buttons
-      document.querySelectorAll('.ml__preset-btn').forEach(b => b.classList.remove('active'));
-
-      // Remove injected animation CSS
-      const styleEl = document.getElementById('mlAnimStyle');
-      if (styleEl) styleEl.textContent = '';
-
-      // Clear inline animation overrides on SVG
+      // Clear inline preview overrides on SVG
       const svgEl = document.querySelector('#mlPreview svg');
       if (svgEl) {
-        svgEl.style.animation = '';
         svgEl.style.transform = '';
         svgEl.style.opacity = '';
         svgEl.querySelectorAll('*').forEach(el => {
-          el.style.animation = '';
           el.style.transform = '';
           el.style.opacity = '';
         });
-      }
-
-      // Sync stop button to play_arrow (no animation active)
-      motionLab.isStopped = true;
-      const playBtn = document.getElementById('mlPlayBtn');
-      if (playBtn) {
-        const icon = playBtn.querySelector('.material-symbols-outlined');
-        if (icon) icon.textContent = 'play_arrow';
-        playBtn.classList.add('ml__play-btn--active');
       }
 
       // Reset fill and stroke colors to original
@@ -4309,27 +4376,20 @@ function initMotionLabControls() {
   const playBtn = document.getElementById('mlPlayBtn');
   if (playBtn) {
     playBtn.addEventListener('click', () => {
-      const styleEl = document.getElementById('mlAnimStyle');
-      const icon = playBtn.querySelector('.material-symbols-outlined');
+      const hasAnimation = hasMotionLabAnimationTracks();
+
+      if (!hasAnimation) {
+        clearMotionLabActivePresetAnimation();
+        return;
+      }
 
       if (motionLab.isStopped) {
         // Resume: re-inject CSS
         motionLab.isStopped = false;
         generateAndInjectCSS({ forcePlay: true });
-        if (icon) icon.textContent = 'stop';
-        playBtn.classList.remove('ml__play-btn--active');
       } else {
-        // Stop: strip all animation CSS
-        motionLab.isStopped = true;
-        if (styleEl) styleEl.textContent = '';
-        // Also clear inline animation-play-state on all SVG elements
-        const svgEl = document.querySelector('#mlPreview svg');
-        if (svgEl) {
-          svgEl.style.animation = 'none';
-          svgEl.querySelectorAll('*').forEach(el => { el.style.animation = 'none'; });
-        }
-        if (icon) icon.textContent = 'play_arrow';
-        playBtn.classList.add('ml__play-btn--active');
+        // Stop: fully clear the active preset-backed animation session
+        clearMotionLabActivePresetAnimation();
       }
     });
   }
@@ -4377,6 +4437,7 @@ function initMotionLabControls() {
   if (controlBar) {
     let savedTracks = null;
     let savedActivePreset = null;
+    let savedIsStopped = null;
 
     // Hover preview: temporarily apply preset on hover
     controlBar.addEventListener('mouseover', (e) => {
@@ -4385,6 +4446,7 @@ function initMotionLabControls() {
       if (!savedTracks) {
         savedTracks = JSON.parse(JSON.stringify(motionLab.tracks));
         savedActivePreset = motionLab.activePreset;
+        savedIsStopped = motionLab.isStopped;
       }
       applyPreset(btn.dataset.preset, true);
     });
@@ -4395,8 +4457,10 @@ function initMotionLabControls() {
       if (savedTracks !== null) {
         motionLab.tracks = savedTracks;
         motionLab.activePreset = savedActivePreset;
+        motionLab.isStopped = savedIsStopped ?? true;
         savedTracks = null;
         savedActivePreset = null;
+        savedIsStopped = null;
         generateAndInjectCSS();
       }
 
@@ -4411,18 +4475,18 @@ function initMotionLabControls() {
         return;
       }
       savedTracks = null; // clear stash so mouseout won't revert
+      savedActivePreset = null;
+      savedIsStopped = null;
 
       const presetName = btn.dataset.preset;
       const isActive = btn.classList.contains('active');
 
       // Deselect all preset buttons
-      controlBar.querySelectorAll('.ml__preset-btn').forEach(b => b.classList.remove('active'));
+      clearMotionLabPresetSelection(controlBar);
 
       if (isActive) {
         // Toggle off: clear tracks and reset
-        motionLab.activePreset = null;
-        motionLab.tracks = {};
-        generateAndInjectCSS();
+        clearMotionLabActivePresetAnimation();
       } else {
         // Apply the preset
         btn.classList.add('active');

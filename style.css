@@ -4961,7 +4961,7 @@ body[data-view="pricing"] .grid-area {
   border: 1px solid var(--si-ghost-border);
   border-radius: var(--si-radius-sm);
   background: var(--si-surface-container);
-  color: var(--si-text-secondary);
+  color: var(--si-text-muted);
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
@@ -5316,7 +5316,7 @@ body.theme-light #mlTooltip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--si-text);
+  color: var(--si-text-muted);
   cursor: pointer;
   font-family: var(--si-font-label);
   font-size: 0.65rem;
@@ -5958,7 +5958,7 @@ body.theme-light #mlTooltip {
   border: 1px solid var(--si-ghost-border);
   border-radius: var(--si-radius-sm);
   background: none;
-  color: var(--si-text);
+  color: var(--si-text-muted);
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
@@ -6006,7 +6006,7 @@ body.theme-light #mlTooltip {
 }
 .ml__size-label {
   font-size: 0.6rem;
-  color: var(--si-text);
+  color: var(--si-text-muted);
   margin-right: 4px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -6042,19 +6042,22 @@ body.theme-light #mlTooltip {
   padding: 0;
   background: none;
   border: none;
-  color: var(--si-text-dim);
+  color: var(--si-text-muted);
   cursor: pointer;
   border-radius: 4px;
-  transition: color 0.15s, background 0.15s;
+  transition: color 0.15s, background 0.15s, opacity 0.15s;
   flex-shrink: 0;
-  opacity: 0;
+  opacity: 0.55;
 }
-.ml__slider-row:hover .ml__ctrl-reset {
-  opacity: 1;
+.ml__slider-row:hover .ml__ctrl-reset,
+.ml__prop-group:hover .ml__ctrl-reset {
+  opacity: 0.9;
 }
-.ml__ctrl-reset:hover {
+.ml__ctrl-reset:hover,
+.ml__ctrl-reset:focus-visible {
   color: var(--si-primary);
   background: rgba(255,107,53,0.08);
+  opacity: 1;
 }
 
 /* ── Motion Lab: Light Mode Overrides ──────────────────────── */
