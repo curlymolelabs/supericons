@@ -20,9 +20,11 @@ import { searchIcons } from './search.js';
 import { validateApiKey } from './auth.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
-  MATERIAL_EXPORT_SOURCE,
+  MATERIAL_EXPORT_STORAGE,
   buildMaterialCacheKey,
-  buildMaterialSnapshotUrl,
+  buildMaterialOwnedSnapshotUrl,
+  getMaterialManifestEntry,
+  normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
 } from '../material-export.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -34,11 +36,14 @@ const dataDir = join(__dirname, '..', 'public');
 const packsDir = join(dataDir, 'packs');
 const manifestPath = join(packsDir, 'manifest.json');
 const materialExportManifestPath = join(dataDir, 'material-export-manifest.json');
+const materialExportDir = join(dataDir, 'material-export');
 
 const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
-  version: 1,
-  source: MATERIAL_EXPORT_SOURCE,
+  version: 2,
+  upstream: null,
   defaultAxes: MATERIAL_EXPORT_DEFAULT_AXES,
+  storage: MATERIAL_EXPORT_STORAGE,
+  entries: {},
 };
 
 const materialExportState = {
@@ -207,9 +212,7 @@ function getMaterialExportAxes() {
 }
 
 function normalizeMaterialSnapshotSvg(rawSvg) {
-  if (!rawSvg) return null;
-  if (/\bfill="/.test(rawSvg)) return rawSvg;
-  return rawSvg.replace(/<svg([^>]*)>/, '<svg$1 fill="currentColor">');
+  return normalizeOwnedMaterialSnapshotSvg(rawSvg);
 }
 
 async function resolveMaterialSnapshotSvg(icon) {
@@ -227,7 +230,21 @@ async function resolveMaterialSnapshotSvg(icon) {
 
   if (materialExportState.failedKeys.has(cacheKey)) return null;
 
-  const url = buildMaterialSnapshotUrl(icon.id, axes, manifest?.source || MATERIAL_EXPORT_SOURCE);
+  const entry = getMaterialManifestEntry(manifest, icon.id, axes);
+  if (entry?.path) {
+    const localPath = join(materialExportDir, entry.path);
+    if (existsSync(localPath)) {
+      const svg = normalizeMaterialSnapshotSvg(readFileSync(localPath, 'utf8'));
+      materialExportState.svgCache.set(cacheKey, svg);
+      return {
+        svg,
+        axes,
+        source: 'owned-material-cache:local',
+      };
+    }
+  }
+
+  const url = buildMaterialOwnedSnapshotUrl(icon.id, axes, manifest);
   let response;
   try {
     response = await fetch(url);
@@ -245,7 +262,9 @@ async function resolveMaterialSnapshotSvg(icon) {
   return {
     svg,
     axes,
-    source: 'material-snapshot',
+    source: response.headers.get('X-Cache-Status')
+      ? `owned-material-cache:${response.headers.get('X-Cache-Status')}`
+      : 'owned-material-cache',
   };
 }
 

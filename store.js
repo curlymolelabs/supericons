@@ -2443,6 +2443,7 @@ const motionLab = {
   previewSize: 48,
   fillColor: null,
   strokeColor: null,
+  assetProfile: null,
   controlsWired: false,   // guard against listener stacking on reload
 };
 
@@ -2686,6 +2687,11 @@ function renderMotionLab() {
           </div>
         </div>
 
+        <div
+          id="mlAssetProfileHint"
+          style="display:none;margin:10px 12px 0;padding:10px 12px;border:1px solid var(--si-border);border-radius:12px;background:rgba(255,255,255,0.03);color:var(--si-text-dim);font-size:12px;line-height:1.4;text-align:center"
+        ></div>
+
         <!-- Bottom bar (visible after SVG load) -->
         <div class="ml__bottom-bar" id="mlBottomBar" style="display:none">
           <!-- Row 1: Size selector + Playback controls -->
@@ -2867,6 +2873,7 @@ function initMotionLabLoading() {
     motionLab.activePreset = null;
     motionLab.intensity = 100;
     motionLab.playback.mode = 'loop';
+    motionLab.assetProfile = null;
     motionLab.controlsWired = false;
 
     const dropZone = document.getElementById('mlDropZone');
@@ -2901,6 +2908,7 @@ function initMotionLabLoading() {
         <p>Select an element to edit</p>
       `;
     }
+    updateMotionLabAssetProfileHint();
   });
 
   // Agent Apply button - keyword-based preset matching
@@ -3003,6 +3011,7 @@ function loadSvgIntoMotionLab(svgText) {
   motionLab.activePreset = null;
   motionLab.fillColor = null;
   motionLab.strokeColor = null;
+  motionLab.assetProfile = null;
 
   // Parse SVG
   const parser = new DOMParser();
@@ -3065,6 +3074,7 @@ function loadSvgIntoMotionLab(svgText) {
     wrapMotionLabDrawableChildren(clone);
     // Ensure currentColor resolves to theme-appropriate text color
     clone.style.color = 'var(--si-text)';
+    motionLab.assetProfile = analyzeMotionLabSvgProfile(clone);
 
     // Apply preview size via attributes (SVGs in flexbox ignore CSS width/height)
     const sz = motionLab.previewSize;
@@ -3094,6 +3104,7 @@ function loadSvgIntoMotionLab(svgText) {
   // clone is defined above in the if (preview) block
   const domSvg = document.querySelector('#mlPreview svg');
   if (domSvg) buildElementTree(domSvg);
+  updateMotionLabAssetProfileHint();
 
   // Wire Phase 2 controls - guard flag prevents listener stacking on re-load
   if (!motionLab.controlsWired) {
@@ -3133,6 +3144,8 @@ const MOTION_LAB_HAS_ANIM_TARGET_ATTR = 'data-ml-has-anim-target';
 const MOTION_LAB_HAS_ANIM_TARGET_VALUE = 'true';
 const MOTION_LAB_LARGE_VIEWBOX_ATTR = 'data-ml-large-viewbox';
 const MOTION_LAB_LARGE_VIEWBOX_VALUE = 'true';
+const MOTION_LAB_DRAWABLE_SHAPE_SELECTOR = 'path,circle,rect,polygon,polyline,line,ellipse';
+const MOTION_LAB_GLYPH_HINT_TEXT = 'This icon is a single filled glyph. Motion Lab is using glyph-optimized presets.';
 const MOTION_LAB_NON_DRAWABLE_TAGS = new Set([
   'defs',
   'metadata',
@@ -3152,6 +3165,55 @@ const MOTION_LAB_NON_DRAWABLE_TAGS = new Set([
 
 function isMotionLabAnimTarget(el) {
   return !!(el && el.nodeType === 1 && el.getAttribute?.(MOTION_LAB_ANIM_TARGET_ATTR) === MOTION_LAB_ANIM_TARGET_VALUE);
+}
+
+function hasMotionLabNonDrawableAncestor(el, svgEl) {
+  let node = el?.parentElement;
+  while (node && node !== svgEl) {
+    if (MOTION_LAB_NON_DRAWABLE_TAGS.has(node.tagName.toLowerCase())) return true;
+    node = node.parentElement;
+  }
+  return false;
+}
+
+function analyzeMotionLabSvgProfile(svgEl) {
+  const shapes = Array.from(svgEl?.querySelectorAll?.(MOTION_LAB_DRAWABLE_SHAPE_SELECTOR) || []).filter((el) => {
+    return !hasMotionLabNonDrawableAncestor(el, svgEl);
+  });
+
+  const shapeCount = shapes.length;
+  const pathCount = shapes.filter((el) => el.tagName.toLowerCase() === 'path').length;
+  const hasStroke = shapes.some((el) => {
+    const stroke = (el.getAttribute('stroke') || '').trim().toLowerCase();
+    return !!stroke && stroke !== 'none';
+  });
+  const hasFillNone = shapes.some((el) => {
+    return (el.getAttribute('fill') || '').trim().toLowerCase() === 'none';
+  });
+  const largeViewBox = svgEl?.getAttribute?.(MOTION_LAB_LARGE_VIEWBOX_ATTR) === MOTION_LAB_LARGE_VIEWBOX_VALUE;
+
+  let kind = 'multi-fill';
+  if (shapeCount <= 1 && !hasStroke && !hasFillNone) {
+    kind = 'single-fill-glyph';
+  } else if (shapeCount <= 1) {
+    kind = 'single-stroke-shape';
+  } else if (hasStroke || hasFillNone) {
+    kind = 'multi-stroke';
+  }
+
+  return { kind, shapeCount, pathCount, hasStroke, hasFillNone, largeViewBox };
+}
+
+function updateMotionLabAssetProfileHint(profile = motionLab.assetProfile) {
+  const hintEl = document.getElementById('mlAssetProfileHint');
+  if (!hintEl) return;
+  if (profile?.kind === 'single-fill-glyph') {
+    hintEl.textContent = MOTION_LAB_GLYPH_HINT_TEXT;
+    hintEl.style.display = 'block';
+    return;
+  }
+  hintEl.textContent = '';
+  hintEl.style.display = 'none';
 }
 
 function wrapMotionLabDrawableChildren(svgEl) {
@@ -3789,6 +3851,19 @@ function generateFullCSS(forPreview = false) {
   return css;
 }
 
+function getMotionLabBaseTransformCss(containerId = 'mlPreview') {
+  return `${getMotionLabPreviewRootSelector(containerId)} { transform-box: fill-box; transform-origin: center; }\n#${containerId} svg * { transform-box: fill-box; transform-origin: center; }\n`;
+}
+
+function buildMotionLabStandaloneSvgCss() {
+  return rewriteForStandalone(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS());
+}
+
+function buildMotionLabExternalCss() {
+  const usageNote = '/* Usage: apply this CSS with an inline <svg> inside <div id="icon-container">...</div> */\n';
+  return rewriteForExternal(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS()) + usageNote;
+}
+
 /**
  * Rewrite CSS selectors for self-contained SVG export.
  * Maps #mlPreview targets to #animated-icon (the SVG root itself).
@@ -3922,8 +3997,7 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
   // If user explicitly stopped playback and this is NOT a play/preset action,
   // strip animation CSS so icon stays still.
   if (motionLab.isStopped && !forcePlay) {
-    const baseCSS = `${getMotionLabPreviewRootSelector('mlPreview')} { transform-box: fill-box; transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
-    styleEl.textContent = baseCSS;
+    styleEl.textContent = getMotionLabBaseTransformCss('mlPreview');
     return;
   }
 
@@ -3937,9 +4011,8 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
     void svgEl.offsetHeight;
   }
 
-  // Add transform-origin for smooth scale/rotate (both root and children)
-  const baseCSS = `${getMotionLabPreviewRootSelector('mlPreview')} { transform-box: fill-box; transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
-  styleEl.textContent = baseCSS + css;
+  // Keep preview and export aligned on the same SVG transform foundation
+  styleEl.textContent = getMotionLabBaseTransformCss('mlPreview') + css;
 
   // Sync the stop/play button to reflect animation state
   const playBtn = document.getElementById('mlPlayBtn');
@@ -4207,7 +4280,7 @@ function initMotionLabControls() {
       // Strip inline live-preview artifacts from clone
       cleanSvgClone(svgClone);
       // Generate CSS and rewrite selectors for standalone SVG
-      const css = rewriteForStandalone(generateFullCSS());
+      const css = buildMotionLabStandaloneSvgCss();
       const styleTag = document.createElementNS('http://www.w3.org/2000/svg', 'style');
       styleTag.textContent = css;
       svgClone.insertBefore(styleTag, svgClone.firstChild);
@@ -5012,8 +5085,82 @@ function scaleKeyframesByIntensity(keyframes) {
   });
 }
 
+function cloneMotionLabPreset(preset) {
+  return {
+    ...preset,
+    keyframes: preset.keyframes.map((kf) => ({
+      offset: kf.offset,
+      props: { ...kf.props },
+    })),
+  };
+}
+
+function formatMotionLabNumber(value, digits = 3) {
+  return parseFloat(value.toFixed(digits)).toString();
+}
+
+function scaleMotionLabTransformValue(value, multipliers) {
+  return value
+    .replace(/translateX\((-?[\d.]+)(px)\)/g, (match, num, unit) => {
+      const scaled = parseFloat(num) * multipliers.translate;
+      return `translateX(${formatMotionLabNumber(scaled, 2)}${unit})`;
+    })
+    .replace(/translateY\((-?[\d.]+)(px)\)/g, (match, num, unit) => {
+      const scaled = parseFloat(num) * multipliers.translate;
+      return `translateY(${formatMotionLabNumber(scaled, 2)}${unit})`;
+    })
+    .replace(/translate\((-?[\d.]+)px,\s*(-?[\d.]+)px\)/g, (match, x, y) => {
+      const scaledX = formatMotionLabNumber(parseFloat(x) * multipliers.translate, 2);
+      const scaledY = formatMotionLabNumber(parseFloat(y) * multipliers.translate, 2);
+      return `translate(${scaledX}px, ${scaledY}px)`;
+    })
+    .replace(/rotate\((-?[\d.]+)(deg)\)/g, (match, num, unit) => {
+      const n = parseFloat(num);
+      if (Math.abs(n) >= 180) return match;
+      return `rotate(${formatMotionLabNumber(n * multipliers.rotate, 2)}${unit})`;
+    })
+    .replace(/scale\(([\d.]+)\)/g, (match, num) => {
+      const s = parseFloat(num);
+      if (s === 1) return match;
+      const next = Math.max(0, 1 + ((s - 1) * multipliers.scale));
+      return `scale(${formatMotionLabNumber(next)})`;
+    });
+}
+
+function scaleMotionLabFilterValue(value, multiplier) {
+  return value.replace(/(-?[\d.]+)px/g, (match, num) => {
+    const scaled = Math.max(0, parseFloat(num) * multiplier);
+    return `${formatMotionLabNumber(scaled, 2)}px`;
+  });
+}
+
+function adaptPresetForAssetProfile(presetName, preset, profile = motionLab.assetProfile) {
+  if (!preset || profile?.kind !== 'single-fill-glyph') return preset;
+
+  const adapted = cloneMotionLabPreset(preset);
+  const transformMultipliers = {
+    translate: 1.7,
+    rotate: 1.25,
+    scale: 1.18,
+  };
+  const filterMultiplier = 1.6;
+
+  adapted.keyframes = adapted.keyframes.map((kf) => {
+    const props = { ...kf.props };
+    if (props.transform) {
+      props.transform = scaleMotionLabTransformValue(props.transform, transformMultipliers);
+    }
+    if (props.filter) {
+      props.filter = scaleMotionLabFilterValue(props.filter, filterMultiplier);
+    }
+    return { ...kf, props };
+  });
+
+  return adapted;
+}
+
 function applyPreset(presetName, silent = false) {
-  const preset = PRESETS[presetName];
+  const preset = adaptPresetForAssetProfile(presetName, PRESETS[presetName]);
   if (!preset) return;
   const dur = motionLab.playback.duration;
 
@@ -5039,7 +5186,7 @@ function applyPreset(presetName, silent = false) {
 
 /** Compose: merge preset keyframes into existing tracks (Shift+click) */
 function composePreset(presetName) {
-  const preset = PRESETS[presetName];
+  const preset = adaptPresetForAssetProfile(presetName, PRESETS[presetName]);
   if (!preset) return;
   const dur = motionLab.playback.duration;
 
@@ -5260,9 +5407,8 @@ function createMotionLabExportModal({ cssContent, svgContent, locked = false }) 
 
 function showExportModal() {
   const rawCSS = generateFullCSS();
-  // CSS tab: rewrite for external use with user-friendly container id
   const cleanCSS = rawCSS
-    ? rewriteForExternal(rawCSS) + '/* Usage: <div id="icon-container"><svg>...</svg></div> */\n'
+    ? buildMotionLabExternalCss()
     : '/* No animations defined yet */';
 
   // Self-contained SVG tab
@@ -5274,7 +5420,7 @@ function showExportModal() {
     // Strip inline live-preview artifacts from clone
     cleanSvgClone(svgClone);
     // Rewrite selectors for self-contained SVG
-    const standaloneCSS = rewriteForStandalone(generateFullCSS());
+    const standaloneCSS = buildMotionLabStandaloneSvgCss();
     const styleTag = document.createElementNS('http://www.w3.org/2000/svg', 'style');
     styleTag.textContent = standaloneCSS;
     svgClone.insertBefore(styleTag, svgClone.firstChild);

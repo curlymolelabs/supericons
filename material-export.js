@@ -6,6 +6,14 @@ export const MATERIAL_EXPORT_SOURCE = {
   styleDir: 'materialsymbolsoutlined',
 };
 
+export const MATERIAL_EXPORT_STORAGE = {
+  mode: 'owned-static-and-cache',
+  localBasePath: '/material-export',
+  functionBaseUrl: 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/serve-material-snapshot',
+  bucket: 'material-icons',
+  styleDir: 'materialsymbolsoutlined',
+};
+
 export const MATERIAL_EXPORT_SUPPORTED_AXES = {
   fill: [0, 1],
   wght: [100, 200, 300, 400, 500, 600, 700],
@@ -61,29 +69,108 @@ export function normalizeMaterialExportAxes(customize = {}) {
   return { ...normalized, snapped };
 }
 
-function formatMaterialGrad(grad) {
+function formatMaterialGradToken(grad) {
   if (grad === 200) return 'grad200';
   if (grad === -25) return 'gradN25';
   return '';
 }
 
-export function buildMaterialSnapshotFilename(iconId, axes) {
+function formatMaterialOwnedGradSegment(grad) {
+  return grad < 0 ? `grad-neg${Math.abs(grad)}` : `grad-${grad}`;
+}
+
+export function buildMaterialUpstreamSnapshotFilename(iconId, axes) {
   let suffix = '';
 
   if (axes.wght !== 400) suffix += `wght${axes.wght}`;
-  const gradToken = formatMaterialGrad(axes.grad);
+  const gradToken = formatMaterialGradToken(axes.grad);
   if (gradToken) suffix += gradToken;
   if (axes.fill === 1) suffix += 'fill1';
 
   return `${iconId}${suffix ? `_${suffix}` : ''}_${axes.opsz}px.svg`;
 }
 
-export function buildMaterialSnapshotUrl(iconId, axes, source = MATERIAL_EXPORT_SOURCE) {
-  const filename = buildMaterialSnapshotFilename(iconId, axes);
+export function buildMaterialUpstreamSnapshotUrl(iconId, axes, source = MATERIAL_EXPORT_SOURCE) {
+  const filename = buildMaterialUpstreamSnapshotFilename(iconId, axes);
   return `${source.baseUrl}/${encodeURIComponent(iconId)}/${source.styleDir}/${filename}`;
 }
 
 export function buildMaterialCacheKey(iconId, axes) {
-  return `${iconId}|f${axes.fill}|w${axes.wght}|g${axes.grad}|o${axes.opsz}`;
+  return `material:${iconId}:f${axes.fill}:w${axes.wght}:g${axes.grad}:o${axes.opsz}`;
 }
 
+export function buildMaterialOwnedStoragePath(iconId, axes, storage = MATERIAL_EXPORT_STORAGE) {
+  return [
+    storage.styleDir || MATERIAL_EXPORT_STORAGE.styleDir,
+    iconId,
+    `fill-${axes.fill}`,
+    `wght-${axes.wght}`,
+    formatMaterialOwnedGradSegment(axes.grad),
+    `opsz-${axes.opsz}.svg`,
+  ].join('/');
+}
+
+export function parseMaterialOwnedStoragePath(path) {
+  const normalized = String(path || '').replace(/\\/g, '/').replace(/^\/+/, '');
+  const match = normalized.match(
+    /^([^/]+)\/([^/]+)\/fill-(0|1)\/wght-(100|200|300|400|500|600|700)\/(grad-(?:0|200)|grad-neg25)\/opsz-(20|24|40|48)\.svg$/
+  );
+
+  if (!match) return null;
+
+  const [, styleDir, iconId, fill, wght, gradSegment, opsz] = match;
+  const grad = gradSegment === 'grad-neg25' ? -25 : Number(gradSegment.replace('grad-', ''));
+
+  return {
+    styleDir,
+    iconId,
+    axes: {
+      fill: Number(fill),
+      wght: Number(wght),
+      grad,
+      opsz: Number(opsz),
+      snapped: false,
+    },
+  };
+}
+
+export function normalizeMaterialSnapshotSvg(rawSvg) {
+  if (!rawSvg) return null;
+  if (/\bfill="/.test(rawSvg)) return rawSvg;
+  return rawSvg.replace(/<svg([^>]*)>/, '<svg$1 fill="currentColor">');
+}
+
+export function resolveMaterialExportStorage(manifest = {}) {
+  return {
+    ...MATERIAL_EXPORT_STORAGE,
+    ...(manifest?.storage || {}),
+  };
+}
+
+export function getMaterialManifestEntry(manifest, iconId, axes) {
+  if (!manifest?.entries) return null;
+  return manifest.entries[buildMaterialCacheKey(iconId, axes)] || null;
+}
+
+export function buildMaterialOwnedSnapshotUrl(iconId, axes, manifest = {}) {
+  const storage = resolveMaterialExportStorage(manifest);
+  const entry = getMaterialManifestEntry(manifest, iconId, axes);
+
+  if (entry?.url) return entry.url;
+
+  if (entry?.path) {
+    const basePath = String(storage.localBasePath || '/material-export').replace(/\/$/, '');
+    const path = String(entry.path).replace(/^\/+/, '');
+    return `${basePath}/${path}`;
+  }
+
+  const params = new URLSearchParams({
+    icon: iconId,
+    fill: String(axes.fill),
+    wght: String(axes.wght),
+    grad: String(axes.grad),
+    opsz: String(axes.opsz),
+  });
+
+  return `${storage.functionBaseUrl}?${params.toString()}`;
+}

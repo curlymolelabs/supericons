@@ -8,11 +8,12 @@ import { initAuth } from './auth.js';
 import { initStore, switchView, isStoreView, loadSvgIntoMotionLab } from './store.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
-  MATERIAL_EXPORT_SOURCE,
+  MATERIAL_EXPORT_STORAGE,
   MATERIAL_EXPORT_SUPPORTED_AXES,
   buildMaterialCacheKey,
-  buildMaterialSnapshotUrl,
+  buildMaterialOwnedSnapshotUrl,
   normalizeMaterialExportAxes,
+  normalizeMaterialSnapshotSvg,
 } from './material-export.js';
 
 // ============================================================
@@ -89,10 +90,12 @@ const state = {
 };
 
 const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
-  version: 1,
-  source: MATERIAL_EXPORT_SOURCE,
-  supportedAxes: MATERIAL_EXPORT_SUPPORTED_AXES,
+  version: 2,
+  upstream: null,
+  exportMatrix: MATERIAL_EXPORT_SUPPORTED_AXES,
   defaultAxes: MATERIAL_EXPORT_DEFAULT_AXES,
+  storage: MATERIAL_EXPORT_STORAGE,
+  entries: {},
 };
 
 const materialExportState = {
@@ -178,7 +181,7 @@ async function resolveMaterialSnapshotSvg(icon, customize = state.customize) {
   if (materialExportState.failedKeys.has(cacheKey)) return null;
 
   const manifest = await loadMaterialExportManifest();
-  const url = buildMaterialSnapshotUrl(icon.id, axes, manifest?.source || MATERIAL_EXPORT_SOURCE);
+  const url = buildMaterialOwnedSnapshotUrl(icon.id, axes, manifest);
   let resp;
   try {
     resp = await fetch(url);
@@ -191,13 +194,14 @@ async function resolveMaterialSnapshotSvg(icon, customize = state.customize) {
     return null;
   }
 
-  const svg = await resp.text();
+  const svg = normalizeMaterialSnapshotSvg(await resp.text());
+  const cacheStatus = resp.headers.get('X-Cache-Status');
   materialExportState.svgCache.set(cacheKey, svg);
   return {
     svg,
     axes,
     snapped: axes.snapped,
-    source: 'material-snapshot',
+    source: cacheStatus ? `owned-material-cache:${cacheStatus}` : 'owned-material-cache',
   };
 }
 
@@ -1451,12 +1455,16 @@ function attachBatchListeners() {
   for (const [id, framework] of Object.entries(componentHandlers)) {
     const btn = $(`#${id}`);
     if (btn) {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         const icons = getSelectedIcons();
-        const codes = icons.map(i => generateComponentCode(i, framework));
-        navigator.clipboard.writeText(codes.join('\n\n')).then(() => {
-          showToast(`${icons.length} ${framework} components copied`);
-        });
+        const codes = (await Promise.all(icons.map(i => generateComponentCode(i, framework)))).filter(Boolean);
+        if (codes.length === 0) {
+          showToast('No exportable icons selected');
+          return;
+        }
+        await navigator.clipboard.writeText(codes.join('\n\n'));
+        const skipped = icons.length - codes.length;
+        showToast(skipped > 0 ? `${codes.length} ${framework} components copied (${skipped} skipped)` : `${codes.length} ${framework} components copied`);
       });
     }
   }
@@ -1992,7 +2000,35 @@ function toPascalCase(str) {
   return str.replace(/(^|[-_ ])([a-z])/g, (_, __, c) => c.toUpperCase());
 }
 
-function copyComponent(icon, framework) {
+function stripRootSvgSize(svg) {
+  return svg
+    .replace(/<svg\b([^>]*?)\swidth="[^"]*"/i, '<svg$1')
+    .replace(/<svg\b([^>]*?)\sheight="[^"]*"/i, '<svg$1');
+}
+
+function buildReactSvgComponentCode(name, svg) {
+  const sizedSvg = stripRootSvgSize(svg).replace(
+    '<svg',
+    '<svg className={className} width={size} height={size} {...props}'
+  );
+  return `export function ${name}Icon({ className, size = 24, ...props }) {\n  return (\n    ${sizedSvg}\n  );\n}`;
+}
+
+function buildSvgFrameworkCode(name, svg, framework) {
+  switch (framework) {
+    case 'react':
+      return buildReactSvgComponentCode(name, svg);
+    case 'vue':
+      return `<template>\n  ${svg}\n</template>`;
+    case 'svelte':
+    case 'html':
+      return svg;
+    default:
+      return '';
+  }
+}
+
+async function copyComponent(icon, framework) {
   // If multi-select is active, export all selected icons
   if (state.multiSelect && state.selectedIcons.size > 0) {
     const selectedIcons = [];
@@ -2000,34 +2036,49 @@ function copyComponent(icon, framework) {
       const found = state.icons.find((i) => iconKey(i) === key);
       if (found) selectedIcons.push(found);
     }
-    const codes = selectedIcons.map((i) => generateComponentCode(i, framework));
+    const codes = (await Promise.all(selectedIcons.map((i) => generateComponentCode(i, framework))))
+      .filter(Boolean);
+    if (codes.length === 0) {
+      showToast('No exportable icons selected');
+      return;
+    }
     const combined = codes.join('\n\n');
-    navigator.clipboard.writeText(combined).then(() => {
-      showToast(`${selectedIcons.length} ${framework} components copied`);
-    });
+    await navigator.clipboard.writeText(combined);
+    const skipped = selectedIcons.length - codes.length;
+    showToast(skipped > 0 ? `${codes.length} ${framework} components copied (${skipped} skipped)` : `${codes.length} ${framework} components copied`);
     return;
   }
 
   // Single icon export
-  const code = generateComponentCode(icon, framework);
-  navigator.clipboard.writeText(code).then(() => {
-    showToast(`${framework.charAt(0).toUpperCase() + framework.slice(1)} component copied`);
-    window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: framework });
-    trackIconStat(icon.id, icon.lib, 'copy', framework);
-  });
+  const code = await generateComponentCode(icon, framework);
+  if (!code) {
+    showToast('This icon could not be resolved for code export');
+    return;
+  }
+  await navigator.clipboard.writeText(code);
+  showToast(`${framework.charAt(0).toUpperCase() + framework.slice(1)} component copied`);
+  window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: framework });
+  trackIconStat(icon.id, icon.lib, 'copy', framework);
 }
 
-function generateComponentCode(icon, framework) {
+async function generateComponentCode(icon, framework) {
   const name = toPascalCase(icon.id);
   const c = state.customize;
 
+  if (isMaterialFontIcon(icon)) {
+    const resolved = await resolveExportSvg(icon, c);
+    if (!resolved?.svg) return '';
+    return buildSvgFrameworkCode(name, resolved.svg, framework);
+  }
+
   if (icon.type === 'font') {
-    const style = `font-variation-settings: 'FILL' ${c.materialFill}, 'wght' ${c.materialWeight}, 'GRAD' ${c.materialGrade}, 'opsz' ${c.materialOpticalSize}; color: ${c.color};`;
+    const fontVariationSettings = `'FILL' ${c.materialFill}, 'wght' ${c.materialWeight}, 'GRAD' ${c.materialGrade}, 'opsz' ${c.materialOpticalSize}`;
+    const style = `font-variation-settings: ${fontVariationSettings}; color: ${c.color};`;
     switch (framework) {
       case 'react':
-        return `export function ${name}Icon({ className, ...props }) {\n  return (\n    <span\n      className={\`material-symbols-outlined \${className || ''}\`}\n      style={{ ${style.replace(/;/g, ',')} }}\n      {...props}\n    >\n      ${icon.id}\n    </span>\n  );\n}`;
+        return `export function ${name}Icon({ className, ...props }) {\n  return (\n    <span\n      className={\`material-symbols-outlined \${className || ''}\`}\n      style={{ fontVariationSettings: ${JSON.stringify(fontVariationSettings)}, color: ${JSON.stringify(c.color)} }}\n      {...props}\n    >\n      ${icon.id}\n    </span>\n  );\n}`;
       case 'vue':
-        return `<template>\n  <span class="material-symbols-outlined" :style="iconStyle">\n    ${icon.id}\n  </span>\n</template>\n<script setup>\nconst iconStyle = { ${style} };\n</script>`;
+        return `<template>\n  <span class="material-symbols-outlined" :style="iconStyle">\n    ${icon.id}\n  </span>\n</template>\n<script setup>\nconst iconStyle = {\n  fontVariationSettings: ${JSON.stringify(fontVariationSettings)},\n  color: ${JSON.stringify(c.color)},\n};\n</script>`;
       case 'svelte':
         return `<span class="material-symbols-outlined" style="${style}">\n  ${icon.id}\n</span>`;
       case 'html':
@@ -2035,15 +2086,7 @@ function generateComponentCode(icon, framework) {
     }
   } else {
     const svg = getStyledSvg(icon);
-    switch (framework) {
-      case 'react':
-        return `export function ${name}Icon({ className, size = 24, ...props }) {\n  return (\n    ${svg.replace('<svg', '<svg className={className} width={size} height={size}')}\n  );\n}`;
-      case 'vue':
-        return `<template>\n  ${svg}\n</template>`;
-      case 'svelte':
-      case 'html':
-        return svg;
-    }
+    return buildSvgFrameworkCode(name, svg, framework);
   }
   return '';
 }

@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build:material-export-manifest": "node scripts/build-material-export-manifest.js",
+    "seed:material-owned-cache": "node scripts/seed-material-owned-cache.js",
     "build:bundles": "node scripts/build-collection-bundles.js",
     "build": "npm run build:material-export-manifest && npm run build:bundles && vite build",
     "preview": "vite preview"

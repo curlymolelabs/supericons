@@ -1,14 +1,13 @@
 {
-  "version": 1,
-  "generatedAt": "2026-04-03T09:02:15.352Z",
-  "source": {
+  "version": 2,
+  "upstream": {
     "provider": "google-material-design-icons",
     "repo": "google/material-design-icons",
     "ref": "master",
     "baseUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web",
     "styleDir": "materialsymbolsoutlined"
   },
-  "supportedAxes": {
+  "exportMatrix": {
     "fill": [
       0,
       1
@@ -39,5 +38,171 @@
     "wght": 300,
     "grad": 0,
     "opsz": 24
+  },
+  "storage": {
+    "mode": "owned-static-and-cache",
+    "localBasePath": "/material-export",
+    "functionBaseUrl": "https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/serve-material-snapshot",
+    "bucket": "material-icons",
+    "styleDir": "materialsymbolsoutlined",
+    "entryCount": 52
+  },
+  "entries": {
+    "material:account_circle:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/account_circle/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:account_circle:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/account_circle/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:arrow_back:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/arrow_back/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:arrow_back:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/arrow_back/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:arrow_forward:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/arrow_forward/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:arrow_forward:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/arrow_forward/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:check:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/check/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:check:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/check/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:close:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/close/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:close:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/close/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:delete:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/delete/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:delete:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/delete/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:download:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/download/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:download:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/download/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:edit:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/edit/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:edit:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/edit/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:favorite:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/favorite/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:favorite:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/favorite/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:help:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/help/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:help:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/help/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:home:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/home/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:home:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/home/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:info:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/info/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:info:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/info/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:lock:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/lock/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:lock:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/lock/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:login:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/login/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:login:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/login/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:logout:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/logout/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:logout:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/logout/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:mail:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/mail/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:mail:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/mail/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:menu:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/menu/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:menu:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/menu/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:person:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/person/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:person:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/person/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:search:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/search/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:search:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/search/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:settings:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/settings/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:settings:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/settings/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:share:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/share/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:share:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/share/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:shopping_cart:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/shopping_cart/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:shopping_cart:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/shopping_cart/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:star:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/star/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:star:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/star/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:upload:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/upload/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:upload:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/upload/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:visibility:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/visibility/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:visibility:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/visibility/fill-1/wght-400/grad-0/opsz-24.svg"
+    },
+    "material:warning:f0:w300:g0:o24": {
+      "path": "materialsymbolsoutlined/warning/fill-0/wght-300/grad-0/opsz-24.svg"
+    },
+    "material:warning:f1:w400:g0:o24": {
+      "path": "materialsymbolsoutlined/warning/fill-1/wght-400/grad-0/opsz-24.svg"
+    }
   }
 }
