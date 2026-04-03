@@ -2565,8 +2565,8 @@ function renderMotionLab() {
             <div class="ml__quad ml__quad--left" data-quad="entrances">
               <span class="ml__quad-label">Entrances</span>
               <div class="ml__quad-btns">
-                <button class="ml__preset-btn" data-preset="fade">
-                  <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade
+                <button class="ml__preset-btn" data-preset="magneticIn">
+                  <span class="material-symbols-outlined" style="font-size:13px">attractions</span> Magnetic In
                 </button>
                 <button class="ml__preset-btn" data-preset="fadeIn">
                   <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade In
@@ -2686,11 +2686,6 @@ function renderMotionLab() {
 
           </div>
         </div>
-
-        <div
-          id="mlAssetProfileHint"
-          style="display:none;margin:10px 12px 0;padding:10px 12px;border:1px solid var(--si-border);border-radius:12px;background:rgba(255,255,255,0.03);color:var(--si-text-dim);font-size:12px;line-height:1.4;text-align:center"
-        ></div>
 
         <!-- Bottom bar (visible after SVG load) -->
         <div class="ml__bottom-bar" id="mlBottomBar" style="display:none">
@@ -2945,8 +2940,8 @@ function initMotionLabLoading() {
       { keys: ['breathe', 'breath', 'zen', 'calm', 'ambient'], preset: 'breathe' },
       { keys: ['metronome', 'tempo', 'rhythm'], preset: 'metronome' },
       // Entrances
-      { keys: ['fade', 'fad', 'opacity'], preset: 'fade' },
-      { keys: ['fadein', 'fade in', 'appear'], preset: 'fadeIn' },
+      { keys: ['magneticin', 'magnetic in', 'magnet in', 'attract in', 'pull in', 'snap in'], preset: 'magneticIn' },
+      { keys: ['fade', 'fad', 'opacity', 'fadein', 'fade in', 'appear'], preset: 'fadeIn' },
       { keys: ['scaleup', 'scale up', 'grow', 'zoom in'], preset: 'scaleUp' },
       { keys: ['slideup', 'slide up', 'rise'], preset: 'slideUp' },
       { keys: ['springland', 'spring land', 'spring', 'land'], preset: 'springLand' },
@@ -3145,7 +3140,6 @@ const MOTION_LAB_HAS_ANIM_TARGET_VALUE = 'true';
 const MOTION_LAB_LARGE_VIEWBOX_ATTR = 'data-ml-large-viewbox';
 const MOTION_LAB_LARGE_VIEWBOX_VALUE = 'true';
 const MOTION_LAB_DRAWABLE_SHAPE_SELECTOR = 'path,circle,rect,polygon,polyline,line,ellipse';
-const MOTION_LAB_GLYPH_HINT_TEXT = 'This icon is a single filled glyph. Motion Lab is using glyph-optimized presets.';
 const MOTION_LAB_NON_DRAWABLE_TAGS = new Set([
   'defs',
   'metadata',
@@ -3205,15 +3199,7 @@ function analyzeMotionLabSvgProfile(svgEl) {
 }
 
 function updateMotionLabAssetProfileHint(profile = motionLab.assetProfile) {
-  const hintEl = document.getElementById('mlAssetProfileHint');
-  if (!hintEl) return;
-  if (profile?.kind === 'single-fill-glyph') {
-    hintEl.textContent = MOTION_LAB_GLYPH_HINT_TEXT;
-    hintEl.style.display = 'block';
-    return;
-  }
-  hintEl.textContent = '';
-  hintEl.style.display = 'none';
+  return profile;
 }
 
 function wrapMotionLabDrawableChildren(svgEl) {
@@ -4570,12 +4556,14 @@ const PRESETS = {
     ],
     easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
   },
-  fade: {
+  magneticIn: {
     keyframes: [
-      { offset: 0, props: { opacity: '0' } },
-      { offset: 1, props: { opacity: '1' } },
+      { offset: 0,    props: { transform: 'translateX(-28px) scale(0.84) rotate(-8deg)', opacity: '0' } },
+      { offset: 0.58, props: { transform: 'translateX(5px) scale(1.06) rotate(2deg)', opacity: '1' } },
+      { offset: 0.82, props: { transform: 'translateX(-1px) scale(0.985) rotate(-0.5deg)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'translateX(0px) scale(1) rotate(0deg)', opacity: '1' } },
     ],
-    easing: 'ease-in-out',
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
   },
   // ── Starter customs (Saved quadrant) ──────────────────────────
   sparkle: {
