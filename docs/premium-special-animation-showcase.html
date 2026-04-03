@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Special Motion Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #131318;
+    --surface-2: #18181f;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,107,53,0.22);
+    --text: #f0f1f4;
+    --sub: #b0b3bc;
+    --dim: #757884;
+    --orange: #ff6b35;
+    --cyan: #2dd4bf;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top, rgba(255,107,53,0.08), transparent 28%),
+      linear-gradient(180deg, #0b0b0d 0%, #09090b 100%);
+    padding: 28px 18px 56px;
+  }
+
+  .shell { max-width: 1220px; margin: 0 auto; }
+  .hero {
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+      linear-gradient(135deg, rgba(255,107,53,0.06), rgba(96,165,250,0.03));
+    border-radius: 24px;
+    padding: 28px 26px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -10% -40% auto;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,0.12), transparent 65%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    color: var(--orange);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    max-width: 780px;
+  }
+  h1 span { color: var(--orange); }
+  .hero-copy {
+    max-width: 780px;
+    color: var(--sub);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill {
+    font-size: 0.74rem;
+    color: var(--sub);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    padding: 8px 11px;
+    border-radius: 999px;
+  }
+
+  .section { margin-top: 24px; }
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--orange);
+    box-shadow: 0 0 18px rgba(255,107,53,0.55);
+  }
+  .section-note { margin: 0; font-size: 0.72rem; color: var(--dim); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 232px;
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+  }
+  .stage {
+    height: 112px;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255,107,53,0.09), transparent 38%),
+      linear-gradient(180deg, #15151c, #111118);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.45), transparent 100%);
+    pointer-events: none;
+  }
+  .name { margin: 0 0 4px; font-size: 0.82rem; font-weight: 700; }
+  .origin {
+    margin: 0 0 8px;
+    color: var(--orange);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .desc { margin: 0; color: var(--sub); font-size: 0.67rem; line-height: 1.55; }
+  .muted { color: var(--dim); }
+  .footer { margin-top: 22px; text-align: center; color: var(--dim); font-size: 0.72rem; }
+
+  .motif { position: relative; width: 88px; height: 88px; z-index: 1; }
+  .motif span, .motif div, .motif svg { position: absolute; }
+
+  .orbit .ring { inset: 12px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; }
+  .orbit .core { left: 39px; top: 39px; width: 10px; height: 10px; border-radius: 999px; background: var(--orange); box-shadow: 0 0 14px rgba(255,107,53,0.65); }
+  .orbit .arm { inset: 8px; transform-origin: 50% 50%; }
+  .orbit .arm .dot { left: 38px; top: -2px; width: 10px; height: 10px; border-radius: 999px; background: var(--cyan); }
+  .orbit .arm.b .dot { background: var(--purple); }
+  .card:hover .orbit .arm.a { animation: spin-cw 1.6s linear infinite; }
+  .card:hover .orbit .arm.b { animation: spin-ccw 1.15s linear infinite; }
+  .card:hover .orbit .core { animation: pulse-core 900ms ease-in-out infinite; }
+
+  .stream .line { left: 16px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06)); opacity: 0.25; }
+  .stream .line.l1 { top: 22px; width: 46px; }
+  .stream .line.l2 { top: 38px; width: 58px; }
+  .stream .line.l3 { top: 54px; width: 36px; }
+  .stream .cursor { left: 56px; top: 69px; width: 2px; height: 14px; background: var(--orange); }
+  .card:hover .stream .line.l1 { animation: line-drop 900ms ease-in-out infinite; }
+  .card:hover .stream .line.l2 { animation: line-drop 900ms ease-in-out infinite 120ms; }
+  .card:hover .stream .line.l3 { animation: line-drop 900ms ease-in-out infinite 240ms; }
+  .card:hover .stream .cursor { animation: cursor-blink 850ms steps(2, jump-none) infinite; }
+
+  .trace { width: 88px; height: 88px; }
+  .trace .outline { fill: none; stroke: rgba(255,255,255,0.28); stroke-width: 4; stroke-dasharray: 240; stroke-dashoffset: 240; }
+  .trace .check { fill: none; stroke: var(--orange); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 80; stroke-dashoffset: 80; }
+  .card:hover .trace .outline { animation: draw-outline 1.1s ease-out infinite; }
+  .card:hover .trace .check { animation: draw-check 1.1s ease-out infinite; }
+
+  .pipeline .track { left: 10px; top: 40px; width: 68px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.12); }
+  .pipeline .node { top: 35px; width: 18px; height: 18px; border-radius: 999px; background: var(--orange); box-shadow: 0 0 16px rgba(255,107,53,0.36); }
+  .pipeline .n1 { left: 8px; }
+  .pipeline .n2 { left: 8px; background: var(--cyan); }
+  .pipeline .n3 { left: 8px; background: var(--purple); }
+  .card:hover .pipeline .n1 { animation: flow-through 1.6s ease-in-out infinite; }
+  .card:hover .pipeline .n2 { animation: flow-through 1.6s ease-in-out infinite 220ms; }
+  .card:hover .pipeline .n3 { animation: flow-through 1.6s ease-in-out infinite 440ms; }
+
+  .converge .core { left: 35px; top: 35px; width: 18px; height: 18px; border-radius: 999px; background: var(--orange); }
+  .converge .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--text); }
+  .converge .d1 { left: 4px; top: 8px; }
+  .converge .d2 { right: 8px; top: 10px; }
+  .converge .d3 { left: 10px; bottom: 8px; }
+  .converge .d4 { right: 6px; bottom: 12px; }
+  .card:hover .converge .core { animation: core-grow 1.2s ease-in-out infinite; }
+  .card:hover .converge .d1 { animation: converge-a 1.2s ease-in-out infinite; }
+  .card:hover .converge .d2 { animation: converge-b 1.2s ease-in-out infinite; }
+  .card:hover .converge .d3 { animation: converge-c 1.2s ease-in-out infinite; }
+  .card:hover .converge .d4 { animation: converge-d 1.2s ease-in-out infinite; }
+
+  .reasoning .node { width: 12px; height: 12px; border-radius: 999px; background: rgba(255,255,255,0.2); }
+  .reasoning .n1 { left: 16px; top: 16px; }
+  .reasoning .n2 { left: 38px; top: 36px; }
+  .reasoning .n3 { left: 60px; top: 16px; }
+  .reasoning .n4 { left: 38px; top: 60px; background: rgba(255,107,53,0.25); }
+  .reasoning .link { height: 2px; background: rgba(255,255,255,0.12); transform-origin: left center; }
+  .reasoning .l1 { left: 24px; top: 22px; width: 22px; transform: rotate(35deg); }
+  .reasoning .l2 { left: 50px; top: 40px; width: 22px; transform: rotate(-35deg); }
+  .reasoning .l3 { left: 44px; top: 48px; width: 16px; transform: rotate(90deg); }
+  .card:hover .reasoning .n1, .card:hover .reasoning .n2, .card:hover .reasoning .n3, .card:hover .reasoning .n4 { animation: node-pop 1.3s ease-in-out infinite; }
+  .card:hover .reasoning .n2 { animation-delay: 140ms; }
+  .card:hover .reasoning .n3 { animation-delay: 280ms; }
+  .card:hover .reasoning .n4 { animation-delay: 420ms; }
+  .card:hover .reasoning .link { animation: link-light 1.3s ease-in-out infinite; }
+  .card:hover .reasoning .l1 { animation-delay: 80ms; }
+  .card:hover .reasoning .l2 { animation-delay: 220ms; }
+  .card:hover .reasoning .l3 { animation-delay: 360ms; }
+
+  .typing .frame { left: 12px; top: 22px; width: 64px; height: 28px; border: 1px solid rgba(255,255,255,0.16); border-radius: 10px; }
+  .typing .fill { left: 22px; top: 35px; width: 0; height: 4px; border-radius: 999px; background: linear-gradient(90deg, var(--orange), #ff9358); }
+  .typing .cursor { left: 22px; top: 31px; width: 2px; height: 12px; background: var(--text); }
+  .card:hover .typing .fill { animation: type-in 1.4s ease-in-out infinite; }
+  .card:hover .typing .cursor { animation: type-cursor 1.4s ease-in-out infinite; }
+
+  .donut { width: 88px; height: 88px; }
+  .donut .base { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 8; }
+  .donut .arc { fill: none; stroke: var(--orange); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 58 190; transform-origin: 50% 50%; }
+  .donut .dot { fill: var(--cyan); }
+  .card:hover .donut .arc { animation: donut-sweep 1.4s linear infinite; }
+  .card:hover .donut .dot { animation: dot-throb 900ms ease-in-out infinite; }
+
+  .cube { perspective: 600px; }
+  .cube .face { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.18); transform: rotate(45deg); background: rgba(255,255,255,0.04); }
+  .cube .f1 { left: 29px; top: 18px; }
+  .cube .f2 { left: 15px; top: 33px; background: rgba(96,165,250,0.12); }
+  .cube .f3 { left: 43px; top: 33px; background: rgba(255,107,53,0.12); }
+  .card:hover .cube { animation: cube-turn 1.6s ease-in-out infinite; }
+  .card:hover .cube .f1 { animation: face-fade 1.6s ease-in-out infinite; }
+  .card:hover .cube .f2 { animation: face-fade 1.6s ease-in-out infinite 120ms; }
+  .card:hover .cube .f3 { animation: face-fade 1.6s ease-in-out infinite 240ms; }
+
+  .wave .bar { bottom: 18px; width: 10px; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--orange), #ff9358); transform-origin: bottom center; }
+  .wave .b1 { left: 16px; height: 20px; }
+  .wave .b2 { left: 30px; height: 34px; }
+  .wave .b3 { left: 44px; height: 46px; }
+  .wave .b4 { left: 58px; height: 28px; }
+  .card:hover .wave .b1 { animation: wave-crest 1.1s ease-in-out infinite 0ms; }
+  .card:hover .wave .b2 { animation: wave-crest 1.1s ease-in-out infinite 80ms; }
+  .card:hover .wave .b3 { animation: wave-crest 1.1s ease-in-out infinite 160ms; }
+  .card:hover .wave .b4 { animation: wave-crest 1.1s ease-in-out infinite 240ms; }
+
+  .shuffle .sheet { width: 38px; height: 50px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); }
+  .shuffle .s1 { left: 14px; top: 18px; }
+  .shuffle .s2 { left: 25px; top: 14px; }
+  .shuffle .s3 { left: 36px; top: 18px; }
+  .card:hover .shuffle .s1 { animation: shuffle-left 1.2s ease-in-out infinite; }
+  .card:hover .shuffle .s2 { animation: shuffle-mid 1.2s ease-in-out infinite; }
+  .card:hover .shuffle .s3 { animation: shuffle-right 1.2s ease-in-out infinite; }
+
+  .figure8 .path { left: 12px; top: 28px; width: 64px; height: 32px; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; box-shadow: 24px 0 0 0 rgba(255,255,255,0.12); }
+  .figure8 .runner { left: 40px; top: 40px; width: 10px; height: 10px; border-radius: 999px; background: var(--orange); }
+  .card:hover .figure8 .runner { animation: figure-eight 1.6s linear infinite; }
+
+  .spatial .halo { inset: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); }
+  .spatial .layer { inset: 20px; border-radius: 999px; border: 1px dashed rgba(255,255,255,0.16); }
+  .spatial .planet { left: 38px; top: 38px; width: 12px; height: 12px; border-radius: 999px; background: var(--blue); }
+  .spatial .moon { left: 16px; top: 16px; width: 7px; height: 7px; border-radius: 999px; background: var(--orange); }
+  .card:hover .spatial .layer { animation: spin-cw 2s linear infinite; }
+  .card:hover .spatial .planet { animation: spatial-pulse 1.2s ease-in-out infinite; }
+  .card:hover .spatial .moon { animation: moon-orbit 1.2s ease-in-out infinite; }
+
+  .pageflip { perspective: 700px; }
+  .pageflip .sheet { left: 25px; top: 14px; width: 38px; height: 58px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)); transform-origin: left center; }
+  .pageflip .fold { left: 48px; top: 14px; width: 15px; height: 58px; border-radius: 0 8px 8px 0; background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06)); transform-origin: left center; }
+  .card:hover .pageflip .sheet { animation: page-base 1.4s ease-in-out infinite; }
+  .card:hover .pageflip .fold { animation: page-fold 1.4s ease-in-out infinite; }
+
+  .book { perspective: 700px; }
+  .book .spine { left: 42px; top: 16px; width: 4px; height: 56px; border-radius: 999px; background: rgba(255,255,255,0.18); }
+  .book .cover { width: 28px; height: 56px; top: 16px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
+  .book .left { left: 14px; border-radius: 8px 0 0 8px; transform-origin: right center; }
+  .book .right { left: 46px; border-radius: 0 8px 8px 0; transform-origin: left center; }
+  .card:hover .book .left { animation: cover-open-left 1.5s ease-in-out infinite; }
+  .card:hover .book .right { animation: cover-open-right 1.5s ease-in-out infinite; }
+
+  .domino .tile { bottom: 14px; width: 10px; height: 44px; border-radius: 6px; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05)); transform-origin: bottom center; }
+  .domino .t1 { left: 18px; }
+  .domino .t2 { left: 32px; }
+  .domino .t3 { left: 46px; }
+  .domino .t4 { left: 60px; }
+  .card:hover .domino .t1 { animation: domino-fall 1.2s ease-in-out infinite; }
+  .card:hover .domino .t2 { animation: domino-fall 1.2s ease-in-out infinite 90ms; }
+  .card:hover .domino .t3 { animation: domino-fall 1.2s ease-in-out infinite 180ms; }
+  .card:hover .domino .t4 { animation: domino-fall 1.2s ease-in-out infinite 270ms; }
+
+  .filter .funnel { left: 24px; top: 18px; width: 40px; height: 38px; border: 1px solid rgba(255,255,255,0.16); clip-path: polygon(0 0, 100% 0, 64% 55%, 64% 100%, 36% 100%, 36% 55%); }
+  .filter .particle { width: 8px; height: 8px; border-radius: 999px; background: var(--orange); }
+  .filter .p1 { left: 26px; top: 8px; }
+  .filter .p2 { left: 40px; top: 4px; background: var(--cyan); }
+  .filter .p3 { left: 54px; top: 8px; background: var(--purple); }
+  .card:hover .filter .p1 { animation: filter-drop-a 1.4s ease-in-out infinite; }
+  .card:hover .filter .p2 { animation: filter-drop-b 1.4s ease-in-out infinite 120ms; }
+  .card:hover .filter .p3 { animation: filter-drop-c 1.4s ease-in-out infinite 240ms; }
+
+  .supernova .core { left: 36px; top: 36px; width: 16px; height: 16px; border-radius: 999px; background: var(--orange); box-shadow: 0 0 20px rgba(255,107,53,0.7); }
+  .supernova .spark { left: 41px; top: 41px; width: 6px; height: 6px; border-radius: 999px; background: var(--yellow); opacity: 0; }
+  .supernova .s1 { --tx: -28px; --ty: -22px; }
+  .supernova .s2 { --tx: 30px; --ty: -18px; }
+  .supernova .s3 { --tx: -24px; --ty: 26px; }
+  .supernova .s4 { --tx: 28px; --ty: 20px; }
+  .supernova .s5 { --tx: 0px; --ty: -34px; }
+  .supernova .s6 { --tx: 0px; --ty: 34px; }
+  .card:hover .supernova .core { animation: nova-core 1.4s ease-out infinite; }
+  .card:hover .supernova .spark { animation: spark-burst 1.4s ease-out infinite; }
+
+  .blackhole .well { left: 25px; top: 25px; width: 38px; height: 38px; border-radius: 999px; background: radial-gradient(circle, rgba(0,0,0,0.9), rgba(255,255,255,0.08)); border: 1px solid rgba(255,255,255,0.16); }
+  .blackhole .dust { width: 7px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.75); }
+  .blackhole .d1 { left: 8px; top: 12px; }
+  .blackhole .d2 { right: 8px; top: 18px; }
+  .blackhole .d3 { left: 12px; bottom: 14px; }
+  .blackhole .d4 { right: 12px; bottom: 12px; }
+  .card:hover .blackhole .dust { animation: collapse-in 1.2s ease-in infinite; }
+  .card:hover .blackhole .d2 { animation-delay: 80ms; }
+  .card:hover .blackhole .d3 { animation-delay: 160ms; }
+  .card:hover .blackhole .d4 { animation-delay: 240ms; }
+  .card:hover .blackhole .well { animation: well-pulse 1.2s ease-in infinite; }
+
+  .fingerprint { width: 88px; height: 88px; }
+  .fingerprint .ridge { fill: none; stroke: rgba(255,255,255,0.24); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 110; stroke-dashoffset: 20; }
+  .fingerprint .scan { fill: rgba(45,212,191,0.2); }
+  .card:hover .fingerprint .scan { animation: scan-line 1.5s ease-in-out infinite; }
+  .card:hover .fingerprint .ridge.r1 { animation: ridge-glow 1.4s ease-in-out infinite; }
+  .card:hover .fingerprint .ridge.r2 { animation: ridge-glow 1.4s ease-in-out infinite 120ms; }
+  .card:hover .fingerprint .ridge.r3 { animation: ridge-glow 1.4s ease-in-out infinite 240ms; }
+
+  .face .corner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); }
+  .face .c1 { left: 16px; top: 16px; border-right: 0; border-bottom: 0; }
+  .face .c2 { right: 16px; top: 16px; border-left: 0; border-bottom: 0; }
+  .face .c3 { left: 16px; bottom: 16px; border-right: 0; border-top: 0; }
+  .face .c4 { right: 16px; bottom: 16px; border-left: 0; border-top: 0; }
+  .face .target { left: 36px; top: 36px; width: 16px; height: 16px; border-radius: 999px; background: rgba(255,107,53,0.22); border: 1px solid rgba(255,107,53,0.6); }
+  .card:hover .face .corner { animation: face-focus 1.25s ease-in-out infinite; }
+  .card:hover .face .target { animation: target-lock 1.25s ease-in-out infinite; }
+
+  .otp .slot { top: 26px; width: 14px; height: 34px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); }
+  .otp .slot::after { content: ""; position: absolute; inset: 9px 4px auto; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.22); }
+  .otp .o1 { left: 12px; }
+  .otp .o2 { left: 30px; }
+  .otp .o3 { left: 48px; }
+  .otp .o4 { left: 66px; }
+  .card:hover .otp .o1, .card:hover .otp .o2, .card:hover .otp .o3, .card:hover .otp .o4 { animation: otp-roll 1.15s ease-in-out infinite; }
+  .card:hover .otp .o2 { animation-delay: 90ms; }
+  .card:hover .otp .o3 { animation-delay: 180ms; }
+  .card:hover .otp .o4 { animation-delay: 270ms; }
+
+  .badge .card-shape { left: 20px; top: 24px; width: 34px; height: 42px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); }
+  .badge .reader { right: 14px; top: 30px; width: 18px; height: 30px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); }
+  .badge .pulse { right: 22px; top: 38px; width: 2px; height: 2px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 0 rgba(74,222,128,0.55); }
+  .card:hover .badge .card-shape { animation: badge-tap 1.45s ease-in-out infinite; }
+  .card:hover .badge .pulse { animation: pulse-rfid 1.45s ease-out infinite; }
+
+  .tap .device { left: 18px; top: 24px; width: 30px; height: 46px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.04); transform-origin: center; }
+  .tap .waves { right: 12px; top: 28px; width: 26px; height: 26px; border-radius: 999px; border: 1px solid transparent; }
+  .tap .waves::before, .tap .waves::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgba(45,212,191,0.55); }
+  .tap .waves::after { inset: 6px; }
+  .card:hover .tap .device { animation: device-tap 1.4s ease-in-out infinite; }
+  .card:hover .tap .waves::before { animation: wave-ping 1.4s ease-out infinite; }
+  .card:hover .tap .waves::after { animation: wave-ping 1.4s ease-out infinite 120ms; }
+
+  .clipboard .board { left: 22px; top: 18px; width: 44px; height: 54px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); }
+  .clipboard .clip { left: 34px; top: 10px; width: 20px; height: 12px; border-radius: 999px 999px 6px 6px; background: rgba(255,255,255,0.16); }
+  .clipboard .stamp { right: 10px; bottom: 10px; width: 20px; height: 20px; border-radius: 999px; background: rgba(255,107,53,0.2); border: 1px solid rgba(255,107,53,0.65); opacity: 0; }
+  .card:hover .clipboard .board { animation: board-drop 1.2s ease-in-out infinite; }
+  .card:hover .clipboard .stamp { animation: stamp-pop 1.2s ease-in-out infinite; }
+
+  @keyframes spin-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes spin-ccw { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+  @keyframes pulse-core { 0%,100% { transform: scale(1); } 50% { transform: scale(1.28); } }
+  @keyframes line-drop { 0%,100% { opacity: 0.22; transform: translateY(-4px); } 35%,65% { opacity: 1; transform: translateY(0); } }
+  @keyframes cursor-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0.15; } }
+  @keyframes draw-outline { 0% { stroke-dashoffset: 240; } 42%,100% { stroke-dashoffset: 0; } }
+  @keyframes draw-check { 0%,40% { stroke-dashoffset: 80; opacity: 0; } 58%,100% { stroke-dashoffset: 0; opacity: 1; } }
+  @keyframes flow-through { 0% { transform: translateX(0) scale(0.8); opacity: 0; } 15% { opacity: 1; } 75% { opacity: 1; } 100% { transform: translateX(60px) scale(1); opacity: 0; } }
+  @keyframes core-grow { 0%,100% { transform: scale(1); } 50% { transform: scale(1.32); } }
+  @keyframes converge-a { 0%,100% { transform: translate(0,0); opacity: 0.8; } 55% { transform: translate(28px,24px); opacity: 1; } }
+  @keyframes converge-b { 0%,100% { transform: translate(0,0); opacity: 0.8; } 55% { transform: translate(-24px,24px); opacity: 1; } }
+  @keyframes converge-c { 0%,100% { transform: translate(0,0); opacity: 0.8; } 55% { transform: translate(24px,-22px); opacity: 1; } }
+  @keyframes converge-d { 0%,100% { transform: translate(0,0); opacity: 0.8; } 55% { transform: translate(-28px,-20px); opacity: 1; } }
+  @keyframes node-pop { 0%,100% { background: rgba(255,255,255,0.18); transform: scale(1); } 30%,55% { background: var(--orange); transform: scale(1.28); } }
+  @keyframes link-light { 0%,100% { background: rgba(255,255,255,0.12); } 35%,60% { background: rgba(255,107,53,0.85); } }
+  @keyframes type-in { 0%,10% { width: 0; } 55%,100% { width: 40px; } }
+  @keyframes type-cursor { 0%,10% { transform: translateX(0); opacity: 1; } 55%,70% { transform: translateX(40px); opacity: 1; } 75%,100% { transform: translateX(40px); opacity: 0.1; } }
+  @keyframes donut-sweep { from { transform: rotate(0deg); stroke-dashoffset: 0; } to { transform: rotate(360deg); stroke-dashoffset: -42; } }
+  @keyframes dot-throb { 0%,100% { r: 5; } 50% { r: 7; } }
+  @keyframes cube-turn { 0%,100% { transform: rotateY(0deg) rotateX(0deg); } 50% { transform: rotateY(180deg) rotateX(12deg); } }
+  @keyframes face-fade { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+  @keyframes wave-crest { 0%,100% { transform: scaleY(0.65); opacity: 0.5; } 40% { transform: scaleY(1.12); opacity: 1; } }
+  @keyframes shuffle-left { 0%,100% { transform: translateX(0) rotate(-8deg); } 50% { transform: translateX(12px) rotate(6deg); } }
+  @keyframes shuffle-mid { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(-2deg); } }
+  @keyframes shuffle-right { 0%,100% { transform: translateX(0) rotate(8deg); } 50% { transform: translateX(-12px) rotate(-6deg); } }
+  @keyframes figure-eight { 0% { transform: translate(-22px, 0px); } 12.5% { transform: translate(-11px, -11px); } 25% { transform: translate(0px, 0px); } 37.5% { transform: translate(-11px, 11px); } 50% { transform: translate(-22px, 0px); } 62.5% { transform: translate(11px, -11px); } 75% { transform: translate(22px, 0px); } 87.5% { transform: translate(11px, 11px); } 100% { transform: translate(-22px, 0px); } }
+  @keyframes spatial-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+  @keyframes moon-orbit { 0%,100% { transform: translate(0,0); } 50% { transform: translate(18px, 18px); } }
+  @keyframes page-base { 0%,100% { transform: rotateY(0deg); } 50% { transform: rotateY(-12deg); } }
+  @keyframes page-fold { 0%,100% { transform: rotateY(0deg); } 50% { transform: rotateY(-140deg); } }
+  @keyframes cover-open-left { 0%,100% { transform: rotateY(0deg); } 50% { transform: rotateY(52deg); } }
+  @keyframes cover-open-right { 0%,100% { transform: rotateY(0deg); } 50% { transform: rotateY(-52deg); } }
+  @keyframes domino-fall { 0%,100% { transform: rotate(0deg); } 35%,70% { transform: rotate(14deg) translateY(2px); } }
+  @keyframes filter-drop-a { 0% { transform: translate(0,0) scale(0.9); opacity: 0; } 20% { opacity: 1; } 50% { transform: translate(10px, 30px) scale(0.65); } 80% { transform: translate(12px, 58px) scale(0.8); opacity: 1; } 100% { transform: translate(12px, 74px) scale(0.9); opacity: 0; } }
+  @keyframes filter-drop-b { 0% { transform: translate(0,0) scale(0.9); opacity: 0; } 20% { opacity: 1; } 50% { transform: translate(0px, 32px) scale(0.65); } 80% { transform: translate(0px, 58px) scale(0.8); opacity: 1; } 100% { transform: translate(0px, 74px) scale(0.9); opacity: 0; } }
+  @keyframes filter-drop-c { 0% { transform: translate(0,0) scale(0.9); opacity: 0; } 20% { opacity: 1; } 50% { transform: translate(-10px, 30px) scale(0.65); } 80% { transform: translate(-12px, 58px) scale(0.8); opacity: 1; } 100% { transform: translate(-12px, 74px) scale(0.9); opacity: 0; } }
+  @keyframes nova-core { 0%,100% { transform: scale(1); } 20% { transform: scale(0.78); } 55% { transform: scale(1.55); } }
+  @keyframes spark-burst { 0%,20% { transform: translate(0,0) scale(0.2); opacity: 0; } 55% { transform: translate(var(--tx), var(--ty)) scale(1); opacity: 1; } 100% { transform: translate(calc(var(--tx) * 1.18), calc(var(--ty) * 1.18)) scale(0.8); opacity: 0; } }
+  @keyframes collapse-in { 0% { transform: translate(0,0) scale(1); opacity: 0.9; } 100% { transform: translate(26px, 24px) scale(0.2); opacity: 0; } }
+  @keyframes well-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+  @keyframes scan-line { 0%,100% { transform: translateY(-20px); opacity: 0.15; } 45%,55% { transform: translateY(18px); opacity: 0.65; } }
+  @keyframes ridge-glow { 0%,100% { stroke: rgba(255,255,255,0.24); } 45%,60% { stroke: rgba(45,212,191,0.95); } }
+  @keyframes face-focus { 0%,100% { transform: translate(0,0) scale(1); border-color: rgba(255,255,255,0.4); } 45%,65% { transform: scale(0.82); border-color: rgba(255,107,53,0.85); } }
+  @keyframes target-lock { 0%,100% { transform: scale(1); opacity: 0.55; } 45%,65% { transform: scale(1.3); opacity: 1; } }
+  @keyframes otp-roll { 0%,100% { transform: translateY(0); border-color: rgba(255,255,255,0.12); } 40% { transform: translateY(-8px); border-color: rgba(255,107,53,0.8); } 60% { transform: translateY(2px); } }
+  @keyframes badge-tap { 0%,100% { transform: translateX(0) rotate(0deg); } 40% { transform: translateX(16px) rotate(6deg); } 60% { transform: translateX(18px) rotate(6deg); } 85% { transform: translateX(2px) rotate(0deg); } }
+  @keyframes pulse-rfid { 0%,35% { box-shadow: 0 0 0 0 rgba(74,222,128,0); opacity: 0; } 45% { box-shadow: 0 0 0 0 rgba(74,222,128,0.55); opacity: 1; } 100% { box-shadow: 0 0 0 14px rgba(74,222,128,0); opacity: 0; } }
+  @keyframes device-tap { 0%,100% { transform: translateX(0) rotate(0deg); } 45% { transform: translateX(12px) rotate(8deg); } 70% { transform: translateX(8px) rotate(4deg); } }
+  @keyframes wave-ping { 0%,35% { transform: scale(0.7); opacity: 0; } 45% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.35); opacity: 0; } }
+  @keyframes board-drop { 0%,100% { transform: translateY(0); } 35% { transform: translateY(10px); } 55% { transform: translateY(-2px); } }
+  @keyframes stamp-pop { 0%,35% { transform: scale(0.2); opacity: 0; } 50% { transform: scale(1.18); opacity: 1; } 70%,100% { transform: scale(1); opacity: 1; } }
+
+  @media (max-width: 700px) {
+    body { padding: 18px 14px 42px; }
+    .hero { padding: 22px 18px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 520px) {
+    .grid { grid-template-columns: 1fr; }
+    .section-head { align-items: start; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="eyebrow">Premium Motion Extraction</div>
+      <h1>Special animations worth pulling <span>out of the premium packs</span>.</h1>
+      <p class="hero-copy">This is a visual audit surface, not app code. Every card below represents a premium-pack motion idea that feels materially different from the current Motion Lab preset set. Hover any stage to play it.</p>
+      <div class="hero-meta">
+        <div class="pill">24 extracted survivor concepts</div>
+        <div class="pill">Overlaps already filtered out</div>
+        <div class="pill">Built from premium collection motion language</div>
+        <div class="pill">Standalone HTML preview only</div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Systems & Sequencing</h2>
+        <p class="section-note">Ordered logic, streaming states, processing flow, and structured reveals.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="stage"><div class="motif orbit"><span class="ring"></span><span class="core"></span><span class="arm a"><span class="dot"></span></span><span class="arm b"><span class="dot"></span></span></div></div>
+          <h3 class="name">Orbit Chase</h3>
+          <p class="origin">AI Agentic / Security/Auth</p>
+          <p class="desc">Orbiting satellites chase around a center lockup. Stronger than the current single-body orbit.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif stream"><span class="line l1"></span><span class="line l2"></span><span class="line l3"></span><span class="cursor"></span></div></div>
+          <h3 class="name">Streaming Cascade</h3>
+          <p class="origin">AI Agentic</p>
+          <p class="desc">Feed rows step in with terminal cadence instead of a generic fade-in.</p>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <svg class="trace" viewBox="0 0 88 88" aria-hidden="true">
+              <rect class="outline" x="16" y="16" width="56" height="56" rx="14"></rect>
+              <path class="check" d="M29 45 L39 55 L59 33"></path>
+            </svg>
+          </div>
+          <h3 class="name">Trace + Confirm</h3>
+          <p class="origin">AI Agentic / Security/Auth</p>
+          <p class="desc">The shell draws first, then confirmation lands. Great for guardrails, approval, and safe-mode states.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif pipeline"><span class="track"></span><span class="node n1"></span><span class="node n2"></span><span class="node n3"></span></div></div>
+          <h3 class="name">Flow Through</h3>
+          <p class="origin">AI Agentic / Data Charts</p>
+          <p class="desc">Nodes move through a visible system path. Feels like real processing, not mere travel.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif converge"><span class="core"></span><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span></div></div>
+          <h3 class="name">Converge to Core</h3>
+          <p class="origin">AI Agentic / Data Charts</p>
+          <p class="desc">Scattered particles collapse inward and energize a center. Feels purposeful, not noisy.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif reasoning"><span class="node n1"></span><span class="node n2"></span><span class="node n3"></span><span class="node n4"></span><span class="link l1"></span><span class="link l2"></span><span class="link l3"></span></div></div>
+          <h3 class="name">Node Reasoning</h3>
+          <p class="origin">AI Agentic</p>
+          <p class="desc">Nodes and links light in ordered steps, giving process icons an actual sequence story.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif typing"><span class="frame"></span><span class="fill"></span><span class="cursor"></span></div></div>
+          <h3 class="name">Cursor Type-In</h3>
+          <p class="origin">AI Agentic</p>
+          <p class="desc">A line types itself in and the cursor finishes the move. Useful for prompts, templates, and search.</p>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <svg class="donut" viewBox="0 0 88 88" aria-hidden="true">
+              <circle class="base" cx="44" cy="44" r="26"></circle>
+              <circle class="arc" cx="44" cy="44" r="26"></circle>
+              <circle class="dot" cx="44" cy="18" r="5"></circle>
+            </svg>
+          </div>
+          <h3 class="name">Donut Sweep</h3>
+          <p class="origin">Data Charts</p>
+          <p class="desc">Arc rotation plus segment breathing. It feels like active progress, not a generic loading loop.</p>
+        </article>
+      </div>
+    </section>
+    
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Spatial & Interface Motion</h2>
+        <p class="section-note">Depth, hinges, stacks, filters, and physical UI mechanics.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="stage"><div class="motif cube"><span class="face f1"></span><span class="face f2"></span><span class="face f3"></span></div></div>
+          <h3 class="name">Cube Turn</h3>
+          <p class="origin">AI Agentic / Media Playback</p>
+          <p class="desc">A depth-driven face turn that reads much richer than a flat spin.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif wave"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span><span class="bar b4"></span></div></div>
+          <h3 class="name">Wave Crest</h3>
+          <p class="origin">Data Charts</p>
+          <p class="desc">Bars crest outward from center, giving chart-like icons a real propagated wave.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif shuffle"><span class="sheet s1"></span><span class="sheet s2"></span><span class="sheet s3"></span></div></div>
+          <h3 class="name">Card Shuffle Mix</h3>
+          <p class="origin">Media Playback / E-commerce</p>
+          <p class="desc">Three layered cards cross over with actual shuffle timing instead of a simple slide.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif figure8"><span class="path"></span><span class="runner"></span></div></div>
+          <h3 class="name">Figure-8 Loop</h3>
+          <p class="origin">Media Playback</p>
+          <p class="desc">A smooth infinity-loop trace that feels more special than orbit or glide.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif spatial"><span class="halo"></span><span class="layer"></span><span class="planet"></span><span class="moon"></span></div></div>
+          <h3 class="name">Spatial Orbit</h3>
+          <p class="origin">Media Playback</p>
+          <p class="desc">Layered orbital depth gives a more cinematic feel than plain rotation.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif pageflip"><span class="sheet"></span><span class="fold"></span></div></div>
+          <h3 class="name">Page Flip</h3>
+          <p class="origin">Media Playback / Navigation Menus</p>
+          <p class="desc">A proper hinged page turn with depth. Useful for document, story, and media states.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif book"><span class="cover left"></span><span class="spine"></span><span class="cover right"></span></div></div>
+          <h3 class="name">Book Open</h3>
+          <p class="origin">Navigation Menus</p>
+          <p class="desc">Panels open like a hardcover spread. Stronger and more deliberate than a generic reveal.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif domino"><span class="tile t1"></span><span class="tile t2"></span><span class="tile t3"></span><span class="tile t4"></span></div></div>
+          <h3 class="name">Domino Cascade</h3>
+          <p class="origin">Navigation Menus</p>
+          <p class="desc">A forward chain reaction. Great for menus, stacks, grids, and ordered layout transitions.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif filter"><span class="funnel"></span><span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span></div></div>
+          <h3 class="name">Filter Through</h3>
+          <p class="origin">Data Charts / Security/Auth</p>
+          <p class="desc">Particles squeeze through a narrowing system aperture, which reads as real filtering.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Trust, Access & High Drama</h2>
+        <p class="section-note">Biometrics, confirmation mechanics, secure interactions, and the loudest special effects.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="stage">
+            <svg class="fingerprint" viewBox="0 0 88 88" aria-hidden="true">
+              <path class="ridge r1" d="M27 54 C27 38, 61 38, 61 54"></path>
+              <path class="ridge r2" d="M22 48 C22 27, 66 27, 66 48"></path>
+              <path class="ridge r3" d="M18 43 C18 19, 70 19, 70 43"></path>
+              <rect class="scan" x="16" y="22" width="56" height="10" rx="5"></rect>
+            </svg>
+          </div>
+          <h3 class="name">Fingerprint Scan</h3>
+          <p class="origin">Security/Auth</p>
+          <p class="desc">Scanner motion plus ring-by-ring illumination creates a true biometric feel.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif face"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span><span class="target"></span></div></div>
+          <h3 class="name">Face Focus</h3>
+          <p class="origin">Security/Auth</p>
+          <p class="desc">The frame contracts inward to lock on target, then confirms. More distinct than plain scale-in.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif otp"><span class="slot o1"></span><span class="slot o2"></span><span class="slot o3"></span><span class="slot o4"></span></div></div>
+          <h3 class="name">OTP Cascade</h3>
+          <p class="origin">Security/Auth</p>
+          <p class="desc">Stepped secure-code motion with slot timing, useful for auth, counters, and progress cells.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif badge"><span class="card-shape"></span><span class="reader"></span><span class="pulse"></span></div></div>
+          <h3 class="name">RFID Badge Tap</h3>
+          <p class="origin">Security/Auth</p>
+          <p class="desc">Approach, contact, pulse, and release. It feels like a real access event.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif tap"><span class="device"></span><span class="waves"></span></div></div>
+          <h3 class="name">Contactless Tap</h3>
+          <p class="origin">E-commerce</p>
+          <p class="desc">Device tilts in, makes contact, pulses success, and settles back out.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif clipboard"><span class="board"></span><span class="clip"></span><span class="stamp"></span></div></div>
+          <h3 class="name">Clipboard Stamp</h3>
+          <p class="origin">Status/Feedback / Security/Auth</p>
+          <p class="desc">The board lands first, then the approval mark hits. Great for confirm and audit states.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif supernova"><span class="core"></span><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span><span class="spark s5"></span><span class="spark s6"></span></div></div>
+          <h3 class="name">Supernova Burst</h3>
+          <p class="origin">Navigation Menus</p>
+          <p class="desc">A compressed center blows out into high-energy fragments. Loud, memorable, and truly special.</p>
+        </article>
+        <article class="card">
+          <div class="stage"><div class="motif blackhole"><span class="well"></span><span class="dust d1"></span><span class="dust d2"></span><span class="dust d3"></span><span class="dust d4"></span></div></div>
+          <h3 class="name">Black Hole Collapse</h3>
+          <p class="origin">Navigation Menus</p>
+          <p class="desc">Everything gets pulled inward and swallowed. Very strong exit or special-effect candidate.</p>
+        </article>
+      </div>
+    </section>
+
+    <p class="footer">Companion audit: <span class="muted">premium-special-animation-audit.md</span>. This showcase is a visual extraction layer only and does not modify the app.</p>
+  </div>
+</body>
+</html>

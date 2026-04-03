@@ -2558,6 +2558,12 @@ function renderMotionLab() {
                 <button class="ml__preset-btn" data-preset="glide">
                   <span class="material-symbols-outlined" style="font-size:13px">air</span> Glide
                 </button>
+                <button class="ml__preset-btn" data-preset="radar">
+                  <span class="material-symbols-outlined" style="font-size:13px">radar</span> Radar
+                </button>
+                <button class="ml__preset-btn" data-preset="beacon">
+                  <span class="material-symbols-outlined" style="font-size:13px">wifi_tethering</span> Beacon
+                </button>
               </div>
             </div>
 
@@ -2668,9 +2674,9 @@ function renderMotionLab() {
               </div>
             </div>
 
-            <!-- Quadrant D: bottom - My Animations -->
+            <!-- Quadrant D: bottom - Special -->
             <div class="ml__quad ml__quad--bottom" data-quad="saved">
-              <span class="ml__quad-label">My Animations</span>
+              <span class="ml__quad-label">Special</span>
               <div class="ml__quad-btns" id="mlSavedBtns">
                 <button class="ml__preset-btn" data-preset="sparkle">
                   <span class="material-symbols-outlined" style="font-size:13px">auto_awesome</span> Sparkle
@@ -2680,6 +2686,72 @@ function renderMotionLab() {
                 </button>
                 <button class="ml__preset-btn" data-preset="jitter">
                   <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> Jitter
+                </button>
+                <button class="ml__preset-btn" data-preset="chase">
+                  <span class="material-symbols-outlined" style="font-size:13px">track_changes</span> Chase
+                </button>
+                <button class="ml__preset-btn" data-preset="stream">
+                  <span class="material-symbols-outlined" style="font-size:13px">view_stream</span> Stream
+                </button>
+                <button class="ml__preset-btn" data-preset="trace">
+                  <span class="material-symbols-outlined" style="font-size:13px">draw</span> Trace
+                </button>
+                <button class="ml__preset-btn" data-preset="flow">
+                  <span class="material-symbols-outlined" style="font-size:13px">schema</span> Flow
+                </button>
+                <button class="ml__preset-btn" data-preset="converge">
+                  <span class="material-symbols-outlined" style="font-size:13px">center_focus_strong</span> Converge
+                </button>
+                <button class="ml__preset-btn" data-preset="cube">
+                  <span class="material-symbols-outlined" style="font-size:13px">view_in_ar</span> Cube
+                </button>
+                <button class="ml__preset-btn" data-preset="typing">
+                  <span class="material-symbols-outlined" style="font-size:13px">keyboard</span> Typing
+                </button>
+                <button class="ml__preset-btn" data-preset="reason">
+                  <span class="material-symbols-outlined" style="font-size:13px">account_tree</span> Reason
+                </button>
+                <button class="ml__preset-btn" data-preset="sweep">
+                  <span class="material-symbols-outlined" style="font-size:13px">pie_chart</span> Sweep
+                </button>
+                <button class="ml__preset-btn" data-preset="scatter">
+                  <span class="material-symbols-outlined" style="font-size:13px">scatter_plot</span> Scatter
+                </button>
+                <button class="ml__preset-btn" data-preset="crest">
+                  <span class="material-symbols-outlined" style="font-size:13px">equalizer</span> Crest
+                </button>
+                <button class="ml__preset-btn" data-preset="tap">
+                  <span class="material-symbols-outlined" style="font-size:13px">contactless</span> Tap
+                </button>
+                <button class="ml__preset-btn" data-preset="shuffle">
+                  <span class="material-symbols-outlined" style="font-size:13px">shuffle</span> Shuffle
+                </button>
+                <button class="ml__preset-btn" data-preset="infinity">
+                  <span class="material-symbols-outlined" style="font-size:13px">all_inclusive</span> Infinity
+                </button>
+                <button class="ml__preset-btn" data-preset="spatial">
+                  <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> Spatial
+                </button>
+                <button class="ml__preset-btn" data-preset="pageFlip">
+                  <span class="material-symbols-outlined" style="font-size:13px">flip</span> Page Flip
+                </button>
+                <button class="ml__preset-btn" data-preset="bookOpen">
+                  <span class="material-symbols-outlined" style="font-size:13px">auto_stories</span> Book Open
+                </button>
+                <button class="ml__preset-btn" data-preset="domino">
+                  <span class="material-symbols-outlined" style="font-size:13px">splitscreen</span> Domino
+                </button>
+                <button class="ml__preset-btn" data-preset="supernova">
+                  <span class="material-symbols-outlined" style="font-size:13px">flare</span> Supernova
+                </button>
+                <button class="ml__preset-btn" data-preset="blackHole">
+                  <span class="material-symbols-outlined" style="font-size:13px">blur_circular</span> Black Hole
+                </button>
+                <button class="ml__preset-btn" data-preset="fingerprint">
+                  <span class="material-symbols-outlined" style="font-size:13px">fingerprint</span> Fingerprint
+                </button>
+                <button class="ml__preset-btn" data-preset="badgeTap">
+                  <span class="material-symbols-outlined" style="font-size:13px">badge</span> Badge Tap
                 </button>
               </div>
             </div>
@@ -2961,6 +3033,31 @@ function initMotionLabLoading() {
       { keys: ['flicker', 'lightbulb', 'strobe'], preset: 'flicker' },
       { keys: ['squish', 'compress', 'squeeze'], preset: 'squish' },
       { keys: ['glide', 'aerodynamic', 'soar'], preset: 'glide' },
+      { keys: ['radar', 'scan pulse', 'sweep pulse'], preset: 'radar' },
+      { keys: ['beacon', 'signal flash', 'warning light'], preset: 'beacon' },
+      // Special
+      { keys: ['chase', 'orbit chase', 'satellite'], preset: 'chase' },
+      { keys: ['stream', 'streaming', 'feed', 'cascade'], preset: 'stream' },
+      { keys: ['trace', 'draw', 'outline'], preset: 'trace' },
+      { keys: ['flow', 'pipeline', 'throughput'], preset: 'flow' },
+      { keys: ['converge', 'collapse inward', 'focus inward'], preset: 'converge' },
+      { keys: ['cube', 'box turn', 'isometric'], preset: 'cube' },
+      { keys: ['typing', 'type', 'cursor'], preset: 'typing' },
+      { keys: ['reason', 'reasoning', 'process'], preset: 'reason' },
+      { keys: ['sweep', 'arc sweep', 'scan'], preset: 'sweep' },
+      { keys: ['scatter', 'disperse', 'reform'], preset: 'scatter' },
+      { keys: ['crest', 'wave crest', 'surge'], preset: 'crest' },
+      { keys: ['tap', 'contactless', 'nfc'], preset: 'tap' },
+      { keys: ['shuffle', 'mix', 'cards'], preset: 'shuffle' },
+      { keys: ['infinity', 'figure eight', 'looping'], preset: 'infinity' },
+      { keys: ['spatial', 'depth orbit', 'layered'], preset: 'spatial' },
+      { keys: ['page flip', 'page', 'flip page'], preset: 'pageFlip' },
+      { keys: ['book open', 'book', 'spread'], preset: 'bookOpen' },
+      { keys: ['domino', 'cascade tilt', 'chain reaction'], preset: 'domino' },
+      { keys: ['supernova', 'burst', 'starburst'], preset: 'supernova' },
+      { keys: ['black hole', 'collapse core', 'singularity'], preset: 'blackHole' },
+      { keys: ['fingerprint', 'biometric', 'scan print'], preset: 'fingerprint' },
+      { keys: ['badge tap', 'rfid', 'access tap'], preset: 'badgeTap' },
       // Phase 2: Entrances
       { keys: ['slideright', 'slide right', 'enter right'], preset: 'slideRight' },
       { keys: ['slidedown', 'slide down', 'drop in', 'drop'], preset: 'slideDown' },
@@ -4594,6 +4691,223 @@ const PRESETS = {
     ],
     easing: 'linear',
   },
+  chase: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translate(0px, 0px) scale(1)' } },
+      { offset: 0.20, props: { transform: 'translate(6px, -4px) scale(1.06)' } },
+      { offset: 0.40, props: { transform: 'translate(10px, 4px) scale(0.97)' } },
+      { offset: 0.60, props: { transform: 'translate(-4px, 8px) scale(1.03)' } },
+      { offset: 0.80, props: { transform: 'translate(-8px, -3px) scale(0.98)' } },
+      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)' } },
+    ],
+    easing: 'linear',
+  },
+  stream: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateY(-14px)', opacity: '0', filter: 'blur(3px)' } },
+      { offset: 0.25, props: { transform: 'translateY(-4px)', opacity: '0.55', filter: 'blur(2px)' } },
+      { offset: 0.50, props: { transform: 'translateY(6px)', opacity: '0.9', filter: 'blur(1px)' } },
+      { offset: 0.75, props: { transform: 'translateY(0px)', opacity: '1', filter: 'blur(0px)' } },
+      { offset: 1,    props: { transform: 'translateY(4px)', opacity: '0.95', filter: 'blur(0px)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  trace: {
+    keyframes: [
+      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', opacity: '0.35', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.55, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.35))' } },
+      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  },
+  flow: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateX(-14px)', opacity: '0.3', filter: 'blur(3px)' } },
+      { offset: 0.30, props: { transform: 'translateX(-4px)', opacity: '0.75', filter: 'blur(2px)' } },
+      { offset: 0.60, props: { transform: 'translateX(8px)', opacity: '1', filter: 'blur(0px)' } },
+      { offset: 1,    props: { transform: 'translateX(0px)', opacity: '1', filter: 'blur(0px)' } },
+    ],
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  converge: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(0.72)', opacity: '0.35', filter: 'blur(6px)' } },
+      { offset: 0.45, props: { transform: 'scale(1.12)', opacity: '1', filter: 'blur(0px)' } },
+      { offset: 0.70, props: { transform: 'scale(0.98)', opacity: '1', filter: 'blur(0px)' } },
+      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
+    ],
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  cube: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'rotate(-18deg) scale(0.82)', opacity: '0.7' } },
+      { offset: 0.35, props: { transform: 'rotate(16deg) scale(1.08)', opacity: '1' } },
+      { offset: 0.65, props: { transform: 'rotate(-8deg) scale(0.96)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'rotate(0deg) scale(1)', opacity: '1' } },
+    ],
+    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  },
+  typing: {
+    keyframes: [
+      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', opacity: '0.2' } },
+      { offset: 0.55, props: { 'clip-path': 'inset(0 28% 0 0)', opacity: '1' } },
+      { offset: 0.70, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
+      { offset: 0.82, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '0.45' } },
+      { offset: 0.90, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
+      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
+    ],
+    easing: 'steps(5, end)',
+  },
+  reason: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translate(-6px, -6px) scale(0.92)', opacity: '0.45' } },
+      { offset: 0.25, props: { transform: 'translate(6px, -2px) scale(1)', opacity: '0.85' } },
+      { offset: 0.50, props: { transform: 'translate(-2px, 6px) scale(1.06)', opacity: '1' } },
+      { offset: 0.75, props: { transform: 'translate(3px, 2px) scale(0.98)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)', opacity: '1' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  sweep: {
+    keyframes: [
+      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', transform: 'translateX(-8px)', opacity: '0.25', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.40, props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(0px)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.28))' } },
+      { offset: 0.70, props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(6px)', opacity: '0.8', filter: 'drop-shadow(0 0 4px rgba(255,107,53,0.18))' } },
+      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(0px)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  scatter: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translate(0px, 0px) scale(0.88)', opacity: '0.8', filter: 'blur(0px)' } },
+      { offset: 0.20, props: { transform: 'translate(-8px, -6px) scale(0.94)', opacity: '0.7', filter: 'blur(3px)' } },
+      { offset: 0.40, props: { transform: 'translate(8px, 5px) scale(1.04)', opacity: '1', filter: 'blur(2px)' } },
+      { offset: 0.70, props: { transform: 'translate(-5px, 3px) scale(0.98)', opacity: '0.92', filter: 'blur(1px)' } },
+      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)', opacity: '1', filter: 'blur(0px)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  crest: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateY(0px) scale(0.96)' } },
+      { offset: 0.20, props: { transform: 'translateY(-6px) scale(1.06)' } },
+      { offset: 0.45, props: { transform: 'translateY(4px) scale(0.97)' } },
+      { offset: 0.70, props: { transform: 'translateY(-2px) scale(1.02)' } },
+      { offset: 1,    props: { transform: 'translateY(0px) scale(1)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  tap: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateX(0px) rotate(0deg)', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.40, props: { transform: 'translateX(12px) rotate(8deg)', filter: 'drop-shadow(0 0 10px rgba(74,222,128,0.35))' } },
+      { offset: 0.65, props: { transform: 'translateX(14px) rotate(8deg)', filter: 'drop-shadow(0 0 12px rgba(74,222,128,0.45))' } },
+      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)', filter: 'drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'cubic-bezier(0.2, 0.9, 0.2, 1)',
+  },
+  shuffle: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateX(-10px) rotate(-8deg)', opacity: '0.8' } },
+      { offset: 0.35, props: { transform: 'translateX(8px) rotate(6deg)', opacity: '1' } },
+      { offset: 0.65, props: { transform: 'translateX(-4px) rotate(-3deg)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)', opacity: '1' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  infinity: {
+    keyframes: [
+      { offset: 0,     props: { transform: 'translate(-10px, 0px)' } },
+      { offset: 0.125, props: { transform: 'translate(-5px, -8px)' } },
+      { offset: 0.25,  props: { transform: 'translate(0px, 0px)' } },
+      { offset: 0.375, props: { transform: 'translate(-5px, 8px)' } },
+      { offset: 0.5,   props: { transform: 'translate(-10px, 0px)' } },
+      { offset: 0.625, props: { transform: 'translate(5px, -8px)' } },
+      { offset: 0.75,  props: { transform: 'translate(10px, 0px)' } },
+      { offset: 0.875, props: { transform: 'translate(5px, 8px)' } },
+      { offset: 1,     props: { transform: 'translate(-10px, 0px)' } },
+    ],
+    easing: 'linear',
+  },
+  spatial: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(0.88) rotate(-12deg)', filter: 'blur(2px)', opacity: '0.8' } },
+      { offset: 0.40, props: { transform: 'scale(1.1) rotate(10deg)', filter: 'blur(0px)', opacity: '1' } },
+      { offset: 0.70, props: { transform: 'scale(0.96) rotate(-4deg)', filter: 'blur(0px)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'scale(1) rotate(0deg)', filter: 'blur(0px)', opacity: '1' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  pageFlip: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'skewY(0deg) scaleX(1)', opacity: '1' } },
+      { offset: 0.35, props: { transform: 'skewY(-14deg) scaleX(0.72)', opacity: '0.85' } },
+      { offset: 0.60, props: { transform: 'skewY(10deg) scaleX(1.04)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'skewY(0deg) scaleX(1)', opacity: '1' } },
+    ],
+    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  },
+  bookOpen: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateX(-6px) scaleX(0.72)', opacity: '0.65' } },
+      { offset: 0.45, props: { transform: 'translateX(0px) scaleX(1.14)', opacity: '1' } },
+      { offset: 0.70, props: { transform: 'translateX(0px) scaleX(0.96)', opacity: '1' } },
+      { offset: 1,    props: { transform: 'translateX(0px) scaleX(1)', opacity: '1' } },
+    ],
+    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  },
+  domino: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'rotate(0deg) translateY(0px)' } },
+      { offset: 0.18, props: { transform: 'rotate(8deg) translateY(1px)' } },
+      { offset: 0.36, props: { transform: 'rotate(-6deg) translateY(0px)' } },
+      { offset: 0.54, props: { transform: 'rotate(5deg) translateY(1px)' } },
+      { offset: 0.72, props: { transform: 'rotate(-3deg) translateY(0px)' } },
+      { offset: 1,    props: { transform: 'rotate(0deg) translateY(0px)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  supernova: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(0.72)', opacity: '0.3', filter: 'blur(3px) drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.35, props: { transform: 'scale(0.92)', opacity: '0.8', filter: 'blur(1px) drop-shadow(0 0 8px rgba(255,107,53,0.45))' } },
+      { offset: 0.60, props: { transform: 'scale(1.22)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 14px rgba(255,107,53,0.55))' } },
+      { offset: 0.80, props: { transform: 'scale(0.96)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 5px rgba(255,107,53,0.22))' } },
+      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  blackHole: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
+      { offset: 0.45, props: { transform: 'scale(0.35)', opacity: '0.25', filter: 'blur(2px)' } },
+      { offset: 0.65, props: { transform: 'scale(0.18)', opacity: '0.1', filter: 'blur(4px)' } },
+      { offset: 0.66, props: { transform: 'scale(1.18)', opacity: '0', filter: 'blur(0px)' } },
+      { offset: 0.82, props: { transform: 'scale(0.95)', opacity: '1', filter: 'blur(1px)' } },
+      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  fingerprint: {
+    keyframes: [
+      { offset: 0,    props: { 'clip-path': 'inset(0 0 100% 0)', opacity: '0.3', filter: 'drop-shadow(0 0 0px rgba(45,212,191,0))' } },
+      { offset: 0.50, props: { 'clip-path': 'inset(0 0 20% 0)', opacity: '1', filter: 'drop-shadow(0 0 12px rgba(45,212,191,0.55))' } },
+      { offset: 0.75, props: { 'clip-path': 'inset(0 0 0% 0)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(45,212,191,0.28))' } },
+      { offset: 1,    props: { 'clip-path': 'inset(0 0 0% 0)', opacity: '1', filter: 'drop-shadow(0 0 0px rgba(45,212,191,0))' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  badgeTap: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'translateX(0px) rotate(0deg) scale(1)', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.25, props: { transform: 'translateX(10px) rotate(6deg) scale(1.02)', filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.3))' } },
+      { offset: 0.45, props: { transform: 'translateX(14px) rotate(8deg) scale(1.05)', filter: 'drop-shadow(0 0 12px rgba(74,222,128,0.45))' } },
+      { offset: 0.62, props: { transform: 'translateX(8px) rotate(4deg) scale(1.02)', filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.28))' } },
+      { offset: 0.78, props: { transform: 'translateX(12px) rotate(7deg) scale(1.04)', filter: 'drop-shadow(0 0 10px rgba(74,222,128,0.4))' } },
+      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg) scale(1)', filter: 'drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'cubic-bezier(0.2, 0.9, 0.2, 1)',
+  },
 
   // ── New Motion presets (NextGen physics-derived) ───────────────
   heartbeat: {
@@ -4900,6 +5214,27 @@ const PRESETS = {
       { offset: 0.5,  props: { transform: 'translateX(0px) rotate(0deg)' } },
       { offset: 0.75, props: { transform: 'translateX(-4px) rotate(-2deg)' } },
       { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  radar: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(0.96)', opacity: '0.92', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.35, props: { transform: 'scale(1.08)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(45,212,191,0.45))' } },
+      { offset: 0.70, props: { transform: 'scale(1.14)', opacity: '0.78', filter: 'drop-shadow(0 0 14px rgba(45,212,191,0.12))' } },
+      { offset: 1,    props: { transform: 'scale(0.96)', opacity: '0.92', filter: 'drop-shadow(0 0 0px transparent)' } },
+    ],
+    easing: 'ease-in-out',
+  },
+  beacon: {
+    keyframes: [
+      { offset: 0,    props: { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.12, props: { transform: 'scale(1.06)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.38))' } },
+      { offset: 0.22, props: { transform: 'scale(1)', opacity: '0.55', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.34, props: { transform: 'scale(1.04)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.32))' } },
+      { offset: 0.46, props: { transform: 'scale(1)', opacity: '0.55', filter: 'drop-shadow(0 0 0px transparent)' } },
+      { offset: 0.60, props: { transform: 'scale(1.08)', opacity: '1', filter: 'drop-shadow(0 0 10px rgba(255,107,53,0.45))' } },
+      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
     ],
     easing: 'ease-in-out',
   },
