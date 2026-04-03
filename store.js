@@ -5970,12 +5970,199 @@ const converterState = {
   bgColor: '#ffffff',
   padding: 8,
   quality: 1,
+  fillColor: null,
+  strokeColor: null,
+  paintSupport: {
+    supportsFill: false,
+    supportsStroke: false,
+    mode: 'unknown',
+    fillCount: 0,
+    strokeCount: 0,
+  },
   // PNG→SVG options
   threshold: 128,
   preset: 'posterized2', // imagetracerjs preset
   colorMode: 'mono',
   smoothness: 50,        // 0-100: curve smoothness (trace resolution + path tolerance)
 };
+
+const CONVERTER_SVG_NS = 'http://www.w3.org/2000/svg';
+const CONVERTER_SVG_SHAPES = 'path, circle, rect, polygon, polyline, line, ellipse';
+const CONVERTER_COLOR_SWATCHES = ['#000000', '#FFFFFF', '#FF6B35', '#00D4FF', '#A855F7', '#22C55E', '#FACC15'];
+const CONVERTER_BOUNDS_PATH_D = 'm00h24v24h0z';
+
+function renderConverterColorDotRow(type, activeColor, disabled = false) {
+  const disabledAttrs = disabled ? ' disabled aria-disabled="true"' : '';
+  let html = `<button type="button" class="conv__color-dot conv__color-dot--original${!activeColor ? ' conv__color-dot--active' : ''}${disabled ? ' is-disabled' : ''}" data-conv-color="" data-conv-color-kind="${type}" data-tip="Default"${disabledAttrs}></button>`;
+  CONVERTER_COLOR_SWATCHES.forEach((color) => {
+    html += `<button type="button" class="conv__color-dot${activeColor === color ? ' conv__color-dot--active' : ''}${disabled ? ' is-disabled' : ''}" data-conv-color="${color}" data-conv-color-kind="${type}" data-tip="${color}" style="background:${color}"${disabledAttrs}></button>`;
+  });
+  html += `<label class="conv__color-add${disabled ? ' is-disabled' : ''}" data-tip="Custom color">
+    <span class="material-symbols-outlined" style="font-size:14px">add</span>
+    <input type="color" class="conv__color-picker-hidden" id="conv${type}Picker" value="${activeColor || '#FFFFFF'}"${disabled ? ' disabled' : ''}>
+  </label>`;
+  return html;
+}
+
+function normalizeConverterPathData(d = '') {
+  return String(d).replace(/\s+/g, '').toLowerCase();
+}
+
+function getConverterInheritedPaint(el, attrName) {
+  let ancestor = el.parentElement;
+  while (ancestor) {
+    const val = (ancestor.getAttribute(attrName) || '').trim().toLowerCase();
+    if (val) return val;
+    ancestor = ancestor.parentElement;
+  }
+  return '';
+}
+
+function isConverterVisibleFillTarget(el) {
+  if (!el) return false;
+  const ownFill = (el.getAttribute('fill') || '').trim().toLowerCase();
+  if (ownFill === 'none') return false;
+  if (ownFill) return true;
+
+  const inheritedFill = getConverterInheritedPaint(el, 'fill');
+  if (inheritedFill === 'none') return false;
+  if (inheritedFill) return true;
+
+  // SVG defaults to visible black fill when no fill is specified.
+  return true;
+}
+
+function isConverterVisibleStrokeTarget(el) {
+  if (!el) return false;
+  const ownStroke = (el.getAttribute('stroke') || '').trim().toLowerCase();
+  if (ownStroke === 'none') return false;
+  if (
+    ownStroke === 'none' &&
+    el.tagName?.toLowerCase() === 'path' &&
+    normalizeConverterPathData(el.getAttribute('d')) === CONVERTER_BOUNDS_PATH_D
+  ) {
+    return false;
+  }
+  if (ownStroke) return true;
+
+  const inheritedStroke = getConverterInheritedPaint(el, 'stroke');
+  if (inheritedStroke === 'none') return false;
+  if (inheritedStroke) return true;
+
+  return false;
+}
+
+function analyzeConverterSvgPaintSupport(svgText) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgText, 'image/svg+xml');
+  const svgEl = doc.querySelector('svg');
+  if (!svgEl) {
+    return { supportsFill: false, supportsStroke: false, mode: 'unknown', fillCount: 0, strokeCount: 0 };
+  }
+
+  let fillCount = 0;
+  let strokeCount = 0;
+  doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
+    if (isConverterVisibleFillTarget(el)) fillCount += 1;
+    if (isConverterVisibleStrokeTarget(el)) strokeCount += 1;
+  });
+
+  let mode = 'unknown';
+  if (fillCount > 0 && strokeCount > 0) mode = 'mixed';
+  else if (fillCount > 0) mode = 'fill-only';
+  else if (strokeCount > 0) mode = 'stroke-only';
+
+  return {
+    supportsFill: fillCount > 0,
+    supportsStroke: strokeCount > 0,
+    mode,
+    fillCount,
+    strokeCount,
+  };
+}
+
+function sanitizeConverterSvg(svgEl) {
+  svgEl.querySelectorAll('script, foreignObject').forEach((node) => node.remove());
+  svgEl.querySelectorAll('*').forEach((node) => {
+    Array.from(node.attributes).forEach((attr) => {
+      if (/^on/i.test(attr.name)) {
+        node.removeAttribute(attr.name);
+      }
+    });
+  });
+}
+
+function applyConverterFillOverrides(svgEl) {
+  if (!converterState.fillColor) return;
+  svgEl.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
+    if (!isConverterVisibleFillTarget(el)) return;
+    el.setAttribute('fill', converterState.fillColor);
+  });
+}
+
+function applyConverterStrokeOverrides(svgEl) {
+  if (!converterState.strokeColor) return;
+  svgEl.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
+    if (!isConverterVisibleStrokeTarget(el)) return;
+    el.setAttribute('stroke', converterState.strokeColor);
+  });
+}
+
+function buildStyledConverterSvg({ width = null, height = null } = {}) {
+  if (!converterState.svgText) return null;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(converterState.svgText, 'image/svg+xml');
+  const svgEl = doc.querySelector('svg');
+  if (!svgEl) return null;
+
+  sanitizeConverterSvg(svgEl);
+  applyConverterFillOverrides(svgEl);
+  applyConverterStrokeOverrides(svgEl);
+
+  if (width != null) svgEl.setAttribute('width', width);
+  if (height != null) svgEl.setAttribute('height', height);
+
+  const serializer = new XMLSerializer();
+  return serializer.serializeToString(svgEl);
+}
+
+function syncConverterColorDots(containerId, activeColor) {
+  const dots = document.getElementById(containerId);
+  if (!dots) return;
+  dots.querySelectorAll('.conv__color-dot').forEach((dot) => dot.classList.remove('conv__color-dot--active'));
+  if (!activeColor) {
+    dots.querySelector('.conv__color-dot[data-conv-color=""]')?.classList.add('conv__color-dot--active');
+    return;
+  }
+  dots.querySelector(`.conv__color-dot[data-conv-color="${activeColor}"]`)?.classList.add('conv__color-dot--active');
+}
+
+function setConverterColorRowDisabled(containerId, disabled) {
+  const row = document.getElementById(containerId);
+  if (!row) return;
+  row.classList.toggle('is-disabled', disabled);
+  row.querySelectorAll('button, input[type="color"]').forEach((control) => {
+    control.disabled = disabled;
+    control.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  });
+}
+
+function updateConverterSvgUiState() {
+  const fillPicker = document.getElementById('convFillPicker');
+  const strokePicker = document.getElementById('convStrokePicker');
+  if (fillPicker) fillPicker.value = converterState.fillColor || '#FFFFFF';
+  if (strokePicker) strokePicker.value = converterState.strokeColor || '#FFFFFF';
+  syncConverterColorDots('convFillDots', converterState.fillColor);
+  syncConverterColorDots('convStrokeDots', converterState.strokeColor);
+  setConverterColorRowDisabled('convFillDots', !converterState.paintSupport.supportsFill);
+  setConverterColorRowDisabled('convStrokeDots', !converterState.paintSupport.supportsStroke);
+}
+
+function resetConverterSvgStyleState() {
+  converterState.fillColor = null;
+  converterState.strokeColor = null;
+}
 
 function renderConverter() {
   removePackCatalog();
@@ -6066,6 +6253,18 @@ function renderConverter() {
               <input type="number" class="conv__size-custom" id="convCustomSize" min="1" max="4096" value="64">
               <span class="conv__size-custom-unit">px</span>
             </div>
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Fill <span class="conv__tip-icon" data-tip="Recolors visible fill shapes. Some uploaded SVGs may be stroke-only.">?</span></label>
+          <div class="conv__color-dots" id="convFillDots">
+            ${renderConverterColorDotRow('Fill', converterState.fillColor, true)}
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Stroke <span class="conv__tip-icon" data-tip="Recolors visible stroke paths. Some uploaded SVGs may be fill-only.">?</span></label>
+          <div class="conv__color-dots" id="convStrokeDots">
+            ${renderConverterColorDotRow('Stroke', converterState.strokeColor, true)}
           </div>
         </div>
         <div class="conv__opt-row">
@@ -6262,6 +6461,37 @@ function initConverterControls() {
     runConversion();
   });
 
+  // Fill / stroke palettes
+  const fillDots = document.getElementById('convFillDots');
+  fillDots?.addEventListener('click', (event) => {
+    const dot = event.target.closest('.conv__color-dot');
+    if (!dot || dot.disabled || !converterState.paintSupport.supportsFill) return;
+    converterState.fillColor = dot.dataset.convColor || null;
+    updateConverterSvgUiState();
+    runConversion();
+  });
+  document.getElementById('convFillPicker')?.addEventListener('input', (event) => {
+    if (!converterState.paintSupport.supportsFill) return;
+    converterState.fillColor = event.target.value;
+    updateConverterSvgUiState();
+    runConversion();
+  });
+
+  const strokeDots = document.getElementById('convStrokeDots');
+  strokeDots?.addEventListener('click', (event) => {
+    const dot = event.target.closest('.conv__color-dot');
+    if (!dot || dot.disabled || !converterState.paintSupport.supportsStroke) return;
+    converterState.strokeColor = dot.dataset.convColor || null;
+    updateConverterSvgUiState();
+    runConversion();
+  });
+  document.getElementById('convStrokePicker')?.addEventListener('input', (event) => {
+    if (!converterState.paintSupport.supportsStroke) return;
+    converterState.strokeColor = event.target.value;
+    updateConverterSvgUiState();
+    runConversion();
+  });
+
   // Padding
   document.getElementById('convPadding')?.addEventListener('input', e => {
     converterState.padding = parseInt(e.target.value, 10);
@@ -6336,6 +6566,7 @@ function initConverterControls() {
     converterState.bgColor = '#ffffff';
     converterState.padding = 8;
     converterState.quality = 1;
+    resetConverterSvgStyleState();
     // Update UI controls
     document.querySelectorAll('.conv__size-btn').forEach(b => {
       b.classList.toggle('conv__size-btn--active', b.dataset.size === '64');
@@ -6350,6 +6581,7 @@ function initConverterControls() {
     const padVal = document.getElementById('convPaddingVal');
     if (padVal) padVal.textContent = '8px';
     document.querySelector('[name="convQuality"][value="1"]').checked = true;
+    updateConverterSvgUiState();
     runConversion();
   });
 
@@ -6427,6 +6659,8 @@ function initConverterControls() {
     });
     observer.observe(document.body, { childList: true });
   }
+
+  updateConverterSvgUiState();
 }
 
 function loadConverterFile(file) {
@@ -6443,6 +6677,7 @@ function loadConverterFile(file) {
 function loadConverterSvgText(svgText, filename) {
   converterState.svgText = svgText;
   converterState.mode = 'svg-to-png';
+  converterState.paintSupport = analyzeConverterSvgPaintSupport(svgText);
   // Switch to SVG→PNG mode
   document.querySelectorAll('.conv__mode-tab').forEach(t => t.classList.remove('conv__mode-tab--active'));
   document.querySelector('[data-mode="svg-to-png"]')?.classList.add('conv__mode-tab--active');
@@ -6457,12 +6692,20 @@ function loadConverterSvgText(svgText, filename) {
   const url = URL.createObjectURL(blob);
   showConverterInput(url, filename || 'Pasted SVG', svgText.length);
   converterState.pngDataUrl = '';
+  updateConverterSvgUiState();
   runConversion();
 }
 
 function loadConverterPng(dataUrl, filename) {
   converterState.pngDataUrl = dataUrl;
   converterState.svgText = '';
+  converterState.paintSupport = {
+    supportsFill: false,
+    supportsStroke: false,
+    mode: 'unknown',
+    fillCount: 0,
+    strokeCount: 0,
+  };
   converterState.mode = 'png-to-svg';
   // Switch to PNG→SVG mode
   document.querySelectorAll('.conv__mode-tab').forEach(t => t.classList.remove('conv__mode-tab--active'));
@@ -6473,6 +6716,7 @@ function loadConverterPng(dataUrl, filename) {
   document.getElementById('convCopyLabel').textContent = 'Copy SVG';
   document.getElementById('convPasteBtn').style.display = 'none';
   showConverterInput(dataUrl, filename, null);
+  updateConverterSvgUiState();
   runConversion();
 }
 
@@ -6495,6 +6739,13 @@ function clearConverterInput() {
   converterState.pngDataUrl = '';
   converterState.outputBlob = null;
   converterState.outputDataUrl = '';
+  converterState.paintSupport = {
+    supportsFill: false,
+    supportsStroke: false,
+    mode: 'unknown',
+    fillCount: 0,
+    strokeCount: 0,
+  };
   document.getElementById('convDropZone').style.display = '';
   document.getElementById('convInputPreview').style.display = 'none';
   document.getElementById('convOutputPreview').style.display = 'none';
@@ -6502,6 +6753,7 @@ function clearConverterInput() {
   document.getElementById('convActions').style.display = 'none';
   const fileInput = document.getElementById('convFileInput');
   if (fileInput) fileInput.value = '';
+  updateConverterSvgUiState();
 }
 
 function runConversion() {
@@ -6552,11 +6804,11 @@ function convertSvgToPng() {
     canvasW = Math.round(targetSize * ar);
   }
 
-  // Set explicit dimensions for rendering
-  svgEl.setAttribute('width', canvasW);
-  svgEl.setAttribute('height', canvasH);
-  const serializer = new XMLSerializer();
-  const sized = serializer.serializeToString(svgEl);
+  const sized = buildStyledConverterSvg({ width: canvasW, height: canvasH });
+  if (!sized) {
+    showToast('SVG render failed');
+    return;
+  }
 
   const blob = new Blob([sized], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
