@@ -3050,6 +3050,7 @@ function loadSvgIntoMotionLab(svgText) {
       const parts = vb.trim().split(/\s+/);
       const vbWidth = parseFloat(parts[2]) || 0;
       if (vbWidth >= 256) {
+        clone.setAttribute(MOTION_LAB_LARGE_VIEWBOX_ATTR, MOTION_LAB_LARGE_VIEWBOX_VALUE);
         const defaultSW = String(Math.round(vbWidth / 16));
         clone.querySelectorAll('path,circle,rect,polygon,polyline,line,ellipse').forEach(el => {
           if (!el.getAttribute('stroke-width')) {
@@ -3061,6 +3062,7 @@ function loadSvgIntoMotionLab(svgText) {
         });
       }
     }
+    wrapMotionLabDrawableChildren(clone);
     // Ensure currentColor resolves to theme-appropriate text color
     clone.style.color = 'var(--si-text)';
 
@@ -3075,11 +3077,13 @@ function loadSvgIntoMotionLab(svgText) {
 
     // Element selection on canvas (click to select SVG children)
     preview.addEventListener('click', (e) => {
+      const selectionRoot = getMotionLabAnimTarget(clone);
       let target = e.target;
-      while (target && target !== clone && target.parentElement !== clone) {
+      while (target && target !== selectionRoot && target.parentElement !== selectionRoot) {
         target = target.parentElement;
       }
-      if (target && target !== clone && target !== preview && target !== stageRing) {
+      if (isMotionLabAnimTarget(target)) return;
+      if (target && target !== clone && target !== selectionRoot && target !== preview && target !== stageRing) {
         const selector = getElementSelector(target);
         selectElement(selector);
       }
@@ -3122,14 +3126,97 @@ function sanitizeSel(selector) {
   return selector.replace(/[^\w-]/g, '_');
 }
 
+const MOTION_LAB_ANIM_TARGET_ATTR = 'data-ml-anim-target';
+const MOTION_LAB_ANIM_TARGET_VALUE = 'true';
+const MOTION_LAB_ANIM_TARGET_SELECTOR = `[${MOTION_LAB_ANIM_TARGET_ATTR}="${MOTION_LAB_ANIM_TARGET_VALUE}"]`;
+const MOTION_LAB_HAS_ANIM_TARGET_ATTR = 'data-ml-has-anim-target';
+const MOTION_LAB_HAS_ANIM_TARGET_VALUE = 'true';
+const MOTION_LAB_LARGE_VIEWBOX_ATTR = 'data-ml-large-viewbox';
+const MOTION_LAB_LARGE_VIEWBOX_VALUE = 'true';
+const MOTION_LAB_NON_DRAWABLE_TAGS = new Set([
+  'defs',
+  'metadata',
+  'desc',
+  'title',
+  'lineargradient',
+  'radialgradient',
+  'stop',
+  'clippath',
+  'mask',
+  'style',
+  'filter',
+  'pattern',
+  'marker',
+  'symbol',
+]);
+
+function isMotionLabAnimTarget(el) {
+  return !!(el && el.nodeType === 1 && el.getAttribute?.(MOTION_LAB_ANIM_TARGET_ATTR) === MOTION_LAB_ANIM_TARGET_VALUE);
+}
+
+function wrapMotionLabDrawableChildren(svgEl) {
+  if (!svgEl) return;
+  if (Array.from(svgEl.children).some(isMotionLabAnimTarget)) {
+    svgEl.setAttribute(MOTION_LAB_HAS_ANIM_TARGET_ATTR, MOTION_LAB_HAS_ANIM_TARGET_VALUE);
+    return;
+  }
+
+  const drawableChildren = Array.from(svgEl.children).filter((child) => {
+    return !MOTION_LAB_NON_DRAWABLE_TAGS.has(child.tagName.toLowerCase());
+  });
+  if (!drawableChildren.length) {
+    svgEl.removeAttribute(MOTION_LAB_HAS_ANIM_TARGET_ATTR);
+    return;
+  }
+
+  const wrapper = svgEl.ownerDocument.createElementNS('http://www.w3.org/2000/svg', 'g');
+  wrapper.setAttribute('class', 'ml-icon-root');
+  wrapper.setAttribute(MOTION_LAB_ANIM_TARGET_ATTR, MOTION_LAB_ANIM_TARGET_VALUE);
+
+  svgEl.insertBefore(wrapper, drawableChildren[0]);
+  drawableChildren.forEach((child) => wrapper.appendChild(child));
+  svgEl.setAttribute(MOTION_LAB_HAS_ANIM_TARGET_ATTR, MOTION_LAB_HAS_ANIM_TARGET_VALUE);
+}
+
+function getMotionLabSvgRoot() {
+  return document.querySelector('#mlPreview svg');
+}
+
+function getMotionLabAnimTarget(svgEl = getMotionLabSvgRoot()) {
+  if (!svgEl) return null;
+  return Array.from(svgEl.children).find(isMotionLabAnimTarget) || svgEl;
+}
+
+function getMotionLabPreviewRootSelector(containerId = 'mlPreview') {
+  return `#${containerId} svg[${MOTION_LAB_HAS_ANIM_TARGET_ATTR}="${MOTION_LAB_HAS_ANIM_TARGET_VALUE}"] ${MOTION_LAB_ANIM_TARGET_SELECTOR}, #${containerId} svg:not([${MOTION_LAB_HAS_ANIM_TARGET_ATTR}="${MOTION_LAB_HAS_ANIM_TARGET_VALUE}"])`;
+}
+
+function getMotionLabExportRootSelector() {
+  return `svg[${MOTION_LAB_HAS_ANIM_TARGET_ATTR}="${MOTION_LAB_HAS_ANIM_TARGET_VALUE}"] ${MOTION_LAB_ANIM_TARGET_SELECTOR}, svg:not([${MOTION_LAB_HAS_ANIM_TARGET_ATTR}="${MOTION_LAB_HAS_ANIM_TARGET_VALUE}"])`;
+}
+
+function prefixSelectorList(prefix, selectorList) {
+  return selectorList
+    .split(',')
+    .map((part) => `${prefix}${part.trim()}`)
+    .join(', ');
+}
+
+function shouldUseMotionLabNonScalingStroke(svgEl = getMotionLabSvgRoot()) {
+  return !!svgEl && svgEl.getAttribute(MOTION_LAB_LARGE_VIEWBOX_ATTR) !== MOTION_LAB_LARGE_VIEWBOX_VALUE;
+}
+
 function getElementSelector(el) {
   if (el.id) return `#${el.id}`;
-  if (el.classList.length > 0) return `.${el.classList[0]}`;
+  if (el.classList.length > 0 && !isMotionLabAnimTarget(el)) return `.${el.classList[0]}`;
   // Positional fallback: nth-child counts ALL children regardless of type
   const parent = el.parentElement;
   if (!parent) return el.tagName.toLowerCase();
   const allChildren = Array.from(parent.children);
   const idx = allChildren.indexOf(el);
+  if (isMotionLabAnimTarget(parent)) {
+    return `${MOTION_LAB_ANIM_TARGET_SELECTOR} > :nth-child(${idx + 1})`;
+  }
   return `:nth-child(${idx + 1})`;
 }
 
@@ -3157,7 +3244,8 @@ function buildElementTree(svgEl) {
   }
 
   // Walk SVG children (skip the svg root itself)
-  for (const child of svgEl.children) {
+  const treeRoot = getMotionLabAnimTarget(svgEl);
+  for (const child of treeRoot.children) {
     walk(child, 0);
   }
 
@@ -3586,28 +3674,29 @@ function generateTrackCSS(selector, track, trigger, containerId, forPreview = fa
   }
   css += `}\n`;
 
-  // Resolve CSS target: __root__ targets the SVG element itself
-  const cssTarget = selector === '__root__' ? 'svg' : selector;
-
   // Preview always uses simple loop selector (animation is always visible)
   if (forPreview) {
-    css += `#${containerId} ${cssTarget} {\n`;
+    const targetSelector = selector === '__root__'
+      ? getMotionLabPreviewRootSelector(containerId)
+      : `#${containerId} ${selector}`;
+    css += `${targetSelector} {\n`;
     css += `  animation: ${name} ${dur}ms ${easing} infinite;\n`;
     css += `}\n\n`;
     return css;
   }
 
   // Export: build rule based on trigger mode
+  const exportTarget = selector === '__root__' ? getMotionLabExportRootSelector() : selector;
   if (trigger === 'hover') {
-    css += `#${containerId}:hover ${cssTarget} {\n`;
+    css += `${prefixSelectorList(`#${containerId}:hover `, exportTarget)} {\n`;
     css += `  animation: ${name} ${dur}ms ${easing} infinite;\n`;
     css += `}\n\n`;
   } else if (trigger === 'loop') {
-    css += `#${containerId} ${cssTarget} {\n`;
+    css += `${prefixSelectorList(`#${containerId} `, exportTarget)} {\n`;
     css += `  animation: ${name} ${dur}ms ${easing} infinite;\n`;
     css += `}\n\n`;
   } else if (trigger === 'click') {
-    css += `#${containerId}.ml--active ${cssTarget} {\n`;
+    css += `${prefixSelectorList(`#${containerId}.ml--active `, exportTarget)} {\n`;
     css += `  animation: ${name} ${dur}ms ${easing} 3;\n`;
     css += `}\n\n`;
   }
@@ -3669,13 +3758,14 @@ function generateFullCSS(forPreview = false) {
   const roEl = document.querySelector('[id^="slRot_"]');
   const scPct = scEl ? parseFloat(scEl.value) : 0;
   const roDeg = roEl ? parseFloat(roEl.value) : 0;
+  const rootTransformRules = [];
   if (scPct !== 0 || roDeg !== 0) {
     const sc = 1 + scPct / 100;
     const parts = [];
     if (scPct !== 0) parts.push(`scale(${sc})`);
     if (roDeg !== 0) parts.push(`rotate(${roDeg}deg)`);
-    staticRules.push(`  transform: ${parts.join(' ')};`);
-    staticRules.push(`  transform-origin: center;`);
+    rootTransformRules.push(`  transform: ${parts.join(' ')};`);
+    rootTransformRules.push(`  transform-origin: center;`);
   }
   // Read opacity
   const opEl = document.querySelector('[id^="slOpac_"]');
@@ -3687,6 +3777,13 @@ function generateFullCSS(forPreview = false) {
   if (staticRules.length) {
     css += `/* Static overrides */\n`;
     css += `#${containerId} svg {\n${staticRules.join('\n')}\n}\n\n`;
+  }
+  if (rootTransformRules.length) {
+    css += `/* Root transform overrides */\n`;
+    const rootSelector = forPreview
+      ? getMotionLabPreviewRootSelector(containerId)
+      : prefixSelectorList(`#${containerId} `, getMotionLabExportRootSelector());
+    css += `${rootSelector} {\n${rootTransformRules.join('\n')}\n}\n\n`;
   }
 
   return css;
@@ -3700,7 +3797,12 @@ function rewriteForStandalone(css) {
   return css
     .replace(/#mlPreview:hover\s+svg\b/g,      '#animated-icon:hover')
     .replace(/#mlPreview\.ml--active\s+svg\b/g, '#animated-icon.active')
-    .replace(/#mlPreview\s+svg\b/g,             '#animated-icon');
+    .replace(/#mlPreview\s+svg\b/g,             '#animated-icon')
+    // Also map any remaining container-prefixed element selectors
+    // (e.g. "#mlPreview [data-ml-anim-target] > :nth-child(1)").
+    .replace(/#mlPreview:hover\b/g,             '#animated-icon:hover')
+    .replace(/#mlPreview\.ml--active\b/g,       '#animated-icon.active')
+    .replace(/#mlPreview\b/g,                   '#animated-icon');
 }
 
 /**
@@ -3711,7 +3813,12 @@ function rewriteForExternal(css) {
   return css
     .replace(/#mlPreview:hover\s+/g,      '#icon-container:hover ')
     .replace(/#mlPreview\.ml--active\s+/g, '#icon-container.active ')
-    .replace(/#mlPreview\s+/g,            '#icon-container ');
+    .replace(/#mlPreview\s+/g,            '#icon-container ')
+    // Future-proof: if selectors are emitted without a descendant combinator,
+    // still remap the preview container id.
+    .replace(/#mlPreview:hover\b/g,       '#icon-container:hover')
+    .replace(/#mlPreview\.ml--active\b/g, '#icon-container.active')
+    .replace(/#mlPreview\b/g,             '#icon-container');
 }
 
 /**
@@ -3815,7 +3922,7 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
   // If user explicitly stopped playback and this is NOT a play/preset action,
   // strip animation CSS so icon stays still.
   if (motionLab.isStopped && !forcePlay) {
-    const baseCSS = `#mlPreview svg { transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
+    const baseCSS = `${getMotionLabPreviewRootSelector('mlPreview')} { transform-box: fill-box; transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
     styleEl.textContent = baseCSS;
     return;
   }
@@ -3831,7 +3938,7 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
   }
 
   // Add transform-origin for smooth scale/rotate (both root and children)
-  const baseCSS = `#mlPreview svg { transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
+  const baseCSS = `${getMotionLabPreviewRootSelector('mlPreview')} { transform-box: fill-box; transform-origin: center; }\n#mlPreview svg * { transform-box: fill-box; transform-origin: center; }\n`;
   styleEl.textContent = baseCSS + css;
 
   // Sync the stop/play button to reflect animation state
@@ -3858,9 +3965,14 @@ function generateAndInjectCSS({ forcePlay = false } = {}) {
         return t && /scale\(/.test(t);
       })
     );
-    const shapes = svgEl.querySelectorAll('path,circle,rect,line,polyline,polygon,ellipse');
-    if (usesScale) {
+    const animTarget = getMotionLabAnimTarget(svgEl);
+    const shapes = animTarget
+      ? animTarget.querySelectorAll('path,circle,rect,line,polyline,polygon,ellipse')
+      : [];
+    if (usesScale && shouldUseMotionLabNonScalingStroke(svgEl)) {
       shapes.forEach(el => { el.setAttribute('vector-effect', 'non-scaling-stroke'); });
+    } else {
+      shapes.forEach(el => { el.removeAttribute('vector-effect'); });
     }
   }
 }
@@ -4289,9 +4401,8 @@ function livePreviewProp(selector, prop, rawVal) {
   const v = parseFloat(rawVal);
   switch (prop) {
     case 'opacity': {
-      // Target SVG root so opacity applies to entire icon uniformly
-      const svgRoot = document.querySelector('#mlPreview svg');
-      if (svgRoot) svgRoot.style.opacity = String(v);
+      const animTarget = getMotionLabAnimTarget();
+      if (animTarget) animTarget.style.opacity = String(v);
       break;
     }
     case 'scalePct':
@@ -4312,16 +4423,15 @@ function updateLiveTransform(selector) {
   const scPct = scEl ? parseFloat(scEl.value) : 0;
   const sc = 1 + scPct / 100;
   const ro = roEl ? parseFloat(roEl.value) : 0;
-  // Always target SVG root so all paths transform as a unit
-  const svgRoot = document.querySelector('#mlPreview svg');
-  if (!svgRoot) return;
-  svgRoot.style.transform = `scale(${sc}) rotate(${ro}deg)`;
-  svgRoot.style.transformBox = 'fill-box';
-  svgRoot.style.transformOrigin = 'center';
+  const animTarget = getMotionLabAnimTarget();
+  if (!animTarget) return;
+  animTarget.style.transform = `scale(${sc}) rotate(${ro}deg)`;
+  animTarget.style.transformBox = 'fill-box';
+  animTarget.style.transformOrigin = 'center';
 
   // Apply non-scaling-stroke to keep stroke width constant under scale
-  const shapes = svgRoot.querySelectorAll('path,circle,rect,line,polyline,polygon,ellipse');
-  if (sc !== 1) {
+  const shapes = animTarget.querySelectorAll('path,circle,rect,line,polyline,polygon,ellipse');
+  if (sc !== 1 && shouldUseMotionLabNonScalingStroke()) {
     shapes.forEach(el => { el.setAttribute('vector-effect', 'non-scaling-stroke'); });
   } else {
     shapes.forEach(el => { el.removeAttribute('vector-effect'); });
