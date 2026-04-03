@@ -2445,9 +2445,178 @@ const motionLab = {
   strokeColor: null,
   assetProfile: null,
   controlsWired: false,   // guard against listener stacking on reload
+  panelIndex: 0,
+  panelTimer: null,
+  panelPaused: false,
+  panelTransitionTimer: null,
 };
 
+const MOTION_LAB_ROTATING_PANEL_ITEMS = [
+  {
+    title: 'Preview instantly',
+    body: 'Click or hover an animation button to preview it.'
+  },
+  {
+    title: 'Adjust the icon',
+    body: 'Use Fill, Stroke, Size, Rotate, and Fade on the right.'
+  },
+  {
+    title: 'Choose playback',
+    body: 'Loop, Hover, and Click control how your export will play.'
+  },
+  {
+    title: 'Export when ready',
+    body: 'Download SVG or copy CSS once the motion looks right.'
+  },
+  {
+    title: 'Reset anytime',
+    body: 'Use the reset icons to restore a control to its default value.'
+  },
+  {
+    title: 'Test colors',
+    body: 'Not every icon supports both Fill and Stroke, so try them and see what works best.'
+  }
+];
+
+function motionLabPrefersReducedMotion() {
+  return typeof window !== 'undefined'
+    && typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function stopMotionLabRotatingPanel() {
+  if (motionLab.panelTimer) {
+    window.clearInterval(motionLab.panelTimer);
+    motionLab.panelTimer = null;
+  }
+  clearMotionLabRotatingPanelTransition();
+}
+
+function clearMotionLabRotatingPanelTransition() {
+  if (motionLab.panelTransitionTimer) {
+    window.clearTimeout(motionLab.panelTransitionTimer);
+    motionLab.panelTransitionTimer = null;
+  }
+}
+
+function renderMotionLabRotatingPanel(index = motionLab.panelIndex) {
+  const panelTitle = document.getElementById('mlRotatingPanelTitle');
+  const panelCopy = document.getElementById('mlRotatingPanelCopy');
+  const panelDots = document.getElementById('mlRotatingPanelDots');
+  if (!panelTitle || !panelCopy || !panelDots || !MOTION_LAB_ROTATING_PANEL_ITEMS.length) return;
+
+  const normalizedIndex = ((index % MOTION_LAB_ROTATING_PANEL_ITEMS.length) + MOTION_LAB_ROTATING_PANEL_ITEMS.length) % MOTION_LAB_ROTATING_PANEL_ITEMS.length;
+  const item = MOTION_LAB_ROTATING_PANEL_ITEMS[normalizedIndex];
+  motionLab.panelIndex = normalizedIndex;
+  panelTitle.textContent = item.title;
+  panelCopy.textContent = item.body;
+  panelDots.querySelectorAll('.ml__rotating-panel-dot').forEach((dot, dotIndex) => {
+    const isActive = dotIndex === normalizedIndex;
+    dot.classList.toggle('active', isActive);
+    dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+  });
+}
+
+function isMotionLabRotatingPanelPaused() {
+  const panel = document.getElementById('mlRotatingPanel');
+  return !!panel && (motionLab.panelPaused || panel.matches(':hover') || panel.matches(':focus-within'));
+}
+
+function setMotionLabRotatingPanelIndex(nextIndex, { animate = true, ignorePause = false } = {}) {
+  const panelCard = document.getElementById('mlRotatingPanelCard');
+  const normalizedIndex = ((nextIndex % MOTION_LAB_ROTATING_PANEL_ITEMS.length) + MOTION_LAB_ROTATING_PANEL_ITEMS.length) % MOTION_LAB_ROTATING_PANEL_ITEMS.length;
+  const shouldAnimate = animate && panelCard && !motionLabPrefersReducedMotion();
+
+  clearMotionLabRotatingPanelTransition();
+
+  if (!shouldAnimate) {
+    renderMotionLabRotatingPanel(normalizedIndex);
+    return;
+  }
+
+  panelCard.classList.remove('is-entering');
+  panelCard.classList.add('is-leaving');
+
+  motionLab.panelTransitionTimer = window.setTimeout(() => {
+    if (!ignorePause && isMotionLabRotatingPanelPaused()) {
+      panelCard.classList.remove('is-leaving');
+      motionLab.panelTransitionTimer = null;
+      return;
+    }
+    renderMotionLabRotatingPanel(normalizedIndex);
+    panelCard.classList.remove('is-leaving');
+    panelCard.classList.add('is-entering');
+    motionLab.panelTransitionTimer = window.setTimeout(() => {
+      panelCard.classList.remove('is-entering');
+      motionLab.panelTransitionTimer = null;
+    }, 380);
+  }, 180);
+}
+
+function startMotionLabRotatingPanelTimer() {
+  if (motionLab.panelTimer) {
+    window.clearInterval(motionLab.panelTimer);
+    motionLab.panelTimer = null;
+  }
+
+  if (motionLabPrefersReducedMotion() || MOTION_LAB_ROTATING_PANEL_ITEMS.length < 2) return;
+
+  motionLab.panelTimer = window.setInterval(() => {
+    if (!document.getElementById('motionLabView')) {
+      stopMotionLabRotatingPanel();
+      return;
+    }
+    if (isMotionLabRotatingPanelPaused()) return;
+    setMotionLabRotatingPanelIndex(motionLab.panelIndex + 1);
+  }, 7000);
+}
+
+function initMotionLabRotatingPanel() {
+  const panel = document.getElementById('mlRotatingPanel');
+  if (!panel) return;
+  const panelCard = document.getElementById('mlRotatingPanelCard');
+  const panelDots = document.getElementById('mlRotatingPanelDots');
+
+  stopMotionLabRotatingPanel();
+  motionLab.panelPaused = false;
+  renderMotionLabRotatingPanel(motionLab.panelIndex);
+
+  const setPanelPaused = (paused) => {
+    motionLab.panelPaused = paused;
+    if (!paused) return;
+    clearMotionLabRotatingPanelTransition();
+    panelCard?.classList.remove('is-leaving', 'is-entering');
+  };
+
+  panel.addEventListener('mouseenter', () => { setPanelPaused(true); });
+  panel.addEventListener('mouseleave', () => { setPanelPaused(false); });
+  panel.addEventListener('focusin', () => { setPanelPaused(true); });
+  panel.addEventListener('focusout', () => { setPanelPaused(false); });
+
+  panelDots?.addEventListener('mousedown', (event) => {
+    const dot = event.target.closest('.ml__rotating-panel-dot');
+    if (!dot) return;
+    event.preventDefault();
+  });
+
+  panelDots?.addEventListener('click', (event) => {
+    const dot = event.target.closest('.ml__rotating-panel-dot');
+    if (!dot) return;
+    const nextIndex = Number.parseInt(dot.dataset.tipIndex || '', 10);
+    if (!Number.isFinite(nextIndex)) return;
+    clearMotionLabRotatingPanelTransition();
+    panelCard?.classList.remove('is-leaving', 'is-entering');
+    setMotionLabRotatingPanelIndex(nextIndex, { ignorePause: true });
+    startMotionLabRotatingPanelTimer();
+  });
+
+  startMotionLabRotatingPanelTimer();
+}
+
 function renderMotionLab() {
+  stopMotionLabRotatingPanel();
+  motionLab.panelIndex = 0;
+  motionLab.panelPaused = false;
   removePackCatalog(); // clears all competing views (motionLabView, converterView, pricingView, etc.)
 
   const gridArea = document.getElementById('gridArea');
@@ -2794,19 +2963,25 @@ function renderMotionLab() {
             </button>
           </div>
 
-          <!-- AI Agent -->
-          <div class="ml__agent-box">
-            <div class="ml__agent-header">
-              <span class="material-symbols-outlined" style="font-size:14px;color:var(--si-primary)">smart_toy</span>
-              <span class="ml__agent-title">AI Agent</span>
-              <span class="ml__coming-soon">Coming Soon</span>
+          <div class="ml__rotating-panel" id="mlRotatingPanel">
+            <div class="ml__rotating-panel-head">
+              <span class="material-symbols-outlined" style="font-size:14px;color:var(--si-primary)">tips_and_updates</span>
+              <span class="ml__rotating-panel-label">Quick Tips</span>
             </div>
-            <div class="ml__agent-row">
-              <textarea class="ml__agent-input" id="mlAgentInput" rows="2"
-                placeholder='Describe animation... e.g. "make it sparkle and glow"'></textarea>
-              <button class="ml__agent-apply-btn" id="mlAgentApply" data-tip="Generate">
-                <span class="material-symbols-outlined" style="font-size:16px">auto_fix_high</span>
-              </button>
+            <div class="ml__rotating-panel-card" id="mlRotatingPanelCard">
+              <div class="ml__rotating-panel-title" id="mlRotatingPanelTitle">${MOTION_LAB_ROTATING_PANEL_ITEMS[0].title}</div>
+              <p class="ml__rotating-panel-copy" id="mlRotatingPanelCopy">${MOTION_LAB_ROTATING_PANEL_ITEMS[0].body}</p>
+            </div>
+            <div class="ml__rotating-panel-dots" id="mlRotatingPanelDots">
+              ${MOTION_LAB_ROTATING_PANEL_ITEMS.map((_, index) => `
+                <button
+                  type="button"
+                  class="ml__rotating-panel-dot${index === 0 ? ' active' : ''}"
+                  data-tip-index="${index}"
+                  aria-label="Show tip ${index + 1}"
+                  aria-current="${index === 0 ? 'true' : 'false'}"
+                ></button>
+              `).join('')}
             </div>
           </div>
         </div>
@@ -2857,6 +3032,7 @@ function renderMotionLab() {
 
 
   gridArea.appendChild(view);
+  initMotionLabRotatingPanel();
 
   // Wire up SVG loading
   initMotionLabLoading();
@@ -2878,7 +3054,10 @@ function initMotionLabLoading() {
 
   // Library button - navigate back to icon grid
   const libBtn = document.getElementById('mlLibraryBtn');
-  libBtn?.addEventListener('click', () => switchView('browse'));
+  libBtn?.addEventListener('click', () => {
+    stopMotionLabRotatingPanel();
+    switchView('browse');
+  });
 
   // File button
   fileBtn?.addEventListener('click', () => fileInput?.click());
@@ -2976,119 +3155,6 @@ function initMotionLabLoading() {
     updateMotionLabAssetProfileHint();
   });
 
-  // Agent Apply button - keyword-based preset matching
-  const agentApplyBtn = document.getElementById('mlAgentApply');
-  const agentInput = document.getElementById('mlAgentInput');
-  agentApplyBtn?.addEventListener('click', () => {
-    const text = agentInput?.value?.trim().toLowerCase() || '';
-    if (!text) { showToast('Describe the animation you want.'); return; }
-
-    // Map keywords to preset names
-    const keywordMap = [
-      // Motion (existing)
-      { keys: ['pulse', 'throb'], preset: 'pulse' },
-      { keys: ['bounce', 'jump', 'hop'], preset: 'bounce' },
-      { keys: ['spin', 'rotate', 'turn', 'whirl', '360'], preset: 'spin' },
-      { keys: ['shake', 'vibrate', 'rattle'], preset: 'shake' },
-      { keys: ['float', 'hover', 'levitate', 'drift'], preset: 'float' },
-      { keys: ['pop', 'burst'], preset: 'pop' },
-      { keys: ['sparkle', 'shine', 'glitter', 'golden'], preset: 'sparkle' },
-      { keys: ['swing', 'sway', 'rock'], preset: 'swing' },
-      { keys: ['jitter', 'nervous', 'twitch'], preset: 'jitter' },
-      // Motion (new)
-      { keys: ['heartbeat', 'heart', 'cardiac', 'thump'], preset: 'heartbeat' },
-      { keys: ['rubberband', 'rubber', 'stretch', 'elastic', 'band'], preset: 'rubberband' },
-      { keys: ['jelly', 'gelatin', 'wobbly', 'gummy'], preset: 'jelly' },
-      { keys: ['ring', 'bell', 'chime', 'ding'], preset: 'ring' },
-      { keys: ['wobble', 'unstable', 'tilt'], preset: 'wobble' },
-      { keys: ['magnetic', 'magnet', 'attract', 'pull'], preset: 'magnetic' },
-      { keys: ['recoil', 'kickback', 'muscle'], preset: 'recoil' },
-      { keys: ['pendulum', 'clock', 'tick'], preset: 'pendulum' },
-      { keys: ['whiplash', 'whip', 'snap', 'lash'], preset: 'whiplash' },
-      { keys: ['tremor', 'earthquake', 'seismic', 'quake'], preset: 'tremor' },
-      { keys: ['neonglow', 'neon', 'glow', 'aura', 'plasma'], preset: 'neonglow' },
-      { keys: ['breathe', 'breath', 'zen', 'calm', 'ambient'], preset: 'breathe' },
-      { keys: ['metronome', 'tempo', 'rhythm'], preset: 'metronome' },
-      // Entrances
-      { keys: ['magneticin', 'magnetic in', 'magnet in', 'attract in', 'pull in', 'snap in'], preset: 'magneticIn' },
-      { keys: ['fade', 'fad', 'opacity', 'fadein', 'fade in', 'appear'], preset: 'fadeIn' },
-      { keys: ['scaleup', 'scale up', 'grow', 'zoom in'], preset: 'scaleUp' },
-      { keys: ['slideup', 'slide up', 'rise'], preset: 'slideUp' },
-      { keys: ['springland', 'spring land', 'spring', 'land'], preset: 'springLand' },
-      { keys: ['slingshot', 'launch', 'catapult'], preset: 'slingshot' },
-      { keys: ['glitchon', 'glitch on', 'glitch in', 'digital'], preset: 'glitchOn' },
-      { keys: ['unfold', 'reveal', 'origami'], preset: 'unfold' },
-      { keys: ['warpin', 'warp in', 'warp', 'teleport'], preset: 'warpIn' },
-      // Exits
-      { keys: ['fadeout', 'fade out', 'vanish', 'invisible', 'dissolve'], preset: 'fadeOut' },
-      { keys: ['scaledown', 'scale down', 'shrink', 'zoom out'], preset: 'scaleDown' },
-      { keys: ['slideout', 'slide out', 'exit'], preset: 'slideOut' },
-      { keys: ['vortex', 'spiral', 'drain', 'tornado'], preset: 'vortex' },
-      { keys: ['glitchoff', 'glitch off', 'glitch out'], preset: 'glitchOff' },
-      { keys: ['dissolve', 'dissipate', 'evaporate'], preset: 'dissolve' },
-      // Phase 2: Motion
-      { keys: ['orbit', 'circular', 'revolve'], preset: 'orbit' },
-      { keys: ['flicker', 'lightbulb', 'strobe'], preset: 'flicker' },
-      { keys: ['squish', 'compress', 'squeeze'], preset: 'squish' },
-      { keys: ['glide', 'aerodynamic', 'soar'], preset: 'glide' },
-      { keys: ['radar', 'scan pulse', 'sweep pulse'], preset: 'radar' },
-      { keys: ['beacon', 'signal flash', 'warning light'], preset: 'beacon' },
-      // Special
-      { keys: ['chase', 'orbit chase', 'satellite'], preset: 'chase' },
-      { keys: ['stream', 'streaming', 'feed', 'cascade'], preset: 'stream' },
-      { keys: ['trace', 'draw', 'outline'], preset: 'trace' },
-      { keys: ['flow', 'pipeline', 'throughput'], preset: 'flow' },
-      { keys: ['converge', 'collapse inward', 'focus inward'], preset: 'converge' },
-      { keys: ['cube', 'box turn', 'isometric'], preset: 'cube' },
-      { keys: ['typing', 'type', 'cursor'], preset: 'typing' },
-      { keys: ['reason', 'reasoning', 'process'], preset: 'reason' },
-      { keys: ['sweep', 'arc sweep', 'scan'], preset: 'sweep' },
-      { keys: ['scatter', 'disperse', 'reform'], preset: 'scatter' },
-      { keys: ['crest', 'wave crest', 'surge'], preset: 'crest' },
-      { keys: ['tap', 'contactless', 'nfc'], preset: 'tap' },
-      { keys: ['shuffle', 'mix', 'cards'], preset: 'shuffle' },
-      { keys: ['infinity', 'figure eight', 'looping'], preset: 'infinity' },
-      { keys: ['spatial', 'depth orbit', 'layered'], preset: 'spatial' },
-      { keys: ['page flip', 'page', 'flip page'], preset: 'pageFlip' },
-      { keys: ['book open', 'book', 'spread'], preset: 'bookOpen' },
-      { keys: ['domino', 'cascade tilt', 'chain reaction'], preset: 'domino' },
-      { keys: ['supernova', 'burst', 'starburst'], preset: 'supernova' },
-      { keys: ['black hole', 'collapse core', 'singularity'], preset: 'blackHole' },
-      { keys: ['fingerprint', 'biometric', 'scan print'], preset: 'fingerprint' },
-      { keys: ['badge tap', 'rfid', 'access tap'], preset: 'badgeTap' },
-      // Phase 2: Entrances
-      { keys: ['slideright', 'slide right', 'enter right'], preset: 'slideRight' },
-      { keys: ['slidedown', 'slide down', 'drop in', 'drop'], preset: 'slideDown' },
-      { keys: ['flipin', 'flip in', 'flip enter'], preset: 'flipIn' },
-      { keys: ['telegram', 'messenger', 'paper plane', 'arc in'], preset: 'telegram' },
-      { keys: ['bloom', 'flower', 'blossom', 'petal'], preset: 'bloom' },
-      { keys: ['shockwave', 'shock', 'explosive', 'impact'], preset: 'shockwave' },
-      // Phase 2: Exits
-      { keys: ['popout', 'pop out', 'squish out'], preset: 'popOut' },
-      { keys: ['slideleft', 'slide left', 'exit left'], preset: 'slideLeft' },
-      { keys: ['sinkdown', 'sink', 'gravity', 'heavy', 'fall'], preset: 'sinkDown' },
-      { keys: ['flipout', 'flip out', 'flip exit'], preset: 'flipOut' },
-      { keys: ['implode', 'crush', 'collapse'], preset: 'implode' },
-      { keys: ['puffout', 'puff', 'smoke', 'vapor'], preset: 'puffOut' },
-      { keys: ['launchout', 'launch out', 'rocket', 'takeoff'], preset: 'launchOut' },
-      { keys: ['shrinkspin', 'shrink spin', 'spin away'], preset: 'shrinkSpin' },
-      { keys: ['blinkout', 'blink out', 'blink'], preset: 'blinkOut' },
-    ];
-
-    const matched = keywordMap.filter(m => m.keys.some(k => text.includes(k)));
-    if (matched.length === 0) {
-      showToast('Try: bounce, heartbeat, jelly, magnetic, glitch on, vortex');
-      return;
-    }
-
-    // Apply first match normally, rest as composed
-    applyPreset(matched[0].preset);
-    for (let i = 1; i < matched.length; i++) {
-      composePreset(matched[i].preset);
-    }
-    showToast(`Applied: ${matched.map(m => m.preset).join(' + ')}`);
-    if (agentInput) agentInput.value = '';
-  });
 }
 
 function loadSvgIntoMotionLab(svgText) {
@@ -3512,11 +3578,7 @@ function updatePropsPanel() {
 
     <!-- Fill color -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Fill
-        <button class="ml__ctrl-reset" id="mlFillReset" data-tip="Reset fill">
-          <span class="material-symbols-outlined" style="font-size:13px">restart_alt</span>
-        </button>
-      </div>
+      <div class="ml__prop-title">Fill</div>
       <div class="ml__color-dots" id="mlFillDots">
         ${colorDotRow('Fill', motionLab.fillColor)}
       </div>
@@ -3524,11 +3586,7 @@ function updatePropsPanel() {
 
     <!-- Stroke color -->
     <div class="ml__prop-group">
-      <div class="ml__prop-title">Stroke
-        <button class="ml__ctrl-reset" id="mlStrokeReset" data-tip="Reset stroke">
-          <span class="material-symbols-outlined" style="font-size:13px">restart_alt</span>
-        </button>
-      </div>
+      <div class="ml__prop-title">Stroke</div>
       <div class="ml__color-dots" id="mlStrokeDots">
         ${colorDotRow('Stroke', motionLab.strokeColor)}
       </div>
@@ -3764,28 +3822,6 @@ function updatePropsPanel() {
     strokePicker.addEventListener('input', (e) => {
       applyStrokeToSvg(e.target.value);
       if (strokeDots) strokeDots.querySelectorAll('.ml__color-dot').forEach(d => d.classList.remove('ml__color-dot--active'));
-    });
-  }
-
-  // Wire Fill reset
-  const fillResetBtn = document.getElementById('mlFillReset');
-  if (fillResetBtn) {
-    fillResetBtn.addEventListener('click', () => {
-      applyFillToSvg(null);
-      syncDotHighlight('mlFillDots', null);
-      const picker = document.getElementById('mlFillPicker');
-      if (picker) picker.value = '#FFFFFF';
-    });
-  }
-
-  // Wire Stroke reset
-  const strokeResetBtn = document.getElementById('mlStrokeReset');
-  if (strokeResetBtn) {
-    strokeResetBtn.addEventListener('click', () => {
-      applyStrokeToSvg(null);
-      syncDotHighlight('mlStrokeDots', null);
-      const picker = document.getElementById('mlStrokePicker');
-      if (picker) picker.value = '#FFFFFF';
     });
   }
 
