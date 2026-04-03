@@ -18,6 +18,12 @@ import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { searchIcons } from './search.js';
 import { validateApiKey } from './auth.js';
+import {
+  MATERIAL_EXPORT_DEFAULT_AXES,
+  MATERIAL_EXPORT_SOURCE,
+  buildMaterialCacheKey,
+  buildMaterialSnapshotUrl,
+} from '../material-export.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -27,15 +33,28 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(__dirname, '..', 'public');
 const packsDir = join(dataDir, 'packs');
 const manifestPath = join(packsDir, 'manifest.json');
+const materialExportManifestPath = join(dataDir, 'material-export-manifest.json');
+
+const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
+  version: 1,
+  source: MATERIAL_EXPORT_SOURCE,
+  defaultAxes: MATERIAL_EXPORT_DEFAULT_AXES,
+};
+
+const materialExportState = {
+  manifest: null,
+  svgCache: new Map(),
+  failedKeys: new Set(),
+};
 
 function loadData() {
   const raw = JSON.parse(readFileSync(join(dataDir, 'icon-index.json'), 'utf8'));
   const synonyms = JSON.parse(readFileSync(join(dataDir, 'synonyms.json'), 'utf8'));
 
   // icon-index.json has { icons: [...] } where each entry is { id, name, lib, type, style, svg? }
-  // Skip font icons (Material Symbols) since MCP clients need actual SVG code
+  // Include Material Symbols so MCP tools can resolve export-grade SVG snapshots on demand.
   const freeIcons = raw.icons
-    .filter(entry => entry.type === 'svg' && entry.svg)
+    .filter(entry => (entry.type === 'svg' && entry.svg) || (entry.lib === 'material' && entry.type === 'font'))
     .map(icon => ({ ...icon, premium: false }));
 
   return { freeIcons, synonyms };
@@ -168,6 +187,105 @@ function extractIconCss(fullCss, iconClass) {
   return relevantLines.join('\n');
 }
 
+function loadMaterialExportManifest() {
+  if (materialExportState.manifest) return materialExportState.manifest;
+  if (existsSync(materialExportManifestPath)) {
+    try {
+      materialExportState.manifest = JSON.parse(readFileSync(materialExportManifestPath, 'utf8'));
+      return materialExportState.manifest;
+    } catch {
+      // Fall back below
+    }
+  }
+  materialExportState.manifest = MATERIAL_EXPORT_MANIFEST_FALLBACK;
+  return materialExportState.manifest;
+}
+
+function getMaterialExportAxes() {
+  const manifest = loadMaterialExportManifest();
+  return { ...MATERIAL_EXPORT_DEFAULT_AXES, ...(manifest?.defaultAxes || {}) };
+}
+
+function normalizeMaterialSnapshotSvg(rawSvg) {
+  if (!rawSvg) return null;
+  if (/\bfill="/.test(rawSvg)) return rawSvg;
+  return rawSvg.replace(/<svg([^>]*)>/, '<svg$1 fill="currentColor">');
+}
+
+async function resolveMaterialSnapshotSvg(icon) {
+  const manifest = loadMaterialExportManifest();
+  const axes = getMaterialExportAxes();
+  const cacheKey = buildMaterialCacheKey(icon.id, axes);
+
+  if (materialExportState.svgCache.has(cacheKey)) {
+    return {
+      svg: materialExportState.svgCache.get(cacheKey),
+      axes,
+      source: 'material-snapshot',
+    };
+  }
+
+  if (materialExportState.failedKeys.has(cacheKey)) return null;
+
+  const url = buildMaterialSnapshotUrl(icon.id, axes, manifest?.source || MATERIAL_EXPORT_SOURCE);
+  let response;
+  try {
+    response = await fetch(url);
+  } catch {
+    materialExportState.failedKeys.add(cacheKey);
+    return null;
+  }
+  if (!response.ok) {
+    materialExportState.failedKeys.add(cacheKey);
+    return null;
+  }
+
+  const svg = normalizeMaterialSnapshotSvg(await response.text());
+  materialExportState.svgCache.set(cacheKey, svg);
+  return {
+    svg,
+    axes,
+    source: 'material-snapshot',
+  };
+}
+
+async function buildToolIconResult(icon) {
+  let svg = icon.svg;
+  let materialAxes = null;
+  let svgSource = 'native-svg';
+
+  if (icon.lib === 'material') {
+    const resolved = await resolveMaterialSnapshotSvg(icon);
+    if (!resolved?.svg) return null;
+    svg = resolved.svg;
+    materialAxes = resolved.axes;
+    svgSource = resolved.source;
+  }
+
+  const result = {
+    id: icon.id,
+    name: icon.name,
+    library: icon.lib,
+    libraryName: libraryMeta[icon.lib]?.name || icon.lib,
+    type: 'svg',
+    originalType: icon.type,
+    premium: icon.premium || false,
+    svg,
+    svgSource,
+  };
+
+  if (materialAxes) {
+    result.materialExportAxes = materialAxes;
+  }
+
+  if (icon.premium && icon.css) {
+    result.css = icon.css;
+    result.usage = `<div class="si-anim si-anim--${icon.id}"><!-- paste SVG here --></div>`;
+  }
+
+  return result;
+}
+
 const { freeIcons, synonyms } = loadData();
 const premiumIcons = loadPremiumPacks();
 
@@ -289,21 +407,15 @@ server.tool(
         content: [{ type: 'text', text: `No icons found for "${query}"${library ? ` in ${library}` : ''}.` }],
       };
     }
-    const formatted = results.map(icon => {
-      const result = {
-        id: icon.id,
-        name: icon.name,
-        library: icon.lib,
-        libraryName: libraryMeta[icon.lib]?.name || icon.lib,
-        premium: icon.premium || false,
-        svg: icon.svg,
+    const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon)))).filter(Boolean);
+    if (formatted.length === 0) {
+      return {
+        content: [{
+          type: 'text',
+          text: `Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`,
+        }],
       };
-      if (icon.premium && icon.css) {
-        result.css = icon.css;
-        result.usage = `<div class="si-anim si-anim--${icon.id}"><!-- paste SVG here --></div>`;
-      }
-      return result;
-    });
+    }
     return {
       content: [{ type: 'text', text: JSON.stringify({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' }, null, 2) }],
     };
@@ -345,35 +457,27 @@ server.tool(
           content: [{ type: 'text', text: `Icon "${id}" not found in library "${library}". Use search_icons to find available icons.` }],
         };
       }
-      const result = {
-        id: loose.id,
-        name: loose.name,
-        library: loose.lib,
-        libraryName: libraryMeta[loose.lib]?.name || loose.lib,
-        type: loose.type,
-        premium: loose.premium || false,
-        svg: loose.svg,
-      };
-      if (loose.premium && loose.css) {
-        result.css = loose.css;
-        result.usage = `<div class="si-anim si-anim--${loose.id}"><!-- paste SVG here --></div>`;
+      const result = await buildToolIconResult(loose);
+      if (!result) {
+        return {
+          content: [{
+            type: 'text',
+            text: `Icon "${loose.id}" was found in library "${loose.lib}", but its SVG payload could not be resolved right now.`,
+          }],
+        };
       }
       return {
         content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
       };
     }
-    const result = {
-      id: icon.id,
-      name: icon.name,
-      library: icon.lib,
-      libraryName: libraryMeta[icon.lib]?.name || icon.lib,
-      type: icon.type,
-      premium: icon.premium || false,
-      svg: icon.svg,
-    };
-    if (icon.premium && icon.css) {
-      result.css = icon.css;
-      result.usage = `<div class="si-anim si-anim--${icon.id}"><!-- paste SVG here --></div>`;
+    const result = await buildToolIconResult(icon);
+    if (!result) {
+      return {
+        content: [{
+          type: 'text',
+          text: `Icon "${icon.id}" was found in library "${icon.lib}", but its SVG payload could not be resolved right now.`,
+        }],
+      };
     }
     return {
       content: [{

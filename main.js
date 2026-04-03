@@ -6,6 +6,14 @@
 import './style.css';
 import { initAuth } from './auth.js';
 import { initStore, switchView, isStoreView, loadSvgIntoMotionLab } from './store.js';
+import {
+  MATERIAL_EXPORT_DEFAULT_AXES,
+  MATERIAL_EXPORT_SOURCE,
+  MATERIAL_EXPORT_SUPPORTED_AXES,
+  buildMaterialCacheKey,
+  buildMaterialSnapshotUrl,
+  normalizeMaterialExportAxes,
+} from './material-export.js';
 
 // ============================================================
 
@@ -80,6 +88,20 @@ const state = {
   popularityMap: {},
 };
 
+const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
+  version: 1,
+  source: MATERIAL_EXPORT_SOURCE,
+  supportedAxes: MATERIAL_EXPORT_SUPPORTED_AXES,
+  defaultAxes: MATERIAL_EXPORT_DEFAULT_AXES,
+};
+
+const materialExportState = {
+  manifest: null,
+  manifestPromise: null,
+  svgCache: new Map(),
+  failedKeys: new Set(),
+};
+
 function resetCustomization() {
   state.customize = { ...CUSTOMIZE_DEFAULTS };
   state.activePalette = 'default';
@@ -88,6 +110,115 @@ function resetCustomization() {
   }
   renderGrid();
   showToast('Customization reset to defaults');
+}
+
+function isMaterialFontIcon(icon) {
+  return icon?.lib === 'material' && icon?.type === 'font';
+}
+
+async function loadMaterialExportManifest() {
+  if (materialExportState.manifest) return materialExportState.manifest;
+  if (!materialExportState.manifestPromise) {
+    materialExportState.manifestPromise = fetch('/material-export-manifest.json')
+      .then(resp => (resp.ok ? resp.json() : MATERIAL_EXPORT_MANIFEST_FALLBACK))
+      .catch(() => MATERIAL_EXPORT_MANIFEST_FALLBACK)
+      .then((manifest) => {
+        materialExportState.manifest = manifest || MATERIAL_EXPORT_MANIFEST_FALLBACK;
+        return materialExportState.manifest;
+      });
+  }
+  return materialExportState.manifestPromise;
+}
+
+function applyExportCustomization(rawSvg, icon, customize = state.customize) {
+  if (!rawSvg) return null;
+
+  const c = customize;
+  let svg = rawSvg;
+
+  svg = svg.replace(/stroke="currentColor"/g, `stroke="${c.color}"`);
+  svg = svg.replace(/fill="currentColor"/g, `fill="${c.color}"`);
+
+  if (icon.lib === 'material' && !/\bfill="/.test(svg)) {
+    svg = svg.replace(/<svg([^>]*)>/, `<svg$1 fill="${c.color}">`);
+  }
+
+  if (svg.includes('stop-color')) {
+    const stops = [...svg.matchAll(/stop-color="([^"]+)"/g)];
+    if (stops.length >= 2) {
+      svg = svg.replace(stops[0][0], `stop-color="${c.color}"`);
+      svg = svg.replace(stops[1][0], `stop-color="${c.color2}"`);
+    }
+    svg = svg.replace(/stroke="#00D4FF"/g, `stroke="${c.color}"`);
+  }
+
+  svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${c.strokeWidth}"`);
+
+  if (c.animation && c.animation !== 'none' && ANIM_CSS[c.animation]) {
+    const anim = ANIM_CSS[c.animation];
+    const styleTag = `<style>${anim.keyframes} ${anim.rule}</style>`;
+    svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}<g class="si-anim">`);
+    svg = svg.replace(/<\/svg>/, '</g></svg>');
+  }
+
+  return svg;
+}
+
+async function resolveMaterialSnapshotSvg(icon, customize = state.customize) {
+  const axes = normalizeMaterialExportAxes(customize);
+  const cacheKey = buildMaterialCacheKey(icon.id, axes);
+  if (materialExportState.svgCache.has(cacheKey)) {
+    return {
+      svg: materialExportState.svgCache.get(cacheKey),
+      axes,
+      snapped: axes.snapped,
+      source: 'material-snapshot',
+    };
+  }
+  if (materialExportState.failedKeys.has(cacheKey)) return null;
+
+  const manifest = await loadMaterialExportManifest();
+  const url = buildMaterialSnapshotUrl(icon.id, axes, manifest?.source || MATERIAL_EXPORT_SOURCE);
+  let resp;
+  try {
+    resp = await fetch(url);
+  } catch {
+    materialExportState.failedKeys.add(cacheKey);
+    return null;
+  }
+  if (!resp.ok) {
+    materialExportState.failedKeys.add(cacheKey);
+    return null;
+  }
+
+  const svg = await resp.text();
+  materialExportState.svgCache.set(cacheKey, svg);
+  return {
+    svg,
+    axes,
+    snapped: axes.snapped,
+    source: 'material-snapshot',
+  };
+}
+
+async function resolveExportSvg(icon, customize = state.customize) {
+  if (isMaterialFontIcon(icon)) {
+    const resolved = await resolveMaterialSnapshotSvg(icon, customize);
+    if (!resolved) return null;
+    return {
+      ...resolved,
+      svg: applyExportCustomization(resolved.svg, icon, customize),
+    };
+  }
+
+  const svg = getStyledSvg(icon);
+  if (!svg) return null;
+  return {
+    svg,
+    axes: null,
+    snapped: false,
+    source: 'svg',
+  };
 }
 
 // ============================================================
@@ -833,7 +964,7 @@ function renderPanelForIcon(icon) {
           </button>
         `).join('')}
       </div>
-      ${icon.type === 'svg' ? `
+      ${(icon.type === 'svg' || isMaterialFontIcon(icon)) ? `
       <div style="margin-top:8px">
         <button class="customize-export__btn" id="openMotionLab">
           <span class="material-symbols-outlined" style="font-size:16px">animation</span> Open in Motion Lab
@@ -876,6 +1007,12 @@ function renderPanelForIcon(icon) {
           <span class="material-symbols-outlined" style="font-size:16px">bookmark</span> Download ICO
         </button>
       </div>
+      ${isMaterialFontIcon(icon) ? `
+      <p class="customize-hint">
+        <span class="material-symbols-outlined" style="font-size:14px;vertical-align:-2px">info</span>
+        Graphical exports use the nearest supported Material snapshot when an exact slider value is unavailable.
+      </p>
+      ` : ''}
     </div>
 
     <!-- Copy as Component -->
@@ -989,13 +1126,13 @@ function renderBatchPanel() {
   const panelBody = els.panel.querySelector('.panel__body') || els.panel.querySelector('.panel__placeholder') || document.createElement('div');
   panelBody.className = 'panel__body';
 
-  const hasFont = selected.some(i => i.type === 'font');
+  const hasMaterial = selected.some(isMaterialFontIcon);
 
   panelBody.innerHTML = `
     <div class="panel__section">
       <div style="text-align:center; padding-bottom: var(--si-space-2);">
         <p style="font-size: 1rem; color: var(--si-text); margin-bottom: 0.15rem; font-weight: 500;">${selected.length}/10 icons selected</p>
-        <p style="font-size: 0.75rem; color: var(--si-text-dim);">All export actions apply to all selected icons.${hasFont ? ' Font icons excluded from SVG/PNG/ICO downloads.' : ''}</p>
+        <p style="font-size: 0.75rem; color: var(--si-text-dim);">All export actions apply to all selected icons.${hasMaterial ? ' Material exports use the nearest supported snapshot when an exact slider value is unavailable.' : ''}</p>
       </div>
     </div>
 
@@ -1162,10 +1299,13 @@ function attachBatchListeners() {
   // Batch: Copy SVGs
   const exportCopySvg = $('#exportCopySvg');
   if (exportCopySvg) {
-    exportCopySvg.addEventListener('click', () => {
-      const icons = getSelectedIcons().filter(i => i.type === 'svg');
-      if (icons.length === 0) { showToast('No SVG icons selected'); return; }
-      const svgs = icons.map(i => getStyledSvg(i)).filter(Boolean);
+    exportCopySvg.addEventListener('click', async () => {
+      const icons = getSelectedIcons();
+      if (icons.length === 0) { showToast('No icons selected'); return; }
+      showToast(`Preparing ${icons.length} SVG${icons.length === 1 ? '' : 's'}...`);
+      const results = await Promise.all(icons.map(icon => resolveExportSvg(icon)));
+      const svgs = results.filter(Boolean).map(result => result.svg);
+      if (svgs.length === 0) { showToast('No exportable icons selected'); return; }
       navigator.clipboard.writeText(svgs.join('\n\n')).then(() => {
         showToast(`${svgs.length} SVGs copied to clipboard`);
       });
@@ -1175,18 +1315,21 @@ function attachBatchListeners() {
   // Batch: Download SVGs as ZIP
   const exportDownloadSvg = $('#exportDownloadSvg');
   if (exportDownloadSvg) {
-    exportDownloadSvg.addEventListener('click', () => {
-      const icons = getSelectedIcons().filter(i => i.type === 'svg');
-      if (icons.length === 0) { showToast('No SVG icons selected'); return; }
+    exportDownloadSvg.addEventListener('click', async () => {
+      const icons = getSelectedIcons();
+      if (icons.length === 0) { showToast('No icons selected'); return; }
       if (typeof JSZip === 'undefined') { showToast('ZIP not available. Reload page.'); return; }
+      showToast(`Preparing ${icons.length} SVG${icons.length === 1 ? '' : 's'}...`);
+      const results = await Promise.all(icons.map(icon => resolveExportSvg(icon).then(result => ({ icon, result }))));
+      const resolved = results.filter(entry => entry.result);
+      if (resolved.length === 0) { showToast('No exportable icons selected'); return; }
       const zip = new JSZip();
-      icons.forEach(icon => {
-        const svg = getStyledSvg(icon);
-        if (svg) zip.file(`${icon.lib}--${icon.id}.svg`, svg);
+      resolved.forEach(({ icon, result }) => {
+        zip.file(`${icon.lib}--${icon.id}.svg`, result.svg);
       });
       zip.generateAsync({ type: 'blob' }).then(blob => {
-        downloadBlob(blob, `supericons-batch-${icons.length}.zip`);
-        showToast(`${icons.length} SVGs downloaded as ZIP`);
+        downloadBlob(blob, `supericons-batch-${resolved.length}.zip`);
+        showToast(`${resolved.length} SVGs downloaded as ZIP`);
       });
     });
   }
@@ -1194,37 +1337,41 @@ function attachBatchListeners() {
   // Batch: Download PNGs as ZIP
   const exportDownloadPng = $('#exportDownloadPng');
   if (exportDownloadPng) {
-    exportDownloadPng.addEventListener('click', () => {
-      const icons = getSelectedIcons().filter(i => i.type === 'svg');
-      if (icons.length === 0) { showToast('No SVG icons selected'); return; }
+    exportDownloadPng.addEventListener('click', async () => {
+      const icons = getSelectedIcons();
+      if (icons.length === 0) { showToast('No icons selected'); return; }
       if (typeof JSZip === 'undefined') { showToast('ZIP not available. Reload page.'); return; }
       const size = state.customize.pngSize || 48;
       showToast(`Rendering ${icons.length} PNGs at ${size}px...`);
-      const renderPng = (icon) => new Promise((resolve) => {
-        const svg = getStyledSvg(icon);
-        if (!svg) { resolve(null); return; }
+      const renderPng = async (icon) => {
+        const resolved = await resolveExportSvg(icon);
+        if (!resolved?.svg) return null;
         const canvas = document.createElement('canvas');
         canvas.width = size; canvas.height = size;
         const ctx = canvas.getContext('2d');
         const img = new Image();
-        const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+        const blob = new Blob([resolved.svg], { type: 'image/svg+xml;charset=utf-8' });
         const url = URL.createObjectURL(blob);
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, size, size);
-          canvas.toBlob(pngBlob => {
-            URL.revokeObjectURL(url);
-            resolve({ name: `${icon.lib}--${icon.id}-${size}px.png`, blob: pngBlob });
-          });
-        };
-        img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
-        img.src = url;
-      });
+        return new Promise((resolve) => {
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, size, size);
+            canvas.toBlob(pngBlob => {
+              URL.revokeObjectURL(url);
+              resolve(pngBlob ? { name: `${icon.lib}--${icon.id}-${size}px.png`, blob: pngBlob } : null);
+            });
+          };
+          img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+          img.src = url;
+        });
+      };
       Promise.all(icons.map(renderPng)).then(results => {
+        const files = results.filter(Boolean);
+        if (files.length === 0) { showToast('No exportable icons selected'); return; }
         const zip = new JSZip();
-        results.filter(Boolean).forEach(r => zip.file(r.name, r.blob));
+        files.forEach(r => zip.file(r.name, r.blob));
         zip.generateAsync({ type: 'blob' }).then(blob => {
-          downloadBlob(blob, `supericons-batch-${icons.length}-png-${size}px.zip`);
-          showToast(`${icons.length} PNGs downloaded as ZIP`);
+          downloadBlob(blob, `supericons-batch-${files.length}-png-${size}px.zip`);
+          showToast(`${files.length} PNGs downloaded as ZIP`);
         });
       });
     });
@@ -1233,21 +1380,21 @@ function attachBatchListeners() {
   // Batch: Download ICOs as ZIP
   const exportDownloadIco = $('#exportDownloadIco');
   if (exportDownloadIco) {
-    exportDownloadIco.addEventListener('click', () => {
-      const icons = getSelectedIcons().filter(i => i.type === 'svg');
-      if (icons.length === 0) { showToast('No SVG icons selected'); return; }
+    exportDownloadIco.addEventListener('click', async () => {
+      const icons = getSelectedIcons();
+      if (icons.length === 0) { showToast('No icons selected'); return; }
       if (typeof JSZip === 'undefined') { showToast('ZIP not available. Reload page.'); return; }
       showToast(`Rendering ${icons.length} ICOs...`);
       const sizes = [16, 32, 48];
-      const renderIco = (icon) => {
-        const svg = getStyledSvg(icon);
-        if (!svg) return Promise.resolve(null);
+      const renderIco = async (icon) => {
+        const resolved = await resolveExportSvg(icon);
+        if (!resolved?.svg) return null;
         const renderAt = (sz) => new Promise((resolve, reject) => {
           const canvas = document.createElement('canvas');
           canvas.width = sz; canvas.height = sz;
           const ctx = canvas.getContext('2d');
           const img = new Image();
-          const b = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+          const b = new Blob([resolved.svg], { type: 'image/svg+xml;charset=utf-8' });
           const url = URL.createObjectURL(b);
           img.onload = () => {
             ctx.drawImage(img, 0, 0, sz, sz);
@@ -1282,11 +1429,13 @@ function attachBatchListeners() {
         }).catch(() => null);
       };
       Promise.all(icons.map(renderIco)).then(results => {
+        const files = results.filter(Boolean);
+        if (files.length === 0) { showToast('No exportable icons selected'); return; }
         const zip = new JSZip();
-        results.filter(Boolean).forEach(r => zip.file(r.name, r.blob));
+        files.forEach(r => zip.file(r.name, r.blob));
         zip.generateAsync({ type: 'blob' }).then(blob => {
-          downloadBlob(blob, `supericons-batch-${icons.length}-ico.zip`);
-          showToast(`${icons.length} ICOs downloaded as ZIP`);
+          downloadBlob(blob, `supericons-batch-${files.length}-ico.zip`);
+          showToast(`${files.length} ICOs downloaded as ZIP`);
         });
       });
     });
@@ -1477,12 +1626,16 @@ function attachCustomizeListeners(icon) {
 
   // Open in Motion Lab (one-click animate)
   const openMlBtn = $('#openMotionLab');
-  if (openMlBtn && icon.type === 'svg') {
-    openMlBtn.addEventListener('click', () => {
+  if (openMlBtn && (icon.type === 'svg' || isMaterialFontIcon(icon))) {
+    openMlBtn.addEventListener('click', async () => {
+      const resolved = await resolveExportSvg(icon);
+      if (!resolved?.svg) {
+        showToast('Unable to resolve this icon for Motion Lab');
+        return;
+      }
       switchView('motion-lab');
-      // Small delay to let Motion Lab render, then load the SVG
       requestAnimationFrame(() => {
-        loadSvgIntoMotionLab(icon.svg);
+        loadSvgIntoMotionLab(resolved.svg);
         showToast(`Loaded "${icon.name}" in Motion Lab`);
       });
     });
@@ -1509,16 +1662,16 @@ function attachCustomizeListeners(icon) {
   // Export: Copy SVG
   const exportCopySvg = $('#exportCopySvg');
   if (exportCopySvg) {
-    exportCopySvg.addEventListener('click', () => {
-      const svg = getStyledSvg(icon);
-      if (svg) {
-        navigator.clipboard.writeText(svg).then(() => {
-          showToast('SVG copied to clipboard');
+    exportCopySvg.addEventListener('click', async () => {
+      const resolved = await resolveExportSvg(icon);
+      if (resolved?.svg) {
+        navigator.clipboard.writeText(resolved.svg).then(() => {
+          showToast(resolved.snapped ? 'SVG copied using nearest Material snapshot' : 'SVG copied to clipboard');
           window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: 'svg' });
           trackIconStat(icon.id, icon.lib, 'copy', 'svg');
         });
       } else {
-        showToast('Font icons: use Copy as Component instead');
+        showToast('This icon could not be resolved for SVG export');
       }
     });
   }
@@ -1526,13 +1679,13 @@ function attachCustomizeListeners(icon) {
   // Export: Copy Base64
   const exportCopyBase64 = $('#exportCopyBase64');
   if (exportCopyBase64) {
-    exportCopyBase64.addEventListener('click', () => {
-      const svg = getStyledSvg(icon);
-      if (svg) {
-        const b64 = svgToBase64(svg);
-        navigator.clipboard.writeText(b64).then(() => showToast('Base64 data URI copied'));
+    exportCopyBase64.addEventListener('click', async () => {
+      const resolved = await resolveExportSvg(icon);
+      if (resolved?.svg) {
+        const b64 = svgToBase64(resolved.svg);
+        navigator.clipboard.writeText(b64).then(() => showToast(resolved.snapped ? 'Base64 copied using nearest Material snapshot' : 'Base64 data URI copied'));
       } else {
-        showToast('Base64 not available for font icons');
+        showToast('This icon could not be resolved for Base64 export');
       }
     });
   }
@@ -1540,15 +1693,15 @@ function attachCustomizeListeners(icon) {
   // Export: Download SVG
   const exportDownloadSvg = $('#exportDownloadSvg');
   if (exportDownloadSvg) {
-    exportDownloadSvg.addEventListener('click', () => {
-      const svg = getStyledSvg(icon);
-      if (svg) {
-        downloadBlob(new Blob([svg], { type: 'image/svg+xml' }), `${icon.id}.svg`);
-        showToast('SVG downloaded');
+    exportDownloadSvg.addEventListener('click', async () => {
+      const resolved = await resolveExportSvg(icon);
+      if (resolved?.svg) {
+        downloadBlob(new Blob([resolved.svg], { type: 'image/svg+xml' }), `${icon.id}.svg`);
+        showToast(resolved.snapped ? 'SVG downloaded using nearest Material snapshot' : 'SVG downloaded');
         window.umami?.track('icon-download', { lib: icon.lib, id: icon.id, format: 'svg' });
         trackIconStat(icon.id, icon.lib, 'download', 'svg');
       } else {
-        showToast('Font icons: use Copy as Component instead');
+        showToast('This icon could not be resolved for SVG export');
       }
     });
   }
@@ -1586,16 +1739,16 @@ function attachCustomizeListeners(icon) {
   // Export: Download PNG (uses state.customize.pngSize)
   const exportDownloadPng = $('#exportDownloadPng');
   if (exportDownloadPng) {
-    exportDownloadPng.addEventListener('click', () => {
-      exportAsPng(icon);
+    exportDownloadPng.addEventListener('click', async () => {
+      await exportAsPng(icon);
     });
   }
 
   // Export: Download ICO
   const exportDownloadIco = $('#exportDownloadIco');
   if (exportDownloadIco) {
-    exportDownloadIco.addEventListener('click', () => {
-      exportAsIco(icon);
+    exportDownloadIco.addEventListener('click', async () => {
+      await exportAsIco(icon);
     });
   }
 
@@ -1687,33 +1840,7 @@ const ANIM_CSS = {
 
 function getStyledSvg(icon) {
   if (!icon.svg) return null;
-  const c = state.customize;
-  let svg = icon.svg;
-  // Apply color
-  svg = svg.replace(/stroke="currentColor"/g, `stroke="${c.color}"`);
-  svg = svg.replace(/fill="currentColor"/g, `fill="${c.color}"`);
-  // Apply gradient stop-colors for premium icons
-  if (svg.includes('stop-color')) {
-    const stops = [...svg.matchAll(/stop-color="([^"]+)"/g)];
-    if (stops.length >= 2) {
-      svg = svg.replace(stops[0][0], `stop-color="${c.color}"`);
-      svg = svg.replace(stops[1][0], `stop-color="${c.color2}"`);
-    }
-    svg = svg.replace(/stroke="#00D4FF"/g, `stroke="${c.color}"`);
-  }
-  // Apply stroke width
-  svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${c.strokeWidth}"`);
-
-  // Embed animation CSS if animation is selected
-  if (c.animation && c.animation !== 'none' && ANIM_CSS[c.animation]) {
-    const anim = ANIM_CSS[c.animation];
-    const styleTag = `<style>${anim.keyframes} ${anim.rule}</style>`;
-    // Wrap SVG content in a group with the animation class, and add style tag
-    svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}<g class="si-anim">`);
-    svg = svg.replace(/<\/svg>/, '</g></svg>');
-  }
-
-  return svg;
+  return applyExportCustomization(icon.svg, icon, state.customize);
 }
 
 function downloadBlob(blob, filename) {
@@ -1727,13 +1854,14 @@ function downloadBlob(blob, filename) {
   URL.revokeObjectURL(url);
 }
 
-function exportAsPng(icon) {
-  const svg = getStyledSvg(icon);
-  if (!svg) {
-    showToast('Font icons: PNG export not supported');
+async function exportAsPng(icon) {
+  const resolved = await resolveExportSvg(icon);
+  if (!resolved?.svg) {
+    showToast('PNG export not available for this icon');
     return;
   }
 
+  const svg = resolved.svg;
   const size = state.customize.pngSize || 48;
   const canvas = document.createElement('canvas');
   canvas.width = size;
@@ -1747,10 +1875,22 @@ function exportAsPng(icon) {
   img.onload = () => {
     ctx.drawImage(img, 0, 0, size, size);
     canvas.toBlob((pngBlob) => {
+      if (!pngBlob) {
+        showToast('PNG export failed - try a different icon');
+        return;
+      }
       downloadBlob(pngBlob, `${icon.id}-${size}px.png`);
-      showToast(`PNG downloaded (${size}x${size}px)`);
+      showToast(
+        resolved.snapped
+          ? `PNG downloaded (${size}x${size}px, snapped to nearest Material snapshot)`
+          : `PNG downloaded (${size}x${size}px)`
+      );
     });
     URL.revokeObjectURL(url);
+  };
+  img.onerror = () => {
+    URL.revokeObjectURL(url);
+    showToast('PNG export failed - try a different icon');
   };
   img.src = url;
 }
@@ -1767,12 +1907,14 @@ function svgToBase64(svgStr) {
 // ============================================================
 // F3: ICO export - embeds 16, 32, 48px PNGs into a valid .ico binary
 // ============================================================
-function exportAsIco(icon) {
-  const svg = getStyledSvg(icon);
-  if (!svg) {
-    showToast('Select an SVG icon to export as ICO');
+async function exportAsIco(icon) {
+  const resolved = await resolveExportSvg(icon);
+  if (!resolved?.svg) {
+    showToast('ICO export not available for this icon');
     return;
   }
+
+  const svg = resolved.svg;
 
   const sizes = [16, 32, 48];
 
@@ -1789,10 +1931,17 @@ function exportAsIco(icon) {
       ctx.drawImage(img, 0, 0, sz, sz);
       canvas.toBlob((pngBlob) => {
         URL.revokeObjectURL(url);
+        if (!pngBlob) {
+          reject(new Error('PNG render failed'));
+          return;
+        }
         pngBlob.arrayBuffer().then(resolve).catch(reject);
       }, 'image/png');
     };
-    img.onerror = reject;
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Image load failed'));
+    };
     img.src = url;
   });
 
@@ -1829,7 +1978,11 @@ function exportAsIco(icon) {
     });
 
     downloadBlob(new Blob([buf], { type: 'image/x-icon' }), `${icon.id}.ico`);
-    showToast('ICO downloaded (16, 32, 48px)');
+    showToast(
+      resolved.snapped
+        ? 'ICO downloaded (16, 32, 48px, snapped to nearest Material snapshot)'
+        : 'ICO downloaded (16, 32, 48px)'
+    );
   }).catch(() => showToast('ICO export failed - try a different icon'));
 }
 
