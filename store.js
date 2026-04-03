@@ -2489,73 +2489,73 @@ function renderMotionLab() {
             <div class="ml__quad ml__quad--top" data-quad="motion">
               <span class="ml__quad-label">Motion</span>
               <div class="ml__quad-btns" id="mlControlBar">
-                <button class="ml__preset-btn" data-preset="bounce" title="Bounce up">
+                <button class="ml__preset-btn" data-preset="bounce">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Bounce
                 </button>
-                <button class="ml__preset-btn" data-preset="float" title="Gentle float">
+                <button class="ml__preset-btn" data-preset="float">
                   <span class="material-symbols-outlined" style="font-size:13px">cloud</span> Float
                 </button>
-                <button class="ml__preset-btn" data-preset="shake" title="Horizontal shake">
+                <button class="ml__preset-btn" data-preset="shake">
                   <span class="material-symbols-outlined" style="font-size:13px">vibration</span> Shake
                 </button>
-                <button class="ml__preset-btn" data-preset="spin" title="360 spin">
+                <button class="ml__preset-btn" data-preset="spin">
                   <span class="material-symbols-outlined" style="font-size:13px">rotate_right</span> Spin
                 </button>
-                <button class="ml__preset-btn" data-preset="pulse" title="Pulse in and out">
+                <button class="ml__preset-btn" data-preset="pulse">
                   <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> Pulse
                 </button>
-                <button class="ml__preset-btn" data-preset="pop" title="Pop in with spring">
+                <button class="ml__preset-btn" data-preset="pop">
                   <span class="material-symbols-outlined" style="font-size:13px">open_in_full</span> Pop
                 </button>
-                <button class="ml__preset-btn" data-preset="heartbeat" title="Double-thump cardiac rhythm">
+                <button class="ml__preset-btn" data-preset="heartbeat">
                   <span class="material-symbols-outlined" style="font-size:13px">favorite</span> Heartbeat
                 </button>
-                <button class="ml__preset-btn" data-preset="rubberband" title="Elastic stretch and snap">
+                <button class="ml__preset-btn" data-preset="rubberband">
                   <span class="material-symbols-outlined" style="font-size:13px">straighten</span> Rubber Band
                 </button>
-                <button class="ml__preset-btn" data-preset="jelly" title="Gelatin wobble">
+                <button class="ml__preset-btn" data-preset="jelly">
                   <span class="material-symbols-outlined" style="font-size:13px">water_drop</span> Jelly
                 </button>
-                <button class="ml__preset-btn" data-preset="ring" title="Bell swing from top pivot">
+                <button class="ml__preset-btn" data-preset="ring">
                   <span class="material-symbols-outlined" style="font-size:13px">notifications</span> Ring
                 </button>
-                <button class="ml__preset-btn" data-preset="wobble" title="Asymmetric rocking">
+                <button class="ml__preset-btn" data-preset="wobble">
                   <span class="material-symbols-outlined" style="font-size:13px">tsunami</span> Wobble
                 </button>
-                <button class="ml__preset-btn" data-preset="magnetic" title="Magnetic pull and snap">
+                <button class="ml__preset-btn" data-preset="magnetic">
                   <span class="material-symbols-outlined" style="font-size:13px">attractions</span> Magnetic
                 </button>
-                <button class="ml__preset-btn" data-preset="recoil" title="Anticipation then explosive release">
+                <button class="ml__preset-btn" data-preset="recoil">
                   <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> Recoil
                 </button>
-                <button class="ml__preset-btn" data-preset="pendulum" title="Sinusoidal swing">
+                <button class="ml__preset-btn" data-preset="pendulum">
                   <span class="material-symbols-outlined" style="font-size:13px">swap_horiz</span> Pendulum
                 </button>
-                <button class="ml__preset-btn" data-preset="whiplash" title="Cascading spring snap">
+                <button class="ml__preset-btn" data-preset="whiplash">
                   <span class="material-symbols-outlined" style="font-size:13px">crop_rotate</span> Whiplash
                 </button>
-                <button class="ml__preset-btn" data-preset="tremor" title="Seismic micro-vibration">
+                <button class="ml__preset-btn" data-preset="tremor">
                   <span class="material-symbols-outlined" style="font-size:13px">earthquake</span> Tremor
                 </button>
-                <button class="ml__preset-btn" data-preset="neonglow" title="Pulsing cyan aura glow">
+                <button class="ml__preset-btn" data-preset="neonglow">
                   <span class="material-symbols-outlined" style="font-size:13px">flare</span> Neon Glow
                 </button>
-                <button class="ml__preset-btn" data-preset="breathe" title="Ultra-slow ambient scale">
+                <button class="ml__preset-btn" data-preset="breathe">
                   <span class="material-symbols-outlined" style="font-size:13px">spa</span> Breathe
                 </button>
-                <button class="ml__preset-btn" data-preset="metronome" title="Steady left-right tilt">
+                <button class="ml__preset-btn" data-preset="metronome">
                   <span class="material-symbols-outlined" style="font-size:13px">timer</span> Metronome
                 </button>
-                <button class="ml__preset-btn" data-preset="orbit" title="Circular orbit path">
+                <button class="ml__preset-btn" data-preset="orbit">
                   <span class="material-symbols-outlined" style="font-size:13px">motion_photos_on</span> Orbit
                 </button>
-                <button class="ml__preset-btn" data-preset="flicker" title="Rapid lightbulb stutter">
+                <button class="ml__preset-btn" data-preset="flicker">
                   <span class="material-symbols-outlined" style="font-size:13px">fluorescent</span> Flicker
                 </button>
-                <button class="ml__preset-btn" data-preset="squish" title="Compression squeeze">
+                <button class="ml__preset-btn" data-preset="squish">
                   <span class="material-symbols-outlined" style="font-size:13px">compress</span> Squish
                 </button>
-                <button class="ml__preset-btn" data-preset="glide" title="Slow horizontal drift">
+                <button class="ml__preset-btn" data-preset="glide">
                   <span class="material-symbols-outlined" style="font-size:13px">air</span> Glide
                 </button>
               </div>
@@ -2565,49 +2565,49 @@ function renderMotionLab() {
             <div class="ml__quad ml__quad--left" data-quad="entrances">
               <span class="ml__quad-label">Entrances</span>
               <div class="ml__quad-btns">
-                <button class="ml__preset-btn" data-preset="fade" title="Fade in">
+                <button class="ml__preset-btn" data-preset="fade">
                   <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade
                 </button>
-                <button class="ml__preset-btn" data-preset="fadeIn" title="Opacity fade in">
+                <button class="ml__preset-btn" data-preset="fadeIn">
                   <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade In
                 </button>
-                <button class="ml__preset-btn" data-preset="scaleUp" title="Scale from zero">
+                <button class="ml__preset-btn" data-preset="scaleUp">
                   <span class="material-symbols-outlined" style="font-size:13px">zoom_in</span> Scale Up
                 </button>
-                <button class="ml__preset-btn" data-preset="slideUp" title="Slide up from below">
+                <button class="ml__preset-btn" data-preset="slideUp">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Slide Up
                 </button>
-                <button class="ml__preset-btn" data-preset="springLand" title="Spring bounce landing">
+                <button class="ml__preset-btn" data-preset="springLand">
                   <span class="material-symbols-outlined" style="font-size:13px">downloading</span> Spring Land
                 </button>
-                <button class="ml__preset-btn" data-preset="slingshot" title="Elastic launch from left">
+                <button class="ml__preset-btn" data-preset="slingshot">
                   <span class="material-symbols-outlined" style="font-size:13px">swipe_right_alt</span> Slingshot
                 </button>
-                <button class="ml__preset-btn" data-preset="glitchOn" title="Digital artifact entrance">
+                <button class="ml__preset-btn" data-preset="glitchOn">
                   <span class="material-symbols-outlined" style="font-size:13px">flash_on</span> Glitch On
                 </button>
-                <button class="ml__preset-btn" data-preset="unfold" title="Reveal from below">
+                <button class="ml__preset-btn" data-preset="unfold">
                   <span class="material-symbols-outlined" style="font-size:13px">unfold_more</span> Unfold
                 </button>
-                <button class="ml__preset-btn" data-preset="warpIn" title="Warp from distance">
+                <button class="ml__preset-btn" data-preset="warpIn">
                   <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> Warp In
                 </button>
-                <button class="ml__preset-btn" data-preset="slideRight" title="Slide in from left">
+                <button class="ml__preset-btn" data-preset="slideRight">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_forward</span> Slide Right
                 </button>
-                <button class="ml__preset-btn" data-preset="slideDown" title="Drop in from above">
+                <button class="ml__preset-btn" data-preset="slideDown">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_downward</span> Slide Down
                 </button>
-                <button class="ml__preset-btn" data-preset="flipIn" title="Flip rotation entrance">
+                <button class="ml__preset-btn" data-preset="flipIn">
                   <span class="material-symbols-outlined" style="font-size:13px">flip</span> Flip In
                 </button>
-                <button class="ml__preset-btn" data-preset="telegram" title="Diagonal arc entry">
+                <button class="ml__preset-btn" data-preset="telegram">
                   <span class="material-symbols-outlined" style="font-size:13px">send</span> Telegram
                 </button>
-                <button class="ml__preset-btn" data-preset="bloom" title="Scale with counter-rotation">
+                <button class="ml__preset-btn" data-preset="bloom">
                   <span class="material-symbols-outlined" style="font-size:13px">filter_vintage</span> Bloom
                 </button>
-                <button class="ml__preset-btn" data-preset="shockwave" title="Explosive scale entry">
+                <button class="ml__preset-btn" data-preset="shockwave">
                   <span class="material-symbols-outlined" style="font-size:13px">radio_button_checked</span> Shockwave
                 </button>
               </div>
@@ -2620,49 +2620,49 @@ function renderMotionLab() {
             <div class="ml__quad ml__quad--right" data-quad="exits">
               <span class="ml__quad-label">Exits</span>
               <div class="ml__quad-btns">
-                <button class="ml__preset-btn" data-preset="fadeOut" title="Fade to invisible">
+                <button class="ml__preset-btn" data-preset="fadeOut">
                   <span class="material-symbols-outlined" style="font-size:13px">gradient</span> Fade Out
                 </button>
-                <button class="ml__preset-btn" data-preset="scaleDown" title="Shrink to zero">
+                <button class="ml__preset-btn" data-preset="scaleDown">
                   <span class="material-symbols-outlined" style="font-size:13px">zoom_out</span> Scale Down
                 </button>
-                <button class="ml__preset-btn" data-preset="slideOut" title="Slide up and away">
+                <button class="ml__preset-btn" data-preset="slideOut">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_upward</span> Slide Out
                 </button>
-                <button class="ml__preset-btn" data-preset="vortex" title="Spiral drain exit">
+                <button class="ml__preset-btn" data-preset="vortex">
                   <span class="material-symbols-outlined" style="font-size:13px">cyclone</span> Vortex
                 </button>
-                <button class="ml__preset-btn" data-preset="glitchOff" title="Digital artifact exit">
+                <button class="ml__preset-btn" data-preset="glitchOff">
                   <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> Glitch Off
                 </button>
-                <button class="ml__preset-btn" data-preset="dissolve" title="Expand and dissolve">
+                <button class="ml__preset-btn" data-preset="dissolve">
                   <span class="material-symbols-outlined" style="font-size:13px">blur_on</span> Dissolve
                 </button>
-                <button class="ml__preset-btn" data-preset="popOut" title="Spring squish then vanish">
+                <button class="ml__preset-btn" data-preset="popOut">
                   <span class="material-symbols-outlined" style="font-size:13px">close_fullscreen</span> Pop Out
                 </button>
-                <button class="ml__preset-btn" data-preset="slideLeft" title="Slide out to left">
+                <button class="ml__preset-btn" data-preset="slideLeft">
                   <span class="material-symbols-outlined" style="font-size:13px">arrow_back</span> Slide Left
                 </button>
-                <button class="ml__preset-btn" data-preset="sinkDown" title="Gravity sink downward">
+                <button class="ml__preset-btn" data-preset="sinkDown">
                   <span class="material-symbols-outlined" style="font-size:13px">download</span> Sink Down
                 </button>
-                <button class="ml__preset-btn" data-preset="flipOut" title="Flip rotation exit">
+                <button class="ml__preset-btn" data-preset="flipOut">
                   <span class="material-symbols-outlined" style="font-size:13px">flip</span> Flip Out
                 </button>
-                <button class="ml__preset-btn" data-preset="implode" title="Crush inward">
+                <button class="ml__preset-btn" data-preset="implode">
                   <span class="material-symbols-outlined" style="font-size:13px">compress</span> Implode
                 </button>
-                <button class="ml__preset-btn" data-preset="puffOut" title="Smoke evaporation">
+                <button class="ml__preset-btn" data-preset="puffOut">
                   <span class="material-symbols-outlined" style="font-size:13px">cloud_queue</span> Puff Out
                 </button>
-                <button class="ml__preset-btn" data-preset="launchOut" title="Diagonal arc exit">
+                <button class="ml__preset-btn" data-preset="launchOut">
                   <span class="material-symbols-outlined" style="font-size:13px">rocket_launch</span> Launch Out
                 </button>
-                <button class="ml__preset-btn" data-preset="shrinkSpin" title="Rotate while shrinking">
+                <button class="ml__preset-btn" data-preset="shrinkSpin">
                   <span class="material-symbols-outlined" style="font-size:13px">autorenew</span> Shrink Spin
                 </button>
-                <button class="ml__preset-btn" data-preset="blinkOut" title="Rapid flicker then gone">
+                <button class="ml__preset-btn" data-preset="blinkOut">
                   <span class="material-symbols-outlined" style="font-size:13px">flash_off</span> Blink Out
                 </button>
               </div>
@@ -2672,13 +2672,13 @@ function renderMotionLab() {
             <div class="ml__quad ml__quad--bottom" data-quad="saved">
               <span class="ml__quad-label">My Animations</span>
               <div class="ml__quad-btns" id="mlSavedBtns">
-                <button class="ml__preset-btn" data-preset="sparkle" title="Golden sparkle glow">
+                <button class="ml__preset-btn" data-preset="sparkle">
                   <span class="material-symbols-outlined" style="font-size:13px">auto_awesome</span> Sparkle
                 </button>
-                <button class="ml__preset-btn" data-preset="swing" title="Pendulum swing">
+                <button class="ml__preset-btn" data-preset="swing">
                   <span class="material-symbols-outlined" style="font-size:13px">sync_alt</span> Swing
                 </button>
-                <button class="ml__preset-btn" data-preset="jitter" title="Micro jitter">
+                <button class="ml__preset-btn" data-preset="jitter">
                   <span class="material-symbols-outlined" style="font-size:13px">electric_bolt</span> Jitter
                 </button>
               </div>
