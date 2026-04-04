@@ -5984,12 +5984,37 @@ const converterState = {
   preset: 'posterized2', // imagetracerjs preset
   colorMode: 'mono',
   smoothness: 50,        // 0-100: curve smoothness (trace resolution + path tolerance)
+  previewBackground: 'transparent', // 'transparent' | 'white' | 'black' | 'custom'
+  previewBgColor: '#ffffff',
+  compareMode: 'trace', // 'trace' | 'original' | 'split' | 'overlay'
+  autoCrop: true,
+  enhanceSmallIcons: true,
+  noiseCleanup: 'medium', // 'low' | 'medium' | 'high'
+  invert: false,
+  previewOriginalDataUrl: '',
+  traceMetrics: null,
+  inputZoom: 1,
+  outputZoom: 1,
 };
 
 const CONVERTER_SVG_NS = 'http://www.w3.org/2000/svg';
 const CONVERTER_SVG_SHAPES = 'path, circle, rect, polygon, polyline, line, ellipse';
 const CONVERTER_COLOR_SWATCHES = ['#000000', '#FFFFFF', '#FF6B35', '#00D4FF', '#A855F7', '#22C55E', '#FACC15'];
 const CONVERTER_BOUNDS_PATH_D = 'm00h24v24h0z';
+const CONVERTER_COMPARE_OPTIONS = [
+  { key: 'trace', label: 'Trace' },
+  { key: 'original', label: 'Original' },
+  { key: 'split', label: 'Split' },
+  { key: 'overlay', label: 'Overlay' },
+];
+const CONVERTER_NOISE_OPTIONS = [
+  { key: 'low', label: 'Low' },
+  { key: 'medium', label: 'Medium' },
+  { key: 'high', label: 'High' },
+];
+const CONVERTER_PREVIEW_ZOOM_MIN = 1;
+const CONVERTER_PREVIEW_ZOOM_MAX = 2;
+const CONVERTER_PREVIEW_ZOOM_STEP = 0.1;
 
 function renderConverterColorDotRow(type, activeColor, disabled = false) {
   const disabledAttrs = disabled ? ' disabled aria-disabled="true"' : '';
@@ -6002,6 +6027,17 @@ function renderConverterColorDotRow(type, activeColor, disabled = false) {
     <input type="color" class="conv__color-picker-hidden" id="conv${type}Picker" value="${activeColor || '#FFFFFF'}"${disabled ? ' disabled' : ''}>
   </label>`;
   return html;
+}
+
+function renderConverterChipGroup(groupId, options, activeKey, dataAttr) {
+  return options.map((option) => `
+    <button
+      type="button"
+      class="conv__chip-btn${option.key === activeKey ? ' conv__chip-btn--active' : ''}"
+      data-${dataAttr}="${option.key}"
+      data-conv-group="${groupId}"
+    >${option.label}</button>
+  `).join('');
 }
 
 function normalizeConverterPathData(d = '') {
@@ -6127,6 +6163,12 @@ function buildStyledConverterSvg({ width = null, height = null } = {}) {
   return serializer.serializeToString(svgEl);
 }
 
+function syncConverterChipGroup(groupId, activeKey, dataAttr) {
+  document.querySelectorAll(`.conv__chip-btn[data-conv-group="${groupId}"]`).forEach((btn) => {
+    btn.classList.toggle('conv__chip-btn--active', btn.dataset[dataAttr] === activeKey);
+  });
+}
+
 function syncConverterColorDots(containerId, activeColor) {
   const dots = document.getElementById(containerId);
   if (!dots) return;
@@ -6164,6 +6206,590 @@ function resetConverterSvgStyleState() {
   converterState.strokeColor = null;
 }
 
+function resetConverterPngStyleState() {
+  converterState.previewBackground = 'transparent';
+  converterState.previewBgColor = '#ffffff';
+  converterState.compareMode = 'trace';
+  converterState.autoCrop = true;
+  converterState.enhanceSmallIcons = true;
+  converterState.noiseCleanup = 'medium';
+  converterState.invert = false;
+  converterState.previewOriginalDataUrl = '';
+  converterState.traceMetrics = null;
+}
+
+function clampConverterPreviewZoom(value) {
+  const stepped = Math.round(value / CONVERTER_PREVIEW_ZOOM_STEP) * CONVERTER_PREVIEW_ZOOM_STEP;
+  return Math.max(CONVERTER_PREVIEW_ZOOM_MIN, Math.min(CONVERTER_PREVIEW_ZOOM_MAX, stepped));
+}
+
+function getConverterPreviewZoomPercent(zoom) {
+  return `${Math.round(zoom * 100)}%`;
+}
+
+function centerConverterPreviewViewport(viewport) {
+  if (!viewport) return;
+  viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) / 2);
+  viewport.scrollTop = Math.max(0, (viewport.scrollHeight - viewport.clientHeight) / 2);
+}
+
+function updateConverterPreviewZoomUi({ center = false } = {}) {
+  const inputStage = document.getElementById('convInputStage');
+  const inputSurface = document.getElementById('convInputSurface');
+  const inputImg = document.getElementById('convInputImg');
+  const outputStage = document.getElementById('convPreviewStage');
+  const outputOverlay = document.getElementById('convCompareOverlay');
+  const outputSplit = document.getElementById('convCompareSplit');
+
+  if (inputSurface) {
+    const inputPercent = getConverterPreviewZoomPercent(converterState.inputZoom);
+    inputSurface.style.width = inputPercent;
+    inputSurface.style.minHeight = `${Math.round(190 * converterState.inputZoom)}px`;
+  }
+  if (inputStage) {
+    inputStage.classList.toggle('is-pannable', converterState.inputZoom > CONVERTER_PREVIEW_ZOOM_MIN);
+  }
+  if (inputImg) {
+    inputImg.style.maxHeight = `${Math.round(180 * converterState.inputZoom)}px`;
+  }
+
+  if (outputOverlay) {
+    const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
+    outputOverlay.style.width = outputPercent;
+    outputOverlay.style.height = outputPercent;
+    outputOverlay.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+  }
+  if (outputSplit) {
+    const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
+    outputSplit.style.width = outputPercent;
+    outputSplit.style.height = outputPercent;
+    outputSplit.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+  }
+  if (outputStage) {
+    outputStage.classList.toggle('is-pannable', converterState.outputZoom > CONVERTER_PREVIEW_ZOOM_MIN);
+  }
+
+  if (center) {
+    requestAnimationFrame(() => {
+      centerConverterPreviewViewport(inputStage);
+      centerConverterPreviewViewport(outputStage);
+    });
+  }
+}
+
+function setConverterPreviewZoom(kind, direction) {
+  const key = kind === 'output' ? 'outputZoom' : 'inputZoom';
+  const viewport = document.getElementById(kind === 'output' ? 'convPreviewStage' : 'convInputStage');
+  const centerX = viewport && viewport.scrollWidth > 0
+    ? (viewport.scrollLeft + viewport.clientWidth / 2) / viewport.scrollWidth
+    : 0.5;
+  const centerY = viewport && viewport.scrollHeight > 0
+    ? (viewport.scrollTop + viewport.clientHeight / 2) / viewport.scrollHeight
+    : 0.5;
+  const delta = direction === 'in' ? CONVERTER_PREVIEW_ZOOM_STEP : -CONVERTER_PREVIEW_ZOOM_STEP;
+  const next = clampConverterPreviewZoom(converterState[key] + delta);
+  if (next === converterState[key]) return;
+  converterState[key] = next;
+  updateConverterPreviewZoomUi();
+  if (viewport) {
+    requestAnimationFrame(() => {
+      viewport.scrollLeft = Math.max(0, centerX * viewport.scrollWidth - viewport.clientWidth / 2);
+      viewport.scrollTop = Math.max(0, centerY * viewport.scrollHeight - viewport.clientHeight / 2);
+    });
+  }
+}
+
+function handleConverterPreviewWheel(event, kind) {
+  if (Math.abs(event.deltaY) < 1) return;
+  event.preventDefault();
+  setConverterPreviewZoom(kind, event.deltaY < 0 ? 'in' : 'out');
+}
+
+function bindConverterPreviewPan(stage, kind) {
+  if (!stage || stage.dataset.convPanBound === 'true') return;
+  stage.dataset.convPanBound = 'true';
+
+  let drag = null;
+
+  const endDrag = () => {
+    drag = null;
+    stage.classList.remove('is-grabbing');
+  };
+
+  stage.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    const zoom = kind === 'output' ? converterState.outputZoom : converterState.inputZoom;
+    if (zoom <= CONVERTER_PREVIEW_ZOOM_MIN) return;
+    drag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startLeft: stage.scrollLeft,
+      startTop: stage.scrollTop,
+    };
+    stage.classList.add('is-grabbing');
+    stage.setPointerCapture?.(event.pointerId);
+    event.preventDefault();
+  });
+
+  stage.addEventListener('pointermove', (event) => {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    stage.scrollLeft = drag.startLeft - (event.clientX - drag.startX);
+    stage.scrollTop = drag.startTop - (event.clientY - drag.startY);
+  });
+
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+  stage.addEventListener('pointerleave', (event) => {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    endDrag();
+  });
+}
+
+function resetConverterPreviewZoom() {
+  converterState.inputZoom = 1;
+  converterState.outputZoom = 1;
+}
+
+function getConverterRgbDistance(data, index, rgb) {
+  return Math.abs(data[index] - rgb[0])
+    + Math.abs(data[index + 1] - rgb[1])
+    + Math.abs(data[index + 2] - rgb[2]);
+}
+
+function clampConverterColorChannel(value) {
+  return Math.max(0, Math.min(255, Math.round(value)));
+}
+
+function converterRgbToHex(rgb) {
+  return `#${rgb.map((value) => clampConverterColorChannel(value).toString(16).padStart(2, '0')).join('')}`;
+}
+
+function getConverterQuantizedColorKey(r, g, b, step = 24) {
+  const quantize = (value) => clampConverterColorChannel(Math.round(value / step) * step);
+  return `${quantize(r)},${quantize(g)},${quantize(b)}`;
+}
+
+function parseConverterColorKey(key) {
+  return key.split(',').map((part) => clampConverterColorChannel(Number(part) || 0));
+}
+
+function getConverterHueInfo(rgb) {
+  const [r, g, b] = rgb.map((value) => value / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+  let hue = null;
+  if (delta > 0.0001) {
+    if (max === r) hue = ((g - b) / delta) % 6;
+    else if (max === g) hue = (b - r) / delta + 2;
+    else hue = (r - g) / delta + 4;
+    hue *= 60;
+    if (hue < 0) hue += 360;
+  }
+  const saturation = max === 0 ? 0 : delta / max;
+  return { hue, saturation };
+}
+
+function getConverterHueDistance(a, b) {
+  const diff = Math.abs(a - b);
+  return Math.min(diff, 360 - diff);
+}
+
+function dedupeConverterPalette(colors, minDistance = 52) {
+  const unique = [];
+  colors.forEach((candidate) => {
+    if (!unique.some((existing) => (
+      Math.abs(existing[0] - candidate[0])
+      + Math.abs(existing[1] - candidate[1])
+      + Math.abs(existing[2] - candidate[2])
+    ) < minDistance)) {
+      unique.push(candidate);
+    }
+  });
+  return unique;
+}
+
+function analyzeConverterTraceProfile(imageData, colorMode, threshold, bgColor, invert = false) {
+  const { data, width, height } = imageData;
+  const counts = new Map();
+  let foregroundPixels = 0;
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const index = (y * width + x) * 4;
+      if (!isConverterForegroundPixel(data, index, colorMode, threshold, bgColor, invert)) continue;
+      foregroundPixels += 1;
+      const key = getConverterQuantizedColorKey(data[index], data[index + 1], data[index + 2], 24);
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+  }
+
+  const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  const significantThreshold = Math.max(8, Math.round(foregroundPixels * 0.01));
+  const significant = sorted.filter(([, count]) => count >= significantThreshold);
+  const topFourCoverage = foregroundPixels
+    ? significant.slice(0, 4).reduce((sum, [, count]) => sum + count, 0) / foregroundPixels
+    : 0;
+  const topTwoCoverage = foregroundPixels
+    ? significant.slice(0, 2).reduce((sum, [, count]) => sum + count, 0) / foregroundPixels
+    : 0;
+  const topPalette = dedupeConverterPalette(significant.slice(0, 6).map(([key]) => parseConverterColorKey(key)));
+  const dominantColor = topPalette[0] || [0, 0, 0];
+  const dominantHueInfo = getConverterHueInfo(dominantColor);
+  const sameHueCoverage = foregroundPixels
+    ? significant.reduce((sum, [key, count]) => {
+      const info = getConverterHueInfo(parseConverterColorKey(key));
+      if (dominantHueInfo.hue == null || info.hue == null) return sum + count;
+      return getConverterHueDistance(dominantHueInfo.hue, info.hue) <= 34 ? sum + count : sum;
+    }, 0) / foregroundPixels
+    : 0;
+  const likelySingleHueLogo = (
+    colorMode === 'color'
+    && significant.length > 0
+    && significant.length <= 12
+    && topTwoCoverage >= 0.7
+    && sameHueCoverage >= 0.82
+  );
+  const likelyFlatArtwork = (
+    colorMode === 'color'
+    && significant.length > 0
+    && significant.length <= 8
+    && topFourCoverage >= 0.82
+  );
+  const recommendedColorCount = likelySingleHueLogo
+    ? Math.min(3, Math.max(2, topPalette.length || 2))
+    : likelyFlatArtwork
+      ? Math.min(6, Math.max(3, topPalette.length || 4))
+      : Math.min(12, Math.max(6, significant.length || 6));
+
+  return {
+    foregroundPixels,
+    approximateColorCount: counts.size,
+    significantColorCount: significant.length,
+    topTwoCoverage,
+    topFourCoverage,
+    sameHueCoverage,
+    dominantColor,
+    palette: topPalette.slice(0, recommendedColorCount),
+    likelySingleHueLogo,
+    likelyFlatArtwork,
+    recommendedColorCount,
+  };
+}
+
+function findNearestConverterPaletteIndex(palette, rgb) {
+  let bestIndex = 0;
+  let bestDistance = Infinity;
+  for (let i = 0; i < palette.length; i++) {
+    const candidate = palette[i];
+    const distance = Math.abs(candidate[0] - rgb[0])
+      + Math.abs(candidate[1] - rgb[1])
+      + Math.abs(candidate[2] - rgb[2]);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = i;
+    }
+  }
+  return { index: bestIndex, distance: bestDistance };
+}
+
+function smoothConverterPaletteLabels(labels, width, height, passes = 1) {
+  let current = labels;
+  for (let pass = 0; pass < passes; pass++) {
+    const next = current.slice();
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const idx = y * width + x;
+        const neighborCounts = new Map();
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            if (dx === 0 && dy === 0) continue;
+            const label = current[idx + dy * width + dx];
+            neighborCounts.set(label, (neighborCounts.get(label) || 0) + 1);
+          }
+        }
+        let winner = current[idx];
+        let winnerCount = 0;
+        neighborCounts.forEach((count, label) => {
+          if (count > winnerCount) {
+            winner = label;
+            winnerCount = count;
+          }
+        });
+        if (winnerCount >= 6 && winner !== current[idx]) {
+          next[idx] = winner;
+        }
+      }
+    }
+    current = next;
+  }
+  return current;
+}
+
+function flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfile) {
+  if (!traceProfile?.palette?.length) return;
+
+  const { data, width, height } = imageData;
+  const bg = bgColor || [255, 255, 255];
+  const bgCutoff = Math.max(18, Math.min(96, Math.round(threshold * 0.9)));
+  const palette = traceProfile.palette;
+  const labels = new Int16Array(width * height);
+  labels.fill(-1);
+
+  for (let i = 0; i < labels.length; i++) {
+    const index = i * 4;
+    if (data[index + 3] < 128) {
+      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      continue;
+    }
+    const bgDistance = Math.abs(data[index] - bg[0])
+      + Math.abs(data[index + 1] - bg[1])
+      + Math.abs(data[index + 2] - bg[2]);
+    if (bgDistance <= bgCutoff) {
+      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      continue;
+    }
+
+    const nearest = findNearestConverterPaletteIndex(palette, [data[index], data[index + 1], data[index + 2]]);
+    if (bgDistance < Math.max(28, nearest.distance * 0.9)) {
+      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      continue;
+    }
+
+    const rgb = palette[nearest.index];
+    labels[i] = nearest.index;
+    data[index] = rgb[0];
+    data[index + 1] = rgb[1];
+    data[index + 2] = rgb[2];
+    data[index + 3] = 255;
+  }
+
+  const shouldSmooth = traceProfile.likelySingleHueLogo || traceProfile.likelyFlatArtwork;
+  if (!shouldSmooth) return;
+
+  const smoothed = smoothConverterPaletteLabels(labels, width, height, traceProfile.likelySingleHueLogo ? 2 : 1);
+  for (let i = 0; i < smoothed.length; i++) {
+    const index = i * 4;
+    const label = smoothed[i];
+    if (label < 0) {
+      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      continue;
+    }
+    const rgb = palette[label];
+    data[index] = rgb[0];
+    data[index + 1] = rgb[1];
+    data[index + 2] = rgb[2];
+    data[index + 3] = 255;
+  }
+}
+
+function retintConverterForegroundSvg(svgStr, fillColor) {
+  if (!svgStr || !fillColor) return svgStr;
+  try {
+    const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+    doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((shape) => {
+      const fill = (shape.getAttribute('fill') || '').trim().toLowerCase();
+      if (!fill || fill === 'none' || fill === '#fff' || fill === '#ffffff' || fill === 'white' || fill === 'rgb(255,255,255)' || fill === 'rgb(255, 255, 255)') {
+        return;
+      }
+      shape.setAttribute('fill', fillColor);
+    });
+    return new XMLSerializer().serializeToString(doc);
+  } catch {
+    return svgStr;
+  }
+}
+
+function isConverterForegroundPixel(data, index, colorMode, threshold, bgColor, invert = false) {
+  if ((data[index + 3] || 0) < 16) return false;
+
+  let isForeground = false;
+  if (colorMode === 'mono') {
+    if (bgColor) {
+      isForeground = getConverterRgbDistance(data, index, bgColor) > threshold;
+    } else {
+      const gray = 0.299 * data[index] + 0.587 * data[index + 1] + 0.114 * data[index + 2];
+      isForeground = gray < threshold;
+    }
+    return invert ? !isForeground : isForeground;
+  }
+
+  if (!bgColor) return (data[index + 3] || 0) >= 128;
+  return getConverterRgbDistance(data, index, bgColor) >= Math.max(18, threshold);
+}
+
+function detectConverterContentBounds(imageData, colorMode, threshold, bgColor, invert = false) {
+  const { data, width, height } = imageData;
+  let minX = width;
+  let minY = height;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const index = (y * width + x) * 4;
+      if (!isConverterForegroundPixel(data, index, colorMode, threshold, bgColor, invert)) continue;
+      if (x < minX) minX = x;
+      if (y < minY) minY = y;
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+    }
+  }
+
+  if (maxX < minX || maxY < minY) {
+    return { x: 0, y: 0, width, height, cropped: false };
+  }
+
+  const pad = 1;
+  const x = Math.max(0, minX - pad);
+  const y = Math.max(0, minY - pad);
+  const right = Math.min(width - 1, maxX + pad);
+  const bottom = Math.min(height - 1, maxY + pad);
+  const croppedWidth = Math.max(1, right - x + 1);
+  const croppedHeight = Math.max(1, bottom - y + 1);
+
+  return {
+    x,
+    y,
+    width: croppedWidth,
+    height: croppedHeight,
+    cropped: x !== 0 || y !== 0 || croppedWidth !== width || croppedHeight !== height,
+  };
+}
+
+function getConverterEnhanceScale(width, height, enabled) {
+  if (!enabled) return 1;
+  const maxDim = Math.max(width, height);
+  if (maxDim >= 96) return 1;
+  if (maxDim <= 24) return 4;
+  if (maxDim <= 48) return 3;
+  return 2;
+}
+
+function applyBinaryNoiseCleanup(imageData, level) {
+  if (level === 'low') return;
+
+  const { data, width, height } = imageData;
+  const iterations = level === 'high' ? 2 : 1;
+  const removeThreshold = level === 'high' ? 2 : 1;
+  const fillThreshold = level === 'high' ? 6 : 7;
+  let mask = new Uint8Array(width * height);
+
+  for (let i = 0; i < mask.length; i++) {
+    mask[i] = data[i * 4] < 128 ? 1 : 0;
+  }
+
+  for (let pass = 0; pass < iterations; pass++) {
+    const next = mask.slice();
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const idx = y * width + x;
+        let neighbors = 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            if (dx === 0 && dy === 0) continue;
+            neighbors += mask[idx + dy * width + dx];
+          }
+        }
+        if (mask[idx] && neighbors <= removeThreshold) next[idx] = 0;
+        if (!mask[idx] && neighbors >= fillThreshold) next[idx] = 1;
+      }
+    }
+    mask = next;
+  }
+
+  for (let i = 0; i < mask.length; i++) {
+    const value = mask[i] ? 0 : 255;
+    const index = i * 4;
+    data[index] = value;
+    data[index + 1] = value;
+    data[index + 2] = value;
+    data[index + 3] = 255;
+  }
+}
+
+function getConverterTraceComplexity(pathCount, sizeKb) {
+  const score = pathCount + Math.round(sizeKb / 4);
+  if (score >= 220) return 'Heavy';
+  if (score >= 90) return 'Medium';
+  return 'Light';
+}
+
+function measureConverterTraceMetrics(svgStr, sizeKb) {
+  const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+  const pathCount = doc.querySelectorAll('path').length;
+  const shapeCount = doc.querySelectorAll(CONVERTER_SVG_SHAPES).length;
+  return {
+    pathCount,
+    shapeCount,
+    complexity: getConverterTraceComplexity(pathCount || shapeCount, sizeKb),
+  };
+}
+
+function updateConverterPreviewStage() {
+  const stage = document.getElementById('convPreviewStage');
+  const overlay = document.getElementById('convCompareOverlay');
+  const split = document.getElementById('convCompareSplit');
+  const originalOverlay = document.getElementById('convOriginalOverlayImg');
+  const outputOverlay = document.getElementById('convOutputOverlayImg');
+  const originalSplit = document.getElementById('convOriginalSplitImg');
+  const outputSplit = document.getElementById('convOutputSplitImg');
+  if (!stage || !overlay || !split || !originalOverlay || !outputOverlay || !originalSplit || !outputSplit) return;
+
+  const outputSrc = converterState.outputDataUrl || '';
+  const originalSrc = converterState.previewOriginalDataUrl || converterState.pngDataUrl || '';
+
+  outputOverlay.src = outputSrc;
+  outputSplit.src = outputSrc;
+  originalOverlay.src = originalSrc;
+  originalSplit.src = originalSrc;
+
+  stage.dataset.previewBg = converterState.previewBackground;
+  stage.style.setProperty('--conv-preview-bg', converterState.previewBackground === 'custom' ? converterState.previewBgColor : 'transparent');
+
+  const hasOutput = Boolean(outputSrc);
+  const showCompare = converterState.mode === 'png-to-svg' && hasOutput;
+  const compareMode = showCompare ? converterState.compareMode : 'trace';
+  const isSplit = compareMode === 'split';
+
+  split.hidden = !isSplit;
+  overlay.hidden = isSplit;
+  overlay.classList.toggle('is-overlay', compareMode === 'overlay');
+
+  originalOverlay.style.display = (compareMode === 'original' || compareMode === 'overlay') ? '' : 'none';
+  outputOverlay.style.display = (compareMode === 'trace' || compareMode === 'overlay') ? '' : 'none';
+
+  if (!hasOutput) {
+    originalOverlay.style.display = 'none';
+    outputOverlay.style.display = 'none';
+  }
+
+  updateConverterPreviewZoomUi({ center: true });
+}
+
+function updateConverterPngUiState() {
+  document.querySelector(`[name="convPreviewBg"][value="${converterState.previewBackground}"]`)?.setAttribute('checked', 'checked');
+  document.querySelectorAll('[name="convPreviewBg"]').forEach((radio) => {
+    radio.checked = radio.value === converterState.previewBackground;
+  });
+  const previewColor = document.getElementById('convPreviewBgColor');
+  if (previewColor) {
+    previewColor.value = converterState.previewBgColor;
+    previewColor.style.display = converterState.previewBackground === 'custom' ? 'inline-block' : 'none';
+  }
+  syncConverterChipGroup('compare', converterState.compareMode, 'compare');
+  syncConverterChipGroup('noise', converterState.noiseCleanup, 'cleanup');
+  const autoCrop = document.getElementById('convAutoCrop');
+  const enhance = document.getElementById('convEnhanceSmall');
+  const invert = document.getElementById('convInvertMono');
+  if (autoCrop) autoCrop.checked = converterState.autoCrop;
+  if (enhance) enhance.checked = converterState.enhanceSmallIcons;
+  if (invert) invert.checked = converterState.invert;
+  updateConverterPreviewStage();
+  updateConverterPreviewZoomUi();
+}
+
 function renderConverter() {
   removePackCatalog();
 
@@ -6199,11 +6825,15 @@ function renderConverter() {
           </div>
         </div>
         <div class="conv__input-preview" id="convInputPreview" style="display:none">
-          <img class="conv__preview-img" id="convInputImg" alt="Input">
-          <div class="conv__input-meta" id="convInputMeta"></div>
-          <button class="conv__clear-btn" id="convClearBtn">
+          <button class="conv__clear-btn" id="convClearBtn" aria-label="Clear converter input">
             <span class="material-symbols-outlined" style="font-size:16px">close</span>
           </button>
+          <div class="conv__input-stage" id="convInputStage">
+            <div class="conv__input-surface" id="convInputSurface">
+              <img class="conv__preview-img" id="convInputImg" alt="Input">
+            </div>
+          </div>
+          <div class="conv__input-meta" id="convInputMeta"></div>
         </div>
       </div>
 
@@ -6220,8 +6850,19 @@ function renderConverter() {
           <p>Preview appears here</p>
         </div>
         <div class="conv__output-preview" id="convOutputPreview" style="display:none">
-          <div class="conv__checker" id="convChecker">
-            <img class="conv__preview-img" id="convOutputImg" alt="Output">
+          <div class="conv__preview-stage" id="convPreviewStage" data-preview-bg="transparent">
+            <div class="conv__compare-overlay" id="convCompareOverlay">
+              <img class="conv__preview-img conv__preview-img--original" id="convOriginalOverlayImg" alt="Original preview">
+              <img class="conv__preview-img conv__preview-img--output" id="convOutputOverlayImg" alt="Output preview">
+            </div>
+            <div class="conv__compare-split" id="convCompareSplit" hidden>
+              <div class="conv__compare-pane">
+                <img class="conv__preview-img" id="convOriginalSplitImg" alt="Original split preview">
+              </div>
+              <div class="conv__compare-pane">
+                <img class="conv__preview-img" id="convOutputSplitImg" alt="Output split preview">
+              </div>
+            </div>
           </div>
           <div class="conv__output-meta" id="convOutputMeta"></div>
           <div class="conv__actions" id="convActions" style="display:none">
@@ -6315,6 +6956,22 @@ function renderConverter() {
           </div>
         </div>
         <div class="conv__opt-row">
+          <label class="conv__opt-label">Preview <span class="conv__tip-icon" data-tip="Changes the preview surface only so you can inspect the traced SVG on different backgrounds.">?</span></label>
+          <div class="conv__bg-options">
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="transparent" checked> Transparent</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="white"> White</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="black"> Black</label>
+            <label class="conv__radio"><input type="radio" name="convPreviewBg" value="custom"> Custom</label>
+            <input type="color" id="convPreviewBgColor" value="#ffffff" class="conv__color-input" style="display:none">
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Compare <span class="conv__tip-icon" data-tip="Switch between the traced result and the original source to judge fidelity.">?</span></label>
+          <div class="conv__chip-group" id="convCompareModes">
+            ${renderConverterChipGroup('compare', CONVERTER_COMPARE_OPTIONS, converterState.compareMode, 'compare')}
+          </div>
+        </div>
+        <div class="conv__opt-row">
           <label class="conv__opt-label">Threshold <span class="conv__tip-icon" data-tip="Controls background removal sensitivity. In Monochrome: how different a pixel must be from the background to be kept. In Color: how similar to the background a pixel must be to be removed. Higher values are more aggressive.">?</span></label>
           <div class="conv__slider-row">
             <input type="range" id="convThreshold" min="0" max="255" value="128" class="conv__slider">
@@ -6326,6 +6983,20 @@ function renderConverter() {
           <div class="conv__slider-row">
             <input type="range" id="convSmoothness" min="0" max="100" value="50" class="conv__slider">
             <span class="conv__slider-val" id="convSmoothnessVal">50</span>
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Cleanup <span class="conv__tip-icon" data-tip="Suppresses tiny speckles and small tracing artifacts. Higher settings are cleaner but can remove tiny details.">?</span></label>
+          <div class="conv__chip-group" id="convNoiseCleanup">
+            ${renderConverterChipGroup('noise', CONVERTER_NOISE_OPTIONS, converterState.noiseCleanup, 'cleanup')}
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Helpers <span class="conv__tip-icon" data-tip="Auto Crop trims empty edges. Enhance Small Icons sharpens tiny assets before tracing. Invert is helpful for light icons on dark backgrounds in Monochrome mode.">?</span></label>
+          <div class="conv__bg-options">
+            <label class="conv__radio"><input type="checkbox" id="convAutoCrop" checked> Auto Crop</label>
+            <label class="conv__radio"><input type="checkbox" id="convEnhanceSmall" checked> Enhance Small Icons</label>
+            <label class="conv__radio"><input type="checkbox" id="convInvertMono"> Invert</label>
           </div>
         </div>
         <button class="conv__reset-btn" id="convResetPng" data-tip="Reset to defaults">
@@ -6395,6 +7066,10 @@ function initConverterControls() {
 
   // Clear button
   document.getElementById('convClearBtn')?.addEventListener('click', clearConverterInput);
+  document.getElementById('convInputStage')?.addEventListener('wheel', (event) => handleConverterPreviewWheel(event, 'input'), { passive: false });
+  document.getElementById('convPreviewStage')?.addEventListener('wheel', (event) => handleConverterPreviewWheel(event, 'output'), { passive: false });
+  bindConverterPreviewPan(document.getElementById('convInputStage'), 'input');
+  bindConverterPreviewPan(document.getElementById('convPreviewStage'), 'output');
 
   // Paste SVG code button
   document.getElementById('convPasteBtn')?.addEventListener('click', async () => {
@@ -6515,6 +7190,44 @@ function initConverterControls() {
   document.querySelectorAll('[name="convColorMode"]').forEach(r => {
     r.addEventListener('change', e => { converterState.colorMode = e.target.value; runConversion(); });
   });
+  document.querySelectorAll('[name="convPreviewBg"]').forEach((radio) => {
+    radio.addEventListener('change', () => {
+      converterState.previewBackground = radio.value;
+      updateConverterPngUiState();
+    });
+  });
+  document.getElementById('convPreviewBgColor')?.addEventListener('input', (event) => {
+    converterState.previewBgColor = event.target.value;
+    updateConverterPngUiState();
+  });
+  document.querySelectorAll('.conv__chip-btn[data-conv-group="compare"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      converterState.compareMode = btn.dataset.compare || 'trace';
+      updateConverterPngUiState();
+    });
+  });
+  document.querySelectorAll('.conv__chip-btn[data-conv-group="noise"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      converterState.noiseCleanup = btn.dataset.cleanup || 'medium';
+      updateConverterPngUiState();
+      runConversion();
+    });
+  });
+  document.getElementById('convAutoCrop')?.addEventListener('change', (event) => {
+    converterState.autoCrop = Boolean(event.target.checked);
+    updateConverterPngUiState();
+    runConversion();
+  });
+  document.getElementById('convEnhanceSmall')?.addEventListener('change', (event) => {
+    converterState.enhanceSmallIcons = Boolean(event.target.checked);
+    updateConverterPngUiState();
+    runConversion();
+  });
+  document.getElementById('convInvertMono')?.addEventListener('change', (event) => {
+    converterState.invert = Boolean(event.target.checked);
+    updateConverterPngUiState();
+    runConversion();
+  });
   // Threshold: update value display immediately, but debounce the expensive re-trace
   document.getElementById('convThreshold')?.addEventListener('input', e => {
     converterState.threshold = parseInt(e.target.value, 10);
@@ -6546,6 +7259,7 @@ function initConverterControls() {
     converterState.colorMode = 'mono';
     converterState.threshold = 128;
     converterState.smoothness = 50;
+    resetConverterPngStyleState();
     // Update UI controls
     document.querySelector('[name="convPreset"][value="posterized2"]').checked = true;
     document.querySelector('[name="convColorMode"][value="mono"]').checked = true;
@@ -6557,6 +7271,7 @@ function initConverterControls() {
     if (smoothSlider) smoothSlider.value = 50;
     const smoothVal = document.getElementById('convSmoothnessVal');
     if (smoothVal) smoothVal.textContent = '50';
+    updateConverterPngUiState();
     runConversion();
   });
   document.getElementById('convResetSvg')?.addEventListener('click', () => {
@@ -6661,6 +7376,8 @@ function initConverterControls() {
   }
 
   updateConverterSvgUiState();
+  updateConverterPngUiState();
+  updateConverterPreviewZoomUi();
 }
 
 function loadConverterFile(file) {
@@ -6675,8 +7392,11 @@ function loadConverterFile(file) {
 }
 
 function loadConverterSvgText(svgText, filename) {
+  resetConverterPreviewZoom();
   converterState.svgText = svgText;
   converterState.mode = 'svg-to-png';
+  converterState.traceMetrics = null;
+  converterState.previewOriginalDataUrl = '';
   converterState.paintSupport = analyzeConverterSvgPaintSupport(svgText);
   // Switch to SVG→PNG mode
   document.querySelectorAll('.conv__mode-tab').forEach(t => t.classList.remove('conv__mode-tab--active'));
@@ -6693,12 +7413,17 @@ function loadConverterSvgText(svgText, filename) {
   showConverterInput(url, filename || 'Pasted SVG', svgText.length);
   converterState.pngDataUrl = '';
   updateConverterSvgUiState();
+  updateConverterPreviewStage();
+  updateConverterPreviewZoomUi({ center: true });
   runConversion();
 }
 
 function loadConverterPng(dataUrl, filename) {
+  resetConverterPreviewZoom();
   converterState.pngDataUrl = dataUrl;
   converterState.svgText = '';
+  converterState.previewOriginalDataUrl = dataUrl;
+  converterState.traceMetrics = null;
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -6717,6 +7442,8 @@ function loadConverterPng(dataUrl, filename) {
   document.getElementById('convPasteBtn').style.display = 'none';
   showConverterInput(dataUrl, filename, null);
   updateConverterSvgUiState();
+  updateConverterPngUiState();
+  updateConverterPreviewZoomUi({ center: true });
   runConversion();
 }
 
@@ -6732,13 +7459,17 @@ function showConverterInput(url, filename, byteSize) {
     const sizeStr = byteSize ? ` · ${(byteSize / 1024).toFixed(1)}KB` : '';
     inputMeta.textContent = `${filename}${sizeStr}`;
   }
+  updateConverterPreviewZoomUi({ center: true });
 }
 
 function clearConverterInput() {
+  resetConverterPreviewZoom();
   converterState.svgText = '';
   converterState.pngDataUrl = '';
   converterState.outputBlob = null;
   converterState.outputDataUrl = '';
+  converterState.previewOriginalDataUrl = '';
+  converterState.traceMetrics = null;
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -6754,6 +7485,8 @@ function clearConverterInput() {
   const fileInput = document.getElementById('convFileInput');
   if (fileInput) fileInput.value = '';
   updateConverterSvgUiState();
+  updateConverterPngUiState();
+  updateConverterPreviewZoomUi();
 }
 
 function runConversion() {
@@ -6853,18 +7586,24 @@ function convertSvgToPng() {
   img.src = url;
 }
 
-function showConverterOutput(url, label, sizeKb) {
+function showConverterOutput(url, label, sizeKb, traceMetrics = null) {
   const outputPreview = document.getElementById('convOutputPreview');
   const outputEmpty = document.getElementById('convOutputEmpty');
-  const outputImg = document.getElementById('convOutputImg');
   const outputMeta = document.getElementById('convOutputMeta');
   const actions = document.getElementById('convActions');
 
   if (outputPreview) outputPreview.style.display = '';
   if (outputEmpty) outputEmpty.style.display = 'none';
-  if (outputImg) outputImg.src = url;
-  if (outputMeta) outputMeta.innerHTML = `${label} &middot; ~${sizeKb}KB`;
+  converterState.outputDataUrl = url;
+  converterState.traceMetrics = traceMetrics;
+  if (outputMeta) {
+    const metricsHtml = traceMetrics
+      ? ` &middot; ${traceMetrics.pathCount} paths &middot; ${traceMetrics.complexity}`
+      : '';
+    outputMeta.innerHTML = `${label} &middot; ~${sizeKb}KB${metricsHtml}`;
+  }
   if (actions) actions.style.display = '';
+  updateConverterPreviewStage();
 }
 
 // Lazy-load imagetracerjs from CDN
@@ -6890,7 +7629,17 @@ function loadImageTracer() {
 let _convToken = 0;
 
 async function convertPngToSvg() {
-  const { pngDataUrl, threshold, preset, colorMode, smoothness } = converterState;
+  const {
+    pngDataUrl,
+    threshold,
+    preset,
+    colorMode,
+    smoothness,
+    autoCrop,
+    enhanceSmallIcons,
+    noiseCleanup,
+    invert,
+  } = converterState;
   const myToken = ++_convToken;
 
   // Show loading state (hide previous output)
@@ -6908,9 +7657,6 @@ async function convertPngToSvg() {
     const ImageTracer = await loadImageTracer();
     if (myToken !== _convToken) return;
 
-    // Build options from current state
-    const options = buildImageTracerOptions(preset, colorMode, threshold, smoothness);
-
     // Load image into canvas
     const img = new Image();
     await new Promise((resolve, reject) => {
@@ -6920,58 +7666,122 @@ async function convertPngToSvg() {
     });
     if (myToken !== _convToken) return;
 
-    // Trace resolution scales with smoothness (0=192px, 50=320px, 100=512px)
-    // Higher resolution = more pixels for the tracer to follow curves accurately.
-    const basePx = preset === 'detailed' ? 384 : 256;
-    const smoothFactor = smoothness / 100; // 0..1
-    const MAX_TRACE_PX = Math.round(basePx * (0.75 + smoothFactor * 1.25));
     const srcW = img.naturalWidth;
     const srcH = img.naturalHeight;
-    const downScale = Math.min(1, MAX_TRACE_PX / Math.max(srcW, srcH));
-    const traceW = Math.round(srcW * downScale);
-    const traceH = Math.round(srcH * downScale);
+    const sourceCanvas = document.createElement('canvas');
+    sourceCanvas.width = srcW;
+    sourceCanvas.height = srcH;
+    const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
+    sourceCtx.drawImage(img, 0, 0, srcW, srcH);
+    const sourceImageData = sourceCtx.getImageData(0, 0, srcW, srcH);
+    const sourceBg = detectBackgroundFromCorners(sourceImageData.data, srcW, srcH);
+    const cropBounds = autoCrop
+      ? detectConverterContentBounds(sourceImageData, colorMode, threshold, sourceBg, invert)
+      : { x: 0, y: 0, width: srcW, height: srcH, cropped: false };
+
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = cropBounds.width;
+    cropCanvas.height = cropBounds.height;
+    const cropCtx = cropCanvas.getContext('2d', { willReadFrequently: true });
+    cropCtx.drawImage(
+      sourceCanvas,
+      cropBounds.x,
+      cropBounds.y,
+      cropBounds.width,
+      cropBounds.height,
+      0,
+      0,
+      cropBounds.width,
+      cropBounds.height,
+    );
+    converterState.previewOriginalDataUrl = cropCanvas.toDataURL('image/png');
+    const cropImageData = cropCtx.getImageData(0, 0, cropBounds.width, cropBounds.height);
+    const traceProfile = analyzeConverterTraceProfile(cropImageData, colorMode, threshold, sourceBg, invert);
+    const effectiveColorMode = (colorMode === 'color' && traceProfile.likelySingleHueLogo) ? 'mono' : colorMode;
+    const logoRouteFill = (colorMode === 'color' && effectiveColorMode === 'mono')
+      ? converterRgbToHex(traceProfile.dominantColor)
+      : null;
+    const effectiveThreshold = logoRouteFill ? Math.max(threshold, 170) : threshold;
+
+    // Trace resolution now starts from cropped bounds and supports a sharper small-icon boost.
+    const smoothFactor = smoothness / 100;
+    const basePx = preset === 'detailed' ? 768 : preset === 'default' ? 640 : 512;
+    const maxTracePx = Math.round(basePx * (0.85 + smoothFactor * 1.15));
+    let enhanceScale = getConverterEnhanceScale(
+      cropBounds.width,
+      cropBounds.height,
+      enhanceSmallIcons || traceProfile.likelySingleHueLogo,
+    );
+    if (traceProfile.likelySingleHueLogo && enhanceScale === 1 && Math.max(cropBounds.width, cropBounds.height) <= 320) {
+      enhanceScale = 2;
+    }
+
+    let traceW = Math.max(1, Math.round(cropBounds.width * enhanceScale));
+    let traceH = Math.max(1, Math.round(cropBounds.height * enhanceScale));
+    const downScale = Math.min(1, maxTracePx / Math.max(traceW, traceH));
+    traceW = Math.max(1, Math.round(traceW * downScale));
+    traceH = Math.max(1, Math.round(traceH * downScale));
 
     const canvas = document.createElement('canvas');
     canvas.width = traceW;
     canvas.height = traceH;
-    const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, 0, 0, traceW, traceH);
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const useSharpUpscale = enhanceScale > 1 && (effectiveColorMode === 'mono' || traceProfile.likelyFlatArtwork);
+    ctx.imageSmoothingEnabled = !useSharpUpscale;
+    ctx.imageSmoothingQuality = useSharpUpscale ? 'low' : 'high';
+    ctx.drawImage(cropCanvas, 0, 0, traceW, traceH);
     const imageData = ctx.getImageData(0, 0, traceW, traceH);
 
     // ── Preprocessing: threshold + background removal ──
-    const detectedBg = preprocessImageData(imageData, colorMode, threshold);
+    preprocessImageData(imageData, {
+      colorMode: effectiveColorMode,
+      threshold: effectiveThreshold,
+      invert,
+      noiseCleanup,
+      traceProfile,
+    });
+
+    // Build options from current state after crop/upscale decisions are known.
+    const options = buildImageTracerOptions(
+      preset,
+      effectiveColorMode,
+      effectiveThreshold,
+      smoothness,
+      noiseCleanup,
+      traceProfile,
+    );
 
     // Scale factor: imagetracerjs traces at traceW x traceH but we want
-    // path coordinates in the ORIGINAL srcW x srcH coordinate space.
-    // The `scale` option multiplies all output path coordinates.
-    const upScale = srcW / traceW; // e.g., 512/256 = 2.0
-    options.scale = upScale;
+    // path coordinates in the cropped source coordinate space.
+    options.scale = cropBounds.width / traceW;
 
     // Trace
     const svgResult = ImageTracer.imagedataToSVG(imageData, options);
     if (myToken !== _convToken) return;
 
-    // Normalize: ensure viewBox matches original dimensions
-    let cleanSvg = normalizeSvgOutput(svgResult, srcW, srcH);
+    // Normalize: ensure viewBox matches the exported crop dimensions
+    let cleanSvg = normalizeSvgOutput(svgResult, cropBounds.width, cropBounds.height);
 
     // Strip background-colored paths (the traced background) to produce
     // icon paths on transparent background.
     // Preprocessing normalises any detected bg to white [255,255,255],
-    // so we always strip white. detectedBg is kept for diagnostics.
+    // so we always strip white.
     cleanSvg = stripBackgroundPaths(cleanSvg, [255, 255, 255]);
+    if (logoRouteFill) {
+      cleanSvg = retintConverterForegroundSvg(cleanSvg, logoRouteFill);
+    }
 
     const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
     converterState.outputBlob = svgBlob;
     const url = URL.createObjectURL(svgBlob);
-    converterState.outputDataUrl = url;
     const sizeKb = Math.round(svgBlob.size / 1024);
+    const traceMetrics = measureConverterTraceMetrics(cleanSvg, sizeKb);
+    const croppedSuffix = cropBounds.cropped ? ' · cropped' : '';
 
     const sizeWarning = sizeKb > 300
       ? ` <span style="color:#f97316">⚠ Large</span>`
       : '';
-    showConverterOutput(url, `SVG (${srcW}x${srcH})${sizeWarning}`, sizeKb);
+    showConverterOutput(url, `SVG (${cropBounds.width}x${cropBounds.height}${croppedSuffix})${sizeWarning}`, sizeKb, traceMetrics);
   } catch (err) {
     if (myToken !== _convToken) return;
     console.error('[Converter] PNG-to-SVG failed:', err);
@@ -6980,16 +7790,17 @@ async function convertPngToSvg() {
   }
 }
 
-function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50) {
+function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, noiseCleanup = 'medium', traceProfile = null) {
   // Base options per preset - tuned for sharp, clean icon output
   // `scale` is set dynamically in convertPngToSvg() to compensate for downsampling
   const presetOptions = {
-    posterized2: { numberofcolors: 2, colorsampling: 0, mincolorratio: 0, colorquantcycles: 1, pathomit: 4, ltres: 0.5, qtres: 0.5 },
-    default:     { numberofcolors: 16, colorsampling: 2, mincolorratio: 0.01, colorquantcycles: 3, pathomit: 4, ltres: 0.5, qtres: 0.5 },
-    detailed:    { numberofcolors: 32, colorsampling: 2, mincolorratio: 0, colorquantcycles: 5, pathomit: 2, ltres: 0.2, qtres: 0.2 },
+    posterized2: { numberofcolors: 2, colorsampling: 0, mincolorratio: 0, colorquantcycles: 1, pathomit: 2, ltres: 0.4, qtres: 0.4 },
+    default:     { numberofcolors: 16, colorsampling: 2, mincolorratio: 0.01, colorquantcycles: 3, pathomit: 3, ltres: 0.4, qtres: 0.4 },
+    detailed:    { numberofcolors: 32, colorsampling: 2, mincolorratio: 0, colorquantcycles: 5, pathomit: 1, ltres: 0.18, qtres: 0.18 },
   };
 
   const base = { ...(presetOptions[preset] || presetOptions.posterized2) };
+  const cleanupWeight = noiseCleanup === 'high' ? 2 : noiseCleanup === 'medium' ? 1 : 0;
 
   if (colorMode === 'mono') {
     // Mono: we preprocess pixels to binary (black/white) in preprocessImageData(),
@@ -7000,8 +7811,9 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50) 
     base.blurradius = 0; // no blur - preprocessing handles threshold
     base.blurdelta = 0;
     // Tight path tolerance for sharp mono edges
-    base.ltres = 0.3;
-    base.qtres = 0.3;
+    base.ltres = 0.22;
+    base.qtres = 0.22;
+    base.pathomit = Math.max(0, (base.pathomit || 1) + cleanupWeight);
   } else {
     // Color mode: need enough palette entries to distinguish icon colors
     // from the white background. With only 2 (Simple preset), k-means
@@ -7009,6 +7821,18 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50) 
     base.numberofcolors = Math.max(base.numberofcolors, 8);
     base.colorsampling = 2; // k-means for reliable color separation
     base.colorquantcycles = Math.max(base.colorquantcycles, 3);
+    base.pathomit = Math.max(base.pathomit || 2, 1 + cleanupWeight * 2);
+    base.mincolorratio = Math.max(base.mincolorratio || 0, cleanupWeight * 0.01);
+    if (traceProfile?.likelyFlatArtwork) {
+      base.numberofcolors = Math.min(
+        Math.max(3, traceProfile.recommendedColorCount || 6),
+        Math.max(base.numberofcolors, 3),
+      );
+      base.colorsampling = 0;
+      base.colorquantcycles = 1;
+      base.pathomit = Math.max(base.pathomit, 2 + cleanupWeight);
+      base.mincolorratio = Math.max(base.mincolorratio, 0.015 + cleanupWeight * 0.01);
+    }
   }
 
   // Smoothness adjustments: lower ltres/qtres = tighter Bezier fit,
@@ -7028,7 +7852,13 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50) 
 
 // ── Image preprocessing: threshold + background removal ──
 // Returns the detected background colour [R,G,B] or null.
-function preprocessImageData(imageData, colorMode, threshold) {
+function preprocessImageData(imageData, {
+  colorMode,
+  threshold,
+  invert = false,
+  noiseCleanup = 'medium',
+  traceProfile = null,
+}) {
   const d = imageData.data; // RGBA flat array
   const w = imageData.width;
   const h = imageData.height;
@@ -7059,12 +7889,15 @@ function preprocessImageData(imageData, colorMode, threshold) {
         isForeground = gray < threshold;
       }
 
+      if (invert) isForeground = !isForeground;
+
       if (isForeground) {
         d[i] = 0; d[i + 1] = 0; d[i + 2] = 0; d[i + 3] = 255;       // opaque black
       } else {
         d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255; // opaque white
       }
     }
+    applyBinaryNoiseCleanup(imageData, noiseCleanup);
   } else {
     // Color mode: replace background pixels with opaque white.
     // We use opaque white (not transparent) because imagetracerjs produces
@@ -7085,6 +7918,9 @@ function preprocessImageData(imageData, colorMode, threshold) {
           d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255; // opaque white
         }
       }
+    }
+    if (traceProfile?.likelyFlatArtwork || traceProfile?.likelySingleHueLogo) {
+      flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfile);
     }
   }
   return bgColor; // [R,G,B] or null
