@@ -9,6 +9,8 @@
     "build:material-export-manifest": "node scripts/build-material-export-manifest.js",
     "seed:material-owned-cache": "node scripts/seed-material-owned-cache.js",
     "build:bundles": "node scripts/build-collection-bundles.js",
+    "converter:proof-service": "node tools/converter-proof-service/server.mjs",
+    "converter:proof-smoke": "node tools/converter-proof-service/smoke-client.mjs",
     "build": "npm run build:material-export-manifest && npm run build:bundles && vite build",
     "preview": "vite preview"
   },
@@ -23,9 +25,11 @@
     "lucide-static": "^0.577.0",
     "mingcute_icon": "^2.9.71",
     "simple-icons": "^16.12.0",
-    "vite": "^6.2.0"
+    "vite": "^6.2.0",
+    "vite-plugin-wasm": "^3.6.0"
   },
   "dependencies": {
-    "@neplex/vectorizer": "^0.0.5"
+    "@neplex/vectorizer": "^0.0.5",
+    "vectortracer": "^0.1.2"
   }
 }

@@ -4,6 +4,24 @@
 
 Improve `PNG -> SVG` quality so icons, logos, and flat artwork trace with sharper edges, better corner fidelity, cleaner cutouts, and more exact geometry than the current ImageTracer-based pipeline.
 
+## Key Framing
+
+The next stage should be described as:
+
+- `engine selection` for quality
+- `runtime hosting` for packaging, determinism, and operations
+
+This is important because a backend or service is not itself a quality fix.
+
+Quality improves when we run a stronger color-capable engine.
+
+Runtime choice matters because it determines whether that engine can run:
+
+- in the browser
+- in a worker
+- in an Edge Function
+- in a dedicated Node service
+
 ## Product Principle
 
 Users care about one thing:
@@ -47,10 +65,48 @@ Replace the current single-engine tracing approach with a hybrid quality-first p
 
 1. Better preprocessing
 2. Image-type classification
-3. Mono tracing engine for exact binary/icon work
-4. Color tracing engine for richer multi-color work
+3. Browser-safe mono tracing engine for exact binary/icon work
+4. Real color tracing engine for richer multi-color work
 5. Cleaner post-processing and output normalization
-6. Worker/WASM execution to keep the UI responsive
+6. Responsive browser execution, with worker/WASM as a follow-on when stable
+
+## Step 0: Color Engine Feasibility Spike
+
+Before committing to backend work, verify what real color-engine path is actually available.
+
+### Questions to answer
+
+1. Does a browser-safe color-capable VTracer-family package already exist?
+2. If not, is a custom browser WASM build realistic enough to justify?
+3. If browser color VTracer is not practical, what is the lightest runtime that can host a real color-capable engine?
+
+### Current facts already known
+
+- the installed `vectortracer` browser package documents binary tracing only
+- the installed `@neplex/vectorizer` package exposes color vectorization, but it is Node-native
+- Supabase Edge Functions are Deno-based, so Node N-API addons cannot be assumed to work there
+
+### Evidence-driven outcomes
+
+#### Outcome A: Browser path is viable
+
+- use a browser-safe color-capable VTracer-family package or build
+- keep the app static
+
+#### Outcome B: Edge Function path is viable
+
+- use a Deno-compatible WASM route in Supabase Edge Functions
+- keep the frontend static while adding a lightweight server-assisted trace boundary
+
+#### Outcome C: Dedicated Node runtime is required
+
+- host `@neplex/vectorizer` or equivalent on a Node-capable runtime
+- accept the higher operational cost in exchange for higher control
+
+### Exit Criteria
+
+- one chosen direction for the color engine runtime
+- explicit written evidence for why the non-chosen paths were rejected
 
 ## Shipping Slice Before Full Engine Swap
 
@@ -61,6 +117,33 @@ Before the full Potrace/VTracer architecture lands, ship an intermediate quality
 3. recolor the cleaned mono result back to the dominant logo color
 4. flatten limited-palette artwork more aggressively before color tracing
 5. tighten current tracer options when the image is clearly icon/logo-like
+
+### Progress Update
+
+Shipped so far inside the current-engine path:
+
+- screenshot-derived single-hue logo detection
+- browser-safe mono exact route with automatic fallback hardening
+- dominant-color recolor for screenshot-derived logo traces
+- limited-palette flattening for flat artwork
+- dedicated `flat-art-color` routing with tighter color-trace settings
+- preview/inspection UX and heavy-trace guidance
+
+Important correction after multi-color audit:
+
+- an attempted wrapper-based browser color-engine rollout was removed from production
+- `flat-art-color` currently uses the improved ImageTracer path only
+- true multi-color engine replacement is still pending until a correct byte-based VTracer integration is in place
+- the current fallback path should keep being hardened in the meantime:
+  - avoid mono-like smoothing for multi-color artwork
+  - preserve more palette entries for flat logos
+  - prefer reliable color separation over aggressive simplification
+
+Still pending from the larger plan:
+
+- a true replacement color engine
+- broader automatic mode routing across all image types
+- off-main-thread worker/WASM execution as the stable default
 
 This is the fastest path to visibly sharper SVG output for the kinds of examples users are already trying.
 
@@ -74,6 +157,11 @@ Create a small local benchmark set of real problem inputs:
 - flat two-color badge
 - multi-color emoji/sticker
 - noisy PNG with tinted background
+- KFC logo
+- Shell logo
+- McDonald's logo
+- Starbucks screenshot
+- cubes icon / white-on-dark app icon
 
 For each sample, capture:
 
@@ -90,6 +178,19 @@ Success criteria for the upgrade:
 - background artifacts are reduced
 - output path count stays reasonable
 - users can quickly judge the traced SVG on light, dark, checker, and custom preview backgrounds
+
+### Semantic acceptance criteria
+
+Proxy metrics are not enough.
+
+For the benchmark set, add human-judged criteria such as:
+
+- KFC: black text stays black, red stays red, white field stays clean
+- Shell: yellow and red remain distinct and correctly bounded
+- McDonald's: yellow arches stay yellow and the red field stays uniform
+- cubes icon: white foreground remains visible and separate from the dark square
+
+These checks should gate major engine or routing changes just as strongly as file size and path count.
 
 ## Phase 1: Stronger Preprocessing
 
@@ -119,7 +220,7 @@ Potrace’s own docs explicitly assume preprocessing is handled upstream, and th
 
 ## Phase 2: Replace the Mono Engine
 
-Introduce a Potrace-class tracing path for monochrome work.
+Introduce a browser-safe mono tracing path for logo/icon work.
 
 ### Target workloads
 
@@ -128,16 +229,25 @@ Introduce a Potrace-class tracing path for monochrome work.
 - symbols
 - line art
 
-### Expected controls to expose internally
+### Architecture decision
 
-- `turdsize`
-- `alphamax`
-- `opttolerance`
-- `tight`
+Do not anchor this phase to Potrace directly.
+
+Based on the repo audit:
+
+- the current app is a static Vite frontend
+- `@neplex/vectorizer` is Node-native and not browser-runnable
+- Potrace introduces licensing friction for this product path
+
+So Phase 2 should use a **browser-safe VTracer-family mono route** instead:
+
+- binary / monochrome mode
+- lazy-loaded browser execution
+- lazy-loaded only inside `PNG -> SVG`
 
 ### UI strategy
 
-Do not expose raw Potrace jargon first.
+Do not expose raw engine jargon first.
 
 Map it to product language:
 
@@ -145,15 +255,22 @@ Map it to product language:
 - `Balanced`
 - `Smooth`
 
-Internally, those presets can translate to tuned Potrace parameters.
+Internally, those presets can translate to tuned mono-engine parameters.
 
 ### Implementation note
 
-Prefer a local/bundled integration path over shelling out to a desktop binary. The web product should stay portable.
+Prefer a local/bundled browser-safe integration path over shelling out to a desktop binary or adding a Node-only helper. The web product should stay portable.
 
 ## Phase 3: Add a Color Engine
 
 Introduce a VTracer-class tracing path for color and flat-illustration work.
+
+Status note:
+
+- this phase is not shipped yet
+- a previous wrapper-based attempt failed real-world KFC/Shell smoke tests and was rolled back
+- the next implementation must use a byte-based tracing integration, not a DOM/demo wrapper
+- the browser-safe runtime path for that engine is still subject to Step 0 feasibility
 
 ### Target workloads
 
@@ -217,13 +334,24 @@ This will not solve every raster-to-vector case, but it should materially improv
 
 ## Phase 5: Move Tracing Off the Main Thread
 
-Tracing should run in a worker-backed WASM flow.
+Tracing should eventually run in a worker-backed WASM flow.
 
 ### Why
 
-- current tracing is main-thread heavy
 - better engines and better preprocessing will increase compute cost
 - the converter UI should remain responsive while tracing
+- Phase 2 can ship first with a batched browser runner if that is the most stable integration path
+
+### Priority note
+
+This is now a polish and robustness phase, not the main quality unlock.
+
+If there is a tradeoff between:
+
+- better color quality
+- and worker isolation
+
+the color engine work should come first.
 
 ### Requirements
 
@@ -406,9 +534,17 @@ This protects product trust.
 
 ## Proposed Delivery Order
 
+### Milestone 0
+
+Run the color-engine feasibility spike:
+
+- verify browser-safe color-capable VTracer-family availability
+- verify whether a Supabase Edge Function route is truly viable
+- verify whether a dedicated Node runtime is actually required
+
 ### Milestone 1
 
-Improve the current flow before changing engines:
+Improve the current flow before finalizing the new color-engine host:
 
 - trim transparent bounds
 - better small-image handling
@@ -422,17 +558,18 @@ This should produce immediate wins and give a baseline for comparison.
 
 Add the mono exact-trace path.
 
-- integrate Potrace-class tracing
-- route `Logo` and `Icon` modes to it
+- integrate a browser-safe VTracer-family mono route
+- route `Logo` and `Icon` style cases to it first
+- keep current ImageTracer as fallback
 - verify exactness improvements on the benchmark set
 
-This is likely the highest-value single upgrade.
+This is still the highest-value single upgrade.
 
 ### Milestone 3
 
 Add the color tracing path.
 
-- integrate VTracer-class tracing in worker/WASM form
+- integrate the chosen color-capable engine in the runtime proven by Milestone 0
 - route `Flat Art` and `Color` modes to it
 - verify color-region separation and edge fidelity
 

@@ -5981,18 +5981,23 @@ const converterState = {
   },
   // PNG→SVG options
   threshold: 128,
-  preset: 'posterized2', // imagetracerjs preset
-  colorMode: 'mono',
+  assetMode: 'logo',
+  preset: 'auto',
+  exportSizeMode: 'auto', // 'auto' | 'original' | 'custom'
+  exportTargetWidth: 512,
   smoothness: 50,        // 0-100: curve smoothness (trace resolution + path tolerance)
   previewBackground: 'transparent', // 'transparent' | 'white' | 'black' | 'custom'
   previewBgColor: '#ffffff',
-  compareMode: 'trace', // 'trace' | 'original' | 'split' | 'overlay'
+  compareMode: 'trace', // 'trace' | 'split'
   autoCrop: true,
   enhanceSmallIcons: true,
   noiseCleanup: 'medium', // 'low' | 'medium' | 'high'
   invert: false,
   previewOriginalDataUrl: '',
   traceMetrics: null,
+  traceAdvice: null,
+  outputPreviewSize: null,
+  outputExportSize: null,
   inputZoom: 1,
   outputZoom: 1,
 };
@@ -6001,11 +6006,12 @@ const CONVERTER_SVG_NS = 'http://www.w3.org/2000/svg';
 const CONVERTER_SVG_SHAPES = 'path, circle, rect, polygon, polyline, line, ellipse';
 const CONVERTER_COLOR_SWATCHES = ['#000000', '#FFFFFF', '#FF6B35', '#00D4FF', '#A855F7', '#22C55E', '#FACC15'];
 const CONVERTER_BOUNDS_PATH_D = 'm00h24v24h0z';
+const CONVERTER_TRANSPARENT_BG_SENTINEL = [255, 0, 255];
+const CONVERTER_PROOF_SERVICE_URL = import.meta.env.VITE_CONVERTER_PROOF_URL || (import.meta.env.DEV ? 'http://127.0.0.1:4318/api/convert/png-to-svg' : '');
+const CONVERTER_PROOF_SERVICE_REQUIRED = Boolean(CONVERTER_PROOF_SERVICE_URL);
 const CONVERTER_COMPARE_OPTIONS = [
-  { key: 'trace', label: 'Trace' },
-  { key: 'original', label: 'Original' },
+  { key: 'trace', label: 'Default' },
   { key: 'split', label: 'Split' },
-  { key: 'overlay', label: 'Overlay' },
 ];
 const CONVERTER_NOISE_OPTIONS = [
   { key: 'low', label: 'Low' },
@@ -6015,6 +6021,7 @@ const CONVERTER_NOISE_OPTIONS = [
 const CONVERTER_PREVIEW_ZOOM_MIN = 1;
 const CONVERTER_PREVIEW_ZOOM_MAX = 2;
 const CONVERTER_PREVIEW_ZOOM_STEP = 0.1;
+let converterMonoEngineReady = null;
 
 function renderConverterColorDotRow(type, activeColor, disabled = false) {
   const disabledAttrs = disabled ? ' disabled aria-disabled="true"' : '';
@@ -6038,6 +6045,84 @@ function renderConverterChipGroup(groupId, options, activeKey, dataAttr) {
       data-conv-group="${groupId}"
     >${option.label}</button>
   `).join('');
+}
+
+function getConverterPresetLabel(preset) {
+  if (preset === 'auto') return 'Auto';
+  if (preset === 'detailed') return 'Exact';
+  if (preset === 'default') return 'Balanced';
+  return 'Compact';
+}
+
+function getConverterDefaultExportLongestEdge(assetMode = 'logo') {
+  return assetMode === 'icon' ? 128 : 512;
+}
+
+function clampConverterExportTargetWidth(value, assetMode = 'logo') {
+  const fallback = getConverterDefaultExportLongestEdge(assetMode);
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(16, Math.min(4096, Math.round(parsed)));
+}
+
+function getConverterExportSize({
+  assetMode = 'logo',
+  cropWidth,
+  cropHeight,
+  exportSizeMode = 'auto',
+  exportTargetWidth = null,
+}) {
+  const safeCropWidth = Math.max(1, Math.round(cropWidth || 1));
+  const safeCropHeight = Math.max(1, Math.round(cropHeight || 1));
+
+  if (exportSizeMode === 'original') {
+    return { width: safeCropWidth, height: safeCropHeight };
+  }
+
+  if (exportSizeMode === 'custom') {
+    const width = clampConverterExportTargetWidth(exportTargetWidth, assetMode);
+    return {
+      width,
+      height: Math.max(1, Math.round((width * safeCropHeight) / safeCropWidth)),
+    };
+  }
+
+  const targetLongestEdge = getConverterDefaultExportLongestEdge(assetMode);
+  if (safeCropWidth >= safeCropHeight) {
+    return {
+      width: targetLongestEdge,
+      height: Math.max(1, Math.round((targetLongestEdge * safeCropHeight) / safeCropWidth)),
+    };
+  }
+  return {
+    width: Math.max(1, Math.round((targetLongestEdge * safeCropWidth) / safeCropHeight)),
+    height: targetLongestEdge,
+  };
+}
+
+function getConverterRequestedColorMode(assetMode = 'logo') {
+  return assetMode === 'icon' ? 'mono' : 'color';
+}
+
+function getConverterServiceQualityMode(preset, assetMode = 'logo') {
+  if (preset === 'posterized2') return 'compact';
+  if (preset === 'detailed') return 'exact';
+  if (preset === 'auto') return assetMode === 'icon' ? 'compact' : 'auto';
+  return 'exact';
+}
+
+function resolveConverterPreset(preset, traceProfile, requestedColorMode) {
+  if (preset !== 'auto') return preset;
+  if (traceProfile?.likelyTinyLineIcon || traceProfile?.likelySingleColorMark) return 'detailed';
+  if (requestedColorMode === 'mono' || traceProfile?.likelySingleHueLogo) return 'detailed';
+  const likelyChromaticFlatArtwork = (
+    traceProfile?.likelyFlatArtwork
+    && traceProfile?.neutralCoverage < 0.14
+    && traceProfile?.chromaticCoverage > 0.82
+  );
+  if (likelyChromaticFlatArtwork) return 'detailed';
+  if (traceProfile?.likelyFlatArtwork) return 'posterized2';
+  return 'default';
 }
 
 function normalizeConverterPathData(d = '') {
@@ -6211,11 +6296,15 @@ function resetConverterPngStyleState() {
   converterState.previewBgColor = '#ffffff';
   converterState.compareMode = 'trace';
   converterState.autoCrop = true;
+  converterState.exportSizeMode = 'auto';
+  converterState.exportTargetWidth = getConverterDefaultExportLongestEdge(converterState.assetMode || 'logo');
   converterState.enhanceSmallIcons = true;
   converterState.noiseCleanup = 'medium';
   converterState.invert = false;
   converterState.previewOriginalDataUrl = '';
   converterState.traceMetrics = null;
+  converterState.outputPreviewSize = null;
+  converterState.outputExportSize = null;
 }
 
 function clampConverterPreviewZoom(value) {
@@ -6225,6 +6314,22 @@ function clampConverterPreviewZoom(value) {
 
 function getConverterPreviewZoomPercent(zoom) {
   return `${Math.round(zoom * 100)}%`;
+}
+
+function getConverterOutputPreviewBaseScale(previewSize, {
+  compareMode = 'trace',
+  stageWidth = 230,
+  stageHeight = 190,
+} = {}) {
+  if (!previewSize) return 1;
+  const paneCount = compareMode === 'split' ? 2 : 1;
+  const maxPreviewWidth = Math.max(1, Math.floor(stageWidth / paneCount) - 20);
+  const maxPreviewHeight = Math.max(1, stageHeight - 20);
+  return Math.min(
+    1,
+    maxPreviewWidth / Math.max(1, previewSize.width),
+    maxPreviewHeight / Math.max(1, previewSize.height),
+  );
 }
 
 function centerConverterPreviewViewport(viewport) {
@@ -6240,6 +6345,10 @@ function updateConverterPreviewZoomUi({ center = false } = {}) {
   const outputStage = document.getElementById('convPreviewStage');
   const outputOverlay = document.getElementById('convCompareOverlay');
   const outputSplit = document.getElementById('convCompareSplit');
+  const originalOverlayImg = document.getElementById('convOriginalOverlayImg');
+  const outputOverlayImg = document.getElementById('convOutputOverlayImg');
+  const originalSplitImg = document.getElementById('convOriginalSplitImg');
+  const outputSplitImg = document.getElementById('convOutputSplitImg');
 
   if (inputSurface) {
     const inputPercent = getConverterPreviewZoomPercent(converterState.inputZoom);
@@ -6253,17 +6362,76 @@ function updateConverterPreviewZoomUi({ center = false } = {}) {
     inputImg.style.maxHeight = `${Math.round(180 * converterState.inputZoom)}px`;
   }
 
+  const previewSize = converterState.mode === 'png-to-svg' ? converterState.outputPreviewSize : null;
+  const previewCompareMode = converterState.mode === 'png-to-svg' && converterState.compareMode === 'split'
+    ? 'split'
+    : 'trace';
+  const outputPreviewScale = previewSize
+    ? getConverterOutputPreviewBaseScale(previewSize, {
+      compareMode: previewCompareMode,
+      stageWidth: outputStage?.clientWidth || 230,
+      stageHeight: outputStage?.clientHeight || 190,
+    })
+    : 1;
+  const outputPixelWidth = previewSize
+    ? Math.max(1, Math.round(previewSize.width * outputPreviewScale * converterState.outputZoom))
+    : null;
+  const outputPixelHeight = previewSize
+    ? Math.max(1, Math.round(previewSize.height * outputPreviewScale * converterState.outputZoom))
+    : null;
+
   if (outputOverlay) {
-    const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
-    outputOverlay.style.width = outputPercent;
-    outputOverlay.style.height = outputPercent;
-    outputOverlay.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+    if (outputPixelWidth && outputPixelHeight) {
+      outputOverlay.style.width = `${outputPixelWidth}px`;
+      outputOverlay.style.height = `${outputPixelHeight}px`;
+      outputOverlay.style.minHeight = `${outputPixelHeight}px`;
+    } else {
+      const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
+      outputOverlay.style.width = outputPercent;
+      outputOverlay.style.height = outputPercent;
+      outputOverlay.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+    }
   }
   if (outputSplit) {
-    const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
-    outputSplit.style.width = outputPercent;
-    outputSplit.style.height = outputPercent;
-    outputSplit.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+    if (outputPixelWidth && outputPixelHeight) {
+      outputSplit.style.width = `${outputPixelWidth * 2}px`;
+      outputSplit.style.height = `${outputPixelHeight}px`;
+      outputSplit.style.minHeight = `${outputPixelHeight}px`;
+    } else {
+      const outputPercent = getConverterPreviewZoomPercent(converterState.outputZoom);
+      outputSplit.style.width = outputPercent;
+      outputSplit.style.height = outputPercent;
+      outputSplit.style.minHeight = `${Math.round(190 * converterState.outputZoom)}px`;
+    }
+  }
+  [originalOverlayImg, outputOverlayImg, originalSplitImg, outputSplitImg].forEach((img) => {
+    if (!img) return;
+    if (outputPixelWidth && outputPixelHeight) {
+      img.style.width = `${outputPixelWidth}px`;
+      img.style.height = `${outputPixelHeight}px`;
+      img.style.maxWidth = 'none';
+      img.style.maxHeight = 'none';
+    } else {
+      img.style.width = '';
+      img.style.height = '';
+      img.style.maxWidth = '';
+      img.style.maxHeight = '';
+    }
+  });
+  if (outputSplit) {
+    outputSplit.querySelectorAll('.conv__compare-pane').forEach((pane) => {
+      if (outputPixelWidth && outputPixelHeight) {
+        pane.style.width = `${outputPixelWidth}px`;
+        pane.style.height = `${outputPixelHeight}px`;
+        pane.style.minWidth = `${outputPixelWidth}px`;
+        pane.style.minHeight = `${outputPixelHeight}px`;
+      } else {
+        pane.style.width = '';
+        pane.style.height = '';
+        pane.style.minWidth = '';
+        pane.style.minHeight = '';
+      }
+    });
   }
   if (outputStage) {
     outputStage.classList.toggle('is-pannable', converterState.outputZoom > CONVERTER_PREVIEW_ZOOM_MIN);
@@ -6357,12 +6525,92 @@ function getConverterRgbDistance(data, index, rgb) {
     + Math.abs(data[index + 2] - rgb[2]);
 }
 
+function getConverterRgbLuminance(rgb) {
+  return (rgb[0] * 0.2126) + (rgb[1] * 0.7152) + (rgb[2] * 0.0722);
+}
+
 function clampConverterColorChannel(value) {
   return Math.max(0, Math.min(255, Math.round(value)));
 }
 
 function converterRgbToHex(rgb) {
   return `#${rgb.map((value) => clampConverterColorChannel(value).toString(16).padStart(2, '0')).join('')}`;
+}
+
+function pickConverterMonochromeFill(traceProfile, bgColor = null) {
+  const palette = Array.isArray(traceProfile?.palette) ? traceProfile.palette : [];
+  if (!palette.length) {
+    return converterRgbToHex(traceProfile?.dominantColor || [0, 0, 0]);
+  }
+  if (!bgColor) {
+    return converterRgbToHex(traceProfile?.dominantChromaticColor || traceProfile?.dominantColor || palette[0]);
+  }
+
+  let best = palette[0];
+  let bestDistance = -1;
+  for (const candidate of palette) {
+    const distance = Math.abs(candidate[0] - bgColor[0])
+      + Math.abs(candidate[1] - bgColor[1])
+      + Math.abs(candidate[2] - bgColor[2]);
+    if (distance > bestDistance) {
+      best = candidate;
+      bestDistance = distance;
+    }
+  }
+  return converterRgbToHex(best);
+}
+
+function getConverterTransparentMonoThreshold(traceProfile) {
+  const palette = Array.isArray(traceProfile?.palette) ? traceProfile.palette : [];
+  if (palette.length < 2) return null;
+
+  let darkest = palette[0];
+  let lightest = palette[0];
+  for (const candidate of palette) {
+    if (getConverterRgbLuminance(candidate) < getConverterRgbLuminance(darkest)) darkest = candidate;
+    if (getConverterRgbLuminance(candidate) > getConverterRgbLuminance(lightest)) lightest = candidate;
+  }
+
+  const darkLum = getConverterRgbLuminance(darkest);
+  const lightLum = getConverterRgbLuminance(lightest);
+  if (lightLum < 215 || darkLum > 175 || (lightLum - darkLum) < 55) {
+    return null;
+  }
+
+  return (lightLum + darkLum) / 2;
+}
+
+function getConverterTransparentIconAlphaThreshold(traceProfile) {
+  if (traceProfile?.likelyTinyLineIcon) return 176;
+  if (traceProfile?.likelySingleColorMark) return 152;
+  return 96;
+}
+
+function parseConverterSvgColor(value) {
+  if (!value) return null;
+  const color = String(value).trim().toLowerCase();
+  if (!color || color === 'none' || color === 'transparent' || color === 'currentcolor') return null;
+  if (color === 'white') return [255, 255, 255];
+  if (color === 'black') return [0, 0, 0];
+
+  const hexMatch = color.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (hexMatch) {
+    const hex = hexMatch[1];
+    if (hex.length === 3) {
+      return hex.split('').map((part) => parseInt(part + part, 16));
+    }
+    return [
+      parseInt(hex.slice(0, 2), 16),
+      parseInt(hex.slice(2, 4), 16),
+      parseInt(hex.slice(4, 6), 16),
+    ];
+  }
+
+  const rgbMatch = color.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+  if (rgbMatch) {
+    return rgbMatch.slice(1, 4).map((part) => clampConverterColorChannel(Number(part)));
+  }
+  return null;
 }
 
 function getConverterQuantizedColorKey(r, g, b, step = 24) {
@@ -6410,6 +6658,47 @@ function dedupeConverterPalette(colors, minDistance = 52) {
   return unique;
 }
 
+function getConverterCornerForegroundCoverage(imageData, colorMode, threshold, bgColor, invert = false) {
+  const { data, width, height } = imageData;
+  const sampleW = Math.max(1, Math.min(width, Math.round(width * 0.18)));
+  const sampleH = Math.max(1, Math.min(height, Math.round(height * 0.18)));
+  const corners = [
+    { startX: 0, startY: 0 },
+    { startX: width - sampleW, startY: 0 },
+    { startX: 0, startY: height - sampleH },
+    { startX: width - sampleW, startY: height - sampleH },
+  ];
+
+  let foregroundCount = 0;
+  let totalCount = 0;
+  corners.forEach(({ startX, startY }) => {
+    for (let y = startY; y < startY + sampleH; y++) {
+      for (let x = startX; x < startX + sampleW; x++) {
+        const index = (y * width + x) * 4;
+        totalCount += 1;
+        if (isConverterForegroundPixel(data, index, colorMode, threshold, bgColor, invert)) {
+          foregroundCount += 1;
+        }
+      }
+    }
+  });
+
+  return totalCount ? foregroundCount / totalCount : 0;
+}
+
+function getConverterTraceClass(traceProfile, requestedColorMode, assetMode = 'logo') {
+  if (!traceProfile) return assetMode === 'icon' ? 'mono-mask' : 'general-color';
+  if (assetMode === 'icon') {
+    if (traceProfile.likelyTinyLineIcon) return 'tiny-line-icon';
+    if (traceProfile.likelySingleColorMark) return 'single-color-mark';
+    return 'mono-mask';
+  }
+  if (requestedColorMode === 'mono') return 'mono-mask';
+  if (traceProfile.likelyTileIconColor) return 'tile-icon-color';
+  if (traceProfile.likelyFlatArtwork || traceProfile.likelySingleHueLogo) return 'flat-logo-color';
+  return 'general-color';
+}
+
 function analyzeConverterTraceProfile(imageData, colorMode, threshold, bgColor, invert = false) {
   const { data, width, height } = imageData;
   const counts = new Map();
@@ -6428,15 +6717,22 @@ function analyzeConverterTraceProfile(imageData, colorMode, threshold, bgColor, 
   const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
   const significantThreshold = Math.max(8, Math.round(foregroundPixels * 0.01));
   const significant = sorted.filter(([, count]) => count >= significantThreshold);
+  const foregroundCoverage = (width * height) ? foregroundPixels / (width * height) : 0;
+  const dominantCoverage = foregroundPixels && significant.length
+    ? significant[0][1] / foregroundPixels
+    : 0;
   const topFourCoverage = foregroundPixels
     ? significant.slice(0, 4).reduce((sum, [, count]) => sum + count, 0) / foregroundPixels
     : 0;
   const topTwoCoverage = foregroundPixels
     ? significant.slice(0, 2).reduce((sum, [, count]) => sum + count, 0) / foregroundPixels
     : 0;
+  const cornerForegroundCoverage = getConverterCornerForegroundCoverage(imageData, colorMode, threshold, bgColor, invert);
   const topPalette = dedupeConverterPalette(significant.slice(0, 6).map(([key]) => parseConverterColorKey(key)));
   const dominantColor = topPalette[0] || [0, 0, 0];
   const dominantHueInfo = getConverterHueInfo(dominantColor);
+  const dominantChromaticColor = topPalette.find((rgb) => getConverterHueInfo(rgb).hue != null) || null;
+  const dominantChromaticHueInfo = dominantChromaticColor ? getConverterHueInfo(dominantChromaticColor) : null;
   const sameHueCoverage = foregroundPixels
     ? significant.reduce((sum, [key, count]) => {
       const info = getConverterHueInfo(parseConverterColorKey(key));
@@ -6444,12 +6740,34 @@ function analyzeConverterTraceProfile(imageData, colorMode, threshold, bgColor, 
       return getConverterHueDistance(dominantHueInfo.hue, info.hue) <= 34 ? sum + count : sum;
     }, 0) / foregroundPixels
     : 0;
+  const neutralCoverage = foregroundPixels
+    ? significant.reduce((sum, [key, count]) => {
+      const info = getConverterHueInfo(parseConverterColorKey(key));
+      return info.hue == null ? sum + count : sum;
+    }, 0) / foregroundPixels
+    : 0;
+  const chromaticCoverage = foregroundPixels
+    ? significant.reduce((sum, [key, count]) => {
+      const info = getConverterHueInfo(parseConverterColorKey(key));
+      return info.hue != null ? sum + count : sum;
+    }, 0) / foregroundPixels
+    : 0;
+  const sameChromaticHueCoverage = (foregroundPixels && dominantChromaticHueInfo?.hue != null)
+    ? significant.reduce((sum, [key, count]) => {
+      const info = getConverterHueInfo(parseConverterColorKey(key));
+      if (info.hue == null) return sum;
+      return getConverterHueDistance(dominantChromaticHueInfo.hue, info.hue) <= 28 ? sum + count : sum;
+    }, 0) / foregroundPixels
+    : 0;
   const likelySingleHueLogo = (
     colorMode === 'color'
+    && dominantChromaticHueInfo?.hue != null
     && significant.length > 0
     && significant.length <= 12
     && topTwoCoverage >= 0.7
-    && sameHueCoverage >= 0.82
+    && chromaticCoverage >= 0.55
+    && sameChromaticHueCoverage >= 0.72
+    && neutralCoverage <= 0.42
   );
   const likelyFlatArtwork = (
     colorMode === 'color'
@@ -6457,25 +6775,66 @@ function analyzeConverterTraceProfile(imageData, colorMode, threshold, bgColor, 
     && significant.length <= 8
     && topFourCoverage >= 0.82
   );
+  const likelyTinyLineIcon = (
+    colorMode === 'color'
+    && Math.max(width, height) <= 96
+    && foregroundCoverage <= 0.22
+    && topTwoCoverage >= 0.78
+    && significant.length <= 6
+  );
+  const likelySingleColorMark = (
+    colorMode === 'color'
+    && !likelyTinyLineIcon
+    && sameChromaticHueCoverage >= 0.84
+    && chromaticCoverage >= 0.64
+    && neutralCoverage <= 0.22
+    && foregroundCoverage <= 0.44
+    && significant.length <= 8
+  );
+  const likelyTileIconColor = (
+    colorMode === 'color'
+    && !likelyTinyLineIcon
+    && likelyFlatArtwork
+    && foregroundCoverage >= 0.5
+    && cornerForegroundCoverage >= 0.36
+    && dominantCoverage >= 0.42
+  );
   const recommendedColorCount = likelySingleHueLogo
     ? Math.min(3, Math.max(2, topPalette.length || 2))
     : likelyFlatArtwork
-      ? Math.min(6, Math.max(3, topPalette.length || 4))
+      ? Math.min(8, Math.max(4, topPalette.length || 4))
       : Math.min(12, Math.max(6, significant.length || 6));
 
   return {
     foregroundPixels,
+    foregroundCoverage,
+    dominantCoverage,
+    cornerForegroundCoverage,
     approximateColorCount: counts.size,
     significantColorCount: significant.length,
     topTwoCoverage,
     topFourCoverage,
     sameHueCoverage,
+    sameChromaticHueCoverage,
+    neutralCoverage,
+    chromaticCoverage,
     dominantColor,
+    dominantChromaticColor,
     palette: topPalette.slice(0, recommendedColorCount),
     likelySingleHueLogo,
     likelyFlatArtwork,
+    likelyTinyLineIcon,
+    likelySingleColorMark,
+    likelyTileIconColor,
     recommendedColorCount,
   };
+}
+
+function getConverterTraceRoute(requestedColorMode, traceProfile) {
+  if (requestedColorMode === 'mono') return 'mono-exact';
+  if (traceProfile?.likelySingleHueLogo) return 'mono-exact';
+  if (requestedColorMode === 'color' && traceProfile?.likelyFlatArtwork) return 'flat-art-color';
+  return 'color-default';
 }
 
 function findNearestConverterPaletteIndex(palette, rgb) {
@@ -6527,53 +6886,64 @@ function smoothConverterPaletteLabels(labels, width, height, passes = 1) {
   return current;
 }
 
-function flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfile) {
+function flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfile, preset = 'posterized2') {
   if (!traceProfile?.palette?.length) return;
 
   const { data, width, height } = imageData;
   const bg = bgColor || [255, 255, 255];
   const bgCutoff = Math.max(18, Math.min(96, Math.round(threshold * 0.9)));
   const palette = traceProfile.palette;
+  const isSimplePreset = preset === 'posterized2';
+  const shouldSnapPalette = traceProfile.likelySingleHueLogo || traceProfile.likelyFlatArtwork || isSimplePreset;
   const labels = new Int16Array(width * height);
   labels.fill(-1);
 
   for (let i = 0; i < labels.length; i++) {
     const index = i * 4;
     if (data[index + 3] < 128) {
-      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      data[index] = bg[0]; data[index + 1] = bg[1]; data[index + 2] = bg[2]; data[index + 3] = 255;
       continue;
     }
     const bgDistance = Math.abs(data[index] - bg[0])
       + Math.abs(data[index + 1] - bg[1])
       + Math.abs(data[index + 2] - bg[2]);
     if (bgDistance <= bgCutoff) {
-      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      data[index] = bg[0]; data[index + 1] = bg[1]; data[index + 2] = bg[2]; data[index + 3] = 255;
       continue;
     }
 
     const nearest = findNearestConverterPaletteIndex(palette, [data[index], data[index + 1], data[index + 2]]);
     if (bgDistance < Math.max(28, nearest.distance * 0.9)) {
-      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      data[index] = bg[0]; data[index + 1] = bg[1]; data[index + 2] = bg[2]; data[index + 3] = 255;
       continue;
     }
 
-    const rgb = palette[nearest.index];
     labels[i] = nearest.index;
-    data[index] = rgb[0];
-    data[index + 1] = rgb[1];
-    data[index + 2] = rgb[2];
-    data[index + 3] = 255;
+    if (shouldSnapPalette) {
+      const rgb = palette[nearest.index];
+      data[index] = rgb[0];
+      data[index + 1] = rgb[1];
+      data[index + 2] = rgb[2];
+      data[index + 3] = 255;
+    } else {
+      data[index + 3] = 255;
+    }
   }
 
-  const shouldSmooth = traceProfile.likelySingleHueLogo || traceProfile.likelyFlatArtwork;
+  const shouldSmooth = traceProfile.likelySingleHueLogo || (traceProfile.likelyFlatArtwork && isSimplePreset);
   if (!shouldSmooth) return;
 
-  const smoothed = smoothConverterPaletteLabels(labels, width, height, traceProfile.likelySingleHueLogo ? 2 : 1);
+  const smoothingPasses = traceProfile.likelySingleHueLogo
+    ? 2
+    : traceProfile.topFourCoverage >= 0.92
+      ? 2
+      : 1;
+  const smoothed = smoothConverterPaletteLabels(labels, width, height, smoothingPasses);
   for (let i = 0; i < smoothed.length; i++) {
     const index = i * 4;
     const label = smoothed[i];
     if (label < 0) {
-      data[index] = 255; data[index + 1] = 255; data[index + 2] = 255; data[index + 3] = 255;
+      data[index] = bg[0]; data[index + 1] = bg[1]; data[index + 2] = bg[2]; data[index + 3] = 255;
       continue;
     }
     const rgb = palette[label];
@@ -6584,13 +6954,18 @@ function flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfil
   }
 }
 
-function retintConverterForegroundSvg(svgStr, fillColor) {
+function retintConverterForegroundSvg(svgStr, fillColor, includeWhite = false) {
   if (!svgStr || !fillColor) return svgStr;
   try {
     const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
     doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((shape) => {
       const fill = (shape.getAttribute('fill') || '').trim().toLowerCase();
-      if (!fill || fill === 'none' || fill === '#fff' || fill === '#ffffff' || fill === 'white' || fill === 'rgb(255,255,255)' || fill === 'rgb(255, 255, 255)') {
+      const isWhiteFill = fill === '#fff'
+        || fill === '#ffffff'
+        || fill === 'white'
+        || fill === 'rgb(255,255,255)'
+        || fill === 'rgb(255, 255, 255)';
+      if (!fill || fill === 'none' || (!includeWhite && isWhiteFill)) {
         return;
       }
       shape.setAttribute('fill', fillColor);
@@ -6606,12 +6981,10 @@ function isConverterForegroundPixel(data, index, colorMode, threshold, bgColor, 
 
   let isForeground = false;
   if (colorMode === 'mono') {
-    if (bgColor) {
-      isForeground = getConverterRgbDistance(data, index, bgColor) > threshold;
-    } else {
-      const gray = 0.299 * data[index] + 0.587 * data[index + 1] + 0.114 * data[index + 2];
-      isForeground = gray < threshold;
+    if (!bgColor) {
+      return true;
     }
+    isForeground = getConverterRgbDistance(data, index, bgColor) > threshold;
     return invert ? !isForeground : isForeground;
   }
 
@@ -6667,6 +7040,23 @@ function getConverterEnhanceScale(width, height, enabled) {
   return 2;
 }
 
+function getConverterMicroIconUpscale(width, height, traceClass) {
+  const maxDim = Math.max(width, height);
+  if (traceClass === 'tiny-line-icon') {
+    if (maxDim <= 32) return 8;
+    if (maxDim <= 48) return 6;
+    if (maxDim <= 64) return 4;
+    return 3;
+  }
+  if (traceClass === 'mono-mask' || traceClass === 'single-color-mark') {
+    if (maxDim <= 32) return 6;
+    if (maxDim <= 48) return 4;
+    if (maxDim <= 64) return 3;
+    return 2;
+  }
+  return 4;
+}
+
 function applyBinaryNoiseCleanup(imageData, level) {
   if (level === 'low') return;
 
@@ -6709,6 +7099,98 @@ function applyBinaryNoiseCleanup(imageData, level) {
   }
 }
 
+function applyBinaryIconThinning(imageData, passes = 1) {
+  if (passes <= 0) return;
+
+  const { data, width, height } = imageData;
+  let mask = new Uint8Array(width * height);
+
+  for (let i = 0; i < mask.length; i++) {
+    mask[i] = data[i * 4] < 128 ? 1 : 0;
+  }
+
+  for (let pass = 0; pass < passes; pass++) {
+    const next = mask.slice();
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const idx = y * width + x;
+        if (!mask[idx]) continue;
+
+        const north = mask[idx - width];
+        const south = mask[idx + width];
+        const west = mask[idx - 1];
+        const east = mask[idx + 1];
+        const northwest = mask[idx - width - 1];
+        const northeast = mask[idx - width + 1];
+        const southwest = mask[idx + width - 1];
+        const southeast = mask[idx + width + 1];
+
+        const cardinalNeighbors = north + south + west + east;
+        const allNeighbors = cardinalNeighbors + northwest + northeast + southwest + southeast;
+
+        // Preserve endpoints / tiny features, but shave a single layer off
+        // thicker icon outlines where a pixel is clearly on the exterior edge.
+        if (allNeighbors >= 2 && allNeighbors <= 5 && cardinalNeighbors <= 3) {
+          next[idx] = 0;
+        }
+      }
+    }
+    mask = next;
+  }
+
+  for (let i = 0; i < mask.length; i++) {
+    const value = mask[i] ? 0 : 255;
+    const index = i * 4;
+    data[index] = value;
+    data[index + 1] = value;
+    data[index + 2] = value;
+    data[index + 3] = 255;
+  }
+}
+
+function applyBinaryIconErosion(imageData, passes = 1) {
+  if (passes <= 0) return;
+
+  const { data, width, height } = imageData;
+  let mask = new Uint8Array(width * height);
+
+  for (let i = 0; i < mask.length; i++) {
+    mask[i] = data[i * 4] < 128 ? 1 : 0;
+  }
+
+  for (let pass = 0; pass < passes; pass++) {
+    const next = mask.slice();
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const idx = y * width + x;
+        if (!mask[idx]) continue;
+
+        const north = mask[idx - width];
+        const south = mask[idx + width];
+        const west = mask[idx - 1];
+        const east = mask[idx + 1];
+        const cardinalNeighbors = north + south + west + east;
+
+        // A single erosion step for thick icon outlines. We only shave pixels
+        // that are clearly on the outer edge, while preserving interior runs.
+        if (cardinalNeighbors <= 2) {
+          next[idx] = 0;
+        }
+      }
+    }
+    mask = next;
+  }
+
+  for (let i = 0; i < mask.length; i++) {
+    const value = mask[i] ? 0 : 255;
+    const index = i * 4;
+    data[index] = value;
+    data[index + 1] = value;
+    data[index + 2] = value;
+    data[index + 3] = 255;
+  }
+}
+
 function getConverterTraceComplexity(pathCount, sizeKb) {
   const score = pathCount + Math.round(sizeKb / 4);
   if (score >= 220) return 'Heavy';
@@ -6725,6 +7207,189 @@ function measureConverterTraceMetrics(svgStr, sizeKb) {
     shapeCount,
     complexity: getConverterTraceComplexity(pathCount || shapeCount, sizeKb),
   };
+}
+
+function stripConverterRuntimeSvgAttrs(svgStr) {
+  if (!svgStr) return svgStr;
+  try {
+    const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svgStr;
+    const svg = doc.querySelector('svg');
+    if (!svg) return svgStr;
+    svg.removeAttribute('id');
+    svg.removeAttribute('style');
+    return new XMLSerializer().serializeToString(doc);
+  } catch {
+    return svgStr;
+  }
+}
+
+function stripConverterMonoStroke(svgStr) {
+  if (!svgStr) return svgStr;
+  try {
+    const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svgStr;
+    doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((shape) => {
+      shape.removeAttribute('stroke');
+      shape.removeAttribute('stroke-width');
+      shape.removeAttribute('stroke-linecap');
+      shape.removeAttribute('stroke-linejoin');
+      shape.removeAttribute('stroke-miterlimit');
+      shape.removeAttribute('vector-effect');
+    });
+    return new XMLSerializer().serializeToString(doc);
+  } catch {
+    return svgStr;
+  }
+}
+
+function buildConverterTraceArtifact(
+  svgStr,
+  originalW,
+  originalH,
+  fillColor = null,
+  {
+    stripMonoStroke = false,
+    backgroundStripColor = [255, 255, 255],
+    forceRetint = false,
+    exportWidth = originalW,
+    exportHeight = originalH,
+  } = {},
+) {
+  let cleanSvg = stripConverterRuntimeSvgAttrs(svgStr);
+  cleanSvg = normalizeSvgOutput(cleanSvg, originalW, originalH, exportWidth, exportHeight);
+  cleanSvg = stripBackgroundPaths(cleanSvg, backgroundStripColor);
+  if (stripMonoStroke) {
+    cleanSvg = stripConverterMonoStroke(cleanSvg);
+  }
+  if (fillColor) {
+    cleanSvg = retintConverterForegroundSvg(cleanSvg, fillColor, forceRetint);
+  }
+  const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
+  const sizeKb = Math.round(svgBlob.size / 1024);
+  const traceMetrics = measureConverterTraceMetrics(cleanSvg, sizeKb);
+  return {
+    cleanSvg,
+    svgBlob,
+    sizeKb,
+    traceMetrics,
+  };
+}
+
+function buildConverterServiceTraceArtifact(
+  svgStr,
+  metrics = null,
+  {
+    fillColor = null,
+    backgroundStripColor = null,
+    stripMonoStroke = false,
+    forceRetint = false,
+    originalWidth = null,
+    originalHeight = null,
+    exportWidth = originalWidth,
+    exportHeight = originalHeight,
+  } = {},
+) {
+  let cleanSvg = stripConverterRuntimeSvgAttrs(svgStr);
+  if (originalWidth && originalHeight) {
+    cleanSvg = normalizeSvgOutput(cleanSvg, originalWidth, originalHeight, exportWidth, exportHeight);
+  }
+  if (backgroundStripColor) {
+    cleanSvg = stripBackgroundPaths(cleanSvg, backgroundStripColor);
+  }
+  if (stripMonoStroke) {
+    cleanSvg = stripConverterMonoStroke(cleanSvg);
+  }
+  if (fillColor) {
+    cleanSvg = retintConverterForegroundSvg(cleanSvg, fillColor, forceRetint);
+  }
+  const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
+  const sizeKb = Math.round(svgBlob.size / 1024);
+  const pathCount = Number(metrics?.pathCount ?? 0);
+  const shapeCount = Number(metrics?.shapeCount ?? pathCount);
+  const traceMetrics = (pathCount || shapeCount)
+    ? {
+        pathCount,
+        shapeCount,
+        complexity: getConverterTraceComplexity(pathCount || shapeCount, sizeKb),
+      }
+    : measureConverterTraceMetrics(cleanSvg, sizeKb);
+
+  return {
+    cleanSvg,
+    svgBlob,
+    sizeKb,
+    traceMetrics,
+  };
+}
+
+function shouldFallbackFromMonoTrace({
+  traceArtifact,
+  traceProfile,
+  requestedColorMode,
+  cropWidth,
+  cropHeight,
+}) {
+  if (!traceArtifact?.traceMetrics) return true;
+  const { traceMetrics, sizeKb } = traceArtifact;
+  const cropArea = Math.max(1, cropWidth * cropHeight);
+  const density = traceMetrics.pathCount / cropArea;
+  const isLogoLike = Boolean(traceProfile?.likelySingleHueLogo);
+  const explicitMono = requestedColorMode === 'mono';
+
+  if (!traceMetrics.pathCount || !traceMetrics.shapeCount) return true;
+  if (traceMetrics.complexity === 'Heavy' && (isLogoLike || explicitMono)) return true;
+  if (isLogoLike && (traceMetrics.pathCount > 120 || sizeKb > 96 || density > 0.0012)) return true;
+  if (explicitMono && (traceMetrics.pathCount > 900 || sizeKb > 260 || density > 0.0035)) return true;
+  return false;
+}
+
+function getConverterTraceAdvice({
+  traceProfile,
+  traceMetrics,
+  requestedColorMode,
+  effectiveColorMode,
+  sizeKb,
+  traceRoute = 'color-fallback',
+  resolvedPreset = 'default',
+}) {
+  if (!traceProfile || !traceMetrics) return null;
+
+  const isHeavyTrace = traceMetrics.complexity === 'Heavy' || traceMetrics.pathCount >= 1200 || sizeKb >= 300;
+  const isDetailedColorSource = (
+    requestedColorMode === 'color'
+    && effectiveColorMode === 'color'
+    && !traceProfile.likelySingleHueLogo
+    && !traceProfile.likelyFlatArtwork
+    && (
+      traceProfile.significantColorCount >= 10
+      || traceProfile.approximateColorCount >= 28
+      || traceProfile.topFourCoverage < 0.78
+    )
+  );
+
+  if (isHeavyTrace && isDetailedColorSource) {
+    return {
+      tone: 'warn',
+      text: 'This source image includes extra screenshot detail. For cleaner icon SVGs, upload an image that contains only the logo or symbol.',
+    };
+  }
+
+  if (resolvedPreset === 'detailed' && (traceMetrics.pathCount >= 700 || sizeKb >= 160)) {
+    return {
+      tone: 'info',
+      text: 'Exact keeps more detail and can produce a larger SVG. Switch to Compact if you want a smaller file.',
+    };
+  }
+
+  if (resolvedPreset !== 'posterized2' && (traceMetrics.pathCount >= 1200 || sizeKb >= 300)) {
+    return {
+      tone: 'info',
+      text: 'This SVG is on the larger side. Switch to Compact if you want a smaller file.',
+    };
+  }
+
+  return null;
 }
 
 function updateConverterPreviewStage() {
@@ -6750,15 +7415,15 @@ function updateConverterPreviewStage() {
 
   const hasOutput = Boolean(outputSrc);
   const showCompare = converterState.mode === 'png-to-svg' && hasOutput;
-  const compareMode = showCompare ? converterState.compareMode : 'trace';
+  const compareMode = showCompare && converterState.compareMode === 'split' ? 'split' : 'trace';
   const isSplit = compareMode === 'split';
 
   split.hidden = !isSplit;
   overlay.hidden = isSplit;
-  overlay.classList.toggle('is-overlay', compareMode === 'overlay');
+  overlay.classList.remove('is-overlay');
 
-  originalOverlay.style.display = (compareMode === 'original' || compareMode === 'overlay') ? '' : 'none';
-  outputOverlay.style.display = (compareMode === 'trace' || compareMode === 'overlay') ? '' : 'none';
+  originalOverlay.style.display = 'none';
+  outputOverlay.style.display = hasOutput ? '' : 'none';
 
   if (!hasOutput) {
     originalOverlay.style.display = 'none';
@@ -6769,10 +7434,27 @@ function updateConverterPreviewStage() {
 }
 
 function updateConverterPngUiState() {
+  document.querySelectorAll('[name="convAssetMode"]').forEach((radio) => {
+    radio.checked = radio.value === converterState.assetMode;
+  });
+  document.querySelectorAll('[name="convExportSizeMode"]').forEach((radio) => {
+    radio.checked = radio.value === converterState.exportSizeMode;
+  });
   document.querySelector(`[name="convPreviewBg"][value="${converterState.previewBackground}"]`)?.setAttribute('checked', 'checked');
   document.querySelectorAll('[name="convPreviewBg"]').forEach((radio) => {
     radio.checked = radio.value === converterState.previewBackground;
   });
+  const exportWidthWrap = document.getElementById('convExportWidthWrap');
+  const exportWidthInput = document.getElementById('convExportWidth');
+  if (exportWidthWrap) {
+    exportWidthWrap.style.display = converterState.exportSizeMode === 'custom' ? 'inline-flex' : 'none';
+  }
+  if (exportWidthInput) {
+    exportWidthInput.value = clampConverterExportTargetWidth(
+      converterState.exportTargetWidth,
+      converterState.assetMode,
+    );
+  }
   const previewColor = document.getElementById('convPreviewBgColor');
   if (previewColor) {
     previewColor.value = converterState.previewBgColor;
@@ -6875,6 +7557,7 @@ function renderConverter() {
             </button>
           </div>
         </div>
+        <div class="conv__quality-note" id="convQualityNote" style="display:none"></div>
       </div>
     </div>
 
@@ -6941,22 +7624,34 @@ function renderConverter() {
       <!-- PNG→SVG options (hidden by default) -->
       <div class="conv__opts-group" id="convPngOpts" style="display:none">
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Preset <span class="conv__tip-icon" data-tip="Controls tracing complexity. Simple produces clean 2-color paths (best for logos/icons). Balanced uses 16 colors with good detail. Detailed preserves fine edges with 32 colors.">?</span></label>
+          <label class="conv__opt-label">Mode <span class="conv__tip-icon" data-tip="Icon preserves tiny symbols and cutouts. Logo is tuned for flat brand artwork and raster logos.">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convPreset" value="posterized2" checked> Simple</label>
-            <label class="conv__radio"><input type="radio" name="convPreset" value="default"> Balanced</label>
-            <label class="conv__radio"><input type="radio" name="convPreset" value="detailed"> Detailed</label>
+            <label class="conv__radio"><input type="radio" name="convAssetMode" value="icon"> Icon</label>
+            <label class="conv__radio"><input type="radio" name="convAssetMode" value="logo" checked> Logo</label>
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Color Mode <span class="conv__tip-icon" data-tip="Monochrome traces the image as black paths on transparent background, best for icons. Color preserves multiple fill colors from the original image.">?</span></label>
+          <label class="conv__opt-label">Preset <span class="conv__tip-icon" data-tip="Auto chooses the best trace path. Compact favors smaller SVGs. Exact keeps more detail when fidelity matters most.">?</span></label>
           <div class="conv__bg-options">
-            <label class="conv__radio"><input type="radio" name="convColorMode" value="mono" checked> Monochrome</label>
-            <label class="conv__radio"><input type="radio" name="convColorMode" value="color"> Color</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="auto" checked> Auto</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="posterized2"> Compact</label>
+            <label class="conv__radio"><input type="radio" name="convPreset" value="detailed"> Exact</label>
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Preview <span class="conv__tip-icon" data-tip="Changes the preview surface only so you can inspect the traced SVG on different backgrounds.">?</span></label>
+          <label class="conv__opt-label">Output Size <span class="conv__tip-icon" data-tip="Auto uses a practical export size. Original keeps the cropped PNG dimensions. Custom sets export width in px and derives height automatically. This changes export dimensions, not preview size, and usually does not reduce SVG KB unless the paths are simplified.">?</span></label>
+          <div class="conv__bg-options">
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="auto" checked> Auto</label>
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="original"> Original</label>
+            <label class="conv__radio"><input type="radio" name="convExportSizeMode" value="custom"> Custom</label>
+            <div class="conv__size-custom-wrap" id="convExportWidthWrap" style="display:none">
+              <input type="number" class="conv__size-custom" id="convExportWidth" min="16" max="4096" value="512">
+              <span class="conv__size-custom-unit">px</span>
+            </div>
+          </div>
+        </div>
+        <div class="conv__opt-row">
+          <label class="conv__opt-label">Background <span class="conv__tip-icon" data-tip="Changes the preview surface only so you can inspect the traced SVG on different backgrounds.">?</span></label>
           <div class="conv__bg-options">
             <label class="conv__radio"><input type="radio" name="convPreviewBg" value="transparent" checked> Transparent</label>
             <label class="conv__radio"><input type="radio" name="convPreviewBg" value="white"> White</label>
@@ -6972,31 +7667,9 @@ function renderConverter() {
           </div>
         </div>
         <div class="conv__opt-row">
-          <label class="conv__opt-label">Threshold <span class="conv__tip-icon" data-tip="Controls background removal sensitivity. In Monochrome: how different a pixel must be from the background to be kept. In Color: how similar to the background a pixel must be to be removed. Higher values are more aggressive.">?</span></label>
-          <div class="conv__slider-row">
-            <input type="range" id="convThreshold" min="0" max="255" value="128" class="conv__slider">
-            <span class="conv__slider-val" id="convThresholdVal">128</span>
-          </div>
-        </div>
-        <div class="conv__opt-row">
-          <label class="conv__opt-label">Smoothness <span class="conv__tip-icon" data-tip="Controls curve quality. Higher values produce smoother arcs and rounder shapes by tracing at higher resolution and fitting tighter Bezier curves. Use higher values for logos with curves (like arches or circles). Lower values preserve sharp pixel edges.">?</span></label>
-          <div class="conv__slider-row">
-            <input type="range" id="convSmoothness" min="0" max="100" value="50" class="conv__slider">
-            <span class="conv__slider-val" id="convSmoothnessVal">50</span>
-          </div>
-        </div>
-        <div class="conv__opt-row">
-          <label class="conv__opt-label">Cleanup <span class="conv__tip-icon" data-tip="Suppresses tiny speckles and small tracing artifacts. Higher settings are cleaner but can remove tiny details.">?</span></label>
-          <div class="conv__chip-group" id="convNoiseCleanup">
-            ${renderConverterChipGroup('noise', CONVERTER_NOISE_OPTIONS, converterState.noiseCleanup, 'cleanup')}
-          </div>
-        </div>
-        <div class="conv__opt-row">
-          <label class="conv__opt-label">Helpers <span class="conv__tip-icon" data-tip="Auto Crop trims empty edges. Enhance Small Icons sharpens tiny assets before tracing. Invert is helpful for light icons on dark backgrounds in Monochrome mode.">?</span></label>
+          <label class="conv__opt-label">Helpers <span class="conv__tip-icon" data-tip="Auto Crop trims empty edges around the source image before tracing, which usually gives cleaner logo and icon results.">?</span></label>
           <div class="conv__bg-options">
             <label class="conv__radio"><input type="checkbox" id="convAutoCrop" checked> Auto Crop</label>
-            <label class="conv__radio"><input type="checkbox" id="convEnhanceSmall" checked> Enhance Small Icons</label>
-            <label class="conv__radio"><input type="checkbox" id="convInvertMono"> Invert</label>
           </div>
         </div>
         <button class="conv__reset-btn" id="convResetPng" data-tip="Reset to defaults">
@@ -7184,11 +7857,35 @@ function initConverterControls() {
   });
 
   // PNG→SVG options
+  document.querySelectorAll('[name="convAssetMode"]').forEach(r => {
+    r.addEventListener('change', e => {
+      converterState.assetMode = e.target.value;
+      if (converterState.exportSizeMode === 'auto') {
+        converterState.exportTargetWidth = getConverterDefaultExportLongestEdge(converterState.assetMode);
+      }
+      updateConverterPngUiState();
+      runConversion();
+    });
+  });
   document.querySelectorAll('[name="convPreset"]').forEach(r => {
     r.addEventListener('change', e => { converterState.preset = e.target.value; runConversion(); });
   });
-  document.querySelectorAll('[name="convColorMode"]').forEach(r => {
-    r.addEventListener('change', e => { converterState.colorMode = e.target.value; runConversion(); });
+  document.querySelectorAll('[name="convExportSizeMode"]').forEach(r => {
+    r.addEventListener('change', e => {
+      converterState.exportSizeMode = e.target.value;
+      if (converterState.exportSizeMode === 'auto') {
+        converterState.exportTargetWidth = getConverterDefaultExportLongestEdge(converterState.assetMode);
+      }
+      updateConverterPngUiState();
+      runConversion();
+    });
+  });
+  document.getElementById('convExportWidth')?.addEventListener('change', (event) => {
+    converterState.exportTargetWidth = clampConverterExportTargetWidth(event.target.value, converterState.assetMode);
+    updateConverterPngUiState();
+    if (converterState.exportSizeMode === 'custom') {
+      runConversion();
+    }
   });
   document.querySelectorAll('[name="convPreviewBg"]').forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -7206,71 +7903,28 @@ function initConverterControls() {
       updateConverterPngUiState();
     });
   });
-  document.querySelectorAll('.conv__chip-btn[data-conv-group="noise"]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      converterState.noiseCleanup = btn.dataset.cleanup || 'medium';
-      updateConverterPngUiState();
-      runConversion();
-    });
-  });
   document.getElementById('convAutoCrop')?.addEventListener('change', (event) => {
     converterState.autoCrop = Boolean(event.target.checked);
     updateConverterPngUiState();
-    runConversion();
-  });
-  document.getElementById('convEnhanceSmall')?.addEventListener('change', (event) => {
-    converterState.enhanceSmallIcons = Boolean(event.target.checked);
-    updateConverterPngUiState();
-    runConversion();
-  });
-  document.getElementById('convInvertMono')?.addEventListener('change', (event) => {
-    converterState.invert = Boolean(event.target.checked);
-    updateConverterPngUiState();
-    runConversion();
-  });
-  // Threshold: update value display immediately, but debounce the expensive re-trace
-  document.getElementById('convThreshold')?.addEventListener('input', e => {
-    converterState.threshold = parseInt(e.target.value, 10);
-    const valEl = document.getElementById('convThresholdVal');
-    if (valEl) valEl.textContent = converterState.threshold;
-    debouncedRunConversion();
-  });
-  // Also fire immediately on release (mouseup/touchend) to ensure final value is traced
-  document.getElementById('convThreshold')?.addEventListener('change', () => {
-    clearTimeout(window._convDebounceTimer);
-    runConversion();
-  });
-  // Smoothness slider
-  document.getElementById('convSmoothness')?.addEventListener('input', e => {
-    converterState.smoothness = parseInt(e.target.value, 10);
-    const valEl = document.getElementById('convSmoothnessVal');
-    if (valEl) valEl.textContent = converterState.smoothness;
-    debouncedRunConversion();
-  });
-  document.getElementById('convSmoothness')?.addEventListener('change', () => {
-    clearTimeout(window._convDebounceTimer);
     runConversion();
   });
 
   // Reset buttons
   document.getElementById('convResetPng')?.addEventListener('click', () => {
     // Reset PNG→SVG state to defaults
-    converterState.preset = 'posterized2';
-    converterState.colorMode = 'mono';
+    converterState.assetMode = 'logo';
+    converterState.preset = 'auto';
+    converterState.exportSizeMode = 'auto';
+    converterState.exportTargetWidth = getConverterDefaultExportLongestEdge('logo');
     converterState.threshold = 128;
     converterState.smoothness = 50;
     resetConverterPngStyleState();
     // Update UI controls
-    document.querySelector('[name="convPreset"][value="posterized2"]').checked = true;
-    document.querySelector('[name="convColorMode"][value="mono"]').checked = true;
-    const slider = document.getElementById('convThreshold');
-    if (slider) slider.value = 128;
-    const valEl = document.getElementById('convThresholdVal');
-    if (valEl) valEl.textContent = '128';
-    const smoothSlider = document.getElementById('convSmoothness');
-    if (smoothSlider) smoothSlider.value = 50;
-    const smoothVal = document.getElementById('convSmoothnessVal');
-    if (smoothVal) smoothVal.textContent = '50';
+    document.querySelector('[name="convAssetMode"][value="logo"]').checked = true;
+    document.querySelector('[name="convPreset"][value="auto"]').checked = true;
+    document.querySelector('[name="convExportSizeMode"][value="auto"]').checked = true;
+    const exportWidth = document.getElementById('convExportWidth');
+    if (exportWidth) exportWidth.value = getConverterDefaultExportLongestEdge('logo');
     updateConverterPngUiState();
     runConversion();
   });
@@ -7396,6 +8050,8 @@ function loadConverterSvgText(svgText, filename) {
   converterState.svgText = svgText;
   converterState.mode = 'svg-to-png';
   converterState.traceMetrics = null;
+  converterState.traceAdvice = null;
+  converterState.outputExportSize = null;
   converterState.previewOriginalDataUrl = '';
   converterState.paintSupport = analyzeConverterSvgPaintSupport(svgText);
   // Switch to SVG→PNG mode
@@ -7424,6 +8080,8 @@ function loadConverterPng(dataUrl, filename) {
   converterState.svgText = '';
   converterState.previewOriginalDataUrl = dataUrl;
   converterState.traceMetrics = null;
+  converterState.traceAdvice = null;
+  converterState.outputExportSize = null;
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -7462,6 +8120,74 @@ function showConverterInput(url, filename, byteSize) {
   updateConverterPreviewZoomUi({ center: true });
 }
 
+function resetConverterOutputPlaceholder(message = 'Preview appears here', icon = 'image_search') {
+  const outputEmpty = document.getElementById('convOutputEmpty');
+  if (!outputEmpty) return;
+  outputEmpty.innerHTML = `
+    <span class="material-symbols-outlined" style="font-size:40px;color:var(--si-text-dim)">${icon}</span>
+    <p>${message}</p>
+  `;
+}
+
+function showConverterPendingOutput(message = 'Tracing preview…') {
+  converterState.outputBlob = null;
+  converterState.outputDataUrl = '';
+  converterState.traceMetrics = null;
+  converterState.traceAdvice = null;
+  converterState.outputPreviewSize = null;
+  converterState.outputExportSize = null;
+
+  const outputPreview = document.getElementById('convOutputPreview');
+  const outputEmpty = document.getElementById('convOutputEmpty');
+  const outputMeta = document.getElementById('convOutputMeta');
+  const outputNote = document.getElementById('convQualityNote');
+  const actions = document.getElementById('convActions');
+
+  if (outputPreview) outputPreview.style.display = 'none';
+  resetConverterOutputPlaceholder(message, 'progress_activity');
+  if (outputEmpty) outputEmpty.style.display = '';
+  if (outputMeta) outputMeta.textContent = '';
+  if (outputNote) {
+    outputNote.textContent = '';
+    outputNote.style.display = 'none';
+    outputNote.classList.remove('conv__quality-note--warn', 'conv__quality-note--info');
+  }
+  if (actions) actions.style.display = 'none';
+  updateConverterPreviewStage();
+}
+
+function showConverterProofServiceOffline(proofErr) {
+  converterState.outputBlob = null;
+  converterState.outputDataUrl = '';
+  converterState.traceMetrics = null;
+  converterState.outputPreviewSize = null;
+  converterState.outputExportSize = null;
+  converterState.traceAdvice = {
+    tone: 'warn',
+    text: 'Start npm run converter:proof-service in a second terminal while npm run dev is running.',
+  };
+
+  const outputPreview = document.getElementById('convOutputPreview');
+  const outputEmpty = document.getElementById('convOutputEmpty');
+  const outputMeta = document.getElementById('convOutputMeta');
+  const outputNote = document.getElementById('convQualityNote');
+  const actions = document.getElementById('convActions');
+
+  if (outputPreview) outputPreview.style.display = 'none';
+  resetConverterOutputPlaceholder('Local PNG-to-SVG service is offline.', 'cloud_off');
+  if (outputEmpty) outputEmpty.style.display = '';
+  if (outputMeta) outputMeta.textContent = 'Reliable color tracing requires the local vector service.';
+  if (outputNote) {
+    outputNote.textContent = converterState.traceAdvice.text;
+    outputNote.style.display = '';
+    outputNote.classList.remove('conv__quality-note--info');
+    outputNote.classList.add('conv__quality-note--warn');
+  }
+  if (actions) actions.style.display = 'none';
+  updateConverterPreviewStage();
+  console.warn('[Converter] Local proof service unavailable:', proofErr);
+}
+
 function clearConverterInput() {
   resetConverterPreviewZoom();
   converterState.svgText = '';
@@ -7470,6 +8196,8 @@ function clearConverterInput() {
   converterState.outputDataUrl = '';
   converterState.previewOriginalDataUrl = '';
   converterState.traceMetrics = null;
+  converterState.traceAdvice = null;
+  converterState.outputPreviewSize = null;
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -7481,6 +8209,7 @@ function clearConverterInput() {
   document.getElementById('convInputPreview').style.display = 'none';
   document.getElementById('convOutputPreview').style.display = 'none';
   document.getElementById('convOutputEmpty').style.display = '';
+  resetConverterOutputPlaceholder();
   document.getElementById('convActions').style.display = 'none';
   const fileInput = document.getElementById('convFileInput');
   if (fileInput) fileInput.value = '';
@@ -7506,6 +8235,7 @@ function convertSvgToPng() {
   const { svgText, size, background, bgColor, padding, quality } = converterState;
   const myToken = ++_svgConvToken;
   const targetSize = size * quality;
+  showConverterPendingOutput('Rendering preview…');
 
   // Parse SVG to get viewBox / intrinsic size
   const parser = new DOMParser();
@@ -7579,28 +8309,50 @@ function convertSvgToPng() {
       converterState.outputDataUrl = outUrl;
       const displayW = Math.round(canvasW / quality);
       const displayH = Math.round(canvasH / quality);
-      showConverterOutput(outUrl, `${displayW}x${displayH}${quality > 1 ? ` @${quality}x` : ''} PNG`, Math.round(pngBlob.size / 1024));
+      showConverterOutput(
+        outUrl,
+        `${displayW}x${displayH}${quality > 1 ? ` @${quality}x` : ''} PNG`,
+        Math.round(pngBlob.size / 1024),
+        null,
+        null,
+        { width: displayW, height: displayH },
+      );
     }, 'image/png');
   };
   img.onerror = () => { URL.revokeObjectURL(url); showToast('SVG render failed'); };
   img.src = url;
 }
 
-function showConverterOutput(url, label, sizeKb, traceMetrics = null) {
+function showConverterOutput(url, label, sizeKb, traceMetrics = null, traceAdvice = null, previewSize = null, exportSize = null) {
   const outputPreview = document.getElementById('convOutputPreview');
   const outputEmpty = document.getElementById('convOutputEmpty');
   const outputMeta = document.getElementById('convOutputMeta');
+  const outputNote = document.getElementById('convQualityNote');
   const actions = document.getElementById('convActions');
 
   if (outputPreview) outputPreview.style.display = '';
   if (outputEmpty) outputEmpty.style.display = 'none';
   converterState.outputDataUrl = url;
   converterState.traceMetrics = traceMetrics;
+  converterState.traceAdvice = traceAdvice;
+  converterState.outputPreviewSize = previewSize;
+  converterState.outputExportSize = exportSize;
   if (outputMeta) {
     const metricsHtml = traceMetrics
       ? ` &middot; ${traceMetrics.pathCount} paths &middot; ${traceMetrics.complexity}`
       : '';
     outputMeta.innerHTML = `${label} &middot; ~${sizeKb}KB${metricsHtml}`;
+  }
+  if (outputNote) {
+    outputNote.classList.remove('conv__quality-note--warn', 'conv__quality-note--info');
+    if (traceAdvice?.text) {
+      outputNote.textContent = traceAdvice.text;
+      outputNote.classList.add(`conv__quality-note--${traceAdvice.tone || 'info'}`);
+      outputNote.style.display = '';
+    } else {
+      outputNote.textContent = '';
+      outputNote.style.display = 'none';
+    }
   }
   if (actions) actions.style.display = '';
   updateConverterPreviewStage();
@@ -7623,17 +8375,234 @@ function loadImageTracer() {
   return imageTracerReady;
 }
 
+async function loadConverterMonoEngine() {
+  if (!converterMonoEngineReady) {
+    converterMonoEngineReady = import('vectortracer');
+  }
+  return converterMonoEngineReady;
+}
+
+function converterDegreesToRadians(degrees) {
+  return (degrees * Math.PI) / 180;
+}
+
+function buildConverterMonoEngineConfig({
+  preset,
+  smoothness = 50,
+  noiseCleanup = 'medium',
+  traceProfile = null,
+  invert = false,
+  cropWidth,
+  cropHeight,
+  traceWidth,
+  traceHeight,
+  fillColor = '#000000',
+}) {
+  const smoothFactor = Math.max(0, Math.min(1, smoothness / 100));
+  const cleanupWeight = noiseCleanup === 'high' ? 2 : noiseCleanup === 'medium' ? 1 : 0;
+  const isSimple = preset === 'posterized2';
+  const isDetailed = preset === 'detailed';
+  const logoLike = Boolean(traceProfile?.likelySingleHueLogo);
+  const useSpline = isDetailed || (!isSimple && (logoLike || smoothFactor >= 0.45));
+
+  const cornerBase = isSimple ? 22 : isDetailed ? 58 : 40;
+  const cornerMax = isSimple
+    ? (logoLike ? 38 : 34)
+    : isDetailed
+      ? (logoLike ? 84 : 74)
+      : (logoLike ? 60 : 52);
+  const spliceBase = isSimple ? 14 : isDetailed ? 40 : 26;
+  const spliceMax = isSimple
+    ? (logoLike ? 28 : 24)
+    : isDetailed
+      ? (logoLike ? 66 : 56)
+      : (logoLike ? 48 : 40);
+  const maxIterations = isSimple
+    ? Math.round(4 + smoothFactor * 2)
+    : isDetailed
+      ? Math.round(10 + smoothFactor * 5)
+      : Math.round(7 + smoothFactor * 3);
+  const lengthThreshold = isSimple
+    ? Math.max(4, 5 + cleanupWeight)
+    : isDetailed
+      ? Math.max(1, 2 + Math.max(0, cleanupWeight - 1))
+      : Math.max(2, 3 + Math.floor(cleanupWeight / 2));
+  const filterSpeckle = isSimple
+    ? (noiseCleanup === 'high' ? 10 : noiseCleanup === 'medium' ? 8 : 6)
+    : isDetailed
+      ? (noiseCleanup === 'high' ? 5 : noiseCleanup === 'medium' ? 3 : 2)
+      : (noiseCleanup === 'high' ? 7 : noiseCleanup === 'medium' ? 5 : 3);
+  const pathPrecision = isSimple
+    ? 1
+    : isDetailed
+      ? (logoLike ? 5 : 4)
+      : (logoLike ? 3 : 2);
+  const scale = traceWidth > 0 ? cropWidth / traceWidth : 1;
+
+  return {
+    params: {
+      debug: false,
+      mode: useSpline ? 'spline' : 'polygon',
+      cornerThreshold: converterDegreesToRadians(cornerBase + (cornerMax - cornerBase) * smoothFactor),
+      lengthThreshold,
+      maxIterations,
+      spliceThreshold: converterDegreesToRadians(spliceBase + (spliceMax - spliceBase) * smoothFactor),
+      filterSpeckle,
+      pathPrecision,
+    },
+    options: {
+      invert,
+      pathFill: fillColor,
+      backgroundColor: 'transparent',
+      attributes: `viewBox="0 0 ${cropWidth} ${cropHeight}" width="${cropWidth}" height="${cropHeight}"`,
+      scale: Number.isFinite(scale) && scale > 0 ? scale : (cropHeight > 0 && traceHeight > 0 ? cropHeight / traceHeight : 1),
+    },
+  };
+}
+
+function isValidConverterSvg(svgStr) {
+  if (!svgStr || !/<svg[\s>]/i.test(svgStr)) return false;
+  try {
+    const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+    const svg = doc.querySelector('svg');
+    if (!svg || doc.querySelector('parsererror')) return false;
+    return Boolean(doc.querySelector(CONVERTER_SVG_SHAPES));
+  } catch {
+    return false;
+  }
+}
+
+async function traceWithConverterMonoEngine(imageData, config) {
+  const { BinaryImageConverter } = await loadConverterMonoEngine();
+  const source = {
+    data: new Uint8ClampedArray(imageData.data),
+    width: imageData.width,
+    height: imageData.height,
+  };
+
+  return new Promise((resolve, reject) => {
+    let converter;
+
+    const cleanup = () => {
+      if (!converter) return;
+      try {
+        converter.free();
+      } catch {
+        // Ignore cleanup failures while falling back to the old engine.
+      }
+      converter = null;
+    };
+
+    try {
+      converter = new BinaryImageConverter(source, config.params, config.options);
+      converter.init();
+
+      const runBatch = () => {
+        try {
+          let done = false;
+          for (let i = 0; i < 128 && !done; i++) {
+            done = converter.tick();
+          }
+          if (done) {
+            const svg = converter.getResult();
+            cleanup();
+            resolve(svg);
+            return;
+          }
+          requestAnimationFrame(runBatch);
+        } catch (err) {
+          cleanup();
+          reject(err);
+        }
+      };
+
+      requestAnimationFrame(runBatch);
+    } catch (err) {
+      cleanup();
+      reject(err);
+    }
+  });
+}
+
+async function traceWithImageTracerEngine(imageData, options) {
+  const ImageTracer = await loadImageTracer();
+  return ImageTracer.imagedataToSVG(imageData, options);
+}
+
+async function traceWithConverterProofService(
+  imageBase64,
+  qualityMode = 'exact',
+  requestedColorMode = 'color',
+  traceClass = 'general-color',
+  uiMode = 'logo',
+) {
+  if (!CONVERTER_PROOF_SERVICE_URL) {
+    throw new Error('Converter proof service URL is not configured.');
+  }
+
+  const response = await fetch(CONVERTER_PROOF_SERVICE_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      imageBase64,
+      mimeType: 'image/png',
+      qualityMode,
+      requestedColorMode,
+      traceClass,
+      uiMode,
+    }),
+  });
+
+  let payload = null;
+  try {
+    payload = await response.json();
+  } catch {
+    payload = null;
+  }
+
+  if (!response.ok) {
+    throw new Error(payload?.error || `Converter proof service failed (${response.status}).`);
+  }
+
+  if (!payload?.svg || typeof payload.svg !== 'string') {
+    throw new Error('Converter proof service returned no SVG.');
+  }
+
+  return payload;
+}
+
 // Conversion token: increments each time a new conversion starts.
 // When an async trace finishes, it checks if its token matches the
 // current value - if not, a newer conversion superseded it, so discard.
 let _convToken = 0;
+
+function cloneConverterImageData(imageData) {
+  return new ImageData(
+    new Uint8ClampedArray(imageData.data),
+    imageData.width,
+    imageData.height,
+  );
+}
+
+function imageDataToConverterPngDataUrl(imageData) {
+  const canvas = document.createElement('canvas');
+  canvas.width = imageData.width;
+  canvas.height = imageData.height;
+  const ctx = canvas.getContext('2d');
+  ctx.putImageData(imageData, 0, 0);
+  return canvas.toDataURL('image/png');
+}
 
 async function convertPngToSvg() {
   const {
     pngDataUrl,
     threshold,
     preset,
-    colorMode,
+    assetMode = 'logo',
+    exportSizeMode = 'auto',
+    exportTargetWidth = null,
     smoothness,
     autoCrop,
     enhanceSmallIcons,
@@ -7641,22 +8610,9 @@ async function convertPngToSvg() {
     invert,
   } = converterState;
   const myToken = ++_convToken;
-
-  // Show loading state (hide previous output)
-  const outputEmpty = document.getElementById('convOutputEmpty');
-  const outputPreview = document.getElementById('convOutputPreview');
-  const actions = document.getElementById('convActions');
-  if (outputPreview) outputPreview.style.display = 'none';
-  if (actions) actions.style.display = 'none';
-  if (outputEmpty) {
-    outputEmpty.style.display = '';
-    outputEmpty.innerHTML = `<span class="material-symbols-outlined" style="font-size:40px;color:var(--si-text-dim)">hourglass_top</span><p>Tracing...</p>`;
-  }
+  showConverterPendingOutput(`Tracing ${getConverterPresetLabel(preset)} preview…`);
 
   try {
-    const ImageTracer = await loadImageTracer();
-    if (myToken !== _convToken) return;
-
     // Load image into canvas
     const img = new Image();
     await new Promise((resolve, reject) => {
@@ -7675,8 +8631,9 @@ async function convertPngToSvg() {
     sourceCtx.drawImage(img, 0, 0, srcW, srcH);
     const sourceImageData = sourceCtx.getImageData(0, 0, srcW, srcH);
     const sourceBg = detectBackgroundFromCorners(sourceImageData.data, srcW, srcH);
+    const requestedColorMode = getConverterRequestedColorMode(assetMode);
     const cropBounds = autoCrop
-      ? detectConverterContentBounds(sourceImageData, colorMode, threshold, sourceBg, invert)
+      ? detectConverterContentBounds(sourceImageData, requestedColorMode, threshold, sourceBg, invert)
       : { x: 0, y: 0, width: srcW, height: srcH, cropped: false };
 
     const cropCanvas = document.createElement('canvas');
@@ -7696,16 +8653,168 @@ async function convertPngToSvg() {
     );
     converterState.previewOriginalDataUrl = cropCanvas.toDataURL('image/png');
     const cropImageData = cropCtx.getImageData(0, 0, cropBounds.width, cropBounds.height);
-    const traceProfile = analyzeConverterTraceProfile(cropImageData, colorMode, threshold, sourceBg, invert);
-    const effectiveColorMode = (colorMode === 'color' && traceProfile.likelySingleHueLogo) ? 'mono' : colorMode;
-    const logoRouteFill = (colorMode === 'color' && effectiveColorMode === 'mono')
+    const traceProfile = analyzeConverterTraceProfile(cropImageData, requestedColorMode, threshold, sourceBg, invert);
+    const exportSize = getConverterExportSize({
+      assetMode,
+      cropWidth: cropBounds.width,
+      cropHeight: cropBounds.height,
+      exportSizeMode,
+      exportTargetWidth,
+    });
+    const effectivePreset = resolveConverterPreset(preset, traceProfile, requestedColorMode);
+    let traceRoute = getConverterTraceRoute(requestedColorMode, traceProfile);
+    const effectiveColorMode = traceRoute === 'mono-exact' ? 'mono' : requestedColorMode;
+    const traceBackgroundFill = (
+      effectiveColorMode === 'color' && !sourceBg
+        ? CONVERTER_TRANSPARENT_BG_SENTINEL
+        : [255, 255, 255]
+    );
+    const explicitMonoFill = requestedColorMode === 'mono' ? converterRgbToHex(traceProfile.dominantColor || [0, 0, 0]) : null;
+    const logoRouteFill = (requestedColorMode === 'color' && traceRoute === 'mono-exact')
       ? converterRgbToHex(traceProfile.dominantColor)
       : null;
+    const traceFillColor = logoRouteFill || explicitMonoFill;
     const effectiveThreshold = logoRouteFill ? Math.max(threshold, 170) : threshold;
+    const traceClass = getConverterTraceClass(traceProfile, requestedColorMode, assetMode);
+    const serviceRequestedColorMode = (
+      requestedColorMode === 'mono'
+      || traceClass === 'tiny-line-icon'
+      || traceClass === 'single-color-mark'
+      || traceClass === 'mono-mask'
+    )
+      ? 'mono'
+      : 'color';
+
+    if (CONVERTER_PROOF_SERVICE_URL) {
+      try {
+        let proofTraceGeometryWidth = cropBounds.width;
+        let proofTraceGeometryHeight = cropBounds.height;
+        const proofServiceImageBase64 = serviceRequestedColorMode === 'mono'
+          ? (() => {
+              const iconMaskThreshold = assetMode === 'icon'
+                ? Math.min(232, effectiveThreshold + (traceClass === 'tiny-line-icon' ? 64 : 32))
+                : effectiveThreshold;
+              if (
+                assetMode === 'icon'
+                && (traceClass === 'tiny-line-icon' || traceClass === 'mono-mask' || traceClass === 'single-color-mark')
+              ) {
+                const upscaleFactor = getConverterMicroIconUpscale(
+                  cropCanvas.width,
+                  cropCanvas.height,
+                  traceClass,
+                );
+                const upscaledCanvas = document.createElement('canvas');
+                upscaledCanvas.width = cropCanvas.width * upscaleFactor;
+                upscaledCanvas.height = cropCanvas.height * upscaleFactor;
+                proofTraceGeometryWidth = upscaledCanvas.width;
+                proofTraceGeometryHeight = upscaledCanvas.height;
+                const upscaledCtx = upscaledCanvas.getContext('2d');
+                upscaledCtx.imageSmoothingEnabled = true;
+                upscaledCtx.imageSmoothingQuality = 'high';
+                upscaledCtx.drawImage(cropCanvas, 0, 0, upscaledCanvas.width, upscaledCanvas.height);
+                const upscaledImage = upscaledCtx.getImageData(0, 0, upscaledCanvas.width, upscaledCanvas.height);
+                preprocessImageData(upscaledImage, {
+                  colorMode: 'mono',
+                  threshold: iconMaskThreshold,
+                  invert,
+                  noiseCleanup,
+                  traceProfile,
+                  preset: effectivePreset,
+                  backgroundFillColor: [255, 255, 255],
+                });
+                applyBinaryIconThinning(
+                  upscaledImage,
+                  traceClass === 'tiny-line-icon' ? 2 : 0,
+                );
+                applyBinaryIconErosion(
+                  upscaledImage,
+                  traceClass === 'tiny-line-icon' ? 1 : 0,
+                );
+                upscaledCtx.putImageData(upscaledImage, 0, 0);
+                return upscaledCanvas.toDataURL('image/png');
+              }
+              const monoProofImage = cloneConverterImageData(cropImageData);
+              preprocessImageData(monoProofImage, {
+                colorMode: 'mono',
+                threshold: iconMaskThreshold,
+                invert,
+                noiseCleanup,
+                traceProfile,
+                preset: effectivePreset,
+                backgroundFillColor: [255, 255, 255],
+              });
+              applyBinaryIconThinning(
+                monoProofImage,
+                assetMode === 'icon' && traceClass === 'tiny-line-icon' ? 2 : 0,
+              );
+              applyBinaryIconErosion(
+                monoProofImage,
+                assetMode === 'icon' && traceClass === 'tiny-line-icon' ? 1 : 0,
+              );
+              return imageDataToConverterPngDataUrl(monoProofImage);
+            })()
+          : cropCanvas.toDataURL('image/png');
+
+        const proofResult = await traceWithConverterProofService(
+          proofServiceImageBase64,
+          getConverterServiceQualityMode(preset, assetMode),
+          serviceRequestedColorMode,
+          traceClass,
+          assetMode,
+        );
+        if (myToken !== _convToken) return;
+
+        const traceArtifact = buildConverterServiceTraceArtifact(
+          proofResult.svg,
+          proofResult.metrics,
+          serviceRequestedColorMode === 'mono'
+            ? {
+                fillColor: pickConverterMonochromeFill(traceProfile, sourceBg),
+                backgroundStripColor: [255, 255, 255],
+                stripMonoStroke: true,
+                forceRetint: true,
+                originalWidth: proofTraceGeometryWidth,
+                originalHeight: proofTraceGeometryHeight,
+                exportWidth: exportSize.width,
+                exportHeight: exportSize.height,
+              }
+            : {
+                originalWidth: proofTraceGeometryWidth,
+                originalHeight: proofTraceGeometryHeight,
+                exportWidth: exportSize.width,
+                exportHeight: exportSize.height,
+              },
+        );
+        const { svgBlob, sizeKb, traceMetrics } = traceArtifact;
+        converterState.outputBlob = svgBlob;
+        const url = URL.createObjectURL(svgBlob);
+        const croppedSuffix = cropBounds.cropped ? ' · cropped' : '';
+        const sizeWarning = sizeKb > 300
+          ? ` <span style="color:#f97316">⚠ Large</span>`
+          : '';
+        showConverterOutput(
+          url,
+          `SVG (${cropBounds.width}x${cropBounds.height}${croppedSuffix} -> ${exportSize.width}x${exportSize.height} export)${sizeWarning}`,
+          sizeKb,
+          traceMetrics,
+          null,
+          { width: cropBounds.width, height: cropBounds.height },
+          exportSize,
+        );
+        return;
+      } catch (proofErr) {
+        if (CONVERTER_PROOF_SERVICE_REQUIRED) {
+          if (myToken !== _convToken) return;
+          showConverterProofServiceOffline(proofErr);
+          return;
+        }
+        console.warn('[Converter] Local proof service unavailable, falling back to browser tracer:', proofErr);
+      }
+    }
 
     // Trace resolution now starts from cropped bounds and supports a sharper small-icon boost.
     const smoothFactor = smoothness / 100;
-    const basePx = preset === 'detailed' ? 768 : preset === 'default' ? 640 : 512;
+    const basePx = effectivePreset === 'detailed' ? 768 : effectivePreset === 'default' ? 640 : 512;
     const maxTracePx = Math.round(basePx * (0.85 + smoothFactor * 1.15));
     let enhanceScale = getConverterEnhanceScale(
       cropBounds.width,
@@ -7730,7 +8839,9 @@ async function convertPngToSvg() {
     ctx.imageSmoothingEnabled = !useSharpUpscale;
     ctx.imageSmoothingQuality = useSharpUpscale ? 'low' : 'high';
     ctx.drawImage(cropCanvas, 0, 0, traceW, traceH);
-    const imageData = ctx.getImageData(0, 0, traceW, traceH);
+    const traceSourceImageData = ctx.getImageData(0, 0, traceW, traceH);
+    let imageData = cloneConverterImageData(traceSourceImageData);
+    let fallbackImageData = imageData;
 
     // ── Preprocessing: threshold + background removal ──
     preprocessImageData(imageData, {
@@ -7739,58 +8850,188 @@ async function convertPngToSvg() {
       invert,
       noiseCleanup,
       traceProfile,
+      preset: effectivePreset,
+      backgroundFillColor: traceBackgroundFill,
     });
 
-    // Build options from current state after crop/upscale decisions are known.
-    const options = buildImageTracerOptions(
-      preset,
-      effectiveColorMode,
-      effectiveThreshold,
-      smoothness,
-      noiseCleanup,
-      traceProfile,
-    );
-
-    // Scale factor: imagetracerjs traces at traceW x traceH but we want
-    // path coordinates in the cropped source coordinate space.
-    options.scale = cropBounds.width / traceW;
-
-    // Trace
-    const svgResult = ImageTracer.imagedataToSVG(imageData, options);
-    if (myToken !== _convToken) return;
-
-    // Normalize: ensure viewBox matches the exported crop dimensions
-    let cleanSvg = normalizeSvgOutput(svgResult, cropBounds.width, cropBounds.height);
-
-    // Strip background-colored paths (the traced background) to produce
-    // icon paths on transparent background.
-    // Preprocessing normalises any detected bg to white [255,255,255],
-    // so we always strip white.
-    cleanSvg = stripBackgroundPaths(cleanSvg, [255, 255, 255]);
-    if (logoRouteFill) {
-      cleanSvg = retintConverterForegroundSvg(cleanSvg, logoRouteFill);
+    let traceArtifact = null;
+    if (effectiveColorMode === 'mono') {
+      const monoConfig = buildConverterMonoEngineConfig({
+        preset: effectivePreset,
+        smoothness,
+        noiseCleanup,
+        traceProfile,
+        invert,
+        cropWidth: cropBounds.width,
+        cropHeight: cropBounds.height,
+        traceWidth: traceW,
+        traceHeight: traceH,
+        fillColor: traceFillColor || '#000000',
+      });
+      fallbackImageData = imageData;
+      try {
+        const monoSvgResult = await traceWithConverterMonoEngine(imageData, monoConfig);
+        if (isValidConverterSvg(monoSvgResult)) {
+          const monoArtifact = buildConverterTraceArtifact(
+            monoSvgResult,
+            cropBounds.width,
+            cropBounds.height,
+            traceFillColor,
+            {
+              stripMonoStroke: true,
+              backgroundStripColor: traceBackgroundFill,
+              forceRetint: true,
+              exportWidth: exportSize.width,
+              exportHeight: exportSize.height,
+            },
+          );
+          const monoTraceLooksEmpty = !monoArtifact?.traceMetrics?.pathCount || !monoArtifact?.traceMetrics?.shapeCount;
+          if (!shouldFallbackFromMonoTrace({
+            traceArtifact: monoArtifact,
+            traceProfile,
+            requestedColorMode,
+            cropWidth: cropBounds.width,
+            cropHeight: cropBounds.height,
+          })) {
+            traceArtifact = monoArtifact;
+          } else if (requestedColorMode === 'mono' && monoTraceLooksEmpty) {
+            const retryInvert = !invert;
+            const retryImageData = cloneConverterImageData(traceSourceImageData);
+            preprocessImageData(retryImageData, {
+              colorMode: effectiveColorMode,
+              threshold: effectiveThreshold,
+              invert: retryInvert,
+              noiseCleanup,
+              traceProfile,
+              preset: effectivePreset,
+              backgroundFillColor: traceBackgroundFill,
+            });
+            fallbackImageData = retryImageData;
+            const retryMonoConfig = buildConverterMonoEngineConfig({
+              preset: effectivePreset,
+              smoothness,
+              noiseCleanup,
+              traceProfile,
+              invert: retryInvert,
+              cropWidth: cropBounds.width,
+              cropHeight: cropBounds.height,
+              traceWidth: traceW,
+              traceHeight: traceH,
+              fillColor: traceFillColor || '#000000',
+            });
+            try {
+              const retryMonoSvgResult = await traceWithConverterMonoEngine(retryImageData, retryMonoConfig);
+              if (isValidConverterSvg(retryMonoSvgResult)) {
+                const retryArtifact = buildConverterTraceArtifact(
+                  retryMonoSvgResult,
+                  cropBounds.width,
+                  cropBounds.height,
+                  traceFillColor,
+                  {
+                    stripMonoStroke: true,
+                    backgroundStripColor: traceBackgroundFill,
+                    forceRetint: true,
+                    exportWidth: exportSize.width,
+                    exportHeight: exportSize.height,
+                  },
+                );
+                if (!shouldFallbackFromMonoTrace({
+                  traceArtifact: retryArtifact,
+                  traceProfile,
+                  requestedColorMode,
+                  cropWidth: cropBounds.width,
+                  cropHeight: cropBounds.height,
+                })) {
+                  traceArtifact = retryArtifact;
+                } else {
+                  traceRoute = 'mono-fallback';
+                }
+              } else {
+                traceRoute = 'mono-fallback';
+              }
+            } catch (retryMonoErr) {
+              console.warn('[Converter] Mono polarity retry failed, falling back to ImageTracer:', retryMonoErr);
+              traceRoute = 'mono-fallback';
+            }
+          } else {
+            traceRoute = 'mono-fallback';
+          }
+        } else {
+          traceRoute = 'mono-fallback';
+        }
+      } catch (monoErr) {
+        console.warn('[Converter] Mono engine failed, falling back to ImageTracer:', monoErr);
+        traceRoute = 'mono-fallback';
+      }
     }
 
-    const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
+    if (!traceArtifact) {
+      // Build options from current state after crop/upscale decisions are known.
+      const options = buildImageTracerOptions(
+        effectivePreset,
+        effectiveColorMode,
+        effectiveThreshold,
+        smoothness,
+        noiseCleanup,
+        traceProfile,
+        traceRoute,
+      );
+
+      // Scale factor: imagetracerjs traces at traceW x traceH but we want
+      // path coordinates in the cropped source coordinate space.
+      options.scale = cropBounds.width / traceW;
+      const svgResult = await traceWithImageTracerEngine(fallbackImageData, options);
+      traceArtifact = buildConverterTraceArtifact(
+        svgResult,
+        cropBounds.width,
+        cropBounds.height,
+        traceFillColor,
+        {
+          stripMonoStroke: effectiveColorMode === 'mono',
+          backgroundStripColor: traceBackgroundFill,
+          forceRetint: effectiveColorMode === 'mono',
+          exportWidth: exportSize.width,
+          exportHeight: exportSize.height,
+        },
+      );
+    }
+    if (myToken !== _convToken) return;
+
+    const { cleanSvg, svgBlob, sizeKb, traceMetrics } = traceArtifact;
     converterState.outputBlob = svgBlob;
     const url = URL.createObjectURL(svgBlob);
-    const sizeKb = Math.round(svgBlob.size / 1024);
-    const traceMetrics = measureConverterTraceMetrics(cleanSvg, sizeKb);
+    const traceAdvice = getConverterTraceAdvice({
+      traceProfile,
+      traceMetrics,
+      requestedColorMode,
+      effectiveColorMode,
+      sizeKb,
+      traceRoute,
+      resolvedPreset: effectivePreset,
+    });
     const croppedSuffix = cropBounds.cropped ? ' · cropped' : '';
 
     const sizeWarning = sizeKb > 300
       ? ` <span style="color:#f97316">⚠ Large</span>`
       : '';
-    showConverterOutput(url, `SVG (${cropBounds.width}x${cropBounds.height}${croppedSuffix})${sizeWarning}`, sizeKb, traceMetrics);
+    showConverterOutput(
+      url,
+      `SVG (${cropBounds.width}x${cropBounds.height}${croppedSuffix} -> ${exportSize.width}x${exportSize.height} export)${sizeWarning}`,
+      sizeKb,
+      traceMetrics,
+      traceAdvice,
+      { width: cropBounds.width, height: cropBounds.height },
+      exportSize,
+    );
   } catch (err) {
     if (myToken !== _convToken) return;
     console.error('[Converter] PNG-to-SVG failed:', err);
-    if (outputEmpty) outputEmpty.innerHTML = `<span class="material-symbols-outlined" style="font-size:40px;color:var(--si-text-dim)">image_search</span><p>Preview appears here</p>`;
+    resetConverterOutputPlaceholder();
     showToast('Tracing failed: ' + (err.message || 'Unknown error'));
   }
 }
 
-function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, noiseCleanup = 'medium', traceProfile = null) {
+function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, noiseCleanup = 'medium', traceProfile = null, traceRoute = 'color-default') {
   // Base options per preset - tuned for sharp, clean icon output
   // `scale` is set dynamically in convertPngToSvg() to compensate for downsampling
   const presetOptions = {
@@ -7801,6 +9042,7 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, 
 
   const base = { ...(presetOptions[preset] || presetOptions.posterized2) };
   const cleanupWeight = noiseCleanup === 'high' ? 2 : noiseCleanup === 'medium' ? 1 : 0;
+  base.strokewidth = 0;
 
   if (colorMode === 'mono') {
     // Mono: we preprocess pixels to binary (black/white) in preprocessImageData(),
@@ -7811,9 +9053,19 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, 
     base.blurradius = 0; // no blur - preprocessing handles threshold
     base.blurdelta = 0;
     // Tight path tolerance for sharp mono edges
-    base.ltres = 0.22;
-    base.qtres = 0.22;
-    base.pathomit = Math.max(0, (base.pathomit || 1) + cleanupWeight);
+    if (preset === 'posterized2') {
+      base.ltres = 0.34;
+      base.qtres = 0.34;
+      base.pathomit = Math.max(3, 4 + cleanupWeight * 2);
+    } else if (preset === 'detailed') {
+      base.ltres = 0.14;
+      base.qtres = 0.14;
+      base.pathomit = Math.max(0, cleanupWeight - 1);
+    } else {
+      base.ltres = 0.22;
+      base.qtres = 0.22;
+      base.pathomit = Math.max(1, 2 + cleanupWeight);
+    }
   } else {
     // Color mode: need enough palette entries to distinguish icon colors
     // from the white background. With only 2 (Simple preset), k-means
@@ -7823,7 +9075,28 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, 
     base.colorquantcycles = Math.max(base.colorquantcycles, 3);
     base.pathomit = Math.max(base.pathomit || 2, 1 + cleanupWeight * 2);
     base.mincolorratio = Math.max(base.mincolorratio || 0, cleanupWeight * 0.01);
-    if (traceProfile?.likelyFlatArtwork) {
+    if (traceRoute === 'flat-art-color') {
+      const flatBaseCount = traceProfile?.recommendedColorCount || 5;
+      if (preset === 'posterized2') {
+        base.numberofcolors = Math.max(4, Math.min(flatBaseCount + 1, 8));
+        base.pathomit = Math.max(2, 1 + cleanupWeight);
+        base.mincolorratio = Math.max(base.mincolorratio || 0, 0.004 + cleanupWeight * 0.004);
+      } else if (preset === 'detailed') {
+        base.numberofcolors = Math.max(8, Math.min(flatBaseCount + 4, 12));
+        base.pathomit = Math.max(0, cleanupWeight - 1);
+        base.mincolorratio = Math.max(base.mincolorratio || 0, 0.001);
+        base.ltres = Math.max(base.ltres, 0.24);
+        base.qtres = Math.max(base.qtres, 0.24);
+      } else {
+        base.numberofcolors = Math.max(6, Math.min(flatBaseCount + 2, 10));
+        base.pathomit = Math.max(1, cleanupWeight);
+        base.mincolorratio = Math.max(base.mincolorratio || 0, 0.002 + cleanupWeight * 0.002);
+      }
+      base.colorsampling = 2; // k-means preserves flat-logo colors more reliably
+      base.colorquantcycles = Math.max(base.colorquantcycles, 4);
+      base.blurradius = 0;
+      base.blurdelta = 0;
+    } else if (traceProfile?.likelyFlatArtwork) {
       base.numberofcolors = Math.min(
         Math.max(3, traceProfile.recommendedColorCount || 6),
         Math.max(base.numberofcolors, 3),
@@ -7842,7 +9115,7 @@ function buildImageTracerOptions(preset, colorMode, threshold, smoothness = 50, 
   base.ltres = Math.max(0.1, (base.ltres || 0.5) * (1 - sf * 0.8));
   base.qtres = Math.max(0.1, (base.qtres || 0.5) * (1 - sf * 0.8));
   // Blur: 0 at sf=0, up to 2 at sf=1 (only in color mode; mono uses preprocessing)
-  if (colorMode !== 'mono' && sf > 0.2) {
+  if (colorMode !== 'mono' && traceRoute !== 'flat-art-color' && sf > 0.2) {
     base.blurradius = Math.round(sf * 2);
     base.blurdelta = 20;
   }
@@ -7858,6 +9131,8 @@ function preprocessImageData(imageData, {
   invert = false,
   noiseCleanup = 'medium',
   traceProfile = null,
+  preset = 'posterized2',
+  backgroundFillColor = [255, 255, 255],
 }) {
   const d = imageData.data; // RGBA flat array
   const w = imageData.width;
@@ -7867,6 +9142,7 @@ function preprocessImageData(imageData, {
   const bgColor = detectBackgroundFromCorners(d, w, h);
 
   if (colorMode === 'mono') {
+    const transparentMonoThreshold = !bgColor ? getConverterTransparentMonoThreshold(traceProfile) : null;
     // Mono mode: convert to opaque black (foreground) and opaque white (background).
     // We use OPAQUE white, not transparent, because imagetracerjs ignores alpha
     // when all RGB channels are the same (it would trace everything as one solid fill).
@@ -7874,22 +9150,28 @@ function preprocessImageData(imageData, {
     for (let i = 0; i < d.length; i += 4) {
       let isForeground;
 
-      if (d[i + 3] < 128) {
+      if (d[i + 3] < 16) {
         // Already transparent pixel -> definitely background
         isForeground = false;
+      } else if (!bgColor) {
+        if (transparentMonoThreshold != null) {
+          const luminance = getConverterRgbLuminance([d[i], d[i + 1], d[i + 2]]);
+          isForeground = luminance <= transparentMonoThreshold;
+        } else if (traceProfile?.likelyTinyLineIcon || traceProfile?.likelySingleColorMark) {
+          isForeground = d[i + 3] >= getConverterTransparentIconAlphaThreshold(traceProfile);
+        } else {
+          // Pure white/light transparent icons should still trace their visible pixels.
+          isForeground = true;
+        }
       } else if (bgColor) {
         // Has a detected background color: foreground = pixels far from bg
         const dist = Math.abs(d[i] - bgColor[0])
                    + Math.abs(d[i + 1] - bgColor[1])
                    + Math.abs(d[i + 2] - bgColor[2]);
         isForeground = dist > threshold;
-      } else {
-        // No background detected (corners are transparent): luminance fallback
-        const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-        isForeground = gray < threshold;
       }
 
-      if (invert) isForeground = !isForeground;
+      if (invert && (bgColor || transparentMonoThreshold != null)) isForeground = !isForeground;
 
       if (isForeground) {
         d[i] = 0; d[i + 1] = 0; d[i + 2] = 0; d[i + 3] = 255;       // opaque black
@@ -7903,24 +9185,31 @@ function preprocessImageData(imageData, {
     // We use opaque white (not transparent) because imagetracerjs produces
     // garbage when mixing opaque and transparent pixels with residual RGB.
     // White paths are stripped post-trace by stripBackgroundPaths().
+    const bgFill = backgroundFillColor;
     if (bgColor) {
       const bgTolerance = threshold;
       for (let i = 0; i < d.length; i += 4) {
         if (d[i + 3] < 128) {
-          // Already transparent -> make opaque white
-          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255;
+          // Already transparent -> normalize to the synthetic background fill
+          d[i] = bgFill[0]; d[i + 1] = bgFill[1]; d[i + 2] = bgFill[2]; d[i + 3] = 255;
           continue;
         }
         const dist = Math.abs(d[i] - bgColor[0])
                    + Math.abs(d[i + 1] - bgColor[1])
                    + Math.abs(d[i + 2] - bgColor[2]);
         if (dist < bgTolerance) {
-          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255; // opaque white
+          d[i] = bgFill[0]; d[i + 1] = bgFill[1]; d[i + 2] = bgFill[2]; d[i + 3] = 255;
+        }
+      }
+    } else {
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 128) {
+          d[i] = bgFill[0]; d[i + 1] = bgFill[1]; d[i + 2] = bgFill[2]; d[i + 3] = 255;
         }
       }
     }
     if (traceProfile?.likelyFlatArtwork || traceProfile?.likelySingleHueLogo) {
-      flattenConverterColorArtwork(imageData, bgColor, threshold, traceProfile);
+      flattenConverterColorArtwork(imageData, bgColor || bgFill, threshold, traceProfile, preset);
     }
   }
   return bgColor; // [R,G,B] or null
@@ -7959,29 +9248,37 @@ function detectBackgroundFromCorners(d, w, h) {
 // but this function handles ANY colour so light-on-dark icons work if
 // preprocessing logic is ever changed.
 function stripBackgroundPaths(svgStr, bgColor) {
-  const bgR = bgColor[0], bgG = bgColor[1], bgB = bgColor[2];
   const tolerance = 55; // allow for quantisation drift
-  return svgStr.replace(
-    /<path[^>]*fill="rgb\((\d+),(\d+),(\d+)\)"[^>]*\/>/g,
-    (match, r, g, b) => {
-      const dist = Math.abs(parseInt(r) - bgR)
-                 + Math.abs(parseInt(g) - bgG)
-                 + Math.abs(parseInt(b) - bgB);
-      return dist < tolerance ? '' : match;
-    }
-  );
+  try {
+    const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svgStr;
+    doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((shape) => {
+      const fillRgb = parseConverterSvgColor(shape.getAttribute('fill'));
+      if (!fillRgb) return;
+      const dist = Math.abs(fillRgb[0] - bgColor[0])
+                 + Math.abs(fillRgb[1] - bgColor[1])
+                 + Math.abs(fillRgb[2] - bgColor[2]);
+      if (dist < tolerance) {
+        shape.remove();
+      }
+    });
+    return new XMLSerializer().serializeToString(doc);
+  } catch {
+    return svgStr;
+  }
 }
 
-function normalizeSvgOutput(svgStr, originalW, originalH) {
-  // imagetracerjs embeds the trace canvas dimensions; override with original
-  // so the downloaded SVG matches the source image's aspect ratio
+function normalizeSvgOutput(svgStr, originalW, originalH, exportW = originalW, exportH = originalH) {
+  const viewBoxWidth = Math.max(1, Math.round(originalW || 1));
+  const viewBoxHeight = Math.max(1, Math.round(originalH || 1));
+  const exportWidth = Math.max(1, Math.round(exportW || viewBoxWidth));
+  const exportHeight = Math.max(1, Math.round(exportH || viewBoxHeight));
   svgStr = svgStr.replace(/<svg([^>]*)>/, (m, attrs) => {
-    // Remove any existing width/height/viewBox then rewrite
     attrs = attrs
       .replace(/\s*width="[^"]*"/, '')
       .replace(/\s*height="[^"]*"/, '')
       .replace(/\s*viewBox="[^"]*"/, '');
-    return `<svg${attrs} viewBox="0 0 ${originalW} ${originalH}" width="${originalW}" height="${originalH}">`;
+    return `<svg${attrs} viewBox="0 0 ${viewBoxWidth} ${viewBoxHeight}" width="${exportWidth}" height="${exportHeight}">`;
   });
   return svgStr;
 }

@@ -6267,6 +6267,25 @@ body.theme-light .ml__dial-needle::after {
   font-family: var(--si-font-label);
   text-align: center;
 }
+.conv__quality-note {
+  width: min(100%, 260px);
+  margin: 8px auto 0;
+  padding: 8px 10px;
+  border: 1px solid var(--si-ghost-border);
+  border-radius: var(--si-radius-sm);
+  background: color-mix(in srgb, var(--si-surface-container) 82%, transparent);
+  color: var(--si-text-muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+  text-align: left;
+}
+.conv__quality-note--info {
+  border-color: color-mix(in srgb, var(--si-primary) 20%, var(--si-ghost-border));
+}
+.conv__quality-note--warn {
+  border-color: color-mix(in srgb, #f97316 45%, var(--si-ghost-border));
+  color: color-mix(in srgb, var(--si-text) 82%, #f97316);
+}
 .conv__clear-btn {
   position: absolute;
   top: 8px;
