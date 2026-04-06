@@ -3,7 +3,7 @@
  * Handles collection catalog rendering, view switching, and Stripe checkout.
  */
 
-import { getUser, getSupabase, isLoggedIn, isPro, getCreditBalance, waitForAuth } from './auth.js';
+import { getUser, getSupabase, isLoggedIn, isPro, getClaimStatus, fetchClaimStatus, invalidateClaimStatus, waitForAuth } from './auth.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -41,6 +41,9 @@ const MOTION_LAB_LOCKED_SVG = '<!-- Animated SVG available with Pro -->';
 
 // ── State ─────────────────────────────────────────────────────
 let products = [];
+let claimStatusLoadPromise = null;
+let purchasesLoadPromise = null;
+let purchasesLoadedForUserId = null;
 
 // ── Premium Asset Fetcher ─────────────────────────────────────
 // Fetches SVG/CSS through the Edge Function with auth headers.
@@ -106,6 +109,145 @@ function getProPlanPriceMarkup(planKey) {
   return `${plan.amount}<span style="font-size:0.65rem;font-weight:400">${plan.period}</span>`;
 }
 
+function formatClaimAvailability(nextAvailable) {
+  if (!nextAvailable) return 'soon';
+  const date = new Date(nextAvailable);
+  if (Number.isNaN(date.getTime())) return 'soon';
+  return date.toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+function isClaimableProduct(product) {
+  if (!product || product.status !== 'active') return false;
+  if (Object.prototype.hasOwnProperty.call(product, 'v1_launch')) {
+    return product.v1_launch === true;
+  }
+  return product.pack_type === 'single';
+}
+
+function getOwnedBadgeMeta(source) {
+  if (source === 'credit') {
+    return {
+      text: 'Redeemed',
+      className: 'pack-card__badge--redeemed',
+    };
+  }
+
+  return {
+    text: 'Purchased',
+    className: 'pack-card__badge--owned',
+  };
+}
+
+function getPackCardState(product, isPurchased, priceDisplay) {
+  const primary = isPurchased
+    ? {
+      action: 'open',
+      label: '<span class="material-symbols-outlined" style="font-size:15px">visibility</span> View Collection',
+      className: 'pack-card__btn--open',
+    }
+    : {
+      action: 'purchase',
+      label: `Buy $${priceDisplay}`,
+      className: 'pack-card__btn--buy',
+    };
+
+  let redeem = null;
+  const shouldShowRedeemState = !isPurchased && isPro() && isClaimableProduct(product);
+  if (shouldShowRedeemState) {
+    const claimStatus = getClaimStatus();
+    if (!claimStatus) {
+      redeem = { type: 'note', className: 'pack-card__redeem-note--muted', text: 'Checking redeem access...' };
+    } else if (claimStatus.canClaim) {
+      redeem = {
+        type: 'action',
+        action: 'claim',
+        label: '<span class="material-symbols-outlined" style="font-size:14px">redeem</span> Redeem now',
+        className: 'pack-card__redeem-btn',
+      };
+    } else if (claimStatus.reason === 'cooldown_wait') {
+      redeem = {
+        type: 'note',
+        className: 'pack-card__redeem-note--cooldown',
+        text: `Redeem on ${formatClaimAvailability(claimStatus.nextAvailable)}`,
+      };
+    } else if (claimStatus.reason === 'all_owned') {
+      redeem = {
+        type: 'note',
+        className: 'pack-card__redeem-note--muted',
+        text: 'All claimable collections owned',
+      };
+    }
+  }
+
+  return { primary, redeem };
+}
+
+function ensureClaimStatusLoaded() {
+  if (!isLoggedIn() || !isPro()) return;
+  if (getClaimStatus() || claimStatusLoadPromise) return;
+
+  claimStatusLoadPromise = fetchClaimStatus()
+    .catch((err) => {
+      console.warn('[Store] Failed to fetch claim status:', err?.message || err);
+    })
+    .finally(() => {
+      claimStatusLoadPromise = null;
+      if (currentView === 'packs') {
+        renderPackCatalog();
+      }
+    });
+}
+
+function rerenderCollectionSurfaceForCurrentView() {
+  if (currentView === 'packs') {
+    renderPackCatalog();
+  } else if (currentView === 'downloads') {
+    renderDownloads();
+  } else if (currentView === 'dashboard') {
+    renderDashboard();
+  }
+}
+
+async function ensureUserPurchasesLoaded({ force = false, rerender = true } = {}) {
+  const user = getUser();
+  if (!user) {
+    userPurchases = [];
+    purchasesLoadedForUserId = null;
+    purchasesLoadPromise = null;
+    const countEl = document.getElementById('countDownloads');
+    if (countEl) countEl.textContent = '0';
+    if (rerender) rerenderCollectionSurfaceForCurrentView();
+    return userPurchases;
+  }
+
+  if (!force && purchasesLoadPromise) {
+    return purchasesLoadPromise;
+  }
+
+  const request = (async () => {
+    await fetchUserPurchases();
+    purchasesLoadedForUserId = getUser()?.id || null;
+    return userPurchases;
+  })()
+    .catch((err) => {
+      console.warn('[Store] Failed to ensure purchases are loaded:', err?.message || err);
+      return userPurchases;
+    })
+    .finally(() => {
+      if (purchasesLoadPromise === request) {
+        purchasesLoadPromise = null;
+      }
+      if (rerender) rerenderCollectionSurfaceForCurrentView();
+    });
+
+  purchasesLoadPromise = request;
+  return request;
+}
+
 function getUpgradeCtasMarkup() {
   return `
     <div class="si-upsell__actions">
@@ -139,7 +281,12 @@ function closeUpgradePrompt() {
 // ── Init ──────────────────────────────────────────────────────
 export function initStore() {
   wireStoreListeners();
-  fetchProducts();
+  void fetchProducts();
+  void waitForAuth()
+    .then(() => ensureUserPurchasesLoaded({ rerender: false }))
+    .catch((err) => {
+      console.warn('[Store] Initial purchase sync skipped:', err?.message || err);
+    });
 }
 
 // ── Fetch Products ────────────────────────────────────────────
@@ -165,7 +312,13 @@ async function fetchProducts() {
 // ── Fetch User Purchases ──────────────────────────────────────
 export async function fetchUserPurchases() {
   const user = getUser();
-  if (!user) { userPurchases = []; return; }
+  if (!user) {
+    userPurchases = [];
+    purchasesLoadedForUserId = null;
+    const countEl = document.getElementById('countDownloads');
+    if (countEl) countEl.textContent = '0';
+    return userPurchases;
+  }
 
   try {
     const sb = getSupabase();
@@ -181,13 +334,16 @@ export async function fetchUserPurchases() {
         },
       }
     );
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(`Purchase fetch failed (${res.status})`);
     userPurchases = await res.json();
+    purchasesLoadedForUserId = user.id;
 
     const countEl = document.getElementById('countDownloads');
     if (countEl) countEl.textContent = userPurchases.length;
+    return userPurchases;
   } catch (e) {
     console.warn('[Store] Failed to fetch purchases:', e.message);
+    return userPurchases;
   }
 }
 
@@ -196,23 +352,6 @@ function updatePackCount() {
   const countEl = document.querySelector('#sidebarAnimatedPacks .sidebar__item-count');
   if (countEl && products.length > 0) {
     countEl.textContent = products.length;
-  }
-}
-
-function updateSidebarCreditBadge() {
-  const credits = getCreditBalance();
-  const sidebarSection = document.querySelector('.sidebar__section-title--pro');
-  if (!sidebarSection) return;
-
-  // Remove existing badge if any
-  const existing = sidebarSection.querySelector('.sidebar__credit-badge');
-  if (existing) existing.remove();
-
-  if (isPro() && credits > 0) {
-    const badge = document.createElement('span');
-    badge.className = 'sidebar__credit-badge';
-    badge.textContent = `${credits} credit${credits !== 1 ? 's' : ''}`;
-    sidebarSection.appendChild(badge);
   }
 }
 
@@ -279,13 +418,21 @@ export function switchView(view) {
     if (view === 'packs') {
       if (gridTitle) gridTitle.textContent = 'Premium Collections';
       if (gridMeta) gridMeta.textContent = '';
+      ensureClaimStatusLoaded();
       renderPackCatalog();
+      void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'collection-detail') {
       // Title/meta set by renderCollectionDetail
     } else if (view === 'downloads') {
       if (gridTitle) gridTitle.textContent = 'My Collection';
       if (gridMeta) gridMeta.textContent = '';
       renderDownloads();
+      void ensureUserPurchasesLoaded({ rerender: true });
+    } else if (view === 'dashboard') {
+      if (gridTitle) gridTitle.textContent = 'Dashboard';
+      if (gridMeta) gridMeta.textContent = '';
+      renderDashboard();
+      void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'pricing') {
       if (gridTitle) gridTitle.textContent = 'Pricing';
       if (gridMeta) gridMeta.textContent = '';
@@ -435,9 +582,6 @@ function renderPackCatalog() {
     } else if (launchProducts.length > 1) {
       catalog.appendChild(createLaunchEditionCard(launchProducts));
     }
-    // Update sidebar credit badge
-    updateSidebarCreditBadge();
-
     // Sort products by demand priority
     const slugPriority = {
       'ai-agentic': 1,
@@ -463,63 +607,69 @@ function renderPackCatalog() {
 function createPackCard(product) {
   const card = document.createElement('div');
 
-  const isPurchased = userPurchases.some(p => p.product_id === product.id);
+  const ownedPurchase = userPurchases.find(p => p.product_id === product.id) || null;
+  const isPurchased = Boolean(ownedPurchase);
+  const badgeMeta = isPurchased ? getOwnedBadgeMeta(ownedPurchase?.source) : null;
   const priceDisplay = (product.price_cents / 100).toFixed(product.price_cents % 100 === 0 ? 0 : 2);
-  const credits = getCreditBalance();
-  const canClaim = isPro() && credits > 0 && !isPurchased;
+  const cardState = getPackCardState(product, isPurchased, priceDisplay);
+  const showPrice = false;
+  const previewActionMarkup = isPurchased
+    ? ''
+    : `<button class="pack-card__preview-btn" data-action="preview" data-product-slug="${product.slug}">
+           Preview
+         </button>`;
+  const redeemRowMarkup = cardState.redeem
+    ? (cardState.redeem.type === 'action'
+      ? `<button class="${cardState.redeem.className}" data-action="redeem">${cardState.redeem.label}</button>`
+      : `<div class="pack-card__redeem-note ${cardState.redeem.className}">${cardState.redeem.text}</div>`)
+    : '';
 
   card.className = `pack-card ${product.pack_type === 'bundle' ? 'pack-card--bundle' : ''} ${isPurchased ? 'pack-card--owned' : ''}`;
-
-  // Determine CTA label and style
-  let ctaLabel = `Get Collection $${priceDisplay}`;
-  let ctaClass = '';
-  if (isPurchased) {
-    ctaLabel = '<span class="material-symbols-outlined" style="font-size:16px">folder_open</span> Open';
-    ctaClass = 'pack-card__btn--open';
-  } else if (canClaim) {
-    ctaLabel = `<span class="material-symbols-outlined" style="font-size:14px">confirmation_number</span> Claim (${credits} left)`;
-    ctaClass = 'pack-card__btn--claim';
-  }
 
   card.innerHTML = `
     <div class="pack-card__header">
       <span class="pack-card__type">${product.pack_type === 'bundle' ? 'Bundle' : 'Launch Edition'}</span>
-      ${isPurchased ? '<span class="pack-card__badge">Purchased</span>' : ''}
+      ${isPurchased ? `<span class="pack-card__badge ${badgeMeta.className}">${badgeMeta.text}</span>` : ''}
     </div>
     <h3 class="pack-card__name">${getProductName(product)}</h3>
     <p class="pack-card__desc">${product.description || `${product.icon_count} animated icons`}</p>
     <div class="pack-card__footer">
-      <span class="pack-card__price">${isPurchased ? '' : `$${priceDisplay}`}</span>
+      <span class="pack-card__price">${showPrice ? `$${priceDisplay}` : ''}</span>
       <div class="pack-card__actions">
-        <button class="pack-card__preview-btn" data-product-slug="${product.slug}">
-          Preview <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-        </button>
-        <button class="pack-card__btn ${ctaClass}" 
+        ${previewActionMarkup}
+        <button class="pack-card__btn ${cardState.primary.className}"
+                data-action="primary"
                 data-product-id="${product.id}"
                 data-product-slug="${product.slug}">
-          ${ctaLabel}
+          ${cardState.primary.label}
         </button>
       </div>
+      ${redeemRowMarkup}
     </div>`;
 
-  // Wire preview button (opens detail view)
-  const previewBtn = card.querySelector('.pack-card__preview-btn');
-  previewBtn.addEventListener('click', (e) => {
+  // Wire preview button
+  const previewBtn = card.querySelector('[data-action="preview"]');
+  previewBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     renderCollectionDetail(product);
   });
 
-  // Wire buy/open/claim button
-  const btn = card.querySelector('.pack-card__btn');
-  btn.addEventListener('click', (e) => {
+  // Wire primary action button (buy/view)
+  const primaryBtn = card.querySelector('[data-action="primary"]');
+  primaryBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (isPurchased) {
+    if (cardState.primary.action === 'open') {
       renderCollectionDetail(product);
-    } else if (canClaim) {
-      handleCreditRedeem(product);
-    } else {
+    } else if (cardState.primary.action === 'purchase') {
       handlePurchase(product);
     }
+  });
+
+  // Wire redeem row action, when claim is currently available
+  const redeemBtn = card.querySelector('[data-action="redeem"]');
+  redeemBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    handlePackClaim(product);
   });
 
   // Card body click opens detail too
@@ -539,12 +689,14 @@ function createProSubscriptionCard() {
   const monthlyFeatures = `
     <li>MCP + API access for AI agents</li>
     <li>Workflow tools (PNG-to-SVG, batch export)</li>
-    <li>1 free collection per month</li>
+    <li>1 premium collection/month</li>
+    <li>Access all collections while active</li>
     <li>Unlimited commercial license</li>`;
   const annualFeatures = `
     <li>MCP + API access for AI agents</li>
     <li>Workflow tools (PNG-to-SVG, batch export)</li>
-    <li>3 collections included upfront</li>
+    <li>1 premium collection/month</li>
+    <li>Access all collections while active</li>
     <li>Unlimited commercial license</li>`;
 
   card.innerHTML = `
@@ -1578,12 +1730,13 @@ function renderDownloads() {
   userPurchases.forEach(purchase => {
     if (purchase.si_products) {
       const product = purchase.si_products;
+      const badgeMeta = getOwnedBadgeMeta(purchase.source);
       const card = document.createElement('div');
       card.className = 'pack-card pack-card--owned';
       card.innerHTML = `
         <div class="pack-card__header">
           <span class="pack-card__type">Collection</span>
-          <span class="pack-card__badge pack-card__badge--owned">Owned</span>
+          <span class="pack-card__badge ${badgeMeta.className}">${badgeMeta.text}</span>
         </div>
         <div class="pack-card__icon">
           <span class="material-symbols-outlined" style="font-size:32px; color: var(--si-primary);">diamond</span>
@@ -1882,7 +2035,6 @@ function renderPricingPage() {
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$0</span>
-          <span class="pricing-card__period">forever</span>
         </div>
         <ul class="pricing-card__features">
           <li><span class="material-symbols-outlined">check</span> 20,000+ icons across 9 libraries</li>
@@ -1904,7 +2056,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">diamond</span>
           </div>
           <h3 class="pricing-card__name">Pro</h3>
-          <p class="pricing-card__desc">A new animated pack drops in your account every month. Keep all claimed packs forever.</p>
+          <p class="pricing-card__desc">Pro tools, full premium access, and 1 free collection every month.</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount" id="pricingProAmount">${monthlyPlan.amount}</span>
@@ -1913,13 +2065,13 @@ function renderPricingPage() {
         </div>
         <ul class="pricing-card__features">
           <li><span class="material-symbols-outlined">check</span> Everything in Free</li>
-          <li><span class="material-symbols-outlined">check</span> 1 pack credit per billing cycle</li>
-          <li><span class="material-symbols-outlined">check</span> Claimed packs are yours forever</li>
+          <li><span class="material-symbols-outlined">check</span> 1 premium collection/month</li>
+          <li><span class="material-symbols-outlined">check</span> Access all collections while active</li>
+          <li><span class="material-symbols-outlined">check</span> Cancel anytime, keep what you claimed</li>
           <li><span class="material-symbols-outlined">check</span> Motion Lab: export CSS animations</li>
           <li><span class="material-symbols-outlined">check</span> Converter: unlimited SVG/PNG conversion</li>
           <li><span class="material-symbols-outlined">check</span> Full MCP access (free + premium)</li>
           <li><span class="material-symbols-outlined">check</span> Commercial use, unlimited projects</li>
-          <li><span class="material-symbols-outlined">check</span> 3 bonus packs upfront (annual)</li>
           <li><span class="material-symbols-outlined">check</span> Priority support</li>
         </ul>
         <button class="pricing-card__cta pricing-card__cta--primary" id="pricingProBtn">Go Pro</button>
@@ -1944,8 +2096,8 @@ function renderPricingPage() {
           <li><span class="material-symbols-outlined">check</span> Unique hover animation per icon</li>
           <li><span class="material-symbols-outlined">check</span> Lifetime ownership</li>
           <li><span class="material-symbols-outlined">check</span> Single project license</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No monthly credit drops</li>
           <li><span class="material-symbols-outlined">check</span> MCP access for purchased pack</li>
+          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No Pro tools (Motion Lab, Converter)</li>
         </ul>
         <button class="pricing-card__cta pricing-card__cta--secondary" id="pricingBrowseBtn">Browse Packs</button>
       </div>
@@ -1971,24 +2123,10 @@ function renderPricingPage() {
           <li><span class="material-symbols-outlined">check</span> AI, E-com, Media, Nav, Security + more</li>
           <li><span class="material-symbols-outlined">check</span> Lifetime ownership + future updates</li>
           <li><span class="material-symbols-outlined">check</span> Commercial use, unlimited projects</li>
-          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No monthly credit drops</li>
           <li><span class="material-symbols-outlined">check</span> MCP access for all 8 packs</li>
+          <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> No Pro tools (Motion Lab, Converter)</li>
         </ul>
         <button class="pricing-card__cta pricing-card__cta--launch" id="pricingLaunchBtn">Get Launch Bundle</button>
-      </div>
-    </div>
-
-    <div class="pricing-packs-strip">
-      <p class="pricing-packs-strip__label">What's inside the Launch Bundle:</p>
-      <div class="pricing-packs-strip__list">
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">smart_toy</span> Agentic AI</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">shopping_cart</span> E-commerce</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">play_circle</span> Media &amp; Playback</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">menu</span> Navigation &amp; Menus</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">lock</span> Security &amp; Auth</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">favorite</span> Social &amp; Comms</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">bar_chart</span> Data &amp; Charts</span>
-        <span class="pricing-pack-chip"><span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1">thumb_up</span> Status &amp; Feedback</span>
       </div>
     </div>
 
@@ -2001,16 +2139,16 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Each pack contains 50 solid icons from Material Symbols, each with a unique story-driven CSS hover animation. The 8 packs cover: Agentic AI, E-commerce, Media &amp; Playback, Navigation &amp; Menus, Security &amp; Auth, Social &amp; Communications, Data &amp; Charts, and Status &amp; Feedback. That's 400 animated SVG icons in total.
+            Each pack contains 50 animated SVG icons with unique hover animations. The 8 packs cover: Agentic AI, Status &amp; Feedback, E-commerce, Navigation &amp; Menus, Media &amp; Playback, Security &amp; Auth, Social &amp; Communications, and Data &amp; Charts.
           </div>
         </div>
         <div class="pricing-faq__item">
           <button class="pricing-faq__question" aria-expanded="false">
-            How do monthly Pro credits work?
+            How does the monthly collection work?
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Pro subscribers receive 1 free pack credit per billing cycle. Annual subscribers also get 3 packs included upfront when they subscribe. You choose which collection to unlock each month, and claimed packs are yours permanently, even if you cancel.
+            Pro subscribers can add 1 premium collection to their permanent library each month. Claimed collections stay in your library, even if you cancel.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2019,7 +2157,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            The SuperIcons MCP (Model Context Protocol) server lets AI coding agents like Claude, Cursor, and Windsurf search and retrieve icons programmatically. The free MCP server gives access to the full free icon library. Pro subscribers get an API key for premium animated icon access through MCP.
+            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners get API access to their premium collections.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2028,7 +2166,25 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Yes, cancel anytime from your dashboard. Your Pro benefits remain active until the end of the current billing period. Any packs claimed with your monthly credit are yours to keep permanently.
+            Yes, cancel anytime from your dashboard. Pro benefits stay active until the end of your billing period. Collections you claimed remain in your library.
+          </div>
+        </div>
+        <div class="pricing-faq__item">
+          <button class="pricing-faq__question" aria-expanded="false">
+            What happens to my access if I cancel Pro?
+            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
+          </button>
+          <div class="pricing-faq__answer">
+            You lose access to collections you haven't claimed and to Pro tools (Motion Lab, Converter). Any collections you already claimed stay in your library. You can re-subscribe anytime to regain full access.
+          </div>
+        </div>
+        <div class="pricing-faq__item">
+          <button class="pricing-faq__question" aria-expanded="false">
+            Can I use premium icons in commercial projects?
+            <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
+          </button>
+          <div class="pricing-faq__answer">
+            Yes. All premium icons include a commercial license. Single Pack purchases include a single-project license. Pro and Launch Bundle include unlimited-project commercial use.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2146,7 +2302,7 @@ function renderTermsPage() {
         <div class="terms-tier-grid">
           <div class="terms-tier">
             <h4>Single Project License</h4>
-            <p>Applies to: A-la-carte purchases, credit redemptions</p>
+            <p>Applies to: A-la-carte purchases and Pro collection claims</p>
             <p>Use the purchased collection in one (1) project. Additional projects require additional purchases or a Pro subscription.</p>
           </div>
           <div class="terms-tier">
@@ -2159,7 +2315,7 @@ function renderTermsPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">5. Refund Policy</h3>
-        <p><strong>Pro Subscription:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Collections claimed with credits are yours permanently.</p>
+        <p><strong>Pro Subscription:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Collections you add to your library remain yours permanently.</p>
         <p><strong>One-time Purchases:</strong> Due to the digital nature of our products, we do not offer refunds on individual collection purchases or the Launch Edition bundle once download access has been granted.</p>
         <p><strong>Exceptions:</strong> If you experience a technical issue that prevents you from accessing your purchased content, contact us within 14 days for a full refund or resolution.</p>
       </section>
@@ -2243,7 +2399,7 @@ async function handleLaunchEditionPurchase() {
         price_id: STRIPE_LAUNCH_EDITION,
         product_id: 'launch_edition',
         mode: 'payment',
-        success_url: `${window.location.origin}?purchase=success`,
+        success_url: `${window.location.origin}?purchase=success&product_id=launch_edition`,
         cancel_url: `${window.location.origin}?purchase=canceled`,
       }),
     });
@@ -2261,50 +2417,156 @@ async function handleLaunchEditionPurchase() {
   }
 }
 // ── Credit Redemption ─────────────────────────────────────────
-async function handleCreditRedeem(product) {
+function getClaimFailureMessage(reason, nextAvailable, fallback) {
+  if (reason === 'cooldown_wait') {
+    return `Next claim available ${formatClaimAvailability(nextAvailable)}.`;
+  }
+  if (reason === 'all_owned') return 'All claimable collections are already in your library.';
+  if (reason === 'already_owned') return 'This collection is already in your library.';
+  if (reason === 'subscription_required') return 'An active Pro subscription is required to claim collections.';
+  return fallback || 'Collection claim failed. Please try again.';
+}
+
+async function requestPackClaimWithToken(token, productId) {
+  return fetch(`${SUPABASE_URL}/functions/v1/redeem-credit`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      'apikey': SUPABASE_ANON,
+    },
+    body: JSON.stringify({ product_id: productId }),
+  });
+}
+
+function showPackClaimConfirmModal(productName, claimReason) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'claim-confirm-modal';
+
+    const safeName = escapeHtml(productName || 'this collection');
+    const usageCopy = claimReason === 'legacy_credit'
+      ? 'This will use 1 legacy credit.'
+      : 'This will use your active Pro claim.';
+
+    overlay.innerHTML = `
+      <div class="claim-confirm-modal__backdrop"></div>
+      <div class="claim-confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="claimConfirmTitle">
+        <button class="claim-confirm-modal__close" type="button" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <p class="claim-confirm-modal__eyebrow">Claim Collection</p>
+        <h3 class="claim-confirm-modal__title" id="claimConfirmTitle">Add "${safeName}" to My Collection?</h3>
+        <p class="claim-confirm-modal__desc">The collection unlocks immediately and will appear in your library.</p>
+        <p class="claim-confirm-modal__meta">${usageCopy}</p>
+        <div class="claim-confirm-modal__actions">
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--primary" type="button" data-action="confirm">Add to My Collection</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const card = overlay.querySelector('.claim-confirm-modal__card');
+    const closeBtn = overlay.querySelector('.claim-confirm-modal__close');
+    const cancelBtn = overlay.querySelector('[data-action="cancel"]');
+    const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+    const backdrop = overlay.querySelector('.claim-confirm-modal__backdrop');
+
+    let settled = false;
+    const close = (accepted) => {
+      if (settled) return;
+      settled = true;
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.remove();
+      resolve(accepted);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(false);
+      }
+      if (event.key === 'Enter' && document.activeElement === confirmBtn) {
+        event.preventDefault();
+        close(true);
+      }
+    };
+
+    backdrop?.addEventListener('click', () => close(false));
+    closeBtn?.addEventListener('click', () => close(false));
+    cancelBtn?.addEventListener('click', () => close(false));
+    confirmBtn?.addEventListener('click', () => close(true));
+    document.addEventListener('keydown', onKeyDown);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      confirmBtn?.focus();
+      card?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+}
+
+async function handlePackClaim(product) {
   if (!isLoggedIn() || !isPro()) return;
 
-  const credits = getCreditBalance();
-  if (credits <= 0) {
-    showToast('No credits available');
+  const claimStatus = getClaimStatus();
+  if (!claimStatus) {
+    showToast('Checking claim access...');
+    ensureClaimStatusLoaded();
     return;
   }
 
-  // Confirmation
-  const confirmed = confirm(`Use 1 credit to unlock "${product.name}"?\n\n${credits} credit${credits > 1 ? 's' : ''} remaining.`);
+  if (!claimStatus.canClaim) {
+    showToast(getClaimFailureMessage(claimStatus.reason, claimStatus.nextAvailable, 'Claim unavailable right now.'));
+    return;
+  }
+
+  const confirmed = await showPackClaimConfirmModal(product.name, claimStatus.reason);
   if (!confirmed) return;
 
-  showToast('Claiming collection...');
+  showToast('Adding collection to My Collection...');
 
   try {
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
+    if (!token) throw new Error('Session expired. Please sign in again.');
 
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/redeem-credit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        'apikey': SUPABASE_ANON,
-      },
-      body: JSON.stringify({ product_id: product.id }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Redemption failed');
+    let res = await requestPackClaimWithToken(token, product.id);
+    if (res.status === 401) {
+      await sb.auth.refreshSession();
+      const { data: { session: retrySession } } = await sb.auth.getSession();
+      const retryToken = retrySession?.access_token;
+      if (retryToken) {
+        res = await requestPackClaimWithToken(retryToken, product.id);
+      }
     }
 
-    const { remaining_credits } = await res.json();
-    showToast(`Claimed "${product.name}"! ${remaining_credits} credit${remaining_credits !== 1 ? 's' : ''} remaining.`);
+    const payload = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(getClaimFailureMessage(payload.reason, payload.nextAvailable, payload.error));
+    }
 
-    // Refresh purchases and re-render
-    await fetchUserPurchases();
-    renderPackCatalog();
+    showToast(`Added "${product.name}" to My Collection.`);
+    invalidateClaimStatus();
+
+    await Promise.all([
+      ensureUserPurchasesLoaded({ force: true, rerender: false }),
+      fetchClaimStatus({ force: true }),
+    ]);
+    rerenderCollectionSurfaceForCurrentView();
   } catch (err) {
-    showToast(err.message || 'Failed to redeem credit. Please try again.');
-    console.error('[Store] Credit redeem error:', err);
+    showToast(err.message || 'Failed to add collection. Please try again.');
+    console.error('[Store] Collection claim error:', err);
+    invalidateClaimStatus();
+    void Promise.all([
+      ensureUserPurchasesLoaded({ force: true, rerender: false }),
+      fetchClaimStatus(),
+    ]).then(() => {
+      rerenderCollectionSurfaceForCurrentView();
+    });
   }
 }
 
@@ -2335,7 +2597,7 @@ async function handlePurchase(product) {
       body: JSON.stringify({
         product_id: product.id,
         price_id: product.stripe_price_id,
-        success_url: `${window.location.origin}?purchase=success`,
+        success_url: `${window.location.origin}?purchase=success&product_id=${encodeURIComponent(product.id)}`,
         cancel_url: `${window.location.origin}?purchase=canceled`,
       }),
     });
@@ -2368,7 +2630,7 @@ function wireStoreListeners() {
   const downloadsBtn = document.getElementById('sidebarMyDownloads');
   if (downloadsBtn) {
     downloadsBtn.addEventListener('click', async () => {
-      await fetchUserPurchases();
+      await ensureUserPurchasesLoaded({ force: true, rerender: false });
       switchView('downloads');
     });
   }
@@ -2396,34 +2658,39 @@ function wireStoreListeners() {
   if (purchasesBtn) {
     purchasesBtn.addEventListener('click', async () => {
       document.getElementById('authDropdown')?.classList.remove('open');
-      await fetchUserPurchases();
+      await ensureUserPurchasesLoaded({ force: true, rerender: false });
       switchView('dashboard');
     });
   }
 
   // Check for purchase success/cancel URL params
   const params = new URLSearchParams(window.location.search);
+  const purchaseProductId = params.get('product_id');
   if (params.get('purchase') === 'success') {
     // Clean URL immediately
     window.history.replaceState({}, '', window.location.pathname);
     // Show success toast
     showToast('Purchase successful! Opening your collection...');
     // Refresh purchases and navigate to My Collection
-    handlePurchaseSuccess();
+    handlePurchaseSuccess(purchaseProductId);
   } else if (params.get('purchase') === 'canceled') {
     showToast('Payment was not completed. Try again.');
     window.history.replaceState({}, '', window.location.pathname);
   }
 }
 
-async function handlePurchaseSuccess() {
-  // Wait for webhook to process, then fetch purchases
+async function handlePurchaseSuccess(expectedProductId = null) {
+  // Wait for webhook to process, then fetch purchases.
   let retries = 0;
-  const maxRetries = 3;
+  const maxRetries = 6;
+  const baselineCount = userPurchases.length;
   while (retries < maxRetries) {
-    await new Promise(r => setTimeout(r, 1500));
-    await fetchUserPurchases();
-    if (userPurchases.length > 0) break;
+    await new Promise(r => setTimeout(r, 1200));
+    await ensureUserPurchasesLoaded({ force: true, rerender: false });
+    if (!expectedProductId) break;
+    if (expectedProductId === 'launch_edition' && userPurchases.length > baselineCount) break;
+    const foundExpected = userPurchases.some(p => p.product_id === expectedProductId);
+    if (foundExpected) break;
     retries++;
   }
   // Navigate to My Collection
