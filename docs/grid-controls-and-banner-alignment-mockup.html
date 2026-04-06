@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grid Controls and Banner Alignment Mockup</title>
+  <style>
+    :root {
+      --bg: #0f0f10;
+      --panel: #171718;
+      --panel-2: #1d1d1f;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #f3f3f3;
+      --muted: #9a9aa0;
+      --accent: #ff5a1f;
+      --accent-soft: rgba(255, 90, 31, 0.14);
+      --success: #4ade80;
+      --radius: 16px;
+      --chip: 999px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --font: Inter, system-ui, sans-serif;
+      --font-head: "Space Grotesk", Inter, system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, rgba(255, 90, 31, 0.08), transparent 28%), var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.45;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .intro {
+      margin-bottom: 28px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: var(--shadow);
+    }
+
+    .intro h1 {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .intro p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .panel .caption {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+    }
+
+    .icon-card {
+      position: relative;
+      min-height: 188px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-2);
+      overflow: hidden;
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .card-title {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #d8d8dc;
+    }
+
+    .glyph {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #ededf0;
+    }
+
+    .glyph svg {
+      width: 40px;
+      height: 40px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-btn {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      color: #c1c1c7;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .icon-btn--compare {
+      color: var(--accent);
+      border-color: rgba(255, 90, 31, 0.45);
+      background: rgba(255, 90, 31, 0.08);
+    }
+
+    .icon-btn--save.active {
+      color: var(--accent);
+      border-color: rgba(255, 90, 31, 0.4);
+      background: rgba(255, 90, 31, 0.1);
+    }
+
+    .top-right { top: 12px; right: 12px; }
+    .top-left { top: 12px; left: 12px; }
+    .stack-top { top: 12px; right: 12px; }
+    .stack-bottom { top: 42px; right: 12px; }
+
+    .decision {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .decision strong {
+      color: var(--text);
+    }
+
+    .banner-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 18px;
+    }
+
+    .banner-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .banner-label {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .promo {
+      border: 1px dashed rgba(255, 90, 31, 0.7);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255, 90, 31, 0.08), rgba(255, 255, 255, 0.02));
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px 18px;
+    }
+
+    .promo__left {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .promo__left--top {
+      align-items: flex-start;
+    }
+
+    .promo__diamond {
+      color: var(--accent);
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .promo__diamond--pinned {
+      margin-top: 2px;
+    }
+
+    .promo__title {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .promo__desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 40ch;
+      line-height: 1.45;
+    }
+
+    .promo__right {
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .toggle {
+      display: inline-flex;
+      padding: 2px;
+      border-radius: var(--chip);
+      background: rgba(255, 255, 255, 0.06);
+      gap: 2px;
+    }
+
+    .toggle span {
+      padding: 4px 12px;
+      border-radius: var(--chip);
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .toggle .active {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .price-row .save {
+      color: var(--success);
+      font-size: 0.74rem;
+    }
+
+    .price-row .old {
+      color: var(--muted);
+      text-decoration: line-through;
+      font-size: 0.88rem;
+    }
+
+    .price-row button {
+      border: none;
+      border-radius: var(--chip);
+      padding: 7px 14px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: default;
+    }
+
+    .note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="intro">
+      <h1>Grid Controls and Banner Alignment Mockup</h1>
+      <p>This mockup compares three icon-card control layouts and two Go Pro banner alignment treatments. The recommended direction is compare-only cards plus a top-aligned diamond in the Pro banner.</p>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Option A: Compare Only</h2>
+        <p class="caption">Recommended. Compare stays on the card. Save happens in the Customize panel.</p>
+        <div class="icon-card">
+          <div class="icon-btn icon-btn--compare top-right">↔</div>
+          <div class="glyph" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M8 4h8l4 4v8l-4 4H8l-4-4V8z"></path>
+              <path d="M12 8v8"></path>
+              <path d="M8.5 12H15.5"></path>
+            </svg>
+          </div>
+          <div class="card-title">Boxes</div>
+        </div>
+        <div class="decision"><strong>Recommendation:</strong> cleanest grid, no corner conflict, favorites remain available via the panel and sidebar.</div>
+      </article>
+
+      <article class="panel">
+        <h2>Option B: Split Corners</h2>
+        <p class="caption">Acceptable fallback. Both actions remain visible, but the card gets busier.</p>
+        <div class="icon-card">
+          <div class="icon-btn icon-btn--compare top-left">↔</div>
+          <div class="icon-btn icon-btn--save top-right">♡</div>
+          <div class="glyph" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s-6.5-4.35-8.5-7.3C1.1 10.1 2.2 6 5.9 6c2 0 3.2 1.1 4.1 2.4C10.9 7.1 12.1 6 14.1 6c3.7 0 4.8 4.1 2.4 7.7C18.5 16.65 12 21 12 21z"></path>
+            </svg>
+          </div>
+          <div class="card-title">Heart</div>
+        </div>
+        <div class="decision"><strong>Fallback:</strong> workable, but adds visual noise and competes with selection affordances on dense cards.</div>
+      </article>
+
+      <article class="panel">
+        <h2>Option C: Vertical Stack</h2>
+        <p class="caption">Only if both actions must stay on the card. Most crowded of the three.</p>
+        <div class="icon-card">
+          <div class="icon-btn icon-btn--save stack-top">♡</div>
+          <div class="icon-btn icon-btn--compare stack-bottom">↔</div>
+          <div class="glyph" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 8h16"></path>
+              <path d="M4 12h16"></path>
+              <path d="M4 16h16"></path>
+            </svg>
+          </div>
+          <div class="card-title">Menu</div>
+        </div>
+        <div class="decision"><strong>Not preferred:</strong> resolves overlap, but makes small cards feel cramped and over-instrumented.</div>
+      </article>
+    </section>
+
+    <section class="banner-wrap">
+      <article class="banner-card">
+        <div class="banner-label">Current behavior: centered icon shifts when annual text wraps</div>
+        <div class="promo">
+          <div class="promo__left">
+            <div class="promo__diamond">◈</div>
+            <div>
+              <div class="promo__title">Go Pro</div>
+              <div class="promo__desc">Own all 8 premium collections now, plus future drops while annual is active.</div>
+            </div>
+          </div>
+          <div class="promo__right">
+            <div class="toggle"><span>Monthly</span><span class="active">Annual</span></div>
+            <div class="price-row"><span class="save">Save 45%</span><span class="old">$180</span><span>$99/yr</span><button>Subscribe</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="banner-card">
+        <div class="banner-label">Recommended behavior: top-aligned icon stays pinned</div>
+        <div class="promo">
+          <div class="promo__left promo__left--top">
+            <div class="promo__diamond promo__diamond--pinned">◈</div>
+            <div>
+              <div class="promo__title">Go Pro</div>
+              <div class="promo__desc">Own all 8 premium collections now, plus future drops while annual is active.</div>
+            </div>
+          </div>
+          <div class="promo__right">
+            <div class="toggle"><span>Monthly</span><span class="active">Annual</span></div>
+            <div class="price-row"><span class="save">Save 45%</span><span class="old">$180</span><span>$99/yr</span><button>Subscribe</button></div>
+          </div>
+        </div>
+        <div class="note">Recommended: only the text block grows vertically. The diamond remains visually anchored.</div>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

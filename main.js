@@ -133,11 +133,33 @@ async function loadMaterialExportManifest() {
   return materialExportState.manifestPromise;
 }
 
-function applyExportCustomization(rawSvg, icon, customize = state.customize) {
+function normalizeExportSvgRoot(rawSvg) {
+  if (!rawSvg) return null;
+
+  let svg = rawSvg
+    .replace(/<svg([^>]*?)\s+width="[^"]*"/gi, '<svg$1')
+    .replace(/<svg([^>]*?)\s+height="[^"]*"/gi, '<svg$1');
+
+  if (!/\bviewBox="/i.test(svg)) {
+    svg = svg.replace(/<svg\b/i, '<svg viewBox="0 0 24 24"');
+  }
+  if (!/\bpreserveAspectRatio="/i.test(svg)) {
+    svg = svg.replace(/<svg\b/i, '<svg preserveAspectRatio="xMidYMid meet"');
+  }
+
+  return svg;
+}
+
+function getExportStrokeWidth(icon, customize = state.customize) {
+  return customize.strokeWidth * (libraryMeta[icon.lib]?.strokeScale || 1);
+}
+
+function applyExportCustomization(rawSvg, icon, customize = state.customize, options = {}) {
   if (!rawSvg) return null;
 
   const c = customize;
-  let svg = rawSvg;
+  const normalizeRoot = options.normalizeRoot === true;
+  let svg = normalizeRoot ? normalizeExportSvgRoot(rawSvg) : rawSvg;
 
   svg = svg.replace(/stroke="currentColor"/g, `stroke="${c.color}"`);
   svg = svg.replace(/fill="currentColor"/g, `fill="${c.color}"`);
@@ -155,7 +177,12 @@ function applyExportCustomization(rawSvg, icon, customize = state.customize) {
     svg = svg.replace(/stroke="#00D4FF"/g, `stroke="${c.color}"`);
   }
 
-  svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${c.strokeWidth}"`);
+  const exportStrokeWidth = getExportStrokeWidth(icon, c);
+  if (/stroke-width="/i.test(svg)) {
+    svg = svg.replace(/stroke-width="[^"]*"/gi, `stroke-width="${exportStrokeWidth}"`);
+  } else if (libraryMeta[icon.lib]?.hasStroke !== false && /\bstroke="/i.test(svg)) {
+    svg = svg.replace(/<svg([^>]*)>/i, `<svg$1 stroke-width="${exportStrokeWidth}">`);
+  }
 
   if (c.animation && c.animation !== 'none' && ANIM_CSS[c.animation]) {
     const anim = ANIM_CSS[c.animation];
@@ -265,6 +292,7 @@ function toggleFavorite(key) {
     state.favorites.add(key);
   }
   saveFavorites();
+  return state.favorites.has(key);
 }
 
 function addToRecent(key) {
@@ -276,6 +304,80 @@ function addToRecent(key) {
 
 function iconKey(icon) {
   return `${icon.lib}:${icon.id}`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function getFavoriteActionLabel(iconName, isFav) {
+  return isFav ? `Remove ${iconName} from favorites` : `Save ${iconName} to favorites`;
+}
+
+function renderPanelFavoriteButton(icon) {
+  const isFav = state.favorites.has(iconKey(icon));
+  const actionLabel = escapeHtml(getFavoriteActionLabel(icon.name, isFav));
+  return `
+    <button
+      type="button"
+      class="panel__favorite-btn${isFav ? ' active' : ''}"
+      id="panelFavoriteBtn"
+      aria-pressed="${isFav}"
+      aria-label="${actionLabel}"
+      title="${actionLabel}"
+    >
+      <span class="material-symbols-outlined panel__favorite-btn-icon" aria-hidden="true">${isFav ? 'favorite' : 'favorite_border'}</span>
+      <span class="panel__favorite-btn-label">${isFav ? 'Saved' : 'Save'}</span>
+    </button>
+  `;
+}
+
+function updateGridFavoriteButton(button, iconName, isFav) {
+  if (!button) return;
+  const actionLabel = getFavoriteActionLabel(iconName, isFav);
+  button.classList.toggle('active', isFav);
+  button.setAttribute('aria-pressed', String(isFav));
+  button.setAttribute('aria-label', actionLabel);
+  button.setAttribute('title', actionLabel);
+  button.dataset.tip = isFav ? 'Remove from favorites' : 'Add to favorites';
+  const icon = button.querySelector('.material-symbols-outlined');
+  if (icon) icon.textContent = isFav ? 'favorite' : 'favorite_border';
+}
+
+function updatePanelFavoriteButton(button, icon, isFav) {
+  if (!button) return;
+  const actionLabel = getFavoriteActionLabel(icon.name, isFav);
+  button.classList.toggle('active', isFav);
+  button.setAttribute('aria-pressed', String(isFav));
+  button.setAttribute('aria-label', actionLabel);
+  button.setAttribute('title', actionLabel);
+  const iconEl = button.querySelector('.panel__favorite-btn-icon');
+  const labelEl = button.querySelector('.panel__favorite-btn-label');
+  if (iconEl) iconEl.textContent = isFav ? 'favorite' : 'favorite_border';
+  if (labelEl) labelEl.textContent = isFav ? 'Saved' : 'Save';
+}
+
+function findGridFavoriteButtonByKey(key) {
+  return Array.from($$('.icon-cell__fav')).find((button) => button.dataset.favKey === key) || null;
+}
+
+function syncFavoriteSelectionState(key, isFav) {
+  if (!state.selectedIcon || iconKey(state.selectedIcon) !== key) return;
+
+  if (!isFav && state.activeLibrary === 'favorites') {
+    state.selectedIcon = null;
+    resetPanelToPlaceholder();
+    return;
+  }
+
+  if (!state.multiSelect) {
+    renderPanelForIcon(state.selectedIcon);
+  }
 }
 
 function updateSidebarCounts() {
@@ -383,8 +485,33 @@ const libraryMeta = {
   premium: { name: 'Premium', icon: 'diamond', hasStroke: true, hasFilled: false },
 };
 
+const librarySidebarOrder = [
+  'mingcute',
+  'simpleicons',
+  'lucide',
+  'tabler',
+  'phosphor',
+  'heroicons',
+  'bootstrap',
+  'iconoir',
+  'ionicons',
+  'material',
+  'premium',
+];
+
+const librarySidebarPriority = new Map(
+  librarySidebarOrder.map((id, index) => [id, index]),
+);
+
 function renderLibraries() {
-  els.libraryList.innerHTML = state.libraries
+  const orderedLibraries = [...state.libraries].sort((a, b) => {
+    const aPriority = librarySidebarPriority.get(a.id) ?? Number.MAX_SAFE_INTEGER;
+    const bPriority = librarySidebarPriority.get(b.id) ?? Number.MAX_SAFE_INTEGER;
+    if (aPriority !== bPriority) return aPriority - bPriority;
+    return a.id.localeCompare(b.id);
+  });
+
+  els.libraryList.innerHTML = orderedLibraries
     .map((lib) => {
       const meta = libraryMeta[lib.id] || { name: lib.id, icon: 'folder' };
       return `
@@ -406,9 +533,10 @@ function renderIconCell(icon) {
   const isFav = state.favorites.has(iconKey(icon));
   const isSelected = state.selectedIcons.has(iconKey(icon));
   const selectClass = isSelected ? ' multi-selected' : '';
-  const favBtn = `<button class="icon-cell__fav ${isFav ? 'active' : ''}" data-fav-key="${iconKey(icon)}" data-tip="${isFav ? 'Remove from favorites' : 'Add to favorites'}"><span class="material-symbols-outlined" style="font-size:14px">${isFav ? 'favorite' : 'favorite_border'}</span></button>`;
+  const favoriteActionLabel = escapeHtml(getFavoriteActionLabel(icon.name, isFav));
+  const favBtn = `<button type="button" class="icon-cell__fav ${isFav ? 'active' : ''}" data-fav-key="${iconKey(icon)}" data-tip="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-pressed="${isFav}" aria-label="${favoriteActionLabel}" title="${favoriteActionLabel}"><span class="material-symbols-outlined" style="font-size:14px">${isFav ? 'favorite' : 'favorite_border'}</span></button>`;
   const checkmark = state.multiSelect ? `<span class="icon-cell__check ${isSelected ? 'checked' : ''}"><span class="material-symbols-outlined" style="font-size:14px">check_circle</span></span>` : '';
-  const compareBtn = `<button class="icon-cell__compare" data-cmp-id="${icon.id}" data-cmp-lib="${icon.lib}" data-tip="Add to compare"><span class="material-symbols-outlined" style="font-size:14px">compare_arrows</span></button>`;
+  const compareBtn = `<button type="button" class="icon-cell__compare" data-cmp-id="${icon.id}" data-cmp-lib="${icon.lib}" data-tip="Add to compare"><span class="material-symbols-outlined" style="font-size:14px">compare_arrows</span></button>`;
 
   if (icon.type === 'font') {
     const fontVars = `font-variation-settings:'FILL' ${c.materialFill},'wght' ${c.materialWeight},'GRAD' ${c.materialGrade},'opsz' ${c.materialOpticalSize};`;
@@ -456,10 +584,23 @@ function renderGrid() {
   if (icons.length === 0) {
     els.iconGrid.style.display = 'none';
     els.gridEmpty.style.display = '';
-    $('.grid-empty__title').textContent = state.searchQuery ? 'No icons found' : 'Welcome to SuperIcons';
-    $('.grid-empty__text').textContent = state.searchQuery
-      ? `No icons match "${state.searchQuery}". Try a different search term.`
-      : '19,000+ icons from Material Symbols, Lucide, Tabler, Phosphor, Bootstrap, Ionicons, Iconoir, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
+    const emptyTitle = $('.grid-empty__title');
+    const emptyText = $('.grid-empty__text');
+    const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
+    if (emptyTitle) {
+      emptyTitle.textContent = state.searchQuery
+        ? 'No icons found'
+        : isFavoritesView
+          ? 'No favorites yet'
+          : 'Welcome to SuperIcons';
+    }
+    if (emptyText) {
+      emptyText.textContent = state.searchQuery
+        ? `No icons match "${state.searchQuery}". Try a different search term.`
+        : isFavoritesView
+          ? 'Click the heart on any icon or use Save in Customize to keep it here. Favorites stay on this device.'
+          : '20,000+ icons across 10 libraries including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
+    }
   } else {
     els.iconGrid.style.display = '';
     els.gridEmpty.style.display = 'none';
@@ -674,7 +815,7 @@ function updateCounts() {
 
 
   $('#countAll').textContent = total.toLocaleString();
-  els.searchInput.placeholder = `Search ${total.toLocaleString()} icons...`;
+  els.searchInput.placeholder = 'Search 20,000+ icons...';
 
   // Check if current library has no solid variant
   const activeLib = state.activeLibrary;
@@ -820,8 +961,8 @@ function renderAlsoInRow(icon) {
     <div class="also-in-row">
       <span class="also-in-label">Also in</span>
       ${unique.map(alt => `
-        <button class="also-in-pill" data-also-lib="${alt.lib}" data-also-id="${alt.id}">
-          ${libraryMeta[alt.lib]?.name || alt.lib}
+        <button type="button" class="also-in-pill" data-also-lib="${alt.lib}" data-also-id="${alt.id}">
+          ${escapeHtml(libraryMeta[alt.lib]?.name || alt.lib)}
         </button>
       `).join('')}
     </div>
@@ -829,6 +970,10 @@ function renderAlsoInRow(icon) {
 }
 function renderPanelForIcon(icon) {
   const c = state.customize;
+  const iconName = escapeHtml(icon.name);
+  const libraryName = escapeHtml(libraryMeta[icon.lib]?.name || icon.lib);
+  const assetType = icon.type === 'font' ? 'Variable Font' : 'SVG';
+  const iconId = escapeHtml(icon.id);
 
   // Preview
   if (icon.type === 'font') {
@@ -855,9 +1000,12 @@ function renderPanelForIcon(icon) {
   panelBody.innerHTML = `
     <!-- Icon Info -->
     <div class="panel__section">
-      <div style="text-align:center; padding-bottom: var(--si-space-2);">
-        <p style="font-size: 1rem; color: var(--si-text); margin-bottom: 0.15rem; font-weight: 500;">${icon.name}</p>
-        <p style="font-size: 0.75rem; color: var(--si-text-dim);">${libraryMeta[icon.lib]?.name || icon.lib} &middot; ${icon.type === 'font' ? 'Variable Font' : 'SVG'} &middot; <code style="font-size:0.7rem">${icon.id}</code></p>
+      <div class="panel__meta">
+        <div class="panel__meta-head">
+          <p class="panel__meta-title">${iconName}</p>
+          ${renderPanelFavoriteButton(icon)}
+        </div>
+        <p class="panel__meta-subtitle">${libraryName} &middot; ${assetType} &middot; <code>${iconId}</code></p>
         ${renderAlsoInRow(icon)}
       </div>
     </div>
@@ -1478,6 +1626,27 @@ function renderSwatches() {
 }
 
 function attachCustomizeListeners(icon) {
+  const panelFavoriteBtn = $('#panelFavoriteBtn');
+  if (panelFavoriteBtn) {
+    panelFavoriteBtn.addEventListener('click', () => {
+      const key = iconKey(icon);
+      const isFav = toggleFavorite(key);
+      updatePanelFavoriteButton(panelFavoriteBtn, icon, isFav);
+      updateGridFavoriteButton(findGridFavoriteButtonByKey(key), icon.name, isFav);
+
+      if (!isFav && state.activeLibrary === 'favorites') {
+        state.selectedIcon = null;
+        applyFilters();
+        resetPanelToPlaceholder();
+        return;
+      }
+
+      if (state.activeLibrary === 'favorites') {
+        applyFilters();
+      }
+    });
+  }
+
   // Color picker
   const colorPicker = $('#colorPicker');
   const colorHex = $('#colorHex');
@@ -1848,7 +2017,7 @@ const ANIM_CSS = {
 
 function getStyledSvg(icon) {
   if (!icon.svg) return null;
-  return applyExportCustomization(icon.svg, icon, state.customize);
+  return applyExportCustomization(icon.svg, icon, state.customize, { normalizeRoot: true });
 }
 
 function downloadBlob(blob, filename) {
@@ -2285,14 +2454,15 @@ els.iconGrid.addEventListener('click', (e) => {
   if (favBtn) {
     e.stopPropagation();
     const key = favBtn.dataset.favKey;
-    toggleFavorite(key);
-    // Update just this button instead of full re-render
-    const isFav = state.favorites.has(key);
-    favBtn.classList.toggle('active', isFav);
-    favBtn.title = isFav ? 'Remove from favorites' : 'Add to favorites';
-    const icon = favBtn.querySelector('.material-symbols-outlined');
-    if (icon) icon.textContent = isFav ? 'favorite' : 'favorite_border';
-    // If currently viewing favorites, re-render to remove unfavorited icon
+    const cell = favBtn.closest('.icon-cell');
+    const iconId = cell?.dataset.iconId;
+    const iconLib = cell?.dataset.iconLib;
+    const icon = state.icons.find((entry) => entry.id === iconId && entry.lib === iconLib);
+    const isFav = toggleFavorite(key);
+    if (icon) {
+      updateGridFavoriteButton(favBtn, icon.name, isFav);
+    }
+    syncFavoriteSelectionState(key, isFav);
     if (state.activeLibrary === 'favorites') {
       applyFilters();
     }
@@ -2499,16 +2669,12 @@ init();
 
 window.__supericons = { state, showToast, renderPanelForIcon, togglePanel, libraryMeta, getStyledSvg, ANIM_CSS };
 
-// Footer: API link scrolls to MCP section
+// Footer: MCP link opens the public MCP docs
 const footerApiLink = $('#footerApiLink');
 if (footerApiLink) {
   footerApiLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const mcpSection = $('#landing-mcp');
-    if (mcpSection) {
-      mcpSection.classList.remove('hidden');
-      mcpSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    window.location.href = '/mcp/';
   });
 }
 
