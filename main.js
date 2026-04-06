@@ -6,6 +6,7 @@
 import './style.css';
 import { initAuth } from './auth.js';
 import { initStore, switchView, isStoreView, loadSvgIntoMotionLab } from './store.js';
+import { hydrateSidebarIconSlot, renderSidebarIconSlot } from './sidebar-icons.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
   MATERIAL_EXPORT_STORAGE,
@@ -337,18 +338,6 @@ function renderPanelFavoriteButton(icon) {
   `;
 }
 
-function updateGridFavoriteButton(button, iconName, isFav) {
-  if (!button) return;
-  const actionLabel = getFavoriteActionLabel(iconName, isFav);
-  button.classList.toggle('active', isFav);
-  button.setAttribute('aria-pressed', String(isFav));
-  button.setAttribute('aria-label', actionLabel);
-  button.setAttribute('title', actionLabel);
-  button.dataset.tip = isFav ? 'Remove from favorites' : 'Add to favorites';
-  const icon = button.querySelector('.material-symbols-outlined');
-  if (icon) icon.textContent = isFav ? 'favorite' : 'favorite_border';
-}
-
 function updatePanelFavoriteButton(button, icon, isFav) {
   if (!button) return;
   const actionLabel = getFavoriteActionLabel(icon.name, isFav);
@@ -360,24 +349,6 @@ function updatePanelFavoriteButton(button, icon, isFav) {
   const labelEl = button.querySelector('.panel__favorite-btn-label');
   if (iconEl) iconEl.textContent = isFav ? 'favorite' : 'favorite_border';
   if (labelEl) labelEl.textContent = isFav ? 'Saved' : 'Save';
-}
-
-function findGridFavoriteButtonByKey(key) {
-  return Array.from($$('.icon-cell__fav')).find((button) => button.dataset.favKey === key) || null;
-}
-
-function syncFavoriteSelectionState(key, isFav) {
-  if (!state.selectedIcon || iconKey(state.selectedIcon) !== key) return;
-
-  if (!isFav && state.activeLibrary === 'favorites') {
-    state.selectedIcon = null;
-    resetPanelToPlaceholder();
-    return;
-  }
-
-  if (!state.multiSelect) {
-    renderPanelForIcon(state.selectedIcon);
-  }
 }
 
 function updateSidebarCounts() {
@@ -472,17 +443,17 @@ async function loadSolidIcons() {
 // Libraries
 // ============================================================
 const libraryMeta = {
-  material: { name: 'Material Symbols', icon: 'widgets', hasStroke: false, hasFilled: true },
-  lucide: { name: 'Lucide', icon: 'edit', hasStroke: true, hasFilled: false },
-  tabler: { name: 'Tabler', icon: 'category', hasStroke: true, hasFilled: true },
-  phosphor: { name: 'Phosphor', icon: 'hexagon', hasStroke: false, hasFilled: true },
-  heroicons: { name: 'Heroicons', icon: 'shield', hasStroke: true, hasFilled: true },
-  bootstrap: { name: 'Bootstrap', icon: 'grid_view', hasStroke: false, hasFilled: true },
-  iconoir: { name: 'Iconoir', icon: 'circle', hasStroke: true, hasFilled: true },
-  ionicons: { name: 'Ionicons', icon: 'bolt', hasStroke: true, strokeScale: 21.33, hasFilled: true },
-  simpleicons: { name: 'Simple Icons', icon: 'apps', hasStroke: false, hasFilled: false },
-  mingcute: { name: 'MingCute', icon: 'star', hasStroke: false, hasFilled: true, previewSize: 72 },
-  premium: { name: 'Premium', icon: 'diamond', hasStroke: true, hasFilled: false },
+  material: { name: 'Material Symbols', iconKey: 'material', fallbackIcon: 'widgets', hasStroke: false, hasFilled: true },
+  lucide: { name: 'Lucide', iconKey: 'lucide', fallbackIcon: 'edit', hasStroke: true, hasFilled: false },
+  tabler: { name: 'Tabler', iconKey: 'tabler', fallbackIcon: 'category', hasStroke: true, hasFilled: true },
+  phosphor: { name: 'Phosphor', iconKey: 'phosphor', fallbackIcon: 'hexagon', hasStroke: false, hasFilled: true },
+  heroicons: { name: 'Heroicons', iconKey: 'heroicons', fallbackIcon: 'shield', hasStroke: true, hasFilled: true },
+  bootstrap: { name: 'Bootstrap', iconKey: 'bootstrap', fallbackIcon: 'grid_view', hasStroke: false, hasFilled: true },
+  iconoir: { name: 'Iconoir', iconKey: 'iconoir', fallbackIcon: 'circle', hasStroke: true, hasFilled: true },
+  ionicons: { name: 'Ionicons', iconKey: 'ionicons', fallbackIcon: 'bolt', hasStroke: true, strokeScale: 21.33, hasFilled: true },
+  simpleicons: { name: 'Simple Icons', iconKey: 'simpleicons', fallbackIcon: 'apps', hasStroke: false, hasFilled: false },
+  mingcute: { name: 'MingCute', iconKey: 'mingcute', fallbackIcon: 'star', hasStroke: false, hasFilled: true, previewSize: 72 },
+  premium: { name: 'Premium', iconKey: 'collections', fallbackIcon: 'diamond', hasStroke: true, hasFilled: false },
 };
 
 const librarySidebarOrder = [
@@ -513,10 +484,10 @@ function renderLibraries() {
 
   els.libraryList.innerHTML = orderedLibraries
     .map((lib) => {
-      const meta = libraryMeta[lib.id] || { name: lib.id, icon: 'folder' };
+      const meta = libraryMeta[lib.id] || { name: lib.id, iconKey: lib.id, fallbackIcon: 'folder' };
       return `
         <div class="sidebar__item" data-library="${lib.id}">
-          <span class="material-symbols-outlined sidebar__item-icon">${meta.icon}</span>
+          ${renderSidebarIconSlot(meta.iconKey || lib.id, { fallbackGlyph: meta.fallbackIcon || 'folder' })}
           <span class="sidebar__item-name">${meta.name}</span>
           <span class="sidebar__item-count">${lib.count.toLocaleString()}</span>
         </div>
@@ -525,24 +496,44 @@ function renderLibraries() {
     .join('');
 }
 
+function hydrateSidebarIcons() {
+  $$('[data-sidebar-icon]').forEach((el) => {
+    const iconKey = el.dataset.sidebarIcon;
+    const fallbackGlyph = el.textContent.trim() || 'folder';
+    hydrateSidebarIconSlot(el, iconKey, { fallbackGlyph });
+  });
+}
+
 // ============================================================
 // Grid Rendering
 // ============================================================
 function renderIconCell(icon) {
   const c = state.customize;
-  const isFav = state.favorites.has(iconKey(icon));
   const isSelected = state.selectedIcons.has(iconKey(icon));
   const selectClass = isSelected ? ' multi-selected' : '';
-  const favoriteActionLabel = escapeHtml(getFavoriteActionLabel(icon.name, isFav));
-  const favBtn = `<button type="button" class="icon-cell__fav ${isFav ? 'active' : ''}" data-fav-key="${iconKey(icon)}" data-tip="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-pressed="${isFav}" aria-label="${favoriteActionLabel}" title="${favoriteActionLabel}"><span class="material-symbols-outlined" style="font-size:14px">${isFav ? 'favorite' : 'favorite_border'}</span></button>`;
   const checkmark = state.multiSelect ? `<span class="icon-cell__check ${isSelected ? 'checked' : ''}"><span class="material-symbols-outlined" style="font-size:14px">check_circle</span></span>` : '';
-  const compareBtn = `<button type="button" class="icon-cell__compare" data-cmp-id="${icon.id}" data-cmp-lib="${icon.lib}" data-tip="Add to compare"><span class="material-symbols-outlined" style="font-size:14px">compare_arrows</span></button>`;
+  const compareBtn = `
+    <div class="icon-cell__controls">
+      <button
+        type="button"
+        class="icon-cell__compare"
+        data-cmp-id="${icon.id}"
+        data-cmp-lib="${icon.lib}"
+        data-tip="Add to compare"
+        aria-label="Add ${icon.name} to compare"
+      >
+        <svg class="icon-cell__compare-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+          <path d="M3 5.5H13M10.5 3L13 5.5L10.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 10.5H3M5.5 8L3 10.5L5.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>`;
 
   if (icon.type === 'font') {
     const fontVars = `font-variation-settings:'FILL' ${c.materialFill},'wght' ${c.materialWeight},'GRAD' ${c.materialGrade},'opsz' ${c.materialOpticalSize};`;
     return `
       <div class="icon-cell${selectClass}" data-icon-id="${icon.id}" data-icon-lib="${icon.lib}">
-        ${favBtn}${checkmark}${compareBtn}
+        ${checkmark}${compareBtn}
         <span class="material-symbols-outlined icon-cell__icon" style="${fontVars}">${icon.id}</span>
         <span class="icon-cell__name">${icon.name}</span>
       </div>
@@ -557,7 +548,7 @@ function renderIconCell(icon) {
   const filledClass = isFilled ? ' icon-cell__icon--filled' : '';
   return `
     <div class="icon-cell${selectClass}" data-icon-id="${icon.id}" data-icon-lib="${icon.lib}">
-      ${favBtn}${checkmark}${compareBtn}
+      ${checkmark}${compareBtn}
       <div class="icon-cell__icon${filledClass}" style="${strokeStyle}">${icon.svg}</div>
       <span class="icon-cell__name">${icon.name}</span>
     </div>
@@ -598,7 +589,7 @@ function renderGrid() {
       emptyText.textContent = state.searchQuery
         ? `No icons match "${state.searchQuery}". Try a different search term.`
         : isFavoritesView
-          ? 'Click the heart on any icon or use Save in Customize to keep it here. Favorites stay on this device.'
+          ? 'Select an icon and use Save in Customize to keep it here. Favorites stay on this device.'
           : '20,000+ icons across 10 libraries including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
     }
   } else {
@@ -1629,10 +1620,8 @@ function attachCustomizeListeners(icon) {
   const panelFavoriteBtn = $('#panelFavoriteBtn');
   if (panelFavoriteBtn) {
     panelFavoriteBtn.addEventListener('click', () => {
-      const key = iconKey(icon);
-      const isFav = toggleFavorite(key);
+      const isFav = toggleFavorite(iconKey(icon));
       updatePanelFavoriteButton(panelFavoriteBtn, icon, isFav);
-      updateGridFavoriteButton(findGridFavoriteButtonByKey(key), icon.name, isFav);
 
       if (!isFav && state.activeLibrary === 'favorites') {
         state.selectedIcon = null;
@@ -2449,26 +2438,6 @@ els.sidebar.addEventListener('click', (e) => {
 
 // Icon grid click (delegated)
 els.iconGrid.addEventListener('click', (e) => {
-  // Fav button (targeted update, no full re-render)
-  const favBtn = e.target.closest('.icon-cell__fav');
-  if (favBtn) {
-    e.stopPropagation();
-    const key = favBtn.dataset.favKey;
-    const cell = favBtn.closest('.icon-cell');
-    const iconId = cell?.dataset.iconId;
-    const iconLib = cell?.dataset.iconLib;
-    const icon = state.icons.find((entry) => entry.id === iconId && entry.lib === iconLib);
-    const isFav = toggleFavorite(key);
-    if (icon) {
-      updateGridFavoriteButton(favBtn, icon.name, isFav);
-    }
-    syncFavoriteSelectionState(key, isFav);
-    if (state.activeLibrary === 'favorites') {
-      applyFilters();
-    }
-    return;
-  }
-
   // Compare button
   const cmpBtn = e.target.closest('.icon-cell__compare');
   if (cmpBtn) {
@@ -2629,6 +2598,7 @@ els.searchInput.addEventListener('input', autoDismissOnce);
 // Init
 // ============================================================
 async function init() {
+  hydrateSidebarIcons();
   loadCollections();
   await loadIcons();
   setupInfiniteScroll();
