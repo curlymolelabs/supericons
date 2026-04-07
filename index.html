@@ -69,107 +69,77 @@
 </head>
 
 <body>
-    <!-- Landing Hero (dismissible, outside #app to avoid overflow:hidden clipping) -->
-    <section class="landing-hero" id="landingHero">
-        <div class="landing-hero__inner">
-            <div class="landing-hero__content">
-                <h1 class="landing-hero__h1">20,000+ free icons,<br>one search.</h1>
-                <p class="landing-hero__subtitle">10 libraries. AI semantic search. React, Vue, Svelte export. Customize
-                    colors, sizes, and containers. No login required for free icons.</p>
-                <div class="landing-hero__cta">
-                    <button class="landing-hero__btn" id="heroSearchBtn">
-                        <span class="material-symbols-outlined" style="font-size:18px">search</span>
-                        Start searching
+    <div class="landing-shell" id="landingShell">
+        <!-- Landing Hero -->
+        <section class="landing-hero" id="landingHero">
+            <div class="icon-rain" id="iconRain" aria-hidden="true"></div>
+            <div class="landing-hero__inner">
+                <div class="landing-hero__content">
+                    <a class="landing-hero__brand" href="/" aria-label="Supericons home">
+                        <svg class="landing-hero__brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="100 120 280 280"
+                            fill="currentColor" width="34" height="34" aria-hidden="true">
+                            <path
+                                d="M0 0 C0.75 -0.01 1.5 -0.01 2.27 -0.02 C4.74 -0.03 7.21 -0.01 9.68 0.01 C11.41 0.01 13.15 0 14.88 0 C18.51 0 22.14 0.01 25.76 0.04 C30.38 0.06 35 0.06 39.62 0.05 C43.19 0.04 46.77 0.05 50.35 0.06 C52.05 0.07 53.75 0.07 55.45 0.06 C75.21 0.04 91.55 3.97 107.27 16.5 C107.91 16.97 108.54 17.44 109.2 17.93 C123.5 29.07 132.75 49.3 135.86 66.78 C138.53 90.58 134.26 116.82 119.05 136.05 C104.98 152.93 88.55 162.08 67.27 166.5 C66.69 166.68 66.11 166.85 65.5 167.03 C62.4 167.68 59.42 167.66 56.24 167.69 C55.2 167.71 55.2 167.71 54.12 167.72 C51.81 167.74 49.5 167.76 47.2 167.78 C46.4 167.78 45.61 167.79 44.8 167.79 C40.6 167.82 36.41 167.84 32.22 167.85 C28.76 167.87 25.3 167.89 21.85 167.93 C17.66 167.98 13.47 168.01 9.29 168.02 C7.7 168.02 6.11 168.04 4.52 168.06 C-10.47 168.27 -10.47 168.27 -16.37 163.84 C-20.05 160.22 -20.93 156.56 -21.29 151.56 C-21.15 146.76 -19.7 144.31 -16.43 140.88 C-12.87 138 -10.03 137.25 -5.47 137.21 C-4.42 137.2 -3.38 137.19 -2.3 137.17 C-1.17 137.17 -0.04 137.16 1.12 137.16 C2.28 137.14 3.44 137.13 4.64 137.11 C9.61 137.05 14.58 137.01 19.55 136.97 C23.17 136.94 26.8 136.89 30.43 136.85 C31.56 136.84 32.68 136.83 33.84 136.83 C34.89 136.82 35.94 136.8 37.02 136.79 C37.94 136.78 38.86 136.77 39.81 136.77 C42.43 136.48 44.06 135.92 46.27 134.5 C47.66 131.73 47.46 129.57 47.27 126.5 C45.55 123.25 45.55 123.25 42.27 122.5 C40.89 122.41 39.51 122.38 38.13 122.38 C37.28 122.37 36.44 122.37 35.57 122.37 C34.65 122.37 33.72 122.37 32.77 122.38 C31.8 122.37 30.82 122.37 29.82 122.37 C27.7 122.37 25.58 122.36 23.47 122.36 C18.96 122.36 14.46 122.34 9.95 122.32 C1.56 122.28 -6.82 122.25 -15.21 122.25 C-21.04 122.25 -26.88 122.23 -32.71 122.19 C-34.93 122.18 -37.15 122.18 -39.37 122.18 C-42.49 122.19 -45.6 122.17 -48.71 122.15 C-49.62 122.16 -50.54 122.17 -51.48 122.18 C-57.81 122.07 -60.95 120.7 -65.73 116.5 C-68.8 112.05 -69.68 107.79 -68.73 102.5 C-66.15 97.55 -62.74 94.01 -57.73 91.5 C-55.15 91.4 -52.6 91.36 -50.02 91.36 C-49.22 91.36 -48.43 91.35 -47.61 91.35 C-45.88 91.34 -44.15 91.34 -42.42 91.33 C-39.69 91.33 -36.95 91.31 -34.21 91.29 C-26.44 91.24 -18.66 91.19 -10.88 91.18 C-6.12 91.17 -1.37 91.14 3.39 91.09 C5.2 91.08 7.02 91.08 8.83 91.08 C11.37 91.08 13.9 91.06 16.44 91.03 C17.19 91.04 17.94 91.04 18.72 91.05 C22.02 90.99 23.8 90.95 26.25 88.63 C28.02 84.96 27.53 82.28 26.27 78.5 C23.33 77.52 21.43 77.37 18.36 77.37 C17.35 77.37 16.33 77.36 15.29 77.36 C13.62 77.36 13.62 77.36 11.92 77.36 C10.75 77.36 9.58 77.35 8.37 77.35 C5.82 77.34 3.28 77.34 0.73 77.33 C-3.3 77.33 -7.33 77.31 -11.36 77.29 C-12.74 77.29 -14.12 77.28 -15.5 77.27 C-16.19 77.27 -16.88 77.27 -17.6 77.26 C-26.98 77.22 -36.36 77.19 -45.74 77.18 C-52.07 77.17 -58.4 77.14 -64.73 77.11 C-68.08 77.09 -71.43 77.08 -74.78 77.08 C-78.51 77.08 -82.25 77.06 -85.99 77.03 C-87.09 77.04 -88.2 77.04 -89.33 77.05 C-95.45 76.98 -99.08 76.6 -103.73 72.5 C-107.43 68.28 -108.14 64.33 -108.07 58.85 C-107.5 54.94 -105.56 52.2 -102.73 49.5 C-98.55 46.43 -95.5 46.13 -90.36 46.13 C-89.62 46.13 -88.89 46.12 -88.14 46.12 C-85.69 46.11 -83.24 46.12 -80.79 46.13 C-79.03 46.13 -77.28 46.13 -75.52 46.12 C-71.74 46.11 -67.95 46.11 -64.17 46.12 C-58.19 46.13 -52.21 46.12 -46.23 46.1 C-31.38 46.07 -16.54 46.06 -1.69 46.07 C9.86 46.07 21.4 46.06 32.94 46.03 C38.89 46.01 44.83 46.01 50.78 46.03 C54.48 46.03 58.17 46.02 61.87 46.01 C63.58 46 65.3 46.01 67.01 46.02 C69.35 46.03 71.69 46.02 74.03 46 C76 46 76 46 78 46 C81.34 45.76 81.34 45.76 83.69 43.66 C85.5 41.53 85.5 41.53 85.77 38.5 C85.14 34.7 84.37 33.77 81.27 31.5 C78.28 31.13 75.67 31.01 72.68 31.07 C71.82 31.07 70.95 31.07 70.06 31.07 C68.18 31.07 66.31 31.09 64.43 31.11 C61.45 31.14 58.47 31.14 55.5 31.14 C47.03 31.13 38.57 31.17 30.11 31.24 C24.93 31.28 19.75 31.28 14.57 31.26 C12.6 31.26 10.63 31.28 8.66 31.3 C-8.69 31.55 -8.69 31.55 -13.93 27.14 C-17.81 22.83 -18.08 18.6 -18 13.01 C-17.59 9.26 -16.23 7.27 -13.73 4.5 C-9.18 0.86 -5.7 -0.08 0 0 Z"
+                                transform="translate(239.73,169.5)" />
+                        </svg>
+                        <span class="landing-hero__brand-name">Supericons</span>
+                    </a>
+                    <h1 class="landing-hero__h1">20,000+ free icons,<br>one search.</h1>
+                    <p class="landing-hero__subtitle">10 libraries. AI semantic search. React, Vue, Svelte export.
+                        Customize colors, sizes, and containers.</p>
+                    <div class="landing-hero__cta">
+                        <button class="landing-hero__btn" id="heroSearchBtn">
+                            <span class="material-symbols-outlined" style="font-size:18px">search</span>
+                            Start searching
+                        </button>
+                    </div>
+                    <div class="landing-hero__stats">
+                        <div class="landing-stat">
+                            <span class="landing-stat__num">20,000+</span>
+                            <span class="landing-stat__label">Icons</span>
+                        </div>
+                        <div class="landing-stat">
+                            <span class="landing-stat__num">10</span>
+                            <span class="landing-stat__label">Libraries</span>
+                        </div>
+                        <div class="landing-stat">
+                            <span class="landing-stat__num">5</span>
+                            <span class="landing-stat__label">Export Formats</span>
+                        </div>
+                        <div class="landing-stat">
+                            <span class="landing-stat__num">1</span>
+                            <span class="landing-stat__label">MCP Server</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MCP Integration Section -->
+        <section class="landing-mcp" id="landing-mcp">
+            <div class="landing-mcp__inner">
+                <div class="landing-mcp__header">
+                    <span class="material-symbols-outlined landing-mcp__icon">smart_toy</span>
+                    <h2 class="landing-mcp__title">Works with MCP-capable coding agents</h2>
+                    <button class="landing-mcp__close" id="mcpCloseBtn" title="Close">
+                        <span class="material-symbols-outlined" style="font-size:18px">close</span>
                     </button>
                 </div>
-            </div>
-            <div class="landing-hero__stats">
-                <div class="landing-stat">
-                    <span class="landing-stat__num">20,000+</span>
-                    <span class="landing-stat__label">Icons</span>
+                <p class="landing-mcp__subtitle">Use Supericons through MCP to search and paste icons directly into your
+                    code. No browser needed.</p>
+                <div class="landing-mcp__editors">
+                    <span class="editor-badge">Claude Code</span>
+                    <span class="editor-badge">Codex</span>
+                    <span class="editor-badge">Cursor</span>
+                    <span class="editor-badge">OpenCode</span>
+                    <span class="editor-badge">Cline</span>
+                    <span class="editor-badge">Copilot agent</span>
+                    <span class="editor-badge">Windsurf</span>
                 </div>
-                <div class="landing-stat">
-                    <span class="landing-stat__num">10</span>
-                    <span class="landing-stat__label">Libraries</span>
-                </div>
-                <div class="landing-stat">
-                    <span class="landing-stat__num">5</span>
-                    <span class="landing-stat__label">Export formats</span>
-                </div>
-                <div class="landing-stat">
-                    <span class="landing-stat__num">1</span>
-                    <span class="landing-stat__label">MCP Server</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feature Grid -->
-    <section class="landing-features" id="landing-features">
-        <div class="landing-features__grid">
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">search</span>
-                <h3 class="feature-card__title">AI Semantic Search</h3>
-                <p class="feature-card__desc">Type "login" to find lock, key, shield, fingerprint. Smart synonyms with
-                    5-layer matching.</p>
-            </div>
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">palette</span>
-                <h3 class="feature-card__title">5 Color Palettes</h3>
-                <p class="feature-card__desc">Default, Material, Tailwind, Radix, Mono presets. Recent colors saved
-                    automatically.</p>
-            </div>
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">code</span>
-                <h3 class="feature-card__title">Framework Export</h3>
-                <p class="feature-card__desc">Copy as React, Vue, Svelte, or raw HTML component code. One click.</p>
-            </div>
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">compare_arrows</span>
-                <h3 class="feature-card__title">Cross-Library Compare</h3>
-                <p class="feature-card__desc">"heart" in Lucide vs Tabler vs Phosphor, side by side in the compare
-                    drawer.</p>
-            </div>
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">download</span>
-                <h3 class="feature-card__title">PNG, SVG, ICO, ZIP</h3>
-                <p class="feature-card__desc">Custom sizes (8 to 1024px), Base64 data URI, batch ZIP download.</p>
-            </div>
-            <div class="feature-card">
-                <span class="material-symbols-outlined feature-card__icon">tune</span>
-                <h3 class="feature-card__title">4-Axis Material Symbols</h3>
-                <p class="feature-card__desc">Weight, fill, grade, optical size. True variable font sliders with 4,200+
-                    icons.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MCP Integration Section -->
-    <section class="landing-mcp" id="landing-mcp">
-        <div class="landing-mcp__inner">
-            <div class="landing-mcp__header">
-                <span class="material-symbols-outlined landing-mcp__icon">smart_toy</span>
-                <h2 class="landing-mcp__title">Works with any AI coding agent</h2>
-                <button class="landing-mcp__close" id="mcpCloseBtn" title="Close">
-                    <span class="material-symbols-outlined" style="font-size:18px">close</span>
-                </button>
-            </div>
-            <p class="landing-mcp__subtitle">Use Supericons through MCP to search and paste icons directly into your
-                code. No browser needed.</p>
-            <div class="landing-mcp__editors">
-                <span class="editor-badge">Claude Code</span>
-                <span class="editor-badge">Codex</span>
-                <span class="editor-badge">Cursor</span>
-                <span class="editor-badge">OpenCode</span>
-                <span class="editor-badge">Cline</span>
-                <span class="editor-badge">GitHub Copilot</span>
-                <span class="editor-badge">Windsurf</span>
-                <span class="editor-badge">Antigravity</span>
-            </div>
-            <div class="landing-mcp__install">
-                <div class="landing-mcp__install-label">Add to your MCP config:</div>
-                <div class="landing-mcp__code-block" id="mcpConfigBlock">
-                    <pre class="landing-mcp__pre"><code>{
+                <div class="landing-mcp__install">
+                    <div class="landing-mcp__install-label">Add to your MCP config:</div>
+                    <div class="landing-mcp__code-block" id="mcpConfigBlock">
+                        <pre class="landing-mcp__pre"><code>{
   "mcpServers": {
     "supericons": {
       "command": "npx",
@@ -177,15 +147,16 @@
     }
   }
 }</code></pre>
-                    <button class="landing-mcp__copy-btn" id="mcpCopyBtn" title="Copy config">
-                        <span class="material-symbols-outlined" style="font-size:16px">content_copy</span>
-                        Copy
-                    </button>
+                        <button class="landing-mcp__copy-btn" id="mcpCopyBtn" title="Copy config">
+                            <span class="material-symbols-outlined" style="font-size:16px">content_copy</span>
+                            Copy
+                        </button>
+                    </div>
+                    <a href="/?view=mcp" class="landing-mcp__docs-link" id="landingMcpDocsLink">See setup guides for Claude Code, Codex, and Cursor</a>
                 </div>
-                <a href="/mcp/" class="landing-mcp__docs-link">See setup guides for Claude Code, Codex, Cursor, and more</a>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <div id="app" class="app">
 
@@ -245,6 +216,10 @@
                             <span class="auth-dropdown__pro-badge" id="proDropdownBadge" style="display:none">PRO</span>
                         </div>
                         <div class="auth-dropdown__divider"></div>
+                        <button class="auth-dropdown__item" id="authAccountBtn">
+                            <span class="material-symbols-outlined" style="font-size:16px">account_circle</span>
+                            Account
+                        </button>
                         <button class="auth-dropdown__item" id="authMyPurchases">
                             <span class="material-symbols-outlined" style="font-size:16px">shopping_bag</span>
                             My Purchases
@@ -364,7 +339,7 @@
             </main>
 
             <!-- Customize Panel -->
-            <aside class="panel panel-open" id="panel">
+            <aside class="panel" id="panel">
                 <div class="panel__header">
                     <span class="panel__title">Customize</span>
                     <button class="panel__close" id="panelClose" aria-label="Close panel">
@@ -411,7 +386,7 @@
                     class="footer__link">GitHub</a>
                 <a href="#" class="footer__link" id="footerPricingLink">Pricing</a>
                 <a href="#" class="footer__link" id="footerTermsLink">Terms</a>
-                <a href="/mcp/" class="footer__link" id="footerApiLink">MCP</a>
+                <a href="/?view=mcp" class="footer__link" id="footerApiLink">MCP</a>
                 <a href="#" class="footer__link" id="footerContactLink">Contact</a>
             </div>
         </footer>
@@ -441,7 +416,7 @@
                 </form>
                 <div class="contact-modal__links">
                     <span>or email directly:</span>
-                    <a href="mailto:hello@curlymolelabs.com">hello@curlymolelabs.com</a>
+                    <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>
                 </div>
             </div>
         </div>
@@ -454,29 +429,124 @@
                     <span class="material-symbols-outlined" style="font-size:18px">close</span>
                 </button>
                 <h2 class="auth-modal__title" id="authModalTitle">Sign in to Supericons</h2>
-                <p class="auth-modal__desc">Access animated icon packs, manage purchases, and unlock Pro features.</p>
+                <p class="auth-modal__desc" id="authModalDesc">Access animated icon packs, manage purchases, and unlock Pro features.</p>
+                <p class="auth-modal__note" id="authModalNote">Free account. No card required for free icons.</p>
 
-                <button class="auth-modal__google" id="authGoogleBtn">
-                    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.1 24.1 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                    Continue with Google
-                </button>
-
-                <div class="auth-modal__divider">
-                    <span>or</span>
-                </div>
-
-                <form class="auth-form" id="authForm">
-                    <input type="email" class="auth-form__input" id="authEmail" placeholder="Email address" required autocomplete="email" />
-                    <input type="password" class="auth-form__input" id="authPassword" placeholder="Password" required autocomplete="current-password" minlength="6" />
-                    <button type="submit" class="auth-form__submit" id="authSubmitBtn">
-                        <span id="authSubmitText">Sign in</span>
+                <div class="auth-modal__stage" id="authFormStage">
+                    <button class="auth-modal__google" id="authGoogleBtn">
+                        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.1 24.1 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                        Continue with Google
                     </button>
-                    <div class="auth-modal__status" id="authStatus"></div>
-                </form>
 
-                <div class="auth-modal__toggle" id="authToggleText">
-                    Don't have an account? <a href="#" id="authToggleLink">Sign up</a>
+                    <div class="auth-modal__divider">
+                        <span>or</span>
+                    </div>
+
+                    <form class="auth-form" id="authForm">
+                        <input type="email" class="auth-form__input" id="authEmail" name="email" placeholder="Email address" required autocomplete="email username" />
+                        <input type="password" class="auth-form__input" id="authPassword" name="password" placeholder="Password" required autocomplete="current-password" minlength="6" />
+                        <div class="auth-form__meta" id="authForgotWrap">
+                            <button type="button" class="auth-form__link" id="authForgotBtn">Forgot password?</button>
+                        </div>
+                        <button type="submit" class="auth-form__submit" id="authSubmitBtn">
+                            <span id="authSubmitText">Sign in</span>
+                        </button>
+                        <div class="auth-modal__status" id="authStatus"></div>
+                    </form>
+
+                    <div class="auth-modal__toggle" id="authToggleText">
+                        Don't have an account? <a href="#" id="authToggleLink">Sign up</a>
+                    </div>
                 </div>
+
+                <div class="auth-modal__stage auth-verify" id="authVerifyStage" hidden>
+                    <span class="material-symbols-outlined auth-verify__icon">mark_email_read</span>
+                    <h3 class="auth-verify__title">Check your email</h3>
+                    <p class="auth-verify__text" id="authVerifyText">We sent a confirmation link to your email.</p>
+                    <button type="button" class="auth-verify__btn" id="authVerifyBackBtn">Back to sign in</button>
+                </div>
+
+                <div class="auth-modal__stage auth-verify" id="authForgotStage" hidden>
+                    <span class="material-symbols-outlined auth-verify__icon">lock_reset</span>
+                    <h3 class="auth-verify__title">Reset your password</h3>
+                    <p class="auth-verify__text">Enter your account email and we'll send you a secure reset link.</p>
+                    <form class="auth-form" id="authForgotForm">
+                        <input type="email" class="auth-form__input" id="authForgotEmail" name="email" placeholder="Email address" required autocomplete="email username" />
+                        <button type="submit" class="auth-form__submit" id="authForgotSubmitBtn">
+                            <span id="authForgotSubmitText">Send reset link</span>
+                        </button>
+                        <div class="auth-modal__status" id="authForgotStatus"></div>
+                    </form>
+                    <button type="button" class="auth-verify__btn" id="authForgotBackBtn">Back to sign in</button>
+                </div>
+
+                <div class="auth-modal__stage auth-verify" id="authResetStage" hidden>
+                    <span class="material-symbols-outlined auth-verify__icon">password</span>
+                    <h3 class="auth-verify__title">Set a new password</h3>
+                    <p class="auth-verify__text" id="authResetText">Choose a new password for your account.</p>
+                    <form class="auth-form" id="authResetForm">
+                        <input type="email" class="auth-form__input auth-form__input--hidden" id="authResetEmail" name="email" autocomplete="username email" tabindex="-1" aria-hidden="true" />
+                        <input type="password" class="auth-form__input" id="authResetPassword" name="new-password" placeholder="New password" required autocomplete="new-password" minlength="8" />
+                        <input type="password" class="auth-form__input" id="authResetPasswordConfirm" name="confirm-password" placeholder="Confirm new password" required autocomplete="new-password" minlength="8" />
+                        <button type="submit" class="auth-form__submit" id="authResetSubmitBtn">
+                            <span id="authResetSubmitText">Update password</span>
+                        </button>
+                        <div class="auth-modal__status" id="authResetStatus"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Modal -->
+        <div class="auth-modal" id="accountModal">
+            <div class="auth-modal__backdrop" id="accountBackdrop"></div>
+            <div class="auth-modal__card account-modal__card">
+                <button class="auth-modal__close" id="accountClose">
+                    <span class="material-symbols-outlined" style="font-size:18px">close</span>
+                </button>
+                <h2 class="auth-modal__title">Account</h2>
+                <p class="auth-modal__desc">Manage the basics for your Supericons account without leaving the app.</p>
+
+                <div class="account-modal__summary">
+                    <div class="account-modal__avatar" id="accountAvatarInitial">?</div>
+                    <div class="account-modal__identity">
+                        <span class="account-modal__name" id="accountSummaryName"></span>
+                        <span class="account-modal__email" id="accountSummaryEmail"></span>
+                    </div>
+                </div>
+
+                <section class="account-modal__section">
+                    <div class="account-modal__section-head">
+                        <h3 class="account-modal__section-title">Profile</h3>
+                        <p class="account-modal__section-copy">Choose the display name shown inside Supericons.</p>
+                    </div>
+                    <form class="auth-form account-form" id="accountProfileForm">
+                        <input type="text" class="auth-form__input" id="accountDisplayName" name="display-name" placeholder="Display name" maxlength="48" autocomplete="nickname name" />
+                        <button type="submit" class="auth-form__submit" id="accountSaveBtn">
+                            <span>Save display name</span>
+                        </button>
+                        <div class="auth-modal__status" id="accountProfileStatus"></div>
+                    </form>
+                </section>
+
+                <section class="account-modal__section">
+                    <div class="account-modal__section-head">
+                        <h3 class="account-modal__section-title">Email</h3>
+                        <p class="account-modal__section-copy">Your sign-in email is shown here for reference.</p>
+                    </div>
+                    <input type="email" class="auth-form__input account-form__input--readonly" id="accountEmailDisplay" readonly />
+                </section>
+
+                <section class="account-modal__section">
+                    <div class="account-modal__section-head">
+                        <h3 class="account-modal__section-title">Password</h3>
+                        <p class="account-modal__section-copy">Use the secure recovery flow to choose a new password.</p>
+                    </div>
+                    <button type="button" class="auth-verify__btn account-modal__password-btn" id="accountPasswordBtn">
+                        Send password reset email
+                    </button>
+                    <div class="auth-modal__status" id="accountPasswordStatus"></div>
+                </section>
             </div>
         </div>
 

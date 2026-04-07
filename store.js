@@ -3,15 +3,27 @@
  * Handles collection catalog rendering, view switching, and Stripe checkout.
  */
 
-import { getUser, getSupabase, isLoggedIn, isPro, getClaimStatus, fetchClaimStatus, invalidateClaimStatus, waitForAuth } from './auth.js';
+import {
+  getUser,
+  getSupabase,
+  isLoggedIn,
+  isPro,
+  getClaimStatus,
+  fetchClaimStatus,
+  invalidateClaimStatus,
+  waitForAuth,
+  openAuthModal,
+  setAuthIntent,
+  consumeAuthIntent,
+} from './auth.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
 const PREMIUM_ASSET_FN = `${SUPABASE_URL}/functions/v1/serve-premium-asset`;
-const STRIPE_PRO_MONTHLY = 'price_1TEtIs3eLO1ro0kliSB6whjH';
-const STRIPE_PRO_YEARLY = 'price_1TEtK73eLO1ro0klfhQrsrJa';
-const STRIPE_LAUNCH_EDITION = 'price_1TEtZz3eLO1ro0kl0Xk8q1Nw';
+const STRIPE_PRO_MONTHLY = 'price_1TJVJE35D7agOGFjE6iECyMD';
+const STRIPE_PRO_YEARLY = 'price_1TJVJC35D7agOGFjKc0GlrAy';
+const STRIPE_LAUNCH_EDITION = 'price_1TJVJ935D7agOGFjrIsRlAOS';
 const PRO_PLANS = {
   monthly: {
     key: 'monthly',
@@ -29,6 +41,59 @@ const PRO_PLANS = {
     period: '/yr',
     originalAmount: '$180',
     ctaLabel: '$99/yr',
+  },
+};
+const PRO_WORKFLOW_BULLET = 'Workflow tools: Motion Lab, Converter (PNG <-> SVG)';
+const PRO_BANNER_COPY = {
+  monthly: {
+    description: 'MCP access, workflow tools, and 1 premium collection every month.',
+    features: [
+      'MCP access for AI agents',
+      PRO_WORKFLOW_BULLET,
+      '1 premium collection/month',
+      'Access all collections while active',
+      'Unlimited commercial license',
+    ],
+  },
+  annual: {
+    description: 'Own all 8 premium collections now, plus future drops while annual is active.',
+    features: [
+      'MCP access for AI agents',
+      PRO_WORKFLOW_BULLET,
+      'Own all 8 premium collections now',
+      'Future premium drops while annual is active',
+      'Unlimited commercial license',
+    ],
+  },
+};
+const PRO_PRICING_COPY = {
+  monthly: {
+    description: 'Pro tools, full premium access, and 1 premium collection every month.',
+    features: [
+      'Everything in Free',
+      '1 premium collection/month',
+      'Access all collections while active',
+      'Cancel anytime, keep what you claimed',
+      'Motion Lab: export CSS animations',
+      'Converter: unlimited SVG/PNG conversion',
+      'Full MCP access (free + premium)',
+      'Commercial use, unlimited projects',
+      'Priority support',
+    ],
+  },
+  annual: {
+    description: 'Own all 8 premium collections now, plus future drops while your annual plan is active.',
+    features: [
+      'Everything in Free',
+      'Own all 8 premium collections now',
+      'Keep the 8 included collections forever',
+      'Future premium drops while annual is active',
+      'Motion Lab: export CSS animations',
+      'Converter: unlimited SVG/PNG conversion',
+      'Full MCP access (free + premium)',
+      'Commercial use, unlimited projects',
+      'Priority support',
+    ],
   },
 };
 const MOTION_LAB_LOCKED_CSS = [
@@ -87,10 +152,17 @@ async function fetchPremiumAsset(slug, filename) {
   });
 }
 let userPurchases = [];
-let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail'
+let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail' | 'pricing' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
 let previousView = 'icons';
 let currentCollectionData = null; // manifest data for the currently viewed collection
+let activeCollectionProductId = null;
+let activeCollectionProductSlug = null;
+let authIntentResumePromise = null;
+let toastTimeout = null;
 let removeUpgradePrompt = null;
+const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
+const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'collection-detail', 'pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
+const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -104,9 +176,95 @@ function getProPlan(plan = 'monthly') {
   return PRO_PLANS[plan] || PRO_PLANS.monthly;
 }
 
+function findProductById(productId) {
+  if (!productId) return null;
+  return products.find(product => product.id === productId)
+    || userPurchases.find(purchase => purchase.product_id === productId)?.si_products
+    || null;
+}
+
+function getAuthReturnIntent(context, overrides = {}) {
+  const intent = {
+    context,
+    view: overrides.view || currentView,
+  };
+
+  const productId = overrides.productId
+    || (intent.view === 'collection-detail' ? activeCollectionProductId : null);
+  const productSlug = overrides.productSlug
+    || (intent.view === 'collection-detail' ? activeCollectionProductSlug : null);
+
+  if (productId) intent.productId = productId;
+  if (productSlug) intent.productSlug = productSlug;
+  if (overrides.plan) intent.plan = overrides.plan;
+
+  return intent;
+}
+
+function promptForAuth(context, overrides = {}) {
+  setAuthIntent(getAuthReturnIntent(context, overrides));
+  openAuthModal({ mode: 'signin', context });
+}
+
+async function restoreAuthIntent(intent) {
+  if (!intent || !isLoggedIn()) return false;
+
+  const view = intent.view || 'icons';
+
+  if (view === 'collection-detail') {
+    if (products.length === 0) {
+      await fetchProducts();
+    }
+    await ensureUserPurchasesLoaded({ rerender: false });
+    const product = findProductById(intent.productId)
+      || products.find(item => item.slug === intent.productSlug)
+      || null;
+    if (product) {
+      await renderCollectionDetail(product);
+      return true;
+    }
+    switchView('packs');
+    return true;
+  }
+
+  if (view === 'downloads' || view === 'dashboard') {
+    await ensureUserPurchasesLoaded({ force: true, rerender: false });
+  }
+
+  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'motion-lab', 'converter', 'terms', 'mcp']);
+  switchView(allowedViews.has(view) ? view : 'icons');
+  return true;
+}
+
+async function resumePostAuthIntent() {
+  if (authIntentResumePromise) return authIntentResumePromise;
+
+  authIntentResumePromise = (async () => {
+    await waitForAuth();
+    if (!isLoggedIn()) return false;
+    const intent = consumeAuthIntent();
+    if (!intent) return false;
+    return restoreAuthIntent(intent);
+  })();
+
+  try {
+    return await authIntentResumePromise;
+  } finally {
+    authIntentResumePromise = null;
+  }
+}
+
 function getProPlanPriceMarkup(planKey) {
   const plan = getProPlan(planKey);
   return `${plan.amount}<span style="font-size:0.65rem;font-weight:400">${plan.period}</span>`;
+}
+
+function renderPlainFeatureList(items) {
+  return items.map(item => `<li>${item}</li>`).join('');
+}
+
+function renderPricingFeatureList(items) {
+  return items.map(item => `<li><span class="material-symbols-outlined">check</span> ${item}</li>`).join('');
 }
 
 function formatClaimAvailability(nextAvailable) {
@@ -282,8 +440,14 @@ function closeUpgradePrompt() {
 export function initStore() {
   wireStoreListeners();
   void fetchProducts();
+  window.addEventListener('supericons:auth-signed-in', () => {
+    void resumePostAuthIntent();
+  });
   void waitForAuth()
-    .then(() => ensureUserPurchasesLoaded({ rerender: false }))
+    .then(async () => {
+      await ensureUserPurchasesLoaded({ rerender: false });
+      await resumePostAuthIntent();
+    })
     .catch((err) => {
       console.warn('[Store] Initial purchase sync skipped:', err?.message || err);
     });
@@ -357,24 +521,35 @@ function updatePackCount() {
 
 // ── View Switching ────────────────────────────────────────────
 export function switchView(view) {
+  const si = window.__supericons;
   previousView = currentView;
   closeUpgradePrompt();
   document.getElementById('mlExportModal')?.remove();
+  if (view !== 'collection-detail') {
+    activeCollectionProductId = null;
+    activeCollectionProductSlug = null;
+  }
 
-  // Restore the Customize panel if we're leaving a full-width view
-  const fullWidthViews = ['pricing', 'motion-lab', 'converter'];
-  if (fullWidthViews.includes(currentView) && !fullWidthViews.includes(view)) {
-    const restorePanel = document.getElementById('panel');
-    if (restorePanel && restorePanel.dataset.hiddenByPricing) {
-      restorePanel.classList.remove('panel--pricing-hidden');
-      if (restorePanel.dataset.hiddenByPricing === 'was-open') {
-        restorePanel.classList.add('panel-open');
+  if (view !== 'icons') {
+    si?.dismissLanding?.();
+  }
+
+  // Restore the Customize panel if we're leaving a view that suppresses it
+  if (PANEL_SUPPRESSED_VIEWS.has(currentView) && !PANEL_SUPPRESSED_VIEWS.has(view)) {
+    if (si?.setPanelSuppressed) {
+      si.setPanelSuppressed(false);
+    } else {
+      const restorePanel = document.getElementById('panel');
+      if (restorePanel && restorePanel.dataset.hiddenByPricing) {
+        restorePanel.classList.remove('panel--pricing-hidden');
+        if (restorePanel.dataset.hiddenByPricing === 'was-open') {
+          restorePanel.classList.add('panel-open');
+        }
+        delete restorePanel.dataset.hiddenByPricing;
       }
-      delete restorePanel.dataset.hiddenByPricing;
+      const mainLayout = document.getElementById('mainLayout');
+      if (mainLayout) mainLayout.classList.remove('panel-hidden');
     }
-    // Restore the 3-column grid
-    const mainLayout = document.getElementById('mainLayout');
-    if (mainLayout) mainLayout.classList.remove('panel-hidden');
     document.body.removeAttribute('data-view');
   }
 
@@ -387,13 +562,15 @@ export function switchView(view) {
 
   if (!gridArea) return;
 
-  // Hide landing hero in store views
-  const landingHero = document.getElementById('landingHero');
+  const resetShellScroll = () => {
+    gridArea.scrollTop = 0;
+    gridArea.scrollLeft = 0;
+    window.scrollTo(0, 0);
+  };
 
-  if (view === 'packs' || view === 'downloads' || view === 'dashboard' || view === 'collection-detail' || view === 'pricing' || view === 'terms' || view === 'motion-lab' || view === 'converter') {
+  if (STORE_SHELL_VIEWS.has(view)) {
     // Add class to hide all existing grid content (icon cells, empty state, actions)
     gridArea.classList.add('store-active');
-    if (landingHero) landingHero.style.display = 'none';
     if (gridActions) gridActions.style.display = 'none';
 
     // Reset customize panel to placeholder state (clear stale free icon controls)
@@ -436,46 +613,41 @@ export function switchView(view) {
     } else if (view === 'pricing') {
       if (gridTitle) gridTitle.textContent = 'Pricing';
       if (gridMeta) gridMeta.textContent = '';
-      // Hide the customize panel and collapse its grid column
-      const pricingPanel = document.getElementById('panel');
-      if (pricingPanel && !pricingPanel.dataset.hiddenByPricing) {
-        pricingPanel.dataset.hiddenByPricing = pricingPanel.classList.contains('panel-open') ? 'was-open' : 'was-closed';
-        pricingPanel.classList.remove('panel-open');
-        pricingPanel.classList.add('panel--pricing-hidden');
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
       }
-      const mainLayout = document.getElementById('mainLayout');
-      if (mainLayout) mainLayout.classList.add('panel-hidden');
       document.body.setAttribute('data-view', 'pricing');
       renderPricingPage();
     } else if (view === 'terms') {
       if (gridTitle) gridTitle.textContent = 'Terms of Service';
       if (gridMeta) gridMeta.textContent = '';
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
+      }
+      document.body.setAttribute('data-view', 'terms');
       renderTermsPage();
+    } else if (view === 'mcp') {
+      if (gridTitle) gridTitle.textContent = 'Supericons MCP';
+      if (gridMeta) gridMeta.textContent = '';
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
+      }
+      document.body.setAttribute('data-view', 'mcp');
+      renderMcpPage();
     } else if (view === 'motion-lab') {
       if (gridTitle) gridTitle.textContent = 'Motion Lab';
       if (gridMeta) gridMeta.textContent = '';
-      // Hide customize panel, expand grid
-      const mlPanel = document.getElementById('panel');
-      if (mlPanel && !mlPanel.dataset.hiddenByPricing) {
-        mlPanel.dataset.hiddenByPricing = mlPanel.classList.contains('panel-open') ? 'was-open' : 'was-closed';
-        mlPanel.classList.remove('panel-open');
-        mlPanel.classList.add('panel--pricing-hidden');
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
       }
-      const mlLayout = document.getElementById('mainLayout');
-      if (mlLayout) mlLayout.classList.add('panel-hidden');
       document.body.setAttribute('data-view', 'motion-lab');
       renderMotionLab();
     } else if (view === 'converter') {
       if (gridTitle) gridTitle.textContent = 'Icon Converter';
       if (gridMeta) gridMeta.textContent = '';
-      const cvPanel = document.getElementById('panel');
-      if (cvPanel && !cvPanel.dataset.hiddenByPricing) {
-        cvPanel.dataset.hiddenByPricing = cvPanel.classList.contains('panel-open') ? 'was-open' : 'was-closed';
-        cvPanel.classList.remove('panel-open');
-        cvPanel.classList.add('panel--pricing-hidden');
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
       }
-      const cvLayout = document.getElementById('mainLayout');
-      if (cvLayout) cvLayout.classList.add('panel-hidden');
       document.body.setAttribute('data-view', 'converter');
       renderConverter();
     } else {
@@ -502,15 +674,18 @@ export function switchView(view) {
     if (gridActions) gridActions.style.display = '';
     if (gridTitle) gridTitle.textContent = 'All Icons';
     if (gridMeta) gridMeta.textContent = '';
-    if (landingHero) landingHero.style.display = '';
     removePackCatalog();
     // Clean up any tool/store views lingering in the DOM
     document.getElementById('motionLabView')?.remove();
     document.getElementById('converterView')?.remove();
+    document.getElementById('termsView')?.remove();
+    document.getElementById('mcpView')?.remove();
   }
 
   // Update sidebar active state
   updateSidebarActive(view);
+  resetShellScroll();
+  window.requestAnimationFrame(resetShellScroll);
 }
 
 function updateSidebarActive(view) {
@@ -525,6 +700,8 @@ function updateSidebarActive(view) {
     document.getElementById('sidebarMyDownloads')?.classList.add('active');
   } else if (view === 'pricing') {
     document.getElementById('sidebarPricing')?.classList.add('active');
+  } else if (view === 'terms' || view === 'mcp') {
+    // Keep docs/legal views neutral in the sidebar.
   } else if (view === 'motion-lab') {
     document.getElementById('sidebarMotionLab')?.classList.add('active');
   } else if (view === 'converter') {
@@ -685,26 +862,15 @@ function createProSubscriptionCard() {
   card.className = 'promo-banner promo-banner--pro';
   const monthlyPlan = getProPlan('monthly');
   const annualPlan = getProPlan('annual');
-
-  const monthlyFeatures = `
-    <li>MCP + API access for AI agents</li>
-    <li>Workflow tools (PNG-to-SVG, batch export)</li>
-    <li>1 premium collection/month</li>
-    <li>Access all collections while active</li>
-    <li>Unlimited commercial license</li>`;
-  const annualFeatures = `
-    <li>MCP + API access for AI agents</li>
-    <li>Workflow tools (PNG-to-SVG, batch export)</li>
-    <li>1 premium collection/month</li>
-    <li>Access all collections while active</li>
-    <li>Unlimited commercial license</li>`;
+  const monthlyFeatures = renderPlainFeatureList(PRO_BANNER_COPY.monthly.features);
+  const annualFeatures = renderPlainFeatureList(PRO_BANNER_COPY.annual.features);
 
   card.innerHTML = `
     <div class="promo-banner__left">
       <span class="material-symbols-outlined promo-banner__icon">diamond</span>
       <div class="promo-banner__info">
         <div class="promo-banner__title">Go Pro</div>
-        <div class="promo-banner__desc">MCP access, workflow tools, and premium collection access.</div>
+        <div class="promo-banner__desc" id="proBannerDesc">${PRO_BANNER_COPY.monthly.description}</div>
       </div>
     </div>
     <div class="promo-banner__right">
@@ -728,6 +894,7 @@ function createProSubscriptionCard() {
   const priceDisplay = card.querySelector('#proPriceDisplay');
   const savingsBadge = card.querySelector('#proSavingsBadge');
   const tooltipFeatures = card.querySelector('#proTooltipFeatures');
+  const bannerDesc = card.querySelector('#proBannerDesc');
   toggleBtns.forEach(tb => {
     tb.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -737,10 +904,12 @@ function createProSubscriptionCard() {
       if (selectedPlan === 'annual') {
         priceDisplay.innerHTML = `<span class="pro-card__annual">Save 45%</span> <span class="launch-card__original">${annualPlan.originalAmount}</span> ${annualPlan.amount}<span style="font-size:0.65rem;font-weight:400">${annualPlan.period}</span>`;
         savingsBadge.style.display = 'none';
+        if (bannerDesc) bannerDesc.textContent = PRO_BANNER_COPY.annual.description;
         tooltipFeatures.innerHTML = annualFeatures;
       } else {
         priceDisplay.innerHTML = `${monthlyPlan.amount}<span style="font-size:0.65rem;font-weight:400">${monthlyPlan.period}</span>`;
         savingsBadge.style.display = 'none';
+        if (bannerDesc) bannerDesc.textContent = PRO_BANNER_COPY.monthly.description;
         tooltipFeatures.innerHTML = monthlyFeatures;
       }
     });
@@ -757,9 +926,8 @@ function createProSubscriptionCard() {
 
 async function handleProSubscribe(plan = 'monthly') {
   if (!isLoggedIn()) {
-    const modal = document.getElementById('authModal');
-    if (modal) modal.classList.add('open');
-    showToast('Sign in to subscribe');
+    promptForAuth('subscribe', { plan });
+    showToast('Sign in to continue to Pro checkout');
     return;
   }
 
@@ -782,7 +950,7 @@ async function handleProSubscribe(plan = 'monthly') {
       body: JSON.stringify({
         price_id: priceId,
         mode: 'subscription',
-        success_url: `${window.location.origin}?purchase=success`,
+        success_url: `${window.location.origin}?purchase=success&subscription_plan=${encodeURIComponent(plan)}`,
         cancel_url: `${window.location.origin}?purchase=canceled`,
       }),
     });
@@ -803,7 +971,7 @@ async function handleProSubscribe(plan = 'monthly') {
 async function requirePro() {
   await waitForAuth();
   if (!isLoggedIn()) {
-    document.getElementById('authModal')?.classList.add('open');
+    promptForAuth('pro');
     return 'anon';
   }
   if (!isPro()) return 'free';
@@ -834,6 +1002,8 @@ function getAnimClass(collectionData, iconName) {
 async function renderCollectionDetail(product) {
   // Switch to detail view (sets store-active class, hides grid)
   switchView('collection-detail');
+  activeCollectionProductId = product?.id || null;
+  activeCollectionProductSlug = product?.slug || null;
 
   removePackCatalog();
 
@@ -883,8 +1053,8 @@ async function renderCollectionDetail(product) {
     <div class="collection-detail__cta">
       ${isPurchased
         ? '<span class="collection-detail__purchased"><span class="material-symbols-outlined" style="font-size:18px">check_circle</span> Purchased</span>'
-        : `<span class="collection-detail__price">$${priceDisplay}</span>
-           <button class="collection-detail__buy-btn" id="collectionBuyBtn">Get Collection</button>`
+         : `<span class="collection-detail__price">$${priceDisplay}</span>
+            <button class="collection-detail__buy-btn" id="collectionBuyBtn">Buy</button>`
       }
     </div>
   `;
@@ -1272,7 +1442,13 @@ async function selectPremiumIcon(iconName, collectionSlug) {
     renderPremiumPanel(iconName, collectionSlug, svgText, iconCSS);
 
     // Open panel if closed
-    if (si.state && !si.state.panelOpen) si.togglePanel();
+    if (si.state && !si.state.panelOpen) {
+      if (typeof si.setPanelOpen === 'function') {
+        si.setPanelOpen(true);
+      } else {
+        si.togglePanel();
+      }
+    }
   } catch (e) {
     console.warn('[Store] Failed to select premium icon:', e);
     showToast('Error loading icon');
@@ -1624,7 +1800,7 @@ function showLockedPanel(iconName, product) {
     </div>
     <div class="locked-panel__actions">
       <button class="locked-panel__buy-btn" id="lockedPanelBuyBtn">
-        $${priceDisplay} Get Collection
+        Buy $${priceDisplay}
       </button>
       <button class="locked-panel__pro-btn" id="lockedPanelProBtn">
         <span class="material-symbols-outlined" style="font-size:14px">diamond</span>
@@ -1673,6 +1849,8 @@ function removePackCatalog() {
   if (existingPricing) existingPricing.remove();
   const existingTerms = document.getElementById('termsView');
   if (existingTerms) existingTerms.remove();
+  const existingMcp = document.getElementById('mcpView');
+  if (existingMcp) existingMcp.remove();
   // Tool views must also be mutually exclusive
   const existingML = document.getElementById('motionLabView');
   if (existingML) {
@@ -2003,11 +2181,12 @@ async function revokeApiKey(keyId) {
 function renderPricingPage() {
   removePackCatalog();
   const monthlyPlan = getProPlan('monthly');
+  const annualPlan = getProPlan('annual');
+  const monthlyPricing = PRO_PRICING_COPY.monthly;
+  const annualPricing = PRO_PRICING_COPY.annual;
 
   const gridArea = document.getElementById('gridArea');
   if (!gridArea) return;
-
-  const isAnnual = false;
   const page = document.createElement('div');
   page.id = 'pricingView';
   page.className = 'pricing-view';
@@ -2031,13 +2210,13 @@ function renderPricingPage() {
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">redeem</span>
           </div>
           <h3 class="pricing-card__name">Free</h3>
-          <p class="pricing-card__desc">20,000+ icons, 9 libraries, AI search, SVG export. No account needed.</p>
+          <p class="pricing-card__desc">20,000+ icons, 10 libraries, AI search, SVG export. No account needed.</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$0</span>
         </div>
         <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> 20,000+ icons across 9 libraries</li>
+          <li><span class="material-symbols-outlined">check</span> 20,000+ icons across 10 libraries</li>
           <li><span class="material-symbols-outlined">check</span> Material, Lucide, Tabler, Phosphor + more</li>
           <li><span class="material-symbols-outlined">check</span> AI semantic search</li>
           <li><span class="material-symbols-outlined">check</span> SVG, PNG, CSS export</li>
@@ -2056,23 +2235,15 @@ function renderPricingPage() {
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">diamond</span>
           </div>
           <h3 class="pricing-card__name">Pro</h3>
-          <p class="pricing-card__desc">Pro tools, full premium access, and 1 free collection every month.</p>
+          <p class="pricing-card__desc" id="pricingProDesc">${monthlyPricing.description}</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount" id="pricingProAmount">${monthlyPlan.amount}</span>
           <span class="pricing-card__period" id="pricingProPeriod">${monthlyPlan.period}</span>
           <span class="pricing-card__original" id="pricingProOriginal" style="display:none"></span>
         </div>
-        <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> Everything in Free</li>
-          <li><span class="material-symbols-outlined">check</span> 1 premium collection/month</li>
-          <li><span class="material-symbols-outlined">check</span> Access all collections while active</li>
-          <li><span class="material-symbols-outlined">check</span> Cancel anytime, keep what you claimed</li>
-          <li><span class="material-symbols-outlined">check</span> Motion Lab: export CSS animations</li>
-          <li><span class="material-symbols-outlined">check</span> Converter: unlimited SVG/PNG conversion</li>
-          <li><span class="material-symbols-outlined">check</span> Full MCP access (free + premium)</li>
-          <li><span class="material-symbols-outlined">check</span> Commercial use, unlimited projects</li>
-          <li><span class="material-symbols-outlined">check</span> Priority support</li>
+        <ul class="pricing-card__features" id="pricingProFeatures">
+          ${renderPricingFeatureList(monthlyPricing.features)}
         </ul>
         <button class="pricing-card__cta pricing-card__cta--primary" id="pricingProBtn">Go Pro</button>
       </div>
@@ -2144,11 +2315,11 @@ function renderPricingPage() {
         </div>
         <div class="pricing-faq__item">
           <button class="pricing-faq__question" aria-expanded="false">
-            How does the monthly collection work?
+            How do Pro Monthly and Pro Annual collection access work?
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Pro subscribers can add 1 premium collection to their permanent library each month. Claimed collections stay in your library, even if you cancel.
+            Pro Monthly lets you add 1 premium collection to your permanent library each month. Pro Annual unlocks all 8 current premium collections immediately, keeps those 8 in your library permanently, and includes future premium drops while your annual subscription is active.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2157,7 +2328,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners get API access to their premium collections.
+            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners get MCP access to their premium collections.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2166,7 +2337,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Yes, cancel anytime from your dashboard. Pro benefits stay active until the end of your billing period. Collections you claimed remain in your library.
+            Yes. Cancel anytime from your dashboard and your Pro benefits stay active until the end of the paid billing period. Monthly subscribers keep any collections they already claimed. Annual subscribers keep the 8 included premium collections they already own.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2175,7 +2346,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            You lose access to collections you haven't claimed and to Pro tools (Motion Lab, Converter). Any collections you already claimed stay in your library. You can re-subscribe anytime to regain full access.
+            Monthly subscribers lose access to unclaimed collections and Pro tools when their term ends, but claimed collections stay in their library. Annual subscribers keep the 8 included premium collections they already own, but future premium drops, full-library live access, MCP access to unowned drops, and Pro tools end when the annual term ends unless they renew.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2184,7 +2355,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            Yes. All premium icons include a commercial license. Single Pack purchases include a single-project license. Pro and Launch Bundle include unlimited-project commercial use.
+            Yes. All premium icons include a commercial license. Single Pack purchases and Pro Monthly claimed collections include a single-project license. Active Pro, Pro Annual included collections, and Launch Bundle include unlimited-project commercial use.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -2207,17 +2378,22 @@ function renderPricingPage() {
   const proAmount = document.getElementById('pricingProAmount');
   const proPeriod = document.getElementById('pricingProPeriod');
   const proOriginal = document.getElementById('pricingProOriginal');
+  const proDesc = document.getElementById('pricingProDesc');
+  const proFeatures = document.getElementById('pricingProFeatures');
 
   let isAnnualState = false;
 
   function setPeriod(annual) {
     const plan = annual ? getProPlan('annual') : getProPlan('monthly');
+    const pricingCopy = annual ? annualPricing : monthlyPricing;
     isAnnualState = annual;
     monthlyBtn.classList.toggle('pricing-toggle__seg--active', !annual);
     annualBtn.classList.toggle('pricing-toggle__seg--active', annual);
 
     proAmount.textContent = plan.amount;
     proPeriod.textContent = plan.period;
+    if (proDesc) proDesc.textContent = pricingCopy.description;
+    if (proFeatures) proFeatures.innerHTML = renderPricingFeatureList(pricingCopy.features);
     if (plan.originalAmount) {
       proOriginal.style.display = 'inline';
       proOriginal.textContent = plan.originalAmount;
@@ -2270,17 +2446,17 @@ function renderTermsPage() {
 
   page.innerHTML = `
     <div class="terms-content">
-      <p class="terms-content__updated">Last updated: March 26, 2026</p>
+      <p class="terms-content__updated">Last updated: April 8, 2026</p>
 
       <section class="terms-section">
         <h3 class="terms-section__title">1. Usage Rights</h3>
-        <p>SuperIcons provides free and premium icon assets for use in digital products. Free icons from the 9 open-source libraries (Lucide, Heroicons, Material, Bootstrap, Phosphor, Tabler, Ionicons, Font Awesome, Radix) retain their original open-source licenses.</p>
+        <p>SuperIcons provides free and premium icon assets for use in digital products. Free icons from the 10 open-source libraries available in SuperIcons retain their original open-source licenses.</p>
         <p>Premium animated collections are proprietary assets created by Curly Mole Labs. Your usage rights depend on your license tier (see Section 4 below).</p>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">2. AI Output Rights</h3>
-        <p>Icons retrieved via the SuperIcons MCP server or API may be used in AI-generated code output. The generated code (HTML, CSS, JSX) that references or embeds our icons is your property.</p>
+        <p>Icons retrieved via the SuperIcons MCP server may be used in AI-generated code output. The generated code (HTML, CSS, JSX) that references or embeds our icons is your property.</p>
         <p>However, the underlying SVG and CSS animation source files remain the intellectual property of Curly Mole Labs. You may not use AI tools to extract, reverse-engineer, or bulk-export raw icon assets.</p>
       </section>
 
@@ -2302,20 +2478,20 @@ function renderTermsPage() {
         <div class="terms-tier-grid">
           <div class="terms-tier">
             <h4>Single Project License</h4>
-            <p>Applies to: A-la-carte purchases and Pro collection claims</p>
-            <p>Use the purchased collection in one (1) project. Additional projects require additional purchases or a Pro subscription.</p>
+            <p>Applies to: A-la-carte purchases and Pro Monthly collection claims</p>
+            <p>Use the purchased collection in one (1) project. Additional projects require additional purchases, Launch Bundle, Pro Annual ownership, or an active Pro subscription.</p>
           </div>
           <div class="terms-tier">
             <h4>Unlimited Project License</h4>
-            <p>Applies to: Pro subscribers, Launch Edition purchasers</p>
-            <p>Use purchased collections in unlimited projects, including client work. Valid for as long as your Pro subscription is active, or permanently for Launch Edition.</p>
+            <p>Applies to: Active Pro subscribers, Pro Annual included collections, Launch Edition purchasers</p>
+            <p>Use eligible collections in unlimited projects, including client work. Valid for as long as your subscription is active for monthly Pro and future annual drops, and permanently for Pro Annual included collections and Launch Edition purchases.</p>
           </div>
         </div>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">5. Refund Policy</h3>
-        <p><strong>Pro Subscription:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Collections you add to your library remain yours permanently.</p>
+        <p><strong>Pro Subscription:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Monthly claims stay in your library permanently. Pro Annual keeps the 8 included premium collections in your library permanently, while future premium drops and Pro tools end when the annual term ends unless renewed.</p>
         <p><strong>One-time Purchases:</strong> Due to the digital nature of our products, we do not offer refunds on individual collection purchases or the Launch Edition bundle once download access has been granted.</p>
         <p><strong>Exceptions:</strong> If you experience a technical issue that prevents you from accessing your purchased content, contact us within 14 days for a full refund or resolution.</p>
       </section>
@@ -2328,6 +2504,173 @@ function renderTermsPage() {
     </div>`;
 
   gridArea.appendChild(page);
+}
+
+function renderMcpPage() {
+  removePackCatalog();
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const page = document.createElement('div');
+  page.id = 'mcpView';
+  page.className = 'mcp-view';
+
+  page.innerHTML = `
+    <section class="mcp-hero">
+      <span class="mcp-hero__eyebrow">MCP Integration</span>
+      <h2 class="mcp-hero__title">Give your coding agent 20,000+ icons</h2>
+      <p class="mcp-hero__copy">Search, retrieve, and paste SVG icons directly into code through the Model Context Protocol. Free icons work out of the box. Premium collections unlock with a Pro subscription or API key.</p>
+      <div class="mcp-hero__actions">
+        <a class="mcp-btn mcp-btn--primary" href="#mcpInstall">Install the MCP server</a>
+        <a class="mcp-btn mcp-btn--secondary" href="#mcpGuides">Setup guides</a>
+      </div>
+    </section>
+
+    <div class="mcp-layout">
+      <div class="mcp-layout__main">
+        <section class="mcp-card" id="mcpInstall">
+          <h3 class="mcp-card__title">Add Supericons to your MCP config</h3>
+          <p class="mcp-card__copy">One local stdio server works across every MCP-capable client. Paste the config below into your editor's MCP settings.</p>
+          <div class="mcp-code">
+            <button class="mcp-code__copy" type="button" id="mcpPageCopyBtn">Copy</button>
+            <pre class="mcp-code__pre"><code id="mcpPageConfig">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+          <p class="mcp-card__copy mcp-card__copy--spaced">After connecting, your agent can search icons, retrieve SVG output, and access premium collections tied to your account or API key.</p>
+        </section>
+
+        <section class="mcp-card">
+          <h3 class="mcp-card__title">What the server provides</h3>
+          <div class="mcp-grid">
+            <article class="mcp-mini-card">
+              <h4>Semantic icon search</h4>
+              <p>Find icons across free and premium libraries using natural-language queries optimized for coding workflows.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Ready-to-use SVG output</h4>
+              <p>Get clean SVG markup directly in your code, no browser tabs, no asset folders, no copy-paste friction.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Access-aware entitlements</h4>
+              <p>Free users search 20,000+ icons. Pro subscribers and pack owners also access the premium collections they have purchased.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Built for agent workflows</h4>
+              <p>Works naturally in refactors, UI iteration, prototype builds, documentation, and any task that needs icons on demand.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="mcp-card" id="mcpGuides">
+          <h3 class="mcp-card__title">Works with any MCP client</h3>
+          <p class="mcp-card__copy">The Supericons stdio server connects to any editor, agent, or tool that supports the Model Context Protocol. While the underlying configuration is the same everywhere, the setup UX differs by client.</p>
+          <p class="mcp-card__copy">Here are the specific setup guides we maintain for popular clients:</p>
+          <div class="mcp-pill-list">
+            <span class="mcp-pill">Claude Code</span>
+            <span class="mcp-pill">Codex</span>
+            <span class="mcp-pill">Cursor</span>
+            <span class="mcp-pill">OpenCode</span>
+            <span class="mcp-pill">Cline</span>
+            <span class="mcp-pill">Copilot agent</span>
+            <span class="mcp-pill">Windsurf</span>
+          </div>
+          <div class="mcp-grid mcp-grid--guides">
+            <article class="mcp-mini-card">
+              <h4><a href="https://docs.anthropic.com/en/docs/claude-code/mcp" target="_blank" rel="noopener noreferrer">Claude Code</a></h4>
+              <p>Anthropic's official MCP docs: CLI setup, Windows notes, and troubleshooting.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://developers.openai.com/codex/mcp" target="_blank" rel="noopener noreferrer">Codex</a></h4>
+              <p>OpenAI's official MCP docs: CLI and <code>config.toml</code> setup.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://docs.cursor.com/en/context/mcp" target="_blank" rel="noopener noreferrer">Cursor</a></h4>
+              <p>Cursor's official MCP docs: JSON config and in-app MCP settings.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h4>
+              <p>OpenCode's official MCP docs: server config and CLI flow.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h4>
+              <p>Cline's official MCP docs: Servers UI and <code>cline_mcp_settings.json</code> config.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h4>
+              <p>GitHub's official docs: repository MCP config and Copilot environment secrets.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h4>
+              <p>Windsurf's Cascade MCP docs: settings UI and <code>mcp_config.json</code> flow.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="mcp-card">
+          <h3 class="mcp-card__title">Example prompts</h3>
+          <div class="mcp-grid">
+            <article class="mcp-mini-card">
+              <h4>UI build</h4>
+              <ul>
+                <li>Find a tab icon for analytics.</li>
+                <li>Show the Lucide and Tabler options side by side.</li>
+                <li>Insert the chosen SVG into my React component.</li>
+              </ul>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Brand logos</h4>
+              <ul>
+                <li>Search Simple Icons for Stripe, Vercel, and Supabase.</li>
+                <li>Return the SVGs in monochrome.</li>
+                <li>Place them in a footer component.</li>
+              </ul>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Premium assets</h4>
+              <ul>
+                <li>Fetch icons from a premium collection I own.</li>
+                <li>Drop them into a prototype component.</li>
+                <li>Keep collection access tied to my account.</li>
+              </ul>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Available tools</h4>
+              <ul>
+                <li><code>search_icons</code>: find the closest match.</li>
+                <li><code>get_icon</code>: retrieve a specific SVG by ID.</li>
+                <li><code>list_libraries</code>: list all available icon sources.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>`;
+
+  gridArea.appendChild(page);
+
+  const copyBtn = page.querySelector('#mcpPageCopyBtn');
+  const configEl = page.querySelector('#mcpPageConfig');
+  if (copyBtn && configEl) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(configEl.textContent || '');
+        const original = copyBtn.textContent;
+        copyBtn.textContent = 'Copied';
+        window.setTimeout(() => {
+          copyBtn.textContent = original;
+        }, 1800);
+      } catch (err) {
+        console.warn('[Store] Failed to copy MCP config:', err?.message || err);
+      }
+    });
+  }
 }
 
 // ── Launch Edition Card ───────────────────────────────────────
@@ -2375,9 +2718,8 @@ function createLaunchEditionCard(launchProducts) {
 
 async function handleLaunchEditionPurchase() {
   if (!isLoggedIn()) {
-    const modal = document.getElementById('authModal');
-    if (modal) modal.classList.add('open');
-    showToast('Sign in to purchase');
+    promptForAuth('purchase');
+    showToast('Sign in to continue your purchase');
     return;
   }
 
@@ -2573,10 +2915,12 @@ async function handlePackClaim(product) {
 // ── Purchase Flow ─────────────────────────────────────────────
 async function handlePurchase(product) {
   if (!isLoggedIn()) {
-    // Open auth modal
-    const modal = document.getElementById('authModal');
-    if (modal) modal.classList.add('open');
-    showToast('Sign in to purchase');
+    promptForAuth('purchase', {
+      view: currentView,
+      productId: product?.id,
+      productSlug: product?.slug,
+    });
+    showToast('Sign in to continue your purchase');
     return;
   }
 
@@ -2666,28 +3010,37 @@ function wireStoreListeners() {
   // Check for purchase success/cancel URL params
   const params = new URLSearchParams(window.location.search);
   const purchaseProductId = params.get('product_id');
+  const subscriptionPlan = params.get('subscription_plan');
   if (params.get('purchase') === 'success') {
     // Clean URL immediately
     window.history.replaceState({}, '', window.location.pathname);
     // Show success toast
     showToast('Purchase successful! Opening your collection...');
     // Refresh purchases and navigate to My Collection
-    handlePurchaseSuccess(purchaseProductId);
+    handlePurchaseSuccess(purchaseProductId, subscriptionPlan);
   } else if (params.get('purchase') === 'canceled') {
     showToast('Payment was not completed. Try again.');
     window.history.replaceState({}, '', window.location.pathname);
   }
+
+  const requestedView = params.get('view');
+  if (DIRECT_ROUTE_VIEWS.has(requestedView || '')) {
+    switchView(requestedView);
+    window.history.replaceState({}, '', window.location.pathname);
+  }
 }
 
-async function handlePurchaseSuccess(expectedProductId = null) {
+async function handlePurchaseSuccess(expectedProductId = null, subscriptionPlan = null) {
   // Wait for webhook to process, then fetch purchases.
   let retries = 0;
   const maxRetries = 6;
   const baselineCount = userPurchases.length;
+  const expectsAnnualGrant = subscriptionPlan === 'annual';
   while (retries < maxRetries) {
     await new Promise(r => setTimeout(r, 1200));
     await ensureUserPurchasesLoaded({ force: true, rerender: false });
-    if (!expectedProductId) break;
+    if (!expectedProductId && !expectsAnnualGrant) break;
+    if (expectsAnnualGrant && userPurchases.length > baselineCount) break;
     if (expectedProductId === 'launch_edition' && userPurchases.length > baselineCount) break;
     const foundExpected = userPurchases.some(p => p.product_id === expectedProductId);
     if (foundExpected) break;
@@ -9556,8 +9909,11 @@ function showToast(msg) {
   const toast = document.getElementById('toast');
   if (!toast) return;
   toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  toast.classList.add('visible');
+  clearTimeout(toastTimeout);
+  toastTimeout = window.setTimeout(() => {
+    toast.classList.remove('visible');
+  }, 2500);
 }
 
 // ── Exports for main.js ───────────────────────────────────────

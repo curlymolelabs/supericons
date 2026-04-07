@@ -32,7 +32,7 @@ NOT PERMITTED:
 - Include in open-source projects as bundled assets
 - Use in tools that generate or redistribute icons
 
-AI USAGE: Icons retrieved via the MCP server or API may be used
+AI USAGE: Icons retrieved via the MCP server may be used
 in AI-generated code output for the licensed project only.
 
 This license is perpetual for the licensed project.
@@ -60,7 +60,7 @@ NOT PERMITTED:
 - Include in open-source projects as bundled assets
 - Use in tools that generate or redistribute icons
 
-AI USAGE: Icons retrieved via the MCP server or API may be used
+AI USAGE: Icons retrieved via the MCP server may be used
 in AI-generated code output for any of your licensed projects.
 
 This license is perpetual for all projects.
@@ -132,8 +132,8 @@ serve(async (req) => {
     }
 
     // Determine license tier
-    // Pro subscribers and Launch Edition buyers get unlimited license
-    // A-la-carte and credit redemptions get single-project license
+    // Pro subscribers, Pro Annual included packs, and Launch Edition buyers get unlimited license.
+    // A-la-carte purchases and monthly claims get single-project license.
     let licenseType = 'single';
     let licenseText = SINGLE_PROJECT_LICENSE;
 
@@ -151,7 +151,7 @@ serve(async (req) => {
     }
 
     // Check if acquired via Launch Edition (bundle purchase)
-    if (purchase.source === 'launch_edition' || purchase.source === 'bundle') {
+    if (purchase.source === 'launch_edition' || purchase.source === 'bundle' || purchase.source === 'pro_annual_grant') {
       licenseType = 'unlimited';
       licenseText = UNLIMITED_LICENSE;
     }

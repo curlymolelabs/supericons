@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuperIcons MCP for Codex</title>
+  <meta name="description" content="Set up the SuperIcons MCP server for Codex and search or insert icons directly into your coding workflow.">
+  <link rel="canonical" href="https://supericons.dev/mcp/codex/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/mcp/docs.css">
+</head>
+<body>
+  <div class="docs-shell">
+    <nav class="docs-nav" aria-label="Primary">
+      <a class="docs-nav__brand" href="/">
+        <img src="/favicon.svg" alt="">
+        <span>SuperIcons</span>
+      </a>
+      <div class="docs-nav__links">
+        <a class="docs-nav__link" href="/mcp/">MCP hub</a>
+        <a class="docs-nav__link" href="/mcp/claude-code/">Claude Code</a>
+        <a class="docs-nav__link" href="/mcp/cursor/">Cursor</a>
+      </div>
+    </nav>
+
+    <section class="docs-tool-card">
+      <span class="docs-eyebrow">Codex</span>
+      <h1 style="margin-top: 16px; font-size: clamp(2rem, 4vw, 3.6rem);">Set up SuperIcons MCP in Codex</h1>
+      <p>
+        Use SuperIcons MCP in Codex when you want icon search to live inside the same agent loop as code edits,
+        refactors, and UI fixes.
+      </p>
+      <div class="docs-code" style="margin-top: 22px;">
+        <button class="docs-copy" type="button" data-copy-target="codex-config">Copy</button>
+        <pre><code id="codex-config">codex mcp add supericons -- npx -y supericons-mcp</code></pre>
+      </div>
+      <div class="docs-code" style="margin-top: 16px;">
+        <button class="docs-copy" type="button" data-copy-target="codex-config-toml">Copy config.toml</button>
+        <pre><code id="codex-config-toml">[mcp_servers.supericons]
+command = "npx"
+args = ["-y", "supericons-mcp"]</code></pre>
+      </div>
+      <p style="margin-top: 14px;">
+        The CLI command is the quickest path. If you manage Codex manually, use the same values in
+        <code>~/.codex/config.toml</code>.
+      </p>
+    </section>
+
+    <div class="docs-main" style="margin-top: 24px;">
+      <div class="docs-column">
+        <section class="docs-section">
+          <h2>Codex flow</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>1. Register the MCP server</h3>
+              <p>Run <code>codex mcp add supericons -- npx -y supericons-mcp</code> or add the same values to <code>config.toml</code>.</p>
+            </article>
+            <article class="docs-card">
+              <h3>2. Confirm Codex can see it</h3>
+              <p>Open Codex and use <code>/mcp</code> to confirm the server is active before you rely on icon tool calls.</p>
+            </article>
+            <article class="docs-card">
+              <h3>3. Try a narrow prompt</h3>
+              <p>Start with a concrete request like a navigation, auth, or dashboard icon so you can verify the flow quickly.</p>
+            </article>
+            <article class="docs-card">
+              <h3>4. Insert the SVG</h3>
+              <p>After selecting an icon, ask Codex to place the SVG inside your component or template file directly.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Codex examples</h2>
+          <div class="docs-code">
+            <pre><code>Search SuperIcons for a secure login icon.
+Show me a Lucide option and a Tabler option.
+Insert the Lucide SVG into the sign-in button component.</code></pre>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Config saves but tool is absent</h3>
+              <p>Use <code>/mcp</code> in Codex to inspect active servers and restart the session after changing MCP config.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Package resolution fails</h3>
+              <p>Ensure `npx` is available in the shell environment that Codex uses for local MCP processes.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Premium results are unavailable</h3>
+              <p>Premium icon access depends on your SuperIcons entitlement. Free flows still return 20,000+ icons without a paid plan.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="docs-column">
+        <section class="docs-sidebar">
+          <h3>Related guides</h3>
+          <div class="docs-link-list">
+            <a href="/mcp/">MCP hub</a>
+            <a href="/mcp/claude-code/">Claude Code setup</a>
+            <a href="/mcp/cursor/">Cursor setup</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-copy-target]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.getAttribute('data-copy-target'));
+        if (!target) return;
+        await navigator.clipboard.writeText(target.textContent || '');
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        window.setTimeout(() => {
+          button.textContent = original;
+        }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>

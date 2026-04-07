@@ -1,0 +1,349 @@
+:root {
+  color-scheme: light;
+  --mcp-bg: #f7f4ed;
+  --mcp-surface: rgba(255, 255, 255, 0.84);
+  --mcp-border: rgba(37, 28, 12, 0.12);
+  --mcp-text: #1f1a13;
+  --mcp-text-dim: #5d5345;
+  --mcp-primary: #e26d2f;
+  --mcp-primary-deep: #a54b1f;
+  --mcp-code-bg: #171411;
+  --mcp-code-text: #f7efe5;
+  --mcp-shadow: 0 16px 40px rgba(40, 26, 7, 0.08);
+  --mcp-radius-lg: 24px;
+  --mcp-radius-md: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(226, 109, 47, 0.14), transparent 32%),
+    linear-gradient(180deg, #fcfaf6 0%, var(--mcp-bg) 100%);
+  color: var(--mcp-text);
+}
+
+a {
+  color: inherit;
+}
+
+.docs-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 80px;
+}
+
+.docs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.docs-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.docs-nav__brand img {
+  width: 28px;
+  height: 28px;
+}
+
+.docs-nav__links {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.docs-nav__link {
+  color: var(--mcp-text-dim);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.docs-nav__link:hover,
+.docs-nav__brand:hover {
+  color: var(--mcp-primary-deep);
+}
+
+.docs-hero,
+.docs-section,
+.docs-sidebar,
+.docs-callout,
+.docs-faq,
+.docs-tool-card {
+  background: var(--mcp-surface);
+  border: 1px solid var(--mcp-border);
+  border-radius: var(--mcp-radius-lg);
+  box-shadow: var(--mcp-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.docs-hero {
+  padding: 40px;
+  margin-bottom: 24px;
+}
+
+.docs-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(226, 109, 47, 0.12);
+  color: var(--mcp-primary-deep);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.docs-hero h1,
+.docs-section h2,
+.docs-faq h2,
+.docs-tool-card h2 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.docs-hero h1 {
+  margin-top: 18px;
+  font-size: clamp(2.3rem, 5vw, 4.6rem);
+  max-width: 12ch;
+}
+
+.docs-hero p {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  color: var(--mcp-text-dim);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.docs-hero__actions,
+.docs-pill-list,
+.docs-grid,
+.docs-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.docs-hero__actions {
+  margin-top: 28px;
+}
+
+.docs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.docs-btn--primary {
+  background: var(--mcp-primary);
+  color: #fff;
+}
+
+.docs-btn--primary:hover {
+  background: var(--mcp-primary-deep);
+}
+
+.docs-btn--secondary {
+  border-color: var(--mcp-border);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.docs-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.docs-column {
+  display: grid;
+  gap: 24px;
+}
+
+.docs-section,
+.docs-faq,
+.docs-tool-card,
+.docs-sidebar,
+.docs-callout {
+  padding: 30px;
+}
+
+.docs-section h2,
+.docs-faq h2,
+.docs-tool-card h2 {
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+}
+
+.docs-section p,
+.docs-faq p,
+.docs-tool-card p,
+.docs-sidebar p,
+.docs-callout p {
+  margin: 0 0 14px;
+  color: var(--mcp-text-dim);
+  line-height: 1.7;
+}
+
+.docs-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--mcp-border);
+  font-size: 0.9rem;
+  color: var(--mcp-text);
+}
+
+.docs-code {
+  position: relative;
+  border-radius: var(--mcp-radius-md);
+  overflow: hidden;
+  background: var(--mcp-code-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.docs-code pre {
+  margin: 0;
+  padding: 24px 20px 20px;
+  overflow-x: auto;
+}
+
+.docs-code code {
+  font-family: "SF Mono", Consolas, "Liberation Mono", monospace;
+  color: var(--mcp-code-text);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.docs-copy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.docs-copy:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.docs-card {
+  padding: 18px;
+  border-radius: var(--mcp-radius-md);
+  border: 1px solid var(--mcp-border);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.docs-card h3,
+.docs-sidebar h3,
+.docs-callout h3 {
+  margin: 0 0 10px;
+  font-size: 1.02rem;
+}
+
+.docs-card p,
+.docs-card ul,
+.docs-sidebar ul,
+.docs-callout ul,
+.docs-tool-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--mcp-text-dim);
+  line-height: 1.7;
+}
+
+.docs-link-list {
+  display: grid;
+  gap: 10px;
+}
+
+.docs-link-list a {
+  color: var(--mcp-primary-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.docs-link-list a:hover {
+  text-decoration: underline;
+}
+
+.docs-faq__item + .docs-faq__item {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--mcp-border);
+}
+
+.docs-footer {
+  margin-top: 28px;
+  color: var(--mcp-text-dim);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 960px) {
+  .docs-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-shell {
+    width: min(100% - 20px, 1120px);
+    padding-top: 18px;
+  }
+
+  .docs-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .docs-hero,
+  .docs-section,
+  .docs-faq,
+  .docs-sidebar,
+  .docs-callout,
+  .docs-tool-card {
+    padding: 22px;
+  }
+
+  .docs-grid {
+    grid-template-columns: 1fr;
+  }
+}

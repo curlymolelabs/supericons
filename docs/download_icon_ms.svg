@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#ffffff" data-ml-large-viewbox="true" data-ml-has-anim-target="true" width="48" height="48" id="animated-icon"><style>/* Supericons Motion Lab */
+/* Animation: glide | Trigger: hover | Duration: 500ms */
+
+@keyframes ml-icon {
+  0% {
+    transform: translateX(0px) scale(1.35) rotate(0deg);
+  }
+  25% {
+    transform: translateX(6.8px) scale(1.35) rotate(2.5deg);
+  }
+  50% {
+    transform: translateX(0px) scale(1.35) rotate(0deg);
+  }
+  75% {
+    transform: translateX(-6.8px) scale(1.35) rotate(-2.5deg);
+  }
+  100% {
+    transform: translateX(0px) scale(1.35) rotate(0deg);
+  }
+}
+#animated-icon:hover[data-ml-has-anim-target="true"] [data-ml-anim-target="true"], #animated-icon:hover:not([data-ml-has-anim-target="true"]) {
+  animation: ml-icon 500ms ease-in-out infinite;
+}
+
+/* Root transform overrides */
+#animated-icon[data-ml-has-anim-target="true"] [data-ml-anim-target="true"], #animated-icon:not([data-ml-has-anim-target="true"]) {
+  transform: scale(1.35);
+  transform-origin: center;
+}
+
+</style><g class="ml-icon-root" data-ml-anim-target="true"><path d="M480-724.62q-30.46 0-52.15-21.69-21.7-21.69-21.7-52.15 0-30.46 21.7-52.15 21.69-21.7 52.15-21.7 30.46 0 52.15 21.7 21.7 21.69 21.7 52.15 0 30.46-21.7 52.15-21.69 21.69-52.15 21.69ZM376.16-90v-521.54H139.23v-60h681.54v60H583.84V-90h-59.99v-230h-87.7v230h-59.99Z" fill="#FF6B35"></path></g></svg>

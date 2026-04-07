@@ -1,76 +1,270 @@
-# Supericons Pre-Launch Checklist
+# Supericons Prelaunch Checklist
 
-## P0: Blocking (Must fix before launch)
+## Goal
 
-### Security
-- [ ] **Audit all Edge Functions for JWT gate issue** - `create-checkout`, `create-portal`, `serve-premium-asset`, `download-pack`, `redeem-credit` may have the same "Invalid JWT" error that broke `api-keys`. Each function that handles auth internally should have gateway JWT verification OFF.
-- [ ] **Rotate exposed API key** - The API key `si_18f7e375...` was visible in console logs and screenshots during debugging. Generate a new key and revoke this one before launch.
-- [ ] **Verify RLS policies cover all tables** - Confirm `si_api_keys`, `si_subscriptions`, `si_purchases`, `si_products`, `si_credits` all have proper RLS enabled with correct policies.
-- [ ] **Remove Supabase access token from MCP config** - The `sbp_a0f71e...` token in `mcp_config.json` is a management token. Ensure it is not committed to any public repo.
+Finish all code, dashboard configuration, auth/email setup, and deployment prep before the first paid production deploy.
 
-### Payment Flow
-- [ ] **Test Stripe checkout end-to-end** - Single pack purchase: product selection, Stripe redirect, webhook processing, purchase record creation. Verify with a Stripe test card.
-- [ ] **Test Stripe subscription end-to-end** - Pro monthly/annual: checkout, webhook, subscription record creation, portal access for cancellation.
-- [ ] **Verify webhook idempotency** - `stripe-webhook` must handle duplicate events gracefully (no double-inserts).
-- [ ] **Test credit redemption flow** - Pro users with credits: redeem credit for a pack, verify purchase record created without Stripe charge.
+This checklist is the short step-by-step execution plan.
 
-### Data Integrity
-- [ ] **Verify all 8 premium collections have 50 icons each** - Confirm SVGs and CSS files are uploaded to Supabase Storage for all collections: ai-agentic, data-charts, ecommerce, media-playback, navigation-menus, security-auth, social-communication, status-feedback.
-- [ ] **Verify manifest.json is complete** - All 8 collections have correct `classMap` entries for CSS reverse-mapping.
+For the fuller status tracker, see:
+- [prelaunch-local-first-monitoring-plan.md](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/plans/prelaunch-local-first-monitoring-plan.md)
 
----
+## Working Rule
 
-## P1: High Priority (Should fix before launch)
+Do not create the first paid Netlify deploy until:
 
-### Production Build
-- [ ] **Run `npm run build`** - `dist/` is stale. The production bundle still has the old `isPro()` gate and missing auth changes.
-- [ ] **Deploy updated `dist/` to hosting** - After building, deploy to your hosting provider (Vercel, Netlify, etc.).
-- [ ] **Verify production site loads correctly** - Check all pages: icon grid, collections, pricing, dashboard, motion lab, converter.
+- the converter is deploy-ready
+- the production build works locally
+- Supabase Auth is configured
+- Resend SMTP and email templates are configured
+- Google OAuth is configured
+- Cloudflare / Railway / Netlify settings are already decided
 
-### MCP Package
-- [ ] **Publish `supericons-mcp` to npm** - Current version 0.1.0 has the old broken auth (3 REST calls). Bump to 0.2.0 with the new Edge Function auth and publish.
-- [ ] **Update MCP package.json description** - Add keywords, repository URL, author, license fields for npm discoverability.
-- [ ] **Test `npx supericons-mcp` installs and runs** - After publishing, verify the npm package works for external users with and without API keys.
+## Current Snapshot
 
-### Edge Function Deployment
-- [ ] **Verify `validate-mcp-key` is deployed** - Confirm the function exists and responds correctly (done, but double-check).
-- [ ] **Verify `api-keys` is deployed with latest code** - Confirm the pack-buyer guard update is live.
-- [ ] **Check all Edge Functions are deployed** - Ensure local code matches deployed versions for all 8 functions.
+### Already Done
 
----
+- [x] live Stripe app-side price IDs updated in [store.js](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js)
+- [x] live Stripe pack price IDs updated in Supabase `si_products`
+- [x] live Stripe webhook destination created
+- [x] live `STRIPE_SECRET_KEY` updated in Supabase
+- [x] live `STRIPE_WEBHOOK_SECRET` updated in Supabase
+- [x] Stripe customer portal configured for:
+  - invoice history
+  - payment method updates
+  - cancellations
+  - monthly/annual plan switching
+- [x] converter server patched for Railway-style hosting in [tools/converter-proof-service/server.mjs](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/tools/converter-proof-service/server.mjs)
+- [x] local converter proof smoke and production-style build/preview completed
+- [x] Supabase Auth URL config updated for:
+  - `https://supericons.dev`
+  - `http://localhost:5173`
+- [x] Resend auth domain verified for `auth.supericons.dev`
+- [x] password reset flow implemented in the app
+- [x] reset-password email template installed and tested
+- [x] password-changed notification template installed and tested
+- [x] basic account modal added with:
+  - display name editing
+  - read-only email display
+  - password reset trigger
+- [x] favicon replaced with the Supericons logo mark in [public/favicon.svg](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/public/favicon.svg)
 
-## P2: Medium Priority (Should fix within first week)
+### Still Missing
 
-### Per-Collection Gating
-- [ ] **Test pack-buyer access** - Create a test account with 1 purchased pack. Verify MCP returns only that pack's icons (not all 400). Currently only Pro (all icons) has been tested.
-- [ ] **Test bundle-buyer access** - Create a test account with a bundle purchase. Verify all 8 packs are accessible.
-- [ ] **Test revoked key behavior** - Revoke an API key and verify the MCP correctly rejects it.
-- [ ] **Test expired subscription** - Let a Pro subscription expire and verify MCP downgrades to free-only.
+- [ ] Railway project not created yet
+- [ ] Netlify site not created yet
+- [ ] Cloudflare production DNS not prepared yet
+- [ ] Google OAuth production config not verified yet
+- [ ] Google sign-in has not been verified locally yet
+- [ ] confirmation email signup flow has not been re-verified end to end yet
+- [ ] decide whether magic-link auth is part of launch scope
+- [ ] first live smoke test is still blocked on hosting setup
 
-### UX Polish
-- [ ] **Fix "Failed to load API keys" on page load** - The GET request to api-keys fails initially (may be a timing issue with auth state). Ensure keys load on dashboard open.
-- [ ] **Add loading state to Generate Key button** - Disable button and show spinner while the Edge Function processes.
-- [ ] **Show toast on successful key generation** - Currently only shows the modal. Add a success toast after the modal is dismissed.
-- [ ] **Handle key copy failure gracefully** - If clipboard API is blocked, show the key in a selectable text field.
+## Do Now
 
-### Documentation
-- [ ] **Write MCP setup guide** - Instructions for Cursor, Claude, VS Code, Windsurf, Antigravity. Include both free and premium setup.
-- [ ] **Write API documentation** - Document the REST API for programmatic access (if exposing beyond MCP).
-- [ ] **Update README.md** - Project overview, architecture, setup instructions for contributors.
+Work top to bottom. Do not skip ahead to deploy setup.
 
----
+### Phase 1. Make The Code Deploy-Ready Locally
 
-## P3: Low Priority (Nice to have)
+Status: `completed`
 
-### Analytics
-- [ ] **Track MCP usage** - `last_used` timestamp is updated on each validation. Add a dashboard view showing API key usage stats.
-- [ ] **Track premium icon access patterns** - Which collections are most popular via MCP?
+1. Patch the converter server for Railway hosting.
+   - [x] update [tools/converter-proof-service/server.mjs](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/tools/converter-proof-service/server.mjs)
+   - [x] support `process.env.PORT`
+   - [x] bind to `0.0.0.0`
+   - [x] keep local fallback for development
 
-### Performance
-- [ ] **Add caching to validate-mcp-key** - Consider caching validated keys for 5-10 minutes to reduce Edge Function invocations.
-- [ ] **Optimize MCP startup time** - Loading 17,000+ icons takes a moment. Consider lazy-loading or caching the icon index.
+2. Verify the converter still works locally.
+   - [x] local converter proof service is compatible with the updated host/port logic
+   - [x] run `npm run converter:proof-smoke`
+   - [x] confirm the proof endpoint responds locally
 
-### Future Features
-- [ ] **Rate limiting on API keys** - Prevent abuse of premium icon access.
-- [ ] **API key scoping** - Allow users to create read-only vs full-access keys.
-- [ ] **Usage dashboard in My Purchases** - Show API call count, last used, collections accessed.
+3. Run a local production-style frontend test.
+   - [x] set `VITE_CONVERTER_PROOF_URL=http://127.0.0.1:4318/api/convert/png-to-svg`
+   - [x] run `npm run build`
+   - [x] run `npm run preview`
+   - [x] verify the production build for:
+     - [x] landing
+     - [x] pricing
+     - [x] auth modal
+     - [x] converter entry flow
+     - [x] MCP page
+     - [x] favicon / OG asset paths
+
+Why this phase is first:
+- the frontend only uses the proof service in production if `VITE_CONVERTER_PROOF_URL` is set in [store.js](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js)
+
+### Phase 2. Finish Supabase Auth And Email
+
+Status: `mostly_completed`
+
+4. Configure Supabase Auth URLs.
+   - [x] set Site URL to `https://supericons.dev`
+   - [x] add redirect URL `https://supericons.dev`
+   - [x] add redirect URL `http://localhost:5173`
+   - [x] verify auth flows still match [auth.js](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/auth.js)
+
+5. Set up Resend.
+   - [x] confirm the Resend account/project
+   - [x] verify sending domain for `auth.supericons.dev`
+   - [x] note required DNS records for later Cloudflare entry:
+     - [x] SPF
+     - [x] DKIM
+     - [ ] optional DMARC
+
+6. Configure Supabase custom SMTP with Resend.
+   - [x] SMTP host `smtp.resend.com`
+   - [x] SMTP port `465`
+   - [x] SMTP user `resend`
+   - [x] SMTP password configured
+   - [x] sender identity is working for auth mail
+   - [ ] final sender copy should be rechecked before launch
+
+7. Implement the real reset-password flow in the app.
+   - [x] add a `Forgot password?` entry point in the auth UI
+   - [x] send recovery email with `resetPasswordForEmail(...)`
+   - [x] route recovery redirects back into the app
+   - [x] detect Supabase `PASSWORD_RECOVERY` state
+   - [x] show a dedicated `Set new password` form
+   - [x] complete password update with `updateUser({ password })`
+   - [x] show success/error states clearly
+   - [x] verify the recovery flow works locally end to end
+
+8. Install and verify email templates.
+   - [x] confirmation template exists in [docs/confirmation-email-supabase.html](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/docs/confirmation-email-supabase.html)
+   - [x] branded confirmation template appears installed in Supabase
+   - [x] create branded reset-password template
+   - [x] install reset-password template in Supabase
+   - [x] create branded password-changed template
+   - [x] install password-changed template in Supabase
+   - [ ] decide whether magic-link login is part of launch scope
+   - [ ] if magic link is required:
+     - [ ] create branded magic-link template
+     - [ ] implement or verify magic-link app flow
+
+Current remaining gap:
+- email/password recovery is working, but signup confirmation should still be re-verified end to end after Google OAuth is configured
+
+9. Verify email auth end to end.
+   - [ ] sign up with email
+   - [ ] receive confirmation email
+   - [ ] confirm account
+   - [x] sign in with email/password
+   - [x] request password reset email
+   - [x] open recovery link
+   - [x] set a new password successfully
+   - [x] sign in with the new password
+
+### Phase 3. Finish Google OAuth
+
+Status: `pending`
+
+9. Create or update the Google OAuth web client.
+   - [ ] open Google Cloud Console
+   - [ ] create or update OAuth 2.0 Client ID for Web application
+
+10. Configure Google OAuth URLs.
+   - [ ] authorized JavaScript origin `https://supericons.dev`
+   - [ ] authorized JavaScript origin `http://localhost:5173`
+   - [ ] authorized redirect URI `https://kcjmkakdhsqplvasgkjv.supabase.co/auth/v1/callback`
+
+11. Configure the Google consent screen.
+   - [ ] app name `Supericons`
+   - [ ] support email `hello@supericons.dev`
+   - [ ] app logo
+   - [ ] homepage `https://supericons.dev`
+   - [ ] privacy policy URL
+   - [ ] terms URL
+   - [ ] developer contact `hello@supericons.dev`
+   - [ ] publishing status set appropriately for public launch
+
+12. Connect Google OAuth to Supabase.
+   - [ ] paste Google Client ID into Supabase Auth Provider settings
+   - [ ] paste Google Client Secret into Supabase Auth Provider settings
+   - [ ] enable Google provider
+
+13. Verify Google sign-in locally.
+   - [ ] sign in with Google from localhost
+   - [ ] confirm redirect returns correctly
+   - [ ] confirm account/session state renders correctly
+
+Note:
+- Google OAuth in [auth.js](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/auth.js) uses `redirectTo: window.location.origin`
+
+### Phase 4. Prepare DNS And Hosted Services
+
+Status: `pending`
+
+14. Prepare Cloudflare first.
+   - [ ] confirm Cloudflare will be authoritative for `supericons.dev`
+   - [ ] do not add proxy complexity until the core deploy works
+   - [ ] prepare records for:
+     - [ ] Netlify frontend
+     - [ ] optional `www`
+     - [ ] optional Railway subdomain such as `api.supericons.dev`
+     - [ ] Resend verification
+
+15. Create the Railway project for the converter.
+   - [ ] create Railway project
+   - [ ] deploy the converter service only
+   - [ ] set runtime env/port as required
+   - [ ] verify `/health`
+   - [ ] record the public converter URL
+   - [ ] decide whether a custom API subdomain is needed before launch
+
+16. Create the Netlify site for the frontend.
+   - [ ] create or link the Netlify site
+   - [ ] confirm build command `npm run build`
+   - [ ] confirm publish directory `dist`
+   - [ ] set `VITE_CONVERTER_PROOF_URL` to the Railway converter endpoint
+   - [ ] confirm SPA routing via [netlify.toml](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/netlify.toml)
+
+17. Prepare Cloudflare DNS records after both hosted services exist.
+   - [ ] point root domain to Netlify
+   - [ ] point optional `www` to Netlify
+   - [ ] point optional API subdomain to Railway
+   - [ ] add Resend records as DNS-only where required
+
+### Phase 5. Do The First Online Deploy And Live Smoke Test
+
+Status: `pending`
+
+18. Do the first Railway deploy.
+   - [ ] verify live converter health
+   - [ ] verify live converter request works
+
+19. Do the first Netlify deploy.
+   - [ ] deploy only after Phases 1-4 are ready
+   - [ ] attach `supericons.dev`
+   - [ ] verify SSL
+   - [ ] verify main routes and assets
+
+20. Run live smoke tests.
+   - [ ] open live site in incognito
+   - [ ] sign up with email
+   - [ ] confirm email delivery
+   - [ ] sign in with Google
+   - [ ] test one live single-pack purchase
+   - [ ] test one live Pro purchase
+   - [ ] verify Stripe webhook delivery success
+   - [ ] verify portal open/return flow
+   - [ ] verify premium access unlocks
+   - [ ] verify converter works against Railway
+
+## Launch Scope Decisions Still To Confirm
+
+- [ ] is magic-link auth required for launch
+- [ ] do we want a custom Railway subdomain before launch
+- [ ] do we want `www.supericons.dev` live at launch or root-only first
+
+## Current Recommended Next Step
+
+Start with `Phase 3, Google OAuth production config`:
+
+- create or update the Google OAuth web client
+- add `https://supericons.dev` and `http://localhost:5173`
+- add the Supabase callback URL
+- connect the Google client in Supabase
+- verify Google sign-in locally
+
+Once Google OAuth is verified, the next phase is creating the Railway project and Netlify site.

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Report: Material Symbols Export Limitations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1, h2 {
+            color: #111;
+        }
+        h1 {
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 0.5rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul, ol {
+            margin-bottom: 1.5rem;
+        }
+        code {
+            background-color: #f6f8fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 85%;
+        }
+        .highlight {
+            background-color: #fffbdd;
+            padding: 1rem;
+            border-left: 4px solid #facc15;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Audit Report: Material Symbols Export Limitations</h1>
+
+    <h2>Executive Summary</h2>
+    <p>This audit investigates the reported issue where the customizer panel's export functions ("Copy SVG", "Copy Base64", "Download SVG") and the "Open in Motion Lab" button do not work for the Material Symbols icon library on the Supericons app.</p>
+
+    <h2>Root Cause Analysis</h2>
+    <p>The underlying reason these functions are unavailable stems from the architectural decision to implement Material Symbols as a <strong>Variable Font</strong> (<code>icon.type === 'font'</code>) rather than raw scalable vector graphics (<code>icon.type === 'svg'</code>).</p>
+    
+    <ol>
+        <li><strong>Missing SVG Property</strong>: The export functions strictly depend on the <code>getStyledSvg(icon)</code> helper function, which attempts to retrieve the <code>icon.svg</code> property. Because Material Symbols are rendered via the DOM using font ligatures and CSS variable axes (Weight, Fill, Grade, Optical Size), they do not store or process an actual <code>.svg</code> string in memory.</li>
+        <li><strong>Short-circuiting Logic</strong>: When <code>getStyledSvg(icon)</code> is called for a font-based icon, it returns <code>null</code>. This specifically triggers the fallback frontend toast notifications (e.g., <code>"Font icons: use Copy as Component instead"</code> and <code>"Font icons: PNG export not supported"</code>).</li>
+        <li><strong>Motion Lab Condition</strong>: The "Open in Motion Lab" UI button is explicitly blocked from rendering via a ternary conditional check (<code>if (icon.type === 'svg')</code>) in the customize panel HTML generation. Since Material Symbols evaluate to <code>'font'</code>, the button is omitted from the DOM entirely.</li>
+    </ol>
+
+    <h2>Are Other Libraries Affected?</h2>
+    <div class="highlight">
+        <strong>No.</strong> Based on an audit of the <code>libraryMeta</code> and the application's ingestion rules, Material Symbols is the <em>only</em> library currently implemented as a font.
+    </div>
+    <p>All other libraries (Lucide, Tabler, Phosphor, Heroicons, Bootstrap, Iconoir, Ionicons, Simple Icons, MingCute, and Premium collections) are ingested and treated as scalable vectors (<code>icon.type === 'svg'</code>). As a result, they fully support the graphical rendering pipeline, including SVG batch downloads, Canvas API transformations for PNG/ICO generation, and integration with the Motion Lab ecosystem.</p>
+
+    <h2>Conclusion</h2>
+    <p>The limitation is intentional and isolated strictly to the Material Symbols library due to its unique 4-axis variable font structure. Architecture dictates that users must rely on the component export functions (React, Vue, Svelte, HTML) to utilize these specific icons.</p>
+
+</body>
+</html>

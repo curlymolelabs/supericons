@@ -16,6 +16,7 @@ import {
   normalizeMaterialExportAxes,
   normalizeMaterialSnapshotSvg,
 } from './material-export.js';
+import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
 
 // ============================================================
 
@@ -64,9 +65,11 @@ const COLOR_PALETTES = {
   mono: { label: 'Mono', colors: ['#000000', '#1a1a1a', '#333333', '#4d4d4d', '#666666', '#808080', '#999999', '#b3b3b3', '#cccccc', '#e6e6e6', '#f2f2f2', '#ffffff'] },
 };
 
+const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
+
 const state = {
   sidebarOpen: false,
-  panelOpen: true,
+  panelOpen: !MOBILE_PANEL_MEDIA.matches,
   activeLibrary: 'all',
   selectedIcon: null,
   searchQuery: '',
@@ -371,6 +374,10 @@ const els = {
   panelClose: $('#panelClose'),
   panel: $('#panel'),
   mainLayout: $('#mainLayout'),
+  landingShell: $('#landingShell'),
+  landingHero: $('#landingHero'),
+  landingMcp: $('#landing-mcp'),
+  compareDrawer: $('#compareDrawer'),
   searchInput: $('#searchInput'),
   searchShortcut: $('#searchShortcut'),
   searchClear: $('#searchClear'),
@@ -828,15 +835,75 @@ function updateCounts() {
 // ============================================================
 // Sidebar & Panel
 // ============================================================
+function isLandingActive() {
+  return Boolean(els.landingShell && !els.landingShell.classList.contains('hidden'));
+}
+
+function isMobilePanelMode() {
+  return MOBILE_PANEL_MEDIA.matches;
+}
+
+function syncPanelLayout() {
+  const panelSuppressed = els.panel?.classList.contains('panel--pricing-hidden');
+  const showPanel = state.panelOpen && !panelSuppressed && !isLandingActive();
+  if (els.panel) {
+    els.panel.classList.toggle('panel-open', showPanel);
+  }
+  if (els.mainLayout) {
+    els.mainLayout.classList.toggle('panel-hidden', !state.panelOpen || panelSuppressed);
+  }
+}
+
+function setSidebarOpen(isOpen) {
+  state.sidebarOpen = Boolean(isOpen);
+  els.sidebar.classList.toggle('open', state.sidebarOpen && !isLandingActive());
+}
+
+function setPanelOpen(isOpen) {
+  state.panelOpen = Boolean(isOpen);
+  syncPanelLayout();
+}
+
+function setPanelSuppressed(isSuppressed) {
+  if (!els.panel) return;
+  els.panel.classList.toggle('panel--pricing-hidden', Boolean(isSuppressed));
+  if (isSuppressed) {
+    els.panel.dataset.hiddenByView = '1';
+  } else {
+    delete els.panel.dataset.hiddenByView;
+  }
+  syncPanelLayout();
+}
+
+function closeCompareDrawer() {
+  els.compareDrawer?.classList.remove('open');
+}
+
+function syncLandingState() {
+  const landingActive = isLandingActive();
+  document.body.classList.toggle('landing-active', landingActive);
+  if (landingActive) {
+    setSidebarOpen(false);
+    closeCompareDrawer();
+  }
+  syncPanelLayout();
+}
+
+function syncShellForViewport() {
+  setSidebarOpen(false);
+  if (isMobilePanelMode() && !state.selectedIcon && !state.multiSelect) {
+    setPanelOpen(false);
+    return;
+  }
+  syncPanelLayout();
+}
+
 function toggleSidebar() {
-  state.sidebarOpen = !state.sidebarOpen;
-  els.sidebar.classList.toggle('open', state.sidebarOpen);
+  setSidebarOpen(!state.sidebarOpen);
 }
 
 function togglePanel() {
-  state.panelOpen = !state.panelOpen;
-  els.panel.classList.toggle('panel-open', state.panelOpen);
-  els.mainLayout.classList.toggle('panel-hidden', !state.panelOpen);
+  setPanelOpen(!state.panelOpen);
 }
 
 function setActiveLibrary(libraryId) {
@@ -914,7 +981,7 @@ function selectIcon(iconId, iconLib) {
   // Update panel with customize controls
   renderPanelForIcon(icon);
 
-  if (!state.panelOpen) togglePanel();
+  if (!state.panelOpen) setPanelOpen(true);
 }
 
 function updateMultiSelectCount() {
@@ -2253,16 +2320,21 @@ async function generateComponentCode(icon, framework) {
 // ============================================================
 // Event Listeners
 // ============================================================
+syncLandingState();
+if (typeof MOBILE_PANEL_MEDIA.addEventListener === 'function') {
+  MOBILE_PANEL_MEDIA.addEventListener('change', syncShellForViewport);
+} else if (typeof MOBILE_PANEL_MEDIA.addListener === 'function') {
+  MOBILE_PANEL_MEDIA.addListener(syncShellForViewport);
+}
+
 els.sidebarToggle.addEventListener('click', toggleSidebar);
 els.panelToggle.addEventListener('click', togglePanel);
 // Panel close button (use delegation on panel in case DOM is rebuilt)
 els.panel.addEventListener('click', (e) => {
   const closeBtn = e.target.closest('#panelClose, .panel__close');
   if (!closeBtn) return;
-  state.panelOpen = false;
   state.selectedIcon = null;
-  els.panel.classList.remove('panel-open');
-  els.mainLayout.classList.add('panel-hidden');
+  setPanelOpen(false);
   $$('.icon-cell.selected').forEach((el) => el.classList.remove('selected'));
 });
 
@@ -2546,18 +2618,22 @@ function showToast(message, duration = 2000) {
 // Landing Hero Dismiss (S7)
 // ============================================================
 function dismissHero() {
-  const hero = $('#landingHero');
-  const features = $('#landing-features');
-  const mcp = $('#landing-mcp');
-  if (hero) hero.classList.add('hidden');
-  if (features) features.classList.add('hidden');
-  if (mcp) mcp.classList.add('hidden');
+  destroyLandingEffects();
+  if (els.landingShell) {
+    els.landingShell.classList.add('hidden');
+  } else {
+    if (els.landingHero) els.landingHero.classList.add('hidden');
+    if (els.landingMcp) els.landingMcp.classList.add('hidden');
+  }
   localStorage.setItem('si-hero-dismissed', '1');
+  syncLandingState();
 }
 
 // Auto-hide hero if previously dismissed
 if (localStorage.getItem('si-hero-dismissed')) {
   dismissHero();
+} else {
+  initLandingEffects();
 }
 
 // "Start searching" button
@@ -2637,14 +2713,35 @@ async function fetchPopularity() {
 
 init();
 
-window.__supericons = { state, showToast, renderPanelForIcon, togglePanel, libraryMeta, getStyledSvg, ANIM_CSS };
+window.__supericons = {
+  state,
+  showToast,
+  renderPanelForIcon,
+  togglePanel,
+  setPanelOpen,
+  setPanelSuppressed,
+  setSidebarOpen,
+  dismissLanding: dismissHero,
+  isMobilePanelMode,
+  libraryMeta,
+  getStyledSvg,
+  ANIM_CSS,
+};
 
-// Footer: MCP link opens the public MCP docs
+// MCP links open the in-app MCP hub
+const landingMcpDocsLink = $('#landingMcpDocsLink');
+if (landingMcpDocsLink) {
+  landingMcpDocsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    switchView('mcp');
+  });
+}
+
 const footerApiLink = $('#footerApiLink');
 if (footerApiLink) {
   footerApiLink.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.href = '/mcp/';
+    switchView('mcp');
   });
 }
 
@@ -2668,9 +2765,13 @@ if (footerTermsLink) {
 const mcpCloseBtn = $('#mcpCloseBtn');
 if (mcpCloseBtn) {
   mcpCloseBtn.addEventListener('click', () => {
+    const landingShell = $('#landingShell');
     const mcpSection = $('#landing-mcp');
     if (mcpSection) mcpSection.classList.add('hidden');
-    // Scroll back to the app
+    if (landingShell && !landingShell.classList.contains('hidden')) {
+      landingShell.scrollTo({ behavior: 'smooth', top: 0 });
+      return;
+    }
     const header = $('#header');
     if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });

@@ -10,6 +10,53 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+type ClaimPackResult = {
+  success?: boolean;
+  canClaim?: boolean;
+  reason?: string;
+  nextAvailable?: string | null;
+  usedLegacyCredit?: boolean;
+};
+
+function jsonResponse(body: Record<string, unknown>, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+function mapClaimFailureStatus(reason: string): number {
+  if (reason === 'subscription_required') return 403;
+  if (reason === 'already_owned' || reason === 'all_owned' || reason === 'cooldown_wait') return 409;
+  if (reason === 'invalid_request' || reason === 'product_not_found' || reason === 'product_not_active' || reason === 'product_not_claimable') {
+    return 400;
+  }
+  return 500;
+}
+
+function mapClaimFailureMessage(reason: string): string {
+  switch (reason) {
+    case 'subscription_required':
+      return 'Active Pro subscription required';
+    case 'already_owned':
+      return 'Collection already owned';
+    case 'all_owned':
+      return 'All eligible collections are already owned';
+    case 'cooldown_wait':
+      return 'Claim is currently on cooldown';
+    case 'product_not_found':
+      return 'Collection not found';
+    case 'product_not_active':
+      return 'Collection is not currently claimable';
+    case 'product_not_claimable':
+      return 'Collection is not eligible for Pro claims';
+    case 'invalid_request':
+      return 'Missing or invalid request payload';
+    default:
+      return 'Claim failed';
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -17,145 +64,57 @@ serve(async (req) => {
   }
 
   try {
-    // Verify auth (user-context client)
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
-    );
-
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    const authHeader = req.headers.get('Authorization') || '';
+    const token = authHeader.startsWith('Bearer ')
+      ? authHeader.slice('Bearer '.length).trim()
+      : '';
+    if (!token) {
+      return jsonResponse({ error: 'Unauthorized' }, 401);
     }
 
-    const { product_id } = await req.json();
-    if (!product_id) {
-      return new Response(JSON.stringify({ error: 'Missing product_id' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // Admin client for writes (bypasses RLS)
+    // Admin client for token verification + RPC execution.
     const adminClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
-    // 1. Verify active Pro subscription
-    const { data: sub, error: subErr } = await adminClient
-      .from('si_subscriptions')
-      .select('status')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .single();
-
-    if (subErr || !sub) {
-      return new Response(JSON.stringify({ error: 'Active Pro subscription required' }), {
-        status: 403,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    const { data: { user }, error: authError } = await adminClient.auth.getUser(token);
+    if (authError || !user) {
+      return jsonResponse({ error: 'Unauthorized' }, 401);
     }
 
-    // 2. Check if already owned
-    const { data: existing } = await adminClient
-      .from('si_purchases')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('product_id', product_id)
-      .single();
-
-    if (existing) {
-      return new Response(JSON.stringify({ error: 'Collection already owned' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    const body = await req.json().catch(() => ({}));
+    const product_id = body?.product_id;
+    if (!product_id) {
+      return jsonResponse({ error: 'Missing product_id' }, 400);
     }
 
-    // 3. Calculate credit balance
-    const { data: credits, error: credErr } = await adminClient
-      .from('si_credits')
-      .select('type')
-      .eq('user_id', user.id);
-
-    if (credErr) {
-      return new Response(JSON.stringify({ error: 'Failed to check credits' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const earned = (credits || []).filter((c: { type: string }) => c.type === 'earned' || c.type === 'bonus').length;
-    const redeemed = (credits || []).filter((c: { type: string }) => c.type === 'redeemed').length;
-    const balance = earned - redeemed;
-
-    if (balance <= 0) {
-      return new Response(JSON.stringify({ error: 'No credits available' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // 4. Get product name for the note
-    const { data: product } = await adminClient
-      .from('si_products')
-      .select('name')
-      .eq('id', product_id)
-      .single();
-
-    // 5. Insert redeemed credit
-    const { error: creditErr } = await adminClient
-      .from('si_credits')
-      .insert({
-        user_id: user.id,
-        type: 'redeemed',
-        product_id,
-        note: `Redeemed: ${product?.name || 'Unknown collection'}`,
-      });
-
-    if (creditErr) {
-      return new Response(JSON.stringify({ error: 'Failed to redeem credit' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // 6. Insert purchase record
-    const { error: purchaseErr } = await adminClient
-      .from('si_purchases')
-      .insert({
-        user_id: user.id,
-        product_id,
-        stripe_session_id: 'credit_redeem',
-        source: 'credit',
-        purchased_at: new Date().toISOString(),
-      });
-
-    if (purchaseErr) {
-      console.error('Purchase insert after credit redeem failed:', purchaseErr);
-      return new Response(JSON.stringify({ error: 'Credit used but purchase record failed' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    return new Response(JSON.stringify({
-      success: true,
-      remaining_credits: balance - 1,
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    const { data, error: claimErr } = await adminClient.rpc('si_claim_pack', {
+      p_user_id: user.id,
+      p_product_id: product_id,
     });
+
+    if (claimErr) {
+      console.error('si_claim_pack RPC failed:', claimErr);
+      return jsonResponse({ error: 'Claim RPC failed' }, 500);
+    }
+
+    const result = (data || {}) as ClaimPackResult;
+    if (result.success) {
+      return jsonResponse({ success: true, reason: 'claimed', usedLegacyCredit: result.usedLegacyCredit === true }, 200);
+    }
+
+    const reason = result.reason || 'claim_failed';
+    const status = mapClaimFailureStatus(reason);
+    const message = mapClaimFailureMessage(reason);
+    return jsonResponse({
+      error: message,
+      reason,
+      nextAvailable: result.nextAvailable ?? null,
+    }, status);
 
   } catch (err) {
     console.error('Redeem credit error:', err);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return jsonResponse({ error: 'Internal server error' }, 500);
   }
 });

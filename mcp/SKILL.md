@@ -4,7 +4,7 @@ description: How to use the SuperIcons MCP server for AI agent icon retrieval
 
 # SuperIcons MCP Server
 
-Gives AI agents access to 19,000+ SVG icons from 9 libraries via the Model Context Protocol.
+Gives AI agents access to 20,000+ SVG icons from 10 libraries via the Model Context Protocol.
 
 ## Available Tools
 
@@ -20,7 +20,7 @@ Retrieve a specific icon by ID and library.
 - `library` (required): Library name, e.g. "lucide"
 
 ### list_libraries
-List all 9 libraries with names, counts, and descriptions.
+List all 10 libraries with names, counts, and descriptions.
 
 ## Setup
 

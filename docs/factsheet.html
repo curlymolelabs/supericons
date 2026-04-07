@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supericons Factsheet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0e0e0e;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        .sheet {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero {
+            text-align: center;
+            padding: 48px 0 40px;
+            border-bottom: 1px solid #222;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        .hero .tagline {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: 8px;
+        }
+        .hero .url {
+            display: inline-block;
+            margin-top: 12px;
+            color: #7c6aef;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .hero .url:hover { text-decoration: underline; }
+        .hero .meta {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .hero .meta span { display: flex; align-items: center; gap: 6px; }
+        .hero .meta strong { color: #aaa; }
+
+        section { padding: 32px 0; border-bottom: 1px solid #1a1a1a; }
+        section:last-child { border-bottom: none; }
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.8rem;
+        }
+        p { margin-bottom: 12px; color: #bbb; font-size: 0.95rem; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .stat {
+            background: #161616;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .stat .num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .stat .label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        th {
+            color: #888;
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        td { color: #ccc; }
+        tr:last-child td { border-bottom: none; }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .feature {
+            background: #161616;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+        .feature strong {
+            color: #fff;
+            font-size: 0.85rem;
+        }
+        .feature p {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 4px 0 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .badge-free { background: #1a3a1a; color: #4ade80; }
+        .badge-pro { background: #2a1a3a; color: #a78bfa; }
+        .badge-collection { background: #1a2a3a; color: #60a5fa; }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .tier {
+            background: #161616;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .tier h3 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .tier .tier-price {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        .tier ul {
+            list-style: none;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        .tier ul li {
+            padding: 3px 0;
+        }
+        .tier ul li::before {
+            content: "✓ ";
+            color: #4ade80;
+        }
+
+        .footer-info {
+            text-align: center;
+            padding: 32px 0 16px;
+            color: #555;
+            font-size: 0.8rem;
+        }
+        .footer-info a { color: #7c6aef; text-decoration: none; }
+
+        @media (max-width: 640px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .features { grid-template-columns: 1fr; }
+            .tier-grid { grid-template-columns: 1fr; }
+            .hero .meta { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sheet">
+        <header class="hero">
+            <h1>Supericons</h1>
+            <p class="tagline">20,000+ free SVG icons from 10 libraries. AI search. Framework export. Premium animated collections.</p>
+            <a class="url" href="https://supericons.dev">supericons.dev</a>
+            <div class="meta">
+                <span>Made by <strong>Curly Mole Labs</strong></span>
+                <span>Version <strong>0.1.0</strong></span>
+                <span>Contact: <strong>hello@supericons.dev</strong></span>
+            </div>
+        </header>
+
+        <section>
+            <div class="stats">
+                <div class="stat">
+                    <div class="num">20,000+</div>
+                    <div class="label">Icons</div>
+                </div>
+                <div class="stat">
+                    <div class="num">10</div>
+                    <div class="label">Libraries</div>
+                </div>
+                <div class="stat">
+                    <div class="num">5</div>
+                    <div class="label">Export Formats</div>
+                </div>
+                <div class="stat">
+                    <div class="num">8</div>
+                    <div class="label">Premium Packs</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>What it does</h2>
+            <p>Supericons aggregates 20,000+ open-source SVG icons from 10 popular libraries into one searchable interface. It provides AI-powered semantic search, real-time customization (color, size, stroke, containers), and one-click export as SVG, PNG, React, Vue, or Svelte components.</p>
+            <p>For AI-assisted development, Supericons ships a dedicated MCP server (<code>supericons-mcp</code>) that lets coding agents search and paste icons directly into code, with no browser needed.</p>
+        </section>
+
+        <section>
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <strong>AI Semantic Search</strong>
+                    <p>Natural language queries across all 10 icon libraries simultaneously.</p>
+                </div>
+                <div class="feature">
+                    <strong>Framework Export</strong>
+                    <p>One-click copy as React, Vue, or Svelte components, plus SVG and PNG.</p>
+                </div>
+                <div class="feature">
+                    <strong>Variable Font Axes</strong>
+                    <p>Full Material Symbols support: weight, fill, grade, optical size.</p>
+                </div>
+                <div class="feature">
+                    <strong>Container Preview</strong>
+                    <p>Preview icons inside buttons, cards, nav bars before exporting.</p>
+                </div>
+                <div class="feature">
+                    <strong>Motion Lab</strong>
+                    <p>Preview, customize, and export CSS animation presets. Pro feature.</p>
+                </div>
+                <div class="feature">
+                    <strong>MCP Server</strong>
+                    <p>Works with Claude Code, Codex, Cursor, Copilot, and more.</p>
+                </div>
+                <div class="feature">
+                    <strong>Premium Collections</strong>
+                    <p>8 curated animated icon packs with CSS-only hover animations.</p>
+                </div>
+                <div class="feature">
+                    <strong>Multi-select + ZIP</strong>
+                    <p>Batch select, compare side-by-side, and export as ZIP archive.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Icon Libraries</h2>
+            <table>
+                <thead>
+                    <tr><th>Library</th><th>Type</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Lucide</td><td>General purpose</td></tr>
+                    <tr><td>Tabler</td><td>General purpose</td></tr>
+                    <tr><td>Phosphor</td><td>General purpose</td></tr>
+                    <tr><td>Heroicons</td><td>General purpose</td></tr>
+                    <tr><td>Bootstrap Icons</td><td>General purpose</td></tr>
+                    <tr><td>Iconoir</td><td>General purpose</td></tr>
+                    <tr><td>Ionicons</td><td>General purpose</td></tr>
+                    <tr><td>Material Symbols</td><td>Variable (weight, fill, grade, size)</td></tr>
+                    <tr><td>MingCute</td><td>Designer icons</td></tr>
+                    <tr><td>Simple Icons</td><td>3,400+ brand logos</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Pricing</h2>
+            <div class="tier-grid">
+                <div class="tier">
+                    <h3>Free <span class="badge badge-free">Free</span></h3>
+                    <div class="tier-price">$0, forever</div>
+                    <ul>
+                        <li>20,000+ icons</li>
+                        <li>AI semantic search</li>
+                        <li>SVG, PNG, React, Vue, Svelte export</li>
+                        <li>Real-time customization</li>
+                        <li>Multi-select and ZIP export</li>
+                        <li>MCP server (search + retrieve)</li>
+                    </ul>
+                </div>
+                <div class="tier">
+                    <h3>Pro <span class="badge badge-pro">Subscription</span></h3>
+                    <div class="tier-price">Monthly subscription</div>
+                    <ul>
+                        <li>Everything in Free</li>
+                        <li>Premium animated collections</li>
+                        <li>Motion Lab exports</li>
+                        <li>Converter downloads</li>
+                        <li>30-day rolling collection claim</li>
+                        <li>Stripe portal management</li>
+                    </ul>
+                </div>
+                <div class="tier">
+                    <h3>Collections <span class="badge badge-collection">One-time</span></h3>
+                    <div class="tier-price">Per-collection purchase</div>
+                    <ul>
+                        <li>Buy individual animated packs</li>
+                        <li>CSS-only hover animations</li>
+                        <li>Instant browser download</li>
+                        <li>Protected delivery</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tech Stack</h2>
+            <table>
+                <thead>
+                    <tr><th>Layer</th><th>Technology</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Frontend</td><td>Vanilla HTML/CSS/JS, Vite</td></tr>
+                    <tr><td>Auth</td><td>Supabase Auth (email + Google OAuth)</td></tr>
+                    <tr><td>Email</td><td>Resend (transactional auth emails)</td></tr>
+                    <tr><td>Database</td><td>Supabase (PostgreSQL)</td></tr>
+                    <tr><td>Edge Functions</td><td>Supabase (Deno)</td></tr>
+                    <tr><td>Payments</td><td>Stripe (subscriptions + purchases)</td></tr>
+                    <tr><td>Hosting</td><td>Netlify (frontend), Railway (services)</td></tr>
+                    <tr><td>Domain/CDN</td><td>Cloudflare</td></tr>
+                    <tr><td>Analytics</td><td>Umami</td></tr>
+                    <tr><td>MCP Server</td><td>Node.js (npm: supericons-mcp)</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>MCP Server</h2>
+            <p>The Supericons MCP server lets AI coding agents search and retrieve icons directly inside the editor. Compatible with Claude Code, Codex, Cursor, OpenCode, Cline, GitHub Copilot, Windsurf, and Antigravity.</p>
+            <div style="background:#161616; border:1px solid #222; border-radius:8px; padding:16px; margin-top:12px; font-family:monospace; font-size:0.85rem; color:#ccc;">
+                <pre style="margin:0; white-space:pre-wrap;">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</pre>
+            </div>
+        </section>
+
+        <div class="footer-info">
+            <p>Supericons v0.1.0 by <a href="https://curlymolelabs.com">Curly Mole Labs</a></p>
+        </div>
+    </div>
+</body>
+</html>

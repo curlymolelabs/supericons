@@ -1,8 +1,8 @@
 import { createServer } from 'node:http';
 import { convertPngToSvgProof } from './service.mjs';
 
-const HOST = process.env.CONVERTER_PROOF_HOST || '127.0.0.1';
-const PORT = Number.parseInt(process.env.CONVERTER_PROOF_PORT || '4318', 10);
+const PORT = Number.parseInt(process.env.PORT || process.env.CONVERTER_PROOF_PORT || '4318', 10);
+const HOST = process.env.CONVERTER_PROOF_HOST || (process.env.PORT ? '0.0.0.0' : '127.0.0.1');
 
 function sendJson(res, statusCode, payload) {
   const body = JSON.stringify(payload, null, 2);

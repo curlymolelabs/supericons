@@ -6,6 +6,43 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
 
+async function grantLaunchProducts(
+  supabase: ReturnType<typeof createClient>,
+  userId: string,
+  source: string,
+  stripeReference: string | null,
+) {
+  const { data: launchProducts, error: fetchErr } = await supabase
+    .from('si_products')
+    .select('id')
+    .eq('v1_launch', true);
+
+  if (fetchErr) {
+    console.error('Failed to fetch V1 products:', fetchErr);
+    return;
+  }
+
+  if (!launchProducts || launchProducts.length === 0) return;
+
+  for (const product of launchProducts) {
+    const { error } = await supabase
+      .from('si_purchases')
+      .upsert({
+        user_id: userId,
+        product_id: product.id,
+        stripe_session_id: stripeReference,
+        source,
+        purchased_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,product_id' });
+
+    if (error) {
+      console.error(`${source} purchase insert error (${product.id}):`, error);
+    }
+  }
+
+  console.log(`${source}: ${launchProducts.length} packs granted to user=${userId}`);
+}
+
 serve(async (req) => {
   try {
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
@@ -41,29 +78,7 @@ serve(async (req) => {
         if (userId && productId && session.mode === 'payment') {
           // Launch Edition: bulk-insert all V1 packs
           if (productId === 'launch_edition') {
-            const { data: launchProducts, error: fetchErr } = await supabase
-              .from('si_products')
-              .select('id')
-              .eq('v1_launch', true);
-
-            if (fetchErr) {
-              console.error('Failed to fetch V1 products:', fetchErr);
-            } else if (launchProducts && launchProducts.length > 0) {
-              for (const lp of launchProducts) {
-                const { error } = await supabase
-                  .from('si_purchases')
-                  .upsert({
-                    user_id: userId,
-                    product_id: lp.id,
-                    stripe_session_id: session.id,
-                    source: 'launch_edition',
-                    purchased_at: new Date().toISOString(),
-                  }, { onConflict: 'user_id,product_id' });
-
-                if (error) console.error(`Launch Edition purchase insert error (${lp.id}):`, error);
-              }
-              console.log(`Launch Edition: ${launchProducts.length} packs granted to user=${userId}`);
-            }
+            await grantLaunchProducts(supabase, userId, 'launch_edition', session.id);
           } else {
             // Single pack purchase
             const { error } = await supabase
@@ -105,6 +120,10 @@ serve(async (req) => {
 
           if (error) console.error('Subscription insert error:', error);
           else console.log(`Subscription created: user=${userId}, plan=${plan}`);
+
+          if (plan === 'pro_annual') {
+            await grantLaunchProducts(supabase, userId, 'pro_annual_grant', subscriptionId);
+          }
         }
         break;
       }
@@ -134,80 +153,6 @@ serve(async (req) => {
           .eq('stripe_subscription_id', subscription.id);
 
         if (error) console.error('Subscription cancel error:', error);
-        break;
-      }
-
-      case 'invoice.paid': {
-        const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId = invoice.subscription as string;
-        if (!subscriptionId) break;
-
-        // Look up the subscription to get user_id and plan
-        const { data: subRow, error: subErr } = await supabase
-          .from('si_subscriptions')
-          .select('user_id, plan')
-          .eq('stripe_subscription_id', subscriptionId)
-          .single();
-
-        if (subErr || !subRow) {
-          console.error('invoice.paid: subscription lookup failed:', subErr);
-          break;
-        }
-
-        const userId = subRow.user_id;
-        const plan = subRow.plan || 'pro_monthly';
-        const cap = plan === 'pro_annual' ? 5 : 3;
-
-        // Calculate current credit balance: (earned + bonus) - redeemed
-        const { data: credits, error: credErr } = await supabase
-          .from('si_credits')
-          .select('type')
-          .eq('user_id', userId);
-
-        if (credErr) {
-          console.error('invoice.paid: credit query failed:', credErr);
-          break;
-        }
-
-        const earned = (credits || []).filter(c => c.type === 'earned' || c.type === 'bonus').length;
-        const redeemed = (credits || []).filter(c => c.type === 'redeemed').length;
-        const balance = earned - redeemed;
-
-        // Issue 1 earned credit if under cap
-        if (balance < cap) {
-          const { error: insertErr } = await supabase
-            .from('si_credits')
-            .insert({
-              user_id: userId,
-              type: 'earned',
-              note: `Monthly renewal (invoice ${invoice.id})`,
-            });
-
-          if (insertErr) console.error('Credit insert error:', insertErr);
-          else console.log(`Credit issued: user=${userId}, balance=${balance + 1}/${cap}`);
-        } else {
-          console.log(`Credit cap reached: user=${userId}, balance=${balance}/${cap}`);
-        }
-
-        // Annual bonus: 3 credits on first invoice only
-        if (plan === 'pro_annual') {
-          const existingBonus = (credits || []).filter(c => c.type === 'bonus').length;
-          if (existingBonus === 0) {
-            const bonusRows = Array.from({ length: 3 }, (_, i) => ({
-              user_id: userId,
-              type: 'bonus',
-              note: `Annual bonus credit ${i + 1}/3`,
-            }));
-
-            const { error: bonusErr } = await supabase
-              .from('si_credits')
-              .insert(bonusRows);
-
-            if (bonusErr) console.error('Annual bonus insert error:', bonusErr);
-            else console.log(`Annual bonus: 3 credits issued to user=${userId}`);
-          }
-        }
-
         break;
       }
 
