@@ -2753,6 +2753,14 @@ if (footerPricingLink) {
   });
 }
 
+const footerPrivacyLink = $('#footerPrivacyLink');
+if (footerPrivacyLink) {
+  footerPrivacyLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    switchView('privacy');
+  });
+}
+
 const footerTermsLink = $('#footerTermsLink');
 if (footerTermsLink) {
   footerTermsLink.addEventListener('click', (e) => {

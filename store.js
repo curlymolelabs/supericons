@@ -152,7 +152,7 @@ async function fetchPremiumAsset(slug, filename) {
   });
 }
 let userPurchases = [];
-let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail' | 'pricing' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
+let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
 let previousView = 'icons';
 let currentCollectionData = null; // manifest data for the currently viewed collection
 let activeCollectionProductId = null;
@@ -160,9 +160,9 @@ let activeCollectionProductSlug = null;
 let authIntentResumePromise = null;
 let toastTimeout = null;
 let removeUpgradePrompt = null;
-const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
-const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'collection-detail', 'pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
-const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'terms', 'mcp', 'motion-lab', 'converter']);
+const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
+const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'collection-detail', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
+const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -231,7 +231,7 @@ async function restoreAuthIntent(intent) {
     await ensureUserPurchasesLoaded({ force: true, rerender: false });
   }
 
-  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'motion-lab', 'converter', 'terms', 'mcp']);
+  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'motion-lab', 'converter', 'privacy', 'terms', 'mcp']);
   switchView(allowedViews.has(view) ? view : 'icons');
   return true;
 }
@@ -618,6 +618,14 @@ export function switchView(view) {
       }
       document.body.setAttribute('data-view', 'pricing');
       renderPricingPage();
+    } else if (view === 'privacy') {
+      if (gridTitle) gridTitle.textContent = 'Privacy Policy';
+      if (gridMeta) gridMeta.textContent = '';
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
+      }
+      document.body.setAttribute('data-view', 'privacy');
+      renderPrivacyPage();
     } else if (view === 'terms') {
       if (gridTitle) gridTitle.textContent = 'Terms of Service';
       if (gridMeta) gridMeta.textContent = '';
@@ -678,6 +686,7 @@ export function switchView(view) {
     // Clean up any tool/store views lingering in the DOM
     document.getElementById('motionLabView')?.remove();
     document.getElementById('converterView')?.remove();
+    document.getElementById('privacyView')?.remove();
     document.getElementById('termsView')?.remove();
     document.getElementById('mcpView')?.remove();
   }
@@ -700,7 +709,7 @@ function updateSidebarActive(view) {
     document.getElementById('sidebarMyDownloads')?.classList.add('active');
   } else if (view === 'pricing') {
     document.getElementById('sidebarPricing')?.classList.add('active');
-  } else if (view === 'terms' || view === 'mcp') {
+  } else if (view === 'privacy' || view === 'terms' || view === 'mcp') {
     // Keep docs/legal views neutral in the sidebar.
   } else if (view === 'motion-lab') {
     document.getElementById('sidebarMotionLab')?.classList.add('active');
@@ -1847,6 +1856,8 @@ function removePackCatalog() {
   if (existingDetail) existingDetail.remove();
   const existingPricing = document.getElementById('pricingView');
   if (existingPricing) existingPricing.remove();
+  const existingPrivacy = document.getElementById('privacyView');
+  if (existingPrivacy) existingPrivacy.remove();
   const existingTerms = document.getElementById('termsView');
   if (existingTerms) existingTerms.remove();
   const existingMcp = document.getElementById('mcpView');
@@ -2500,6 +2511,84 @@ function renderTermsPage() {
         <h3 class="terms-section__title">6. Contact</h3>
         <p>For questions about these terms, licensing, or refund requests:</p>
         <p>Email: <a href="mailto:hello@supericons.dev">hello@supericons.dev</a></p>
+      </section>
+    </div>`;
+
+  gridArea.appendChild(page);
+}
+
+function renderPrivacyPage() {
+  removePackCatalog();
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const page = document.createElement('div');
+  page.id = 'privacyView';
+  page.className = 'terms-view';
+
+  page.innerHTML = `
+    <div class="terms-content">
+      <p class="terms-content__updated">Last updated: April 7, 2026</p>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">1. Overview</h3>
+        <p>Supericons is an icon search, export, licensing, and MCP access product operated by Curly Mole Labs. This Privacy Policy explains what information we collect, how we use it, and how to contact us about privacy questions.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">2. Data We Collect</h3>
+        <p>We may collect account information such as your email address, display name, authentication provider, and account identifiers through Supabase Auth.</p>
+        <p>We also store purchase, entitlement, and subscription records needed to grant access to premium collections, MCP features, and related product functionality.</p>
+        <p>If you contact us, we may receive the information you include in your email or support request.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">3. How We Use Data</h3>
+        <ul>
+          <li>Provide sign-in, account recovery, and account management</li>
+          <li>Process purchases, subscriptions, and entitlements</li>
+          <li>Deliver paid access to premium collections and MCP features</li>
+          <li>Respond to support requests and product questions</li>
+          <li>Protect the service against abuse, fraud, and unauthorized access</li>
+          <li>Improve product quality and reliability</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">4. Payments</h3>
+        <p>Payments and subscription management are handled by Stripe. We do not store full payment card details on Supericons servers. Stripe may collect and process billing information according to its own privacy and security practices.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">5. Authentication And Email</h3>
+        <p>Authentication is powered by Supabase and may include email/password sign-in and Google sign-in. Transactional account emails such as confirmation, password reset, and password-changed notifications are delivered using Resend through Supabase SMTP configuration.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">6. MCP Access</h3>
+        <p>When you use Supericons through MCP, we may process requests needed to validate access, return icon results, and enforce premium entitlements tied to your account or API key.</p>
+        <p>We do not use this public policy page to expose private dashboards, private key-management interfaces, or non-public customer data.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">7. Third-Party Services</h3>
+        <p>Supericons currently relies on third-party providers including Supabase, Stripe, Resend, Google OAuth, and Umami analytics. These services may process limited data as needed to operate authentication, billing, email delivery, sign-in, and basic product analytics.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">8. Data Retention</h3>
+        <p>We retain account, billing, and entitlement records for as long as needed to operate the service, provide access to purchases, comply with legal obligations, resolve disputes, and support customers.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">9. Your Choices</h3>
+        <p>You can update your display name inside the app and use password reset to recover access to your account. For privacy-related requests such as correction or deletion, contact us directly and we will review the request manually during this launch phase.</p>
+      </section>
+
+      <section class="terms-section">
+        <h3 class="terms-section__title">10. Contact</h3>
+        <p>For privacy questions or requests, contact us at <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>.</p>
       </section>
     </div>`;
 
