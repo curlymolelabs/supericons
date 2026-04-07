@@ -6669,6 +6669,8 @@ const debouncedRunConversion = debounce(() => runConversion(), 400);
 const converterState = {
   mode: 'svg-to-png',   // 'svg-to-png' | 'png-to-svg'
   svgText: '',
+  svgPreparedText: '',
+  svgRasterAdvice: null,
   pngBlob: null,
   pngDataUrl: '',
   outputBlob: null,
@@ -6922,6 +6924,84 @@ function sanitizeConverterSvg(svgEl) {
   });
 }
 
+function inspectConverterSvgRasterRisks(svgText) {
+  const hasExternalFontImport = /@import\s+url\((['"]?)https?:\/\/[^)]+\1\)/i.test(svgText);
+  const hasRemoteUrlReference = /url\((['"]?)https?:\/\/[^)]+\1\)/i.test(svgText);
+  const hasExternalImageHref = /<(?:image|feImage)\b[^>]+(?:href|xlink:href)=["']https?:\/\//i.test(svgText);
+  const hasTextNode = /<text[\s>]/i.test(svgText);
+
+  return {
+    hasExternalFontImport,
+    hasRemoteUrlReference,
+    hasExternalImageHref,
+    hasTextNode,
+    riskCount: [hasExternalFontImport, hasRemoteUrlReference, hasExternalImageHref].filter(Boolean).length,
+  };
+}
+
+function stripConverterSvgImportRules(styleText) {
+  return styleText.replace(/@import\s+url\((['"]?)https?:\/\/[^)]+\1\)\s*;?/gi, '');
+}
+
+function stripConverterSvgExternalFontImports(svgText) {
+  let normalized = false;
+  const nextSvg = svgText.replace(/<style\b([^>]*)>([\s\S]*?)<\/style>/gi, (fullMatch, attrs, cssText) => {
+    const nextCss = stripConverterSvgImportRules(cssText);
+    if (nextCss === cssText) return fullMatch;
+    normalized = true;
+    const trimmedCss = nextCss.trim();
+    return trimmedCss ? `<style${attrs}>${trimmedCss}</style>` : '';
+  });
+
+  if (normalized) {
+    return {
+      svgText: nextSvg,
+      normalized: true,
+    };
+  }
+
+  const globallyStripped = stripConverterSvgImportRules(svgText);
+  return {
+    svgText: globallyStripped,
+    normalized: globallyStripped !== svgText,
+  };
+}
+
+function prepareConverterSvgForRasterization(svgText) {
+  if (!svgText) {
+    return {
+      svgText,
+      normalized: false,
+      advice: null,
+      risks: inspectConverterSvgRasterRisks(''),
+    };
+  }
+
+  const risks = inspectConverterSvgRasterRisks(svgText);
+  if (!risks.hasExternalFontImport) {
+    return {
+      svgText,
+      normalized: false,
+      advice: null,
+      risks,
+    };
+  }
+
+  const normalized = stripConverterSvgExternalFontImports(svgText);
+  const nextSvgText = normalized.normalized ? normalized.svgText : svgText;
+  return {
+    svgText: nextSvgText,
+    normalized: normalized.normalized,
+    advice: {
+      tone: 'warn',
+      text: risks.hasTextNode
+        ? 'External web font imports were removed so this SVG can render. The PNG may use a fallback font unless the text is converted to paths.'
+        : 'External web font imports were removed so this SVG can render reliably in the browser export path.',
+    },
+    risks,
+  };
+}
+
 function applyConverterFillOverrides(svgEl) {
   if (!converterState.fillColor) return;
   svgEl.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
@@ -6939,10 +7019,11 @@ function applyConverterStrokeOverrides(svgEl) {
 }
 
 function buildStyledConverterSvg({ width = null, height = null } = {}) {
-  if (!converterState.svgText) return null;
+  const sourceSvg = converterState.svgPreparedText || converterState.svgText;
+  if (!sourceSvg) return null;
 
   const parser = new DOMParser();
-  const doc = parser.parseFromString(converterState.svgText, 'image/svg+xml');
+  const doc = parser.parseFromString(sourceSvg, 'image/svg+xml');
   const svgEl = doc.querySelector('svg');
   if (!svgEl) return null;
 
@@ -8756,13 +8837,16 @@ function loadConverterFile(file) {
 
 function loadConverterSvgText(svgText, filename) {
   resetConverterPreviewZoom();
+  const rasterPrep = prepareConverterSvgForRasterization(svgText);
   converterState.svgText = svgText;
+  converterState.svgPreparedText = rasterPrep.normalized ? rasterPrep.svgText : '';
+  converterState.svgRasterAdvice = rasterPrep.advice;
   converterState.mode = 'svg-to-png';
   converterState.traceMetrics = null;
   converterState.traceAdvice = null;
   converterState.outputExportSize = null;
   converterState.previewOriginalDataUrl = '';
-  converterState.paintSupport = analyzeConverterSvgPaintSupport(svgText);
+  converterState.paintSupport = analyzeConverterSvgPaintSupport(rasterPrep.svgText || svgText);
   // Switch to SVG→PNG mode
   document.querySelectorAll('.conv__mode-tab').forEach(t => t.classList.remove('conv__mode-tab--active'));
   document.querySelector('[data-mode="svg-to-png"]')?.classList.add('conv__mode-tab--active');
@@ -8773,7 +8857,8 @@ function loadConverterSvgText(svgText, filename) {
   document.getElementById('convPasteBtn').style.display = '';
 
   // Show input preview with SVG rendered as img
-  const blob = new Blob([svgText], { type: 'image/svg+xml' });
+  const previewSvg = rasterPrep.svgText || svgText;
+  const blob = new Blob([previewSvg], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
   showConverterInput(url, filename || 'Pasted SVG', svgText.length);
   converterState.pngDataUrl = '';
@@ -8787,6 +8872,8 @@ function loadConverterPng(dataUrl, filename) {
   resetConverterPreviewZoom();
   converterState.pngDataUrl = dataUrl;
   converterState.svgText = '';
+  converterState.svgPreparedText = '';
+  converterState.svgRasterAdvice = null;
   converterState.previewOriginalDataUrl = dataUrl;
   converterState.traceMetrics = null;
   converterState.traceAdvice = null;
@@ -8897,15 +8984,51 @@ function showConverterProofServiceOffline(proofErr) {
   console.warn('[Converter] Local proof service unavailable:', proofErr);
 }
 
+function showConverterSvgDecodeFailure(traceAdvice = null) {
+  converterState.outputBlob = null;
+  converterState.outputDataUrl = '';
+  converterState.traceMetrics = null;
+  converterState.traceAdvice = traceAdvice;
+  converterState.outputPreviewSize = null;
+  converterState.outputExportSize = null;
+
+  const outputPreview = document.getElementById('convOutputPreview');
+  const outputEmpty = document.getElementById('convOutputEmpty');
+  const outputMeta = document.getElementById('convOutputMeta');
+  const outputNote = document.getElementById('convQualityNote');
+  const actions = document.getElementById('convActions');
+
+  if (outputPreview) outputPreview.style.display = 'none';
+  resetConverterOutputPlaceholder('This SVG could not be rasterized.', 'warning');
+  if (outputEmpty) outputEmpty.style.display = '';
+  if (outputMeta) outputMeta.textContent = 'Browser image export can fail on unsupported embedded resources.';
+  if (outputNote) {
+    outputNote.classList.remove('conv__quality-note--info', 'conv__quality-note--warn');
+    if (traceAdvice?.text) {
+      outputNote.textContent = traceAdvice.text;
+      outputNote.classList.add(`conv__quality-note--${traceAdvice.tone || 'warn'}`);
+      outputNote.style.display = '';
+    } else {
+      outputNote.textContent = 'Common causes: external web fonts, remote images, or unsupported embedded resources.';
+      outputNote.classList.add('conv__quality-note--warn');
+      outputNote.style.display = '';
+    }
+  }
+  if (actions) actions.style.display = 'none';
+  updateConverterPreviewStage();
+}
+
 function clearConverterInput() {
   resetConverterPreviewZoom();
   converterState.svgText = '';
+  converterState.svgPreparedText = '';
   converterState.pngDataUrl = '';
   converterState.outputBlob = null;
   converterState.outputDataUrl = '';
   converterState.previewOriginalDataUrl = '';
   converterState.traceMetrics = null;
   converterState.traceAdvice = null;
+  converterState.svgRasterAdvice = null;
   converterState.outputPreviewSize = null;
   converterState.paintSupport = {
     supportsFill: false,
@@ -8941,14 +9064,15 @@ function runConversion() {
 let _svgConvToken = 0;
 
 function convertSvgToPng() {
-  const { svgText, size, background, bgColor, padding, quality } = converterState;
+  const sourceSvgText = converterState.svgPreparedText || converterState.svgText;
+  const { size, background, bgColor, padding, quality } = converterState;
   const myToken = ++_svgConvToken;
   const targetSize = size * quality;
   showConverterPendingOutput('Rendering preview…');
 
   // Parse SVG to get viewBox / intrinsic size
   const parser = new DOMParser();
-  const doc = parser.parseFromString(svgText, 'image/svg+xml');
+  const doc = parser.parseFromString(sourceSvgText, 'image/svg+xml');
   const svgEl = doc.querySelector('svg');
   if (!svgEl) { showToast('Invalid SVG'); return; }
 
@@ -9023,12 +9147,21 @@ function convertSvgToPng() {
         `${displayW}x${displayH}${quality > 1 ? ` @${quality}x` : ''} PNG`,
         Math.round(pngBlob.size / 1024),
         null,
-        null,
+        converterState.svgRasterAdvice,
         { width: displayW, height: displayH },
       );
     }, 'image/png');
   };
-  img.onerror = () => { URL.revokeObjectURL(url); showToast('SVG render failed'); };
+  img.onerror = () => {
+    URL.revokeObjectURL(url);
+    showConverterSvgDecodeFailure(
+      converterState.svgRasterAdvice || {
+        tone: 'warn',
+        text: 'This SVG could not be rasterized by the browser image pipeline. Common causes: external web fonts, remote images, or unsupported embedded resources.',
+      },
+    );
+    showToast('SVG render failed');
+  };
   img.src = url;
 }
 

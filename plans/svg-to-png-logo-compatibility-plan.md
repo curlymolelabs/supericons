@@ -2,9 +2,16 @@
 
 ## Status
 
-This is the canonical implementation plan for the Supericons logo SVG fix.
+This is the canonical implementation plan for the Supericons logo SVG fix and now reflects the implemented approach.
 
 The earlier proposal in [svg_input_proposal.md](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/docs/svg_input_proposal.md) is useful as exploratory thinking, but it is broader than the bug we actually need to fix. The narrow `SVG -> PNG` stabilization work in this document is the active plan.
+
+Implemented in this pass:
+
+- preflight detection now uses raw SVG text so risky SVGs can be identified even when the original XML is malformed
+- the converter strips only external `@import` rules before any XML parsing or rasterization
+- the converter warns when it had to remove an external web font import
+- an export-safe compatibility logo asset was added at [supericons-logo-export-safe.svg](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/docs/supericons-logo-export-safe.svg)
 
 ## Goal
 
@@ -33,6 +40,7 @@ Repro result:
 Conclusion:
 
 - The root incompatibility is the external font import inside the SVG image pipeline
+- In this specific logo file, the Google Fonts URL also contains an unescaped `&display=swap`, which makes the uploaded SVG invalid XML until the import rule is removed
 - The product currently accepts this SVG, but does not normalize or warn about it before rasterization
 
 ## Desired Outcome
@@ -55,7 +63,8 @@ Detect and flag:
 
 Implementation target:
 
-- extend the current SVG preparation path around [store.js](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L6941)
+- extend the current SVG preparation path around [store.js](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L6927)
+- make detection work on raw SVG text instead of relying on `DOMParser`, because the failing logo is malformed XML until the `@import` is removed
 
 UI behavior:
 
@@ -71,11 +80,13 @@ Minimum normalization:
 - remove `@import` rules from inline `<style>` blocks
 - preserve the rest of the SVG styles
 - keep nested `<svg>` and filters if they still decode successfully
+- do the normalization as a raw text transform first, before any XML parsing
 
 Why this is safe:
 
 - the repro proved that removing only `@import` makes this logo decode
 - the current nested SVG and glow filter are not the blocking issue for this file
+- the free icon regression check showed a normal icon SVG remained byte-for-byte unchanged because the converter only normalizes files that actually contain risky external imports
 
 Important limitation:
 
@@ -127,6 +138,11 @@ Suggested output asset:
 
 - `docs/supericons-logo-export-safe.svg`
 
+Current implementation note:
+
+- this pass ships a compatibility export-safe logo asset without the remote font import
+- converting the wordmark fully to paths is still the preferred future hardening step if pixel-perfect brand fidelity is required across all tools
+
 ## Phase 4: Improve Failure Feedback
 
 Right now the converter only ends with a generic `SVG render failed` toast from [store.js](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L9031).
@@ -168,6 +184,18 @@ Verification target:
 3. add export-safe Supericons logo asset
 4. add regression fixtures and verification notes
 5. evaluate selective resource inlining only after the narrow fix is stable
+
+## Verification Notes
+
+The implemented fix was validated against both paths we care about:
+
+- failing logo SVG:
+  - preview now renders
+  - PNG output now renders
+  - warning note explains that the external web font import was removed
+- normal free icon SVG:
+  - preview and PNG output still render
+  - the uploaded preview hash matched the original file hash exactly, which confirms the converter left the already-working icon SVG untouched
 
 ## Recommendation
 
