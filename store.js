@@ -9147,7 +9147,7 @@ function convertSvgToPng() {
         `${displayW}x${displayH}${quality > 1 ? ` @${quality}x` : ''} PNG`,
         Math.round(pngBlob.size / 1024),
         null,
-        converterState.svgRasterAdvice,
+        null,
         { width: displayW, height: displayH },
       );
     }, 'image/png');
