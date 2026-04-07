@@ -5575,7 +5575,7 @@ body[data-view="pricing"] .grid-area {
   font-size: clamp(1.3rem, 2.6vw, 2.28rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: var(--si-text);
+  color: var(--si-text-muted);
   max-width: 18ch;
 }
 
@@ -5663,7 +5663,7 @@ body[data-view="pricing"] .grid-area {
   margin: 0 0 16px;
   font-family: var(--si-font-headline);
   font-size: 1.55rem;
-  color: var(--si-text);
+  color: var(--si-text-muted);
 }
 
 .mcp-card__copy {
@@ -5688,7 +5688,7 @@ body[data-view="pricing"] .grid-area {
   margin: 0 0 10px;
   font-family: var(--si-font-headline);
   font-size: 1rem;
-  color: var(--si-text);
+  color: var(--si-text-muted);
 }
 
 .mcp-mini-card p,
@@ -5728,7 +5728,7 @@ body[data-view="pricing"] .grid-area {
   border-radius: 999px;
   background: color-mix(in srgb, var(--si-surface-container-high) 85%, transparent);
   border: 1px solid var(--si-outline-variant);
-  color: var(--si-text);
+  color: var(--si-text-muted);
   font-family: var(--si-font-label);
   font-size: 0.84rem;
 }

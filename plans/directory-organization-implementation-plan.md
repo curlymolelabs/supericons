@@ -27,6 +27,17 @@ The main reason the folder feels unmanageable is not only "the icons." The bigge
 - preserve the current Vite app, MCP package, and Supabase workflow
 - keep the reorganization incremental and reversible
 
+## Immediate 2026-04-08 Decisions
+
+- keep [commands.md](/d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/commands.md) as the only intentionally top-level operator note
+- treat `brand/` as the canonical home for logo, favicon, wordmark, email-header, and OAuth-branding assets
+- keep `public/` for runtime-served copies only
+  - `public/favicon.svg`
+  - `public/logo_email_header.png`
+  - other directly served brand assets when the site needs them
+- stop using `docs/` as the long-term source-of-truth location for reusable brand assets; docs may reference brand assets, but they should not be the canonical storage location
+- archive or ignore machine-generated files, local logs, scratch screenshots, proof artifacts, and dependency trees
+
 ## Non-Goals
 
 - changing product behavior

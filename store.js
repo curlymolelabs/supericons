@@ -2529,7 +2529,7 @@ function renderPrivacyPage() {
 
   page.innerHTML = `
     <div class="terms-content">
-      <p class="terms-content__updated">Last updated: April 7, 2026</p>
+      <p class="terms-content__updated">Last updated: April 8, 2026</p>
 
       <section class="terms-section">
         <h3 class="terms-section__title">1. Overview</h3>
@@ -2538,20 +2538,21 @@ function renderPrivacyPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">2. Data We Collect</h3>
-        <p>We may collect account information such as your email address, display name, authentication provider, and account identifiers through Supabase Auth.</p>
+        <p>We may collect account information such as your email address, display name, authentication provider, and account identifiers when you create an account or sign in.</p>
         <p>We also store purchase, entitlement, and subscription records needed to grant access to premium collections, MCP features, and related product functionality.</p>
+        <p>We collect anonymized, cookie-free usage analytics to understand how the product is used. No personal data is tied to these analytics.</p>
         <p>If you contact us, we may receive the information you include in your email or support request.</p>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">3. How We Use Data</h3>
         <ul>
-          <li>Provide sign-in, account recovery, and account management</li>
-          <li>Process purchases, subscriptions, and entitlements</li>
-          <li>Deliver paid access to premium collections and MCP features</li>
-          <li>Respond to support requests and product questions</li>
-          <li>Protect the service against abuse, fraud, and unauthorized access</li>
-          <li>Improve product quality and reliability</li>
+          <li>Providing sign-in, account recovery, and account management</li>
+          <li>Processing purchases, subscriptions, and entitlements</li>
+          <li>Delivering paid access to premium collections and MCP features</li>
+          <li>Responding to support requests and product questions</li>
+          <li>Protecting the service against abuse, fraud, and unauthorized access</li>
+          <li>Improving product quality and reliability</li>
         </ul>
       </section>
 
@@ -2562,18 +2563,17 @@ function renderPrivacyPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">5. Authentication And Email</h3>
-        <p>Authentication is powered by Supabase and may include email/password sign-in and Google sign-in. Transactional account emails such as confirmation, password reset, and password-changed notifications are delivered using Resend through Supabase SMTP configuration.</p>
+        <p>Authentication may include email/password sign-in and Google sign-in. Transactional emails such as confirmation, password reset, and password-changed notifications are delivered through a secure email provider on our behalf.</p>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">6. MCP Access</h3>
         <p>When you use Supericons through MCP, we may process requests needed to validate access, return icon results, and enforce premium entitlements tied to your account or API key.</p>
-        <p>We do not use this public policy page to expose private dashboards, private key-management interfaces, or non-public customer data.</p>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">7. Third-Party Services</h3>
-        <p>Supericons currently relies on third-party providers including Supabase, Stripe, Resend, Google OAuth, and Umami analytics. These services may process limited data as needed to operate authentication, billing, email delivery, sign-in, and basic product analytics.</p>
+        <p>Supericons relies on third-party providers for authentication, billing, email delivery, and basic product analytics. These services may process limited data as needed to operate their respective functions. Payment processing is handled by Stripe.</p>
       </section>
 
       <section class="terms-section">
@@ -2583,7 +2583,7 @@ function renderPrivacyPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">9. Your Choices</h3>
-        <p>You can update your display name inside the app and use password reset to recover access to your account. For privacy-related requests such as correction or deletion, contact us directly and we will review the request manually during this launch phase.</p>
+        <p>You can update your display name inside the app and use password reset to recover access to your account. For privacy-related requests such as correction or deletion, contact us directly and we will process your request.</p>
       </section>
 
       <section class="terms-section">
