@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bespoke Icon Choreography Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   BESPOKE ICON CHOREOGRAPHY DEMO
+   10 SaaS Dashboard Icons with per-icon CSS/SVG animations
+   Technique: Pure CSS + inline SVG. No JavaScript. No Lottie.
+   ================================================================ */
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #141417;
+  --surface-hover: #1c1c21;
+  --border: #27272a;
+  --text: #fafafa;
+  --text-muted: #a1a1aa;
+  --accent: #7c3aed;
+  --icon-color: #d4d4d8;
+  --icon-hover: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 48px 32px;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.sidebar-demo {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  width: 240px;
+  margin: 0 auto 48px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--icon-color);
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover svg {
+  color: var(--icon-hover);
+}
+
+/* Grid view */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-card:hover {
+  background: var(--surface-hover);
+  border-color: #3f3f46;
+}
+
+.icon-card svg {
+  width: 28px;
+  height: 28px;
+  color: var(--icon-color);
+  transition: color 0.2s ease;
+}
+
+.icon-card:hover svg {
+  color: var(--icon-hover);
+}
+
+.icon-card span {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.section-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+
+.technique-note {
+  font-size: 12px;
+  color: #52525b;
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+/* ================================================================
+   ICON ANIMATIONS
+   Each icon has bespoke choreography tied to its meaning.
+   ================================================================ */
+
+/* ---- 1. MAIL (Envelope) ----
+   Real object: Letter envelope
+   Verb: Flap opens to reveal contents
+   Story: flap lifts (0ms) -> body settles (80ms)
+   ---- */
+.bespoke-mail .mail-flap {
+  transition: transform 0.3s cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  transform-origin: 12px 9px;
+}
+.bespoke-mail .mail-body {
+  transition: transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1.0) 80ms;
+}
+.nav-item:hover .bespoke-mail .mail-flap,
+.icon-card:hover .bespoke-mail .mail-flap {
+  transform: rotateX(-35deg) translateY(-1px);
+}
+.nav-item:hover .bespoke-mail .mail-body,
+.icon-card:hover .bespoke-mail .mail-body {
+  transform: translateY(0.5px);
+}
+
+/* ---- 2. BROADCAST (Signal tower) ----
+   Real object: Radio transmission tower
+   Verb: Emits signal waves outward
+   Story: tower pulses (0ms) -> inner wave (60ms) -> outer wave (140ms)
+   ---- */
+.bespoke-broadcast .wave-inner,
+.bespoke-broadcast .wave-outer {
+  transform-origin: center;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.nav-item:hover .bespoke-broadcast .tower,
+.icon-card:hover .bespoke-broadcast .tower {
+  animation: tower-pulse 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-broadcast .wave-inner,
+.icon-card:hover .bespoke-broadcast .wave-inner {
+  animation: wave-expand 0.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) 60ms forwards;
+}
+.nav-item:hover .bespoke-broadcast .wave-outer,
+.icon-card:hover .bespoke-broadcast .wave-outer {
+  animation: wave-expand 0.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) 140ms forwards;
+}
+@keyframes tower-pulse {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(1.06); }
+  100% { transform: scaleY(1); }
+}
+@keyframes wave-expand {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.6; }
+}
+
+/* ---- 3. ROCKET (Deploy) ----
+   Real object: Space rocket
+   Verb: Lifts off with thrust
+   Story: body lifts (0ms) -> flame flickers (60ms)
+   ---- */
+.bespoke-rocket .rocket-body {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bespoke-rocket .rocket-flame {
+  transform-origin: center bottom;
+  transition: transform 0.3s ease 60ms, opacity 0.3s ease 60ms;
+}
+.nav-item:hover .bespoke-rocket .rocket-body,
+.icon-card:hover .bespoke-rocket .rocket-body {
+  transform: translateY(-2px);
+}
+.nav-item:hover .bespoke-rocket .rocket-flame,
+.icon-card:hover .bespoke-rocket .rocket-flame {
+  animation: flame-flicker 0.4s ease 60ms forwards;
+}
+@keyframes flame-flicker {
+  0% { transform: scaleY(1); opacity: 1; }
+  30% { transform: scaleY(1.4); opacity: 1; }
+  60% { transform: scaleY(0.9); opacity: 0.8; }
+  100% { transform: scaleY(1.2); opacity: 1; }
+}
+
+/* ---- 4. DATABASE (Stacked cylinders) ----
+   Real object: Server rack / disk stack
+   Verb: Layers pulse top to bottom (data flowing)
+   Story: top (0ms) -> mid (80ms) -> bottom (160ms)
+   ---- */
+.bespoke-database .db-top,
+.bespoke-database .db-mid,
+.bespoke-database .db-bottom {
+  transform-origin: center;
+}
+.nav-item:hover .bespoke-database .db-top,
+.icon-card:hover .bespoke-database .db-top {
+  animation: db-pulse 0.4s cubic-bezier(0.0, 0.0, 0.2, 1.0) 0ms forwards;
+}
+.nav-item:hover .bespoke-database .db-mid,
+.icon-card:hover .bespoke-database .db-mid {
+  animation: db-pulse 0.4s cubic-bezier(0.0, 0.0, 0.2, 1.0) 80ms forwards;
+}
+.nav-item:hover .bespoke-database .db-bottom,
+.icon-card:hover .bespoke-database .db-bottom {
+  animation: db-pulse 0.4s cubic-bezier(0.0, 0.0, 0.2, 1.0) 160ms forwards;
+}
+@keyframes db-pulse {
+  0% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(1.06); opacity: 0.7; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+
+/* ---- 5. BAR CHART (Analytics) ----
+   Real object: Dashboard bar chart
+   Verb: Bars grow from baseline
+   Story: bar1 (0ms) -> bar2 (70ms) -> bar3 (140ms) cascade left to right
+   ---- */
+.bespoke-chart .chart-bar-1,
+.bespoke-chart .chart-bar-2,
+.bespoke-chart .chart-bar-3 {
+  transform-origin: center bottom;
+}
+.nav-item:hover .bespoke-chart .chart-bar-1,
+.icon-card:hover .bespoke-chart .chart-bar-1 {
+  animation: bar-grow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0ms forwards;
+}
+.nav-item:hover .bespoke-chart .chart-bar-2,
+.icon-card:hover .bespoke-chart .chart-bar-2 {
+  animation: bar-grow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 70ms forwards;
+}
+.nav-item:hover .bespoke-chart .chart-bar-3,
+.icon-card:hover .bespoke-chart .chart-bar-3 {
+  animation: bar-grow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 140ms forwards;
+}
+@keyframes bar-grow {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(1.15); }
+  100% { transform: scaleY(1); }
+}
+
+/* ---- 6. GEAR (Settings) ----
+   Real object: Mechanical cogwheel
+   Verb: Turns with mechanical precision
+   Story: gear rotates 60deg with snappy easing
+   ---- */
+.bespoke-gear .gear-body {
+  transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.nav-item:hover .bespoke-gear .gear-body,
+.icon-card:hover .bespoke-gear .gear-body {
+  transform: rotate(60deg);
+}
+
+/* ---- 7. CODE (API / Brackets) ----
+   Real object: Code editor brackets
+   Verb: Brackets expand outward (code executes)
+   Story: left bracket (0ms) -> right bracket (60ms)
+   ---- */
+.bespoke-code .bracket-left,
+.bespoke-code .bracket-right {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bespoke-code .bracket-right {
+  transition-delay: 60ms;
+}
+.bespoke-code .code-lines {
+  transition: opacity 0.25s ease 100ms;
+}
+.nav-item:hover .bespoke-code .bracket-left,
+.icon-card:hover .bespoke-code .bracket-left {
+  transform: translateX(-1.5px);
+}
+.nav-item:hover .bespoke-code .bracket-right,
+.icon-card:hover .bespoke-code .bracket-right {
+  transform: translateX(1.5px);
+}
+.nav-item:hover .bespoke-code .code-lines,
+.icon-card:hover .bespoke-code .code-lines {
+  opacity: 1;
+}
+
+/* ---- 8. LOCK (Security) ----
+   Real object: Padlock
+   Verb: Shackle lifts open
+   Story: shackle lifts (0ms) -> body settles (80ms)
+   ---- */
+.bespoke-lock .lock-shackle {
+  transform-origin: 15px 10px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bespoke-lock .lock-body {
+  transition: transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1.0) 80ms;
+}
+.nav-item:hover .bespoke-lock .lock-shackle,
+.icon-card:hover .bespoke-lock .lock-shackle {
+  transform: translateY(-2px) rotate(-8deg);
+}
+.nav-item:hover .bespoke-lock .lock-body,
+.icon-card:hover .bespoke-lock .lock-body {
+  transform: translateY(0.5px);
+}
+
+/* ---- 9. ZAP (Webhook / Lightning) ----
+   Real object: Lightning bolt
+   Verb: Strikes with flash
+   Story: bolt brightens (0ms) -> glow pulse (100ms)
+   ---- */
+.bespoke-zap .zap-bolt {
+  transition: filter 0.15s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-item:hover .bespoke-zap .zap-bolt,
+.icon-card:hover .bespoke-zap .zap-bolt {
+  animation: zap-strike 0.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) forwards;
+  filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.5));
+}
+@keyframes zap-strike {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.15) rotate(-3deg); }
+  30% { transform: scale(0.97) rotate(1deg); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* ---- 10. USERS (Team) ----
+   Real object: Group of people
+   Verb: Figures gather / converge together
+   Story: left person slides in (0ms) -> right person slides in (80ms) -> center person scales (140ms)
+   ---- */
+.bespoke-users .user-left {
+  transition: transform 0.3s cubic-bezier(0.0, 0.0, 0.2, 1.0);
+}
+.bespoke-users .user-right {
+  transition: transform 0.3s cubic-bezier(0.0, 0.0, 0.2, 1.0) 80ms;
+}
+.bespoke-users .user-center {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) 140ms;
+}
+.nav-item:hover .bespoke-users .user-left,
+.icon-card:hover .bespoke-users .user-left {
+  transform: translateX(1px);
+}
+.nav-item:hover .bespoke-users .user-right,
+.icon-card:hover .bespoke-users .user-right {
+  transform: translateX(-1px);
+}
+.nav-item:hover .bespoke-users .user-center,
+.icon-card:hover .bespoke-users .user-center {
+  transform: scale(1.08);
+}
+
+</style>
+</head>
+<body>
+
+<div class="demo-container">
+  <h1>Bespoke Icon Choreography</h1>
+  <p class="subtitle">10 SaaS dashboard icons with per-icon CSS/SVG hover animations. No JavaScript. No Lottie.</p>
+
+  <!-- Sidebar demo (Resend-style) -->
+  <p class="section-label">Sidebar Navigation</p>
+  <div class="sidebar-demo">
+
+    <!-- 1. Mail -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-mail">
+        <g class="mail-body">
+          <rect x="2" y="5" width="20" height="14" rx="2" />
+        </g>
+        <g class="mail-flap">
+          <polyline points="2,5 12,13 22,5" />
+        </g>
+      </svg>
+      Emails
+    </a>
+
+    <!-- 2. Broadcast -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-broadcast">
+        <g class="tower">
+          <line x1="12" y1="12" x2="12" y2="21" />
+          <circle cx="12" cy="12" r="2" />
+        </g>
+        <g class="wave-inner">
+          <path d="M8.5 8.5a5 5 0 0 1 7 0" />
+          <path d="M8.5 15.5a5 5 0 0 0 7 0" />
+        </g>
+        <g class="wave-outer">
+          <path d="M6 6a9 9 0 0 1 12 0" />
+          <path d="M6 18a9 9 0 0 0 12 0" />
+        </g>
+      </svg>
+      Broadcasts
+    </a>
+
+    <!-- 3. Rocket -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-rocket">
+        <g class="rocket-body">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+          <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+          <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+        </g>
+        <g class="rocket-flame">
+          <line x1="2" y1="22" x2="7" y2="17" />
+        </g>
+      </svg>
+      Deploy
+    </a>
+
+    <!-- 4. Database -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-database">
+        <g class="db-top">
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+        </g>
+        <g class="db-mid">
+          <path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" />
+        </g>
+        <g class="db-bottom">
+          <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+        </g>
+      </svg>
+      Database
+    </a>
+
+    <!-- 5. Bar Chart -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-chart">
+        <g class="chart-bar-1">
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </g>
+        <g class="chart-bar-2">
+          <line x1="12" y1="20" x2="12" y2="4" />
+        </g>
+        <g class="chart-bar-3">
+          <line x1="18" y1="20" x2="18" y2="10" />
+        </g>
+      </svg>
+      Analytics
+    </a>
+
+    <!-- 6. Gear -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-gear">
+        <g class="gear-body">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </g>
+      </svg>
+      Settings
+    </a>
+
+    <!-- 7. Code -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-code">
+        <g class="bracket-left">
+          <polyline points="8,4 4,12 8,20" />
+        </g>
+        <g class="bracket-right">
+          <polyline points="16,4 20,12 16,20" />
+        </g>
+        <g class="code-lines" opacity="0.7">
+          <line x1="10" y1="10" x2="14" y2="14" />
+        </g>
+      </svg>
+      API
+    </a>
+
+    <!-- 8. Lock -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-lock">
+        <g class="lock-shackle">
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </g>
+        <g class="lock-body">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none" />
+        </g>
+      </svg>
+      Security
+    </a>
+
+    <!-- 9. Zap -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-zap">
+        <g class="zap-bolt">
+          <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" />
+        </g>
+      </svg>
+      Webhooks
+    </a>
+
+    <!-- 10. Users -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-users">
+        <g class="user-center">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+        </g>
+        <g class="user-right">
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </g>
+      </svg>
+      Team
+    </a>
+
+  </div>
+
+  <!-- Grid view -->
+  <p class="section-label">Grid View</p>
+  <div class="grid">
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-mail">
+        <g class="mail-body"><rect x="2" y="5" width="20" height="14" rx="2" /></g>
+        <g class="mail-flap"><polyline points="2,5 12,13 22,5" /></g>
+      </svg>
+      <span>Mail</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-broadcast">
+        <g class="tower"><line x1="12" y1="12" x2="12" y2="21" /><circle cx="12" cy="12" r="2" /></g>
+        <g class="wave-inner"><path d="M8.5 8.5a5 5 0 0 1 7 0" /><path d="M8.5 15.5a5 5 0 0 0 7 0" /></g>
+        <g class="wave-outer"><path d="M6 6a9 9 0 0 1 12 0" /><path d="M6 18a9 9 0 0 0 12 0" /></g>
+      </svg>
+      <span>Broadcast</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-rocket">
+        <g class="rocket-body">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+          <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+        </g>
+        <g class="rocket-flame"><line x1="2" y1="22" x2="7" y2="17" /></g>
+      </svg>
+      <span>Deploy</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-database">
+        <g class="db-top"><ellipse cx="12" cy="5" rx="9" ry="3" /></g>
+        <g class="db-mid"><path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" /></g>
+        <g class="db-bottom"><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" /></g>
+      </svg>
+      <span>Database</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-chart">
+        <g class="chart-bar-1"><line x1="6" y1="20" x2="6" y2="14" /></g>
+        <g class="chart-bar-2"><line x1="12" y1="20" x2="12" y2="4" /></g>
+        <g class="chart-bar-3"><line x1="18" y1="20" x2="18" y2="10" /></g>
+      </svg>
+      <span>Analytics</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-gear">
+        <g class="gear-body">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </g>
+      </svg>
+      <span>Settings</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-code">
+        <g class="bracket-left"><polyline points="8,4 4,12 8,20" /></g>
+        <g class="bracket-right"><polyline points="16,4 20,12 16,20" /></g>
+        <g class="code-lines" opacity="0.7"><line x1="10" y1="10" x2="14" y2="14" /></g>
+      </svg>
+      <span>API</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-lock">
+        <g class="lock-shackle"><path d="M7 11V7a5 5 0 0 1 10 0v4" /></g>
+        <g class="lock-body"><rect x="3" y="11" width="18" height="11" rx="2" /><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none" /></g>
+      </svg>
+      <span>Security</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-zap">
+        <g class="zap-bolt"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10" /></g>
+      </svg>
+      <span>Webhooks</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-users">
+        <g class="user-center"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></g>
+        <g class="user-right"><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></g>
+      </svg>
+      <span>Team</span>
+    </div>
+
+  </div>
+
+  <p class="technique-note">Pure CSS + SVG. Zero JavaScript. Zero Lottie. Each icon has bespoke choreography.</p>
+</div>
+
+</body>
+</html>

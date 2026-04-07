@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supericons Sidebar - Bespoke Icon Animations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   SUPERICONS SIDEBAR BESPOKE ICON ANIMATIONS
+   17 sidebar icons with per-icon CSS/SVG choreography
+   Technique: Pure CSS + inline SVG. No JavaScript. No Lottie.
+   Duration: 2-3s per icon (extended choreography)
+   ================================================================ */
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #141417;
+  --surface-hover: #1c1c21;
+  --border: #27272a;
+  --text: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #f97316;
+  --accent-dim: rgba(249, 115, 22, 0.15);
+  --icon-color: #a1a1aa;
+  --icon-hover: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.demo-container {
+  max-width: 900px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+/* ---- Sidebar Layout ---- */
+.sidebar-demo {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 8px;
+  width: 260px;
+  margin: 0 auto 48px;
+}
+
+.section-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 12px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header:first-child { padding-top: 4px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--icon-color);
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover svg {
+  color: var(--icon-hover);
+}
+
+.nav-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.nav-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 12px;
+}
+
+/* ---- Grid View ---- */
+.grid-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-card:hover {
+  background: var(--surface-hover);
+  border-color: #3f3f46;
+}
+
+.icon-card svg {
+  width: 26px;
+  height: 26px;
+  color: var(--icon-color);
+  transition: color 0.2s ease;
+}
+
+.icon-card:hover svg { color: var(--icon-hover); }
+
+.icon-card span {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.technique-note {
+  font-size: 12px;
+  color: #52525b;
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+/* ================================================================
+   ICON ANIMATIONS - BROWSE SECTION
+   ================================================================ */
+
+/* ---- 1. ALL ICONS (Grid Dots) ----
+   Real object: Mosaic tile wall
+   Verb: Tiles burst outward then magnetically snap back
+   Story: TL (0ms) -> TR (100ms) -> BL (200ms) -> BR (300ms) -> all snap back
+   ---- */
+.bespoke-allicons .grid-tl,
+.bespoke-allicons .grid-tr,
+.bespoke-allicons .grid-bl,
+.bespoke-allicons .grid-br {
+  transform-origin: center;
+}
+.nav-item:hover .bespoke-allicons .grid-tl,
+.icon-card:hover .bespoke-allicons .grid-tl {
+  animation: grid-burst-tl 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-allicons .grid-tr,
+.icon-card:hover .bespoke-allicons .grid-tr {
+  animation: grid-burst-tr 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 100ms forwards;
+}
+.nav-item:hover .bespoke-allicons .grid-bl,
+.icon-card:hover .bespoke-allicons .grid-bl {
+  animation: grid-burst-bl 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 200ms forwards;
+}
+.nav-item:hover .bespoke-allicons .grid-br,
+.icon-card:hover .bespoke-allicons .grid-br {
+  animation: grid-burst-br 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 300ms forwards;
+}
+@keyframes grid-burst-tl {
+  0% { transform: translate(0,0) scale(1) rotate(0); }
+  15% { transform: translate(-2px,-2px) scale(1.15) rotate(-5deg); }
+  35% { transform: translate(-1.5px,-1.5px) scale(1.1) rotate(-3deg); }
+  60% { transform: translate(0.5px,0.5px) scale(0.95) rotate(1deg); }
+  80% { transform: translate(-0.2px,-0.2px) scale(1.02) rotate(0); }
+  100% { transform: translate(0,0) scale(1) rotate(0); }
+}
+@keyframes grid-burst-tr {
+  0% { transform: translate(0,0) scale(1) rotate(0); }
+  15% { transform: translate(2px,-2px) scale(1.15) rotate(5deg); }
+  35% { transform: translate(1.5px,-1.5px) scale(1.1) rotate(3deg); }
+  60% { transform: translate(-0.5px,0.5px) scale(0.95) rotate(-1deg); }
+  80% { transform: translate(0.2px,-0.2px) scale(1.02) rotate(0); }
+  100% { transform: translate(0,0) scale(1) rotate(0); }
+}
+@keyframes grid-burst-bl {
+  0% { transform: translate(0,0) scale(1) rotate(0); }
+  15% { transform: translate(-2px,2px) scale(1.15) rotate(5deg); }
+  35% { transform: translate(-1.5px,1.5px) scale(1.1) rotate(3deg); }
+  60% { transform: translate(0.5px,-0.5px) scale(0.95) rotate(-1deg); }
+  80% { transform: translate(-0.2px,0.2px) scale(1.02) rotate(0); }
+  100% { transform: translate(0,0) scale(1) rotate(0); }
+}
+@keyframes grid-burst-br {
+  0% { transform: translate(0,0) scale(1) rotate(0); }
+  15% { transform: translate(2px,2px) scale(1.15) rotate(-5deg); }
+  35% { transform: translate(1.5px,1.5px) scale(1.1) rotate(-3deg); }
+  60% { transform: translate(-0.5px,-0.5px) scale(0.95) rotate(1deg); }
+  80% { transform: translate(0.2px,0.2px) scale(1.02) rotate(0); }
+  100% { transform: translate(0,0) scale(1) rotate(0); }
+}
+
+/* ---- 2. FAVORITES (Heart) ----
+   Real object: Human heart
+   Verb: Lub-dub double-pump heartbeat with radiating pulse rings
+   Story: squeeze (0ms) -> expand (150ms) -> second beat (400ms) -> ripples (500ms)
+   ---- */
+.bespoke-heart .heart-body { transform-origin: center; }
+.bespoke-heart .heart-pulse-1,
+.bespoke-heart .heart-pulse-2 {
+  transform-origin: center;
+  opacity: 0;
+}
+.nav-item:hover .bespoke-heart .heart-body,
+.icon-card:hover .bespoke-heart .heart-body {
+  animation: heart-lubdub 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-heart .heart-pulse-1,
+.icon-card:hover .bespoke-heart .heart-pulse-1 {
+  animation: heart-ripple 2s cubic-bezier(0.0, 0.0, 0.2, 1.0) 500ms forwards;
+}
+.nav-item:hover .bespoke-heart .heart-pulse-2,
+.icon-card:hover .bespoke-heart .heart-pulse-2 {
+  animation: heart-ripple 2s cubic-bezier(0.0, 0.0, 0.2, 1.0) 700ms forwards;
+}
+@keyframes heart-lubdub {
+  0% { transform: scale(1); }
+  6% { transform: scale(0.85); }
+  14% { transform: scale(1.2); }
+  22% { transform: scale(0.95); }
+  30% { transform: scale(1.1); }
+  40% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes heart-ripple {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  40% { transform: scale(1.6); opacity: 0.3; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ---- 3. RECENT (Clock) ----
+   Real object: Analog clock
+   Verb: Second hand sweeps counterclockwise (rewinding time)
+   Story: second hand rewinds (0ms) -> minute hand nudges (800ms) -> face pulses (1200ms)
+   ---- */
+.bespoke-clock .clock-second { transform-origin: 12px 12px; }
+.bespoke-clock .clock-minute { transform-origin: 12px 12px; }
+.bespoke-clock .clock-face { transform-origin: center; }
+.nav-item:hover .bespoke-clock .clock-second,
+.icon-card:hover .bespoke-clock .clock-second {
+  animation: clock-rewind 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) forwards;
+}
+.nav-item:hover .bespoke-clock .clock-minute,
+.icon-card:hover .bespoke-clock .clock-minute {
+  animation: clock-minute-nudge 2.5s cubic-bezier(0.4, 0.0, 0.2, 1.0) 800ms forwards;
+}
+.nav-item:hover .bespoke-clock .clock-face,
+.icon-card:hover .bespoke-clock .clock-face {
+  animation: clock-face-pulse 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) 1200ms forwards;
+}
+@keyframes clock-rewind {
+  0% { transform: rotate(0deg); }
+  70% { transform: rotate(-360deg); }
+  85% { transform: rotate(-350deg); }
+  100% { transform: rotate(-360deg); }
+}
+@keyframes clock-minute-nudge {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-30deg); }
+  80% { transform: rotate(-25deg); }
+  100% { transform: rotate(-30deg); }
+}
+@keyframes clock-face-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+
+/* ================================================================
+   ICON ANIMATIONS - LIBRARIES SECTION (Part 1: icons 4-6)
+   ================================================================ */
+
+/* ---- 4. MINGCUTE (Star) ----
+   Real object: Celestial star / supernova
+   Verb: Twinkles with radiant sparkle, points extend
+   Story: core brightens (0ms) -> points extend (150ms) -> sparkles (400ms) -> rotation
+   ---- */
+.bespoke-star .star-core { transform-origin: center; }
+.bespoke-star .star-points { transform-origin: center; }
+.bespoke-star .star-sparkle-1,
+.bespoke-star .star-sparkle-2 { opacity: 0; transform-origin: center; }
+.nav-item:hover .bespoke-star .star-core,
+.icon-card:hover .bespoke-star .star-core {
+  animation: star-core-pulse 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.nav-item:hover .bespoke-star .star-points,
+.icon-card:hover .bespoke-star .star-points {
+  animation: star-points-extend 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 150ms forwards;
+}
+.nav-item:hover .bespoke-star .star-sparkle-1,
+.icon-card:hover .bespoke-star .star-sparkle-1 {
+  animation: star-sparkle 2s ease 400ms forwards;
+}
+.nav-item:hover .bespoke-star .star-sparkle-2,
+.icon-card:hover .bespoke-star .star-sparkle-2 {
+  animation: star-sparkle 2s ease 600ms forwards;
+}
+@keyframes star-core-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  20% { transform: scale(1.3); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+@keyframes star-points-extend {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.15) rotate(8deg); }
+  50% { transform: scale(1.05) rotate(12deg); }
+  100% { transform: scale(1) rotate(15deg); }
+}
+@keyframes star-sparkle {
+  0% { opacity: 0; transform: scale(0.5) translate(0,0); }
+  30% { opacity: 1; transform: scale(1.2) translate(2px,-2px); }
+  60% { opacity: 0.8; transform: scale(1) translate(3px,-3px); }
+  100% { opacity: 0; transform: scale(0.5) translate(4px,-4px); }
+}
+
+/* ---- 5. SIMPLE ICONS (Square frame) ----
+   Real object: Minimalist picture frame
+   Verb: Frame edges draw themselves, content reveals
+   Story: border draws clockwise (0-800ms) -> inner content fades in (800ms)
+   ---- */
+.bespoke-simpleicons .frame-border {
+  stroke-dasharray: 72;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.01s;
+}
+.bespoke-simpleicons .frame-inner {
+  transform-origin: center;
+  opacity: 1;
+}
+.nav-item:hover .bespoke-simpleicons .frame-border,
+.icon-card:hover .bespoke-simpleicons .frame-border {
+  animation: frame-draw 2.5s cubic-bezier(0.4, 0.0, 0.2, 1.0) forwards;
+}
+.nav-item:hover .bespoke-simpleicons .frame-inner,
+.icon-card:hover .bespoke-simpleicons .frame-inner {
+  animation: frame-content-reveal 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 800ms forwards;
+}
+@keyframes frame-draw {
+  0% { stroke-dashoffset: 72; }
+  60% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes frame-content-reveal {
+  0% { opacity: 0; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---- 6. LUCIDE (Pen/Quill) ----
+   Real object: Calligraphy feather quill
+   Verb: Dips into inkwell and writes a flourish
+   Story: pen dips (0ms) -> lifts (300ms) -> ink stroke appears (500ms) -> settles (800ms)
+   ---- */
+.bespoke-pen .pen-body { transform-origin: 18px 18px; }
+.bespoke-pen .ink-stroke {
+  stroke-dasharray: 12;
+  stroke-dashoffset: 12;
+  opacity: 0;
+}
+.nav-item:hover .bespoke-pen .pen-body,
+.icon-card:hover .bespoke-pen .pen-body {
+  animation: pen-write 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-pen .ink-stroke,
+.icon-card:hover .bespoke-pen .ink-stroke {
+  animation: ink-appear 2s cubic-bezier(0.0, 0.0, 0.2, 1.0) 500ms forwards;
+}
+@keyframes pen-write {
+  0% { transform: rotate(0deg) translate(0,0); }
+  15% { transform: rotate(-12deg) translate(0, 2px); }
+  30% { transform: rotate(-15deg) translate(0, 2.5px); }
+  50% { transform: rotate(5deg) translate(0, -1px); }
+  70% { transform: rotate(-2deg) translate(0, 0.5px); }
+  85% { transform: rotate(1deg) translate(0, 0); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+@keyframes ink-appear {
+  0% { stroke-dashoffset: 12; opacity: 0; }
+  30% { opacity: 0.8; }
+  60% { stroke-dashoffset: 0; opacity: 1; }
+  80% { stroke-dashoffset: 0; opacity: 0.6; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* ================================================================
+   ICON ANIMATIONS - LIBRARIES SECTION (Part 2: icons 7-11)
+   ================================================================ */
+
+/* ---- 7. TABLER (Anchor) ----
+   Real object: Ship's anchor
+   Verb: Drops into water with chain trailing, settles with weight
+   Story: chain (0ms) -> anchor drops (150ms) -> chain snaps (300ms) -> ripple (500ms)
+   ---- */
+.bespoke-anchor .anchor-body { transform-origin: center top; }
+.bespoke-anchor .anchor-ring { transform-origin: center; }
+.bespoke-anchor .anchor-ripple { transform-origin: center; opacity: 0; }
+.nav-item:hover .bespoke-anchor .anchor-body,
+.icon-card:hover .bespoke-anchor .anchor-body {
+  animation: anchor-drop 2.5s cubic-bezier(0.4, 0.0, 0.2, 1.0) forwards;
+}
+.nav-item:hover .bespoke-anchor .anchor-ring,
+.icon-card:hover .bespoke-anchor .anchor-ring {
+  animation: anchor-ring-swing 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-anchor .anchor-ripple,
+.icon-card:hover .bespoke-anchor .anchor-ripple {
+  animation: anchor-ripple 2s cubic-bezier(0.0, 0.0, 0.2, 1.0) 500ms forwards;
+}
+@keyframes anchor-drop {
+  0% { transform: translateY(0); }
+  15% { transform: translateY(3px); }
+  30% { transform: translateY(2.5px); }
+  50% { transform: translateY(3.5px); }
+  70% { transform: translateY(2px); }
+  85% { transform: translateY(2.8px); }
+  100% { transform: translateY(0); }
+}
+@keyframes anchor-ring-swing {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg); }
+  40% { transform: rotate(8deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes anchor-ripple {
+  0% { opacity: 0.8; transform: scaleX(0.5); }
+  50% { opacity: 0.4; transform: scaleX(1.8); }
+  100% { opacity: 0; transform: scaleX(2.5); }
+}
+
+/* ---- 8. PHOSPHOR (Circle/Orb) ----
+   Real object: Phosphorescent orb / bioluminescent creature
+   Verb: Glows and pulses with organic bioluminescent rhythm
+   Story: inner brightens (0ms) -> outer halo expands (200ms) -> second pulse (600ms)
+   ---- */
+.bespoke-phosphor .phosphor-orb { transform-origin: center; }
+.bespoke-phosphor .phosphor-glow {
+  transform-origin: center;
+  opacity: 0;
+}
+.nav-item:hover .bespoke-phosphor .phosphor-orb,
+.icon-card:hover .bespoke-phosphor .phosphor-orb {
+  animation: phosphor-pulse 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) forwards;
+}
+.nav-item:hover .bespoke-phosphor .phosphor-glow,
+.icon-card:hover .bespoke-phosphor .phosphor-glow {
+  animation: phosphor-halo 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) 200ms forwards;
+}
+@keyframes phosphor-pulse {
+  0% { transform: scale(1); opacity: 0.7; filter: none; }
+  15% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 3px rgba(168,85,247,0.6)); }
+  30% { transform: scale(1.02); opacity: 0.85; filter: drop-shadow(0 0 1px rgba(168,85,247,0.3)); }
+  50% { transform: scale(1.06); opacity: 1; filter: drop-shadow(0 0 4px rgba(168,85,247,0.7)); }
+  70% { transform: scale(1.01); opacity: 0.8; filter: drop-shadow(0 0 1px rgba(168,85,247,0.2)); }
+  100% { transform: scale(1); opacity: 0.7; filter: none; }
+}
+@keyframes phosphor-halo {
+  0% { transform: scale(0.9); opacity: 0; }
+  20% { transform: scale(1.2); opacity: 0.5; }
+  40% { transform: scale(1.1); opacity: 0.2; }
+  60% { transform: scale(1.3); opacity: 0.4; }
+  80% { transform: scale(1.15); opacity: 0.15; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* ---- 9. HEROICONS (Shield) ----
+   Real object: Hero's battle shield
+   Verb: Braces for impact, absorbs hit, rebounds with shockwave
+   Story: brace (0ms) -> impact flash (200ms) -> rebound (400ms) -> shockwave (600ms)
+   ---- */
+.bespoke-shield .shield-body { transform-origin: center; }
+.bespoke-shield .shield-emblem { transform-origin: center; }
+.bespoke-shield .shield-shockwave { transform-origin: center; opacity: 0; }
+.nav-item:hover .bespoke-shield .shield-body,
+.icon-card:hover .bespoke-shield .shield-body {
+  animation: shield-impact 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-shield .shield-emblem,
+.icon-card:hover .bespoke-shield .shield-emblem {
+  animation: shield-flash 2.5s ease 200ms forwards;
+}
+.nav-item:hover .bespoke-shield .shield-shockwave,
+.icon-card:hover .bespoke-shield .shield-shockwave {
+  animation: shield-wave 2s cubic-bezier(0.0, 0.0, 0.2, 1.0) 600ms forwards;
+}
+@keyframes shield-impact {
+  0% { transform: scale(1); }
+  10% { transform: scale(0.88); }
+  25% { transform: scale(1.12); }
+  40% { transform: scale(0.96); }
+  55% { transform: scale(1.04); }
+  70% { transform: scale(0.99); }
+  100% { transform: scale(1); }
+}
+@keyframes shield-flash {
+  0% { opacity: 0.5; }
+  15% { opacity: 1; }
+  40% { opacity: 0.3; }
+  60% { opacity: 0.8; }
+  100% { opacity: 0.5; }
+}
+@keyframes shield-wave {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  40% { transform: scale(1.8); opacity: 0.2; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ---- 10. BOOTSTRAP (Grid blocks) ----
+   Real object: Building blocks / Tetris pieces
+   Verb: Blocks drop in from above and lock into place
+   Story: block1 (0ms) -> block2 (150ms) -> block3 (300ms) -> block4 (450ms) -> settle (600ms)
+   ---- */
+.bespoke-bootstrap .block-1,
+.bespoke-bootstrap .block-2,
+.bespoke-bootstrap .block-3,
+.bespoke-bootstrap .block-4 { transform-origin: center; }
+.nav-item:hover .bespoke-bootstrap .block-1,
+.icon-card:hover .bespoke-bootstrap .block-1 {
+  animation: block-drop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0ms forwards;
+}
+.nav-item:hover .bespoke-bootstrap .block-2,
+.icon-card:hover .bespoke-bootstrap .block-2 {
+  animation: block-drop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 150ms forwards;
+}
+.nav-item:hover .bespoke-bootstrap .block-3,
+.icon-card:hover .bespoke-bootstrap .block-3 {
+  animation: block-drop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 300ms forwards;
+}
+.nav-item:hover .bespoke-bootstrap .block-4,
+.icon-card:hover .bespoke-bootstrap .block-4 {
+  animation: block-drop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 450ms forwards;
+}
+@keyframes block-drop {
+  0% { transform: translateY(-5px) scale(0.8); opacity: 0.3; }
+  20% { transform: translateY(1px) scale(1.05); opacity: 1; }
+  35% { transform: translateY(-0.5px) scale(0.98); }
+  50% { transform: translateY(0.3px) scale(1.02); }
+  65% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* ---- 11. ICONOIR (Circle/Iris) ----
+   Real object: Camera iris / aperture ring
+   Verb: Iris blades rotate, aperture opens
+   Story: outer ring CW (0ms) -> inner ring CCW (100ms) -> aperture opens (300ms)
+   ---- */
+.bespoke-iconoir .iris-outer { transform-origin: center; }
+.bespoke-iconoir .iris-inner { transform-origin: center; }
+.bespoke-iconoir .iris-aperture { transform-origin: center; }
+.nav-item:hover .bespoke-iconoir .iris-outer,
+.icon-card:hover .bespoke-iconoir .iris-outer {
+  animation: iris-rotate-cw 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.nav-item:hover .bespoke-iconoir .iris-inner,
+.icon-card:hover .bespoke-iconoir .iris-inner {
+  animation: iris-rotate-ccw 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) 100ms forwards;
+}
+.nav-item:hover .bespoke-iconoir .iris-aperture,
+.icon-card:hover .bespoke-iconoir .iris-aperture {
+  animation: iris-open 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 300ms forwards;
+}
+@keyframes iris-rotate-cw {
+  0% { transform: rotate(0deg); }
+  40% { transform: rotate(30deg); }
+  70% { transform: rotate(25deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes iris-rotate-ccw {
+  0% { transform: rotate(0deg); }
+  40% { transform: rotate(-20deg); }
+  70% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes iris-open {
+  0% { transform: scale(0.5); opacity: 0.4; }
+  30% { transform: scale(1.1); opacity: 1; }
+  60% { transform: scale(0.9); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+/* ================================================================
+   ICON ANIMATIONS - LIBRARIES (Part 3: icons 12-13) + PREMIUM + TOOLS
+   ================================================================ */
+
+/* ---- 12. IONICONS (Lightning bolt) ----
+   Real object: Electrical discharge / plasma bolt
+   Verb: Charges with crackling energy, then discharges with flash
+   Story: vibration (0ms) -> peak flash (400ms) -> afterglow (700ms)
+   ---- */
+.bespoke-ionbolt .bolt-body { transform-origin: center; }
+.bespoke-ionbolt .bolt-glow { transform-origin: center; opacity: 0; }
+.nav-item:hover .bespoke-ionbolt .bolt-body,
+.icon-card:hover .bespoke-ionbolt .bolt-body {
+  animation: ion-discharge 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) forwards;
+}
+.nav-item:hover .bespoke-ionbolt .bolt-glow,
+.icon-card:hover .bespoke-ionbolt .bolt-glow {
+  animation: ion-glow 2.5s ease 300ms forwards;
+}
+@keyframes ion-discharge {
+  0% { transform: translate(0,0); filter: none; }
+  5% { transform: translate(0.5px, 0); }
+  10% { transform: translate(-0.5px, 0.3px); }
+  15% { transform: translate(0.3px, -0.3px); }
+  20% { transform: translate(-0.3px, 0.2px); filter: drop-shadow(0 0 2px rgba(250,204,21,0.3)); }
+  25% { transform: translate(0.4px, -0.2px); filter: drop-shadow(0 0 4px rgba(250,204,21,0.5)); }
+  30% { transform: scale(1.15) rotate(-3deg); filter: drop-shadow(0 0 6px rgba(250,204,21,0.8)); }
+  40% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 8px rgba(250,204,21,1)); }
+  55% { transform: scale(1.02) rotate(0); filter: drop-shadow(0 0 4px rgba(250,204,21,0.5)); }
+  70% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(250,204,21,0.3)); }
+  100% { transform: scale(1) translate(0,0); filter: none; }
+}
+@keyframes ion-glow {
+  0% { opacity: 0; transform: scale(0.8); }
+  20% { opacity: 0.7; transform: scale(1.1); }
+  50% { opacity: 0.3; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* ---- 13. MATERIAL SYMBOLS (Dots grid) ----
+   Real object: LED matrix / pixel display
+   Verb: Pixels ripple in diagonal wave pattern
+   Story: 9 dots animate in diagonal cascade (TL to BR)
+   ---- */
+.bespoke-matgrid [class^="dot-"] { transform-origin: center; }
+.nav-item:hover .bespoke-matgrid .dot-1,
+.icon-card:hover .bespoke-matgrid .dot-1 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 0ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-2,
+.icon-card:hover .bespoke-matgrid .dot-2 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 80ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-3,
+.icon-card:hover .bespoke-matgrid .dot-3 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 160ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-4,
+.icon-card:hover .bespoke-matgrid .dot-4 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 100ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-5,
+.icon-card:hover .bespoke-matgrid .dot-5 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 180ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-6,
+.icon-card:hover .bespoke-matgrid .dot-6 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 260ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-7,
+.icon-card:hover .bespoke-matgrid .dot-7 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 200ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-8,
+.icon-card:hover .bespoke-matgrid .dot-8 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 280ms forwards; }
+.nav-item:hover .bespoke-matgrid .dot-9,
+.icon-card:hover .bespoke-matgrid .dot-9 { animation: dot-ripple 2.5s cubic-bezier(0.0,0.0,0.2,1) 360ms forwards; }
+@keyframes dot-ripple {
+  0% { transform: scale(1); opacity: 0.5; }
+  20% { transform: scale(1.4); opacity: 1; }
+  40% { transform: scale(0.9); opacity: 0.7; }
+  60% { transform: scale(1.15); opacity: 0.9; }
+  80% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* ---- 14. COLLECTIONS (Layers/Stack) ----
+   Real object: Stack of glass panes / card deck
+   Verb: Layers fan out like a hand of cards, then restack
+   Story: top lifts (0ms) -> mid shifts (120ms) -> rest (200ms) -> converge (800ms)
+   ---- */
+.bespoke-layers .layer-top { transform-origin: center bottom; }
+.bespoke-layers .layer-mid { transform-origin: center; }
+.bespoke-layers .layer-bottom { transform-origin: center; }
+.nav-item:hover .bespoke-layers .layer-top,
+.icon-card:hover .bespoke-layers .layer-top {
+  animation: layer-fan-top 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-layers .layer-mid,
+.icon-card:hover .bespoke-layers .layer-mid {
+  animation: layer-fan-mid 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 120ms forwards;
+}
+.nav-item:hover .bespoke-layers .layer-bottom,
+.icon-card:hover .bespoke-layers .layer-bottom {
+  animation: layer-fan-bottom 2.5s cubic-bezier(0.0, 0.0, 0.2, 1.0) 200ms forwards;
+}
+@keyframes layer-fan-top {
+  0% { transform: translateY(0) rotate(0); }
+  20% { transform: translateY(-4px) rotate(-6deg); }
+  50% { transform: translateY(-3.5px) rotate(-5deg); }
+  75% { transform: translateY(-1px) rotate(-1deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@keyframes layer-fan-mid {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(3px); }
+  50% { transform: translateX(2.5px); }
+  75% { transform: translateX(0.5px); }
+  100% { transform: translateX(0); }
+}
+@keyframes layer-fan-bottom {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.04); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* ---- 15. MOTION LAB (Atom/Orbits) ----
+   Real object: Atom with orbiting electrons
+   Verb: Electrons orbit the nucleus in elliptical paths
+   Story: nucleus pulses (0ms) -> orbit-1 rotates CW (100ms) -> orbit-2 rotates CCW (200ms)
+   ---- */
+.bespoke-atom .nucleus { transform-origin: center; }
+.bespoke-atom .orbit-1 { transform-origin: center; }
+.bespoke-atom .orbit-2 { transform-origin: center; }
+.nav-item:hover .bespoke-atom .nucleus,
+.icon-card:hover .bespoke-atom .nucleus {
+  animation: atom-nucleus-pulse 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-atom .orbit-1,
+.icon-card:hover .bespoke-atom .orbit-1 {
+  animation: atom-orbit-cw 2.5s cubic-bezier(0.4, 0.0, 0.2, 1.0) 100ms forwards;
+}
+.nav-item:hover .bespoke-atom .orbit-2,
+.icon-card:hover .bespoke-atom .orbit-2 {
+  animation: atom-orbit-ccw 2.5s cubic-bezier(0.4, 0.0, 0.2, 1.0) 200ms forwards;
+}
+@keyframes atom-nucleus-pulse {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.3); }
+  30% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  70% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes atom-orbit-cw {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+@keyframes atom-orbit-ccw {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-120deg); }
+}
+
+/* ---- 16. CONVERTER (Swap Arrows) ----
+   Real object: Format converter / currency exchange
+   Verb: Two arrows swap positions, crossing in the middle
+   Story: arrow-a down (0ms) -> arrow-b up (80ms) -> cross flash (300ms) -> settle (600ms)
+   ---- */
+.bespoke-converter .arrow-a { transform-origin: center; }
+.bespoke-converter .arrow-b { transform-origin: center; }
+.bespoke-converter .converter-flash { transform-origin: center; opacity: 0; }
+.nav-item:hover .bespoke-converter .arrow-a,
+.icon-card:hover .bespoke-converter .arrow-a {
+  animation: converter-swap-down 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-converter .arrow-b,
+.icon-card:hover .bespoke-converter .arrow-b {
+  animation: converter-swap-up 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 80ms forwards;
+}
+.nav-item:hover .bespoke-converter .converter-flash,
+.icon-card:hover .bespoke-converter .converter-flash {
+  animation: converter-flash-pulse 2s ease 300ms forwards;
+}
+@keyframes converter-swap-down {
+  0% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(4px) rotate(5deg); }
+  50% { transform: translateY(6px) rotate(0); }
+  75% { transform: translateY(3px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@keyframes converter-swap-up {
+  0% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-4px) rotate(-5deg); }
+  50% { transform: translateY(-6px) rotate(0); }
+  75% { transform: translateY(-3px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@keyframes converter-flash-pulse {
+  0% { opacity: 0; transform: scale(0.5); }
+  25% { opacity: 0.8; transform: scale(1.2); }
+  50% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+/* ---- 17. PRICING (Price Tag) ----
+   Real object: Retail price tag on a string
+   Verb: Tag swings like a pendulum on its string
+   Story: swings right (0ms) -> left (300ms) -> dampens -> settles
+   ---- */
+.bespoke-tag .tag-body { transform-origin: 19px 5px; }
+.bespoke-tag .tag-hole { transform-origin: center; }
+.nav-item:hover .bespoke-tag .tag-body,
+.icon-card:hover .bespoke-tag .tag-body {
+  animation: tag-pendulum 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.nav-item:hover .bespoke-tag .tag-hole,
+.icon-card:hover .bespoke-tag .tag-hole {
+  animation: tag-hole-pulse 2.5s ease 200ms forwards;
+}
+@keyframes tag-pendulum {
+  0% { transform: rotate(0deg); }
+  12% { transform: rotate(12deg); }
+  28% { transform: rotate(-9deg); }
+  42% { transform: rotate(6deg); }
+  56% { transform: rotate(-3deg); }
+  70% { transform: rotate(1.5deg); }
+  84% { transform: rotate(-0.5deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes tag-hole-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  30% { transform: scale(1.3); opacity: 0.7; }
+  60% { transform: scale(1.1); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="demo-container">
+  <h1>Supericons Sidebar Animations</h1>
+  <p class="subtitle">17 sidebar icons with bespoke 2-3s CSS/SVG choreography. No JavaScript. No Lottie.</p>
+
+  <!-- Sidebar Navigation -->
+  <p class="grid-label">Sidebar Navigation</p>
+  <div class="sidebar-demo">
+
+    <!-- BROWSE -->
+    <div class="section-header">Browse</div>
+
+    <!-- 1. All Icons -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-allicons">
+        <g class="grid-tl"><rect x="3" y="3" width="3" height="3" rx="0.75"/><rect x="8" y="3" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-tr"><rect x="13" y="3" width="3" height="3" rx="0.75"/><rect x="18" y="3" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-bl"><rect x="3" y="8" width="3" height="3" rx="0.75"/><rect x="8" y="8" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-br"><rect x="13" y="8" width="3" height="3" rx="0.75"/><rect x="18" y="8" width="3" height="3" rx="0.75"/></g>
+      </svg>
+      All Icons
+      <span class="nav-count">21,264</span>
+    </a>
+
+    <!-- 2. Favorites -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-heart">
+        <g class="heart-pulse-2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></g>
+        <g class="heart-pulse-1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></g>
+        <g class="heart-body"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></g>
+      </svg>
+      Favorites
+      <span class="nav-count">0</span>
+    </a>
+
+    <!-- 3. Recent -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-clock">
+        <g class="clock-face"><circle cx="12" cy="12" r="10"/></g>
+        <g class="clock-minute"><line x1="12" y1="12" x2="12" y2="6"/></g>
+        <g class="clock-second"><line x1="12" y1="12" x2="16" y2="12"/></g>
+      </svg>
+      Recent
+      <span class="nav-count">50</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <!-- LIBRARIES -->
+    <div class="section-header">Libraries <span style="cursor:pointer">&#9662;</span></div>
+
+    <!-- 4. MingCute -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-star">
+        <g class="star-sparkle-1"><circle cx="4" cy="4" r="0.8" fill="currentColor" stroke="none"/></g>
+        <g class="star-sparkle-2"><circle cx="20" cy="8" r="0.6" fill="currentColor" stroke="none"/></g>
+        <g class="star-points"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></g>
+        <g class="star-core"><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" opacity="0.6"/></g>
+      </svg>
+      MingCute
+      <span class="nav-count">1,662</span>
+    </a>
+
+    <!-- 5. Simple Icons (official SI brand logo) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-simpleicons">
+        <g class="frame-border"><path d="M12 0C8.688 0 6 2.688 6 6s2.688 6 6 6c4.64-.001 7.526 5.039 5.176 9.04h1.68A7.507 7.507 0 0 0 12 10.5 4.502 4.502 0 0 1 7.5 6c0-2.484 2.016-4.5 4.5-4.5s4.5 2.016 4.5 4.5H18c0-3.312-2.688-6-6-6Z" opacity="0.7"/></g>
+        <g class="frame-inner"><path d="M12 3a3 3 0 0 0 0 6c4 0 4-6 0-6Zm0 1.5A1.5 1.5 0 0 1 13.5 6v.002c-.002 1.336-1.617 2.003-2.561 1.058C9.995 6.115 10.664 4.5 12 4.5ZM7.5 15v1.5H9v6H4.5V24h15v-1.5H15v-6h1.5V15Zm3 1.5h3v6h-3zm-6 1.47c0 1.09.216 2.109.644 3.069h1.684A5.957 5.957 0 0 1 6 17.97Z"/></g>
+      </svg>
+      Simple Icons
+      <span class="nav-count">3,412</span>
+    </a>
+
+    <!-- 6. Lucide -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-pen">
+        <g class="pen-body">
+          <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+          <line x1="15" y1="5" x2="19" y2="9"/>
+        </g>
+        <g class="ink-stroke"><path d="M4 20 Q6 18 8 20" stroke="currentColor" stroke-width="1" fill="none"/></g>
+      </svg>
+      Lucide
+      <span class="nav-count">1,951</span>
+    </a>
+
+    <!-- 7. Tabler (official brand-tabler: terminal prompt in rounded rect) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-anchor">
+        <g class="anchor-ring"><path stroke="none" d="M0 0h24v24H0z" fill="none"/></g>
+        <g class="anchor-body">
+          <path d="M8 9l3 3l-3 3"/>
+          <path d="M13 15h3"/>
+        </g>
+        <g class="anchor-ripple"><path d="M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7" opacity="0.7"/></g>
+      </svg>
+      Tabler
+      <span class="nav-count">5,021</span>
+    </a>
+
+    <!-- 8. Phosphor -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-phosphor">
+        <g class="phosphor-glow"><circle cx="12" cy="12" r="10" stroke-width="0.5" opacity="0"/></g>
+        <g class="phosphor-orb"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none" opacity="0.3"/></g>
+      </svg>
+      Phosphor
+      <span class="nav-count">1,512</span>
+    </a>
+
+    <!-- 9. Heroicons -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-shield">
+        <g class="shield-shockwave"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="0.5" opacity="0"/></g>
+        <g class="shield-body"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></g>
+        <g class="shield-emblem"><path d="M9 12l2 2 4-4" stroke-width="2" opacity="0.5"/></g>
+      </svg>
+      Heroicons
+      <span class="nav-count">324</span>
+    </a>
+
+    <!-- 10. Bootstrap (official B letterform brand logo) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-bootstrap">
+        <g class="block-1"><path d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572z" opacity="0.8"/></g>
+        <g class="block-2"><path d="M12.094 12.446H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663z" opacity="0.8"/></g>
+        <g class="block-3"><path d="M24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268z" opacity="0.4"/></g>
+        <g class="block-4"><path d="M16.073 13.207c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/></g>
+      </svg>
+      Bootstrap
+      <span class="nav-count">1,373</span>
+    </a>
+
+    <!-- 11. Iconoir -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-iconoir">
+        <g class="iris-outer"><circle cx="12" cy="12" r="10"/></g>
+        <g class="iris-inner"><circle cx="12" cy="12" r="6"/></g>
+        <g class="iris-aperture"><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" opacity="0.7"/></g>
+      </svg>
+      Iconoir
+      <span class="nav-count">1,383</span>
+    </a>
+
+    <!-- 12. Ionicons (official Ionic brand logo: circle with satellite dot) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-ionbolt">
+        <g class="bolt-glow"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0"/></g>
+        <g class="bolt-body"><path d="M22.922 7.027l-.103-.23-.169.188c-.408.464-.928.82-1.505 1.036l-.159.061.066.155a9.745 9.745 0 0 1 .75 3.759c0 5.405-4.397 9.806-9.806 9.806-5.409 0-9.802-4.397-9.802-9.802 0-5.405 4.402-9.806 9.806-9.806 1.467 0 2.883.319 4.2.947l.155.075.066-.155a3.767 3.767 0 0 1 1.106-1.453l.197-.159-.225-.117A11.905 11.905 0 0 0 12.001.001c-6.619 0-12 5.381-12 12s5.381 12 12 12 12-5.381 12-12c0-1.73-.361-3.403-1.078-4.973zM12 6.53A5.476 5.476 0 0 0 6.53 12 5.476 5.476 0 0 0 12 17.47 5.476 5.476 0 0 0 17.47 12 5.479 5.479 0 0 0 12 6.53zm10.345-2.007a2.494 2.494 0 1 1-4.988 0 2.494 2.494 0 0 1 4.988 0z"/></g>
+      </svg>
+      Ionicons
+      <span class="nav-count">421</span>
+    </a>
+
+    <!-- 13. Material Symbols (official Material Design triangle-in-circle logo) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-matgrid">
+        <g class="dot-1"><path d="M4.364 18.137V5.864A9.48 9.48 0 0 0 2.755 8.7C2.373 9.737 2.183 10.837 2.183 12s.19 2.273.572 3.327a9.57 9.57 0 0 0 1.609 2.81z" opacity="0.5"/></g>
+        <g class="dot-2"><path d="M5.864 4.364H18.163a9.48 9.48 0 0 0-2.836-1.609c-1.055-.382-2.164-.573-3.327-.573s-2.273.191-3.327.573a9.57 9.57 0 0 0-2.809 1.609z" opacity="0.5"/></g>
+        <g class="dot-3"><path d="M12 14.727l4.118-8.182H7.909z" opacity="0.9"/></g>
+        <g class="dot-4"><path d="M13.091 17.455h4.363V8.728z" opacity="0.5"/></g>
+        <g class="dot-5"><path d="M6.545 17.455h4.364L6.545 8.728z" opacity="0.5"/></g>
+        <g class="dot-6"><path d="M14.327 21.245c1.055-.382 2-.918 2.836-1.609H5.863a9.57 9.57 0 0 0 2.809 1.609c1.055.382 2.164.572 3.327.572 1.054 0 2.182-.158 3.327-.572z" opacity="0.5"/></g>
+        <g class="dot-7"><path d="M19.636 18.137a9.57 9.57 0 0 0 1.609-2.81c.382-1.054.572-2.163.572-3.327s-.19-2.264-.572-3.3c-.382-1.055-.918-2-1.609-2.836v12.273z" opacity="0.5"/></g>
+        <g class="dot-8"><circle cx="12" cy="12" r="11.5" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.3"/></g>
+        <g class="dot-9"><circle cx="12" cy="12" r="12" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.15"/></g>
+      </svg>
+      Material Symbols
+      <span class="nav-count">4,205</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <!-- PREMIUM COLLECTIONS -->
+    <div class="section-header">Premium Collections</div>
+
+    <!-- 14. Collections -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-layers">
+        <g class="layer-bottom"><rect x="4" y="14" width="16" height="6" rx="1.5"/></g>
+        <g class="layer-mid"><rect x="6" y="9" width="12" height="6" rx="1.5"/></g>
+        <g class="layer-top"><rect x="8" y="4" width="8" height="6" rx="1.5"/></g>
+      </svg>
+      Collections
+      <span class="nav-count">8</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <!-- TOOLS -->
+    <div class="section-header">Tools</div>
+
+    <!-- 15. Motion Lab (film frames / animation reel) -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-atom">
+        <g class="orbit-1"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="22" y2="16"/></g>
+        <g class="orbit-2"><line x1="6" y1="4" x2="6" y2="8"/><line x1="10" y1="4" x2="10" y2="8"/><line x1="14" y1="4" x2="14" y2="8"/><line x1="18" y1="4" x2="18" y2="8"/><line x1="6" y1="16" x2="6" y2="20"/><line x1="10" y1="16" x2="10" y2="20"/><line x1="14" y1="16" x2="14" y2="20"/><line x1="18" y1="16" x2="18" y2="20"/></g>
+        <g class="nucleus"><polygon points="10,10.5 10,15.5 15,13" fill="currentColor" stroke="none"/></g>
+      </svg>
+      Motion Lab
+    </a>
+
+    <!-- 16. Converter -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-converter">
+        <g class="converter-flash"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" opacity="0"/></g>
+        <g class="arrow-a">
+          <path d="M7 10l-3 3 3 3"/>
+          <line x1="4" y1="13" x2="15" y2="13"/>
+        </g>
+        <g class="arrow-b">
+          <path d="M17 8l3-3-3-3"/>
+          <line x1="20" y1="5" x2="9" y2="5"/>
+        </g>
+      </svg>
+      Converter
+    </a>
+
+    <!-- 17. Pricing -->
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-tag">
+        <g class="tag-body">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+        </g>
+        <g class="tag-hole"><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></g>
+      </svg>
+      Pricing
+    </a>
+
+  </div>
+
+  <!-- Grid View -->
+  <p class="grid-label">Grid View</p>
+  <div class="grid">
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-allicons">
+        <g class="grid-tl"><rect x="3" y="3" width="3" height="3" rx="0.75"/><rect x="8" y="3" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-tr"><rect x="13" y="3" width="3" height="3" rx="0.75"/><rect x="18" y="3" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-bl"><rect x="3" y="8" width="3" height="3" rx="0.75"/><rect x="8" y="8" width="3" height="3" rx="0.75"/></g>
+        <g class="grid-br"><rect x="13" y="8" width="3" height="3" rx="0.75"/><rect x="18" y="8" width="3" height="3" rx="0.75"/></g>
+      </svg>
+      <span>All Icons</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-heart">
+        <g class="heart-pulse-2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></g>
+        <g class="heart-pulse-1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></g>
+        <g class="heart-body"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></g>
+      </svg>
+      <span>Favorites</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-clock">
+        <g class="clock-face"><circle cx="12" cy="12" r="10"/></g>
+        <g class="clock-minute"><line x1="12" y1="12" x2="12" y2="6"/></g>
+        <g class="clock-second"><line x1="12" y1="12" x2="16" y2="12"/></g>
+      </svg>
+      <span>Recent</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-star">
+        <g class="star-sparkle-1"><circle cx="4" cy="4" r="0.8" fill="currentColor" stroke="none"/></g>
+        <g class="star-sparkle-2"><circle cx="20" cy="8" r="0.6" fill="currentColor" stroke="none"/></g>
+        <g class="star-points"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></g>
+        <g class="star-core"><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" opacity="0.6"/></g>
+      </svg>
+      <span>MingCute</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-simpleicons">
+        <g class="frame-border"><path d="M12 0C8.688 0 6 2.688 6 6s2.688 6 6 6c4.64-.001 7.526 5.039 5.176 9.04h1.68A7.507 7.507 0 0 0 12 10.5 4.502 4.502 0 0 1 7.5 6c0-2.484 2.016-4.5 4.5-4.5s4.5 2.016 4.5 4.5H18c0-3.312-2.688-6-6-6Z" opacity="0.7"/></g>
+        <g class="frame-inner"><path d="M12 3a3 3 0 0 0 0 6c4 0 4-6 0-6Zm0 1.5A1.5 1.5 0 0 1 13.5 6v.002c-.002 1.336-1.617 2.003-2.561 1.058C9.995 6.115 10.664 4.5 12 4.5ZM7.5 15v1.5H9v6H4.5V24h15v-1.5H15v-6h1.5V15Zm3 1.5h3v6h-3zm-6 1.47c0 1.09.216 2.109.644 3.069h1.684A5.957 5.957 0 0 1 6 17.97Z"/></g>
+      </svg>
+      <span>Simple Icons</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-pen">
+        <g class="pen-body"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/><line x1="15" y1="5" x2="19" y2="9"/></g>
+        <g class="ink-stroke"><path d="M4 20 Q6 18 8 20" stroke="currentColor" stroke-width="1" fill="none"/></g>
+      </svg>
+      <span>Lucide</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-anchor">
+        <g class="anchor-ring"><path stroke="none" d="M0 0h24v24H0z" fill="none"/></g>
+        <g class="anchor-body">
+          <path d="M8 9l3 3l-3 3"/>
+          <path d="M13 15h3"/>
+        </g>
+        <g class="anchor-ripple"><path d="M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7" opacity="0.7"/></g>
+      </svg>
+      <span>Tabler</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-phosphor">
+        <g class="phosphor-glow"><circle cx="12" cy="12" r="10" stroke-width="0.5" opacity="0"/></g>
+        <g class="phosphor-orb"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none" opacity="0.3"/></g>
+      </svg>
+      <span>Phosphor</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-shield">
+        <g class="shield-shockwave"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="0.5" opacity="0"/></g>
+        <g class="shield-body"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></g>
+        <g class="shield-emblem"><path d="M9 12l2 2 4-4" stroke-width="2" opacity="0.5"/></g>
+      </svg>
+      <span>Heroicons</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-bootstrap">
+        <g class="block-1"><path d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572z" opacity="0.8"/></g>
+        <g class="block-2"><path d="M12.094 12.446H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663z" opacity="0.8"/></g>
+        <g class="block-3"><path d="M24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268z" opacity="0.4"/></g>
+        <g class="block-4"><path d="M16.073 13.207c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/></g>
+      </svg>
+      <span>Bootstrap</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-iconoir">
+        <g class="iris-outer"><circle cx="12" cy="12" r="10"/></g>
+        <g class="iris-inner"><circle cx="12" cy="12" r="6"/></g>
+        <g class="iris-aperture"><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" opacity="0.7"/></g>
+      </svg>
+      <span>Iconoir</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-ionbolt">
+        <g class="bolt-glow"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0"/></g>
+        <g class="bolt-body"><path d="M22.922 7.027l-.103-.23-.169.188c-.408.464-.928.82-1.505 1.036l-.159.061.066.155a9.745 9.745 0 0 1 .75 3.759c0 5.405-4.397 9.806-9.806 9.806-5.409 0-9.802-4.397-9.802-9.802 0-5.405 4.402-9.806 9.806-9.806 1.467 0 2.883.319 4.2.947l.155.075.066-.155a3.767 3.767 0 0 1 1.106-1.453l.197-.159-.225-.117A11.905 11.905 0 0 0 12.001.001c-6.619 0-12 5.381-12 12s5.381 12 12 12 12-5.381 12-12c0-1.73-.361-3.403-1.078-4.973zM12 6.53A5.476 5.476 0 0 0 6.53 12 5.476 5.476 0 0 0 12 17.47 5.476 5.476 0 0 0 17.47 12 5.479 5.479 0 0 0 12 6.53zm10.345-2.007a2.494 2.494 0 1 1-4.988 0 2.494 2.494 0 0 1 4.988 0z"/></g>
+      </svg>
+      <span>Ionicons</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" class="bespoke-matgrid">
+        <g class="dot-1"><path d="M4.364 18.137V5.864A9.48 9.48 0 0 0 2.755 8.7C2.373 9.737 2.183 10.837 2.183 12s.19 2.273.572 3.327a9.57 9.57 0 0 0 1.609 2.81z" opacity="0.5"/></g>
+        <g class="dot-2"><path d="M5.864 4.364H18.163a9.48 9.48 0 0 0-2.836-1.609c-1.055-.382-2.164-.573-3.327-.573s-2.273.191-3.327.573a9.57 9.57 0 0 0-2.809 1.609z" opacity="0.5"/></g>
+        <g class="dot-3"><path d="M12 14.727l4.118-8.182H7.909z" opacity="0.9"/></g>
+        <g class="dot-4"><path d="M13.091 17.455h4.363V8.728z" opacity="0.5"/></g>
+        <g class="dot-5"><path d="M6.545 17.455h4.364L6.545 8.728z" opacity="0.5"/></g>
+        <g class="dot-6"><path d="M14.327 21.245c1.055-.382 2-.918 2.836-1.609H5.863a9.57 9.57 0 0 0 2.809 1.609c1.055.382 2.164.572 3.327.572 1.054 0 2.182-.158 3.327-.572z" opacity="0.5"/></g>
+        <g class="dot-7"><path d="M19.636 18.137a9.57 9.57 0 0 0 1.609-2.81c.382-1.054.572-2.163.572-3.327s-.19-2.264-.572-3.3c-.382-1.055-.918-2-1.609-2.836v12.273z" opacity="0.5"/></g>
+        <g class="dot-8"><circle cx="12" cy="12" r="11.5" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.3"/></g>
+        <g class="dot-9"><circle cx="12" cy="12" r="12" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.15"/></g>
+      </svg>
+      <span>Material</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-layers">
+        <g class="layer-bottom"><rect x="4" y="14" width="16" height="6" rx="1.5"/></g>
+        <g class="layer-mid"><rect x="6" y="9" width="12" height="6" rx="1.5"/></g>
+        <g class="layer-top"><rect x="8" y="4" width="8" height="6" rx="1.5"/></g>
+      </svg>
+      <span>Collections</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-atom">
+        <g class="orbit-1"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="22" y2="16"/></g>
+        <g class="orbit-2"><line x1="6" y1="4" x2="6" y2="8"/><line x1="10" y1="4" x2="10" y2="8"/><line x1="14" y1="4" x2="14" y2="8"/><line x1="18" y1="4" x2="18" y2="8"/><line x1="6" y1="16" x2="6" y2="20"/><line x1="10" y1="16" x2="10" y2="20"/><line x1="14" y1="16" x2="14" y2="20"/><line x1="18" y1="16" x2="18" y2="20"/></g>
+        <g class="nucleus"><polygon points="10,10.5 10,15.5 15,13" fill="currentColor" stroke="none"/></g>
+      </svg>
+      <span>Motion Lab</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-converter">
+        <g class="converter-flash"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" opacity="0"/></g>
+        <g class="arrow-a"><path d="M7 10l-3 3 3 3"/><line x1="4" y1="13" x2="15" y2="13"/></g>
+        <g class="arrow-b"><path d="M17 8l3-3-3-3"/><line x1="20" y1="5" x2="9" y2="5"/></g>
+      </svg>
+      <span>Converter</span>
+    </div>
+
+    <div class="icon-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bespoke-tag">
+        <g class="tag-body"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/></g>
+        <g class="tag-hole"><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></g>
+      </svg>
+      <span>Pricing</span>
+    </div>
+
+  </div>
+
+  <p class="technique-note">Pure CSS + SVG. Zero JavaScript. Zero Lottie. Each icon has bespoke choreography.</p>
+</div>
+
+</body>
+</html>

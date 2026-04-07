@@ -4,8 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '..', '..');
-const sourcePath = path.join(repoRoot, 'dc_verify.png');
+const sourcePath = path.join(__dirname, 'fixtures', 'dc_verify.png');
 const outputDir = path.join(__dirname, 'artifacts');
 const outputPath = path.join(outputDir, 'dc_verify.exact.svg');
 const endpoint = process.env.CONVERTER_PROOF_URL || 'http://127.0.0.1:4318/api/convert/png-to-svg';

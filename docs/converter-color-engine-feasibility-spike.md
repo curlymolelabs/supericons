@@ -86,7 +86,7 @@ Important local evidence:
 
 ### 2a. Local Node proof succeeded
 
-A local Node spike was run directly in this repo against `dc_verify.png`.
+A local Node spike was run directly in this repo against `tools/converter-proof-service/fixtures/dc_verify.png`.
 
 Result:
 
