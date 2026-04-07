@@ -6715,6 +6715,7 @@ const converterState = {
 
 const CONVERTER_SVG_NS = 'http://www.w3.org/2000/svg';
 const CONVERTER_SVG_SHAPES = 'path, circle, rect, polygon, polyline, line, ellipse';
+const CONVERTER_SVG_FILL_TARGETS = `${CONVERTER_SVG_SHAPES}, text, tspan`;
 const CONVERTER_COLOR_SWATCHES = ['#000000', '#FFFFFF', '#FF6B35', '#00D4FF', '#A855F7', '#22C55E', '#FACC15'];
 const CONVERTER_BOUNDS_PATH_D = 'm00h24v24h0z';
 const CONVERTER_TRANSPARENT_BG_SENTINEL = [255, 0, 255];
@@ -6894,8 +6895,10 @@ function analyzeConverterSvgPaintSupport(svgText) {
 
   let fillCount = 0;
   let strokeCount = 0;
-  doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
+  doc.querySelectorAll(CONVERTER_SVG_FILL_TARGETS).forEach((el) => {
     if (isConverterVisibleFillTarget(el)) fillCount += 1;
+  });
+  doc.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
     if (isConverterVisibleStrokeTarget(el)) strokeCount += 1;
   });
 
@@ -6967,6 +6970,19 @@ function stripConverterSvgExternalFontImports(svgText) {
   };
 }
 
+function setConverterInlinePaintStyle(el, propertyName, value) {
+  if (!el) return;
+  const currentStyle = (el.getAttribute('style') || '').trim();
+  const withoutProperty = currentStyle
+    .replace(new RegExp(`(?:^|;)\\s*${propertyName}\\s*:[^;]*`, 'gi'), '')
+    .replace(/^;\s*|\s*;$/g, '')
+    .trim();
+  const nextStyle = withoutProperty
+    ? `${withoutProperty}; ${propertyName}: ${value};`
+    : `${propertyName}: ${value};`;
+  el.setAttribute('style', nextStyle);
+}
+
 function prepareConverterSvgForRasterization(svgText) {
   if (!svgText) {
     return {
@@ -7004,9 +7020,10 @@ function prepareConverterSvgForRasterization(svgText) {
 
 function applyConverterFillOverrides(svgEl) {
   if (!converterState.fillColor) return;
-  svgEl.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
+  svgEl.querySelectorAll(CONVERTER_SVG_FILL_TARGETS).forEach((el) => {
     if (!isConverterVisibleFillTarget(el)) return;
     el.setAttribute('fill', converterState.fillColor);
+    setConverterInlinePaintStyle(el, 'fill', converterState.fillColor);
   });
 }
 
@@ -7015,7 +7032,20 @@ function applyConverterStrokeOverrides(svgEl) {
   svgEl.querySelectorAll(CONVERTER_SVG_SHAPES).forEach((el) => {
     if (!isConverterVisibleStrokeTarget(el)) return;
     el.setAttribute('stroke', converterState.strokeColor);
+    setConverterInlinePaintStyle(el, 'stroke', converterState.strokeColor);
   });
+}
+
+function appendConverterPaintOverrideStyle(doc, svgEl) {
+  const rules = [];
+  if (converterState.fillColor) {
+    rules.push(`text, tspan { fill: ${converterState.fillColor} !important; }`);
+  }
+  if (!rules.length) return;
+  const styleEl = doc.createElementNS('http://www.w3.org/2000/svg', 'style');
+  styleEl.setAttribute('data-conv-paint-override', 'true');
+  styleEl.textContent = rules.join('\n');
+  svgEl.appendChild(styleEl);
 }
 
 function buildStyledConverterSvg({ width = null, height = null } = {}) {
@@ -7030,6 +7060,7 @@ function buildStyledConverterSvg({ width = null, height = null } = {}) {
   sanitizeConverterSvg(svgEl);
   applyConverterFillOverrides(svgEl);
   applyConverterStrokeOverrides(svgEl);
+  appendConverterPaintOverrideStyle(doc, svgEl);
 
   if (width != null) svgEl.setAttribute('width', width);
   if (height != null) svgEl.setAttribute('height', height);
