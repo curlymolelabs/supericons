@@ -31,12 +31,33 @@ const DEFAULT_CLAIM_STATUS = Object.freeze({
 });
 const AUTH_INTENT_STORAGE_KEY = 'si-auth-intent';
 const AUTH_INTENT_TTL_MS = 1000 * 60 * 60 * 6;
+const AUTH_VERIFY_RESEND_COOLDOWN_MS = 30 * 1000;
+const AUTH_VERIFY_KIND = Object.freeze({
+  SIGNUP_PENDING: 'signup_pending',
+  SIGNUP_EXISTING_HINT: 'signup_existing_hint',
+  SIGNIN_UNCONFIRMED: 'signin_unconfirmed',
+  CALLBACK_ERROR: 'callback_error',
+});
+const AUTH_CALLBACK_FLOW = Object.freeze({
+  GENERIC: 'generic',
+  RECOVERY: 'recovery',
+  SIGNUP: 'signup',
+});
+const AUTH_RESET_KIND = Object.freeze({
+  PASSWORD_RECOVERY: 'password_recovery',
+  ADD_PASSWORD: 'add_password',
+});
 const AUTH_MODAL_DEFAULT_STATE = Object.freeze({
   mode: 'signin',
   context: 'default',
   stage: 'form',
   verifyEmail: '',
+  verifyKind: AUTH_VERIFY_KIND.SIGNUP_PENDING,
+  verifyResendCooldownUntil: 0,
+  callbackErrorMessage: '',
+  callbackErrorFlow: AUTH_CALLBACK_FLOW.GENERIC,
   recoveryEmail: '',
+  resetKind: AUTH_RESET_KIND.PASSWORD_RECOVERY,
 });
 const AUTH_MODAL_COPY = {
   default: {
@@ -113,6 +134,7 @@ const AUTH_MODAL_COPY = {
   },
 };
 authModalState = { ...AUTH_MODAL_DEFAULT_STATE };
+let verifyResendRefreshTimer = null;
 
 function createAuthReadyPromise() {
   let settled = false;
@@ -165,6 +187,7 @@ export function initAuth() {
   }
   supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   const bootEpoch = beginAuthCycle();
+  const callbackError = readAuthCallbackError();
 
   // Listen for auth state changes
   supabase.auth.onAuthStateChange((event, session) => {
@@ -183,6 +206,9 @@ export function initAuth() {
       const signInEpoch = beginAuthCycle();
       void fetchSubscriptionForEpoch(signInEpoch);
       dispatchAuthSignedIn();
+    } else if (event === 'USER_UPDATED') {
+      const updateEpoch = beginAuthCycle();
+      void fetchSubscriptionForEpoch(updateEpoch);
     } else if (event === 'SIGNED_OUT') {
       clearAuthIntent();
       showToast('Signed out');
@@ -215,6 +241,15 @@ export function initAuth() {
 
   // Wire up UI
   wireAuthListeners();
+
+  if (callbackError) {
+    clearAuthCallbackHash();
+    showAuthVerifyStage('', {
+      kind: AUTH_VERIFY_KIND.CALLBACK_ERROR,
+      callbackErrorMessage: callbackError.description,
+      callbackErrorFlow: callbackError.flow,
+    });
+  }
 }
 
 // ── Sign In (email) ───────────────────────────────────────────
@@ -234,6 +269,17 @@ export async function signUpWithEmail(email, password) {
   });
   if (error) throw error;
   return data;
+}
+
+export async function resendSignupConfirmation(email) {
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email,
+    options: {
+      emailRedirectTo: window.location.origin,
+    },
+  });
+  if (error) throw error;
 }
 
 export async function requestPasswordReset(email) {
@@ -562,14 +608,26 @@ function renderAccountModal() {
   const displayNameInput = document.getElementById('accountDisplayName');
   const emailDisplayInput = document.getElementById('accountEmailDisplay');
   const avatarInitial = document.getElementById('accountAvatarInitial');
+  const passwordTitle = document.getElementById('accountPasswordTitle');
+  const passwordCopy = document.getElementById('accountPasswordCopy');
   const passwordBtn = document.getElementById('accountPasswordBtn');
+  const oauthOnly = isOAuthOnlyUser();
 
   if (summaryName) summaryName.textContent = getUserDisplayName();
   if (summaryEmail) summaryEmail.textContent = currentUser?.email || '';
   if (displayNameInput) displayNameInput.value = getUserDisplayName();
   if (emailDisplayInput) emailDisplayInput.value = currentUser?.email || '';
   if (avatarInitial) avatarInitial.textContent = getUserInitial();
-  if (passwordBtn) passwordBtn.disabled = !currentUser?.email;
+  if (passwordTitle) passwordTitle.textContent = oauthOnly ? 'Add password sign-in' : 'Password';
+  if (passwordCopy) {
+    passwordCopy.textContent = oauthOnly
+      ? 'You currently sign in with Google. Set a password if you also want to sign in with email.'
+      : 'Use the secure recovery flow to choose a new password.';
+  }
+  if (passwordBtn) {
+    passwordBtn.disabled = !currentUser?.email;
+    passwordBtn.textContent = oauthOnly ? 'Set password' : 'Send password reset email';
+  }
 }
 
 function openAccountModal() {
@@ -596,6 +654,30 @@ function getAuthCopy(context = authModalState.context, mode = authModalState.mod
   const normalizedContext = AUTH_MODAL_COPY[context] ? context : 'default';
   const normalizedMode = mode === 'signup' ? 'signup' : 'signin';
   return AUTH_MODAL_COPY[normalizedContext][normalizedMode];
+}
+
+function getCurrentProviders(user = currentUser) {
+  const providers = user?.app_metadata?.providers;
+  if (Array.isArray(providers) && providers.length) return providers;
+  const singleProvider = user?.app_metadata?.provider;
+  if (typeof singleProvider === 'string' && singleProvider) return [singleProvider];
+  return [];
+}
+
+function hasEmailProvider(user = currentUser) {
+  const providers = getCurrentProviders(user);
+  return providers.length === 0 || providers.includes('email');
+}
+
+function isOAuthOnlyUser(user = currentUser) {
+  const providers = getCurrentProviders(user);
+  return providers.length > 0 && !providers.includes('email');
+}
+
+function isLikelyExistingSignupResult(data) {
+  if (!data?.user || data?.session) return false;
+  const identities = data.user.identities;
+  return Array.isArray(identities) && identities.length === 0;
 }
 
 function readStoredAuthIntent() {
@@ -687,22 +769,142 @@ function resetRecoveryForms({ preserveEmail = false } = {}) {
   if (preserveEmail && forgotEmailInput) forgotEmailInput.value = preservedEmail;
   if (resetPasswordInput) resetPasswordInput.value = '';
   if (resetPasswordConfirmInput) resetPasswordConfirmInput.value = '';
+  setStageStatus('authVerifyStatus');
   setStageStatus('authForgotStatus');
   setStageStatus('authResetStatus');
 }
 
+function inferAuthCallbackFlow(params, description = '') {
+  const explicitType = String(params.get('type') || '').trim().toLowerCase();
+  if (explicitType === 'recovery') return AUTH_CALLBACK_FLOW.RECOVERY;
+  if (explicitType === 'signup' || explicitType === 'invite') return AUTH_CALLBACK_FLOW.SIGNUP;
+  if (/recover|reset password|otp|magic link/i.test(description)) return AUTH_CALLBACK_FLOW.RECOVERY;
+  if (/confirm|signup|sign up|verify email/i.test(description)) return AUTH_CALLBACK_FLOW.SIGNUP;
+  return AUTH_CALLBACK_FLOW.GENERIC;
+}
+
+function readAuthCallbackError() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+  const params = [hashParams, searchParams].find((candidate) => candidate.has('error') || candidate.has('error_description'));
+  if (!params) return null;
+
+  const description = params.get('error_description') || params.get('error') || 'This link is invalid or has expired.';
+
+  return {
+    code: params.get('error_code') || params.get('error') || '',
+    description,
+    flow: inferAuthCallbackFlow(params, description),
+  };
+}
+
 function clearAuthCallbackHash() {
-  const hash = window.location.hash || '';
-  if (!hash) return;
-  if (!/(access_token=|refresh_token=|type=recovery|type=signup|type=invite)/.test(hash)) return;
-  const cleanUrl = `${window.location.pathname}${window.location.search}`;
+  const url = new URL(window.location.href);
+  let changed = false;
+
+  if (url.hash && /(access_token=|refresh_token=|type=recovery|type=signup|type=invite|error=|error_description=|error_code=)/.test(url.hash)) {
+    url.hash = '';
+    changed = true;
+  }
+
+  ['error', 'error_code', 'error_description'].forEach((key) => {
+    if (url.searchParams.has(key)) {
+      url.searchParams.delete(key);
+      changed = true;
+    }
+  });
+
+  if (!changed) return;
+  const nextSearch = url.searchParams.toString();
+  const cleanUrl = `${url.pathname}${nextSearch ? `?${nextSearch}` : ''}${url.hash}`;
   window.history.replaceState({}, document.title, cleanUrl);
+}
+
+function scheduleVerifyStageRefresh() {
+  if (verifyResendRefreshTimer) {
+    clearTimeout(verifyResendRefreshTimer);
+    verifyResendRefreshTimer = null;
+  }
+  const remaining = Number(authModalState.verifyResendCooldownUntil || 0) - Date.now();
+  if (authModalState.stage !== 'verify' || remaining <= 0) return;
+  verifyResendRefreshTimer = window.setTimeout(() => {
+    renderAuthModal();
+  }, Math.min(remaining, 1000));
+}
+
+function getVerifyStageConfig() {
+  const verifyEmail = authModalState.verifyEmail || 'your email';
+  const isRecoveryCallback = authModalState.callbackErrorFlow === AUTH_CALLBACK_FLOW.RECOVERY;
+  switch (authModalState.verifyKind) {
+    case AUTH_VERIFY_KIND.SIGNUP_EXISTING_HINT:
+      return {
+        icon: 'mail_lock',
+        modalTitle: 'Use your existing account',
+        modalDesc: 'This email may already belong to a Supericons account. Sign in instead of creating another one.',
+        modalNote: 'If you usually sign in with Google, continue with Google. Otherwise go back and sign in with your email.',
+        stageTitle: 'Account already exists',
+        stageText: `${verifyEmail} may already be tied to an existing Supericons account.`,
+        showGoogle: true,
+        showResend: false,
+        backLabel: 'Back to sign in',
+      };
+    case AUTH_VERIFY_KIND.SIGNIN_UNCONFIRMED:
+      return {
+        icon: 'mark_email_unread',
+        modalTitle: 'Confirm your email',
+        modalDesc: 'Check your inbox to confirm your email address before signing in.',
+        modalNote: 'If you can’t find the email, or the link no longer works, send a new confirmation email below.',
+        stageTitle: 'Email confirmation needed',
+        stageText: `Send a new confirmation email to ${verifyEmail}.`,
+        showGoogle: false,
+        showResend: true,
+        backLabel: 'Back to sign in',
+        primaryActionLabel: 'Resend confirmation',
+      };
+    case AUTH_VERIFY_KIND.CALLBACK_ERROR:
+      return {
+        icon: 'link_off',
+        modalTitle: isRecoveryCallback ? 'This reset link is no longer valid' : 'This link is no longer valid',
+        modalDesc: isRecoveryCallback
+          ? 'The password reset link is invalid, incomplete, or has expired.'
+          : 'The sign-in or recovery link is invalid, incomplete, or has expired.',
+        modalNote: isRecoveryCallback
+          ? 'Request a fresh reset email and try again.'
+          : 'Start over from Supericons and request a fresh email if needed.',
+        stageTitle: 'Link expired or invalid',
+        stageText: authModalState.callbackErrorMessage || 'This link can no longer be used.',
+        showGoogle: false,
+        showResend: isRecoveryCallback,
+        backLabel: 'Back to sign in',
+        primaryActionLabel: isRecoveryCallback ? 'Get a new reset link' : 'Resend confirmation',
+      };
+    case AUTH_VERIFY_KIND.SIGNUP_PENDING:
+    default:
+      return {
+        icon: 'mark_email_read',
+        modalTitle: 'Check your email',
+        modalDesc: 'Confirm your email address to finish creating your Supericons account.',
+        modalNote: 'Need another email? You can resend the confirmation below.',
+        stageTitle: 'Check your email',
+        stageText: `Check ${verifyEmail} for your confirmation email.`,
+        showGoogle: false,
+        showResend: true,
+        backLabel: 'Back to sign in',
+        primaryActionLabel: 'Resend confirmation',
+      };
+  }
 }
 
 function focusAuthPrimaryField() {
   window.requestAnimationFrame(() => {
     if (authModalState.stage === 'verify') {
-      document.getElementById('authVerifyBackBtn')?.focus();
+      const primaryVerifyAction = document.getElementById('authVerifyResendBtn')?.hidden
+        ? null
+        : document.getElementById('authVerifyResendBtn');
+      const verifyGoogleAction = document.getElementById('authVerifyGoogleBtn')?.hidden
+        ? null
+        : document.getElementById('authVerifyGoogleBtn');
+      (primaryVerifyAction || verifyGoogleAction || document.getElementById('authVerifyBackBtn'))?.focus();
       return;
     }
     if (authModalState.stage === 'forgot') {
@@ -724,26 +926,36 @@ function renderAuthModal() {
   const form = document.getElementById('authForm');
   const formStage = document.getElementById('authFormStage');
   const verifyStage = document.getElementById('authVerifyStage');
+  const verifyIcon = document.getElementById('authVerifyIcon');
+  const verifyTitle = document.getElementById('authVerifyTitle');
   const forgotStage = document.getElementById('authForgotStage');
   const resetStage = document.getElementById('authResetStage');
+  const resetIcon = document.getElementById('authResetIcon');
+  const resetStageTitle = document.getElementById('authResetStageTitle');
   const submitText = document.getElementById('authSubmitText');
   const toggleText = document.getElementById('authToggleText');
   const passwordInput = document.getElementById('authPassword');
   const googleBtn = document.getElementById('authGoogleBtn');
+  const verifyGoogleBtn = document.getElementById('authVerifyGoogleBtn');
+  const verifyResendBtn = document.getElementById('authVerifyResendBtn');
   const divider = document.querySelector('.auth-modal__divider');
   const forgotWrap = document.getElementById('authForgotWrap');
   const verifyText = document.getElementById('authVerifyText');
   const forgotEmailInput = document.getElementById('authForgotEmail');
   const resetText = document.getElementById('authResetText');
   const resetEmailInput = document.getElementById('authResetEmail');
+  const resetSubmitText = document.getElementById('authResetSubmitText');
   const copy = getAuthCopy();
   const isVerifyStage = authModalState.stage === 'verify';
   const isForgotStage = authModalState.stage === 'forgot';
   const isResetStage = authModalState.stage === 'reset';
+  const verifyConfig = getVerifyStageConfig();
+  const verifyCooldownRemaining = Math.max(0, Number(authModalState.verifyResendCooldownUntil || 0) - Date.now());
+  const isAddPasswordReset = authModalState.resetKind === AUTH_RESET_KIND.ADD_PASSWORD;
 
   if (modalTitle) {
     modalTitle.textContent = isVerifyStage
-      ? 'Check your email'
+      ? verifyConfig.modalTitle
       : isForgotStage
         ? 'Reset your password'
         : isResetStage
@@ -752,22 +964,26 @@ function renderAuthModal() {
   }
   if (modalDesc) {
     if (isVerifyStage) {
-      modalDesc.textContent = 'Verify your email to finish creating your account and continue where you left off.';
+      modalDesc.textContent = verifyConfig.modalDesc;
     } else if (isForgotStage) {
       modalDesc.textContent = 'Enter your account email and we\'ll send you a secure reset link.';
     } else if (isResetStage) {
-      modalDesc.textContent = 'Choose a new password to secure your Supericons account.';
+      modalDesc.textContent = isAddPasswordReset
+        ? 'Create a password so you can sign in with email as well as Google.'
+        : 'Choose a new password to secure your Supericons account.';
     } else {
       modalDesc.textContent = copy.desc;
     }
   }
   if (modalNote) {
     if (isVerifyStage) {
-      modalNote.textContent = 'After you verify, come back here and sign in to continue.';
+      modalNote.textContent = verifyConfig.modalNote;
     } else if (isForgotStage) {
       modalNote.textContent = 'The recovery link will bring you back here to choose a new password.';
     } else if (isResetStage) {
-      modalNote.textContent = 'Use at least 8 characters. Strong passwords are recommended for launch.';
+      modalNote.textContent = isAddPasswordReset
+        ? 'Google sign-in will keep working after you add password access.'
+        : 'Use at least 8 characters. Strong passwords are recommended for launch.';
     } else {
       modalNote.textContent = copy.note;
     }
@@ -783,23 +999,40 @@ function renderAuthModal() {
   if (forgotStage) forgotStage.hidden = !isForgotStage;
   if (resetStage) resetStage.hidden = !isResetStage;
   if (googleBtn) googleBtn.hidden = isVerifyStage || isForgotStage || isResetStage;
+  if (verifyIcon) verifyIcon.textContent = verifyConfig.icon;
+  if (verifyTitle) verifyTitle.textContent = verifyConfig.stageTitle;
+  if (verifyGoogleBtn) verifyGoogleBtn.hidden = !isVerifyStage || !verifyConfig.showGoogle;
+  if (verifyResendBtn) {
+    verifyResendBtn.hidden = !isVerifyStage || !verifyConfig.showResend;
+    verifyResendBtn.disabled = verifyCooldownRemaining > 0;
+    verifyResendBtn.textContent = verifyCooldownRemaining > 0
+      ? `Resend in ${Math.ceil(verifyCooldownRemaining / 1000)}s`
+      : (verifyConfig.primaryActionLabel || 'Resend confirmation');
+  }
   if (divider) divider.hidden = isVerifyStage || isForgotStage || isResetStage;
   if (forgotWrap) forgotWrap.hidden = authModalState.mode !== 'signin' || isVerifyStage || isForgotStage || isResetStage;
   if (verifyText) {
-    verifyText.textContent = authModalState.verifyEmail
-      ? `We sent a confirmation link to ${authModalState.verifyEmail}.`
-      : 'We sent a confirmation link to your email.';
+    verifyText.textContent = verifyConfig.stageText;
   }
+  if (resetIcon) resetIcon.textContent = isAddPasswordReset ? 'key' : 'password';
+  if (resetStageTitle) resetStageTitle.textContent = isAddPasswordReset ? 'Add password sign-in' : 'Set a new password';
   if (forgotEmailInput && authModalState.recoveryEmail) {
     forgotEmailInput.value = authModalState.recoveryEmail;
   }
   if (resetText) {
     resetText.textContent = authModalState.recoveryEmail
-      ? `Choose a new password for ${authModalState.recoveryEmail}.`
-      : 'Choose a new password for your account.';
+      ? (isAddPasswordReset
+        ? `Create a password for ${authModalState.recoveryEmail}.`
+        : `Choose a new password for ${authModalState.recoveryEmail}.`)
+      : (isAddPasswordReset
+        ? 'Create a password for your account.'
+        : 'Choose a new password for your account.');
   }
   if (resetEmailInput) {
     resetEmailInput.value = authModalState.recoveryEmail || currentUser?.email || '';
+  }
+  if (resetSubmitText) {
+    resetSubmitText.textContent = isAddPasswordReset ? 'Set password' : 'Update password';
   }
   if (toggleText) {
     toggleText.innerHTML = `${copy.toggle} <a href="#" id="authToggleLink">${copy.toggleAction}</a>`;
@@ -816,9 +1049,14 @@ function renderAuthModal() {
       focusAuthPrimaryField();
     });
   }
+  scheduleVerifyStageRefresh();
 }
 
 function resetAuthModalState() {
+  if (verifyResendRefreshTimer) {
+    clearTimeout(verifyResendRefreshTimer);
+    verifyResendRefreshTimer = null;
+  }
   authModalState = { ...AUTH_MODAL_DEFAULT_STATE };
 }
 
@@ -860,17 +1098,25 @@ export function openAuthModal({
   focusAuthPrimaryField();
 }
 
-function showAuthVerifyStage(email) {
+function showAuthVerifyStage(email, {
+  kind = AUTH_VERIFY_KIND.SIGNUP_PENDING,
+  callbackErrorMessage = '',
+  callbackErrorFlow = AUTH_CALLBACK_FLOW.GENERIC,
+} = {}) {
   authModalState = {
     ...authModalState,
     mode: 'signin',
     stage: 'verify',
     verifyEmail: email || '',
+    verifyKind: kind,
+    callbackErrorMessage,
+    callbackErrorFlow,
   };
   setAuthStatus();
   resetAuthForm({ preserveEmail: true });
   resetRecoveryForms();
   renderAuthModal();
+  document.getElementById('authModal')?.classList.add('open');
   focusAuthPrimaryField();
 }
 
@@ -888,12 +1134,15 @@ function showForgotPasswordStage(email = '') {
   focusAuthPrimaryField();
 }
 
-function showPasswordResetStage(email = '') {
+function showPasswordResetStage(email = '', {
+  kind = AUTH_RESET_KIND.PASSWORD_RECOVERY,
+} = {}) {
   authModalState = {
     ...authModalState,
     mode: 'signin',
     stage: 'reset',
     recoveryEmail: email || authModalState.recoveryEmail || currentUser?.email || '',
+    resetKind: kind,
   };
   setAuthStatus();
   resetAuthForm();
@@ -901,6 +1150,82 @@ function showPasswordResetStage(email = '') {
   renderAuthModal();
   document.getElementById('authModal')?.classList.add('open');
   focusAuthPrimaryField();
+}
+
+function startVerifyResendCooldown() {
+  authModalState = {
+    ...authModalState,
+    verifyResendCooldownUntil: Date.now() + AUTH_VERIFY_RESEND_COOLDOWN_MS,
+  };
+  renderAuthModal();
+}
+
+function getNormalizedSignInError(error) {
+  const message = String(error?.message || '').trim();
+  if (/email.*not confirmed/i.test(message)) {
+    return {
+      kind: 'verify',
+      verifyKind: AUTH_VERIFY_KIND.SIGNIN_UNCONFIRMED,
+    };
+  }
+  if (/invalid login credentials/i.test(message)) {
+    return {
+      kind: 'status',
+      message: 'That email and password did not match. If you usually sign in with Google, continue with Google instead.',
+    };
+  }
+  if (/too many requests|rate limit/i.test(message)) {
+    return {
+      kind: 'status',
+      message: 'Too many attempts right now. Please wait a moment and try again.',
+    };
+  }
+  return {
+    kind: 'status',
+    message: message || 'We could not sign you in right now.',
+  };
+}
+
+function getNormalizedSignUpError(error) {
+  const message = String(error?.message || '').trim();
+  if (/too many requests|rate limit/i.test(message)) {
+    return {
+      kind: 'status',
+      message: 'Too many signup attempts right now. Please wait a moment and try again.',
+    };
+  }
+  if (/user already registered/i.test(message)) {
+    return {
+      kind: 'verify',
+      verifyKind: AUTH_VERIFY_KIND.SIGNUP_EXISTING_HINT,
+    };
+  }
+  if (/password/i.test(message)) {
+    return {
+      kind: 'status',
+      message: message || 'Use at least 8 characters for your password.',
+    };
+  }
+  return {
+    kind: 'status',
+    message: message || 'We could not create your account right now.',
+  };
+}
+
+function getNormalizedForgotPasswordError(error) {
+  const message = String(error?.message || '').trim();
+  if (/too many requests|rate limit/i.test(message)) {
+    return 'Please wait a moment before requesting another reset email.';
+  }
+  return message || 'We could not send a reset email right now.';
+}
+
+function getNormalizedResendError(error) {
+  const message = String(error?.message || '').trim();
+  if (/too many requests|rate limit/i.test(message)) {
+    return 'Please wait a moment before requesting another confirmation email.';
+  }
+  return 'We could not send another confirmation email right now. If you already have an account, sign in instead.';
 }
 
 function wireAuthListeners() {
@@ -922,6 +1247,8 @@ function wireAuthListeners() {
   const accountPasswordBtn = document.getElementById('accountPasswordBtn');
   const signOutBtn = document.getElementById('authSignOutBtn');
   const googleBtn = document.getElementById('authGoogleBtn');
+  const verifyGoogleBtn = document.getElementById('authVerifyGoogleBtn');
+  const verifyResendBtn = document.getElementById('authVerifyResendBtn');
   const form = document.getElementById('authForm');
   const submitBtn = document.getElementById('authSubmitBtn');
   const forgotBtn = document.getElementById('authForgotBtn');
@@ -952,8 +1279,36 @@ function wireAuthListeners() {
         stage: 'form',
       };
       setAuthStatus();
+      setStageStatus('authVerifyStatus');
       renderAuthModal();
       focusAuthPrimaryField();
+    });
+  }
+  if (verifyResendBtn) {
+    verifyResendBtn.addEventListener('click', async () => {
+      const email = authModalState.verifyEmail?.trim();
+      const cooldownUntil = Number(authModalState.verifyResendCooldownUntil || 0);
+      if (authModalState.verifyKind === AUTH_VERIFY_KIND.CALLBACK_ERROR && authModalState.callbackErrorFlow === AUTH_CALLBACK_FLOW.RECOVERY) {
+        showForgotPasswordStage(authModalState.recoveryEmail || currentUser?.email || '');
+        return;
+      }
+      if (!email || Date.now() < cooldownUntil) return;
+
+      verifyResendBtn.disabled = true;
+      setStageStatus('authVerifyStatus');
+
+      try {
+        await resendSignupConfirmation(email);
+        startVerifyResendCooldown();
+        const resendMessage = authModalState.verifyKind === AUTH_VERIFY_KIND.SIGNIN_UNCONFIRMED
+          ? `A new confirmation email has been sent to ${email}.`
+          : `Check ${email} for a new confirmation email.`;
+        setStageStatus('authVerifyStatus', resendMessage, 'success');
+      } catch (err) {
+        setStageStatus('authVerifyStatus', getNormalizedResendError(err), 'error');
+      } finally {
+        renderAuthModal();
+      }
     });
   }
   if (forgotBackBtn) {
@@ -1014,6 +1369,16 @@ function wireAuthListeners() {
     });
   }
 
+  if (verifyGoogleBtn) {
+    verifyGoogleBtn.addEventListener('click', async () => {
+      try {
+        await signInWithGoogle();
+      } catch (err) {
+        showToast(err.message || 'Google sign-in failed');
+      }
+    });
+  }
+
   if (forgotBtn) {
     forgotBtn.addEventListener('click', () => {
       const email = document.getElementById('authEmail')?.value?.trim() || '';
@@ -1039,7 +1404,11 @@ function wireAuthListeners() {
           if (result?.session) {
             closeAuthModal({ preserveIntent: true, resetToDefault: true });
           } else {
-            showAuthVerifyStage(email);
+            showAuthVerifyStage(email, {
+              kind: isLikelyExistingSignupResult(result)
+                ? AUTH_VERIFY_KIND.SIGNUP_EXISTING_HINT
+                : AUTH_VERIFY_KIND.SIGNUP_PENDING,
+            });
           }
         } else {
           await signInWithEmail(email, password);
@@ -1047,7 +1416,21 @@ function wireAuthListeners() {
           resetAuthForm();
         }
       } catch (err) {
-        setAuthStatus(err.message || 'Something went wrong', 'error');
+        if (form.dataset.mode === 'signup') {
+          const normalized = getNormalizedSignUpError(err);
+          if (normalized.kind === 'verify') {
+            showAuthVerifyStage(email, { kind: normalized.verifyKind });
+          } else {
+            setAuthStatus(normalized.message, 'error');
+          }
+        } else {
+          const normalized = getNormalizedSignInError(err);
+          if (normalized.kind === 'verify') {
+            showAuthVerifyStage(email, { kind: normalized.verifyKind });
+          } else {
+            setAuthStatus(normalized.message, 'error');
+          }
+        }
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }
@@ -1069,9 +1452,9 @@ function wireAuthListeners() {
           recoveryEmail: email,
         };
         await requestPasswordReset(email);
-        setStageStatus('authForgotStatus', `We sent a reset link to ${email}.`, 'success');
+        setStageStatus('authForgotStatus', `If an account matches ${email}, you'll get a reset link shortly.`, 'success');
       } catch (err) {
-        setStageStatus('authForgotStatus', err.message || 'Could not send reset email', 'error');
+        setStageStatus('authForgotStatus', getNormalizedForgotPasswordError(err), 'error');
       } finally {
         if (forgotSubmitBtn) forgotSubmitBtn.disabled = false;
       }
@@ -1100,8 +1483,9 @@ function wireAuthListeners() {
       try {
         await updateUserPassword(nextPassword);
         clearAuthCallbackHash();
+        const resetKind = authModalState.resetKind;
         closeAuthModal({ preserveIntent: true, resetToDefault: true });
-        showToast('Password updated');
+        showToast(resetKind === AUTH_RESET_KIND.ADD_PASSWORD ? 'Password sign-in added' : 'Password updated');
         dispatchAuthSignedIn();
       } catch (err) {
         setStageStatus('authResetStatus', err.message || 'Could not update password', 'error');
@@ -1152,11 +1536,17 @@ function wireAuthListeners() {
       setAccountStatus('accountPasswordStatus');
 
       try {
-        await requestPasswordReset(email);
-        setAccountStatus('accountPasswordStatus', `We sent a reset link to ${email}.`, 'success');
-        showToast('Password reset email sent');
+        if (isOAuthOnlyUser()) {
+          closeAccountModal({ resetState: true });
+          showPasswordResetStage(email, { kind: AUTH_RESET_KIND.ADD_PASSWORD });
+          setStageStatus('authResetStatus', 'Set a password you can use alongside Google sign-in.', 'success');
+        } else {
+          await requestPasswordReset(email);
+          setAccountStatus('accountPasswordStatus', `A password reset email has been sent to ${email}.`, 'success');
+          showToast('Password reset email sent');
+        }
       } catch (err) {
-        setAccountStatus('accountPasswordStatus', err.message || 'Could not send password reset email', 'error');
+        setAccountStatus('accountPasswordStatus', getNormalizedForgotPasswordError(err), 'error');
       } finally {
         accountPasswordBtn.disabled = false;
       }
@@ -1170,164 +1560,6 @@ function wireAuthListeners() {
       dropdown?.classList.remove('open');
     }
   });
-}
-
-function wireAuthListenersLegacy() {
-  const modal = document.getElementById('authModal');
-  // Guard: prevent duplicate listener attachment
-  if (modal?.dataset.wired) return;
-  if (modal) modal.dataset.wired = 'true';
-
-  const backdrop = document.getElementById('authBackdrop');
-  const closeBtn = document.getElementById('authClose');
-  const signInBtn = document.getElementById('authSignInBtn');
-  const avatarBtn = document.getElementById('authAvatarBtn');
-  const dropdown = document.getElementById('authDropdown');
-  const signOutBtn = document.getElementById('authSignOutBtn');
-  const googleBtn = document.getElementById('authGoogleBtn');
-  const toggleLink = document.getElementById('authToggleLink');
-  const form = document.getElementById('authForm');
-  const statusEl = document.getElementById('authStatus');
-  const submitBtn = document.getElementById('authSubmitBtn');
-  const submitText = document.getElementById('authSubmitText');
-  const modalTitle = document.getElementById('authModalTitle');
-  const toggleText = document.getElementById('authToggleText');
-
-
-  // Open modal
-  if (signInBtn) {
-    signInBtn.addEventListener('click', () => {
-      if (form) form.dataset.mode = 'signin';
-      updateModalMode(false, modalTitle, submitText, toggleText);
-      if (modal) modal.classList.add('open');
-    });
-  }
-
-  // Close modal
-  if (backdrop) backdrop.addEventListener('click', () => modal?.classList.remove('open'));
-  if (closeBtn) closeBtn.addEventListener('click', () => modal?.classList.remove('open'));
-
-  // Toggle sign in / sign up
-  if (toggleLink) {
-    toggleLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const nowSignUp = form?.dataset.mode !== 'signup';
-      if (form) form.dataset.mode = nowSignUp ? 'signup' : 'signin';
-      updateModalMode(nowSignUp, modalTitle, submitText, toggleText);
-      if (statusEl) { statusEl.textContent = ''; statusEl.className = 'auth-modal__status'; }
-    });
-  }
-
-  // Avatar dropdown
-  if (avatarBtn) {
-    avatarBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdown?.classList.toggle('open');
-    });
-  }
-  // Close dropdown on outside click
-  document.addEventListener('click', () => dropdown?.classList.remove('open'));
-
-  // Sign out
-  if (signOutBtn) {
-    signOutBtn.addEventListener('click', async () => {
-      dropdown?.classList.remove('open');
-      await signOut();
-    });
-  }
-
-  // Manage Subscription (Customer Portal)
-  const manageSubBtn = document.getElementById('authManageSubscription');
-  if (manageSubBtn) {
-    manageSubBtn.addEventListener('click', async () => {
-      dropdown?.classList.remove('open');
-      await openCustomerPortal();
-    });
-  }
-
-  // Google sign in
-  if (googleBtn) {
-    googleBtn.addEventListener('click', async () => {
-      try {
-        await signInWithGoogle();
-      } catch (err) {
-        if (statusEl) {
-          statusEl.textContent = err.message || 'Google sign-in failed';
-          statusEl.className = 'auth-modal__status error';
-        }
-      }
-    });
-  }
-
-  // Form submit (email sign in/up)
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('authEmail')?.value?.trim();
-      const password = document.getElementById('authPassword')?.value;
-
-      if (!email || !password) return;
-
-      if (submitBtn) submitBtn.disabled = true;
-      if (statusEl) { statusEl.textContent = ''; statusEl.className = 'auth-modal__status'; }
-
-      try {
-        const isSigningUp = form?.dataset.mode === 'signup';
-        if (isSigningUp) {
-          await signUpWithEmail(email, password);
-          if (statusEl) {
-            statusEl.textContent = 'Check your email to confirm your account';
-            statusEl.className = 'auth-modal__status success';
-          }
-        } else {
-          await signInWithEmail(email, password);
-          modal?.classList.remove('open');
-          form.reset();
-        }
-      } catch (err) {
-        if (statusEl) {
-          statusEl.textContent = err.message || 'Something went wrong';
-          statusEl.className = 'auth-modal__status error';
-        }
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  }
-
-  // Escape key closes modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      modal?.classList.remove('open');
-      dropdown?.classList.remove('open');
-    }
-  });
-}
-
-function updateModalMode(isSignUp, titleEl, submitTextEl, toggleTextEl) {
-  if (titleEl) titleEl.textContent = isSignUp ? 'Create an account' : 'Sign in to Supericons';
-  if (submitTextEl) submitTextEl.textContent = isSignUp ? 'Create account' : 'Sign in';
-  if (toggleTextEl) toggleTextEl.innerHTML = isSignUp
-    ? 'Already have an account? <a href="#" id="authToggleLink">Sign in</a>'
-    : 'Don\'t have an account? <a href="#" id="authToggleLink">Sign up</a>';
-
-  // Sync form data-mode with current state
-  const form = document.getElementById('authForm');
-  if (form) form.dataset.mode = isSignUp ? 'signup' : 'signin';
-
-  // Re-wire toggle link (innerHTML destroyed the old one)
-  const newLink = toggleTextEl?.querySelector('#authToggleLink');
-  if (newLink) {
-    newLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const titleEl2 = document.getElementById('authModalTitle');
-      const submitText2 = document.getElementById('authSubmitText');
-      const toggleText2 = document.getElementById('authToggleText');
-      const statusEl = document.getElementById('authStatus');
-      updateModalMode(!isSignUp, titleEl2, submitText2, toggleText2);
-      if (statusEl) { statusEl.textContent = ''; statusEl.className = 'auth-modal__status'; }
-    });
-  }
 }
 
 // ── Toast Helper ──────────────────────────────────────────────

@@ -461,10 +461,18 @@
                 </div>
 
                 <div class="auth-modal__stage auth-verify" id="authVerifyStage" hidden>
-                    <span class="material-symbols-outlined auth-verify__icon">mark_email_read</span>
-                    <h3 class="auth-verify__title">Check your email</h3>
-                    <p class="auth-verify__text" id="authVerifyText">We sent a confirmation link to your email.</p>
-                    <button type="button" class="auth-verify__btn" id="authVerifyBackBtn">Back to sign in</button>
+                    <span class="material-symbols-outlined auth-verify__icon" id="authVerifyIcon">mark_email_read</span>
+                    <h3 class="auth-verify__title" id="authVerifyTitle">Check your email</h3>
+                    <p class="auth-verify__text" id="authVerifyText">If a confirmation email was sent, it went to your email.</p>
+                    <div class="auth-modal__status" id="authVerifyStatus"></div>
+                    <div class="auth-verify__actions">
+                        <button type="button" class="auth-modal__google auth-verify__google" id="authVerifyGoogleBtn">
+                            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.1 24.1 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                            Continue with Google
+                        </button>
+                        <button type="button" class="auth-verify__btn" id="authVerifyResendBtn">Resend confirmation</button>
+                        <button type="button" class="auth-verify__btn" id="authVerifyBackBtn">Back to sign in</button>
+                    </div>
                 </div>
 
                 <div class="auth-modal__stage auth-verify" id="authForgotStage" hidden>
@@ -482,8 +490,8 @@
                 </div>
 
                 <div class="auth-modal__stage auth-verify" id="authResetStage" hidden>
-                    <span class="material-symbols-outlined auth-verify__icon">password</span>
-                    <h3 class="auth-verify__title">Set a new password</h3>
+                    <span class="material-symbols-outlined auth-verify__icon" id="authResetIcon">password</span>
+                    <h3 class="auth-verify__title" id="authResetStageTitle">Set a new password</h3>
                     <p class="auth-verify__text" id="authResetText">Choose a new password for your account.</p>
                     <form class="auth-form" id="authResetForm">
                         <input type="email" class="auth-form__input auth-form__input--hidden" id="authResetEmail" name="email" autocomplete="username email" tabindex="-1" aria-hidden="true" />
@@ -540,8 +548,8 @@
 
                 <section class="account-modal__section">
                     <div class="account-modal__section-head">
-                        <h3 class="account-modal__section-title">Password</h3>
-                        <p class="account-modal__section-copy">Use the secure recovery flow to choose a new password.</p>
+                        <h3 class="account-modal__section-title" id="accountPasswordTitle">Password</h3>
+                        <p class="account-modal__section-copy" id="accountPasswordCopy">Use the secure recovery flow to choose a new password.</p>
                     </div>
                     <button type="button" class="auth-verify__btn account-modal__password-btn" id="accountPasswordBtn">
                         Send password reset email

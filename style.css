@@ -3643,6 +3643,23 @@ body.theme-light [data-tip]::after {
   line-height: 1.6;
   color: var(--si-text-dim);
 }
+.auth-verify .auth-modal__status {
+  min-height: 1.2rem;
+  text-align: center;
+}
+.auth-verify__actions {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 280px;
+}
+.auth-verify__google {
+  width: 100%;
+}
+.auth-modal__google[hidden],
+.auth-verify__btn[hidden] {
+  display: none !important;
+}
 .auth-verify__btn {
   display: inline-flex;
   align-items: center;
