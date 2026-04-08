@@ -1,3 +1,6 @@
+// Manual paste snapshot for Supabase dashboard deploy.
+// Canonical source: supabase/functions/stripe-webhook/index.ts
+
 // Supericons: Stripe Webhook Handler
 // Supabase Edge Function (Deno)
 // POST /functions/v1/stripe-webhook
@@ -311,7 +314,6 @@ serve(async (req) => {
 
         if (userId && productId && session.mode === 'payment') {
           let shouldSendPurchaseEmail = false;
-          let emailPayload: EmailContent | null = null;
 
           // Launch Edition: bulk-insert all V1 packs
           if (productId === 'launch_edition') {
@@ -328,7 +330,7 @@ serve(async (req) => {
             if (shouldSendPurchaseEmail) {
               const recipientEmail = await resolveUserEmail(supabase, userId, session);
               if (recipientEmail) {
-                emailPayload = buildPurchaseEmail({
+                const emailPayload = buildPurchaseEmail({
                   recipientEmail,
                   productName: 'Launch Edition',
                   productDescription: 'All 8 launch packs have been added to your Supericons account.',
@@ -374,7 +376,7 @@ serve(async (req) => {
               const recipientEmail = await resolveUserEmail(supabase, userId, session);
               if (recipientEmail) {
                 const product = await fetchProductSummary(supabase, productId);
-                emailPayload = buildPurchaseEmail({
+                const emailPayload = buildPurchaseEmail({
                   recipientEmail,
                   productName: product.name,
                   productDescription: product.description,

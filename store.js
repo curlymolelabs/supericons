@@ -155,11 +155,14 @@ let userPurchases = [];
 let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
 let previousView = 'icons';
 let currentCollectionData = null; // manifest data for the currently viewed collection
+let currentCollectionBundle = null;
 let activeCollectionProductId = null;
 let activeCollectionProductSlug = null;
 let authIntentResumePromise = null;
 let toastTimeout = null;
 let removeUpgradePrompt = null;
+let premiumSelectionRequestId = 0;
+let packCatalogNotice = null;
 const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
 const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'collection-detail', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
 const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
@@ -442,6 +445,14 @@ export function initStore() {
   void fetchProducts();
   window.addEventListener('supericons:auth-signed-in', () => {
     void resumePostAuthIntent();
+  });
+  window.addEventListener('supericons:auth-signed-out', () => {
+    void ensureUserPurchasesLoaded({ force: true, rerender: false });
+    if (currentView === 'downloads' || currentView === 'dashboard') {
+      switchView('icons');
+      return;
+    }
+    rerenderCollectionSurfaceForCurrentView();
   });
   void waitForAuth()
     .then(async () => {
@@ -741,6 +752,9 @@ function renderPackCatalog() {
         <p>Animated icon collections are being built. Check back soon.</p>
       </div>`;
   } else {
+    if (packCatalogNotice) {
+      catalog.appendChild(createPackCatalogNotice(packCatalogNotice));
+    }
     // Add Pro subscription card if not subscribed
     if (!isPro()) {
       catalog.appendChild(createProSubscriptionCard());
@@ -788,6 +802,45 @@ function renderPackCatalog() {
   }
 
   gridArea.appendChild(catalog);
+}
+
+function createPackCatalogNotice(notice) {
+  const banner = document.createElement('div');
+  banner.className = 'promo-banner promo-banner--success';
+
+  banner.innerHTML = `
+    <div class="promo-banner__left">
+      <span class="material-symbols-outlined promo-banner__icon">celebration</span>
+      <div class="promo-banner__info">
+        <div class="promo-banner__title">${notice.title}</div>
+        <div class="promo-banner__desc">${notice.description}</div>
+      </div>
+    </div>
+    <div class="promo-banner__right">
+      ${notice.actionLabel ? `<button class="promo-banner__btn promo-banner__btn--success" type="button" data-action="notice">${notice.actionLabel}</button>` : ''}
+    </div>
+  `;
+
+  const actionBtn = banner.querySelector('[data-action="notice"]');
+  actionBtn?.addEventListener('click', () => {
+    if (notice.kind === 'pro-monthly') {
+      const firstRedeemBtn = document.querySelector('.pack-card [data-action="redeem"]');
+      if (firstRedeemBtn) {
+        firstRedeemBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstRedeemBtn.focus({ preventScroll: true });
+      } else {
+        ensureClaimStatusLoaded();
+        showToast('Your claim options are loading. Try again in a moment.');
+      }
+      return;
+    }
+
+    if (notice.kind === 'pro-annual') {
+      switchView('downloads');
+    }
+  });
+
+  return banner;
 }
 
 function createPackCard(product) {
@@ -1013,6 +1066,7 @@ async function renderCollectionDetail(product) {
   switchView('collection-detail');
   activeCollectionProductId = product?.id || null;
   activeCollectionProductSlug = product?.slug || null;
+  currentCollectionBundle = null;
 
   removePackCatalog();
 
@@ -1096,6 +1150,7 @@ async function renderCollectionDetail(product) {
 
   const collectionData = manifest[product.slug];
   currentCollectionData = collectionData;
+  currentCollectionBundle = bundle;
   const iconList = collectionData
     ? collectionData.icons
     : getPlaceholderIcons(product.slug).map(n => ({ name: n }));
@@ -1162,19 +1217,6 @@ async function renderCollectionDetail(product) {
   };
 
   detail.appendChild(grid);
-
-  // Format tools placeholder (for purchased users)
-  if (isPurchased) {
-    const tools = document.createElement('div');
-    tools.className = 'collection-detail__tools';
-    tools.innerHTML = `
-      <div class="collection-detail__tools-placeholder">
-        <span class="material-symbols-outlined" style="font-size:24px; color: var(--si-text-dim);">build</span>
-        <span>Format Tools (Coming Soon)</span>
-      </div>
-    `;
-    detail.appendChild(tools);
-  }
 
   // Add watermark overlay for non-purchasers
   if (!isPurchased) {
@@ -1284,91 +1326,66 @@ async function getCollectionCSS(slug, cssFilename) {
 }
 
 function extractIconCSS(fullCSS, iconName) {
-  // Extract all @keyframes and rules relevant to this specific icon
-  // Match: .si-anim--{iconName} or obfuscated class rules and their associated @keyframes
-  // Use the obfuscated class token from the manifest classMap if available
+  if (!fullCSS) return '';
+
   const animClass = getAnimClass(currentCollectionData, iconName);
-  const lines = fullCSS.split('\n');
-  const relevantRules = [];
-  const neededKeyframes = new Set();
-  let inBlock = false;
+  const blocks = [];
+  let blockStart = 0;
   let braceDepth = 0;
-  let currentBlock = '';
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    if (!inBlock) {
-      // Check if this line starts a rule block containing our icon's anim class
-      if (line.includes(animClass) || line.includes('.si-anim svg')) {
-        inBlock = true;
-        braceDepth = 0;
-        currentBlock = line;
-        braceDepth += (line.match(/{/g) || []).length;
-        braceDepth -= (line.match(/}/g) || []).length;
-        if (braceDepth <= 0) {
-          inBlock = false;
-          relevantRules.push(currentBlock);
-          // Extract keyframe name from animation property
-          const animMatch = currentBlock.match(/animation:\s*([\w-]+)/);
-          if (animMatch) neededKeyframes.add(animMatch[1]);
-          currentBlock = '';
-        }
-        continue;
-      }
-
-      // Check if this is a @keyframes block
-      if (line.trim().startsWith('@keyframes')) {
-        inBlock = true;
-        braceDepth = 0;
-        currentBlock = line;
-        braceDepth += (line.match(/{/g) || []).length;
-        braceDepth -= (line.match(/}/g) || []).length;
-        if (braceDepth <= 0) {
-          inBlock = false;
-          const nameMatch = currentBlock.match(/@keyframes\s+([\w-]+)/);
-          if (nameMatch) {
-            // Store temporarily, we'll include only needed ones
-            relevantRules.push({ type: 'keyframes', name: nameMatch[1], css: currentBlock });
-          }
-          currentBlock = '';
-        }
-        continue;
-      }
-    } else {
-      currentBlock += '\n' + line;
-      braceDepth += (line.match(/{/g) || []).length;
-      braceDepth -= (line.match(/}/g) || []).length;
-      if (braceDepth <= 0) {
-        inBlock = false;
-        if (currentBlock.includes(`si-anim--${iconName}`) || currentBlock.includes('.si-anim svg')) {
-          relevantRules.push(currentBlock);
-          const animMatch = currentBlock.match(/animation:\s*([\w-]+)/);
-          if (animMatch) neededKeyframes.add(animMatch[1]);
-        } else if (currentBlock.trim().startsWith('@keyframes')) {
-          const nameMatch = currentBlock.match(/@keyframes\s+([\w-]+)/);
-          if (nameMatch) {
-            relevantRules.push({ type: 'keyframes', name: nameMatch[1], css: currentBlock });
-          }
-        }
-        currentBlock = '';
+  for (let i = 0; i < fullCSS.length; i += 1) {
+    const char = fullCSS[i];
+    if (char === '{') braceDepth += 1;
+    if (char === '}') {
+      braceDepth -= 1;
+      if (braceDepth === 0) {
+        const block = fullCSS.slice(blockStart, i + 1).trim();
+        if (block) blocks.push(block);
+        blockStart = i + 1;
       }
     }
   }
 
-  // Filter: keep only keyframes that are referenced, and all icon-specific rules
-  const filtered = relevantRules
-    .filter(r => {
-      if (typeof r === 'string') return true; // icon rule
-      if (r.type === 'keyframes') return neededKeyframes.has(r.name);
-      return false;
-    })
-    .map(r => typeof r === 'string' ? r : r.css);
+  const relevantRules = [];
+  const keyframeBlocks = new Map();
+  const neededKeyframes = new Set();
 
-  return filtered.join('\n\n');
+  const collectAnimationNames = (block) => {
+    const matches = block.matchAll(/animation(?:-name)?\s*:\s*([^;}{]+)/g);
+    for (const match of matches) {
+      const value = match[1] || '';
+      value.split(',').forEach((entry) => {
+        const trimmed = entry.trim();
+        if (!trimmed || trimmed === 'none') return;
+        const name = trimmed.split(/\s+/)[0];
+        if (name && !/^\d/.test(name)) {
+          neededKeyframes.add(name);
+        }
+      });
+    }
+  };
+
+  blocks.forEach((block) => {
+    const keyframeMatch = block.match(/^\s*(?:\/\*[\s\S]*?\*\/\s*)*@keyframes\s+([\w-]+)/);
+    if (keyframeMatch) {
+      keyframeBlocks.set(keyframeMatch[1], block);
+      return;
+    }
+
+    if (block.includes(animClass) || block.includes('.si-anim svg')) {
+      relevantRules.push(block);
+      collectAnimationNames(block);
+    }
+  });
+
+  const filteredKeyframes = [...neededKeyframes]
+    .map((name) => keyframeBlocks.get(name))
+    .filter(Boolean);
+
+  return [...relevantRules, ...filteredKeyframes].join('\n\n');
 }
 
-function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playMode) {
+function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playMode, animClass = '') {
   let svg = svgText;
   // Apply color
   svg = svg.replace(/stroke="currentColor"/g, `stroke="${color}"`);
@@ -1382,7 +1399,6 @@ function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playM
 
     // Remove external parent hover selectors
     css = css.replace(/\.si-icon-cell:hover\s+/g, '');
-    css = css.replace(/,\s*\n?\.icon-card:hover\s+/g, '');
     css = css.replace(/\.icon-card:hover\s+/g, '');
 
     // Strip .si-anim--{name} wrapper selectors for standalone SVG
@@ -1391,6 +1407,12 @@ function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playM
     css = css.replace(/\.si-anim--[\w-]+\s+svg/g, ':root');
     // .si-anim svg => :root
     css = css.replace(/\.si-anim\s+svg/g, ':root');
+    if (animClass) {
+      const escapedAnimClass = animClass.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      css = css.replace(new RegExp(`\\.${escapedAnimClass}\\s+svg`, 'g'), ':root');
+    }
+    css = css.replace(/:root\s*,\s*:root/g, ':root');
+    css = css.replace(/:root:root/g, ':root');
 
     // Apply animation speed multiplier
     if (animSpeed !== 1) {
@@ -1429,23 +1451,38 @@ let premiumPanelState = {
 async function selectPremiumIcon(iconName, collectionSlug) {
   const si = window.__supericons;
   if (!si) return;
+  const requestId = ++premiumSelectionRequestId;
 
   try {
-    const svgRes = await fetchPremiumAsset(collectionSlug, `${iconName}.svg`);
-    if (!svgRes.ok) { showToast('Could not load icon'); return; }
-    const svgText = await svgRes.text();
-    // Look up the CSS filename from the manifest for this collection
-    const manifest = await loadManifest();
-    const collData = manifest?.[collectionSlug];
-    const collectionCSS = await getCollectionCSS(collectionSlug, collData?.css);
-    const iconCSS = extractIconCSS(collectionCSS, iconName);
-
-    // Highlight selected cell
     document.querySelectorAll('.collection-detail__icon-cell.selected').forEach(el => el.classList.remove('selected'));
     document.querySelectorAll('.collection-detail__icon-cell').forEach(cell => {
       const nameEl = cell.querySelector('.collection-detail__icon-name');
       if (nameEl && nameEl.textContent === iconName) cell.classList.add('selected');
     });
+
+    const preview = document.getElementById('panelPreview');
+    const panel = document.getElementById('panel');
+    const panelBody = panel?.querySelector('.panel__body') || panel?.querySelector('.panel__placeholder');
+    if (preview) {
+      preview.innerHTML = `<span class="material-symbols-outlined panel__preview-icon" style="font-size:64px; color: var(--si-text-dim);">hourglass_empty</span>`;
+    }
+    if (panelBody) {
+      panelBody.className = 'panel__placeholder';
+      panelBody.innerHTML = '<span class="material-symbols-outlined panel__placeholder-icon">progress_activity</span><p class="panel__placeholder-text">Loading icon customization...</p>';
+    }
+
+    let svgText = currentCollectionBundle?.icons?.[iconName] || '';
+    if (!svgText) {
+      const svgRes = await fetchPremiumAsset(collectionSlug, `${iconName}.svg`);
+      if (!svgRes.ok) { showToast('Could not load icon'); return; }
+      svgText = await svgRes.text();
+    }
+    // Look up the CSS filename from the manifest for this collection
+    const manifest = await loadManifest();
+    const collData = manifest?.[collectionSlug];
+    const collectionCSS = await getCollectionCSS(collectionSlug, collData?.css);
+    const iconCSS = extractIconCSS(collectionCSS, iconName);
+    if (requestId !== premiumSelectionRequestId) return;
 
     // Render the premium panel
     renderPremiumPanel(iconName, collectionSlug, svgText, iconCSS);
@@ -1640,7 +1677,7 @@ function wirePremiumPanelEvents(panelBody, iconName, slug, svgText, iconCSS, get
   // Export: Copy Animated SVG
   const copyAnim = panelBody.querySelector('#premCopyAnimSvg');
   if (copyAnim) copyAnim.addEventListener('click', () => {
-    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode);
+    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode, getAnimClass(currentCollectionData, iconName));
     navigator.clipboard.writeText(svg).then(() => showToast('Animated SVG copied'));
   });
 
@@ -1657,7 +1694,7 @@ function wirePremiumPanelEvents(panelBody, iconName, slug, svgText, iconCSS, get
   // Export: Download Animated SVG
   const dlAnim = panelBody.querySelector('#premDownloadAnimSvg');
   if (dlAnim) dlAnim.addEventListener('click', () => {
-    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode);
+    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode, getAnimClass(currentCollectionData, iconName));
     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -2209,7 +2246,7 @@ function renderPricingPage() {
       <div class="pricing-toggle" id="pricingToggle">
         <button class="pricing-toggle__seg pricing-toggle__seg--active" id="pricingMonthlyBtn" data-period="monthly">Monthly</button>
         <button class="pricing-toggle__seg" id="pricingAnnualBtn" data-period="annual">Annual</button>
-        <span class="pricing-toggle__badge">Save 45%</span>
+        <span class="pricing-toggle__badge" id="pricingAnnualBadge" hidden>Save 45%</span>
       </div>
     </div>
 
@@ -2391,6 +2428,7 @@ function renderPricingPage() {
   const proOriginal = document.getElementById('pricingProOriginal');
   const proDesc = document.getElementById('pricingProDesc');
   const proFeatures = document.getElementById('pricingProFeatures');
+  const annualBadge = document.getElementById('pricingAnnualBadge');
 
   let isAnnualState = false;
 
@@ -2400,6 +2438,7 @@ function renderPricingPage() {
     isAnnualState = annual;
     monthlyBtn.classList.toggle('pricing-toggle__seg--active', !annual);
     annualBtn.classList.toggle('pricing-toggle__seg--active', annual);
+    if (annualBadge) annualBadge.hidden = !annual;
 
     proAmount.textContent = plan.amount;
     proPeriod.textContent = plan.period;
@@ -2982,6 +3021,9 @@ async function handlePackClaim(product) {
 
     showToast(`Added "${product.name}" to My Collection.`);
     invalidateClaimStatus();
+    if (packCatalogNotice?.kind === 'pro-monthly') {
+      packCatalogNotice = null;
+    }
 
     await Promise.all([
       ensureUserPurchasesLoaded({ force: true, rerender: false }),
@@ -3103,9 +3145,7 @@ function wireStoreListeners() {
   if (params.get('purchase') === 'success') {
     // Clean URL immediately
     window.history.replaceState({}, '', window.location.pathname);
-    // Show success toast
-    showToast('Purchase successful! Opening your collection...');
-    // Refresh purchases and navigate to My Collection
+    // Refresh purchases and route to the right post-checkout experience
     handlePurchaseSuccess(purchaseProductId, subscriptionPlan);
   } else if (params.get('purchase') === 'canceled') {
     showToast('Payment was not completed. Try again.');
@@ -3135,7 +3175,31 @@ async function handlePurchaseSuccess(expectedProductId = null, subscriptionPlan 
     if (foundExpected) break;
     retries++;
   }
+  await fetchClaimStatus({ force: true }).catch(() => {});
+
+  if (subscriptionPlan) {
+    const isAnnual = subscriptionPlan === 'annual';
+    packCatalogNotice = isAnnual
+      ? {
+        kind: 'pro-annual',
+        title: 'Welcome to Pro Annual',
+        description: 'All 8 launch collections are now in your library. Browse the packs or open My Collection to start using them.',
+        actionLabel: 'Open My Collection',
+      }
+      : {
+        kind: 'pro-monthly',
+        title: 'Welcome to Pro Monthly',
+        description: 'Your first Pro claim is ready. Pick a premium collection below and redeem it now to add it to My Collection.',
+        actionLabel: 'Redeem a collection',
+      };
+    showToast(isAnnual ? 'Pro Annual is active. Your collections are ready.' : 'Welcome to Pro. Redeem your first collection now.');
+    switchView('packs');
+    return;
+  }
+
+  packCatalogNotice = null;
   // Navigate to My Collection
+  showToast('Purchase successful! Opening your collection...');
   switchView('downloads');
 }
 
@@ -3735,12 +3799,33 @@ function renderMotionLab() {
       </div>
 
     </div>
+
+    <div class="desktop-tool-glimpse desktop-tool-glimpse--motionlab" id="mlMobileGlimpse">
+      <div class="desktop-tool-glimpse__card" role="note" aria-label="Motion Lab mobile notice">
+        <div class="desktop-tool-glimpse__eyebrow">Desktop-first tool</div>
+        <h3 class="desktop-tool-glimpse__title">Motion Lab is optimized for desktop</h3>
+        <p class="desktop-tool-glimpse__copy">Preview the workspace here, then open Supericons on a larger screen to animate and export with the full editor.</p>
+        <p class="desktop-tool-glimpse__hint">This mobile view is read-only so you can get a feel for the interface without fighting the controls.</p>
+        <div class="desktop-tool-glimpse__actions">
+          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="mlMobileBackBtn">Back to icons</button>
+          <button type="button" class="desktop-tool-glimpse__btn" id="mlMobilePricingBtn">See pricing</button>
+        </div>
+      </div>
+    </div>
   `;
 
 
 
 
   gridArea.appendChild(view);
+  document.getElementById('mlMobileBackBtn')?.addEventListener('click', () => {
+    stopMotionLabRotatingPanel();
+    switchView('icons');
+  });
+  document.getElementById('mlMobilePricingBtn')?.addEventListener('click', () => {
+    stopMotionLabRotatingPanel();
+    switchView('pricing');
+  });
   initMotionLabRotatingPanel();
 
   // Wire up SVG loading
@@ -8499,8 +8584,23 @@ function renderConverter() {
       </div>
     </div>
 
+    <div class="desktop-tool-glimpse desktop-tool-glimpse--converter" id="convMobileGlimpse">
+      <div class="desktop-tool-glimpse__card" role="note" aria-label="Converter mobile notice">
+        <div class="desktop-tool-glimpse__eyebrow">Desktop-first tool</div>
+        <h3 class="desktop-tool-glimpse__title">Converter is optimized for desktop</h3>
+        <p class="desktop-tool-glimpse__copy">Preview the converter here, then open Supericons on a larger screen to convert and export files with the full workspace.</p>
+        <p class="desktop-tool-glimpse__hint">On smaller screens this stays read-only so the interface remains clear instead of cramped.</p>
+        <div class="desktop-tool-glimpse__actions">
+          <button type="button" class="desktop-tool-glimpse__btn desktop-tool-glimpse__btn--ghost" id="convMobileBackBtn">Back to icons</button>
+          <button type="button" class="desktop-tool-glimpse__btn" id="convMobilePricingBtn">See pricing</button>
+        </div>
+      </div>
+    </div>
+
   `;
   gridArea.appendChild(view);
+  document.getElementById('convMobileBackBtn')?.addEventListener('click', () => switchView('icons'));
+  document.getElementById('convMobilePricingBtn')?.addEventListener('click', () => switchView('pricing'));
   initConverterControls();
 }
 

@@ -31,7 +31,7 @@ const DEFAULT_CLAIM_STATUS = Object.freeze({
 });
 const AUTH_INTENT_STORAGE_KEY = 'si-auth-intent';
 const AUTH_INTENT_TTL_MS = 1000 * 60 * 60 * 6;
-const AUTH_VERIFY_RESEND_COOLDOWN_MS = 30 * 1000;
+const AUTH_EMAIL_REQUEST_COOLDOWN_MS = 60 * 1000;
 const AUTH_VERIFY_KIND = Object.freeze({
   SIGNUP_PENDING: 'signup_pending',
   SIGNUP_EXISTING_HINT: 'signup_existing_hint',
@@ -54,6 +54,7 @@ const AUTH_MODAL_DEFAULT_STATE = Object.freeze({
   verifyEmail: '',
   verifyKind: AUTH_VERIFY_KIND.SIGNUP_PENDING,
   verifyResendCooldownUntil: 0,
+  forgotSubmitCooldownUntil: 0,
   callbackErrorMessage: '',
   callbackErrorFlow: AUTH_CALLBACK_FLOW.GENERIC,
   recoveryEmail: '',
@@ -179,6 +180,10 @@ function dispatchAuthSignedIn() {
   }));
 }
 
+function dispatchAuthSignedOut() {
+  window.dispatchEvent(new CustomEvent('supericons:auth-signed-out'));
+}
+
 // ── Init ──────────────────────────────────────────────────────
 export function initAuth() {
   if (!window.supabase) {
@@ -214,6 +219,7 @@ export function initAuth() {
       showToast('Signed out');
       beginAuthCycle({ resolved: true });
       resetProState();
+      dispatchAuthSignedOut();
     }
   });
 
@@ -820,13 +826,19 @@ function clearAuthCallbackHash() {
   window.history.replaceState({}, document.title, cleanUrl);
 }
 
-function scheduleVerifyStageRefresh() {
+function scheduleAuthStageRefresh() {
   if (verifyResendRefreshTimer) {
     clearTimeout(verifyResendRefreshTimer);
     verifyResendRefreshTimer = null;
   }
-  const remaining = Number(authModalState.verifyResendCooldownUntil || 0) - Date.now();
-  if (authModalState.stage !== 'verify' || remaining <= 0) return;
+  const verifyRemaining = authModalState.stage === 'verify'
+    ? Number(authModalState.verifyResendCooldownUntil || 0) - Date.now()
+    : 0;
+  const forgotRemaining = authModalState.stage === 'forgot'
+    ? Number(authModalState.forgotSubmitCooldownUntil || 0) - Date.now()
+    : 0;
+  const remaining = Math.max(verifyRemaining, forgotRemaining);
+  if (remaining <= 0) return;
   verifyResendRefreshTimer = window.setTimeout(() => {
     renderAuthModal();
   }, Math.min(remaining, 1000));
@@ -883,10 +895,10 @@ function getVerifyStageConfig() {
       return {
         icon: 'mark_email_read',
         modalTitle: 'Check your email',
-        modalDesc: 'Confirm your email address to finish creating your Supericons account.',
-        modalNote: 'Need another email? You can resend the confirmation below.',
+        modalDesc: 'Open the confirmation email to finish creating your Supericons account.',
+        modalNote: 'If it does not show up right away, you can request another in about a minute.',
         stageTitle: 'Check your email',
-        stageText: `Check ${verifyEmail} for your confirmation email.`,
+        stageText: `Look for the confirmation email we sent to ${verifyEmail}.`,
         showGoogle: false,
         showResend: true,
         backLabel: 'Back to sign in',
@@ -942,6 +954,8 @@ function renderAuthModal() {
   const forgotWrap = document.getElementById('authForgotWrap');
   const verifyText = document.getElementById('authVerifyText');
   const forgotEmailInput = document.getElementById('authForgotEmail');
+  const forgotSubmitBtn = document.getElementById('authForgotSubmitBtn');
+  const forgotSubmitText = document.getElementById('authForgotSubmitText');
   const resetText = document.getElementById('authResetText');
   const resetEmailInput = document.getElementById('authResetEmail');
   const resetSubmitText = document.getElementById('authResetSubmitText');
@@ -951,6 +965,7 @@ function renderAuthModal() {
   const isResetStage = authModalState.stage === 'reset';
   const verifyConfig = getVerifyStageConfig();
   const verifyCooldownRemaining = Math.max(0, Number(authModalState.verifyResendCooldownUntil || 0) - Date.now());
+  const forgotCooldownRemaining = Math.max(0, Number(authModalState.forgotSubmitCooldownUntil || 0) - Date.now());
   const isAddPasswordReset = authModalState.resetKind === AUTH_RESET_KIND.ADD_PASSWORD;
 
   if (modalTitle) {
@@ -1009,6 +1024,14 @@ function renderAuthModal() {
       ? `Resend in ${Math.ceil(verifyCooldownRemaining / 1000)}s`
       : (verifyConfig.primaryActionLabel || 'Resend confirmation');
   }
+  if (forgotSubmitBtn) {
+    forgotSubmitBtn.disabled = forgotCooldownRemaining > 0;
+  }
+  if (forgotSubmitText) {
+    forgotSubmitText.textContent = forgotCooldownRemaining > 0
+      ? `Send again in ${Math.ceil(forgotCooldownRemaining / 1000)}s`
+      : 'Send reset link';
+  }
   if (divider) divider.hidden = isVerifyStage || isForgotStage || isResetStage;
   if (forgotWrap) forgotWrap.hidden = authModalState.mode !== 'signin' || isVerifyStage || isForgotStage || isResetStage;
   if (verifyText) {
@@ -1049,7 +1072,7 @@ function renderAuthModal() {
       focusAuthPrimaryField();
     });
   }
-  scheduleVerifyStageRefresh();
+  scheduleAuthStageRefresh();
 }
 
 function resetAuthModalState() {
@@ -1102,17 +1125,25 @@ function showAuthVerifyStage(email, {
   kind = AUTH_VERIFY_KIND.SIGNUP_PENDING,
   callbackErrorMessage = '',
   callbackErrorFlow = AUTH_CALLBACK_FLOW.GENERIC,
+  startCooldown = false,
+  statusMessage = '',
+  statusType = 'success',
 } = {}) {
+  const nextVerifyResendCooldownUntil = startCooldown
+    ? Date.now() + AUTH_EMAIL_REQUEST_COOLDOWN_MS
+    : 0;
   authModalState = {
     ...authModalState,
     mode: 'signin',
     stage: 'verify',
     verifyEmail: email || '',
     verifyKind: kind,
+    verifyResendCooldownUntil: nextVerifyResendCooldownUntil,
     callbackErrorMessage,
     callbackErrorFlow,
   };
   setAuthStatus();
+  setStageStatus('authVerifyStatus', statusMessage, statusMessage ? statusType : '');
   resetAuthForm({ preserveEmail: true });
   resetRecoveryForms();
   renderAuthModal();
@@ -1155,7 +1186,15 @@ function showPasswordResetStage(email = '', {
 function startVerifyResendCooldown() {
   authModalState = {
     ...authModalState,
-    verifyResendCooldownUntil: Date.now() + AUTH_VERIFY_RESEND_COOLDOWN_MS,
+    verifyResendCooldownUntil: Date.now() + AUTH_EMAIL_REQUEST_COOLDOWN_MS,
+  };
+  renderAuthModal();
+}
+
+function startForgotPasswordCooldown() {
+  authModalState = {
+    ...authModalState,
+    forgotSubmitCooldownUntil: Date.now() + AUTH_EMAIL_REQUEST_COOLDOWN_MS,
   };
   renderAuthModal();
 }
@@ -1223,7 +1262,7 @@ function getNormalizedForgotPasswordError(error) {
 function getNormalizedResendError(error) {
   const message = String(error?.message || '').trim();
   if (/too many requests|rate limit/i.test(message)) {
-    return 'Please wait a moment before requesting another confirmation email.';
+    return 'A confirmation email was just sent. Please wait about a minute before requesting another.';
   }
   return 'We could not send another confirmation email right now. If you already have an account, sign in instead.';
 }
@@ -1347,7 +1386,12 @@ function wireAuthListeners() {
   if (signOutBtn) {
     signOutBtn.addEventListener('click', async () => {
       dropdown?.classList.remove('open');
-      await signOut();
+      try {
+        await signOut();
+        window.location.replace(window.location.origin);
+      } catch (err) {
+        showToast(err?.message || 'Could not sign you out right now.');
+      }
     });
   }
 
@@ -1404,10 +1448,15 @@ function wireAuthListeners() {
           if (result?.session) {
             closeAuthModal({ preserveIntent: true, resetToDefault: true });
           } else {
+            const isExistingHint = isLikelyExistingSignupResult(result);
             showAuthVerifyStage(email, {
-              kind: isLikelyExistingSignupResult(result)
+              kind: isExistingHint
                 ? AUTH_VERIFY_KIND.SIGNUP_EXISTING_HINT
                 : AUTH_VERIFY_KIND.SIGNUP_PENDING,
+              startCooldown: !isExistingHint,
+              statusMessage: isExistingHint
+                ? ''
+                : `We sent a confirmation email to ${email}. You can request another in about a minute.`,
             });
           }
         } else {
@@ -1441,7 +1490,9 @@ function wireAuthListeners() {
     forgotForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const email = document.getElementById('authForgotEmail')?.value?.trim();
+      const cooldownUntil = Number(authModalState.forgotSubmitCooldownUntil || 0);
       if (!email) return;
+      if (Date.now() < cooldownUntil) return;
 
       if (forgotSubmitBtn) forgotSubmitBtn.disabled = true;
       setStageStatus('authForgotStatus');
@@ -1452,11 +1503,12 @@ function wireAuthListeners() {
           recoveryEmail: email,
         };
         await requestPasswordReset(email);
+        startForgotPasswordCooldown();
         setStageStatus('authForgotStatus', `If an account matches ${email}, you'll get a reset link shortly.`, 'success');
       } catch (err) {
         setStageStatus('authForgotStatus', getNormalizedForgotPasswordError(err), 'error');
       } finally {
-        if (forgotSubmitBtn) forgotSubmitBtn.disabled = false;
+        renderAuthModal();
       }
     });
   }

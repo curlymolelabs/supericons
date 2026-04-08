@@ -200,7 +200,10 @@
                 </button>
 
                 <!-- Auth: Sign In button (logged out) -->
-                <button class="auth-signin-btn" id="authSignInBtn">Sign in</button>
+                <button class="auth-signin-btn" id="authSignInBtn" aria-label="Sign in">
+                    <span class="material-symbols-outlined auth-signin-btn__icon" aria-hidden="true">account_circle</span>
+                    <span class="auth-signin-btn__text">Sign in</span>
+                </button>
 
                 <!-- Auth: Avatar button (logged in) -->
                 <div class="auth-avatar-wrap" id="authAvatarBtn" style="display:none">
@@ -376,8 +379,6 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer__left">
-                <span>SuperIcons v0.1.0</span>
-                <span>|</span>
                 <a href="https://curlymolelabs.com/" target="_blank" rel="noopener" class="footer__link">Curly Mole
                     Labs</a>
             </div>
