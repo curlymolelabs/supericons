@@ -28,6 +28,7 @@ const PREMIUM_ASSET_FN = `${SUPABASE_URL}/functions/v1/serve-premium-asset`;
 const STRIPE_PRO_MONTHLY = 'price_1TJVJE35D7agOGFjE6iECyMD';
 const STRIPE_PRO_YEARLY = 'price_1TJVJC35D7agOGFjKc0GlrAy';
 const STRIPE_LAUNCH_EDITION = 'price_1TJVJ935D7agOGFjrIsRlAOS';
+const API_KEY_LIMIT = 5;
 const PRO_PLANS = {
   monthly: {
     key: 'monthly',
@@ -156,7 +157,7 @@ async function fetchPremiumAsset(slug, filename) {
   });
 }
 let userPurchases = [];
-let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
+let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'api-keys' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
 let previousView = 'icons';
 let currentCollectionData = null; // manifest data for the currently viewed collection
 let currentCollectionBundle = null;
@@ -168,8 +169,8 @@ let removeUpgradePrompt = null;
 let premiumSelectionRequestId = 0;
 let packCatalogNotice = null;
 const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
-const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'collection-detail', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
-const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
+const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', 'collection-detail', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
+const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -181,6 +182,10 @@ function getProductName(product) {
 
 function getProPlan(plan = 'monthly') {
   return PRO_PLANS[plan] || PRO_PLANS.monthly;
+}
+
+function canManageApiKeys() {
+  return isPro() || userPurchases.length > 0;
 }
 
 function findProductById(productId) {
@@ -234,11 +239,11 @@ async function restoreAuthIntent(intent) {
     return true;
   }
 
-  if (view === 'downloads' || view === 'dashboard') {
+  if (view === 'downloads' || view === 'dashboard' || view === 'api-keys') {
     await ensureUserPurchasesLoaded({ force: true, rerender: false });
   }
 
-  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'pricing', 'motion-lab', 'converter', 'privacy', 'terms', 'mcp']);
+  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', 'pricing', 'motion-lab', 'converter', 'privacy', 'terms', 'mcp']);
   switchView(allowedViews.has(view) ? view : 'icons');
   return true;
 }
@@ -379,6 +384,8 @@ function rerenderCollectionSurfaceForCurrentView() {
     renderDownloads();
   } else if (currentView === 'dashboard') {
     renderDashboard();
+  } else if (currentView === 'api-keys') {
+    renderApiKeysPage();
   }
 }
 
@@ -632,9 +639,14 @@ export function switchView(view) {
       renderDownloads();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'dashboard') {
-      if (gridTitle) gridTitle.textContent = 'Dashboard';
+      if (gridTitle) gridTitle.textContent = 'My Purchases';
       if (gridMeta) gridMeta.textContent = '';
       renderDashboard();
+      void ensureUserPurchasesLoaded({ rerender: true });
+    } else if (view === 'api-keys') {
+      if (gridTitle) gridTitle.textContent = 'API Keys';
+      if (gridMeta) gridMeta.textContent = '';
+      renderApiKeysPage();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'pricing') {
       if (gridTitle) gridTitle.textContent = 'Pricing';
@@ -715,6 +727,7 @@ export function switchView(view) {
     document.getElementById('privacyView')?.remove();
     document.getElementById('termsView')?.remove();
     document.getElementById('mcpView')?.remove();
+    document.getElementById('apiKeysView')?.remove();
   }
 
   // Update sidebar active state
@@ -735,7 +748,7 @@ function updateSidebarActive(view) {
     document.getElementById('sidebarMyDownloads')?.classList.add('active');
   } else if (view === 'pricing') {
     document.getElementById('sidebarPricing')?.classList.add('active');
-  } else if (view === 'privacy' || view === 'terms' || view === 'mcp') {
+  } else if (view === 'privacy' || view === 'terms' || view === 'mcp' || view === 'dashboard' || view === 'api-keys') {
     // Keep docs/legal views neutral in the sidebar.
   } else if (view === 'motion-lab') {
     document.getElementById('sidebarMotionLab')?.classList.add('active');
@@ -1379,6 +1392,25 @@ function getPremiumStandaloneRootSelector({
   return `svg.${rootClassName}${hover ? ':hover' : ''}`;
 }
 
+function getPremiumStandaloneRootSelectors({
+  trigger = 'loop',
+  rootClassName = PREMIUM_STANDALONE_ROOT_CLASS,
+} = {}) {
+  const baseSelector = getPremiumStandaloneRootSelector({ rootClassName });
+  if (trigger === 'click') return [`${baseSelector}.active`];
+  return [getPremiumStandaloneRootSelector({ hover: trigger === 'hover', rootClassName })];
+}
+
+function getPremiumTriggeredSelector({
+  trigger = 'loop',
+  rootClassName = PREMIUM_STANDALONE_ROOT_CLASS,
+  descendant = '',
+} = {}) {
+  return getPremiumStandaloneRootSelectors({ trigger, rootClassName })
+    .map(selector => `${selector}${descendant}`)
+    .join(',\n');
+}
+
 function normalizePremiumHexColor(token = '') {
   const match = String(token || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
   if (!match) return '';
@@ -1619,11 +1651,126 @@ function sanitizePremiumExportSvg(svgText = '', rootClassName = PREMIUM_EXPORT_R
   return setPremiumSvgRootClasses(withoutHtmlComments, [rootClassName].filter(Boolean));
 }
 
+function splitTopLevelCssBlocks(cssText = '') {
+  const blocks = [];
+  let blockStart = 0;
+  let braceDepth = 0;
+
+  for (let i = 0; i < cssText.length; i += 1) {
+    const char = cssText[i];
+    if (char === '{') braceDepth += 1;
+    if (char === '}') {
+      braceDepth -= 1;
+      if (braceDepth === 0) {
+        const block = cssText.slice(blockStart, i + 1).trim();
+        if (block) blocks.push(block);
+        blockStart = i + 1;
+      }
+    }
+  }
+
+  return blocks;
+}
+
+function dedupeCommaSeparatedSelectors(selectorText = '') {
+  return [...new Set(String(selectorText || '')
+    .split(',')
+    .map(selector => selector.trim())
+    .filter(Boolean))]
+    .join(',\n');
+}
+
+function isStandaloneRootSelector(selector = '', rootSelector = '') {
+  return selector === rootSelector
+    || selector.startsWith(`${rootSelector} `)
+    || selector.startsWith(`${rootSelector}.`)
+    || selector.startsWith(`${rootSelector}:`)
+    || selector.startsWith(`${rootSelector}[`)
+    || selector.startsWith(`${rootSelector}>`)
+    || selector.startsWith(`${rootSelector}+`)
+    || selector.startsWith(`${rootSelector}~`);
+}
+
+function hasAnimationDeclaration(ruleBody = '') {
+  return /\banimation(?:-[\w-]+)?\s*:/.test(ruleBody);
+}
+
+function normalizePremiumStandaloneExportCss(
+  cssText = '',
+  {
+    rootTokens = [],
+    rootSelector = getPremiumStandaloneRootSelector(),
+  } = {},
+) {
+  let css = String(cssText || '');
+
+  css = css.replace(/\.si-icon-cell:hover\s+/g, '');
+  css = css.replace(/\.icon-card:hover\s+/g, '');
+  css = css.replace(/\.si-anim--[\w-]+\s+svg/g, rootSelector);
+  css = css.replace(/\.si-anim\s+svg/g, rootSelector);
+  css = css.replace(/:root:hover/g, rootSelector);
+  css = css.replace(/:root/g, rootSelector);
+
+  rootTokens.forEach((token) => {
+    const escapedToken = escapeRegExp(token);
+    css = css.replace(new RegExp(`\\.${escapedToken}:hover\\s+svg`, 'g'), rootSelector);
+    css = css.replace(new RegExp(`\\.${escapedToken}:hover\\b`, 'g'), rootSelector);
+    css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
+    css = css.replace(new RegExp(`\\.${escapedToken}(?=(?:\\s|\\{|\\.|#|\\[|>|\\+|~|,|:|$))`, 'g'), rootSelector);
+  });
+
+  return css;
+}
+
+function scopePremiumStandaloneAnimationRules(
+  cssText = '',
+  {
+    playMode = 'loop',
+    rootSelector = getPremiumStandaloneRootSelector(),
+    rootClassName = PREMIUM_STANDALONE_ROOT_CLASS,
+  } = {},
+) {
+  const blocks = splitTopLevelCssBlocks(stripCssComments(cssText));
+  if (!blocks.length) return cssText;
+
+  const trigger = playMode === 'hover' || playMode === 'click' ? playMode : 'loop';
+  const triggerRoots = getPremiumStandaloneRootSelectors({ trigger, rootClassName });
+
+  return blocks.map((block) => {
+    if (/^\s*@keyframes\b/.test(block)) return block;
+
+    const openBraceIndex = block.indexOf('{');
+    const closeBraceIndex = block.lastIndexOf('}');
+    if (openBraceIndex === -1 || closeBraceIndex === -1 || closeBraceIndex <= openBraceIndex) {
+      return block;
+    }
+
+    const selectorText = block.slice(0, openBraceIndex).trim();
+    const ruleBody = block.slice(openBraceIndex + 1, closeBraceIndex).trim();
+    if (!selectorText) return block;
+
+    const selectors = selectorText
+      .split(',')
+      .map(selector => selector.trim())
+      .filter(Boolean);
+
+    const mappedSelectors = selectors.flatMap((selector) => {
+      if (!hasAnimationDeclaration(ruleBody)) return [selector];
+      if (!isStandaloneRootSelector(selector, rootSelector)) return [selector];
+
+      const suffix = selector.slice(rootSelector.length);
+      return triggerRoots.map(triggerRoot => `${triggerRoot}${suffix}`);
+    });
+
+    const nextSelectors = dedupeCommaSeparatedSelectors(mappedSelectors.join(','));
+    return `${nextSelectors} {\n${ruleBody}\n}`;
+  }).join('\n\n');
+}
+
 function buildAnimatedSvg(
   svgText,
   iconCSS,
   color,
-  strokeWidth,
   animSpeed,
   playMode,
   cssContract = null,
@@ -1637,52 +1784,58 @@ function buildAnimatedSvg(
 ) {
   const contract = cssContract || getPremiumSvgCssContract(svgText);
   const rootTokens = [...new Set(contract.cssMatchTokens || [])];
-  const rootSelector = getPremiumStandaloneRootSelector({ rootClassName });
-  const hoverRootSelector = getPremiumStandaloneRootSelector({ hover: true, rootClassName });
+  const rootSelector = getPremiumTriggeredSelector({ rootClassName });
+  const hoverRootSelector = getPremiumTriggeredSelector({ trigger: 'hover', rootClassName });
+  const clickRootSelector = getPremiumTriggeredSelector({ trigger: 'click', rootClassName });
   const rootClassTokens = preserveInternalRootClasses
     ? [...new Set([...(contract.rootClasses || []), contract.animClass, rootClassName].filter(Boolean))]
     : [rootClassName].filter(Boolean);
   let svg = setPremiumSvgRootClasses(svgText, rootClassTokens);
   svg = applyPremiumSvgColorOverrides(svg, color, colorProfile, colorMode);
-  // Apply stroke width
-  svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${strokeWidth}"`);
 
   if (iconCSS) {
     // Rewrite CSS for self-contained SVG:
     let css = applyPremiumCssColorOverrides(iconCSS, color);
 
-    if (playMode === 'hover') {
+    if (sanitizeForExport) {
+      css = normalizePremiumStandaloneExportCss(css, {
+        rootTokens,
+        rootSelector,
+      });
+    } else {
+      if (playMode === 'hover') {
+        rootTokens.forEach((token) => {
+          const escapedToken = escapeRegExp(token);
+          css = css.replace(
+            new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}\\s+svg`, 'g'),
+            hoverRootSelector,
+          );
+          css = css.replace(
+            new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}(?=\\s)`, 'g'),
+            `.${token}:hover`,
+          );
+        });
+      }
+
+      // Remove any remaining external parent hover selectors
+      css = css.replace(/\.si-icon-cell:hover\s+/g, '');
+      css = css.replace(/\.icon-card:hover\s+/g, '');
+
+      // Strip .si-anim--{name} wrapper selectors for standalone SVG
+      // .si-anim--bell svg => svg.si-premium-standalone-root
+      // .si-anim--checkmark svg .si-check-circle => svg.si-premium-standalone-root .si-check-circle
+      css = css.replace(/\.si-anim--[\w-]+\s+svg/g, rootSelector);
+      // .si-anim svg => svg.si-premium-standalone-root
+      css = css.replace(/\.si-anim\s+svg/g, rootSelector);
       rootTokens.forEach((token) => {
         const escapedToken = escapeRegExp(token);
-        css = css.replace(
-          new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}\\s+svg`, 'g'),
-          hoverRootSelector,
-        );
-        css = css.replace(
-          new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}(?=\\s)`, 'g'),
-          `.${token}:hover`,
-        );
+        css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
       });
+      css = css.replace(/:root:hover/g, hoverRootSelector);
+      css = css.replace(/:root/g, rootSelector);
+      css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*,\\s*${escapeRegExp(rootSelector)}`, 'g'), rootSelector);
+      css = css.replace(new RegExp(`${escapeRegExp(hoverRootSelector)}\\s*,\\s*${escapeRegExp(hoverRootSelector)}`, 'g'), hoverRootSelector);
     }
-
-    // Remove any remaining external parent hover selectors
-    css = css.replace(/\.si-icon-cell:hover\s+/g, '');
-    css = css.replace(/\.icon-card:hover\s+/g, '');
-
-    // Strip .si-anim--{name} wrapper selectors for standalone SVG
-    // .si-anim--bell svg => svg.si-premium-standalone-root
-    // .si-anim--checkmark svg .si-check-circle => svg.si-premium-standalone-root .si-check-circle
-    css = css.replace(/\.si-anim--[\w-]+\s+svg/g, rootSelector);
-    // .si-anim svg => svg.si-premium-standalone-root
-    css = css.replace(/\.si-anim\s+svg/g, rootSelector);
-    rootTokens.forEach((token) => {
-      const escapedToken = escapeRegExp(token);
-      css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
-    });
-    css = css.replace(/:root:hover/g, hoverRootSelector);
-    css = css.replace(/:root/g, rootSelector);
-    css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*,\\s*${escapeRegExp(rootSelector)}`, 'g'), rootSelector);
-    css = css.replace(new RegExp(`${escapeRegExp(hoverRootSelector)}\\s*,\\s*${escapeRegExp(hoverRootSelector)}`, 'g'), hoverRootSelector);
 
     // Apply animation speed multiplier
     if (animSpeed !== 1) {
@@ -1692,25 +1845,42 @@ function buildAnimatedSvg(
       });
     }
 
-    // For hover-triggered export, scope root animations to hovering the standalone SVG root
-    if (playMode === 'hover') {
-      css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} {$1}`);
-      css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s+\\.([\\w-]+)\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} .$1 {$2}`);
+    if (sanitizeForExport) {
+      css = scopePremiumStandaloneAnimationRules(css, {
+        playMode,
+        rootSelector,
+        rootClassName,
+      });
+    } else {
+      // For hover-triggered export, scope root animations to hovering the standalone SVG root
+      if (playMode === 'hover') {
+        css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} {$1}`);
+        css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s+\\.([\\w-]+)\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} .$1 {$2}`);
+      }
+
+      if (playMode === 'click') {
+        css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*{([^}]*animation[^}]*)}`, 'g'), `${clickRootSelector} {$1}`);
+        css = css.replace(
+          new RegExp(`${escapeRegExp(rootSelector)}\\s+\\.([\\w-]+)\\s*{([^}]*animation[^}]*)}`, 'g'),
+          (match, descendantClass, ruleBody) => `${getPremiumTriggeredSelector({
+            trigger: 'click',
+            rootClassName,
+            descendant: ` .${descendantClass}`,
+          })} {${ruleBody}}`,
+        );
+      }
     }
 
-    // Apply play mode: replace infinite with 1 for once mode
+    // Preview-only one-shot mode: export UI no longer exposes this option.
     if (playMode === 'once') {
       css = css.replace(/infinite/g, '1');
     }
 
+    if (playMode === 'click') {
+      css = css.replace(/infinite/g, '3');
+    }
+
     if (sanitizeForExport) {
-      rootTokens.forEach((token) => {
-        const escapedToken = escapeRegExp(token);
-        css = css.replace(new RegExp(`\\.${escapedToken}:hover\\s+svg`, 'g'), hoverRootSelector);
-        css = css.replace(new RegExp(`\\.${escapedToken}:hover\\b`, 'g'), hoverRootSelector);
-        css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
-        css = css.replace(new RegExp(`\\.${escapedToken}(?=(?:\\s|\\{|\\.|#|\\[|>|\\+|~|,|$))`, 'g'), rootSelector);
-      });
       css = sanitizePremiumExportCss(css);
     }
 
@@ -1731,7 +1901,7 @@ const PREMIUM_PANEL_DEFAULTS = Object.freeze({
   colorMode: PREMIUM_COLOR_MODE_ORIGINAL,
   originalColor: '#ffffff',
   animSpeed: 1,
-  playMode: 'loop', // 'loop' | 'hover' | 'once'
+  playMode: 'loop', // 'loop' | 'hover' | 'click'
   pngSize: 48,
 });
 
@@ -1740,7 +1910,6 @@ let currentPremiumSelection = null;
 let premiumPanelState = createPremiumPanelState();
 
 function createPremiumPanelState({ svgText = '', pngSize = PREMIUM_PANEL_DEFAULTS.pngSize, colorProfile = null } = {}) {
-  const defaultStrokeWidth = getPremiumDefaultStrokeWidth(svgText);
   const nextColorProfile = colorProfile || analyzePremiumColorProfile(svgText);
   const originalColor = resolvePremiumOriginalColor(nextColorProfile);
 
@@ -1750,9 +1919,6 @@ function createPremiumPanelState({ svgText = '', pngSize = PREMIUM_PANEL_DEFAULT
     color: originalColor,
     originalColor,
     colorProfile: nextColorProfile,
-    strokeWidth: defaultStrokeWidth,
-    defaultStrokeWidth,
-    supportsStrokeWidth: premiumIconSupportsStrokeWidth(svgText),
     lastValidColor: originalColor,
     previewState: 'stopped',
     previewStatus: premiumPrefersReducedMotion()
@@ -1781,17 +1947,6 @@ function escapePanelHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
-}
-
-function premiumIconSupportsStrokeWidth(svgText) {
-  return /stroke(?:=|-[a-z-]+=)/i.test(svgText || '');
-}
-
-function getPremiumDefaultStrokeWidth(svgText) {
-  const match = String(svgText || '').match(/stroke-width="([\d.]+)"/i);
-  const parsed = Number.parseFloat(match?.[1] || '');
-  if (!Number.isFinite(parsed)) return 2;
-  return Math.min(3, Math.max(0.5, parsed));
 }
 
 function humanizeCollectionSlug(slug) {
@@ -1864,6 +2019,7 @@ function renderPremiumPanelEmptyState(collectionName = 'Premium Collection') {
 
   const panelBody = getPremiumPanelBody();
   if (!panelBody) return;
+  disablePremiumPanelTooltip(panelBody);
 
   panelBody.innerHTML = `
       <div class="panel__section">
@@ -1893,6 +2049,7 @@ function renderPremiumPanelLoading(iconName, collectionName) {
 
   const panelBody = getPremiumPanelBody();
   if (!panelBody) return;
+  disablePremiumPanelTooltip(panelBody);
 
   panelBody.innerHTML = `
     <div class="panel__section">
@@ -1925,6 +2082,7 @@ function renderPremiumPanelError(iconName, collectionName, message) {
 
   const panelBody = getPremiumPanelBody();
   if (!panelBody) return;
+  disablePremiumPanelTooltip(panelBody);
 
   panelBody.classList.add('panel__body--error');
   panelBody.innerHTML = `
@@ -2003,6 +2161,37 @@ function formatCssTimeMs(value) {
   return `${Number(rounded.toFixed(2))}ms`;
 }
 
+function escapeHtmlAttributeValue(value = '') {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function setSvgRootAttributes(svgText = '', attributes = {}) {
+  return String(svgText || '').replace(/<svg\b([^>]*)>/i, (match, attrs) => {
+    let nextAttrs = attrs;
+
+    Object.entries(attributes).forEach(([name, rawValue]) => {
+      if (!name) return;
+      const value = rawValue == null ? '' : String(rawValue);
+      const escapedValue = escapeHtmlAttributeValue(value);
+      const attrPattern = new RegExp(`\\b${escapeRegExp(name)}="([^"]*)"`, 'i');
+
+      if (attrPattern.test(nextAttrs)) {
+        nextAttrs = nextAttrs.replace(attrPattern, `${name}="${escapedValue}"`);
+        return;
+      }
+
+      nextAttrs += ` ${name}="${escapedValue}"`;
+    });
+
+    return `<svg${nextAttrs}>`;
+  });
+}
+
 function applyAnimSpeedToPreview(speedFactor) {
   const preview = document.getElementById('panelPreview');
   if (!preview) return;
@@ -2027,11 +2216,10 @@ function applyAnimSpeedToPreview(speedFactor) {
   });
 }
 
-function getPremiumPreviewDurationMs() {
-  const preview = document.getElementById('panelPreview');
-  if (!preview) return 0;
+function getAnimationTimelineDurationMs(root) {
+  if (!root) return 0;
 
-  const nodes = [preview, ...preview.querySelectorAll('*')];
+  const nodes = [root, ...root.querySelectorAll('*')];
   let maxDuration = 0;
 
   nodes.forEach((node) => {
@@ -2059,6 +2247,59 @@ function getPremiumPreviewDurationMs() {
   return maxDuration;
 }
 
+function getPremiumPreviewDurationMs() {
+  const preview = document.getElementById('panelPreview');
+  if (!preview) return 0;
+  return getAnimationTimelineDurationMs(preview);
+}
+
+function getPremiumExportClickReplayDurationMs(svgText = '') {
+  if (typeof document === 'undefined' || !document.body || !svgText) return 850;
+
+  const host = document.createElement('div');
+  host.setAttribute('aria-hidden', 'true');
+  host.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:0;height:0;overflow:hidden;pointer-events:none;opacity:0;';
+  document.body.appendChild(host);
+  host.innerHTML = svgText;
+
+  const svgEl = host.querySelector(`svg.${PREMIUM_EXPORT_ROOT_CLASS}`) || host.querySelector('svg');
+  if (!svgEl) {
+    host.remove();
+    return 850;
+  }
+
+  svgEl.classList.add('active');
+  const durationMs = Math.max(getAnimationTimelineDurationMs(svgEl), 350);
+  host.remove();
+  return durationMs;
+}
+
+function buildPremiumExportClickReplayHandler() {
+  return [
+    'var svg=this;',
+    'if(!svg||!svg.classList)return;',
+    "var replayMs=Number(svg.getAttribute('data-si-click-ms'))||850;",
+    'if(svg.__siReplayTimer){window.clearTimeout(svg.__siReplayTimer);}',
+    "svg.classList.remove('active');",
+    'void svg.getBoundingClientRect();',
+    "svg.classList.add('active');",
+    "svg.__siReplayTimer=window.setTimeout(function(){svg.classList.remove('active');svg.__siReplayTimer=0;}, replayMs);",
+  ].join('');
+}
+
+function applyPremiumExportClickReplayBehavior(
+  svgText = '',
+  {
+    replayDurationMs = 0,
+  } = {},
+) {
+  const safeReplayDuration = Math.max(Math.ceil(Number(replayDurationMs) || 0), 350) + 48;
+  return setSvgRootAttributes(svgText, {
+    'data-si-click-ms': String(safeReplayDuration),
+    onclick: buildPremiumExportClickReplayHandler(),
+  });
+}
+
 function buildPremiumPreviewSvg() {
   if (!currentPremiumSelection) return '';
   if (premiumPanelState.previewState !== 'playing') {
@@ -2069,7 +2310,6 @@ function buildPremiumPreviewSvg() {
     currentPremiumSelection.svgText,
     currentPremiumSelection.iconCSS || '',
     getPremiumAppliedColor(),
-    premiumPanelState.strokeWidth,
     premiumPanelState.animSpeed,
     'once',
     currentPremiumSelection.cssContract,
@@ -2153,26 +2393,21 @@ function setPremiumColorValidation(message = '') {
 }
 
 function buildStaticPremiumSvg(svgText) {
-  let svg = applyPremiumSvgColorOverrides(
+  return applyPremiumSvgColorOverrides(
     svgText,
     getPremiumAppliedColor(),
     currentPremiumSelection?.colorProfile || premiumPanelState.colorProfile,
     premiumPanelState.colorMode,
   );
-  if (premiumPanelState.supportsStrokeWidth) {
-    svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${premiumPanelState.strokeWidth}"`);
-  }
-  return svg;
 }
 
 function buildPremiumAnimatedExportSvg(selection = currentPremiumSelection, state = premiumPanelState) {
   if (!selection?.svgText) return '';
 
-  return buildAnimatedSvg(
+  const svg = buildAnimatedSvg(
     selection.svgText,
     selection.iconCSS,
     getPremiumAppliedColor(state),
-    state.strokeWidth,
     state.animSpeed,
     state.playMode,
     selection.cssContract,
@@ -2184,6 +2419,12 @@ function buildPremiumAnimatedExportSvg(selection = currentPremiumSelection, stat
       sanitizeForExport: true,
     },
   );
+
+  if (!svg || state.playMode !== 'click') return svg;
+
+  return applyPremiumExportClickReplayBehavior(svg, {
+    replayDurationMs: getPremiumExportClickReplayDurationMs(svg),
+  });
 }
 
 function buildPremiumStaticExportSvg(selection = currentPremiumSelection) {
@@ -2215,18 +2456,58 @@ function svgToBase64DataUri(svgText) {
   return `data:image/svg+xml;base64,${encoded}`;
 }
 
+function isPremiumBase64ExportSupported(playMode = premiumPanelState.playMode) {
+  return playMode === 'loop';
+}
+
+function getPremiumBase64UnsupportedMessage(playMode = premiumPanelState.playMode) {
+  if (playMode === 'hover') {
+    return 'Base64 data URIs do not preserve hover-triggered SVG interaction. Use Animated SVG, HTML, or a framework component instead.';
+  }
+
+  if (playMode === 'click') {
+    return 'Base64 data URIs do not preserve click-triggered SVG interaction. Use Animated SVG, HTML, or a framework component instead.';
+  }
+
+  return '';
+}
+
+function syncPremiumExportAffordances(panelBody = document.getElementById('panel')?.querySelector('.panel__body')) {
+  if (!panelBody) return;
+
+  const base64Btn = panelBody.querySelector('#premCopyBase64');
+  if (!base64Btn) return;
+
+  const supported = isPremiumBase64ExportSupported(premiumPanelState.playMode);
+  base64Btn.classList.toggle('customize-export__btn--disabled', !supported);
+  base64Btn.setAttribute('aria-disabled', String(!supported));
+
+  if (supported) {
+    base64Btn.removeAttribute('data-tip');
+    return;
+  }
+
+  base64Btn.setAttribute('data-tip', getPremiumBase64UnsupportedMessage(premiumPanelState.playMode));
+}
+
 function buildPremiumReactCode(componentName, svgText) {
   const escapedSvg = escapeTemplateLiteral(svgText);
   return `import React from 'react';
 
 const svgMarkup = \`${escapedSvg}\`;
 
-export function ${componentName}Icon({ className = '', ...props }) {
+function buildSvgMarkup(svgClassName = '', active = false) {
+  const mergedSvgClassName = ['si-animated-icon', svgClassName, active ? 'active' : ''].filter(Boolean).join(' ');
+  return svgMarkup.replace(/class="si-animated-icon"/, \`class="\${mergedSvgClassName}"\`);
+}
+
+export function ${componentName}Icon({ className = '', svgClassName = '', active = false, ...props }) {
+  const resolvedSvgMarkup = buildSvgMarkup(svgClassName, active);
   return (
     <span
       {...props}
       className={className}
-      dangerouslySetInnerHTML={{ __html: svgMarkup }}
+      dangerouslySetInnerHTML={{ __html: resolvedSvgMarkup }}
     />
   );
 }
@@ -2239,36 +2520,56 @@ function buildPremiumHtmlSnippet(svgText) {
 
 function buildPremiumVueCode(svgText) {
   const escapedSvg = escapeTemplateLiteral(svgText);
-  return `<template>
-  <span v-html="svgMarkup"></span>
-</template>
+  return `<script setup>
+import { computed } from 'vue';
 
-<script setup>
+const props = defineProps({
+  className: { type: String, default: '' },
+  svgClassName: { type: String, default: '' },
+  active: { type: Boolean, default: false },
+});
+
 const svgMarkup = \`${escapedSvg}\`;
-</script>`;
+const resolvedSvgMarkup = computed(() => {
+  const mergedSvgClassName = ['si-animated-icon', props.svgClassName, props.active ? 'active' : ''].filter(Boolean).join(' ');
+  return svgMarkup.replace(/class="si-animated-icon"/, \`class="\${mergedSvgClassName}"\`);
+});
+</script>
+
+<template>
+  <span :class="props.className" v-html="resolvedSvgMarkup"></span>
+</template>`;
 }
 
 function buildPremiumSvelteCode(svgText) {
   const escapedSvg = escapeTemplateLiteral(svgText);
   return `<script>
+  export let className = '';
+  export let svgClassName = '';
+  export let active = false;
+
   const svgMarkup = \`${escapedSvg}\`;
+  let resolvedSvgMarkup = svgMarkup;
+
+  function buildSvgMarkup(svgClassName, active) {
+    const mergedSvgClassName = ['si-animated-icon', svgClassName, active ? 'active' : ''].filter(Boolean).join(' ');
+    return svgMarkup.replace(/class="si-animated-icon"/, \`class="\${mergedSvgClassName}"\`);
+  }
+
+  $: resolvedSvgMarkup = buildSvgMarkup(svgClassName, active);
 </script>
 
-<span>{@html svgMarkup}</span>`;
+<span class={className}>{@html resolvedSvgMarkup}</span>`;
 }
 
 function resetPremiumPanelControls() {
   if (!currentPremiumSelection?.svgText) return;
 
-  const { supportsStrokeWidth, defaultStrokeWidth } = premiumPanelState;
   premiumPanelState = {
     ...createPremiumPanelState({
       svgText: currentPremiumSelection.svgText,
       colorProfile: currentPremiumSelection.colorProfile,
     }),
-    supportsStrokeWidth,
-    defaultStrokeWidth,
-    strokeWidth: supportsStrokeWidth ? defaultStrokeWidth : 2,
   };
 
   renderPremiumPanel(currentPremiumSelection);
@@ -2358,8 +2659,15 @@ function renderPremiumPanel(selection) {
   const c = premiumPanelState;
   const panelBody = getPremiumPanelBody();
   if (!panelBody) return;
+  hidePremiumPanelTooltip();
   const normalizedCustomColor = normalizePremiumHexColor(c.color);
   const usesPresetCustomColor = PREMIUM_COLOR_SWATCHES.some(sc => normalizePremiumHexColor(sc) === normalizedCustomColor);
+  const base64Supported = isPremiumBase64ExportSupported(c.playMode);
+  const base64UnsupportedMessage = base64Supported ? '' : getPremiumBase64UnsupportedMessage(c.playMode);
+  const base64ButtonClass = `customize-export__btn${base64Supported ? '' : ' customize-export__btn--disabled'}`;
+  const base64ButtonAttrs = base64Supported
+    ? ''
+    : ` aria-disabled="true" data-tip="${escapePanelHtml(base64UnsupportedMessage)}"`;
 
   panelBody.innerHTML = `
     <div class="panel__section">
@@ -2418,18 +2726,6 @@ function renderPremiumPanel(selection) {
           <input type="color" id="premColorPicker" value="${c.color}" class="customize-color__picker-hidden">
         </label>
       </div>
-
-      ${c.supportsStrokeWidth ? `
-        <div class="panel__control-block panel__control-block--appearance">
-          <div class="panel__control-label panel__control-label--tight">
-            <span class="panel__control-title">Line weight</span>
-          <span class="customize-slider__value" id="premStrokeValue">${c.strokeWidth}px</span>
-          </div>
-          <div class="customize-slider">
-            <input type="range" id="premStrokeSlider" min="0.5" max="3" step="0.1" value="${c.strokeWidth}" class="customize-slider__range">
-          </div>
-        </div>
-      ` : ''}
     </div>
 
     <div class="panel__section panel__section--compact">
@@ -2438,7 +2734,7 @@ function renderPremiumPanel(selection) {
         <div class="panel__segmented panel__segmented--compact panel__segmented--single-line" role="group" aria-label="Animation trigger">
           <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'loop' ? 'active' : ''}" type="button" data-prem-trigger="loop" aria-pressed="${c.playMode === 'loop'}">Loop</button>
           <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'hover' ? 'active' : ''}" type="button" data-prem-trigger="hover" aria-pressed="${c.playMode === 'hover'}">Hover</button>
-          <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'once' ? 'active' : ''}" type="button" data-prem-trigger="once" aria-pressed="${c.playMode === 'once'}">Play once</button>
+          <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'click' ? 'active' : ''}" type="button" data-prem-trigger="click" aria-pressed="${c.playMode === 'click'}">Click</button>
         </div>
         <button class="panel__icon-btn panel__icon-btn--reset" id="premResetAll" type="button" aria-label="Reset all" data-tip="Reset all">
           <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span>
@@ -2469,7 +2765,7 @@ function renderPremiumPanel(selection) {
           <button class="customize-export__btn" id="premCopyReact" type="button">
             <span class="material-symbols-outlined" style="font-size:16px">code</span> Copy React
           </button>
-          <button class="customize-export__btn" id="premCopyBase64" type="button">
+          <button class="${base64ButtonClass}" id="premCopyBase64" type="button"${base64ButtonAttrs}>
             <span class="material-symbols-outlined" style="font-size:16px">data_object</span> Copy Base64
           </button>
           <button class="customize-export__btn" id="premCopyHtml" type="button">
@@ -2505,7 +2801,105 @@ function renderPremiumPanel(selection) {
   `;
 
   renderPremiumPreview();
+  initPremiumPanelTooltip(panelBody);
   wirePremiumPanelEvents(panelBody);
+}
+
+function getPremiumPanelTooltip() {
+  let tip = document.getElementById('premiumPanelTooltip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.id = 'premiumPanelTooltip';
+    document.body.appendChild(tip);
+  }
+  return tip;
+}
+
+function hidePremiumPanelTooltip() {
+  const tip = document.getElementById('premiumPanelTooltip');
+  if (!tip) return;
+  tip.classList.remove('visible', 'premium-panel-tooltip--below');
+}
+
+function positionPremiumPanelTooltip(tip, anchorEl) {
+  const rect = anchorEl.getBoundingClientRect();
+  const margin = 12;
+  const tipRect = tip.getBoundingClientRect();
+  const centerX = rect.left + (rect.width / 2);
+  const clampedCenterX = Math.min(
+    Math.max(centerX, margin + (tipRect.width / 2)),
+    window.innerWidth - margin - (tipRect.width / 2),
+  );
+  const showBelow = rect.top < tipRect.height + 18;
+
+  tip.classList.toggle('premium-panel-tooltip--below', showBelow);
+  tip.style.left = `${clampedCenterX}px`;
+  tip.style.top = showBelow
+    ? `${rect.bottom + 8}px`
+    : `${rect.top - 8}px`;
+}
+
+function initPremiumPanelTooltip(panelBody) {
+  if (!panelBody) return;
+  panelBody.classList.add('panel__body--premium-tooltips');
+
+  if (panelBody.dataset.premiumTooltipBound === 'true') return;
+
+  const tip = getPremiumPanelTooltip();
+  let hideTimer = null;
+
+  const showTooltip = (target) => {
+    const el = target?.closest?.('[data-tip]');
+    if (!el || !panelBody.contains(el)) return;
+    clearTimeout(hideTimer);
+    const text = el.getAttribute('data-tip');
+    if (!text) return;
+    tip.textContent = text;
+    tip.classList.add('visible');
+    positionPremiumPanelTooltip(tip, el);
+  };
+
+  const scheduleHide = () => {
+    clearTimeout(hideTimer);
+    hideTimer = window.setTimeout(() => {
+      hidePremiumPanelTooltip();
+    }, 50);
+  };
+
+  panelBody.addEventListener('mouseover', (e) => {
+    showTooltip(e.target);
+  });
+
+  panelBody.addEventListener('mouseout', (e) => {
+    const fromEl = e.target?.closest?.('[data-tip]');
+    if (!fromEl || !panelBody.contains(fromEl)) return;
+    const toEl = e.relatedTarget?.closest?.('[data-tip]');
+    if (toEl === fromEl) return;
+    scheduleHide();
+  });
+
+  panelBody.addEventListener('focusin', (e) => {
+    showTooltip(e.target);
+  });
+
+  panelBody.addEventListener('focusout', (e) => {
+    const fromEl = e.target?.closest?.('[data-tip]');
+    if (!fromEl || !panelBody.contains(fromEl)) return;
+    const toEl = e.relatedTarget?.closest?.('[data-tip]');
+    if (toEl === fromEl) return;
+    scheduleHide();
+  });
+
+  window.addEventListener('scroll', hidePremiumPanelTooltip, true);
+  window.addEventListener('resize', hidePremiumPanelTooltip);
+
+  panelBody.dataset.premiumTooltipBound = 'true';
+}
+
+function disablePremiumPanelTooltip(panelBody) {
+  if (!panelBody) return;
+  panelBody.classList.remove('panel__body--premium-tooltips');
+  hidePremiumPanelTooltip();
 }
 
 function wirePremiumPanelEvents(panelBody) {
@@ -2571,14 +2965,6 @@ function wirePremiumPanelEvents(panelBody) {
     });
   });
 
-  const stroke = panelBody.querySelector('#premStrokeSlider');
-  const strokeVal = panelBody.querySelector('#premStrokeValue');
-  if (stroke) stroke.addEventListener('input', (e) => {
-    premiumPanelState.strokeWidth = Number.parseFloat(e.target.value);
-    if (strokeVal) strokeVal.textContent = `${premiumPanelState.strokeWidth}px`;
-    updatePremiumPreview();
-  });
-
   const speed = panelBody.querySelector('#premAnimSpeed');
   const speedVal = panelBody.querySelector('#premAnimSpeedValue');
   if (speed) speed.addEventListener('input', (e) => {
@@ -2595,6 +2981,8 @@ function wirePremiumPanelEvents(panelBody) {
         other.classList.toggle('active', active);
         other.setAttribute('aria-pressed', String(active));
       });
+      syncPremiumExportAffordances(panelBody);
+      hidePremiumPanelTooltip();
     });
   });
 
@@ -2695,6 +3083,10 @@ function wirePremiumPanelEvents(panelBody) {
 
   const copyBase64 = panelBody.querySelector('#premCopyBase64');
   copyBase64?.addEventListener('click', async () => {
+    if (!isPremiumBase64ExportSupported(premiumPanelState.playMode)) {
+      showToast(getPremiumBase64UnsupportedMessage(premiumPanelState.playMode));
+      return;
+    }
     const svg = buildAnimatedPayload();
     const dataUri = svg ? svgToBase64DataUri(svg) : '';
     await copyToClipboard(
@@ -2703,6 +3095,8 @@ function wirePremiumPanelEvents(panelBody) {
       'Could not copy Base64 right now.',
     );
   });
+
+  syncPremiumExportAffordances(panelBody);
 
   const copyHtml = panelBody.querySelector('#premCopyHtml');
   copyHtml?.addEventListener('click', async () => {
@@ -2836,7 +3230,10 @@ function showLockedPanel(iconName, product) {
 
   // Remove any existing customization controls (free icon panel body)
   const existingBody = panel.querySelector('.panel__body');
-  if (existingBody) existingBody.style.display = 'none';
+  if (existingBody) {
+    disablePremiumPanelTooltip(existingBody);
+    existingBody.style.display = 'none';
+  }
 
   // Hide original placeholder
   const placeholder = panel.querySelector('.panel__placeholder');
@@ -2907,6 +3304,8 @@ function removePackCatalog() {
   if (existing) existing.remove();
   const existingDash = document.getElementById('dashboardView');
   if (existingDash) existingDash.remove();
+  const existingApiKeys = document.getElementById('apiKeysView');
+  if (existingApiKeys) existingApiKeys.remove();
   const existingDetail = document.getElementById('collectionDetail');
   if (existingDetail) existingDetail.remove();
   const existingPricing = document.getElementById('pricingView');
@@ -3035,24 +3434,7 @@ function renderDashboard() {
             </tbody>
           </table>`
       }
-    </div>
-    ${(isPro() || userPurchases.length > 0) ? `
-    <div class="dashboard-section">
-      <h3 class="dashboard-section__title">
-        API Keys
-        <span class="dashboard-section__subtitle">For MCP and programmatic access</span>
-      </h3>
-      <div id="apiKeysContainer">
-        <p class="dashboard-section__empty">Loading keys...</p>
-      </div>
-      <div class="api-keys__generate">
-        <input type="text" class="api-keys__label-input" id="apiKeyLabel" placeholder="Key label (e.g. Cursor, Claude)" maxlength="50">
-        <button class="api-keys__generate-btn" id="generateApiKeyBtn">
-          <span class="material-symbols-outlined" style="font-size:14px">add</span>
-          Generate Key
-        </button>
-      </div>
-    </div>` : ''}`;
+    </div>`;
 
   gridArea.appendChild(dashboard);
 
@@ -3064,28 +3446,221 @@ function renderDashboard() {
       if (product) renderCollectionDetail(product);
     });
   });
+}
 
-  // Wire API key generation
-  if (isPro() || userPurchases.length > 0) {
+function renderApiKeysPage() {
+  removePackCatalog();
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const signedIn = isLoggedIn();
+  const canManageKeys = canManageApiKeys();
+  const page = document.createElement('div');
+  page.id = 'apiKeysView';
+  page.className = 'dashboard-view';
+
+  page.innerHTML = `
+    <div class="dashboard-section">
+      <h3 class="dashboard-section__title">Developer Access</h3>
+      <p class="dashboard-section__copy">Use API keys to connect MCP clients and programmatic workflows to your Supericons account.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys carry the premium access your account already owns through Pro or purchased packs.</p>
+    </div>
+    <div class="dashboard-section">
+      <h3 class="dashboard-section__title">
+        API Keys
+        <span class="dashboard-section__subtitle">Up to ${API_KEY_LIMIT} active keys</span>
+      </h3>
+      ${signedIn ? `
+        <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">Loading key usage...</p>
+        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label keys by app or device so you can rotate them later.</p>
+        <div class="api-keys__tabs" id="apiKeysTabs" role="tablist" aria-label="API key states">
+          <button class="api-keys__tab is-active" type="button" role="tab" aria-selected="true" data-filter="active">Active <span class="api-keys__tab-count">0</span></button>
+          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="revoked">Revoked <span class="api-keys__tab-count">0</span></button>
+          <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="all">All <span class="api-keys__tab-count">0</span></button>
+        </div>
+        <div id="apiKeysContainer">
+          <p class="dashboard-section__empty">Loading keys...</p>
+        </div>
+        <div class="api-keys__generate">
+          <input type="text" class="api-keys__label-input" id="apiKeyLabel" placeholder="Key label (e.g. Cursor, Claude)" maxlength="50" ${canManageKeys ? '' : 'disabled'}>
+          <button class="api-keys__generate-btn" id="generateApiKeyBtn" ${canManageKeys ? '' : 'disabled'}>
+            <span class="material-symbols-outlined" style="font-size:14px">add</span>
+            Generate Key
+          </button>
+        </div>
+        ${canManageKeys ? '' : `
+        <div class="api-keys__actions">
+          <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">Browse Packs</button>
+          <button class="dashboard-table__view" id="apiKeysPricingBtn">See Pricing</button>
+        </div>`}
+      ` : `
+        <p class="dashboard-section__empty">Sign in to manage API keys and connect premium MCP access.</p>
+        <div class="api-keys__actions">
+          <button class="dashboard-table__view" id="apiKeysSignInBtn">Sign In</button>
+        </div>
+      `}
+    </div>`;
+
+  gridArea.appendChild(page);
+
+  if (signedIn) {
+    apiKeysViewFilter = 'active';
+    apiKeysCache = [];
     fetchAndRenderApiKeys();
     const genBtn = document.getElementById('generateApiKeyBtn');
     if (genBtn) {
       genBtn.addEventListener('click', () => generateApiKey());
     }
+    page.querySelectorAll('.api-keys__tab').forEach((tab) => {
+      tab.addEventListener('click', () => setApiKeysViewFilter(tab.dataset.filter || 'active'));
+    });
+    if (!canManageKeys) {
+      page.querySelector('#apiKeysBrowsePacksBtn')?.addEventListener('click', () => switchView('packs'));
+      page.querySelector('#apiKeysPricingBtn')?.addEventListener('click', () => switchView('pricing'));
+    }
+    return;
   }
+
+  page.querySelector('#apiKeysSignInBtn')?.addEventListener('click', () => {
+    openAuthModal({ mode: 'signin', context: 'default' });
+  });
 }
 
 // ── API Key Management UI ─────────────────────────────────────
 // Note: escapeHtml is defined in the Motion Lab section below (line ~2597)
 
+let apiKeysViewFilter = 'active';
+let apiKeysCache = [];
+
+function updateApiKeysTabButtons(keys = apiKeysCache) {
+  const tabs = document.querySelectorAll('.api-keys__tab');
+  if (!tabs.length) return;
+
+  const counts = {
+    active: keys.filter((key) => !key.revoked).length,
+    revoked: keys.filter((key) => key.revoked).length,
+    all: keys.length,
+  };
+
+  tabs.forEach((tab) => {
+    const filter = tab.dataset.filter || 'active';
+    const count = counts[filter] ?? 0;
+    tab.classList.toggle('is-active', filter === apiKeysViewFilter);
+    tab.setAttribute('aria-selected', filter === apiKeysViewFilter ? 'true' : 'false');
+    const countEl = tab.querySelector('.api-keys__tab-count');
+    if (countEl) countEl.textContent = String(count);
+  });
+}
+
+function setApiKeysViewFilter(nextFilter) {
+  apiKeysViewFilter = nextFilter;
+  updateApiKeysTabButtons();
+  renderApiKeysList(apiKeysCache);
+}
+
+function renderApiKeysList(keys) {
+  const container = document.getElementById('apiKeysContainer');
+  if (!container) return;
+
+  const canCreateKeys = canManageApiKeys();
+  const activeKeys = keys.filter((key) => !key.revoked);
+  const revokedKeys = keys.filter((key) => key.revoked);
+  const visibleKeys = apiKeysViewFilter === 'revoked'
+    ? revokedKeys
+    : apiKeysViewFilter === 'all'
+      ? keys
+      : activeKeys;
+
+  if (keys.length === 0) {
+    container.innerHTML = canCreateKeys
+      ? '<p class="dashboard-section__empty">No API keys yet. Generate one to get started.</p>'
+      : '<p class="dashboard-section__empty">No API keys on this account yet.</p>';
+    return;
+  }
+
+  const tabCopy = apiKeysViewFilter === 'revoked'
+    ? 'Revoked keys no longer work. Delete a history row if you no longer need the record.'
+    : apiKeysViewFilter === 'all'
+      ? 'See every key record in one place. Active keys can be revoked; revoked history can be deleted.'
+      : 'These keys can still authenticate MCP clients and apps.';
+
+  const emptyCopy = apiKeysViewFilter === 'revoked'
+    ? 'No revoked key history yet. Revoked keys will appear here when you rotate them out.'
+    : apiKeysViewFilter === 'all'
+      ? 'No API keys yet. Generate one to get started.'
+      : 'No active keys right now. Generate one to connect a client.';
+
+  const renderKeyRows = (apiKeys) => apiKeys.map((key) => `
+    <tr class="${key.revoked ? 'api-key--revoked' : ''}">
+      <td class="api-key__prefix"><code>${key.key_prefix}...</code></td>
+      <td>${escapeHtml(key.label || 'Default')}</td>
+      <td>${new Date(key.created_at).toLocaleDateString()}</td>
+      <td>${key.last_used ? new Date(key.last_used).toLocaleDateString() : 'Never'}</td>
+      <td><span class="api-key__status ${key.revoked ? 'api-key__status--revoked' : 'api-key__status--active'}">${key.revoked ? 'Revoked' : 'Active'}</span></td>
+      <td>
+        ${key.revoked
+          ? `<button class="api-key__delete-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}" aria-label="Delete revoked key ${escapeHtml(key.label || 'Default')}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>`
+          : `<button class="api-key__revoke-btn" data-key-id="${key.id}" data-key-prefix="${escapeHtml(key.key_prefix || '')}" data-key-label="${escapeHtml(key.label || 'Default')}">Revoke</button>`}
+      </td>
+    </tr>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="api-keys__panel">
+      <div class="api-keys__panel-header">
+        <h4 class="api-keys__panel-title">${apiKeysViewFilter === 'revoked' ? 'Revoked History' : apiKeysViewFilter === 'all' ? 'All Keys' : 'Active Keys'}</h4>
+        <p class="api-keys__panel-copy">${tabCopy}</p>
+      </div>
+      ${visibleKeys.length > 0 ? `
+        <table class="dashboard-table dashboard-table--keys">
+          <thead>
+            <tr><th>Key</th><th>Label</th><th>Created</th><th>Last Used</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>${renderKeyRows(visibleKeys)}</tbody>
+        </table>
+      ` : `
+        <p class="dashboard-section__empty">${emptyCopy}</p>
+      `}
+    </div>`;
+
+  container.querySelectorAll('.api-key__revoke-btn').forEach((btn) => {
+    btn.addEventListener('click', () => revokeApiKey(btn.dataset.keyId, {
+      button: btn,
+      keyPrefix: btn.dataset.keyPrefix || '',
+      label: btn.dataset.keyLabel || 'Default',
+    }));
+  });
+
+  container.querySelectorAll('.api-key__delete-btn').forEach((btn) => {
+    btn.addEventListener('click', () => deleteApiKeyHistoryEntry(btn.dataset.keyId, {
+      button: btn,
+      keyPrefix: btn.dataset.keyPrefix || '',
+      label: btn.dataset.keyLabel || 'Default',
+    }));
+  });
+}
+
 async function fetchAndRenderApiKeys() {
   const container = document.getElementById('apiKeysContainer');
   if (!container) return;
+  const usageEl = document.getElementById('apiKeysUsage');
+  const limitNoteEl = document.getElementById('apiKeysLimitNote');
+  const genBtn = document.getElementById('generateApiKeyBtn');
+  const labelInput = document.getElementById('apiKeyLabel');
 
   try {
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
+    if (!token) {
+      container.innerHTML = '<p class="dashboard-section__empty">Sign in again to load API keys.</p>';
+      if (usageEl) usageEl.textContent = `Up to ${API_KEY_LIMIT} active keys`;
+      if (limitNoteEl) limitNoteEl.textContent = 'Your session expired. Sign in again to manage keys.';
+      return;
+    }
 
     const res = await fetch(`${SUPABASE_URL}/functions/v1/api-keys`, {
       headers: {
@@ -3094,51 +3669,62 @@ async function fetchAndRenderApiKeys() {
       },
     });
 
-    if (!res.ok) throw new Error('Failed to load keys');
-    const { keys } = await res.json();
-
-    if (!keys || keys.length === 0) {
-      container.innerHTML = '<p class="dashboard-section__empty">No API keys yet. Generate one to get started.</p>';
-      return;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to load keys');
     }
+    const payload = await res.json().catch(() => ({}));
+    const keys = Array.isArray(payload.keys) ? payload.keys : [];
+    apiKeysCache = keys;
+    const activeKeys = keys.filter(k => !k.revoked);
+    const revokedKeys = keys.filter(k => k.revoked);
+    const activeKeyCount = activeKeys.length;
+    const limitReached = activeKeyCount >= API_KEY_LIMIT;
+    const canCreateKeys = canManageApiKeys();
 
-    container.innerHTML = `
-      <table class="dashboard-table dashboard-table--keys">
-        <thead>
-          <tr><th>Key</th><th>Label</th><th>Created</th><th>Last Used</th><th>Status</th><th></th></tr>
-        </thead>
-        <tbody>
-          ${keys.map(k => `
-            <tr class="${k.revoked ? 'api-key--revoked' : ''}">
-              <td class="api-key__prefix"><code>${k.key_prefix}...</code></td>
-              <td>${escapeHtml(k.label || 'Default')}</td>
-              <td>${new Date(k.created_at).toLocaleDateString()}</td>
-              <td>${k.last_used ? new Date(k.last_used).toLocaleDateString() : 'Never'}</td>
-              <td><span class="api-key__status ${k.revoked ? 'api-key__status--revoked' : 'api-key__status--active'}">${k.revoked ? 'Revoked' : 'Active'}</span></td>
-              <td>${k.revoked ? '' : `<button class="api-key__revoke-btn" data-key-id="${k.id}">Revoke</button>`}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>`;
-
-    // Wire revoke buttons
-    container.querySelectorAll('.api-key__revoke-btn').forEach(btn => {
-      btn.addEventListener('click', () => revokeApiKey(btn.dataset.keyId));
-    });
+    if (usageEl) usageEl.textContent = `${activeKeyCount} of ${API_KEY_LIMIT} active keys in use`;
+    if (limitNoteEl) {
+      if (!canCreateKeys) {
+        limitNoteEl.textContent = 'Free MCP works without a key. New keys become available once your account has Pro or at least one purchased premium pack.';
+      } else if (limitReached) {
+        limitNoteEl.textContent = `You have reached the ${API_KEY_LIMIT}-key limit. Revoke one before creating another.`;
+      } else if (revokedKeys.length > 0) {
+        limitNoteEl.textContent = 'Revoked history is available in its own tab and does not count toward your active-key limit.';
+      } else {
+        limitNoteEl.textContent = 'Label keys by app or device so you can rotate them later.';
+      }
+    }
+    if (genBtn) genBtn.disabled = !canCreateKeys || limitReached;
+    if (labelInput) labelInput.disabled = !canCreateKeys || limitReached;
+    updateApiKeysTabButtons(keys);
+    renderApiKeysList(keys);
   } catch (err) {
+    apiKeysCache = [];
+    updateApiKeysTabButtons([]);
     container.innerHTML = '<p class="dashboard-section__empty">Failed to load API keys.</p>';
+    if (usageEl) usageEl.textContent = `Up to ${API_KEY_LIMIT} active keys`;
+    if (limitNoteEl) limitNoteEl.textContent = 'We could not load your API keys right now.';
     console.error('[Store] API keys fetch error:', err);
   }
 }
 
 async function generateApiKey() {
   const labelInput = document.getElementById('apiKeyLabel');
+  const genBtn = document.getElementById('generateApiKeyBtn');
   const label = labelInput?.value?.trim() || 'Default';
+  const originalBtnMarkup = genBtn?.innerHTML || '';
 
   try {
+    if (genBtn) {
+      genBtn.disabled = true;
+      genBtn.textContent = 'Generating...';
+    }
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
+    if (!token) {
+      throw new Error('Sign in again to generate an API key.');
+    }
 
     const res = await fetch(`${SUPABASE_URL}/functions/v1/api-keys`, {
       method: 'POST',
@@ -3162,10 +3748,17 @@ async function generateApiKey() {
 
     // Clear input and refresh list
     if (labelInput) labelInput.value = '';
-    fetchAndRenderApiKeys();
+    await fetchAndRenderApiKeys();
+    if (genBtn?.isConnected) {
+      genBtn.innerHTML = originalBtnMarkup;
+    }
   } catch (err) {
     console.error('[Store] API key generation error:', err);
     showToast(err.message || 'Failed to generate API key');
+    if (genBtn) {
+      genBtn.disabled = false;
+      genBtn.innerHTML = originalBtnMarkup;
+    }
   }
 }
 
@@ -3214,36 +3807,265 @@ function showApiKeyModal(fullKey, prefix, label) {
   overlay.querySelector('.api-key-modal__backdrop').addEventListener('click', closeModal);
 }
 
-async function revokeApiKey(keyId) {
-  const confirmed = confirm('Revoke this API key? This cannot be undone.');
+function showApiKeyLifecycleConfirmModal({
+  keyPrefix = '',
+  label = 'Default',
+  title = 'Confirm action',
+  description = '',
+  confirmLabel = 'Continue',
+} = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'claim-confirm-modal';
+    const safePrefix = escapeHtml(keyPrefix || 'Unknown key');
+    const safeLabel = escapeHtml(label || 'Default');
+    const safeTitle = escapeHtml(title);
+    const safeDescription = escapeHtml(description);
+    const safeConfirmLabel = escapeHtml(confirmLabel);
+
+    overlay.innerHTML = `
+      <div class="claim-confirm-modal__backdrop"></div>
+      <div class="claim-confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="apiKeyLifecycleTitle">
+        <button class="claim-confirm-modal__close" type="button" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <p class="claim-confirm-modal__eyebrow claim-confirm-modal__eyebrow--danger">API Key</p>
+        <h3 class="claim-confirm-modal__title" id="apiKeyLifecycleTitle">${safeTitle}</h3>
+        <p class="claim-confirm-modal__desc">${safeDescription}</p>
+        <p class="claim-confirm-modal__meta claim-confirm-modal__meta--danger">Label: ${safeLabel} &middot; Prefix: ${safePrefix}...</p>
+        <div class="claim-confirm-modal__actions">
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--danger" type="button" data-action="confirm">${safeConfirmLabel}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const card = overlay.querySelector('.claim-confirm-modal__card');
+    const closeBtn = overlay.querySelector('.claim-confirm-modal__close');
+    const cancelBtn = overlay.querySelector('[data-action="cancel"]');
+    const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+    const backdrop = overlay.querySelector('.claim-confirm-modal__backdrop');
+
+    let settled = false;
+    const close = (accepted) => {
+      if (settled) return;
+      settled = true;
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.remove();
+      resolve(accepted);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(false);
+      }
+      if (event.key === 'Enter' && document.activeElement === confirmBtn) {
+        event.preventDefault();
+        close(true);
+      }
+    };
+
+    backdrop?.addEventListener('click', () => close(false));
+    closeBtn?.addEventListener('click', () => close(false));
+    cancelBtn?.addEventListener('click', () => close(false));
+    confirmBtn?.addEventListener('click', () => close(true));
+    document.addEventListener('keydown', onKeyDown);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      confirmBtn?.focus();
+      card?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+}
+
+function showApiKeyRevokePrompt({ keyPrefix = '', label = 'Default' } = {}) {
+  return showApiKeyLifecycleConfirmModal({
+    keyPrefix,
+    label,
+    title: 'Revoke this API key?',
+    description: 'This key will stop working for MCP clients and apps immediately. This action cannot be undone.',
+    confirmLabel: 'Revoke key',
+  });
+}
+
+function showApiKeyDeletePrompt({ keyPrefix = '', label = 'Default' } = {}) {
+  return showApiKeyLifecycleConfirmModal({
+    keyPrefix,
+    label,
+    title: 'Delete this revoked key record?',
+    description: 'This only removes the history entry from your account. The key is already revoked and cannot be used again.',
+    confirmLabel: 'Delete record',
+  });
+}
+
+function showApiKeyRevokeConfirmModal({ keyPrefix = '', label = 'Default' } = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'claim-confirm-modal';
+    const safePrefix = escapeHtml(keyPrefix || 'Unknown key');
+    const safeLabel = escapeHtml(label || 'Default');
+
+    overlay.innerHTML = `
+      <div class="claim-confirm-modal__backdrop"></div>
+      <div class="claim-confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="apiKeyRevokeTitle">
+        <button class="claim-confirm-modal__close" type="button" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <p class="claim-confirm-modal__eyebrow claim-confirm-modal__eyebrow--danger">API Key</p>
+        <h3 class="claim-confirm-modal__title" id="apiKeyRevokeTitle">Revoke this API key?</h3>
+        <p class="claim-confirm-modal__desc">This key will stop working for MCP clients and apps immediately. This action cannot be undone.</p>
+        <p class="claim-confirm-modal__meta claim-confirm-modal__meta--danger">Label: ${safeLabel} · Prefix: ${safePrefix}...</p>
+        <div class="claim-confirm-modal__actions">
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--danger" type="button" data-action="confirm">Revoke key</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const card = overlay.querySelector('.claim-confirm-modal__card');
+    const closeBtn = overlay.querySelector('.claim-confirm-modal__close');
+    const cancelBtn = overlay.querySelector('[data-action="cancel"]');
+    const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+    const backdrop = overlay.querySelector('.claim-confirm-modal__backdrop');
+
+    let settled = false;
+    const close = (accepted) => {
+      if (settled) return;
+      settled = true;
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.remove();
+      resolve(accepted);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(false);
+      }
+      if (event.key === 'Enter' && document.activeElement === confirmBtn) {
+        event.preventDefault();
+        close(true);
+      }
+    };
+
+    backdrop?.addEventListener('click', () => close(false));
+    closeBtn?.addEventListener('click', () => close(false));
+    cancelBtn?.addEventListener('click', () => close(false));
+    confirmBtn?.addEventListener('click', () => close(true));
+    document.addEventListener('keydown', onKeyDown);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      confirmBtn?.focus();
+      card?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+}
+
+async function revokeApiKey(keyId, options = {}) {
+  const { button = null, keyPrefix = '', label = 'Default' } = options;
+  const confirmed = await showApiKeyRevokePrompt({ keyPrefix, label });
   if (!confirmed) return;
 
+  const triggerBtn = button instanceof HTMLElement ? button : null;
+  const originalBtnText = triggerBtn?.textContent || 'Revoke';
+
   try {
+    if (triggerBtn) {
+      triggerBtn.disabled = true;
+      triggerBtn.textContent = 'Revoking...';
+    }
     const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     const token = session?.access_token;
+    if (!token) {
+      throw new Error('Sign in again to revoke API keys.');
+    }
 
     const res = await fetch(`${SUPABASE_URL}/functions/v1/api-keys`, {
-      method: 'DELETE',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
         'apikey': SUPABASE_ANON,
       },
-      body: JSON.stringify({ key_id: keyId }),
+      body: JSON.stringify({ action: 'revoke', key_id: keyId }),
     });
 
-    if (!res.ok) throw new Error('Failed to revoke key');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to revoke key');
+    }
 
     showToast('API key revoked');
-    fetchAndRenderApiKeys();
+    await fetchAndRenderApiKeys();
   } catch (err) {
-    showToast('Failed to revoke key. Please try again.');
+    showToast(err.message || 'Failed to revoke key. Please try again.');
     console.error('[Store] API key revoke error:', err);
+    if (triggerBtn) {
+      triggerBtn.disabled = false;
+      triggerBtn.textContent = originalBtnText;
+    }
   }
 }
 
 // ── Pricing Page ──────────────────────────────────────────────
+async function deleteApiKeyHistoryEntry(keyId, options = {}) {
+  const { button = null, keyPrefix = '', label = 'Default' } = options;
+  const confirmed = await showApiKeyDeletePrompt({ keyPrefix, label });
+  if (!confirmed) return;
+
+  const triggerBtn = button instanceof HTMLElement ? button : null;
+  const originalBtnMarkup = triggerBtn?.innerHTML || '';
+
+  try {
+    if (triggerBtn) {
+      triggerBtn.disabled = true;
+      triggerBtn.textContent = 'Deleting...';
+    }
+    const sb = getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
+    const token = session?.access_token;
+    if (!token) {
+      throw new Error('Sign in again to manage API key history.');
+    }
+
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/api-keys`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'apikey': SUPABASE_ANON,
+      },
+      body: JSON.stringify({ action: 'delete', key_id: keyId }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to delete revoked key record');
+    }
+
+    showToast('Revoked key history deleted');
+    await fetchAndRenderApiKeys();
+  } catch (err) {
+    const message = err?.message === 'Unsupported action'
+      ? 'Delete support is not live yet. Redeploy the api-keys Edge Function and try again.'
+      : (err.message || 'Failed to delete revoked key record. Please try again.');
+    showToast(message);
+    console.error('[Store] API key delete error:', err);
+    if (triggerBtn) {
+      triggerBtn.disabled = false;
+      triggerBtn.innerHTML = originalBtnMarkup;
+    }
+  }
+}
+
 function renderPricingPage() {
   removePackCatalog();
   const monthlyPlan = getProPlan('monthly');
@@ -3394,7 +4216,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners get MCP access to their premium collections.
+            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners can connect a Supericons API key to access the premium collections tied to their account.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -3666,18 +4488,18 @@ function renderMcpPage() {
     <section class="mcp-hero">
       <span class="mcp-hero__eyebrow">MCP Integration</span>
       <h2 class="mcp-hero__title">Give your coding agent 20,000+ icons</h2>
-      <p class="mcp-hero__copy">Search, retrieve, and paste SVG icons directly into code through the Model Context Protocol. Free icons work out of the box. Premium collections unlock with a Pro subscription or API key.</p>
+      <p class="mcp-hero__copy">Search, retrieve, and paste SVG icons directly into code through the Model Context Protocol. Free icons work out of the box. Premium collections are available when your account has Pro or purchased pack access and your MCP client is connected with your Supericons API key.</p>
       <div class="mcp-hero__actions">
         <a class="mcp-btn mcp-btn--primary" href="#mcpInstall">Install the MCP server</a>
-        <a class="mcp-btn mcp-btn--secondary" href="#mcpGuides">Setup guides</a>
+        <a class="mcp-btn mcp-btn--secondary" href="/docs/index.html">Open docs and guides</a>
       </div>
     </section>
 
     <div class="mcp-layout">
       <div class="mcp-layout__main">
         <section class="mcp-card" id="mcpInstall">
-          <h3 class="mcp-card__title">Add Supericons to your MCP config</h3>
-          <p class="mcp-card__copy">One local stdio server works across every MCP-capable client. Paste the config below into your editor's MCP settings.</p>
+          <h3 class="mcp-card__title">Set up Supericons MCP</h3>
+          <p class="mcp-card__copy">One local stdio server works across every MCP-capable client. Start with the base config below, then add your API key only if you want premium pack access tied to your Supericons account.</p>
           <div class="mcp-code">
             <button class="mcp-code__copy" type="button" id="mcpPageCopyBtn">Copy</button>
             <pre class="mcp-code__pre"><code id="mcpPageConfig">{
@@ -3689,35 +4511,99 @@ function renderMcpPage() {
   }
 }</code></pre>
           </div>
-          <p class="mcp-card__copy mcp-card__copy--spaced">After connecting, your agent can search icons, retrieve SVG output, and access premium collections tied to your account or API key.</p>
+          <div class="mcp-grid" style="margin-top: 16px;">
+            <article class="mcp-mini-card">
+              <h4>Free setup</h4>
+              <ul>
+                <li>Add the base server config.</li>
+                <li>Restart or reload your MCP client.</li>
+                <li>Use <code>search_icons</code> or <code>get_icon</code> right away.</li>
+              </ul>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Premium setup</h4>
+              <ul>
+                <li>Subscribe to Pro or buy the premium pack you need.</li>
+                <li>Open <a href="/?view=api-keys">API Keys</a> and generate an API key.</li>
+                <li>Add <code>SUPERICONS_API_KEY</code> in the env or secrets field your MCP client supports.</li>
+              </ul>
+            </article>
+          </div>
+          <p class="mcp-card__copy mcp-card__copy--spaced">JSON-style clients such as Cursor, Claude Code project config, or similar MCP settings surfaces can use an env block like this. For client-specific syntax, use the guides and docs below.</p>
+          <div class="mcp-code">
+            <button class="mcp-code__copy" type="button" id="mcpPremiumCopyBtn">Copy premium example</button>
+            <pre class="mcp-code__pre"><code id="mcpPremiumConfig">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "your_key_here"
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <p class="mcp-card__copy mcp-card__copy--spaced">Today MCP supports icon search, icon retrieval, library discovery, Motion Lab preset exports, and Converter workflows for Pro users.</p>
         </section>
 
         <section class="mcp-card">
-          <h3 class="mcp-card__title">What the server provides</h3>
+          <h3 class="mcp-card__title">Current MCP tools</h3>
           <div class="mcp-grid">
             <article class="mcp-mini-card">
-              <h4>Semantic icon search</h4>
-              <p>Find icons across free and premium libraries using natural-language queries optimized for coding workflows.</p>
+              <h4><code>search_icons</code></h4>
+              <p>Find the closest icon match across the free libraries and any premium packs your account is entitled to use.</p>
             </article>
             <article class="mcp-mini-card">
-              <h4>Ready-to-use SVG output</h4>
-              <p>Get clean SVG markup directly in your code, no browser tabs, no asset folders, no copy-paste friction.</p>
+              <h4><code>get_icon</code></h4>
+              <p>Retrieve a specific icon payload with ready-to-use SVG output that can be inserted directly into code.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>list_libraries</code></h4>
+              <p>List the libraries and pack sources your MCP session can currently see, including premium access state.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>list_motion_presets</code></h4>
+              <p>Browse the Motion Lab presets available through MCP before exporting animation CSS or animated SVG output.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>export_motion_css</code></h4>
+              <p>Generate Motion Lab CSS for a chosen icon, preset, trigger, duration, and intensity without leaving your coding agent.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>export_animated_svg</code></h4>
+              <p>Generate a self-contained animated SVG for the selected icon and preset as a single MCP response.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>convert_svg_to_png</code></h4>
+              <p>Render SVG input to PNG with a controlled output width and optional background through the Pro converter workflow.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4><code>convert_png_to_svg</code></h4>
+              <p>Trace PNG input to SVG with the same converter-quality controls used by the browser workflow.</p>
             </article>
             <article class="mcp-mini-card">
               <h4>Access-aware entitlements</h4>
-              <p>Free users search 20,000+ icons. Pro subscribers and pack owners also access the premium collections they have purchased.</p>
+              <p>Free users search 20,000+ icons. Pro subscribers and pack owners can connect an API key to access the premium collections they already own.</p>
             </article>
             <article class="mcp-mini-card">
-              <h4>Built for agent workflows</h4>
-              <p>Works naturally in refactors, UI iteration, prototype builds, documentation, and any task that needs icons on demand.</p>
+              <h4>Workflow-tool gating</h4>
+              <p>Motion Lab MCP and Converter MCP are Pro workflow tools. Pack ownership unlocks premium icon assets, but workflow tools stay Pro-only.</p>
             </article>
           </div>
         </section>
 
         <section class="mcp-card" id="mcpGuides">
-          <h3 class="mcp-card__title">Works with any MCP client</h3>
-          <p class="mcp-card__copy">The Supericons stdio server connects to any editor, agent, or tool that supports the Model Context Protocol. While the underlying configuration is the same everywhere, the setup UX differs by client.</p>
-          <p class="mcp-card__copy">Here are the specific setup guides we maintain for popular clients:</p>
+          <h3 class="mcp-card__title">Docs, guides, and tutorials</h3>
+          <p class="mcp-card__copy">Use the Supericons docs hub for the systematic setup path, entitlement model, current MCP tools, and workflow recipes for Motion Lab and Converter.</p>
+          <div class="mcp-link-list" style="margin-bottom: 18px;">
+            <a href="/docs/index.html">Open docs hub</a>
+            <a href="/docs/index.html#docs-quickstart">Quickstart</a>
+            <a href="/docs/index.html#docs-premium">Premium setup</a>
+            <a href="/docs/index.html#docs-recipes">Recipes and prompts</a>
+            <a href="/docs/index.html#docs-troubleshooting">Troubleshooting</a>
+          </div>
+          <p class="mcp-card__copy">The Supericons stdio server can be used with any MCP-capable client. The configuration concept is shared, but each client has its own setup UX and config surface.</p>
           <div class="mcp-pill-list">
             <span class="mcp-pill">Claude Code</span>
             <span class="mcp-pill">Codex</span>
@@ -3729,32 +4615,54 @@ function renderMcpPage() {
           </div>
           <div class="mcp-grid mcp-grid--guides">
             <article class="mcp-mini-card">
-              <h4><a href="https://docs.anthropic.com/en/docs/claude-code/mcp" target="_blank" rel="noopener noreferrer">Claude Code</a></h4>
-              <p>Anthropic's official MCP docs: CLI setup, Windows notes, and troubleshooting.</p>
+              <h4><a href="/mcp/claude-code/">Claude Code</a></h4>
+              <p>Supericons setup guide plus Anthropic's official MCP docs for CLI setup, Windows notes, and troubleshooting.</p>
             </article>
             <article class="mcp-mini-card">
-              <h4><a href="https://developers.openai.com/codex/mcp" target="_blank" rel="noopener noreferrer">Codex</a></h4>
-              <p>OpenAI's official MCP docs: CLI and <code>config.toml</code> setup.</p>
+              <h4><a href="/mcp/codex/">Codex</a></h4>
+              <p>Supericons setup guide plus OpenAI's official MCP docs for CLI and <code>config.toml</code> setup.</p>
             </article>
             <article class="mcp-mini-card">
-              <h4><a href="https://docs.cursor.com/en/context/mcp" target="_blank" rel="noopener noreferrer">Cursor</a></h4>
-              <p>Cursor's official MCP docs: JSON config and in-app MCP settings.</p>
+              <h4><a href="/mcp/cursor/">Cursor</a></h4>
+              <p>Supericons setup guide plus Cursor's official MCP docs for JSON config and in-app MCP settings.</p>
             </article>
             <article class="mcp-mini-card">
               <h4><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h4>
-              <p>OpenCode's official MCP docs: server config and CLI flow.</p>
+              <p>Official OpenCode MCP docs for server config and CLI flow.</p>
             </article>
             <article class="mcp-mini-card">
               <h4><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h4>
-              <p>Cline's official MCP docs: Servers UI and <code>cline_mcp_settings.json</code> config.</p>
+              <p>Official Cline docs for the Servers UI and <code>cline_mcp_settings.json</code> config.</p>
             </article>
             <article class="mcp-mini-card">
               <h4><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h4>
-              <p>GitHub's official docs: repository MCP config and Copilot environment secrets.</p>
+              <p>Official GitHub docs for repository MCP config and Copilot environment secrets.</p>
             </article>
             <article class="mcp-mini-card">
               <h4><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h4>
-              <p>Windsurf's Cascade MCP docs: settings UI and <code>mcp_config.json</code> flow.</p>
+              <p>Official Windsurf docs for settings UI and <code>mcp_config.json</code> setup.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="mcp-card">
+          <h3 class="mcp-card__title">Pro Workflow Access</h3>
+          <div class="mcp-grid">
+            <article class="mcp-mini-card">
+              <h4>Motion Lab MCP</h4>
+              <p>Live for Pro workflow access: preset discovery, recipe guidance, motion CSS export, and standalone animated SVG export.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Converter MCP</h4>
+              <p>Live for Pro workflow access: SVG to PNG rendering, PNG to SVG tracing, and option inspection for agent-driven conversion flows.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Why this matters</h4>
+              <p>Search-only MCP is useful, but workflow-tool access is the stronger Pro value proposition for design systems, prototyping, and coding-agent automation.</p>
+            </article>
+            <article class="mcp-mini-card">
+              <h4>Current status</h4>
+              <p>Motion Lab MCP and Converter MCP are Pro-only workflow tools. Premium pack ownership still works for icon access, but workflow tooling requires Pro.</p>
             </article>
           </div>
         </section>
@@ -3781,9 +4689,9 @@ function renderMcpPage() {
             <article class="mcp-mini-card">
               <h4>Premium assets</h4>
               <ul>
-                <li>Fetch icons from a premium collection I own.</li>
+                <li>Fetch icons from a premium collection tied to my Pro or pack access.</li>
                 <li>Drop them into a prototype component.</li>
-                <li>Keep collection access tied to my account.</li>
+                <li>Keep access tied to my Supericons API key.</li>
               </ul>
             </article>
             <article class="mcp-mini-card">
@@ -3801,22 +4709,27 @@ function renderMcpPage() {
 
   gridArea.appendChild(page);
 
-  const copyBtn = page.querySelector('#mcpPageCopyBtn');
-  const configEl = page.querySelector('#mcpPageConfig');
-  if (copyBtn && configEl) {
-    copyBtn.addEventListener('click', async () => {
+  const bindMcpCopyButton = (buttonId, codeId) => {
+    const button = page.querySelector(buttonId);
+    const code = page.querySelector(codeId);
+    if (!button || !code) return;
+
+    button.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(configEl.textContent || '');
-        const original = copyBtn.textContent;
-        copyBtn.textContent = 'Copied';
+        await navigator.clipboard.writeText(code.textContent || '');
+        const original = button.textContent;
+        button.textContent = 'Copied';
         window.setTimeout(() => {
-          copyBtn.textContent = original;
+          button.textContent = original;
         }, 1800);
       } catch (err) {
         console.warn('[Store] Failed to copy MCP config:', err?.message || err);
       }
     });
-  }
+  };
+
+  bindMcpCopyButton('#mcpPageCopyBtn', '#mcpPageConfig');
+  bindMcpCopyButton('#mcpPremiumCopyBtn', '#mcpPremiumConfig');
 }
 
 // ── Launch Edition Card ───────────────────────────────────────
@@ -4153,6 +5066,15 @@ function wireStoreListeners() {
       document.getElementById('authDropdown')?.classList.remove('open');
       await ensureUserPurchasesLoaded({ force: true, rerender: false });
       switchView('dashboard');
+    });
+  }
+
+  const apiKeysBtn = document.getElementById('authApiKeysBtn');
+  if (apiKeysBtn) {
+    apiKeysBtn.addEventListener('click', async () => {
+      document.getElementById('authDropdown')?.classList.remove('open');
+      await ensureUserPurchasesLoaded({ force: true, rerender: false });
+      switchView('api-keys');
     });
   }
 

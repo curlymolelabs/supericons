@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="si-animated-icon" data-si-click-ms="548" onclick="var svg=this;if(!svg||!svg.classList)return;var replayMs=Number(svg.getAttribute(&#39;data-si-click-ms&#39;))||850;if(svg.__siReplayTimer){window.clearTimeout(svg.__siReplayTimer);}svg.classList.remove(&#39;active&#39;);void svg.getBoundingClientRect();svg.classList.add(&#39;active&#39;);svg.__siReplayTimer=window.setTimeout(function(){svg.classList.remove(&#39;active&#39;);svg.__siReplayTimer=0;}, replayMs);"><style>svg.si-animated-icon {
+overflow: visible;
+}
+
+svg.si-animated-icon.active {
+animation: ur9g08 0.5s ease forwards;
+  transform-origin: center top;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
+}
+
+@keyframes ur9g08 {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(4deg); }
+  40%  { transform: rotate(-3deg); }
+  60%  { transform: rotate(3deg); }
+  80%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}</style>
+  <path class="sc-band" d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
+</svg>
