@@ -1,7 +1,7 @@
 {
   "name": "supericons-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for SuperIcons: search and retrieve 20,000+ icons from 10 libraries",
+  "version": "0.2.0",
+  "description": "MCP server for SuperIcons: search icons, animate them with Motion Lab, and access Pro workflow tools",
   "type": "module",
   "bin": {
     "supericons-mcp": "index.js"
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
+    "@resvg/resvg-js": "^2.6.2",
     "zod": "^3.24.0"
   }
 }

@@ -4,6 +4,17 @@
   command = "npm run build"
   publish = "dist"
 
+# Keep docs hub as a real static document before the SPA fallback.
+[[redirects]]
+  from = "/docs"
+  to = "/docs/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/docs/"
+  to = "/docs/index.html"
+  status = 200
+
 # SPA routing: serve index.html for all paths
 [[redirects]]
   from = "/*"

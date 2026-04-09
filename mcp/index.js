@@ -26,6 +26,14 @@ import {
   getMaterialManifestEntry,
   normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
 } from '../material-export.js';
+import { buildMotionLabAnimatedSvg, buildMotionLabBundle, buildMotionLabExternalCss, buildMotionLabRecipe, listMotionLabPresets } from './motion-lab.js';
+import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions } from './converter.js';
+import {
+  buildPremiumLibraryAccessError,
+  buildProWorkflowAccessError,
+  hasPremiumLibraryAccess,
+  hasProWorkflowAccess,
+} from './workflow-access.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -344,9 +352,31 @@ function getAccessibleIcons() {
 
 // Check if user has access to a specific premium library
 function hasLibraryAccess(library) {
-  if (authState.isPro) return true;
-  if (authState.purchasedSlugs.includes(library)) return true;
-  return false;
+  return hasPremiumLibraryAccess(authState, library);
+}
+
+function buildTextResponse(payload) {
+  return {
+    content: [{ type: 'text', text: typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2) }],
+  };
+}
+
+function buildWorkflowAccessResponse(featureName) {
+  return buildTextResponse(buildProWorkflowAccessError(featureName));
+}
+
+async function resolveAccessibleIcon(id, library) {
+  const accessibleIcons = getAccessibleIcons();
+  const exact = accessibleIcons.find((icon) => icon.id === id && icon.lib === library);
+  if (exact) {
+    return buildToolIconResult(exact);
+  }
+
+  const loose = accessibleIcons.find((icon) =>
+    icon.id.toLowerCase() === id.toLowerCase() && icon.lib.toLowerCase() === library.toLowerCase()
+  );
+  if (!loose) return null;
+  return buildToolIconResult(loose);
 }
 
 // ============================================================
@@ -362,6 +392,7 @@ const libraryMeta = {
   iconoir: { name: 'Iconoir', description: 'High-quality open-source icon library', hasStroke: true },
   ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true },
   simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false },
+  mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false },
 };
 
 // Add premium pack libraries
@@ -384,22 +415,24 @@ const libCounts = {};
 for (const icon of allIcons) {
   libCounts[icon.lib] = (libCounts[icon.lib] || 0) + 1;
 }
+const freeLibraryCount = Object.values(libraryMeta).filter(meta => !meta.premium).length;
+const freeIconCountLabel = `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
 
 // ============================================================
 // MCP Server
 // ============================================================
 const server = new McpServer({
   name: 'supericons',
-  version: '0.2.0',
+  version: '0.3.0',
 });
 
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  'Search 19,000+ icons across 9 libraries using AI-powered synonym expansion. Returns matching icons with SVG code. Premium collections require a Pro API key.',
+  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching icons with SVG code. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.`,
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
-    library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, or premium pack names'),
+    library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, mingcute, or premium pack names'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
   },
   async ({ query, library, limit }) => {
@@ -408,16 +441,7 @@ server.tool(
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
-      return {
-        content: [{
-          type: 'text',
-          text: JSON.stringify({
-            error: 'Premium access required',
-            message: `The "${libraryMeta[library].name}" pack requires a purchase or Pro subscription. Visit https://supericons.dev`,
-            hint: 'Set SUPERICONS_API_KEY in your MCP config with your API key.',
-          }, null, 2),
-        }],
-      };
+      return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
 
     const results = searchIcons(query, accessibleIcons, synonyms, { library, limit });
@@ -428,23 +452,16 @@ server.tool(
     }
     const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon)))).filter(Boolean);
     if (formatted.length === 0) {
-      return {
-        content: [{
-          type: 'text',
-          text: `Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`,
-        }],
-      };
+      return buildTextResponse(`Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
     }
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' }, null, 2) }],
-    };
+    return buildTextResponse({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' });
   }
 );
 
 // --- Tool: get_icon ---
 server.tool(
   'get_icon',
-  'Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require a Pro API key.',
+  'Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require an API key linked to a Pro subscription or purchased packs.',
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
     library: z.string().describe('Library name (e.g. "lucide", "tabler", "phosphor", or premium pack name)'),
@@ -452,58 +469,17 @@ server.tool(
   async ({ id, library }) => {
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
-      return {
-        content: [{
-          type: 'text',
-          text: JSON.stringify({
-            error: 'Premium access required',
-            message: `Icon "${id}" is in the premium "${libraryMeta[library].name}" pack. Visit https://supericons.dev`,
-            hint: 'Set SUPERICONS_API_KEY in your MCP config with your API key.',
-          }, null, 2),
-        }],
-      };
+      return buildTextResponse({
+        ...buildPremiumLibraryAccessError(libraryMeta[library].name),
+        message: `Icon "${id}" is in the premium "${libraryMeta[library].name}" pack. Visit https://supericons.dev`,
+      });
     }
 
-    const accessibleIcons = getAccessibleIcons();
-    const icon = accessibleIcons.find(i => i.id === id && i.lib === library);
-    if (!icon) {
-      // Try case-insensitive
-      const loose = accessibleIcons.find(i =>
-        i.id.toLowerCase() === id.toLowerCase() && i.lib.toLowerCase() === library.toLowerCase()
-      );
-      if (!loose) {
-        return {
-          content: [{ type: 'text', text: `Icon "${id}" not found in library "${library}". Use search_icons to find available icons.` }],
-        };
-      }
-      const result = await buildToolIconResult(loose);
-      if (!result) {
-        return {
-          content: [{
-            type: 'text',
-            text: `Icon "${loose.id}" was found in library "${loose.lib}", but its SVG payload could not be resolved right now.`,
-          }],
-        };
-      }
-      return {
-        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
-      };
-    }
-    const result = await buildToolIconResult(icon);
+    const result = await resolveAccessibleIcon(id, library);
     if (!result) {
-      return {
-        content: [{
-          type: 'text',
-          text: `Icon "${icon.id}" was found in library "${icon.lib}", but its SVG payload could not be resolved right now.`,
-        }],
-      };
+      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
     }
-    return {
-      content: [{
-        type: 'text',
-        text: JSON.stringify(result, null, 2),
-      }],
-    };
+    return buildTextResponse(result);
   }
 );
 
@@ -522,9 +498,245 @@ server.tool(
       premium: meta.premium || false,
       accessible: meta.premium ? hasLibraryAccess(id) : true,
     }));
-    return {
-      content: [{ type: 'text', text: JSON.stringify(libs, null, 2) }],
-    };
+    return buildTextResponse(libs);
+  }
+);
+
+// --- Tool: list_motion_presets ---
+server.tool(
+  'list_motion_presets',
+  'List the Motion Lab presets currently available through Supericons MCP. Motion Lab MCP is a Pro workflow tool.',
+  {},
+  async () => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Motion Lab MCP');
+    }
+    return buildTextResponse({
+      presets: listMotionLabPresets(),
+      source: 'Powered by SuperIcons Motion Lab',
+    });
+  }
+);
+
+// --- Tool: get_motion_recipe ---
+server.tool(
+  'get_motion_recipe',
+  'Return a human-readable Motion Lab recipe for a preset, trigger, and duration. Motion Lab MCP is a Pro workflow tool.',
+  {
+    preset: z.string().describe('Motion preset id, for example pulse, bounce, spin, trace, or typing.'),
+    trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
+    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+  },
+  async ({ preset, trigger, durationMs, intensityPercent }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Motion Lab MCP');
+    }
+    try {
+      return buildTextResponse(buildMotionLabRecipe({
+        presetId: preset,
+        trigger,
+        durationMs,
+        intensityPercent,
+      }));
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
+  }
+);
+
+// --- Tool: export_motion_css ---
+server.tool(
+  'export_motion_css',
+  'Generate Motion Lab CSS for a Supericons icon. Motion Lab MCP is a Pro workflow tool.',
+  {
+    id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
+    library: z.string().describe('Library or premium pack name.'),
+    preset: z.string().describe('Motion preset id.'),
+    trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
+    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+  },
+  async ({ id, library, preset, trigger, durationMs, intensityPercent }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Motion Lab MCP');
+    }
+
+    const icon = await resolveAccessibleIcon(id, library);
+    if (!icon?.svg) {
+      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+    }
+
+    try {
+      return buildTextResponse({
+        id: icon.id,
+        library: icon.library,
+        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs, intensityPercent }),
+        css: buildMotionLabExternalCss({
+          presetId: preset,
+          trigger,
+          durationMs,
+          intensityPercent,
+        }),
+      });
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
+  }
+);
+
+// --- Tool: export_animated_svg ---
+server.tool(
+  'export_animated_svg',
+  'Generate a self-contained animated SVG using Motion Lab presets. Motion Lab MCP is a Pro workflow tool.',
+  {
+    id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
+    library: z.string().describe('Library or premium pack name.'),
+    preset: z.string().describe('Motion preset id.'),
+    trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
+    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
+  },
+  async ({ id, library, preset, trigger, durationMs, intensityPercent, color }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Motion Lab MCP');
+    }
+
+    const icon = await resolveAccessibleIcon(id, library);
+    if (!icon?.svg) {
+      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+    }
+
+    try {
+      return buildTextResponse({
+        id: icon.id,
+        library: icon.library,
+        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs, intensityPercent }),
+        animatedSvg: buildMotionLabAnimatedSvg({
+          svg: icon.svg,
+          presetId: preset,
+          trigger,
+          durationMs,
+          intensityPercent,
+          color: color || null,
+        }),
+      });
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
+  }
+);
+
+// --- Tool: animate_icon ---
+server.tool(
+  'animate_icon',
+  'Generate both Motion Lab CSS and a self-contained animated SVG for one icon. Motion Lab MCP is a Pro workflow tool.',
+  {
+    id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
+    library: z.string().describe('Library or premium pack name.'),
+    preset: z.string().describe('Motion preset id.'),
+    trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
+    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
+  },
+  async ({ id, library, preset, trigger, durationMs, intensityPercent, color }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Motion Lab MCP');
+    }
+
+    const icon = await resolveAccessibleIcon(id, library);
+    if (!icon?.svg) {
+      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+    }
+
+    try {
+      const bundle = buildMotionLabBundle({
+        svg: icon.svg,
+        presetId: preset,
+        trigger,
+        durationMs,
+        intensityPercent,
+        color: color || null,
+      });
+      return buildTextResponse({
+        id: icon.id,
+        library: icon.library,
+        recipe: bundle.preset,
+        css: bundle.css,
+        animatedSvg: bundle.animatedSvg,
+      });
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
+  }
+);
+
+// --- Tool: inspect_converter_options ---
+server.tool(
+  'inspect_converter_options',
+  'List the current Converter MCP options and limits. Converter MCP is a Pro workflow tool.',
+  {},
+  async () => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Converter MCP');
+    }
+    return buildTextResponse(getConverterMcpOptions());
+  }
+);
+
+// --- Tool: convert_svg_to_png ---
+server.tool(
+  'convert_svg_to_png',
+  'Convert an SVG string to PNG. Converter MCP is a Pro workflow tool.',
+  {
+    svg: z.string().describe('Raw SVG string to render.'),
+    targetWidth: z.number().min(16).max(2048).optional().default(512).describe('Output width in pixels.'),
+    background: z.string().optional().default('transparent').describe('Background color: `transparent` or a hex value like `#ffffff`.'),
+  },
+  async ({ svg, targetWidth, background }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Converter MCP');
+    }
+    try {
+      return buildTextResponse(convertSvgToPng({
+        svg,
+        targetWidth,
+        background,
+      }));
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
+  }
+);
+
+// --- Tool: convert_png_to_svg ---
+server.tool(
+  'convert_png_to_svg',
+  'Convert a PNG payload to SVG. Converter MCP is a Pro workflow tool.',
+  {
+    imageBase64: z.string().describe('PNG as base64 text or data URL.'),
+    qualityMode: z.enum(['exact', 'compact']).optional().default('exact').describe('Tracing quality mode.'),
+    colorMode: z.enum(['color', 'mono']).optional().default('color').describe('Tracing color mode.'),
+    traceClass: z.enum(['general-color', 'flat-logo-color', 'tile-icon-color', 'tiny-line-icon', 'single-color-mark', 'mono-mask']).optional().default('general-color').describe('Tracing profile tuned for the source image.'),
+    uiMode: z.enum(['logo', 'icon']).optional().default('logo').describe('Output bias for logo or icon-style artwork.'),
+  },
+  async ({ imageBase64, qualityMode, colorMode, traceClass, uiMode }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Converter MCP');
+    }
+    try {
+      return buildTextResponse(await convertPngToSvg({
+        imageBase64,
+        qualityMode,
+        colorMode,
+        traceClass,
+        uiMode,
+      }));
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
   }
 );
 

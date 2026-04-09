@@ -17,6 +17,7 @@
         <span>SuperIcons</span>
       </a>
       <div class="docs-nav__links">
+        <a class="docs-nav__link" href="/docs/index.html">Docs</a>
         <a class="docs-nav__link" href="/mcp/">MCP hub</a>
         <a class="docs-nav__link" href="/mcp/claude-code/">Claude Code</a>
         <a class="docs-nav__link" href="/mcp/cursor/">Cursor</a>
@@ -80,6 +81,20 @@ Insert the Lucide SVG into the sign-in button component.</code></pre>
         </section>
 
         <section class="docs-section">
+          <h2>Premium access</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Entitlement first</h3>
+              <p>Your API key carries the premium collections your Supericons account already owns through Pro or purchased packs. The key alone is not the entitlement.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Codex setup note</h3>
+              <p>Generate the key in API Keys, then add <code>SUPERICONS_API_KEY</code> using the env or secrets mechanism your Codex MCP setup uses alongside the <code>supericons-mcp</code> server entry.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
           <h2>Troubleshooting</h2>
           <div class="docs-grid">
             <article class="docs-card">
@@ -92,7 +107,7 @@ Insert the Lucide SVG into the sign-in button component.</code></pre>
             </article>
             <article class="docs-card">
               <h3>Premium results are unavailable</h3>
-              <p>Premium icon access depends on your SuperIcons entitlement. Free flows still return 20,000+ icons without a paid plan.</p>
+              <p>Premium icon access depends on your Supericons entitlement plus a valid <code>SUPERICONS_API_KEY</code>. Free flows still return 20,000+ icons without a paid plan.</p>
             </article>
           </div>
         </section>
@@ -102,6 +117,7 @@ Insert the Lucide SVG into the sign-in button component.</code></pre>
         <section class="docs-sidebar">
           <h3>Related guides</h3>
           <div class="docs-link-list">
+            <a href="/docs/index.html">Docs hub</a>
             <a href="/mcp/">MCP hub</a>
             <a href="/mcp/claude-code/">Claude Code setup</a>
             <a href="/mcp/cursor/">Cursor setup</a>

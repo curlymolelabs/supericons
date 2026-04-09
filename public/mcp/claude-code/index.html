@@ -17,6 +17,7 @@
         <span>SuperIcons</span>
       </a>
       <div class="docs-nav__links">
+        <a class="docs-nav__link" href="/docs/index.html">Docs</a>
         <a class="docs-nav__link" href="/mcp/">MCP hub</a>
         <a class="docs-nav__link" href="/mcp/codex/">Codex</a>
         <a class="docs-nav__link" href="/mcp/cursor/">Cursor</a>
@@ -78,6 +79,20 @@ Then insert the chosen SVG into my React component.</code></pre>
         </section>
 
         <section class="docs-section">
+          <h2>Premium access</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>How premium actually works</h3>
+              <p>Premium icons do not unlock because a key exists. They unlock when your Supericons account has Pro or purchased pack access and Claude Code launches the MCP server with your <code>SUPERICONS_API_KEY</code>.</p>
+            </article>
+            <article class="docs-card">
+              <h3>What to do</h3>
+              <p>Sign in to Supericons, generate an API key from the API Keys page, then add that key in the env or secrets surface Claude Code uses for MCP server configuration.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
           <h2>Troubleshooting</h2>
           <div class="docs-grid">
             <article class="docs-card">
@@ -90,7 +105,7 @@ Then insert the chosen SVG into my React component.</code></pre>
             </article>
             <article class="docs-card">
               <h3>Premium icons are missing</h3>
-              <p>Free icons work without a paid plan. Premium collections require the right SuperIcons entitlement or MCP key.</p>
+              <p>Free icons work without a paid plan. Premium collections require both the right Supericons entitlement and a valid <code>SUPERICONS_API_KEY</code> in your MCP server config.</p>
             </article>
           </div>
         </section>
@@ -100,6 +115,7 @@ Then insert the chosen SVG into my React component.</code></pre>
         <section class="docs-sidebar">
           <h3>Related guides</h3>
           <div class="docs-link-list">
+            <a href="/docs/index.html">Docs hub</a>
             <a href="/mcp/">MCP hub</a>
             <a href="/mcp/codex/">Codex setup</a>
             <a href="/mcp/cursor/">Cursor setup</a>

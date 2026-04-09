@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons MCP Expansion Proposal</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --panel-soft: #f0f2f5;
+      --text: #142033;
+      --text-soft: #51607a;
+      --line: #d8deea;
+      --accent: #ff5a1f;
+      --accent-soft: rgba(255, 90, 31, 0.12);
+      --ok: #1c8b4d;
+      --shadow: 0 18px 40px rgba(20, 32, 51, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Inter, Arial, sans-serif;
+      background: linear-gradient(180deg, #fafbfc 0%, #f3f5f8 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .shell {
+      width: min(1120px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--text-soft);
+    }
+
+    .hero-grid,
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      margin-top: 22px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 24px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card.soft {
+      background: var(--panel-soft);
+      box-shadow: none;
+    }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kpi strong {
+      font-size: 1.8rem;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .list,
+    .steps {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-soft);
+    }
+
+    .steps li,
+    .list li {
+      margin-bottom: 8px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text-soft);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .quote {
+      background: #fff7f2;
+      border: 1px solid #ffd9c8;
+      color: #7a3a1d;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-family: Consolas, "SFMono-Regular", monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid var(--line);
+      padding: 12px 10px;
+    }
+
+    th {
+      color: var(--text);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title {
+      margin: 10px 0 14px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    .phase {
+      display: grid;
+      gap: 10px;
+    }
+
+    .phase-item {
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <span class="eyebrow">Proposal Plan</span>
+      <h1>MCP, Motion Lab, Converter, and Docs Expansion</h1>
+      <p>This proposal aligns MCP copy with the real entitlement model, maps the current MCP surface, and defines how Motion Lab and Converter should become agent-accessible Pro workflow tools.</p>
+      <div class="hero-grid">
+        <div class="card soft">
+          <h2>Primary Recommendation</h2>
+          <p>Make MCP a complete workflow surface instead of a search-only feature. Keep icon retrieval as the entry point, then extend Pro value through Motion Lab and Converter access for agents.</p>
+          <div class="tag-row">
+            <span class="tag">Correct copy first</span>
+            <span class="tag">Add premium setup path</span>
+            <span class="tag">Launch docs IA</span>
+            <span class="tag">Motion Lab MCP next</span>
+            <span class="tag">Converter MCP after</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span>Current MCP tools</span>
+            <strong>3</strong>
+            <span class="ok">search_icons, get_icon, list_libraries</span>
+          </div>
+          <div class="kpi" style="margin-top:18px;">
+            <span>Workflow tools exposed to MCP today</span>
+            <strong>0</strong>
+            <span>Motion Lab and Converter are browser-only right now.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2 class="section-title">Exact Copy Sources</h2>
+        <p>The current premium statement is in the in-app MCP hub.</p>
+        <div class="quote">Free icons work out of the box. Premium collections unlock with a Pro subscription or API key.</div>
+        <p style="margin-top:12px;">The stale MCP tool description is in the MCP server package.</p>
+        <div class="quote">Search 19,000+ icons across 9 libraries using AI-powered synonym expansion. Returns matching icons with SVG code. Premium collections require a Pro API key.</div>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Why It Needs Correction</h2>
+        <ul class="list">
+          <li>An API key is not the source of premium access. It carries account entitlement.</li>
+          <li>Pack buyers are missing from the current premium copy.</li>
+          <li>The server count claim is out of sync with broader product messaging.</li>
+          <li>The premium setup path is incomplete because the MCP page does not explain Dashboard API key generation.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2 class="section-title">Recommended Copy</h2>
+        <div class="quote">Free icons work out of the box. Premium collections are available when your account has Pro or purchased pack access and your MCP client is connected with your Supericons API key.</div>
+        <p style="margin-top:12px;">Preferred launch copy for the search tool if implementation is aligned:</p>
+        <div class="quote">Search 20,000+ free icons across 10 libraries. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.</div>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Safe Interim Copy</h2>
+        <p>If count and library totals are not fully aligned in MCP yet, ship truth-first wording instead of a risky numeric promise.</p>
+        <div class="quote">Search free icons across the libraries currently supported by Supericons MCP. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.</div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-bottom:24px;">
+      <h2 class="section-title">Current MCP Sitemap</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Surface</th>
+            <th>Current Role</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Landing MCP teaser</td>
+            <td>Discovery and base install snippet</td>
+            <td>Free path only</td>
+          </tr>
+          <tr>
+            <td>In-app MCP hub</td>
+            <td>Main MCP product page</td>
+            <td>No explicit premium setup path</td>
+          </tr>
+          <tr>
+            <td>Static MCP redirect</td>
+            <td>Routes traffic into the app shell</td>
+            <td>No docs IA of its own</td>
+          </tr>
+          <tr>
+            <td>Pricing page</td>
+            <td>Explains free vs paid access</td>
+            <td>Weakly connected to setup flow</td>
+          </tr>
+          <tr>
+            <td>Dashboard API keys</td>
+            <td>Generate keys for MCP and programmatic access</td>
+            <td>Not surfaced clearly in MCP docs</td>
+          </tr>
+          <tr>
+            <td>MCP package and auth</td>
+            <td>Runs tools and validates <code>SUPERICONS_API_KEY</code></td>
+            <td>Tool metadata copy is stale</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid-3">
+      <article class="card">
+        <h2 class="section-title">Current Tools</h2>
+        <ul class="list">
+          <li><code>search_icons</code></li>
+          <li><code>get_icon</code></li>
+          <li><code>list_libraries</code></li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Motion Lab Today</h2>
+        <ul class="list">
+          <li>Browser-only workspace</li>
+          <li>Preset-driven animation tuning</li>
+          <li>CSS export</li>
+          <li>Standalone animated SVG export</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Converter Today</h2>
+        <ul class="list">
+          <li>Browser-only workspace</li>
+          <li>SVG to PNG</li>
+          <li>PNG to SVG</li>
+          <li>Download and copy export controls</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2 class="section-title">Proposed MCP UX Flow</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <strong>Free path</strong>
+            Discover MCP, copy config, restart client, search icons, retrieve SVG.
+          </div>
+          <div class="flow-step">
+            <strong>Premium path</strong>
+            Sign in, subscribe to Pro or buy a pack, generate API key in Dashboard, add <code>SUPERICONS_API_KEY</code>, restart client, use premium tools.
+          </div>
+          <div class="flow-step">
+            <strong>Recovery path</strong>
+            If key is invalid or revoked, MCP error points back to Dashboard API keys and setup docs.
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Required States</h2>
+        <ul class="list">
+          <li>Anonymous free setup</li>
+          <li>Signed in but no entitlement</li>
+          <li>Entitled but no API key yet</li>
+          <li>Valid premium key</li>
+          <li>Invalid or revoked key</li>
+          <li>Tool unavailable or unsupported request</li>
+          <li>Premium workflow requested without access</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2 class="section-title">Proposed Motion Lab MCP</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>list_motion_presets</code></td>
+              <td>List presets and categories</td>
+            </tr>
+            <tr>
+              <td><code>animate_icon</code></td>
+              <td>Apply preset and return motion payload</td>
+            </tr>
+            <tr>
+              <td><code>export_motion_css</code></td>
+              <td>Return external CSS for inline SVG usage</td>
+            </tr>
+            <tr>
+              <td><code>export_animated_svg</code></td>
+              <td>Return standalone animated SVG</td>
+            </tr>
+            <tr>
+              <td><code>get_motion_recipe</code></td>
+              <td>Explain trigger, duration, easing, and usage</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Proposed Converter MCP</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>convert_svg_to_png</code></td>
+              <td>Convert SVG input into PNG output</td>
+            </tr>
+            <tr>
+              <td><code>convert_png_to_svg</code></td>
+              <td>Trace raster input into SVG output</td>
+            </tr>
+            <tr>
+              <td><code>inspect_converter_input</code></td>
+              <td>Analyze paint support and trace risks</td>
+            </tr>
+            <tr>
+              <td><code>suggest_converter_settings</code></td>
+              <td>Recommend presets and output settings</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="card" style="margin-bottom:24px;">
+      <h2 class="section-title">Docs And Guides IA</h2>
+      <div class="grid-3" style="margin-bottom:0;">
+        <div>
+          <h3>Foundational Docs</h3>
+          <ul class="list">
+            <li>/docs</li>
+            <li>/docs/quickstart</li>
+            <li>/docs/entitlements</li>
+            <li>/docs/troubleshooting</li>
+          </ul>
+        </div>
+        <div>
+          <h3>MCP Docs</h3>
+          <ul class="list">
+            <li>/docs/mcp/overview</li>
+            <li>/docs/mcp/free-setup</li>
+            <li>/docs/mcp/premium-setup</li>
+            <li>/docs/mcp/tools/icons</li>
+            <li>/docs/mcp/tools/motion-lab</li>
+            <li>/docs/mcp/tools/converter</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Client Guides</h3>
+          <ul class="list">
+            <li>Claude Code</li>
+            <li>Codex</li>
+            <li>Cursor</li>
+            <li>Windsurf</li>
+            <li>Cline</li>
+            <li>Copilot agent</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2 class="section-title">Implementation Phases</h2>
+        <div class="phase">
+          <div class="phase-item"><strong>Phase 1</strong><br>Copy and truth alignment</div>
+          <div class="phase-item"><strong>Phase 2</strong><br>MCP hub split into Free setup and Premium setup</div>
+          <div class="phase-item"><strong>Phase 3</strong><br>Docs IA and first guide set</div>
+          <div class="phase-item"><strong>Phase 4</strong><br>Motion Lab MCP</div>
+          <div class="phase-item"><strong>Phase 5</strong><br>Converter MCP</div>
+          <div class="phase-item"><strong>Phase 6</strong><br>QA, entitlement checks, and launch validation</div>
+        </div>
+      </article>
+      <article class="card">
+        <h2 class="section-title">Immediate Next Steps</h2>
+        <ol class="steps">
+          <li>Correct the MCP hero copy and stale tool description.</li>
+          <li>Add a premium setup block that points users to Dashboard API key generation.</li>
+          <li>Create the docs IA and first three pages: Quickstart, MCP Free Setup, MCP Premium Setup.</li>
+          <li>Scope Motion Lab MCP as the first Pro workflow-tool expansion.</li>
+          <li>Scope Converter MCP immediately after Motion Lab.</li>
+        </ol>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
