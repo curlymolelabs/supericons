@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons Light Mode Redesign Mockup</title>
+  <style>
+    :root{
+      --bg:#f6f4ef;--bg2:#fcfbf8;--card:#fff;--soft:#f1ede6;--line:#e6ddd2;--text:#241f19;
+      --muted:#74695d;--faint:#9b8f82;--accent:#f26727;--accent-soft:rgba(242,103,39,.12);
+      --green:#1f9a5f;--green-soft:rgba(31,154,95,.12);--shadow:0 18px 42px rgba(53,35,16,.08);
+      --tight:0 10px 24px rgba(44,28,12,.06);--pill:999px;--r-xl:28px;--r-lg:22px;--r-md:16px;
+      --ui:"Aptos","Segoe UI",sans-serif;--display:"Iowan Old Style","Palatino Linotype",serif;
+    }
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:var(--ui);color:var(--text);
+      background:radial-gradient(circle at top left,rgba(255,255,255,.85),transparent 28%),
+      radial-gradient(circle at top right,rgba(242,103,39,.07),transparent 22%),
+      linear-gradient(180deg,#f8f7f4 0%,#f3efe8 100%)}
+    body{padding:24px}
+    .app{max-width:1440px;margin:0 auto;border:1px solid rgba(230,221,210,.9);border-radius:34px;
+      overflow:hidden;background:rgba(252,250,246,.92);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;
+      border-bottom:1px solid rgba(230,221,210,.8);background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(250,248,244,.92))}
+    .brand{display:flex;align-items:center;gap:14px}.mark{width:40px;height:40px;border-radius:14px;display:grid;
+      place-items:center;font-weight:800;color:#cf5616;background:linear-gradient(135deg,rgba(242,103,39,.14),rgba(242,103,39,.02)),#fff;
+      border:1px solid rgba(242,103,39,.22)}.brand strong{display:block;font-size:.95rem}.brand span{color:var(--muted);
+      font-size:.76rem;letter-spacing:.08em;text-transform:uppercase}
+    .chips,.meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .chip{padding:9px 13px;border-radius:var(--pill);border:1px solid var(--line);background:rgba(255,255,255,.88);
+      color:var(--muted);font-size:.8rem;font-weight:700}.chip--accent{background:var(--accent-soft);border-color:rgba(242,103,39,.26);color:#c94f14}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px}
+    .main{padding:26px}.rail{padding:20px;border-left:1px solid rgba(230,221,210,.82);
+      background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(247,244,238,.96))}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-bottom:20px}
+    .hero-card,.surface{border:1px solid rgba(230,221,210,.82);border-radius:var(--r-xl);background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(250,247,242,.94));box-shadow:var(--tight)}
+    .hero-card{padding:24px}.eyebrow,.tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--pill);
+      background:#fff;border:1px solid rgba(230,221,210,.85);color:var(--muted);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,h4,p{margin:0}.hero-card h1{margin-top:16px;font-family:var(--display);font-size:clamp(2.2rem,4vw,3.7rem);line-height:.95;letter-spacing:-.04em}
+    .lede{margin-top:18px;color:var(--muted);line-height:1.65;max-width:42rem}
+    .principles{display:grid;gap:12px;padding:24px}.principle{padding:14px 16px;border-radius:18px;background:#fff;border:1px solid rgba(230,221,210,.78)}
+    .principle strong{display:block;margin-bottom:6px;font-size:.9rem}.principle span{color:var(--muted);line-height:1.55;font-size:.88rem}
+    .showcase{display:grid;grid-template-columns:1.03fr .97fr;gap:18px}
+    .surface{padding:22px}.head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+    .head h2{font-size:1.45rem;letter-spacing:-.03em}.head p{margin-top:8px;color:var(--muted);line-height:1.6}.note{color:var(--faint);font-size:.76rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px;border-radius:20px;border:1px solid rgba(230,221,210,.8);
+      background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(248,245,240,.9))}.toolbar h3{font-size:1.38rem;letter-spacing:-.03em}
+    .toolbar p{margin-top:8px;color:var(--muted);line-height:1.55}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:16px}
+    .icon-card{min-height:148px;padding:12px;border-radius:20px;background:#fff;border:1px solid rgba(230,221,210,.76);box-shadow:0 8px 18px rgba(42,31,17,.04);display:grid;gap:12px}
+    .icon-card.active{border-color:rgba(242,103,39,.42);box-shadow:0 14px 26px rgba(242,103,39,.12)}
+    .tag{justify-self:start;padding:5px 9px;font-size:.66rem}.tag.green{background:#edf6f1;color:#4f846a}.tag.orange{background:#f7efe6;color:#996a33}
+    .glyph{width:56px;height:56px;margin:4px auto 0;color:#3a342f}.glyph svg{width:56px;height:56px;display:block}
+    .name{text-align:center;margin-top:auto;font-size:.92rem;font-weight:700;letter-spacing:-.02em}
+    .pricing-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+    .pricing-head h2{font-family:var(--display);font-size:2rem;letter-spacing:-.03em}.pricing-head p{color:var(--muted);line-height:1.6;max-width:34rem}
+    .pricing{display:grid;grid-template-columns:1.05fr 1.3fr 1fr;gap:14px}
+    .price{padding:20px;border-radius:24px;background:#fff;border:1px solid rgba(230,221,210,.8);box-shadow:var(--tight);display:grid;gap:16px}
+    .price.pro{background:linear-gradient(135deg,rgba(242,103,39,.08),rgba(255,255,255,.98) 38%),#fff;border-color:rgba(242,103,39,.24)}
+    .price.bundle{background:linear-gradient(180deg,rgba(31,154,95,.06),rgba(255,255,255,.96) 42%),#fff}
+    .price .eyebrow{padding:8px 11px}.price h3{font-size:1.18rem;letter-spacing:-.03em}.price p{color:var(--muted);line-height:1.6}
+    .amount{font-size:2.35rem;font-weight:800;letter-spacing:-.05em}.amount span{font-size:.95rem;color:var(--muted);font-weight:600}
+    ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}.price li{display:flex;gap:10px;color:var(--muted);line-height:1.55}
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent);margin-top:.52rem;flex:none}.dot.green{background:var(--green)}
+    .btn{min-height:46px;padding:0 18px;border-radius:var(--pill);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.92rem}
+    .btn.primary{background:var(--accent);color:#fffdfb;box-shadow:0 12px 24px rgba(242,103,39,.2)}.btn.secondary{background:#fff;border:1px solid rgba(230,221,210,.86)}
+    .footer-note{margin-top:18px;padding:18px 20px;border-radius:22px;border:1px solid rgba(230,221,210,.8);background:#fff}.footer-note strong{display:block;margin-bottom:6px}
+    .footer-note p{color:var(--muted);line-height:1.65}
+    .panel{position:sticky;top:20px;border-radius:28px;border:1px solid rgba(230,221,210,.86);overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(250,247,242,.96));box-shadow:var(--tight)}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid rgba(230,221,210,.8)}
+    .panel-head h3{font-size:1.04rem}.panel-head span{color:var(--faint);font-size:1.2rem}
+    .panel-body{padding:22px;display:grid;gap:18px}
+    .preview{padding:18px;border-radius:22px;background:#fff;border:1px solid rgba(230,221,210,.82)}
+    .frame{height:188px;border-radius:18px;background:linear-gradient(180deg,#fff 0%,#fbfaf8 100%);border:1px solid rgba(230,221,210,.7);display:grid;place-items:center;color:#3a342f}
+    .frame svg{width:84px;height:84px;display:block}.preview-meta{text-align:center;display:grid;gap:8px;margin-top:16px}
+    .preview-meta .kicker{color:var(--faint);font-size:.86rem}.preview-meta .title{font-size:1.56rem;letter-spacing:-.04em}.preview-meta .desc{color:var(--muted);line-height:1.6}
+    .rule{height:1px;margin:0 -22px;background:rgba(230,221,210,.8)}
+    .row{display:grid;gap:12px}.inline{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center}
+    .play{width:54px;height:54px;border-radius:999px;display:grid;place-items:center;background:#fff;border:1px solid rgba(230,221,210,.9);box-shadow:var(--tight);color:#c94f14;font-weight:800}
+    .slider-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.82rem}.slider-top strong{color:var(--text)}
+    .track{height:4px;border-radius:999px;background:rgba(216,206,191,.9);position:relative}.track:before{content:"";position:absolute;inset:0 auto 0 0;width:34%;background:linear-gradient(90deg,#f7a35d,var(--accent));border-radius:inherit}
+    .track:after{content:"";position:absolute;left:34%;top:50%;width:16px;height:16px;border-radius:999px;background:var(--accent);box-shadow:0 6px 14px rgba(242,103,39,.24);transform:translate(-50%,-50%)}
+    .label-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.label{color:var(--faint);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .palette{display:flex;flex-wrap:wrap;gap:10px}.swatch{width:26px;height:26px;border-radius:999px;border:1px solid rgba(230,221,210,.9);box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}
+    .swatch.outline{background:linear-gradient(135deg,transparent 44%,#271f18 44%,#271f18 56%,transparent 56%),#fff}.swatch.selected{box-shadow:inset 0 0 0 2px rgba(255,255,255,.95),0 0 0 2px var(--accent)}
+    .seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.seg button{min-height:40px;padding:0 10px;border:1px solid rgba(230,221,210,.9);background:#fff;border-radius:var(--pill);color:var(--muted);font-weight:800;white-space:nowrap}
+    .seg button.active{background:var(--accent-soft);border-color:rgba(242,103,39,.24);color:#c94f14}
+    .export{display:grid;gap:12px;padding:16px;border-radius:18px;background:rgba(255,255,255,.74);border:1px solid rgba(230,221,210,.78)}
+    .export-title{color:var(--faint);font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .export .btnrow{display:grid;gap:10px}.exportbtn{min-height:46px;padding:0 14px;border-radius:15px;border:1px solid rgba(230,221,210,.86);background:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:800}
+    .exportbtn.primary{background:rgba(242,103,39,.12);border-color:rgba(242,103,39,.24);color:#c94f14}
+    @media (max-width:1180px){.layout,.hero,.showcase,.pricing{grid-template-columns:1fr}.rail{border-left:0;border-top:1px solid rgba(230,221,210,.82)}.panel{position:static}}
+    @media (max-width:820px){body{padding:14px}.main,.rail,.topbar{padding-left:18px;padding-right:18px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.seg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">S</div>
+        <div><strong>Supericons Light Mode Direction</strong><span>Minimalist + Professional</span></div>
+      </div>
+      <div class="meta">
+        <span class="chip">Near-white canvas</span>
+        <span class="chip chip--accent">Accent reserved for actions</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="main">
+        <section class="hero">
+          <div class="hero-card">
+            <div class="eyebrow">Light theme concept</div>
+            <h1>Clean surfaces, sharper contrast, less beige drift.</h1>
+            <p class="lede">This direction moves the app away from light-orange wash and toward a near-white workspace. White icon tiles and a white preview frame keep icon color truthful, while orange becomes a focused accent for action, selection, and premium intent.</p>
+          </div>
+          <div class="hero-card principles">
+            <div class="principle"><strong>White where truth matters</strong><span>Icon tiles, preview surfaces, and pricing cards stay white or almost white so icon color reads accurately in light mode.</span></div>
+            <div class="principle"><strong>Warmth in edges, not in fill</strong><span>Brand warmth moves into borders, shadows, and small gradients instead of tinting the entire product beige.</span></div>
+            <div class="principle"><strong>Editorial pricing hierarchy</strong><span>One clear hero plan, quieter support cards, stronger type hierarchy, and less generic card-wall energy.</span></div>
+          </div>
+        </section>
+
+        <div class="showcase">
+          <section class="surface">
+            <div class="head">
+              <div>
+                <h2>Collection View</h2>
+                <p>The grid keeps crisp white tiles so dark and colored icons stay balanced. Selection uses outline, shadow, and accent edge instead of repainting the whole screen.</p>
+              </div>
+              <span class="note">Preview surface should match icon tiles</span>
+            </div>
+
+            <div class="toolbar">
+              <div>
+                <h3>Security &amp; Auth</h3>
+                <p>Login flows, permissions, and trust-signal animations with cleaner light-mode contrast.</p>
+              </div>
+              <span class="chip" style="background:var(--green-soft);border-color:rgba(31,154,95,.18);color:var(--green)">Purchased</span>
+            </div>
+
+            <div class="grid">
+              <article class="icon-card">
+                <span class="tag orange">Access</span>
+                <div class="glyph">
+                  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="28" width="28" height="22" rx="6"/><path d="M24 28v-6c0-6 4-10 8-10s8 4 8 10v6"/></svg>
+                </div>
+                <div class="name">lock-open</div>
+              </article>
+              <article class="icon-card">
+                <span class="tag orange">Protection</span>
+                <div class="glyph">
+                  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10l18 6v13c0 13-8 20-18 25-10-5-18-12-18-25V16l18-6z"/><path d="M32 24v18"/><path d="M23 33h18"/></svg>
+                </div>
+                <div class="name">encrypt-scramble</div>
+              </article>
+              <article class="icon-card">
+                <span class="tag green">Compliance</span>
+                <div class="glyph" style="color:#1f9a5f">
+                  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10l14 8v14c0 11-6 17-14 22-8-5-14-11-14-22V18l14-8z"/><path d="M25 33l5 5 9-11"/></svg>
+                </div>
+                <div class="name">certificate-seal</div>
+              </article>
+              <article class="icon-card active">
+                <span class="tag green">Compliance</span>
+                <div class="glyph">
+                  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="14" width="28" height="36" rx="6"/><path d="M25 24h14"/><path d="M25 31h10"/><path d="M25 38l4 4 10-10"/></svg>
+                </div>
+                <div class="name">compliance-check</div>
+              </article>
+            </div>
+          </section>
+
+          <section class="surface">
+            <div class="pricing-head">
+              <div>
+                <h2>Pricing with more editorial hierarchy</h2>
+                <p>Cleaner white cards, tighter contrast, stronger typography, and a clearer premium center of gravity without looking sterile.</p>
+              </div>
+              <span class="chip">No beige wash</span>
+            </div>
+            <div class="pricing">
+              <article class="price">
+                <span class="eyebrow">Free</span>
+                <div><h3>Free</h3><p>Browse, search, and export the full free library.</p></div>
+                <div class="amount">$0 <span>forever</span></div>
+                <ul>
+                  <li><span class="dot"></span><span>20,000+ icons across 10 libraries</span></li>
+                  <li><span class="dot"></span><span>AI search, SVG and PNG export</span></li>
+                  <li><span class="dot"></span><span>MCP access for the free catalog</span></li>
+                </ul>
+                <div class="btn secondary">Start for Free</div>
+              </article>
+              <article class="price pro">
+                <span class="eyebrow" style="background:var(--accent-soft);border-color:rgba(242,103,39,.24);color:#c94f14">Most popular</span>
+                <div><h3>Pro</h3><p>Animated collections, Motion Lab tools, and a more polished daily workflow.</p></div>
+                <div class="amount">$12 <span>per month</span></div>
+                <ul>
+                  <li><span class="dot"></span><span>Everything in Free</span></li>
+                  <li><span class="dot"></span><span>Animated premium packs with export control</span></li>
+                  <li><span class="dot"></span><span>Motion Lab and premium MCP access</span></li>
+                </ul>
+                <div class="btn primary">Go Pro</div>
+              </article>
+              <article class="price bundle">
+                <span class="eyebrow" style="background:var(--green-soft);border-color:rgba(31,154,95,.18);color:var(--green)">Launch bundle</span>
+                <div><h3>Bundle</h3><p>One-time purchase for the current premium pack lineup.</p></div>
+                <div class="amount">$29 <span>one-time</span></div>
+                <ul>
+                  <li><span class="dot green"></span><span>All premium packs unlocked</span></li>
+                  <li><span class="dot green"></span><span>Lifetime ownership</span></li>
+                  <li><span class="dot green"></span><span>Commercial use for shipped products</span></li>
+                </ul>
+                <div class="btn secondary">Get Bundle</div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div class="footer-note">
+          <strong>Recommended light-mode decision</strong>
+          <p>Yes: the preview pane should move to white or a white-to-soft-white gradient very close to the icon-card surface. That keeps preview contrast honest, removes the muddy beige cast, and makes colored icons feel more premium.</p>
+        </div>
+      </main>
+
+      <aside class="rail">
+        <section class="panel">
+          <div class="panel-head"><h3>Customize</h3><span>&times;</span></div>
+          <div class="panel-body">
+            <div class="preview">
+              <div class="frame">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10l14 8v14c0 11-6 17-14 22-8-5-14-11-14-22V18l14-8z"/><path d="M25 33l5 5 9-11"/></svg>
+              </div>
+              <div class="preview-meta">
+                <div class="kicker">Security &amp; Auth</div>
+                <div class="title">certificate-seal</div>
+                <div class="desc">White preview surface, quieter chrome, clearer icon contrast.</div>
+              </div>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="row">
+              <div class="inline">
+                <div class="play">&#9654;</div>
+                <div>
+                  <div class="slider-top"><span><strong>Speed</strong></span><span>1x</span></div>
+                  <div class="track"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label-row"><span class="label">Color</span><span class="note">Original + compact palette</span></div>
+              <div class="palette">
+                <span class="swatch outline"></span><span class="swatch" style="background:#fff"></span><span class="swatch" style="background:#d8d3cb"></span>
+                <span class="swatch" style="background:#8d857a"></span><span class="swatch" style="background:#ff6a1a"></span><span class="swatch" style="background:#ff8352"></span>
+                <span class="swatch" style="background:#f6b507"></span><span class="swatch selected" style="background:#22c55e"></span><span class="swatch" style="background:#4f8df7"></span>
+                <span class="swatch" style="background:#8b5cf6"></span><span class="swatch" style="background:#e646a2"></span><span class="swatch" style="background:#22c5d9"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="label-row"><span class="label">Export trigger</span><span class="note">Reset belongs here</span></div>
+              <div class="seg">
+                <button class="active">Loop</button><button>Hover</button><button>Play once</button><button>&#8635;</button>
+              </div>
+            </div>
+
+            <div class="export">
+              <div class="export-title">SVG</div>
+              <div class="btnrow">
+                <div class="exportbtn primary"><span>Download Animated SVG</span><span>&#8595;</span></div>
+                <div class="exportbtn"><span>Copy Animated SVG</span><span>&#9118;</span></div>
+                <div class="exportbtn"><span>Copy Static SVG</span><span>&#9118;</span></div>
+              </div>
+            </div>
+
+            <div class="export">
+              <div class="export-title">PNG</div>
+              <div class="seg"><button class="active">48</button><button>64</button><button>96</button><button>128</button></div>
+              <div class="btnrow"><div class="exportbtn"><span>Download PNG</span><span>&#8595;</span></div></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

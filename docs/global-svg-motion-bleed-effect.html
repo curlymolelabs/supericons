@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Global SVG Motion Bleed Effect</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08090b;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-strong: rgba(255, 255, 255, 0.1);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f4f2ee;
+      --muted: #a7a39b;
+      --accent: #ff6a3d;
+      --accent-soft: rgba(255, 106, 61, 0.18);
+      --ok: #57d48a;
+      --warn: #ff9f43;
+      --danger: #ff5d6c;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 106, 61, 0.15), transparent 34%),
+        radial-gradient(circle at top right, rgba(87, 212, 138, 0.08), transparent 28%),
+        linear-gradient(180deg, #0d0f12 0%, #08090b 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: transparent;
+      transition: filter 220ms ease, transform 220ms ease;
+    }
+
+    body.demo-global-bleed {
+      animation: page-threat-shake 560ms cubic-bezier(0.22, 1, 0.36, 1);
+      filter: saturate(1.14) contrast(1.06);
+    }
+
+    main {
+      width: min(1100px, calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 56px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font: 700 0.8rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 {
+      margin: 0;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      max-width: 11ch;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .hero p {
+      max-width: 70ch;
+      font-size: 1.08rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 18px;
+      color: var(--text);
+      background: var(--panel);
+      cursor: pointer;
+      font: 600 0.95rem/1 system-ui, sans-serif;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--panel-strong);
+    }
+
+    button.primary {
+      background: var(--accent-soft);
+      border-color: rgba(255, 106, 61, 0.35);
+      color: #ffd9cd;
+    }
+
+    button.secondary {
+      background: rgba(87, 212, 138, 0.12);
+      border-color: rgba(87, 212, 138, 0.26);
+      color: #c9f5db;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+    }
+
+    .demo-surface {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      min-height: 320px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.06), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .demo-surface.is-active {
+      animation: page-threat-shake 560ms cubic-bezier(0.22, 1, 0.36, 1);
+      filter: saturate(1.14) contrast(1.06);
+    }
+
+    .demo-surface::after {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle, rgba(255, 93, 108, 0.18), transparent 42%),
+        radial-gradient(circle at 70% 30%, rgba(255, 159, 67, 0.1), transparent 32%);
+      opacity: 0;
+      transform: scale(0.92);
+      pointer-events: none;
+    }
+
+    .demo-surface.is-active::after {
+      animation: aura-flare 560ms ease;
+    }
+
+    .icon-stack {
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .icon-frame {
+      width: 136px;
+      height: 136px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07);
+    }
+
+    .icon-frame svg {
+      width: 84px;
+      height: 84px;
+      color: white;
+    }
+
+    .icon-frame svg.is-animating {
+      animation: firewall-rise 560ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center bottom;
+      filter: drop-shadow(0 0 10px rgba(255, 93, 108, 0.35));
+    }
+
+    .meta {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tag {
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #f3d8ca;
+      font: 0.9rem/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .note {
+      padding: 16px 18px;
+      border-left: 3px solid var(--warn);
+      border-radius: 14px;
+      background: rgba(255, 159, 67, 0.08);
+      color: #f4d1a4;
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @keyframes firewall-rise {
+      0% {
+        transform: translateY(0) scaleY(1);
+        filter: drop-shadow(0 0 0 rgba(255, 93, 108, 0));
+      }
+      25% {
+        transform: translateY(6px) scaleY(0.9);
+      }
+      55% {
+        transform: translateY(-4px) scaleY(1.12);
+        filter: drop-shadow(0 0 16px rgba(255, 93, 108, 0.45));
+      }
+      100% {
+        transform: translateY(0) scaleY(1);
+        filter: drop-shadow(0 0 0 rgba(255, 93, 108, 0));
+      }
+    }
+
+    @keyframes page-threat-shake {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      18% {
+        transform: translate3d(-6px, 1px, 0) scale(1.01);
+      }
+      36% {
+        transform: translate3d(7px, -2px, 0) scale(1.018);
+      }
+      54% {
+        transform: translate3d(-5px, 2px, 0) scale(1.008);
+      }
+      72% {
+        transform: translate3d(3px, -1px, 0) scale(1.004);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes aura-flare {
+      0% {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      35% {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 860px) {
+      main {
+        width: min(100vw - 24px, 1100px);
+        padding-top: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Effect Archive</div>
+      <h1>Global SVG Motion Bleed</h1>
+      <p>
+        An accidental interaction pattern discovered during premium animated icon testing.
+        The icon's motion leaked past the preview surface and made the whole page react like the icon itself.
+        It is too disruptive for the default customize flow, but strong enough to keep as a future motion concept.
+      </p>
+      <div class="actions">
+        <button class="primary" id="triggerPage">Trigger Global Bleed</button>
+        <button class="secondary" id="triggerSurface">Trigger Scoped Surface</button>
+        <button id="triggerIcon">Trigger Icon Only</button>
+        <button id="resetDemo">Reset</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="tag">Live Demo</div>
+        <div class="demo-surface" id="demoSurface">
+          <div class="icon-stack">
+            <div class="icon-frame">
+              <svg id="demoIcon" viewBox="0 -960 960 960" aria-hidden="true">
+                <path fill="currentColor" d="M467-85q-6-1-12-3-135-45-215-166.5T160-516v-189q0-25 14.5-45t37.5-29l240-90q14-5 28-5t28 5l240 90q23 9 37.5 29t14.5 45v189q0 140-80 261.5T505-88q-6 2-12 3t-13 1q-7 0-13-1Zm13-333 140-140q11-11 11-28t-11-28q-11-11-28-11t-28 11l-84 84-44-44q-11-11-28-11t-28 11q-11 11-11 28t11 28l100 100Z"></path>
+              </svg>
+            </div>
+            <div class="meta">
+              <h2>Firewall-Wall style motion</h2>
+              <p>
+                This demo separates three layers of the same idea:
+                icon-only animation, intentional surface animation, and the accidental full-page bleed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <div class="tag">Capture Notes</div>
+        <div class="meta">
+          <h2>Why it happened</h2>
+          <p>
+            The premium preview builder rewrote icon-targeted CSS selectors to <code>:root</code>.
+            Once the SVG was mounted inline in the page, <code>:root</code> referred to the document root instead of an isolated icon container.
+          </p>
+          <pre>.si-icon-cell:hover .mnv3on svg {
+  animation: qascmc 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+becomes
+
+:root {
+  animation: qascmc 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}</pre>
+          <div class="note">
+            Keep the concept, not the side effect. If reused, bind the motion to a dedicated wrapper such as
+            <code>.motion-surface.is-animated</code> rather than the document root.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="tag">Good Uses</div>
+        <ul>
+          <li>Security alert pulses for threat-state transitions</li>
+          <li>Hero demos for premium animation collections</li>
+          <li>Short cinematic transitions between locked and unlocked modes</li>
+          <li>High-intent confirmation feedback on protected actions</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="tag">Guardrails</div>
+        <ul>
+          <li>Never ship it as a hidden side effect of inline SVG rewriting</li>
+          <li>Respect reduced-motion preferences</li>
+          <li>Use explicit triggers and brief durations</li>
+          <li>Prefer a scoped wrapper over the document root</li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="footer">
+      Captured from the premium animated icon customize-panel investigation on 2026-04-09.
+    </p>
+  </main>
+
+  <script>
+    const body = document.body;
+    const surface = document.getElementById('demoSurface');
+    const icon = document.getElementById('demoIcon');
+
+    function restartClass(target, className) {
+      target.classList.remove(className);
+      void target.offsetWidth;
+      target.classList.add(className);
+    }
+
+    document.getElementById('triggerPage').addEventListener('click', () => {
+      restartClass(body, 'demo-global-bleed');
+      restartClass(icon, 'is-animating');
+    });
+
+    document.getElementById('triggerSurface').addEventListener('click', () => {
+      restartClass(surface, 'is-active');
+      restartClass(icon, 'is-animating');
+    });
+
+    document.getElementById('triggerIcon').addEventListener('click', () => {
+      restartClass(icon, 'is-animating');
+    });
+
+    document.getElementById('resetDemo').addEventListener('click', () => {
+      body.classList.remove('demo-global-bleed');
+      surface.classList.remove('is-active');
+      icon.classList.remove('is-animating');
+    });
+  </script>
+</body>
+</html>

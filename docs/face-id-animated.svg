@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="p5mmps si-premium-standalone-root"><style>/* Security &amp; Auth Collection: CSS-only hover animations
+   Source: Material Symbols Rounded (solid/filled)
+   
+   DESIGN RULE: Every animation tells a security story.
+   Motion vocabulary: lock mechanisms, biometric scans,
+   encryption transforms, shield deflections, access grants. */
+
+svg.si-premium-standalone-root { overflow: visible; }
+
+/* 6. FACE-ID: Recognition frame. Contracts inward to focus then confirms with glow. */
+svg.si-premium-standalone-root:hover {
+  animation: v2cr3f 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+/* 6. Face recognition: contracts to focus point then confirms */
+@keyframes v2cr3f {
+  0%   { transform: perspective(200px) scale(1) rotateX(0deg); filter: brightness(1); }
+  20%  { transform: perspective(200px) scale(0.88) rotateX(5deg); filter: brightness(0.8); }
+  40%  { transform: perspective(200px) scale(0.85) rotateX(8deg); filter: brightness(0.7) drop-shadow(0 0 4px rgba(96,165,250,0.3)); }
+  55%  { transform: perspective(200px) scale(1.06) rotateX(-2deg); filter: brightness(1.8) drop-shadow(0 0 12px rgba(34,197,94,0.5)); }
+  75%  { transform: perspective(200px) scale(1.02) rotateX(0deg); filter: brightness(1.2) drop-shadow(0 0 4px rgba(34,197,94,0.2)); }
+  100% { transform: perspective(200px) scale(1) rotateX(0deg); filter: brightness(1); }
+}</style>
+  <path class="sa-face" fill="#3b82f6" d="M324.5-404.5Q310-419 310-440t14.5-35.5Q339-490 360-490t35.5 14.5Q410-461 410-440t-14.5 35.5Q381-390 360-390t-35.5-14.5Zm240 0Q550-419 550-440t14.5-35.5Q579-490 600-490t35.5 14.5Q650-461 650-440t-14.5 35.5Q621-390 600-390t-35.5-14.5ZM480-160q134 0 227-93t93-227q0-24-3-46.5T786-570q-21 5-42 7.5t-44 2.5q-91 0-172-39T390-708q-32 78-91.5 135.5T160-486v6q0 134 93 227t227 93Zm0 80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/>
+</svg>

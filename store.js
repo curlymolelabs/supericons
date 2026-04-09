@@ -366,6 +366,11 @@ function ensureClaimStatusLoaded() {
 function rerenderCollectionSurfaceForCurrentView() {
   if (currentView === 'packs') {
     renderPackCatalog();
+  } else if (currentView === 'collection-detail') {
+    const product = findProductById(activeCollectionProductId)
+      || products.find(item => item.slug === activeCollectionProductSlug)
+      || null;
+    if (product) void renderCollectionDetail(product);
   } else if (currentView === 'downloads') {
     renderDownloads();
   } else if (currentView === 'dashboard') {
@@ -479,6 +484,9 @@ async function fetchProducts() {
     if (!res.ok) return;
     products = await res.json();
     updatePackCount();
+    if (currentView === 'packs') {
+      renderPackCatalog();
+    }
   } catch (e) {
     console.warn('[Store] Failed to fetch products:', e.message);
   }
@@ -587,6 +595,9 @@ export function switchView(view) {
     // Reset customize panel to placeholder state (clear stale free icon controls)
     const panel = document.getElementById('panel');
     if (panel) {
+      clearPremiumPreviewTimer();
+      currentPremiumSelection = null;
+      premiumPanelState = createPremiumPanelState();
       const panelPreview = document.getElementById('panelPreview');
       if (panelPreview) {
         panelPreview.innerHTML = `<span class="material-symbols-outlined panel__preview-icon"
@@ -1236,7 +1247,17 @@ async function renderCollectionDetail(product) {
 
     const cell = document.createElement('div');
     cell.className = `collection-detail__icon-cell si-icon-cell ${!isPurchased ? 'collection-detail__icon-cell--locked' : ''}`;
+    cell.dataset.iconName = iconName;
     cell.style.setProperty('--cell-index', index);
+    cell.tabIndex = 0;
+    cell.setAttribute('role', 'button');
+    cell.setAttribute('aria-pressed', 'false');
+    cell.setAttribute(
+      'aria-label',
+      isPurchased
+        ? `Preview and customize ${iconName}`
+        : `View unlock options for ${iconName}`,
+    );
 
     // Category tag
     if (category) {
@@ -1285,14 +1306,30 @@ async function renderCollectionDetail(product) {
       cell.appendChild(lockBadge);
       cell.style.userSelect = 'none';
       cell.style.webkitUserSelect = 'none';
-      cell.addEventListener('click', () => showLockedPanel(iconName, product));
+      const showLocked = () => showLockedPanel(iconName, product);
+      cell.addEventListener('click', showLocked);
+      cell.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        showLocked();
+      });
     } else {
-      cell.addEventListener('click', () => selectPremiumIcon(iconName, product.slug));
+      const selectIcon = () => selectPremiumIcon(iconName, product.slug);
+      cell.addEventListener('click', selectIcon);
+      cell.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        selectIcon();
+      });
     }
 
     // Insert cell into grid (before watermark if present)
     grid.insertBefore(cell, grid.lastChild?.classList?.contains('collection-detail__watermark') ? grid.lastChild : null);
   });
+
+  if (isPurchased) {
+    renderPremiumPanelEmptyState(getProductName(product));
+  }
 }
 
 // Load collection CSS dynamically
@@ -1302,6 +1339,122 @@ async function renderCollectionDetail(product) {
 
 // Cache for fetched collection CSS text
 const _collectionCSSCache = {};
+const PREMIUM_SVG_ROOT_CLASS_IGNORES = new Set(['si-icon', 'si-anim', 'si-anim-dc']);
+const PREMIUM_STANDALONE_ROOT_CLASS = 'si-premium-standalone-root';
+const PREMIUM_COLOR_MODE_ORIGINAL = 'original';
+const PREMIUM_COLOR_MODE_CUSTOM = 'custom';
+const PREMIUM_NEUTRAL_HEX_COLORS = new Set([
+  '#000000',
+  '#111111',
+  '#222222',
+  '#333333',
+  '#444444',
+  '#555555',
+  '#666666',
+  '#777777',
+  '#888888',
+  '#999999',
+  '#aaaaaa',
+  '#bbbbbb',
+  '#cccccc',
+  '#dddddd',
+  '#eeeeee',
+  '#f5f5f5',
+  '#ffffff',
+]);
+
+function escapeRegExp(value = '') {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getPremiumStandaloneRootSelector({ hover = false } = {}) {
+  return `svg.${PREMIUM_STANDALONE_ROOT_CLASS}${hover ? ':hover' : ''}`;
+}
+
+function normalizePremiumHexColor(token = '') {
+  const match = String(token || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (!match) return '';
+  const raw = match[1].toLowerCase();
+  if (raw.length === 3) {
+    return `#${raw.split('').map(part => `${part}${part}`).join('')}`;
+  }
+  return `#${raw}`;
+}
+
+function isPremiumNeutralHexColor(token = '') {
+  const normalized = normalizePremiumHexColor(token);
+  if (!normalized) return false;
+  return PREMIUM_NEUTRAL_HEX_COLORS.has(normalized);
+}
+
+function analyzePremiumColorProfile(svgText = '') {
+  const hexMatches = String(svgText || '').match(/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g) || [];
+  const colorCounts = new Map();
+  hexMatches.forEach((token) => {
+    const normalized = normalizePremiumHexColor(token);
+    if (!normalized || isPremiumNeutralHexColor(normalized)) return;
+    colorCounts.set(normalized, (colorCounts.get(normalized) || 0) + 1);
+  });
+
+  const authoredColors = [...colorCounts.entries()]
+    .sort((left, right) => right[1] - left[1])
+    .map(([color]) => color);
+  const hasCurrentColor = /currentColor/i.test(svgText || '');
+  const originalColor = authoredColors[0] || '#ffffff';
+
+  return {
+    hasCurrentColor,
+    authoredColors,
+    originalColor,
+    supportsCustomColor: hasCurrentColor || authoredColors.length > 0,
+    usesAuthoredPalette: authoredColors.length > 0,
+  };
+}
+
+function resolvePremiumThemeBaseColor() {
+  if (typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') {
+    return PREMIUM_PANEL_DEFAULTS.originalColor;
+  }
+
+  const preview = document.getElementById('panelPreview');
+  const themeHost = preview || document.body || document.documentElement;
+  const computed = window.getComputedStyle(themeHost);
+  const themed = computed.getPropertyValue('--si-text').trim();
+  return themed || computed.color || PREMIUM_PANEL_DEFAULTS.originalColor;
+}
+
+function resolvePremiumOriginalColor(colorProfile = null) {
+  if (colorProfile?.authoredColors?.length) return colorProfile.authoredColors[0];
+  if (colorProfile?.hasCurrentColor) return resolvePremiumThemeBaseColor();
+  return PREMIUM_PANEL_DEFAULTS.originalColor;
+}
+
+function getPremiumAppliedColor(state = premiumPanelState) {
+  if (!state) return '#ffffff';
+  if (state.colorMode === PREMIUM_COLOR_MODE_CUSTOM) return state.color;
+  return resolvePremiumOriginalColor(state.colorProfile);
+}
+
+function applyPremiumSvgColorOverrides(svgText = '', color, colorProfile, colorMode = PREMIUM_COLOR_MODE_CUSTOM) {
+  let svg = String(svgText || '');
+  const appliedColor = color || colorProfile?.originalColor || '#ffffff';
+  svg = svg.replace(/stroke="currentColor"/g, `stroke="${appliedColor}"`);
+  svg = svg.replace(/fill="currentColor"/g, `fill="${appliedColor}"`);
+
+  if (colorMode === PREMIUM_COLOR_MODE_CUSTOM) {
+    (colorProfile?.authoredColors || []).forEach((token) => {
+      const escapedToken = escapeRegExp(token);
+      svg = svg.replace(new RegExp(escapedToken, 'gi'), appliedColor);
+    });
+  }
+
+  return svg;
+}
+
+function applyPremiumCssColorOverrides(cssText = '', color = '') {
+  if (!cssText) return '';
+  return String(cssText).replace(/currentColor/g, color || '#ffffff');
+}
 
 async function getCollectionCSS(slug, cssFilename) {
   if (_collectionCSSCache[slug]) return _collectionCSSCache[slug];
@@ -1325,10 +1478,61 @@ async function getCollectionCSS(slug, cssFilename) {
   return '';
 }
 
-function extractIconCSS(fullCSS, iconName) {
+function getPremiumSvgRootClasses(svgText = '') {
+  const svgMatch = String(svgText || '').match(/<svg\b([^>]*)>/i);
+  if (!svgMatch) return [];
+
+  const classMatch = svgMatch[1].match(/\bclass="([^"]*)"/i);
+  if (!classMatch) return [];
+
+  return classMatch[1]
+    .split(/\s+/)
+    .map(token => token.trim())
+    .filter(Boolean);
+}
+
+function getPremiumSvgCssContract(svgText = '', iconName = '', collectionData = currentCollectionData) {
+  const rootClasses = getPremiumSvgRootClasses(svgText);
+  const animClass = iconName ? getAnimClass(collectionData, iconName) : '';
+  const relevantRootClasses = rootClasses.filter(token => !PREMIUM_SVG_ROOT_CLASS_IGNORES.has(token));
+
+  return {
+    animClass,
+    rootClasses,
+    relevantRootClasses,
+    cssMatchTokens: [...new Set([animClass, ...relevantRootClasses].filter(Boolean))],
+    standaloneRootClasses: [...new Set([...rootClasses, animClass, PREMIUM_STANDALONE_ROOT_CLASS].filter(Boolean))],
+  };
+}
+
+function applyPremiumStandaloneRootClasses(svgText, classTokens = []) {
+  const tokens = [...new Set(classTokens.filter(Boolean))];
+  if (!tokens.length) return svgText;
+
+  return String(svgText || '').replace(/<svg\b([^>]*)>/i, (match, attrs) => {
+    const classMatch = attrs.match(/\bclass="([^"]*)"/i);
+    const existingClasses = classMatch
+      ? classMatch[1].split(/\s+/).map(token => token.trim()).filter(Boolean)
+      : [];
+    const mergedClasses = [...new Set([...existingClasses, ...tokens])];
+
+    if (classMatch) {
+      return `<svg${attrs.replace(/\bclass="([^"]*)"/i, `class="${mergedClasses.join(' ')}"`)}>`;
+    }
+
+    return `<svg${attrs} class="${mergedClasses.join(' ')}">`;
+  });
+}
+
+function warnPremiumPreviewContract(message, context = {}) {
+  if (!import.meta.env.DEV) return;
+  console.warn('[Store] Premium preview contract:', message, context);
+}
+
+function extractIconCSS(fullCSS, iconName, { svgText = '', collectionData = currentCollectionData } = {}) {
   if (!fullCSS) return '';
 
-  const animClass = getAnimClass(currentCollectionData, iconName);
+  const { cssMatchTokens } = getPremiumSvgCssContract(svgText, iconName, collectionData);
   const blocks = [];
   let blockStart = 0;
   let braceDepth = 0;
@@ -1372,7 +1576,7 @@ function extractIconCSS(fullCSS, iconName) {
       return;
     }
 
-    if (block.includes(animClass) || block.includes('.si-anim svg')) {
+    if (block.includes('.si-anim svg') || cssMatchTokens.some(token => block.includes(token))) {
       relevantRules.push(block);
       collectAnimationNames(block);
     }
@@ -1385,34 +1589,60 @@ function extractIconCSS(fullCSS, iconName) {
   return [...relevantRules, ...filteredKeyframes].join('\n\n');
 }
 
-function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playMode, animClass = '') {
-  let svg = svgText;
-  // Apply color
-  svg = svg.replace(/stroke="currentColor"/g, `stroke="${color}"`);
-  svg = svg.replace(/fill="currentColor"/g, `fill="${color}"`);
+// Inline <style> inside SVG is parsed as XML. Raw '&' and '<' in CSS text
+// can break exported files, so sanitize before injecting.
+function escapeSvgStyleText(styleText) {
+  return String(styleText || '')
+    .replace(/&(?![A-Za-z#][A-Za-z0-9]*;)/g, '&amp;')
+    .replace(/</g, '&lt;');
+}
+
+function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playMode, cssContract = null, colorProfile = null, colorMode = PREMIUM_COLOR_MODE_CUSTOM) {
+  const contract = cssContract || getPremiumSvgCssContract(svgText);
+  const rootTokens = [...new Set(contract.cssMatchTokens || [])];
+  const rootSelector = getPremiumStandaloneRootSelector();
+  const hoverRootSelector = getPremiumStandaloneRootSelector({ hover: true });
+  let svg = applyPremiumStandaloneRootClasses(svgText, contract.standaloneRootClasses || []);
+  svg = applyPremiumSvgColorOverrides(svg, color, colorProfile, colorMode);
   // Apply stroke width
   svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${strokeWidth}"`);
 
   if (iconCSS) {
     // Rewrite CSS for self-contained SVG:
-    let css = iconCSS;
+    let css = applyPremiumCssColorOverrides(iconCSS, color);
 
-    // Remove external parent hover selectors
+    if (playMode === 'hover') {
+      rootTokens.forEach((token) => {
+        const escapedToken = escapeRegExp(token);
+        css = css.replace(
+          new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}\\s+svg`, 'g'),
+          hoverRootSelector,
+        );
+        css = css.replace(
+          new RegExp(`(?:\\.si-icon-cell:hover|\\.icon-card:hover)\\s+\\.${escapedToken}(?=\\s)`, 'g'),
+          `.${token}:hover`,
+        );
+      });
+    }
+
+    // Remove any remaining external parent hover selectors
     css = css.replace(/\.si-icon-cell:hover\s+/g, '');
     css = css.replace(/\.icon-card:hover\s+/g, '');
 
     // Strip .si-anim--{name} wrapper selectors for standalone SVG
-    // .si-anim--bell svg => :root
-    // .si-anim--checkmark svg .si-check-circle => :root .si-check-circle
-    css = css.replace(/\.si-anim--[\w-]+\s+svg/g, ':root');
-    // .si-anim svg => :root
-    css = css.replace(/\.si-anim\s+svg/g, ':root');
-    if (animClass) {
-      const escapedAnimClass = animClass.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      css = css.replace(new RegExp(`\\.${escapedAnimClass}\\s+svg`, 'g'), ':root');
-    }
-    css = css.replace(/:root\s*,\s*:root/g, ':root');
-    css = css.replace(/:root:root/g, ':root');
+    // .si-anim--bell svg => svg.si-premium-standalone-root
+    // .si-anim--checkmark svg .si-check-circle => svg.si-premium-standalone-root .si-check-circle
+    css = css.replace(/\.si-anim--[\w-]+\s+svg/g, rootSelector);
+    // .si-anim svg => svg.si-premium-standalone-root
+    css = css.replace(/\.si-anim\s+svg/g, rootSelector);
+    rootTokens.forEach((token) => {
+      const escapedToken = escapeRegExp(token);
+      css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
+    });
+    css = css.replace(/:root:hover/g, hoverRootSelector);
+    css = css.replace(/:root/g, rootSelector);
+    css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*,\\s*${escapeRegExp(rootSelector)}`, 'g'), rootSelector);
+    css = css.replace(new RegExp(`${escapeRegExp(hoverRootSelector)}\\s*,\\s*${escapeRegExp(hoverRootSelector)}`, 'g'), hoverRootSelector);
 
     // Apply animation speed multiplier
     if (animSpeed !== 1) {
@@ -1422,10 +1652,10 @@ function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playM
       });
     }
 
-    // For hover-triggered export, wrap :root selectors in :hover
+    // For hover-triggered export, scope root animations to hovering the standalone SVG root
     if (playMode === 'hover') {
-      css = css.replace(/:root\s*{([^}]*animation[^}]*)}/g, ':root:hover {$1}');
-      css = css.replace(/:root\s+\.([\w-]+)\s*{([^}]*animation[^}]*)}/g, ':root:hover .$1 {$2}');
+      css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} {$1}`);
+      css = css.replace(new RegExp(`${escapeRegExp(rootSelector)}\\s+\\.([\\w-]+)\\s*{([^}]*animation[^}]*)}`, 'g'), `${hoverRootSelector} .$1 {$2}`);
     }
 
     // Apply play mode: replace infinite with 1 for once mode
@@ -1433,349 +1663,907 @@ function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playM
       css = css.replace(/infinite/g, '1');
     }
 
-    const styleTag = `<style>${css}</style>`;
+    const styleTag = `<style>${escapeSvgStyleText(css)}</style>`;
     svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}`);
   }
 
   return svg;
 }
 
-// Premium panel state
-let premiumPanelState = {
+const PREMIUM_COLOR_SWATCHES = ['#ffffff', '#a3a3a3', '#737373', '#ff4f00', '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4'];
+const PREMIUM_PANEL_DEFAULTS = Object.freeze({
   color: '#ffffff',
-  strokeWidth: 2,
+  colorMode: PREMIUM_COLOR_MODE_ORIGINAL,
+  originalColor: '#ffffff',
   animSpeed: 1,
-  playMode: 'auto', // 'hover' | 'auto' | 'once'
-};
+  playMode: 'loop', // 'loop' | 'hover' | 'once'
+  pngSize: 48,
+});
 
-async function selectPremiumIcon(iconName, collectionSlug) {
-  const si = window.__supericons;
-  if (!si) return;
-  const requestId = ++premiumSelectionRequestId;
+let premiumPreviewStopTimer = null;
+let currentPremiumSelection = null;
+let premiumPanelState = createPremiumPanelState();
 
-  try {
-    document.querySelectorAll('.collection-detail__icon-cell.selected').forEach(el => el.classList.remove('selected'));
-    document.querySelectorAll('.collection-detail__icon-cell').forEach(cell => {
-      const nameEl = cell.querySelector('.collection-detail__icon-name');
-      if (nameEl && nameEl.textContent === iconName) cell.classList.add('selected');
-    });
+function createPremiumPanelState({ svgText = '', pngSize = PREMIUM_PANEL_DEFAULTS.pngSize, colorProfile = null } = {}) {
+  const defaultStrokeWidth = getPremiumDefaultStrokeWidth(svgText);
+  const nextColorProfile = colorProfile || analyzePremiumColorProfile(svgText);
+  const originalColor = resolvePremiumOriginalColor(nextColorProfile);
 
-    const preview = document.getElementById('panelPreview');
-    const panel = document.getElementById('panel');
-    const panelBody = panel?.querySelector('.panel__body') || panel?.querySelector('.panel__placeholder');
-    if (preview) {
-      preview.innerHTML = `<span class="material-symbols-outlined panel__preview-icon" style="font-size:64px; color: var(--si-text-dim);">hourglass_empty</span>`;
-    }
-    if (panelBody) {
-      panelBody.className = 'panel__placeholder';
-      panelBody.innerHTML = '<span class="material-symbols-outlined panel__placeholder-icon">progress_activity</span><p class="panel__placeholder-text">Loading icon customization...</p>';
-    }
+  return {
+    ...PREMIUM_PANEL_DEFAULTS,
+    pngSize,
+    color: originalColor,
+    originalColor,
+    colorProfile: nextColorProfile,
+    strokeWidth: defaultStrokeWidth,
+    defaultStrokeWidth,
+    supportsStrokeWidth: premiumIconSupportsStrokeWidth(svgText),
+    lastValidColor: originalColor,
+    previewState: 'stopped',
+    previewStatus: premiumPrefersReducedMotion()
+      ? 'Autoplay paused for reduced motion.'
+      : 'Stopped on resting frame.',
+  };
+}
 
-    let svgText = currentCollectionBundle?.icons?.[iconName] || '';
-    if (!svgText) {
-      const svgRes = await fetchPremiumAsset(collectionSlug, `${iconName}.svg`);
-      if (!svgRes.ok) { showToast('Could not load icon'); return; }
-      svgText = await svgRes.text();
-    }
-    // Look up the CSS filename from the manifest for this collection
-    const manifest = await loadManifest();
-    const collData = manifest?.[collectionSlug];
-    const collectionCSS = await getCollectionCSS(collectionSlug, collData?.css);
-    const iconCSS = extractIconCSS(collectionCSS, iconName);
-    if (requestId !== premiumSelectionRequestId) return;
+function premiumPrefersReducedMotion() {
+  return typeof window !== 'undefined'
+    && typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
-    // Render the premium panel
-    renderPremiumPanel(iconName, collectionSlug, svgText, iconCSS);
-
-    // Open panel if closed
-    if (si.state && !si.state.panelOpen) {
-      if (typeof si.setPanelOpen === 'function') {
-        si.setPanelOpen(true);
-      } else {
-        si.togglePanel();
-      }
-    }
-  } catch (e) {
-    console.warn('[Store] Failed to select premium icon:', e);
-    showToast('Error loading icon');
+function clearPremiumPreviewTimer() {
+  if (premiumPreviewStopTimer) {
+    window.clearTimeout(premiumPreviewStopTimer);
+    premiumPreviewStopTimer = null;
   }
 }
 
-function renderPremiumPanel(iconName, collectionSlug, svgText, iconCSS) {
-  const panel = document.getElementById('panel');
-  if (!panel) return;
-  const c = premiumPanelState;
+function escapePanelHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
 
-  // Preview: wrap in si-anim classes so collection CSS triggers animation
-  const preview = document.getElementById('panelPreview');
-  if (preview) {
-    const animCls = getAnimClass(currentCollectionData, iconName);
-    preview.innerHTML = `<div class="panel__preview-icon si-anim ${animCls}" style="color:${c.color};--si-stroke-width:${c.strokeWidth};">${svgText}</div>`;
-    const svgEl = preview.querySelector('svg');
-    if (svgEl) {
-      svgEl.removeAttribute('width');
-      svgEl.removeAttribute('height');
-      svgEl.style.width = '64px';
-      svgEl.style.height = '64px';
-    }
+function premiumIconSupportsStrokeWidth(svgText) {
+  return /stroke(?:=|-[a-z-]+=)/i.test(svgText || '');
+}
+
+function getPremiumDefaultStrokeWidth(svgText) {
+  const match = String(svgText || '').match(/stroke-width="([\d.]+)"/i);
+  const parsed = Number.parseFloat(match?.[1] || '');
+  if (!Number.isFinite(parsed)) return 2;
+  return Math.min(3, Math.max(0.5, parsed));
+}
+
+function humanizeCollectionSlug(slug) {
+  return String(slug || 'premium-collection')
+    .split('-')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function getPremiumCollectionName(collectionSlug) {
+  const product = products.find(item => item.slug === collectionSlug)
+    || findProductById(activeCollectionProductId);
+  return product ? getProductName(product) : humanizeCollectionSlug(collectionSlug);
+}
+
+function openPremiumPanelIfNeeded(si = window.__supericons) {
+  if (!si?.state || si.state.panelOpen) return;
+  if (typeof si.setPanelOpen === 'function') {
+    si.setPanelOpen(true);
+  } else {
+    si.togglePanel();
+  }
+}
+
+function getPremiumPanelBody() {
+  const panel = document.getElementById('panel');
+  if (!panel) return null;
+
+  const directChildren = Array.from(panel.children);
+  const panelBody = directChildren.find(child => child.classList.contains('panel__body'))
+    || directChildren.find(child => child.classList.contains('panel__placeholder'))
+    || document.createElement('div');
+
+  panelBody.className = 'panel__body';
+  panelBody.style.display = '';
+
+  if (!panelBody.parentElement) {
+    panel.appendChild(panelBody);
+  } else if (panelBody.parentElement === panel) {
+    directChildren
+      .filter(child => child !== panelBody && child.classList.contains('panel__placeholder'))
+      .forEach(child => child.remove());
   }
 
-  // Build panel body
-  const panelBody = panel.querySelector('.panel__placeholder') || panel.querySelector('.panel__body') || document.createElement('div');
-  panelBody.className = 'panel__body';
-
-  // Remove any locked panel
   const lockedPanel = panel.querySelector('.locked-panel');
   if (lockedPanel) lockedPanel.remove();
 
-  const defaultSwatches = ['#ffffff','#a3a3a3','#737373','#ff4f00','#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4899','#06b6d4'];
-
-  panelBody.innerHTML = `
-    <!-- Icon Info -->
-    <div class="panel__section">
-      <div style="text-align:center; padding-bottom: var(--si-space-2);">
-        <p style="font-size: 1rem; color: var(--si-text); margin-bottom: 0.15rem; font-weight: 500;">${iconName}</p>
-        <p style="font-size: 0.75rem; color: var(--si-text-dim);">Premium Collection &middot; Animated SVG</p>
-      </div>
-    </div>
-
-    <!-- Color -->
-    <div class="panel__section">
-      <div class="panel__section-title">Color</div>
-      <div class="customize-color">
-        <input type="color" id="premColorPicker" value="${c.color}" class="customize-color__input">
-        <input type="text" id="premColorHex" value="${c.color}" class="customize-color__hex" maxlength="7" spellcheck="false">
-      </div>
-      <div class="customize-swatches" id="premColorSwatches">
-        ${defaultSwatches.map(sc => `<button class="customize-swatch" data-prem-color="${sc}" style="background:${sc};" aria-label="Color ${sc}"></button>`).join('')}
-      </div>
-    </div>
-
-    <!-- Stroke Width -->
-    <div class="panel__section">
-      <div class="panel__section-title">Stroke Width</div>
-      <div class="customize-slider">
-        <input type="range" id="premStrokeSlider" min="0.5" max="3" step="0.1" value="${c.strokeWidth}" class="customize-slider__range">
-        <span class="customize-slider__value" id="premStrokeValue">${c.strokeWidth}px</span>
-      </div>
-    </div>
-
-    <!-- Animation Controls -->
-    <div class="panel__section">
-      <div class="panel__section-title">Animation</div>
-      <div class="customize-slider">
-        <label style="font-size:0.7rem; color: var(--si-text-dim); margin-bottom: 4px; display: block;">Speed</label>
-        <input type="range" id="premAnimSpeed" min="0.25" max="3" step="0.25" value="${c.animSpeed}" class="customize-slider__range">
-        <span class="customize-slider__value" id="premAnimSpeedValue">${c.animSpeed}x</span>
-      </div>
-    </div>
-
-    <!-- Export -->
-    <div class="panel__section">
-      <div class="panel__section-title">Export</div>
-      <div class="customize-export">
-        <button class="customize-export__btn" id="premCopyAnimSvg">
-          <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy Animated SVG
-        </button>
-        <button class="customize-export__btn" id="premCopySvgOnly">
-          <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG (static)
-        </button>
-        <button class="customize-export__btn" id="premDownloadAnimSvg">
-          <span class="material-symbols-outlined" style="font-size:16px">download</span> Download Animated SVG
-        </button>
-      </div>
-
-      <div class="panel__section-divider"></div>
-      <div class="panel__section-subtitle">PNG Size</div>
-      <div class="png-size-picker">
-        ${[16, 24, 32, 48, 64, 128, 256].map(s => `
-          <button class="png-size-btn ${s === 48 ? 'active' : ''}" data-prem-png-size="${s}">${s}</button>
-        `).join('')}
-      </div>
-      <div class="customize-export">
-        <button class="customize-export__btn" id="premDownloadPng">
-          <span class="material-symbols-outlined" style="font-size:16px">image</span>
-          Download PNG <span class="png-size-badge" id="premPngBadge">48px</span>
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Restore panel body (replace placeholder if needed)
-  const placeholder = panel.querySelector('.panel__placeholder');
-  if (placeholder) {
-    placeholder.replaceWith(panelBody);
-  }
-  // Show controls
   const controls = panel.querySelector('.panel__controls');
   if (controls) controls.style.display = '';
 
-  let pngSize = 48;
-
-  // Wire up event listeners
-  wirePremiumPanelEvents(panelBody, iconName, collectionSlug, svgText, iconCSS, () => pngSize, (s) => { pngSize = s; });
+  return panelBody;
 }
 
-function wirePremiumPanelEvents(panelBody, iconName, slug, svgText, iconCSS, getPngSize, setPngSize) {
-  const c = premiumPanelState;
-
-  // Color
-  const picker = panelBody.querySelector('#premColorPicker');
-  const hex = panelBody.querySelector('#premColorHex');
-  if (picker) picker.addEventListener('input', (e) => {
-    c.color = e.target.value;
-    if (hex) hex.value = c.color;
-    updatePremiumPreview(svgText, iconName);
-  });
-  if (hex) hex.addEventListener('input', (e) => {
-    if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) {
-      c.color = e.target.value;
-      if (picker) picker.value = c.color;
-      updatePremiumPreview(svgText, iconName);
-    }
-  });
-
-  // Color swatches
-  panelBody.querySelectorAll('[data-prem-color]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      c.color = btn.dataset.premColor;
-      if (picker) picker.value = c.color;
-      if (hex) hex.value = c.color;
-      updatePremiumPreview(svgText, iconName);
-    });
-  });
-
-  // Stroke
-  const stroke = panelBody.querySelector('#premStrokeSlider');
-  const strokeVal = panelBody.querySelector('#premStrokeValue');
-  if (stroke) stroke.addEventListener('input', (e) => {
-    c.strokeWidth = parseFloat(e.target.value);
-    if (strokeVal) strokeVal.textContent = `${c.strokeWidth}px`;
-    updatePremiumPreview(svgText, iconName);
-  });
-
-  // Animation speed
-  const speed = panelBody.querySelector('#premAnimSpeed');
-  const speedVal = panelBody.querySelector('#premAnimSpeedValue');
-  if (speed) speed.addEventListener('input', (e) => {
-    c.animSpeed = parseFloat(e.target.value);
-    if (speedVal) speedVal.textContent = `${c.animSpeed}x`;
-    applyAnimSpeedToPreview(c.animSpeed);
-  });
-
-  // PNG size
-  panelBody.querySelectorAll('[data-prem-png-size]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setPngSize(parseInt(btn.dataset.premPngSize));
-      panelBody.querySelectorAll('[data-prem-png-size]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const badge = panelBody.querySelector('#premPngBadge');
-      if (badge) badge.textContent = `${getPngSize()}px`;
-    });
-  });
-
-  // Export: Copy Animated SVG
-  const copyAnim = panelBody.querySelector('#premCopyAnimSvg');
-  if (copyAnim) copyAnim.addEventListener('click', () => {
-    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode, getAnimClass(currentCollectionData, iconName));
-    navigator.clipboard.writeText(svg).then(() => showToast('Animated SVG copied'));
-  });
-
-  // Export: Copy static SVG
-  const copyStatic = panelBody.querySelector('#premCopySvgOnly');
-  if (copyStatic) copyStatic.addEventListener('click', () => {
-    let svg = svgText;
-    svg = svg.replace(/stroke="currentColor"/g, `stroke="${c.color}"`);
-    svg = svg.replace(/fill="currentColor"/g, `fill="${c.color}"`);
-    svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${c.strokeWidth}"`);
-    navigator.clipboard.writeText(svg).then(() => showToast('Static SVG copied'));
-  });
-
-  // Export: Download Animated SVG
-  const dlAnim = panelBody.querySelector('#premDownloadAnimSvg');
-  if (dlAnim) dlAnim.addEventListener('click', () => {
-    const svg = buildAnimatedSvg(svgText, iconCSS, c.color, c.strokeWidth, c.animSpeed, c.playMode, getAnimClass(currentCollectionData, iconName));
-    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${iconName}-animated.svg`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast('Animated SVG downloaded');
-  });
-
-  // Export: Download PNG
-  const dlPng = panelBody.querySelector('#premDownloadPng');
-  if (dlPng) dlPng.addEventListener('click', () => {
-    let svg = svgText;
-    svg = svg.replace(/stroke="currentColor"/g, `stroke="${c.color}"`);
-    svg = svg.replace(/fill="currentColor"/g, `fill="${c.color}"`);
-    svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${c.strokeWidth}"`);
-    const size = getPngSize();
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-    const blobUrl = URL.createObjectURL(blob);
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, size, size);
-      canvas.toBlob((pngBlob) => {
-        const dlUrl = URL.createObjectURL(pngBlob);
-        const a = document.createElement('a');
-        a.href = dlUrl;
-        a.download = `${iconName}-${size}px.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(dlUrl);
-        showToast(`PNG downloaded (${size}x${size}px)`);
-      });
-      URL.revokeObjectURL(blobUrl);
-    };
-    img.src = blobUrl;
-  });
+function setPremiumPreviewMarkup(markup) {
+  const preview = document.getElementById('panelPreview');
+  if (preview) preview.innerHTML = markup;
 }
 
-function updatePremiumPreview(svgText, iconName) {
-  const c = premiumPanelState;
+function renderPremiumPanelEmptyState(collectionName = 'Premium Collection') {
+  clearPremiumPreviewTimer();
+  currentPremiumSelection = null;
+  premiumPanelState = createPremiumPanelState();
+
+  setPremiumPreviewMarkup(`
+    <div class="panel__preview-frame is-stopped">
+      <span class="material-symbols-outlined panel__preview-icon" style="font-size:64px; color: var(--si-text-dim);">animation</span>
+    </div>
+  `);
+
+  const panelBody = getPremiumPanelBody();
+  if (!panelBody) return;
+
+  panelBody.innerHTML = `
+      <div class="panel__section">
+        <div class="panel__meta">
+          <div class="panel__meta-head">
+            <span class="panel__meta-subtitle">${escapePanelHtml(collectionName)}</span>
+          </div>
+        </div>
+        <div class="panel__inline-placeholder">
+          <span class="material-symbols-outlined panel__placeholder-icon">play_circle</span>
+          <p class="panel__placeholder-text">Choose an icon from the collection grid to load preview, playback, and export controls.</p>
+        </div>
+    </div>
+  `;
+}
+
+function renderPremiumPanelLoading(iconName, collectionName) {
+  clearPremiumPreviewTimer();
+  premiumPanelState.previewState = 'stopped';
+  premiumPanelState.previewStatus = 'Loading icon customization...';
+
+  setPremiumPreviewMarkup(`
+    <div class="panel__preview-frame is-stopped">
+      <span class="material-symbols-outlined panel__preview-icon" style="font-size:64px; color: var(--si-text-dim);">hourglass_empty</span>
+    </div>
+  `);
+
+  const panelBody = getPremiumPanelBody();
+  if (!panelBody) return;
+
+  panelBody.innerHTML = `
+    <div class="panel__section">
+      <div class="panel__meta">
+        <div class="panel__meta-head">
+          <span class="panel__meta-subtitle">${escapePanelHtml(collectionName)}</span>
+        </div>
+        <p class="panel__meta-title">${escapePanelHtml(iconName)}</p>
+        <p class="panel__meta-helper">Loading preview and export settings for this animated icon.</p>
+      </div>
+      <div class="panel__inline-placeholder">
+        <span class="material-symbols-outlined panel__placeholder-icon">progress_activity</span>
+        <p class="panel__placeholder-text">Loading icon customization...</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderPremiumPanelError(iconName, collectionName, message) {
+  clearPremiumPreviewTimer();
+  currentPremiumSelection = null;
+  premiumPanelState.previewState = 'stopped';
+  premiumPanelState.previewStatus = 'Could not load this icon.';
+
+  setPremiumPreviewMarkup(`
+    <div class="panel__preview-frame is-stopped">
+      <span class="material-symbols-outlined panel__preview-icon" style="font-size:64px; color: var(--si-text-dim);">warning</span>
+    </div>
+  `);
+
+  const panelBody = getPremiumPanelBody();
+  if (!panelBody) return;
+
+  panelBody.classList.add('panel__body--error');
+  panelBody.innerHTML = `
+    <div class="panel__section">
+      <div class="panel__meta">
+        <div class="panel__meta-head">
+          <span class="panel__meta-subtitle">${escapePanelHtml(collectionName)}</span>
+        </div>
+        <p class="panel__meta-title">${escapePanelHtml(iconName)}</p>
+        <p class="panel__meta-helper">Try another icon or try again in a moment.</p>
+      </div>
+      <div class="panel__error-state">
+        <span class="material-symbols-outlined panel__error-icon">warning</span>
+        <p class="panel__error-title">We could not load this icon right now.</p>
+        <p class="panel__error-text">${escapePanelHtml(message)}</p>
+      </div>
+    </div>
+  `;
+}
+
+function getPremiumPreviewStatusText() {
+  if (premiumPanelState.previewState === 'playing') return 'Playing once';
+  return premiumPanelState.previewStatus || 'Stopped on resting frame.';
+}
+
+function syncPremiumPreviewUI() {
+  const panelBody = document.getElementById('panel')?.querySelector('.panel__body');
+  if (!panelBody) return;
+
+  const status = panelBody.querySelector('#premPreviewStatus');
+  if (status) status.textContent = getPremiumPreviewStatusText();
+
+  const note = panelBody.querySelector('#premPreviewNote');
+  if (note) {
+    note.textContent = premiumPrefersReducedMotion()
+      ? 'Preview only | autoplay respects reduced motion'
+      : 'Preview only';
+  }
+
+  const toggleBtn = panelBody.querySelector('#premPreviewToggle');
+  if (toggleBtn) {
+    const isPlaying = premiumPanelState.previewState === 'playing';
+    toggleBtn.classList.toggle('panel__toolbar-btn--active', isPlaying);
+    toggleBtn.setAttribute('aria-pressed', String(isPlaying));
+    toggleBtn.setAttribute('aria-label', isPlaying ? 'Stop preview' : 'Play preview');
+    toggleBtn.setAttribute('data-tip', isPlaying ? 'Stop preview' : 'Play preview');
+    toggleBtn.innerHTML = `
+      <span class="material-symbols-outlined" style="font-size:16px">${isPlaying ? 'stop' : 'play_arrow'}</span>
+    `;
+  }
+}
+
+function splitCssValueList(value) {
+  return String(value || '')
+    .split(',')
+    .map(item => item.trim())
+    .filter(Boolean);
+}
+
+function getCssListValue(list, index) {
+  if (!list.length) return '';
+  return list[index] ?? list[list.length - 1] ?? '';
+}
+
+function parseCssTimeMs(value) {
+  const trimmed = String(value || '').trim();
+  if (!trimmed) return 0;
+  const numeric = Number.parseFloat(trimmed);
+  if (!Number.isFinite(numeric)) return 0;
+  if (trimmed.endsWith('ms')) return numeric;
+  return numeric * 1000;
+}
+
+function formatCssTimeMs(value) {
+  const rounded = Math.max(value, 1);
+  return `${Number(rounded.toFixed(2))}ms`;
+}
+
+function applyAnimSpeedToPreview(speedFactor) {
   const preview = document.getElementById('panelPreview');
   if (!preview) return;
-  const animCls = getAnimClass(currentCollectionData, iconName);
-  preview.innerHTML = `<div class="panel__preview-icon si-anim ${animCls}" style="color:${c.color};--si-stroke-width:${c.strokeWidth};">${svgText}</div>`;
-  const svgEl = preview.querySelector('svg');
+
+  preview.querySelectorAll('*').forEach((el) => {
+    const computed = getComputedStyle(el);
+    if (!computed.animationName || computed.animationName === 'none') return;
+
+    if (!el.dataset.baseDuration) {
+      el.dataset.baseDuration = computed.animationDuration;
+    }
+
+    const baseDurations = splitCssValueList(el.dataset.baseDuration).map(duration => {
+      const baseMs = parseCssTimeMs(duration);
+      if (!baseMs) return duration;
+      return formatCssTimeMs(baseMs / speedFactor);
+    });
+
+    if (baseDurations.length) {
+      el.style.setProperty('animation-duration', baseDurations.join(', '), 'important');
+    }
+  });
+}
+
+function getPremiumPreviewDurationMs() {
+  const preview = document.getElementById('panelPreview');
+  if (!preview) return 0;
+
+  const nodes = [preview, ...preview.querySelectorAll('*')];
+  let maxDuration = 0;
+
+  nodes.forEach((node) => {
+    const computed = getComputedStyle(node);
+    if (!computed.animationName || computed.animationName === 'none') return;
+
+    const names = splitCssValueList(computed.animationName);
+    const durations = splitCssValueList(computed.animationDuration);
+    const delays = splitCssValueList(computed.animationDelay);
+    const iterations = splitCssValueList(computed.animationIterationCount);
+
+    names.forEach((name, index) => {
+      if (!name || name === 'none') return;
+
+      const durationMs = parseCssTimeMs(getCssListValue(durations, index));
+      const delayMs = parseCssTimeMs(getCssListValue(delays, index));
+      const iterationToken = getCssListValue(iterations, index);
+      const iterationCount = iterationToken === 'infinite'
+        ? 1
+        : Math.max(Number.parseFloat(iterationToken) || 1, 1);
+      maxDuration = Math.max(maxDuration, delayMs + (durationMs * iterationCount));
+    });
+  });
+
+  return maxDuration;
+}
+
+function buildPremiumPreviewSvg() {
+  if (!currentPremiumSelection) return '';
+  if (premiumPanelState.previewState !== 'playing') {
+    return buildStaticPremiumSvg(currentPremiumSelection.svgText);
+  }
+
+  return buildAnimatedSvg(
+    currentPremiumSelection.svgText,
+    currentPremiumSelection.iconCSS || '',
+    getPremiumAppliedColor(),
+    premiumPanelState.strokeWidth,
+    premiumPanelState.animSpeed,
+    'once',
+    currentPremiumSelection.cssContract,
+    currentPremiumSelection.colorProfile,
+    premiumPanelState.colorMode,
+  );
+}
+
+function renderPremiumPreview() {
+  if (!currentPremiumSelection?.svgText) return;
+
+  const stateClass = premiumPanelState.previewState === 'playing'
+    ? 'panel__preview-frame is-playing'
+    : 'panel__preview-frame is-resting';
+  const previewSvg = buildPremiumPreviewSvg();
+
+  setPremiumPreviewMarkup(`
+    <div class="${stateClass}">
+      <div class="panel__preview-icon panel__preview-icon--premium">${previewSvg}</div>
+    </div>
+  `);
+
+  const svgEl = document.getElementById('panelPreview')?.querySelector('svg');
   if (svgEl) {
     svgEl.removeAttribute('width');
     svgEl.removeAttribute('height');
     svgEl.style.width = '64px';
     svgEl.style.height = '64px';
   }
-  // Apply current speed to preview
-  if (c.animSpeed !== 1) {
-    requestAnimationFrame(() => applyAnimSpeedToPreview(c.animSpeed));
+
+  if (premiumPanelState.previewState === 'playing') {
+    requestAnimationFrame(() => {
+      const durationMs = Math.max(getPremiumPreviewDurationMs(), 350);
+      clearPremiumPreviewTimer();
+      premiumPreviewStopTimer = window.setTimeout(() => {
+        premiumPanelState.previewState = 'stopped';
+        premiumPanelState.previewStatus = 'Stopped on resting frame.';
+        renderPremiumPreview();
+      }, durationMs + 80);
+    });
+  } else {
+    clearPremiumPreviewTimer();
+  }
+
+  syncPremiumPreviewUI();
+}
+
+function startPremiumPreview() {
+  if (!currentPremiumSelection?.svgText) return;
+
+  premiumPanelState.previewState = 'playing';
+  premiumPanelState.previewStatus = 'Playing once';
+  renderPremiumPreview();
+}
+
+function stopPremiumPreview(statusText = 'Stopped on resting frame.') {
+  clearPremiumPreviewTimer();
+  premiumPanelState.previewState = 'stopped';
+  premiumPanelState.previewStatus = statusText;
+  renderPremiumPreview();
+}
+
+function updatePremiumPreview() {
+  if (!currentPremiumSelection?.svgText) return;
+
+  startPremiumPreview();
+}
+
+function setPremiumColorValidation(message = '') {
+  const panelBody = document.getElementById('panel')?.querySelector('.panel__body');
+  if (!panelBody) return;
+
+  const hex = panelBody.querySelector('#premColorHex');
+  if (hex) hex.classList.toggle('customize-color__hex--invalid', Boolean(message));
+
+  const hint = panelBody.querySelector('#premColorHint');
+  if (hint) {
+    hint.hidden = !message;
+    hint.textContent = message || '';
   }
 }
 
-function applyAnimSpeedToPreview(speedFactor) {
-  const preview = document.getElementById('panelPreview');
-  if (!preview) return;
-  const allEls = preview.querySelectorAll('*');
-  allEls.forEach(el => {
-    const computed = getComputedStyle(el);
-    if (computed.animationName && computed.animationName !== 'none') {
-      // Store base durations on first read to prevent compounding
-      if (!el.dataset.baseDuration) {
-        el.dataset.baseDuration = computed.animationDuration;
+function buildStaticPremiumSvg(svgText) {
+  let svg = applyPremiumSvgColorOverrides(
+    svgText,
+    getPremiumAppliedColor(),
+    currentPremiumSelection?.colorProfile || premiumPanelState.colorProfile,
+    premiumPanelState.colorMode,
+  );
+  if (premiumPanelState.supportsStrokeWidth) {
+    svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${premiumPanelState.strokeWidth}"`);
+  }
+  return svg;
+}
+
+function resetPremiumPanelControls() {
+  if (!currentPremiumSelection?.svgText) return;
+
+  const { supportsStrokeWidth, defaultStrokeWidth } = premiumPanelState;
+  premiumPanelState = {
+    ...createPremiumPanelState({
+      svgText: currentPremiumSelection.svgText,
+      colorProfile: currentPremiumSelection.colorProfile,
+    }),
+    supportsStrokeWidth,
+    defaultStrokeWidth,
+    strokeWidth: supportsStrokeWidth ? defaultStrokeWidth : 2,
+  };
+
+  renderPremiumPanel(currentPremiumSelection);
+  showToast('Customize settings reset');
+}
+
+async function selectPremiumIcon(iconName, collectionSlug) {
+  const si = window.__supericons;
+  if (!si) return;
+  const requestId = ++premiumSelectionRequestId;
+  const collectionName = getPremiumCollectionName(collectionSlug);
+
+  try {
+    document.querySelectorAll('.collection-detail__icon-cell.selected').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('.collection-detail__icon-cell').forEach(cell => {
+      const isSelected = cell.dataset.iconName === iconName;
+      cell.classList.toggle('selected', isSelected);
+      cell.setAttribute('aria-pressed', String(isSelected));
+    });
+
+    openPremiumPanelIfNeeded(si);
+    renderPremiumPanelLoading(iconName, collectionName);
+
+    let svgText = currentCollectionBundle?.icons?.[iconName] || '';
+    if (!svgText) {
+      const svgRes = await fetchPremiumAsset(collectionSlug, `${iconName}.svg`);
+      if (!svgRes.ok) {
+        renderPremiumPanelError(iconName, collectionName, 'We could not load this icon right now. Try another icon or try again.');
+        showToast('Could not load icon');
+        return;
       }
-      const baseDurations = el.dataset.baseDuration.split(',').map(d => {
-        const base = parseFloat(d.trim());
-        return `${(base / speedFactor).toFixed(3)}s`;
+      svgText = await svgRes.text();
+    }
+    // Look up the CSS filename from the manifest for this collection
+    const manifest = await loadManifest();
+    const collData = manifest?.[collectionSlug];
+    const collectionCSS = await getCollectionCSS(collectionSlug, collData?.css);
+    const cssContract = getPremiumSvgCssContract(svgText, iconName, collData);
+    const iconCSS = extractIconCSS(collectionCSS, iconName, { svgText, collectionData: collData });
+    const colorProfile = analyzePremiumColorProfile(svgText);
+    if (requestId !== premiumSelectionRequestId) return;
+
+    if (collectionCSS && !iconCSS.trim()) {
+      warnPremiumPreviewContract('No standalone CSS extracted for premium icon.', {
+        iconName,
+        collectionSlug,
+        cssContract,
       });
-      el.style.setProperty('animation-duration', baseDurations.join(', '), 'important');
+      renderPremiumPanelError(iconName, collectionName, 'We could not load this icon preview right now. Try another icon or try again.');
+      showToast('Could not load icon preview');
+      return;
+    }
+
+    if (!svgText) {
+      renderPremiumPanelError(iconName, collectionName, 'We could not load this icon right now. Try another icon or try again.');
+      showToast('Could not load icon');
+      return;
+    }
+
+    premiumPanelState = createPremiumPanelState({ svgText, colorProfile });
+    currentPremiumSelection = {
+      iconName,
+      collectionSlug,
+      collectionName,
+      svgText,
+      iconCSS,
+      cssContract,
+      colorProfile,
+    };
+
+    renderPremiumPanel(currentPremiumSelection);
+
+    if (premiumPrefersReducedMotion()) {
+      stopPremiumPreview('Autoplay paused for reduced motion.');
+    } else {
+      startPremiumPreview();
+    }
+  } catch (e) {
+    console.warn('[Store] Failed to select premium icon:', e);
+    renderPremiumPanelError(iconName, collectionName, 'We could not load this icon right now. Try another icon or try again.');
+    showToast('Error loading icon');
+  }
+}
+
+function renderPremiumPanel(selection) {
+  if (!selection) return;
+  const c = premiumPanelState;
+  const panelBody = getPremiumPanelBody();
+  if (!panelBody) return;
+  const normalizedCustomColor = normalizePremiumHexColor(c.color);
+  const usesPresetCustomColor = PREMIUM_COLOR_SWATCHES.some(sc => normalizePremiumHexColor(sc) === normalizedCustomColor);
+
+  panelBody.innerHTML = `
+    <div class="panel__section">
+      <div class="panel__meta">
+        <div class="panel__meta-head">
+          <span class="panel__meta-subtitle">${escapePanelHtml(selection.collectionName)}</span>
+        </div>
+        <p class="panel__meta-title">${escapePanelHtml(selection.iconName)}</p>
+      </div>
+    </div>
+
+    <div class="panel__section panel__section--compact">
+      <div class="panel__row panel__row--preview">
+        <button class="panel__toolbar-btn panel__toolbar-btn--compact panel__toolbar-btn--icon" id="premPreviewToggle" type="button" aria-pressed="${c.previewState === 'playing'}" aria-label="Play preview" data-tip="Play preview">
+          <span class="material-symbols-outlined" style="font-size:16px">play_arrow</span>
+        </button>
+        <div class="panel__row-control panel__row-control--slider">
+          <div class="panel__control-label panel__control-label--tight">
+            <span class="panel__control-title">Speed</span>
+            <span class="customize-slider__value" id="premAnimSpeedValue">${c.animSpeed}x</span>
+          </div>
+          <div class="customize-slider">
+            <input type="range" id="premAnimSpeed" min="0.25" max="3" step="0.25" value="${c.animSpeed}" class="customize-slider__range">
+          </div>
+        </div>
+      </div>
+      <div class="panel__preview-meta panel__preview-meta--compact">
+        <span class="panel__preview-note" id="premPreviewNote">Preview only</span>
+        <span class="panel__preview-status" id="premPreviewStatus">${escapePanelHtml(getPremiumPreviewStatusText())}</span>
+      </div>
+    </div>
+
+    <div class="panel__section panel__section--compact">
+      <div class="panel__section-title">Color</div>
+      <div class="customize-color-palette" role="group" aria-label="Premium color palette">
+        <button
+          class="customize-color-dot customize-color-dot--original ${c.colorMode === PREMIUM_COLOR_MODE_ORIGINAL ? 'customize-color-dot--active' : ''}"
+          id="premColorOriginal"
+          type="button"
+          data-prem-color-mode="${PREMIUM_COLOR_MODE_ORIGINAL}"
+          data-tip="Default"
+          aria-pressed="${c.colorMode === PREMIUM_COLOR_MODE_ORIGINAL}"
+          aria-label="Use original color palette"
+        ></button>
+        ${PREMIUM_COLOR_SWATCHES.map(sc => {
+          const active = c.colorMode === PREMIUM_COLOR_MODE_CUSTOM && normalizePremiumHexColor(sc) === normalizedCustomColor;
+          return `<button class="customize-color-dot ${active ? 'customize-color-dot--active' : ''}" type="button" data-prem-color="${sc}" data-tip="${sc}" style="background:${sc}" aria-label="Color ${sc}" aria-pressed="${active}"></button>`;
+        }).join('')}
+        <label
+          class="customize-color-add ${c.colorMode === PREMIUM_COLOR_MODE_CUSTOM && !usesPresetCustomColor ? 'customize-color-add--active' : ''}"
+          id="premCustomColorAdd"
+          data-tip="Custom color"
+          aria-label="Choose custom color"
+        >
+          <span class="material-symbols-outlined" style="font-size:14px">add</span>
+          <input type="color" id="premColorPicker" value="${c.color}" class="customize-color__picker-hidden">
+        </label>
+      </div>
+
+      ${c.supportsStrokeWidth ? `
+        <div class="panel__control-block panel__control-block--appearance">
+          <div class="panel__control-label panel__control-label--tight">
+            <span class="panel__control-title">Line weight</span>
+          <span class="customize-slider__value" id="premStrokeValue">${c.strokeWidth}px</span>
+          </div>
+          <div class="customize-slider">
+            <input type="range" id="premStrokeSlider" min="0.5" max="3" step="0.1" value="${c.strokeWidth}" class="customize-slider__range">
+          </div>
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="panel__section panel__section--compact">
+      <div class="panel__section-subtitle panel__section-subtitle--tight">Export trigger</div>
+      <div class="panel__row panel__row--export-behavior">
+        <div class="panel__segmented panel__segmented--compact panel__segmented--single-line" role="group" aria-label="Animation trigger">
+          <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'loop' ? 'active' : ''}" type="button" data-prem-trigger="loop" aria-pressed="${c.playMode === 'loop'}">Loop</button>
+          <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'hover' ? 'active' : ''}" type="button" data-prem-trigger="hover" aria-pressed="${c.playMode === 'hover'}">Hover</button>
+          <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'once' ? 'active' : ''}" type="button" data-prem-trigger="once" aria-pressed="${c.playMode === 'once'}">Play once</button>
+        </div>
+        <button class="panel__icon-btn panel__icon-btn--reset" id="premResetAll" type="button" aria-label="Reset all" data-tip="Reset all">
+          <span class="material-symbols-outlined" style="font-size:16px">restart_alt</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel__section panel__section--compact">
+      <div class="panel__section-title">Export</div>
+      <div class="customize-export-group">
+        <div class="panel__section-subtitle">SVG</div>
+        <div class="customize-export">
+          <button class="customize-export__btn customize-export__btn--primary" id="premDownloadAnimSvg" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">download</span> Download Animated SVG
+          </button>
+          <button class="customize-export__btn" id="premCopyAnimSvg" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy Animated SVG
+          </button>
+          <button class="customize-export__btn customize-export__btn--subtle" id="premCopySvgOnly" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">content_copy</span> Copy SVG (static)
+          </button>
+        </div>
+      </div>
+
+      <div class="customize-export-group customize-export-group--png">
+        <div class="customize-export-group__head">
+          <div class="panel__section-subtitle">PNG</div>
+          <span class="png-size-badge" id="premPngBadge">${c.pngSize}px</span>
+        </div>
+        <div class="png-size-picker png-size-picker--compact">
+          ${[16, 24, 32, 48, 64, 128, 256].map(s => `
+            <button class="png-size-btn ${s === c.pngSize ? 'active' : ''}" data-prem-png-size="${s}" type="button">${s}</button>
+          `).join('')}
+        </div>
+        <div class="customize-export">
+          <button class="customize-export__btn" id="premDownloadPng" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">image</span>
+            Download PNG
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  renderPremiumPreview();
+  wirePremiumPanelEvents(panelBody);
+}
+
+function wirePremiumPanelEvents(panelBody) {
+  const selection = currentPremiumSelection;
+  if (!selection) return;
+
+  const syncPremiumColorPaletteUI = () => {
+    const originalBtn = panelBody.querySelector('#premColorOriginal');
+    if (originalBtn) {
+      const active = premiumPanelState.colorMode === PREMIUM_COLOR_MODE_ORIGINAL;
+      originalBtn.classList.toggle('customize-color-dot--active', active);
+      originalBtn.setAttribute('aria-pressed', String(active));
+    }
+
+    const normalizedActiveColor = normalizePremiumHexColor(premiumPanelState.color);
+    let presetMatch = false;
+    panelBody.querySelectorAll('[data-prem-color]').forEach((btn) => {
+      const active = premiumPanelState.colorMode === PREMIUM_COLOR_MODE_CUSTOM
+        && normalizePremiumHexColor(btn.dataset.premColor) === normalizedActiveColor;
+      presetMatch ||= active;
+      btn.classList.toggle('customize-color-dot--active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+
+    const customAdd = panelBody.querySelector('#premCustomColorAdd');
+    if (customAdd) {
+      customAdd.classList.toggle(
+        'customize-color-add--active',
+        premiumPanelState.colorMode === PREMIUM_COLOR_MODE_CUSTOM && !presetMatch,
+      );
+    }
+
+    const picker = panelBody.querySelector('#premColorPicker');
+    if (picker) picker.value = premiumPanelState.color;
+  };
+
+  panelBody.querySelectorAll('[data-prem-color-mode]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      premiumPanelState.colorMode = btn.dataset.premColorMode;
+      syncPremiumColorPaletteUI();
+      updatePremiumPreview();
+    });
+  });
+
+  const picker = panelBody.querySelector('#premColorPicker');
+  if (picker) picker.addEventListener('input', (e) => {
+    premiumPanelState.colorMode = PREMIUM_COLOR_MODE_CUSTOM;
+    premiumPanelState.color = e.target.value;
+    premiumPanelState.lastValidColor = premiumPanelState.color;
+    syncPremiumColorPaletteUI();
+    updatePremiumPreview();
+  });
+
+  syncPremiumColorPaletteUI();
+
+  panelBody.querySelectorAll('[data-prem-color]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      premiumPanelState.colorMode = PREMIUM_COLOR_MODE_CUSTOM;
+      premiumPanelState.color = btn.dataset.premColor;
+      premiumPanelState.lastValidColor = premiumPanelState.color;
+      syncPremiumColorPaletteUI();
+      updatePremiumPreview();
+    });
+  });
+
+  const stroke = panelBody.querySelector('#premStrokeSlider');
+  const strokeVal = panelBody.querySelector('#premStrokeValue');
+  if (stroke) stroke.addEventListener('input', (e) => {
+    premiumPanelState.strokeWidth = Number.parseFloat(e.target.value);
+    if (strokeVal) strokeVal.textContent = `${premiumPanelState.strokeWidth}px`;
+    updatePremiumPreview();
+  });
+
+  const speed = panelBody.querySelector('#premAnimSpeed');
+  const speedVal = panelBody.querySelector('#premAnimSpeedValue');
+  if (speed) speed.addEventListener('input', (e) => {
+    premiumPanelState.animSpeed = Number.parseFloat(e.target.value);
+    if (speedVal) speedVal.textContent = `${premiumPanelState.animSpeed}x`;
+    updatePremiumPreview();
+  });
+
+  panelBody.querySelectorAll('[data-prem-trigger]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      premiumPanelState.playMode = btn.dataset.premTrigger;
+      panelBody.querySelectorAll('[data-prem-trigger]').forEach(other => {
+        const active = other === btn;
+        other.classList.toggle('active', active);
+        other.setAttribute('aria-pressed', String(active));
+      });
+    });
+  });
+
+  const previewToggleBtn = panelBody.querySelector('#premPreviewToggle');
+  previewToggleBtn?.addEventListener('click', () => {
+    if (premiumPanelState.previewState === 'playing') {
+      stopPremiumPreview();
+      return;
+    }
+    startPremiumPreview();
+  });
+
+  const resetBtn = panelBody.querySelector('#premResetAll');
+  resetBtn?.addEventListener('click', () => resetPremiumPanelControls());
+
+  panelBody.querySelectorAll('[data-prem-png-size]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      premiumPanelState.pngSize = Number.parseInt(btn.dataset.premPngSize, 10);
+      panelBody.querySelectorAll('[data-prem-png-size]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const badge = panelBody.querySelector('#premPngBadge');
+      if (badge) badge.textContent = `${premiumPanelState.pngSize}px`;
+    });
+  });
+
+  const copyAnim = panelBody.querySelector('#premCopyAnimSvg');
+  copyAnim?.addEventListener('click', async () => {
+    try {
+      const svg = buildAnimatedSvg(
+        selection.svgText,
+        selection.iconCSS,
+        getPremiumAppliedColor(),
+        premiumPanelState.strokeWidth,
+        premiumPanelState.animSpeed,
+        premiumPanelState.playMode,
+        selection.cssContract,
+        selection.colorProfile,
+        premiumPanelState.colorMode,
+      );
+      await navigator.clipboard.writeText(svg);
+      showToast('Animated SVG copied');
+    } catch (err) {
+      console.warn('[Store] Failed to copy animated SVG:', err);
+      showToast('Could not copy animated SVG. Try downloading it instead.');
+    }
+  });
+
+  const copyStatic = panelBody.querySelector('#premCopySvgOnly');
+  copyStatic?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(buildStaticPremiumSvg(selection.svgText));
+      showToast('Static SVG copied');
+    } catch (err) {
+      console.warn('[Store] Failed to copy static SVG:', err);
+      showToast('Could not copy static SVG. Try downloading it instead.');
+    }
+  });
+
+  const dlAnim = panelBody.querySelector('#premDownloadAnimSvg');
+  dlAnim?.addEventListener('click', () => {
+    try {
+      const svg = buildAnimatedSvg(
+        selection.svgText,
+        selection.iconCSS,
+        getPremiumAppliedColor(),
+        premiumPanelState.strokeWidth,
+        premiumPanelState.animSpeed,
+        premiumPanelState.playMode,
+        selection.cssContract,
+        selection.colorProfile,
+        premiumPanelState.colorMode,
+      );
+      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selection.iconName}-animated.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Animated SVG downloaded');
+    } catch (err) {
+      console.warn('[Store] Failed to download animated SVG:', err);
+      showToast('Could not download animated SVG. Try again.');
+    }
+  });
+
+  const dlPng = panelBody.querySelector('#premDownloadPng');
+  dlPng?.addEventListener('click', () => {
+    try {
+      const svg = buildStaticPremiumSvg(selection.svgText);
+      const size = premiumPanelState.pngSize;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        showToast('Could not create PNG right now. Try again.');
+        return;
+      }
+
+      const img = new Image();
+      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const blobUrl = URL.createObjectURL(blob);
+
+      img.onload = () => {
+        ctx.clearRect(0, 0, size, size);
+        ctx.drawImage(img, 0, 0, size, size);
+        canvas.toBlob((pngBlob) => {
+          if (!pngBlob) {
+            showToast('Could not create PNG right now. Try again.');
+            return;
+          }
+
+          const dlUrl = URL.createObjectURL(pngBlob);
+          const a = document.createElement('a');
+          a.href = dlUrl;
+          a.download = `${selection.iconName}-${size}px.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(dlUrl);
+          showToast('PNG downloaded');
+        });
+        URL.revokeObjectURL(blobUrl);
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(blobUrl);
+        showToast('Could not create PNG right now. Try again.');
+      };
+
+      img.src = blobUrl;
+    } catch (err) {
+      console.warn('[Store] Failed to download PNG:', err);
+      showToast('Could not create PNG right now. Try again.');
     }
   });
 }
@@ -1800,6 +2588,10 @@ async function loadCollectionCSS(slug, cssFile) {
 function showLockedPanel(iconName, product) {
   const panel = document.getElementById('panel');
   if (!panel) return;
+
+  clearPremiumPreviewTimer();
+  currentPremiumSelection = null;
+  premiumPanelState = createPremiumPanelState();
 
   const priceDisplay = (product.price_cents / 100).toFixed(product.price_cents % 100 === 0 ? 0 : 2);
 
@@ -10270,6 +11062,21 @@ function showToast(msg) {
 }
 
 // ── Exports for main.js ───────────────────────────────────────
+const premiumThemeToggleBtn = document.getElementById('themeToggle');
+premiumThemeToggleBtn?.addEventListener('click', () => {
+  window.requestAnimationFrame(() => {
+    if (!currentPremiumSelection || premiumPanelState.colorMode !== PREMIUM_COLOR_MODE_ORIGINAL) return;
+
+    const colorProfile = currentPremiumSelection.colorProfile || premiumPanelState.colorProfile;
+    if (!colorProfile?.hasCurrentColor || colorProfile.authoredColors?.length) return;
+
+    const resolved = resolvePremiumOriginalColor(colorProfile);
+    premiumPanelState.originalColor = resolved;
+    premiumPanelState.color = resolved;
+    renderPremiumPanel(currentPremiumSelection);
+  });
+});
+
 export function getCurrentView() { return currentView; }
 export function isStoreView() { return currentView !== 'icons'; }
 export { loadSvgIntoMotionLab };

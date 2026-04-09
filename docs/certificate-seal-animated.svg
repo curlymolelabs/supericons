@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="q91nh5 si-premium-standalone-root"><style>/* Security & Auth Collection: CSS-only hover animations
+   Source: Material Symbols Rounded (solid/filled)
+   
+   DESIGN RULE: Every animation tells a security story.
+   Motion vocabulary: lock mechanisms, biometric scans,
+   encryption transforms, shield deflections, access grants. */
+
+svg.si-premium-standalone-root { overflow: visible; }
+
+/* 15. CERTIFICATE-SEAL: Emboss press. 3D depth press like stamping a wax seal. */
+svg.si-premium-standalone-root:hover {
+  animation: zqr8yb 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+/* 15. Emboss press: 3D wax seal press */
+@keyframes zqr8yb {
+  0%   { transform: perspective(200px) rotateX(0deg) translateZ(0) scale(1); filter: brightness(1); }
+  25%  { transform: perspective(200px) rotateX(-15deg) translateZ(-10px) scale(0.9); filter: brightness(0.7); }
+  45%  { transform: perspective(200px) rotateX(-20deg) translateZ(-15px) scale(0.85); filter: brightness(0.5); }
+  60%  { transform: perspective(200px) rotateX(5deg) translateZ(8px) scale(1.06); filter: brightness(1.8) drop-shadow(0 0 10px rgba(251,191,36,0.5)); }
+  80%  { transform: perspective(200px) rotateX(2deg) translateZ(2px) scale(1.02); filter: brightness(1.2); }
+  100% { transform: perspective(200px) rotateX(0deg) translateZ(0) scale(1); filter: brightness(1); }
+}</style>
+  <path class="sa-cert" fill="#ff4f00" d="m480-483-68 52q-6 5-12 .5t-4-11.5l26-84-70-56q-5-5-3-11.5t9-6.5h86l26-82q2-7 10-7t10 7l26 82h85q7 0 9.5 6.5T608-582l-71 56 26 84q2 7-4 11.5t-12-.5l-67-52Zm0 363L293-58q-20 7-36.5-5T240-95v-254q-38-42-59-96t-21-115q0-134 93-227t227-93q134 0 227 93t93 227q0 61-21 115t-59 96v254q0 20-16.5 32T667-58l-187-62Zm170-270q70-70 70-170t-70-170q-70-70-170-70t-170 70q-70 70-70 170t70 170q70 70 170 70t170-70Z"/>
+</svg>
