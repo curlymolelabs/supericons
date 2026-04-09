@@ -1,0 +1,20 @@
+<svg class="si-animated-icon"
+  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+ data-si-click-ms="748" onclick="var svg=this;if(!svg||!svg.classList)return;var replayMs=Number(svg.getAttribute(&#39;data-si-click-ms&#39;))||850;if(svg.__siReplayTimer){window.clearTimeout(svg.__siReplayTimer);}svg.classList.remove(&#39;active&#39;);void svg.getBoundingClientRect();svg.classList.add(&#39;active&#39;);svg.__siReplayTimer=window.setTimeout(function(){svg.classList.remove(&#39;active&#39;);svg.__siReplayTimer=0;}, replayMs);"><style>svg.si-animated-icon.active {
+animation: xnbmph 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+
+@keyframes xnbmph {
+  0% { transform: rotate(0) scale(1); }
+  50% { transform: rotate(200deg) scale(0.9); }
+  100% { transform: rotate(360deg) scale(1); }
+}</style>
+  <path class="sf-refresh-p0" d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+  <path class="sf-refresh-p1" d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+</svg>

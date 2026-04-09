@@ -155,7 +155,7 @@ Implementation note:
 - For each new format, verify output semantics under:
   - `Loop`
   - `Hover`
-  - `Play once`
+  - `Click`
 - Verify copied payload reflects active speed multiplier.
 
 ### Appearance Parity

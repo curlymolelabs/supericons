@@ -560,6 +560,43 @@ function getUserAvatarUrl() {
     || null;
 }
 
+function showUserInitialAvatar(avatarImg, avatarInitial) {
+  if (avatarImg) {
+    avatarImg.style.display = 'none';
+    avatarImg.removeAttribute('src');
+  }
+  if (avatarInitial) {
+    avatarInitial.textContent = getUserInitial();
+    avatarInitial.style.display = 'flex';
+  }
+}
+
+function applyUserAvatarImage(avatarImg, avatarInitial) {
+  const avatarUrl = getUserAvatarUrl();
+  if (!avatarImg || !avatarUrl) {
+    showUserInitialAvatar(avatarImg, avatarInitial);
+    return;
+  }
+
+  avatarImg.onload = () => {
+    avatarImg.style.display = 'block';
+    if (avatarInitial) avatarInitial.style.display = 'none';
+  };
+  avatarImg.onerror = () => {
+    showUserInitialAvatar(avatarImg, avatarInitial);
+  };
+  avatarImg.src = avatarUrl;
+
+  if (avatarImg.complete) {
+    if (avatarImg.naturalWidth > 0) {
+      avatarImg.style.display = 'block';
+      if (avatarInitial) avatarInitial.style.display = 'none';
+    } else {
+      showUserInitialAvatar(avatarImg, avatarInitial);
+    }
+  }
+}
+
 // ── UI Updates ────────────────────────────────────────────────
 function updateAuthUI() {
   const signInBtn = document.getElementById('authSignInBtn');
@@ -574,19 +611,7 @@ function updateAuthUI() {
     // Logged in: show avatar, hide sign-in
     if (signInBtn) signInBtn.style.display = 'none';
     if (avatarBtn) avatarBtn.style.display = 'flex';
-
-    const avatarUrl = getUserAvatarUrl();
-    if (avatarUrl && avatarImg) {
-      avatarImg.src = avatarUrl;
-      avatarImg.style.display = 'block';
-      if (avatarInitial) avatarInitial.style.display = 'none';
-    } else {
-      if (avatarImg) avatarImg.style.display = 'none';
-      if (avatarInitial) {
-        avatarInitial.textContent = getUserInitial();
-        avatarInitial.style.display = 'flex';
-      }
-    }
+    applyUserAvatarImage(avatarImg, avatarInitial);
 
     if (dropdownName) dropdownName.textContent = getUserDisplayName();
     if (dropdownEmail) dropdownEmail.textContent = currentUser.email || '';

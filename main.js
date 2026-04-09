@@ -2729,12 +2729,12 @@ window.__supericons = {
   ANIM_CSS,
 };
 
-// MCP links open the in-app MCP hub
+// MCP links
 const landingMcpDocsLink = $('#landingMcpDocsLink');
 if (landingMcpDocsLink) {
   landingMcpDocsLink.addEventListener('click', (e) => {
     e.preventDefault();
-    switchView('mcp');
+    window.location.assign('/docs/index.html');
   });
 }
 

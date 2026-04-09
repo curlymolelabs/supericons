@@ -47,13 +47,13 @@ Severity key:
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Trigger control visible | PASS | Segmented control with `Loop`, `Hover`, `Play once` at [store.js:2005-2009](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L2005). |
-| Trigger semantics correct | PASS | `buildAnimatedSvg` at [store.js:1395](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L1395) handles `hover` (wraps CSS in `:hover`), `once` (replaces `infinite` with `1`), `loop` (default infinite). |
+| Trigger control visible | PASS | Segmented control with `Loop`, `Hover`, and `Click` is rendered in the premium customize panel. |
+| Trigger semantics correct | PASS | `buildAnimatedSvg` now handles `hover` by scoping animation to `:hover`, `click` by targeting `:active` and `.active` with finite replay, and `loop` as the default continuous mode. |
 | Speed slider present | PASS | Range input at [store.js:2017-2019](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L2017), range 0.25x to 3x, step 0.25. Wired at line 2137. |
 | Reset all present | PASS | Button at [store.js:1987-1990](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L1987). `resetPremiumPanelControls` at line 1879 restores default color, stroke width, speed, trigger, and preview state. Shows toast `Animation settings reset`. |
 | Default trigger for export | PASS | Default is `loop` per `PREMIUM_PANEL_DEFAULTS` at [store.js:1454](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L1454). Plan says default should be `Loop`. Match. |
 | Reduced motion behavior | PASS | `premiumPrefersReducedMotion()` at [store.js:1479](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L1479) checks `prefers-reduced-motion: reduce`. Autoplay is skipped at [store.js:1948-1952](file:///d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/store.js#L1948). Manual Play remains available. |
-| Preview controls do not change exported trigger | PASS | Preview always uses `'once'` mode internally (line 1778), while export uses `premiumPanelState.playMode` (lines 2182, 2213). Inline note at line 2010 explains this. |
+| Preview controls do not change exported trigger | PASS | Preview still uses an internal one-shot playback mode, while export uses the selected `premiumPanelState.playMode` (`loop`, `hover`, or `click`). |
 
 ---
 
@@ -399,4 +399,3 @@ Cannot be validated until Phases 1-3 are implemented.
 
 8. **Narrow panel overflow spot-check**
    - Test at 280px panel width.
-

@@ -66,7 +66,7 @@
 - Trigger semantics:
   - `Loop`: repeated playback
   - `Hover`: animation starts on hover in supported contexts
-  - `Play once`: one run on load/open
+  - `Click`: animation plays on press and in exported code when an `.active` class is applied
 - Export contract:
   - export uses the selected `Trigger`, `Speed`, `Color`, and `Stroke width`
   - preview controls do not change the exported trigger unless the trigger control itself changes
@@ -97,7 +97,7 @@
 - `Trigger` is limited to:
   - `Loop`
   - `Hover`
-  - `Play once`
+  - `Click`
 
 ### Capability Rules
 
@@ -160,7 +160,7 @@ Important rule:
   - segmented control or pills:
     - `Loop`
     - `Hover`
-    - `Play once`
+    - `Click`
 - `Speed`
 - `Reset all`
 
@@ -346,7 +346,7 @@ Add a short note:
 - Add `Trigger` control:
   - `Loop`
   - `Hover`
-  - `Play once`
+  - `Click`
 - Add `Reset all`
 - Keep `Speed`
 - Keep `Color`
@@ -365,7 +365,7 @@ Add a short note:
   - `Play` restarts the preview
   - `Stop` freezes the preview at the resting frame
 - `Trigger`
-  - switching between `Loop`, `Hover`, and `Play once` updates export behavior
+  - switching between `Loop`, `Hover`, and `Click` updates export behavior
 - `Reset`
   - `Reset all` restores defaults without requiring re-selection
 - `Export`
