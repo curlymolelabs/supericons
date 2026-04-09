@@ -3028,6 +3028,39 @@ body.theme-light .customize-color-add:hover {
   margin-bottom: var(--si-space-2);
 }
 
+.panel__section-subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--si-space-2);
+}
+
+.panel__section-subtitle-row--tight {
+  margin-bottom: var(--si-space-2);
+}
+
+.panel__section-subtitle-row .panel__section-subtitle {
+  margin-bottom: 0;
+}
+
+.panel__inline-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--si-text-dim);
+  cursor: help;
+  transition: color var(--si-transition-fast);
+}
+
+.panel__inline-tip:hover,
+.panel__inline-tip:focus-visible {
+  color: var(--si-text);
+  outline: none;
+}
+
 .panel__row--export-behavior {
   flex-wrap: nowrap;
   align-items: center;
@@ -4019,7 +4052,8 @@ body.theme-light [data-tip]::after {
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 220px;
   text-align: center;
   line-height: 1.4;
   pointer-events: none;

@@ -108,6 +108,7 @@ const MOTION_LAB_LOCKED_CSS = [
   '}',
 ].join('\n');
 const MOTION_LAB_LOCKED_SVG = '<!-- Animated SVG available with Pro -->';
+const EXPORT_TRIGGER_TOOLTIP_COPY = 'Sets how the animation starts in your exported code. Loop: plays continuously. Hover: plays on mouse over. Click: plays on tap.';
 
 // ── State ─────────────────────────────────────────────────────
 let products = [];
@@ -2729,7 +2730,17 @@ function renderPremiumPanel(selection) {
     </div>
 
     <div class="panel__section panel__section--compact">
-      <div class="panel__section-subtitle panel__section-subtitle--tight">Export trigger</div>
+      <div class="panel__section-subtitle-row panel__section-subtitle-row--tight">
+        <div class="panel__section-subtitle">Export trigger</div>
+        <button
+          class="panel__inline-tip"
+          type="button"
+          aria-label="Explain export trigger"
+          data-tip="${escapePanelHtml(EXPORT_TRIGGER_TOOLTIP_COPY)}"
+        >
+          <span class="material-symbols-outlined" style="font-size:12px">info</span>
+        </button>
+      </div>
       <div class="panel__row panel__row--export-behavior">
         <div class="panel__segmented panel__segmented--compact panel__segmented--single-line" role="group" aria-label="Animation trigger">
           <button class="panel__segmented-btn panel__segmented-btn--choice ${c.playMode === 'loop' ? 'active' : ''}" type="button" data-prem-trigger="loop" aria-pressed="${c.playMode === 'loop'}">Loop</button>
@@ -5662,7 +5673,7 @@ function renderMotionLab() {
           <!-- Row 2: Export trigger + Download/Copy -->
           <div class="ml__export-bar">
             <div class="ml__trigger-group">
-              <span class="ml__trigger-info" data-tip="Sets how the animation starts in your exported code. Loop: plays continuously. Hover: plays on mouse over. Click: plays on tap."><span class="material-symbols-outlined" style="font-size:12px">info</span></span>
+              <span class="ml__trigger-info" data-tip="${EXPORT_TRIGGER_TOOLTIP_COPY}"><span class="material-symbols-outlined" style="font-size:12px">info</span></span>
               <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="loop" checked> Loop</label>
               <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="hover"> Hover</label>
               <label class="ml__trigger-opt"><input type="radio" name="mlTrigger" value="click"> Click</label>
