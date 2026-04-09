@@ -17,6 +17,7 @@ import {
   normalizeMaterialSnapshotSvg,
 } from './material-export.js';
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
+import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 
 // ============================================================
 
@@ -195,7 +196,7 @@ function applyExportCustomization(rawSvg, icon, customize = state.customize, opt
     svg = svg.replace(/<\/svg>/, '</g></svg>');
   }
 
-  return svg;
+  return sanitizeSvgExportMarkup(svg, { preserveBranding: false });
 }
 
 async function resolveMaterialSnapshotSvg(icon, customize = state.customize) {

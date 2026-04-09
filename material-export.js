@@ -1,6 +1,4 @@
 export const MATERIAL_EXPORT_SOURCE = {
-  provider: 'google-material-design-icons',
-  repo: 'google/material-design-icons',
   ref: 'master',
   baseUrl: 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web',
   styleDir: 'materialsymbolsoutlined',

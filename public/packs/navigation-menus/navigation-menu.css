@@ -1,13 +1,4 @@
-/* Navigation & Menu Collection: 50 unique CSS-only hover animations
-   Source: Material Symbols (Google Fonts CDN)
-   
-   DESIGN RULE: Every icon uses a fundamentally DIFFERENT motion type.
-   No two icons share the same pattern. Motion vocabulary includes:
-   3D perspective flips, motion blur, brightness flash, stepped rotation,
-   orbit paths, gravity physics, heartbeat pulses, magnetic snaps, etc. */
-
 .si-anim svg { overflow: visible; }
-
 
 /* =====================================================================
    BATCH 1: Icons 1-20
@@ -209,7 +200,6 @@
   animation: debbkc 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   transform-origin: center;
 }
-
 
 /* =====================================================================
    BATCH 2: Icons 21-50
@@ -415,7 +405,6 @@
   animation: hzqdrk 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-
 /* ===================================================================
    KEYFRAMES - Each uses a fundamentally different motion type
    =================================================================== */
@@ -620,7 +609,6 @@
   85%  { transform: translateY(-2px) rotate(-0.3deg); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08)); }
   100% { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0px 0px rgba(0,0,0,0)); }
 }
-
 
 /* ---- BATCH 2 KEYFRAMES ---- */
 

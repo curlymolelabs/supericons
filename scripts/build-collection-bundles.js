@@ -14,6 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { sanitizeCssCommentMetadata } from '../lib/public-metadata-sanitizer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,7 +50,9 @@ for (const slug of collections) {
   }
 
   // Read CSS
-  const css = fs.readFileSync(cssPath, 'utf-8');
+  const css = sanitizeCssCommentMetadata(fs.readFileSync(cssPath, 'utf-8'), {
+    preserveBranding: false,
+  });
 
   // Read all SVGs
   const svgFiles = fs.readdirSync(collDir).filter(f => f.endsWith('.svg'));

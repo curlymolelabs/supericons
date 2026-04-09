@@ -16,6 +16,10 @@ import {
   setAuthIntent,
   consumeAuthIntent,
 } from './auth.js';
+import {
+  sanitizeCssCommentMetadata,
+  sanitizeSvgExportMarkup,
+} from './lib/public-metadata-sanitizer.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -1341,6 +1345,7 @@ async function renderCollectionDetail(product) {
 const _collectionCSSCache = {};
 const PREMIUM_SVG_ROOT_CLASS_IGNORES = new Set(['si-icon', 'si-anim', 'si-anim-dc']);
 const PREMIUM_STANDALONE_ROOT_CLASS = 'si-premium-standalone-root';
+const PREMIUM_EXPORT_ROOT_CLASS = 'si-animated-icon';
 const PREMIUM_COLOR_MODE_ORIGINAL = 'original';
 const PREMIUM_COLOR_MODE_CUSTOM = 'custom';
 const PREMIUM_NEUTRAL_HEX_COLORS = new Set([
@@ -1367,8 +1372,11 @@ function escapeRegExp(value = '') {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function getPremiumStandaloneRootSelector({ hover = false } = {}) {
-  return `svg.${PREMIUM_STANDALONE_ROOT_CLASS}${hover ? ':hover' : ''}`;
+function getPremiumStandaloneRootSelector({
+  hover = false,
+  rootClassName = PREMIUM_STANDALONE_ROOT_CLASS,
+} = {}) {
+  return `svg.${rootClassName}${hover ? ':hover' : ''}`;
 }
 
 function normalizePremiumHexColor(token = '') {
@@ -1505,22 +1513,21 @@ function getPremiumSvgCssContract(svgText = '', iconName = '', collectionData = 
   };
 }
 
-function applyPremiumStandaloneRootClasses(svgText, classTokens = []) {
+function setPremiumSvgRootClasses(svgText, classTokens = []) {
   const tokens = [...new Set(classTokens.filter(Boolean))];
-  if (!tokens.length) return svgText;
-
   return String(svgText || '').replace(/<svg\b([^>]*)>/i, (match, attrs) => {
     const classMatch = attrs.match(/\bclass="([^"]*)"/i);
-    const existingClasses = classMatch
-      ? classMatch[1].split(/\s+/).map(token => token.trim()).filter(Boolean)
-      : [];
-    const mergedClasses = [...new Set([...existingClasses, ...tokens])];
+    const classValue = tokens.join(' ');
 
     if (classMatch) {
-      return `<svg${attrs.replace(/\bclass="([^"]*)"/i, `class="${mergedClasses.join(' ')}"`)}>`;
+      if (classValue) {
+        return `<svg${attrs.replace(/\bclass="([^"]*)"/i, `class="${classValue}"`)}>`;
+      }
+      return `<svg${attrs.replace(/\s*\bclass="([^"]*)"/i, '')}>`;
     }
 
-    return `<svg${attrs} class="${mergedClasses.join(' ')}">`;
+    if (!classValue) return `<svg${attrs}>`;
+    return `<svg${attrs} class="${classValue}">`;
   });
 }
 
@@ -1597,12 +1604,45 @@ function escapeSvgStyleText(styleText) {
     .replace(/</g, '&lt;');
 }
 
-function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playMode, cssContract = null, colorProfile = null, colorMode = PREMIUM_COLOR_MODE_CUSTOM) {
+function stripCssComments(cssText = '') {
+  return String(cssText || '').replace(/\/\*[\s\S]*?\*\//g, '');
+}
+
+function sanitizePremiumExportCss(cssText = '') {
+  return stripCssComments(cssText)
+    .replace(/\n\s*\n\s*\n+/g, '\n\n')
+    .trim();
+}
+
+function sanitizePremiumExportSvg(svgText = '', rootClassName = PREMIUM_EXPORT_ROOT_CLASS) {
+  const withoutHtmlComments = String(svgText || '').replace(/<!--[\s\S]*?-->/g, '').trim();
+  return setPremiumSvgRootClasses(withoutHtmlComments, [rootClassName].filter(Boolean));
+}
+
+function buildAnimatedSvg(
+  svgText,
+  iconCSS,
+  color,
+  strokeWidth,
+  animSpeed,
+  playMode,
+  cssContract = null,
+  colorProfile = null,
+  colorMode = PREMIUM_COLOR_MODE_CUSTOM,
+  {
+    rootClassName = PREMIUM_STANDALONE_ROOT_CLASS,
+    preserveInternalRootClasses = true,
+    sanitizeForExport = false,
+  } = {},
+) {
   const contract = cssContract || getPremiumSvgCssContract(svgText);
   const rootTokens = [...new Set(contract.cssMatchTokens || [])];
-  const rootSelector = getPremiumStandaloneRootSelector();
-  const hoverRootSelector = getPremiumStandaloneRootSelector({ hover: true });
-  let svg = applyPremiumStandaloneRootClasses(svgText, contract.standaloneRootClasses || []);
+  const rootSelector = getPremiumStandaloneRootSelector({ rootClassName });
+  const hoverRootSelector = getPremiumStandaloneRootSelector({ hover: true, rootClassName });
+  const rootClassTokens = preserveInternalRootClasses
+    ? [...new Set([...(contract.rootClasses || []), contract.animClass, rootClassName].filter(Boolean))]
+    : [rootClassName].filter(Boolean);
+  let svg = setPremiumSvgRootClasses(svgText, rootClassTokens);
   svg = applyPremiumSvgColorOverrides(svg, color, colorProfile, colorMode);
   // Apply stroke width
   svg = svg.replace(/stroke-width="[^"]*"/g, `stroke-width="${strokeWidth}"`);
@@ -1663,8 +1703,23 @@ function buildAnimatedSvg(svgText, iconCSS, color, strokeWidth, animSpeed, playM
       css = css.replace(/infinite/g, '1');
     }
 
+    if (sanitizeForExport) {
+      rootTokens.forEach((token) => {
+        const escapedToken = escapeRegExp(token);
+        css = css.replace(new RegExp(`\\.${escapedToken}:hover\\s+svg`, 'g'), hoverRootSelector);
+        css = css.replace(new RegExp(`\\.${escapedToken}:hover\\b`, 'g'), hoverRootSelector);
+        css = css.replace(new RegExp(`\\.${escapedToken}\\s+svg`, 'g'), rootSelector);
+        css = css.replace(new RegExp(`\\.${escapedToken}(?=(?:\\s|\\{|\\.|#|\\[|>|\\+|~|,|$))`, 'g'), rootSelector);
+      });
+      css = sanitizePremiumExportCss(css);
+    }
+
     const styleTag = `<style>${escapeSvgStyleText(css)}</style>`;
     svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}`);
+  }
+
+  if (sanitizeForExport) {
+    svg = sanitizePremiumExportSvg(svg, rootClassName);
   }
 
   return svg;
@@ -2110,6 +2165,98 @@ function buildStaticPremiumSvg(svgText) {
   return svg;
 }
 
+function buildPremiumAnimatedExportSvg(selection = currentPremiumSelection, state = premiumPanelState) {
+  if (!selection?.svgText) return '';
+
+  return buildAnimatedSvg(
+    selection.svgText,
+    selection.iconCSS,
+    getPremiumAppliedColor(state),
+    state.strokeWidth,
+    state.animSpeed,
+    state.playMode,
+    selection.cssContract,
+    selection.colorProfile,
+    state.colorMode,
+    {
+      rootClassName: PREMIUM_EXPORT_ROOT_CLASS,
+      preserveInternalRootClasses: false,
+      sanitizeForExport: true,
+    },
+  );
+}
+
+function buildPremiumStaticExportSvg(selection = currentPremiumSelection) {
+  if (!selection?.svgText) return '';
+  return buildStaticPremiumSvg(selection.svgText);
+}
+
+function toPremiumPascalCase(value) {
+  const formatted = String(value || '')
+    .replace(/[^a-zA-Z0-9]+([a-zA-Z0-9])/g, (_, next) => next.toUpperCase())
+    .replace(/^[^a-zA-Z0-9]+/, '')
+    .replace(/^[a-z]/, ch => ch.toUpperCase())
+    .replace(/[^a-zA-Z0-9]/g, '');
+
+  if (!formatted) return 'PremiumIcon';
+  if (/^[0-9]/.test(formatted)) return `Premium${formatted}`;
+  return formatted;
+}
+
+function escapeTemplateLiteral(value) {
+  return String(value || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$\{/g, '\\${');
+}
+
+function svgToBase64DataUri(svgText) {
+  const encoded = btoa(unescape(encodeURIComponent(String(svgText || ''))));
+  return `data:image/svg+xml;base64,${encoded}`;
+}
+
+function buildPremiumReactCode(componentName, svgText) {
+  const escapedSvg = escapeTemplateLiteral(svgText);
+  return `import React from 'react';
+
+const svgMarkup = \`${escapedSvg}\`;
+
+export function ${componentName}Icon({ className = '', ...props }) {
+  return (
+    <span
+      {...props}
+      className={className}
+      dangerouslySetInnerHTML={{ __html: svgMarkup }}
+    />
+  );
+}
+`;
+}
+
+function buildPremiumHtmlSnippet(svgText) {
+  return svgText;
+}
+
+function buildPremiumVueCode(svgText) {
+  const escapedSvg = escapeTemplateLiteral(svgText);
+  return `<template>
+  <span v-html="svgMarkup"></span>
+</template>
+
+<script setup>
+const svgMarkup = \`${escapedSvg}\`;
+</script>`;
+}
+
+function buildPremiumSvelteCode(svgText) {
+  const escapedSvg = escapeTemplateLiteral(svgText);
+  return `<script>
+  const svgMarkup = \`${escapedSvg}\`;
+</script>
+
+<span>{@html svgMarkup}</span>`;
+}
+
 function resetPremiumPanelControls() {
   if (!currentPremiumSelection?.svgText) return;
 
@@ -2316,6 +2463,27 @@ function renderPremiumPanel(selection) {
         </div>
       </div>
 
+      <div class="customize-export-group customize-export-group--code">
+        <div class="panel__section-subtitle">Code</div>
+        <div class="customize-export">
+          <button class="customize-export__btn" id="premCopyReact" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">code</span> Copy React
+          </button>
+          <button class="customize-export__btn" id="premCopyBase64" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">data_object</span> Copy Base64
+          </button>
+          <button class="customize-export__btn" id="premCopyHtml" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">code</span> Copy HTML
+          </button>
+          <button class="customize-export__btn" id="premCopyVue" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">code</span> Copy Vue
+          </button>
+          <button class="customize-export__btn" id="premCopySvelte" type="button">
+            <span class="material-symbols-outlined" style="font-size:16px">code</span> Copy Svelte
+          </button>
+        </div>
+      </div>
+
       <div class="customize-export-group customize-export-group--png">
         <div class="customize-export-group__head">
           <div class="panel__section-subtitle">PNG</div>
@@ -2452,53 +2620,51 @@ function wirePremiumPanelEvents(panelBody) {
     });
   });
 
+  const buildAnimatedPayload = () => buildPremiumAnimatedExportSvg(selection, premiumPanelState);
+  const buildStaticPayload = () => buildPremiumStaticExportSvg(selection);
+  const copyToClipboard = async (text, successMessage, failureMessage) => {
+    if (!text) {
+      showToast(failureMessage);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(successMessage);
+    } catch (err) {
+      console.warn('[Store] Clipboard write failed:', err);
+      showToast(failureMessage);
+    }
+  };
+
   const copyAnim = panelBody.querySelector('#premCopyAnimSvg');
   copyAnim?.addEventListener('click', async () => {
-    try {
-      const svg = buildAnimatedSvg(
-        selection.svgText,
-        selection.iconCSS,
-        getPremiumAppliedColor(),
-        premiumPanelState.strokeWidth,
-        premiumPanelState.animSpeed,
-        premiumPanelState.playMode,
-        selection.cssContract,
-        selection.colorProfile,
-        premiumPanelState.colorMode,
-      );
-      await navigator.clipboard.writeText(svg);
-      showToast('Animated SVG copied');
-    } catch (err) {
-      console.warn('[Store] Failed to copy animated SVG:', err);
-      showToast('Could not copy animated SVG. Try downloading it instead.');
-    }
+    const svg = buildAnimatedPayload();
+    await copyToClipboard(
+      svg,
+      'Animated SVG copied',
+      'Could not copy animated SVG. Try downloading it instead.',
+    );
   });
 
   const copyStatic = panelBody.querySelector('#premCopySvgOnly');
   copyStatic?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(buildStaticPremiumSvg(selection.svgText));
-      showToast('Static SVG copied');
-    } catch (err) {
-      console.warn('[Store] Failed to copy static SVG:', err);
-      showToast('Could not copy static SVG. Try downloading it instead.');
-    }
+    const svg = buildStaticPayload();
+    await copyToClipboard(
+      svg,
+      'Static SVG copied',
+      'Could not copy static SVG. Try downloading it instead.',
+    );
   });
 
   const dlAnim = panelBody.querySelector('#premDownloadAnimSvg');
   dlAnim?.addEventListener('click', () => {
     try {
-      const svg = buildAnimatedSvg(
-        selection.svgText,
-        selection.iconCSS,
-        getPremiumAppliedColor(),
-        premiumPanelState.strokeWidth,
-        premiumPanelState.animSpeed,
-        premiumPanelState.playMode,
-        selection.cssContract,
-        selection.colorProfile,
-        premiumPanelState.colorMode,
-      );
+      const svg = buildAnimatedPayload();
+      if (!svg) {
+        showToast('Could not download animated SVG. Try again.');
+        return;
+      }
       const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -2515,10 +2681,70 @@ function wirePremiumPanelEvents(panelBody) {
     }
   });
 
+  const copyReact = panelBody.querySelector('#premCopyReact');
+  copyReact?.addEventListener('click', async () => {
+    const svg = buildAnimatedPayload();
+    const componentName = toPremiumPascalCase(selection.iconName);
+    const code = svg ? buildPremiumReactCode(componentName, svg) : '';
+    await copyToClipboard(
+      code,
+      'React component copied',
+      'Could not copy React component right now.',
+    );
+  });
+
+  const copyBase64 = panelBody.querySelector('#premCopyBase64');
+  copyBase64?.addEventListener('click', async () => {
+    const svg = buildAnimatedPayload();
+    const dataUri = svg ? svgToBase64DataUri(svg) : '';
+    await copyToClipboard(
+      dataUri,
+      'Base64 data URI copied',
+      'Could not copy Base64 right now.',
+    );
+  });
+
+  const copyHtml = panelBody.querySelector('#premCopyHtml');
+  copyHtml?.addEventListener('click', async () => {
+    const svg = buildAnimatedPayload();
+    const html = svg ? buildPremiumHtmlSnippet(svg) : '';
+    await copyToClipboard(
+      html,
+      'HTML snippet copied',
+      'Could not copy HTML right now.',
+    );
+  });
+
+  const copyVue = panelBody.querySelector('#premCopyVue');
+  copyVue?.addEventListener('click', async () => {
+    const svg = buildAnimatedPayload();
+    const vueCode = svg ? buildPremiumVueCode(svg) : '';
+    await copyToClipboard(
+      vueCode,
+      'Vue component copied',
+      'Could not copy Vue component right now.',
+    );
+  });
+
+  const copySvelte = panelBody.querySelector('#premCopySvelte');
+  copySvelte?.addEventListener('click', async () => {
+    const svg = buildAnimatedPayload();
+    const svelteCode = svg ? buildPremiumSvelteCode(svg) : '';
+    await copyToClipboard(
+      svelteCode,
+      'Svelte component copied',
+      'Could not copy Svelte component right now.',
+    );
+  });
+
   const dlPng = panelBody.querySelector('#premDownloadPng');
   dlPng?.addEventListener('click', () => {
     try {
-      const svg = buildStaticPremiumSvg(selection.svgText);
+      const svg = buildStaticPayload();
+      if (!svg) {
+        showToast('Could not create PNG right now. Try again.');
+        return;
+      }
       const size = premiumPanelState.pngSize;
       const canvas = document.createElement('canvas');
       canvas.width = size;
@@ -5653,12 +5879,18 @@ function getMotionLabBaseTransformCss(containerId = 'mlPreview') {
 }
 
 function buildMotionLabStandaloneSvgCss() {
-  return rewriteForStandalone(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS());
+  return sanitizeCssCommentMetadata(
+    rewriteForStandalone(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS()),
+    { preserveBranding: true },
+  );
 }
 
 function buildMotionLabExternalCss() {
   const usageNote = '/* Usage: apply this CSS with an inline <svg> inside <div id="icon-container">...</div> */\n';
-  return rewriteForExternal(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS()) + usageNote;
+  return sanitizeCssCommentMetadata(
+    rewriteForExternal(getMotionLabBaseTransformCss('mlPreview') + generateFullCSS()) + usageNote,
+    { preserveBranding: true },
+  );
 }
 
 /**
@@ -7433,7 +7665,7 @@ function showExportModal() {
     const styleTag = document.createElementNS('http://www.w3.org/2000/svg', 'style');
     styleTag.textContent = standaloneCSS;
     svgClone.insertBefore(styleTag, svgClone.firstChild);
-    svgExport = svgClone.outerHTML;
+    svgExport = sanitizeSvgExportMarkup(svgClone.outerHTML, { preserveBranding: true });
   }
 
   const modal = createMotionLabExportModal({
@@ -8963,6 +9195,7 @@ function buildConverterTraceArtifact(
   if (fillColor) {
     cleanSvg = retintConverterForegroundSvg(cleanSvg, fillColor, forceRetint);
   }
+  cleanSvg = sanitizeSvgExportMarkup(cleanSvg, { preserveBranding: false });
   const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
   const sizeKb = Math.round(svgBlob.size / 1024);
   const traceMetrics = measureConverterTraceMetrics(cleanSvg, sizeKb);
@@ -9001,6 +9234,7 @@ function buildConverterServiceTraceArtifact(
   if (fillColor) {
     cleanSvg = retintConverterForegroundSvg(cleanSvg, fillColor, forceRetint);
   }
+  cleanSvg = sanitizeSvgExportMarkup(cleanSvg, { preserveBranding: false });
   const svgBlob = new Blob([cleanSvg], { type: 'image/svg+xml' });
   const sizeKb = Math.round(svgBlob.size / 1024);
   const pathCount = Number(metrics?.pathCount ?? 0);

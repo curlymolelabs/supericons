@@ -1,7 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
    AI & Agentic Collection V2: Premium CSS Animations
-   50 animated icons with gradient fills, multi-element stagger,
-   draw-in effects, glow pulses, and spectrum cascade
    ═══════════════════════════════════════════════════════════════ */
 
 /* Shared: allow transforms to overflow cell bounds */
@@ -10,8 +8,6 @@
 /* ━━━ V2 HERO ICONS (10) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 /* ──── 1. SPARKLE ──────────────────────────────────────────────
-   Animation story: Main star pops in with elastic bounce,
-   then 3 accent dots twinkle in sequence with color cycling.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .xznek0 .n8l1r5,
 .icon-card:hover .xznek0 .n8l1r5 {
@@ -42,8 +38,6 @@
 }
 
 /* ──── 2. AGENT-LOOP ──────────────────────────────────────────
-   Animation story: Dashed ring spins, orbiting dots chase
-   around the center node with different speeds.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .f91tcy .di0fcm,
 .icon-card:hover .f91tcy .di0fcm {
@@ -84,8 +78,6 @@
 }
 
 /* ──── 3. STREAMING ───────────────────────────────────────────
-   Animation story: Text lines cascade in top-to-bottom with
-   staggered fade-in, cursor blinks at bottom.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .xxyxwf .t753cg,
 .icon-card:hover .xxyxwf .t753cg {
@@ -117,8 +109,6 @@
 }
 
 /* ──── 4. GUARDRAIL ───────────────────────────────────────────
-   Animation story: Shield border draws in, then glow pulse.
-   Checkmark draws in last as confirmation.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .tihxmg .oug1rq,
 .icon-card:hover .tihxmg .oug1rq {
@@ -149,8 +139,6 @@
 }
 
 /* ──── 5. RAG-PIPELINE ────────────────────────────────────────
-   Animation story: Document fades in, data flows through
-   pipe nodes, output document appears at end.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .kk8xwh .pyoyg9,
 .icon-card:hover .kk8xwh .pyoyg9 {
@@ -185,8 +173,6 @@
 }
 
 /* ──── 6. EMBEDDING ───────────────────────────────────────────
-   Animation story: Scattered dots converge toward center
-   core, core grows as dots arrive.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .upo7wq .ikkfnt,
 .icon-card:hover .upo7wq .ikkfnt {
@@ -230,8 +216,6 @@
 }
 
 /* ──── 7. MODEL ───────────────────────────────────────────────
-   Animation story: 3D cube rotates, faces shift opacity
-   creating depth perception.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .iemvrk svg,
 .icon-card:hover .iemvrk svg {
@@ -263,8 +247,6 @@
 }
 
 /* ──── 8. PROMPT ──────────────────────────────────────────────
-   Animation story: Prompt line draws in from left, cursor
-   blinks at the insertion point.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .iksow0 .ul2kfp,
 .icon-card:hover .iksow0 .ul2kfp {
@@ -290,8 +272,6 @@
 }
 
 /* ──── 9. REGENERATE ──────────────────────────────────────────
-   Animation story: Both arrows spin in opposite directions,
-   creating a spinning refresh effect with glow trail.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .j474hh svg,
 .icon-card:hover .j474hh svg {
@@ -305,8 +285,6 @@
 }
 
 /* ──── 10. REASONING ──────────────────────────────────────────
-   Animation story: Nodes pop in sequentially (top to bottom),
-   links draw in between them, center hub pulses last.
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .nzis6r .t0kc87,
 .icon-card:hover .nzis6r .t0kc87 {
@@ -360,14 +338,11 @@
 }
 
 /* ━━━ V2 UNIQUE ANIMATIONS (40 icons) ━━━━━━━━━━━━━━━━━━━━━━━
-   Every icon has its own animation story driven by Socratic
    analysis: "What is this icon's core concept? What motion
    tells that story?"
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 /* ──── AGENT ──────────────────────────────────────────────────
-   Concept: AI robot assistant
-   Story: Robot eyes blink (quick close-open), visor flickers
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .qn0atl .uo31n6,
 .icon-card:hover .qn0atl .uo31n6 {
@@ -398,8 +373,6 @@
 }
 
 /* ──── AGENT-GROUP ─────────────────────────────────────────────
-   Concept: Multiple agents collaborating
-   Story: Second robot slides in from right, joins the first
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .wtegtf .dbgfxl,
 .icon-card:hover .wtegtf .dbgfxl {
@@ -419,8 +392,6 @@
 }
 
 /* ──── AGENT-STOP ─────────────────────────────────────────────
-   Concept: Emergency halt
-   Story: Inner stop block throbs urgently (scale pulse)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .cu4kkk .jllhqf,
 .icon-card:hover .cu4kkk .jllhqf {
@@ -447,8 +418,6 @@
 }
 
 /* ──── AGENT-WORKFLOW ─────────────────────────────────────────
-   Concept: Sequential process flow
-   Story: Nodes light up in sequence (1→2→3→4) showing flow
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .sidg38 .ptkbdc,
 .icon-card:hover .sidg38 .ptkbdc {
@@ -489,8 +458,6 @@
 }
 
 /* ──── AI-HELP ──────────────────────────────────────────────
-   Concept: Getting assistance
-   Story: Question mark wobbles side to side (seeking answer)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .zrffi6 .u5o9aq,
 .icon-card:hover .zrffi6 .u5o9aq {
@@ -513,8 +480,6 @@
 }
 
 /* ──── AI-HISTORY ──────────────────────────────────────────────
-   Concept: Going back in time
-   Story: Clock hands spin backward (rewinding)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .uapabx .y7i3vf,
 .icon-card:hover .uapabx .y7i3vf {
@@ -531,8 +496,6 @@
 }
 
 /* ──── AI-HOME ────────────────────────────────────────────────
-   Concept: Home/dashboard base
-   Story: Roof lifts up slightly (welcoming), door knob appears
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .x2xlvb .nu0cva,
 .icon-card:hover .x2xlvb .nu0cva {
@@ -553,8 +516,6 @@
 }
 
 /* ──── AI-MENU ────────────────────────────────────────────────
-   Concept: Navigation menu
-   Story: Bars slide in with staggered delay
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .ldi6tn .rbc1js,
 .icon-card:hover .ldi6tn .rbc1js {
@@ -578,8 +539,6 @@
 }
 
 /* ──── AI-SEARCH ──────────────────────────────────────────────
-   Concept: Searching / discovery
-   Story: Glint sweeps across glass, handle tilts
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .jkzjn2 svg,
 .icon-card:hover .jkzjn2 svg {
@@ -606,8 +565,6 @@
 }
 
 /* ──── AI-SETTINGS ────────────────────────────────────────────
-   Concept: Configuration / preferences
-   Story: Gear spins 90 degrees, center dot pulses
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .ixp7b2 .yb8nc8,
 .icon-card:hover .ixp7b2 .yb8nc8 {
@@ -625,8 +582,6 @@
 }
 
 /* ──── CHAIN ─────────────────────────────────────────────────
-   Concept: Linked steps in a sequence
-   Story: Links pull apart slightly then snap back together
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .wium09 .yll39m,
 .icon-card:hover .wium09 .yll39m {
@@ -652,8 +607,6 @@
 }
 
 /* ──── CHUNK ──────────────────────────────────────────────────
-   Concept: Splitting content into pieces
-   Story: Quadrants separate slightly (chunking effect)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .sh6z0l .zg8tsl,
 .icon-card:hover .sh6z0l .zg8tsl {
@@ -677,8 +630,6 @@
 @keyframes vm98v2 { 50% { transform: translate(1.5px, 1.5px); } }
 
 /* ──── CONTEXT-WINDOW ─────────────────────────────────────────
-   Concept: Token context filling up
-   Story: Fill region expands toward the limit line
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .gvomgg .yoyr1f,
 .icon-card:hover .gvomgg .yoyr1f {
@@ -704,8 +655,6 @@
 }
 
 /* ──── CONVERSATION ───────────────────────────────────────────
-   Concept: Chat / messaging
-   Story: 3 typing dots pulse in sequence (typing indicator)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .lq26fd .p7tzcz,
 .icon-card:hover .lq26fd .p7tzcz {
@@ -729,8 +678,6 @@
 }
 
 /* ──── DOCUMENT-INDEX ─────────────────────────────────────────
-   Concept: Indexed document content
-   Story: Text lines cascade in from left, staggered
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .jefa0y .vjw6qr,
 .icon-card:hover .jefa0y .vjw6qr {
@@ -750,8 +697,6 @@
 }
 
 /* ──── EMPTY-AGENT ────────────────────────────────────────────
-   Concept: Placeholder for a new agent
-   Story: Dashed outline draws in progressively, plus pops in
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .qtp9ey .o78qf1,
 .icon-card:hover .qtp9ey .o78qf1 {
@@ -772,8 +717,6 @@
 }
 
 /* ──── FINE-TUNE ──────────────────────────────────────────────
-   Concept: Adjusting model parameters
-   Story: Slider knobs slide along their tracks
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .p11kol .h61abu,
 .icon-card:hover .p11kol .h61abu {
@@ -803,8 +746,6 @@
 }
 
 /* ──── KNOWLEDGE-BASE ─────────────────────────────────────────
-   Concept: Repository of knowledge
-   Story: Book opens (spine lifts), text lines fade in
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .hfavei .j2n9re,
 .icon-card:hover .hfavei .j2n9re {
@@ -830,8 +771,6 @@
 }
 
 /* ──── LATENCY ────────────────────────────────────────────────
-   Concept: Response time measurement
-   Story: Clock hand ticks forward (measuring elapsed time)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .pybboo .el8mwi,
 .icon-card:hover .pybboo .el8mwi {
@@ -848,8 +787,6 @@
 }
 
 /* ──── MAX-TOKENS ─────────────────────────────────────────────
-   Concept: Token limit / capacity
-   Story: Fill level rises to the limit, limit flashes
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .hwsrw9 .tz0bbk,
 .icon-card:hover .hwsrw9 .tz0bbk {
@@ -870,8 +807,6 @@
 }
 
 /* ──── MODEL-SELECTOR ─────────────────────────────────────────
-   Concept: Choosing between AI models
-   Story: Active card highlights, checkmark pops in
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .cuw02l .tu8x26,
 .icon-card:hover .cuw02l .tu8x26 {
@@ -893,8 +828,6 @@
 }
 
 /* ──── ORCHESTRATOR ───────────────────────────────────────────
-   Concept: Central hub directing workers
-   Story: Center hub pulses, satellite nodes orbit
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .f2957m .viwrk3,
 .icon-card:hover .f2957m .viwrk3 {
@@ -919,8 +852,6 @@
 }
 
 /* ──── PROMPT-TEMPLATE ────────────────────────────────────────
-   Concept: Template with placeholder slots
-   Story: Template slots fill in from top to bottom
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .zcezjm .qljgig,
 .icon-card:hover .zcezjm .qljgig {
@@ -944,8 +875,6 @@
 }
 
 /* ──── RETRIEVE ───────────────────────────────────────────────
-   Concept: Pulling data from storage
-   Story: Arrow pulls up, document rises from the box
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .vavcq0 .j9dbas,
 .icon-card:hover .vavcq0 .j9dbas {
@@ -970,8 +899,6 @@
 }
 
 /* ──── SAFETY-FILTER ──────────────────────────────────────────
-   Concept: Content filtering/moderation
-   Story: Funnel border draws in (processing)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .hw58k7 .lecr1a,
 .icon-card:hover .hw58k7 .lecr1a {
@@ -985,8 +912,6 @@
 }
 
 /* ──── SYSTEM-PROMPT ──────────────────────────────────────────
-   Concept: System-level instructions
-   Story: Brackets flash (activating), lines type in
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .cfmews .tqcvuc,
 .icon-card:hover .cfmews .tqcvuc {
@@ -1010,8 +935,6 @@
 }
 
 /* ──── TEMPERATURE ────────────────────────────────────────────
-   Concept: Randomness/creativity control
-   Story: Mercury fill rises, bulb glows hotter
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .esk68q .kmljdj,
 .icon-card:hover .esk68q .kmljdj {
@@ -1033,8 +956,6 @@
 }
 
 /* ──── TOKEN-COST ─────────────────────────────────────────────
-   Concept: Usage cost / pricing
-   Story: Dollar sign pulses (cost awareness), coin shimmers
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .osp89u .r504ri,
 .icon-card:hover .osp89u .r504ri {
@@ -1061,8 +982,6 @@
 }
 
 /* ──── TOKEN-COUNTER ──────────────────────────────────────────
-   Concept: Counting tokens used
-   Story: Digit slots cascade lit (counting up)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .h8xl8q .f7qbny,
 .icon-card:hover .h8xl8q .f7qbny {
@@ -1086,8 +1005,6 @@
 }
 
 /* ──── TOOL-USE ───────────────────────────────────────────────
-   Concept: Invoking a tool
-   Story: Wrench rocks back and forth (being used)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .o57xsn .gwe69i,
 .icon-card:hover .o57xsn .gwe69i {
@@ -1110,8 +1027,6 @@
 }
 
 /* ──── VECTOR-DB ──────────────────────────────────────────────
-   Concept: Vector database storage
-   Story: Internal data dots pulse in sequence
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .pwgkw8 .nodk35,
 .icon-card:hover .pwgkw8 .nodk35 {
@@ -1131,8 +1046,6 @@
 }
 
 /* ──── BATCH-PROCESS ──────────────────────────────────────────
-   Concept: Parallel task execution
-   Story: Play triangles activate in staggered sequence
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .bv52ey .eau7ku,
 .icon-card:hover .bv52ey .eau7ku {
@@ -1160,8 +1073,6 @@
 }
 
 /* ──── HALLUCINATION ──────────────────────────────────────────
-   Concept: False/unreliable output
-   Story: Exclamation mark shakes (warning), triangle border flickers
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .v7rz3j .fboc4i,
 .icon-card:hover .v7rz3j .fboc4i {
@@ -1178,8 +1089,6 @@
 }
 
 /* ──── FUNCTION-CALL ──────────────────────────────────────────
-   Concept: Executing a function
-   Story: Arrow shoots right (execution), f() flashes
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .envg1l .e2jdvh,
 .icon-card:hover .envg1l .e2jdvh {
@@ -1199,8 +1108,6 @@
 }
 
 /* ──── MULTIMODAL ─────────────────────────────────────────────
-   Concept: Multiple input modalities
-   Story: Three panels light up in sequence (image, text, audio)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .p25f9w .cnkvmi,
 .icon-card:hover .p25f9w .cnkvmi {
@@ -1229,8 +1136,6 @@
 }
 
 /* ──── ALIGNMENT ──────────────────────────────────────────────
-   Concept: Value alignment / calibration
-   Story: Rings pulse inward toward bullseye center
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .g2yten .yznu8s,
 .icon-card:hover .g2yten .yznu8s {
@@ -1262,8 +1167,6 @@
 }
 
 /* ──── ATTENTION ──────────────────────────────────────────────
-   Concept: Focus mechanism
-   Story: Pupil dilates (focusing attention)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .cybhkq .xwl8ri,
 .icon-card:hover .cybhkq .xwl8ri {
@@ -1291,8 +1194,6 @@
 }
 
 /* ──── TOKENIZER ──────────────────────────────────────────────
-   Concept: Breaking text into tokens
-   Story: Token blocks split apart from center
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .f8cvek .fznlac,
 .icon-card:hover .f8cvek .fznlac {
@@ -1320,8 +1221,6 @@
 }
 
 /* ──── BENCHMARK ──────────────────────────────────────────────
-   Concept: Performance measurement
-   Story: Bars rise from bottom in sequence (results coming in)
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .zp155h .okvmvj,
 .icon-card:hover .zp155h .okvmvj {
@@ -1353,8 +1252,6 @@
 }
 
 /* ──── EVAL-METRICS ───────────────────────────────────────────
-   Concept: Performance evaluation score
-   Story: Progress arc draws in, checkmark pops when done
    ──────────────────────────────────────────────────────────── */
 .si-icon-cell:hover .pikypw .svg8i0,
 .icon-card:hover .pikypw .svg8i0 {
@@ -1373,20 +1270,8 @@
   filter: drop-shadow(0 0 3px rgba(100, 181, 246, 0.3));
 }
 
-
-
-
-
-
-
-
 /* ━━━ PANEL PREVIEW AUTO-PLAY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Mirror hover triggers for premium panel preview context
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-
-
-
 
 .panel__preview-icon .xznek0 .n8l1r5 { animation: fa08ar 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .panel__preview-icon .xznek0 .ba1np5 { animation: q0e7v2 0.8s ease 0.1s both; }
@@ -1401,11 +1286,4 @@
 .panel__preview-icon .tihxmg .t0vwg8 { stroke-dasharray: 15; stroke-dashoffset: 15; animation: wlihdm 0.4s ease 0.7s forwards; }
 .panel__preview-icon .nzis6r .bhnx8a { animation: qdtcwz 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both; transform-origin: center; }
 .panel__preview-icon .j474hh svg { animation: azitsa 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center; filter: drop-shadow(0 0 3px rgba(0, 212, 255, 0.4)); }
-
-
-
-
-
-
-
 

@@ -1,5 +1,4 @@
-/* E-Commerce Collection: CSS-only hover animations
-   Socratic design: 1. What real-world thing? 2. What motion? 3. Which elements? 4. Same at rest? */
+/* E-Commerce Collection: CSS-only hover animations*/
 
 .si-anim svg { overflow: visible; }
 
@@ -241,7 +240,6 @@
   filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.3));
 }
 
-
 /* ===================== KEYFRAMES ===================== */
 
 /* 1. Cart bounce: item dropped into cart, sinks then springs */
@@ -426,7 +424,6 @@
   56%  { transform: scale(1); }
   100% { transform: scale(1); }
 }
-
 
 /* ===================== BATCH 2 (Icons 21-50) ===================== */
 
@@ -668,7 +665,6 @@
   transform-origin: center bottom;
   filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.25));
 }
-
 
 /* ===================== BATCH 2 KEYFRAMES ===================== */
 

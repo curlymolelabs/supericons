@@ -1,12 +1,4 @@
-/* Security & Auth Collection: CSS-only hover animations
-   Source: Material Symbols Rounded (solid/filled)
-   
-   DESIGN RULE: Every animation tells a security story.
-   Motion vocabulary: lock mechanisms, biometric scans,
-   encryption transforms, shield deflections, access grants. */
-
 .si-anim svg { overflow: visible; }
-
 
 /* 1. LOCK-CLOSED: Deadbolt engage. Drops down with heavy metallic clunk. */
 .si-icon-cell:hover .scd9j1 svg,
@@ -157,7 +149,6 @@
   animation: wj9msz 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   transform-origin: center;
 }
-
 
 /* ============= BATCH 2: ICONS 21-50 ============= */
 
@@ -376,7 +367,6 @@
   animation: qt1ptr 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   transform-origin: center;
 }
-
 
 /* ===================== KEYFRAMES ===================== */
 
