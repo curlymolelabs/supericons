@@ -1,0 +1,3590 @@
+{
+  "version": 1,
+  "groups": [
+    "Motion",
+    "Entrances",
+    "Exits",
+    "Special"
+  ],
+  "presets": [
+    {
+      "preset": "bounce",
+      "label": "Bounce",
+      "group": "Motion",
+      "description": "Lifts the icon with a quick rebound.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 430,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 650
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Bounce moves the icon on the Y axis, so it reads best on icons with a clear outer silhouette rather than dense inner detail.",
+        "At higher intensity the rebound can feel toy-like, so keep it restrained in professional product UI."
+      ],
+      "visual_character": "snappy upward rebound",
+      "emotional_tone": [
+        "energetic",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "attention-cue",
+        "primary-cta"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "float",
+      "label": "Float",
+      "group": "Motion",
+      "description": "Drifts the icon upward and back with a light hovering feel.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 700,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1100
+      },
+      "default_intensity_percent": 50,
+      "intensity_range_percent": {
+        "min": 35,
+        "max": 70
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Float moves the icon on the Y axis, so it reads best on icons with a clear outer silhouette rather than dense inner detail.",
+        "Longer durations keep the motion soft; short durations make the preset feel twitchy instead of ambient."
+      ],
+      "visual_character": "gentle suspended drift",
+      "emotional_tone": [
+        "calm",
+        "subtle",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "empty-state",
+        "feature-highlight",
+        "loading"
+      ],
+      "avoid_for": [
+        "click-feedback",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "shake",
+      "label": "Shake",
+      "group": "Motion",
+      "description": "Adds a quick side-to-side alert motion.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 200,
+        "max": 600
+      },
+      "default_intensity_percent": 68,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Shake emphasizes sideways movement, so the effect reads most clearly when the icon has a visible left-to-right shape or asymmetry.",
+        "The motion reads as an alert state, so it can feel overly harsh in calm or premium product surfaces."
+      ],
+      "visual_character": "rapid lateral jolt",
+      "emotional_tone": [
+        "urgent",
+        "energetic",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "attention-cue",
+        "notifications",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "spin",
+      "label": "Spin",
+      "group": "Motion",
+      "description": "Rotates the full icon around its center.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 800,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1200
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Spin rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "Icons with a strong directional meaning can become harder to recognize mid-rotation, so use it on neutral symbols or loading states."
+      ],
+      "visual_character": "continuous full rotation",
+      "emotional_tone": [
+        "mechanical",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "media-controls",
+        "analytics"
+      ],
+      "avoid_for": [
+        "success-confirmation",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "pulse",
+      "label": "Pulse",
+      "group": "Motion",
+      "description": "Scales gently in and out for soft emphasis.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 650,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 950
+      },
+      "default_intensity_percent": 55,
+      "intensity_range_percent": {
+        "min": 35,
+        "max": 75
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Pulse depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "The preset is most readable on icons with stable proportions; very thin marks can feel like they blink instead of breathe."
+      ],
+      "visual_character": "soft outward pulse",
+      "emotional_tone": [
+        "subtle",
+        "professional",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "notifications",
+        "attention-cue",
+        "loading"
+      ],
+      "avoid_for": [
+        "navigation"
+      ]
+    },
+    {
+      "preset": "pop",
+      "label": "Pop",
+      "group": "Motion",
+      "description": "Snaps the icon forward with a springy overshoot.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 430,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 650
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Pop depends on centered scale overshoot rather than path movement, so it reads best on compact icons with enough surrounding space to show the spring effect clearly.",
+        "Because the preset snaps past its resting size before settling, high intensity can feel childish faster than Bounce in serious product UI."
+      ],
+      "visual_character": "springy forward pop",
+      "emotional_tone": [
+        "energetic",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "attention-cue",
+        "primary-cta"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "heartbeat",
+      "label": "Heartbeat",
+      "group": "Motion",
+      "description": "Beats in a double pulse with a heart-like rhythm.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 700,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 950
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Heartbeat depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "The beat pattern is recognizable, so it can feel overly emotive in formal product flows unless the icon already carries warmth."
+      ],
+      "visual_character": "double-beat pulse",
+      "emotional_tone": [
+        "friendly",
+        "cheerful",
+        "playful"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "celebratory-ui",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "rubberband",
+      "label": "Rubber Band",
+      "group": "Motion",
+      "description": "Stretches and snaps back with elastic tension.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 300,
+        "max": 760
+      },
+      "default_intensity_percent": 68,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Rubber Band depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "The stretch reads best on compact icons; highly detailed marks can feel rubbery in an uncontrolled way at high intensity."
+      ],
+      "visual_character": "elastic stretch snap",
+      "emotional_tone": [
+        "playful",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "toggle-state",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "settings",
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "jelly",
+      "label": "Jelly",
+      "group": "Motion",
+      "description": "Wobbles with a soft gelatin settle.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 350,
+        "max": 820
+      },
+      "default_intensity_percent": 64,
+      "intensity_range_percent": {
+        "min": 42,
+        "max": 84
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Jelly works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "The deformation reads best on rounded or compact icons; rigid geometric symbols can feel off-model if the intensity is pushed too high."
+      ],
+      "visual_character": "soft gelatin wobble",
+      "emotional_tone": [
+        "playful",
+        "friendly",
+        "cheerful"
+      ],
+      "recommended_contexts": [
+        "empty-state",
+        "feature-highlight",
+        "click-feedback"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "ring",
+      "label": "Ring",
+      "group": "Motion",
+      "description": "Swings the icon like a ringing bell.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 520,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 800
+      },
+      "default_intensity_percent": 66,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Ring rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "The preset reads best on top-heavy or bell-like silhouettes; very radial icons can make the swing feel less intentional."
+      ],
+      "visual_character": "bell-like swing",
+      "emotional_tone": [
+        "urgent",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "notifications",
+        "attention-cue",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "wobble",
+      "label": "Wobble",
+      "group": "Motion",
+      "description": "Rocks the icon side to side with a loose settle.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 620,
+      "duration_range_ms": {
+        "min": 380,
+        "max": 920
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Wobble rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "The arc reads best on icons that feel visually anchored at the top or center; fully radial shapes can flatten the motion."
+      ],
+      "visual_character": "loose side sway",
+      "emotional_tone": [
+        "playful",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "hover-affordance",
+        "empty-state",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "magnetic",
+      "label": "Magnetic",
+      "group": "Motion",
+      "description": "Pulls and releases with a magnet-like attraction.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 520,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 760
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Magnetic reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The pull direction needs a clear silhouette to read well; very symmetrical icons can make the attraction feel less obvious."
+      ],
+      "visual_character": "controlled magnetic pull",
+      "emotional_tone": [
+        "precise",
+        "premium",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "hover-affordance",
+        "feature-highlight",
+        "primary-cta"
+      ],
+      "avoid_for": [
+        "analytics"
+      ]
+    },
+    {
+      "preset": "recoil",
+      "label": "Recoil",
+      "group": "Motion",
+      "description": "Strikes forward and snaps back with a charged hit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 620
+      },
+      "default_intensity_percent": 72,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Recoil reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The snap is easiest to read on icons with a clear leading edge; dense symbols can make the strike feel abrupt rather than intentional."
+      ],
+      "visual_character": "charged snap back",
+      "emotional_tone": [
+        "bold",
+        "energetic",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "attention-cue",
+        "primary-cta"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "pendulum",
+      "label": "Pendulum",
+      "group": "Motion",
+      "description": "Swings the icon through a measured pendulum arc.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 740,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1100
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Pendulum reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The rhythm is easiest to read on narrow or directional icons; fully symmetrical marks can make the beat feel less intentional."
+      ],
+      "visual_character": "measured pendulum swing",
+      "emotional_tone": [
+        "mechanical",
+        "restrained",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "analytics",
+        "navigation"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "success-confirmation"
+      ]
+    },
+    {
+      "preset": "whiplash",
+      "label": "Whiplash",
+      "group": "Motion",
+      "description": "Whips across the axis with a fast overshoot and return.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 220,
+        "max": 560
+      },
+      "default_intensity_percent": 74,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Whiplash reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "High intensity can feel aggressive very quickly, so reserve stronger settings for standout interactions rather than everyday controls."
+      ],
+      "visual_character": "fast whip arc",
+      "emotional_tone": [
+        "bold",
+        "energetic",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "attention-cue",
+        "primary-cta",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "settings",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "tremor",
+      "label": "Tremor",
+      "group": "Motion",
+      "description": "Vibrates with a tight, unstable micro-shake.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 200,
+        "max": 600
+      },
+      "default_intensity_percent": 68,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Tremor relies on rapid translation jitter, so very small icons can blur into visual noise if the duration is too long or the amplitude is pushed too high.",
+        "The preset works best as a brief alert or unstable-state cue, not as a sustained hover treatment in calm interface surfaces."
+      ],
+      "visual_character": "unstable micro tremor",
+      "emotional_tone": [
+        "urgent",
+        "energetic",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "attention-cue",
+        "notifications",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "neonglow",
+      "label": "Neon Glow",
+      "group": "Motion",
+      "description": "Brightens the icon with a vivid electric glow pulse.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 680,
+      "duration_range_ms": {
+        "min": 420,
+        "max": 980
+      },
+      "default_intensity_percent": 62,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Neon Glow relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "Glow intensity stacks quickly on small icons, so keep the range moderate unless the surrounding UI is already visually expressive."
+      ],
+      "visual_character": "electric glow pulse",
+      "emotional_tone": [
+        "premium",
+        "bold",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "primary-cta",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "breathe",
+      "label": "Breathe",
+      "group": "Motion",
+      "description": "Expands and settles in a slow breathing rhythm.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 900,
+      "duration_range_ms": {
+        "min": 650,
+        "max": 1300
+      },
+      "default_intensity_percent": 48,
+      "intensity_range_percent": {
+        "min": 30,
+        "max": 70
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Breathe depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "The preset needs time to read, so very short durations remove the calm character and make the motion feel like a generic pulse."
+      ],
+      "visual_character": "slow breathing pulse",
+      "emotional_tone": [
+        "calm",
+        "subtle",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "empty-state",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "attention-cue",
+        "notifications"
+      ]
+    },
+    {
+      "preset": "metronome",
+      "label": "Metronome",
+      "group": "Motion",
+      "description": "Ticks through a steady rhythmic swing.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 740,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1100
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Metronome reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The rhythm is easiest to read on narrow or directional icons; fully symmetrical marks can make the beat feel less intentional."
+      ],
+      "visual_character": "steady rhythmic tick",
+      "emotional_tone": [
+        "mechanical",
+        "restrained",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "analytics",
+        "navigation"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "success-confirmation"
+      ]
+    },
+    {
+      "preset": "orbit",
+      "label": "Orbit",
+      "group": "Motion",
+      "description": "Circles with an orbital path around the icon center.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 800,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1200
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Orbit rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "Icons with a strong directional meaning can become harder to recognize mid-rotation, so use it on neutral symbols or loading states."
+      ],
+      "visual_character": "orbital circular drift",
+      "emotional_tone": [
+        "mechanical",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "media-controls",
+        "analytics"
+      ],
+      "avoid_for": [
+        "success-confirmation",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "flicker",
+      "label": "Flicker",
+      "group": "Motion",
+      "description": "Breaks the icon into a brief unstable flicker.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 200,
+        "max": 600
+      },
+      "default_intensity_percent": 68,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Flicker depends on repeated opacity interruption rather than movement, so icons with very thin strokes can disappear too aggressively before the effect reads.",
+        "Short durations keep the effect legible; longer runs can make the icon feel broken rather than intentionally unstable."
+      ],
+      "visual_character": "unstable visibility flicker",
+      "emotional_tone": [
+        "urgent",
+        "energetic",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "attention-cue",
+        "notifications",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "squish",
+      "label": "Squish",
+      "group": "Motion",
+      "description": "Compresses and rebounds with a soft squash-and-stretch feel.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 350,
+        "max": 820
+      },
+      "default_intensity_percent": 64,
+      "intensity_range_percent": {
+        "min": 42,
+        "max": 84
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Squish works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "The deformation reads best on rounded or compact icons; rigid geometric symbols can feel off-model if the intensity is pushed too high."
+      ],
+      "visual_character": "vertical squash and stretch",
+      "emotional_tone": [
+        "playful",
+        "friendly",
+        "cheerful"
+      ],
+      "recommended_contexts": [
+        "empty-state",
+        "feature-highlight",
+        "click-feedback"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "glide",
+      "label": "Glide",
+      "group": "Motion",
+      "description": "Moves smoothly across its path with almost no visible impact.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 650,
+      "duration_range_ms": {
+        "min": 420,
+        "max": 980
+      },
+      "default_intensity_percent": 50,
+      "intensity_range_percent": {
+        "min": 32,
+        "max": 70
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Glide reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The motion is subtle by design, so very small amplitudes on tiny icons can become imperceptible unless the icon has a clear directional shape."
+      ],
+      "visual_character": "smooth directional glide",
+      "emotional_tone": [
+        "restrained",
+        "professional",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "hover-affordance",
+        "settings",
+        "analytics"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "radar",
+      "label": "Radar",
+      "group": "Motion",
+      "description": "Sweeps like a scanning radar pass.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 740,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1100
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Radar reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The signal pattern reads best on centered icons with enough negative space for the scan or beacon effect to stay legible."
+      ],
+      "visual_character": "scanning radar sweep",
+      "emotional_tone": [
+        "mechanical",
+        "precise",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "loading",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "empty-state"
+      ]
+    },
+    {
+      "preset": "beacon",
+      "label": "Beacon",
+      "group": "Motion",
+      "description": "Pulses outward like a beacon signal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 740,
+      "duration_range_ms": {
+        "min": 500,
+        "max": 1100
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Beacon reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The signal pattern reads best on centered icons with enough negative space for the scan or beacon effect to stay legible."
+      ],
+      "visual_character": "broadcast signal pulse",
+      "emotional_tone": [
+        "mechanical",
+        "precise",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "loading",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "empty-state"
+      ]
+    },
+    {
+      "preset": "magneticIn",
+      "label": "Magnetic In",
+      "group": "Entrances",
+      "description": "Pulls the icon inward with a magnetic snap.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 800
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Magnetic In reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The arrival reads most clearly when the icon enters from a distinct side rather than as a perfectly centered shape."
+      ],
+      "visual_character": "magnetic inward snap",
+      "emotional_tone": [
+        "precise",
+        "premium",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "onboarding",
+        "feature-highlight",
+        "navigation"
+      ],
+      "avoid_for": [
+        "analytics"
+      ]
+    },
+    {
+      "preset": "fadeIn",
+      "label": "Fade In",
+      "group": "Entrances",
+      "description": "Brings the icon in with a clean opacity fade.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 700
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 85
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Fade In works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This preset is deliberately quiet, so it works best when layout change and surrounding context already support the arrival."
+      ],
+      "visual_character": "clean arrival reveal",
+      "emotional_tone": [
+        "subtle",
+        "restrained",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "onboarding"
+      ],
+      "avoid_for": [
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "scaleUp",
+      "label": "Scale Up",
+      "group": "Entrances",
+      "description": "Grows upward into place with a clear reveal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 700
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 85
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Scale Up works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This preset is deliberately quiet, so it works best when layout change and surrounding context already support the arrival."
+      ],
+      "visual_character": "growing scale reveal",
+      "emotional_tone": [
+        "subtle",
+        "restrained",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "onboarding"
+      ],
+      "avoid_for": [
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "slideUp",
+      "label": "Slide Up",
+      "group": "Entrances",
+      "description": "Slides the icon upward into view.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 800
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slide Up reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The movement is most readable when the destination has a clear directional flow or baseline inside the layout."
+      ],
+      "visual_character": "upward entry slide",
+      "emotional_tone": [
+        "professional",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "onboarding",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "springLand",
+      "label": "Spring Land",
+      "group": "Entrances",
+      "description": "Drops into place with a springy landing.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 520,
+      "duration_range_ms": {
+        "min": 300,
+        "max": 820
+      },
+      "default_intensity_percent": 75,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Spring Land moves the icon on the Y axis, so it reads best on icons with a clear outer silhouette rather than dense inner detail.",
+        "The overshoot adds personality quickly, so keep the intensity lower in professional product surfaces."
+      ],
+      "visual_character": "spring landing drop",
+      "emotional_tone": [
+        "energetic",
+        "friendly",
+        "cheerful"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "click-feedback",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "settings",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "slingshot",
+      "label": "Slingshot",
+      "group": "Entrances",
+      "description": "Launches into view with a pulled-back release.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 400,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 620
+      },
+      "default_intensity_percent": 76,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slingshot reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The directional release is strong, so it reads best on icons with a clear forward axis rather than static geometric marks."
+      ],
+      "visual_character": "slung directional entry",
+      "emotional_tone": [
+        "bold",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "primary-cta",
+        "attention-cue",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "glitchOn",
+      "label": "Glitch On",
+      "group": "Entrances",
+      "description": "Enters with a digital glitch and snap into place.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 220,
+        "max": 580
+      },
+      "default_intensity_percent": 72,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Glitch On depends on rapid opacity shifts and short lateral translation steps, so brief duration keeps the glitch legible instead of noisy.",
+        "The preset works best on icons with a clear silhouette; very detailed marks can look visually broken rather than intentionally digital."
+      ],
+      "visual_character": "digital glitch arrival",
+      "emotional_tone": [
+        "dramatic",
+        "mechanical",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "security-auth",
+        "feature-highlight",
+        "notifications"
+      ],
+      "avoid_for": [
+        "settings",
+        "navigation"
+      ]
+    },
+    {
+      "preset": "unfold",
+      "label": "Unfold",
+      "group": "Entrances",
+      "description": "Unfolds into place with a controlled reveal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 300,
+        "max": 780
+      },
+      "default_intensity_percent": 66,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Unfold relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This reveal reads best on icons with clear structural edges; highly organic shapes make the staged motion less visible."
+      ],
+      "visual_character": "structured unfolding reveal",
+      "emotional_tone": [
+        "precise",
+        "professional",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "onboarding"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "warpIn",
+      "label": "Warp In",
+      "group": "Entrances",
+      "description": "Arrives through a warped, accelerated reveal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 400,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 620
+      },
+      "default_intensity_percent": 76,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Warp In reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The directional release is strong, so it reads best on icons with a clear forward axis rather than static geometric marks."
+      ],
+      "visual_character": "warped high-speed arrival",
+      "emotional_tone": [
+        "bold",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "primary-cta",
+        "attention-cue",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "slideRight",
+      "label": "Slide Right",
+      "group": "Entrances",
+      "description": "Slides into view from the left toward the right.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 800
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slide Right reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The movement is most readable when the destination has a clear directional flow or baseline inside the layout."
+      ],
+      "visual_character": "rightward entry slide",
+      "emotional_tone": [
+        "professional",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "onboarding",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "slideDown",
+      "label": "Slide Down",
+      "group": "Entrances",
+      "description": "Slides the icon downward into its resting position.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 800
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slide Down reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The movement is most readable when the destination has a clear directional flow or baseline inside the layout."
+      ],
+      "visual_character": "downward settling entry",
+      "emotional_tone": [
+        "professional",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "onboarding",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "flipIn",
+      "label": "Flip In",
+      "group": "Entrances",
+      "description": "Flips the icon into place with a fast hinge-like reveal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 260,
+        "max": 650
+      },
+      "default_intensity_percent": 74,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Flip In uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The turning motion is stronger on simple silhouettes; dense icons can become momentarily unreadable during the turn."
+      ],
+      "visual_character": "hinged flip entry",
+      "emotional_tone": [
+        "playful",
+        "bold",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "click-feedback",
+        "onboarding"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "telegram",
+      "label": "Telegram",
+      "group": "Entrances",
+      "description": "Shoots into place with a send-like directional burst.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 400,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 620
+      },
+      "default_intensity_percent": 76,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Telegram reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The directional release is strong, so it reads best on icons with a clear forward axis rather than static geometric marks."
+      ],
+      "visual_character": "send-like directional launch",
+      "emotional_tone": [
+        "bold",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "primary-cta",
+        "attention-cue",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "bloom",
+      "label": "Bloom",
+      "group": "Entrances",
+      "description": "Opens into view with a soft blooming expansion.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 860
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Bloom relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This effect can feel decorative quickly, so reserve higher intensity values for spotlight or celebratory moments."
+      ],
+      "visual_character": "soft blooming reveal",
+      "emotional_tone": [
+        "premium",
+        "cheerful",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "feature-highlight",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "analytics",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "shockwave",
+      "label": "Shockwave",
+      "group": "Entrances",
+      "description": "Enters with a strong outward shockwave.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 650
+      },
+      "default_intensity_percent": 80,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Shockwave relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This preset expands quickly and needs breathing room; cramped layouts or tiny icons can make the wave feel muddy."
+      ],
+      "visual_character": "outward impact wave",
+      "emotional_tone": [
+        "bold",
+        "dramatic",
+        "celebratory"
+      ],
+      "recommended_contexts": [
+        "celebratory-ui",
+        "feature-highlight",
+        "attention-cue"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "fadeOut",
+      "label": "Fade Out",
+      "group": "Exits",
+      "description": "Removes the icon with a clean opacity fade.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 550
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 85
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Fade Out works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This removal is intentionally quiet, so it works best when the layout change itself already communicates dismissal."
+      ],
+      "visual_character": "clean fade removal",
+      "emotional_tone": [
+        "restrained",
+        "professional",
+        "subtle"
+      ],
+      "recommended_contexts": [
+        "notifications",
+        "settings",
+        "navigation"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "scaleDown",
+      "label": "Scale Down",
+      "group": "Exits",
+      "description": "Shrinks away while staying centered.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 550
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 85
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Scale Down works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This removal is intentionally quiet, so it works best when the layout change itself already communicates dismissal."
+      ],
+      "visual_character": "centered shrink removal",
+      "emotional_tone": [
+        "restrained",
+        "professional",
+        "subtle"
+      ],
+      "recommended_contexts": [
+        "notifications",
+        "settings",
+        "navigation"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "slideOut",
+      "label": "Slide Out",
+      "group": "Exits",
+      "description": "Slides out of view with a decisive directional exit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 450,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 750
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slide Out reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The exit needs a clear direction relative to the layout or interaction flow; otherwise the movement can feel disconnected."
+      ],
+      "visual_character": "decisive slide exit",
+      "emotional_tone": [
+        "professional",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "toggle-state",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "vortex",
+      "label": "Vortex",
+      "group": "Exits",
+      "description": "Spirals away in a tight vortex exit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 650
+      },
+      "default_intensity_percent": 78,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Vortex uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "This exit is visually strong and can overwhelm dense UI, so it works best on larger or more isolated icons."
+      ],
+      "visual_character": "spiraling vortex exit",
+      "emotional_tone": [
+        "dramatic",
+        "bold",
+        "mechanical"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "media-controls",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "glitchOff",
+      "label": "Glitch Off",
+      "group": "Exits",
+      "description": "Breaks apart digitally as the icon exits.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 190,
+        "max": 540
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Glitch Off relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "Because the preset interrupts visibility, very thin or small icons can disappear too abruptly if the intensity is too high."
+      ],
+      "visual_character": "digital glitch removal",
+      "emotional_tone": [
+        "dramatic",
+        "mechanical",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "security-auth",
+        "notifications",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics",
+        "navigation"
+      ]
+    },
+    {
+      "preset": "dissolve",
+      "label": "Dissolve",
+      "group": "Exits",
+      "description": "Softly dissolves until the icon fully disappears.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 400,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 680
+      },
+      "default_intensity_percent": 64,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 88
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Dissolve relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This preset reads best on medium-weight icons; very thin strokes can vanish before the effect feels intentional."
+      ],
+      "visual_character": "soft particulate dissolve",
+      "emotional_tone": [
+        "subtle",
+        "premium",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "feature-highlight",
+        "notifications"
+      ],
+      "avoid_for": [
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "popOut",
+      "label": "Pop Out",
+      "group": "Exits",
+      "description": "Pops away with a quick spring-loaded exit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 520
+      },
+      "default_intensity_percent": 72,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Pop Out depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "The spring exit is most readable on compact icons; dense marks can make the pop feel abrupt rather than playful."
+      ],
+      "visual_character": "springy pop exit",
+      "emotional_tone": [
+        "energetic",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "toggle-state",
+        "success-confirmation"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "slideLeft",
+      "label": "Slide Left",
+      "group": "Exits",
+      "description": "Slides the icon out toward the left edge.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 450,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 750
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Slide Left reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The exit needs a clear direction relative to the layout or interaction flow; otherwise the movement can feel disconnected."
+      ],
+      "visual_character": "leftward exit slide",
+      "emotional_tone": [
+        "professional",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "toggle-state",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "sinkDown",
+      "label": "Sink Down",
+      "group": "Exits",
+      "description": "Drops the icon downward as it exits.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 450,
+      "duration_range_ms": {
+        "min": 250,
+        "max": 750
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Sink Down reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The exit needs a clear direction relative to the layout or interaction flow; otherwise the movement can feel disconnected."
+      ],
+      "visual_character": "downward sink exit",
+      "emotional_tone": [
+        "professional",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "toggle-state",
+        "notifications"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "flipOut",
+      "label": "Flip Out",
+      "group": "Exits",
+      "description": "Flips away on a fast hinge-like exit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 340,
+      "duration_range_ms": {
+        "min": 200,
+        "max": 550
+      },
+      "default_intensity_percent": 74,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 95
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Flip Out uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The turning motion is stronger on simple silhouettes; dense icons can lose recognizability before the exit is complete."
+      ],
+      "visual_character": "hinged flip removal",
+      "emotional_tone": [
+        "bold",
+        "playful"
+      ],
+      "recommended_contexts": [
+        "toggle-state",
+        "click-feedback",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "implode",
+      "label": "Implode",
+      "group": "Exits",
+      "description": "Collapses inward until the icon disappears.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 520
+      },
+      "default_intensity_percent": 78,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Implode depends on visible scale change, so it works best on compact icons with enough surrounding space to show the motion clearly.",
+        "This preset is visually forceful, so high intensity can feel destructive in calm product surfaces."
+      ],
+      "visual_character": "inward collapsing exit",
+      "emotional_tone": [
+        "dramatic",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "toggle-state",
+        "attention-cue",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings"
+      ]
+    },
+    {
+      "preset": "puffOut",
+      "label": "Puff Out",
+      "group": "Exits",
+      "description": "Expands outward and vanishes in a soft puff.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 400,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 680
+      },
+      "default_intensity_percent": 64,
+      "intensity_range_percent": {
+        "min": 45,
+        "max": 88
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Puff Out relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This preset reads best on medium-weight icons; very thin strokes can vanish before the effect feels intentional."
+      ],
+      "visual_character": "soft puff removal",
+      "emotional_tone": [
+        "subtle",
+        "premium",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "feature-highlight",
+        "notifications"
+      ],
+      "avoid_for": [
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "launchOut",
+      "label": "Launch Out",
+      "group": "Exits",
+      "description": "Launches away from its origin with a fast directional exit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 520
+      },
+      "default_intensity_percent": 80,
+      "intensity_range_percent": {
+        "min": 58,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Launch Out reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "The trajectory is easiest to read on icons that already imply forward movement; neutral symbols can feel randomly displaced."
+      ],
+      "visual_character": "launched directional exit",
+      "emotional_tone": [
+        "bold",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "primary-cta",
+        "attention-cue",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "shrinkSpin",
+      "label": "Shrink Spin",
+      "group": "Exits",
+      "description": "Shrinks while spinning out of view.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 360,
+      "duration_range_ms": {
+        "min": 220,
+        "max": 560
+      },
+      "default_intensity_percent": 76,
+      "intensity_range_percent": {
+        "min": 55,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Shrink Spin rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "Because scale and rotation combine, small or intricate icons can become unreadable quickly at stronger settings."
+      ],
+      "visual_character": "shrinking spin exit",
+      "emotional_tone": [
+        "mechanical",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "media-controls",
+        "loading",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "settings"
+      ]
+    },
+    {
+      "preset": "blinkOut",
+      "label": "Blink Out",
+      "group": "Exits",
+      "description": "Flickers and vanishes in a blinking removal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 190,
+        "max": 540
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Blink Out relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "Because the preset interrupts visibility, very thin or small icons can disappear too abruptly if the intensity is too high."
+      ],
+      "visual_character": "blinking visibility exit",
+      "emotional_tone": [
+        "dramatic",
+        "mechanical",
+        "bold"
+      ],
+      "recommended_contexts": [
+        "security-auth",
+        "notifications",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics",
+        "navigation"
+      ]
+    },
+    {
+      "preset": "sparkle",
+      "label": "Sparkle",
+      "group": "Special",
+      "description": "Adds a brief sparkle burst around the icon.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 620,
+      "duration_range_ms": {
+        "min": 380,
+        "max": 900
+      },
+      "default_intensity_percent": 62,
+      "intensity_range_percent": {
+        "min": 42,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Sparkle relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "The effect reads best when the icon has enough size or contrast to support the light burst."
+      ],
+      "visual_character": "mid-cycle sparkle burst",
+      "emotional_tone": [
+        "premium",
+        "cheerful",
+        "celebratory"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "success-confirmation",
+        "celebratory-ui"
+      ],
+      "avoid_for": [
+        "analytics",
+        "security-auth",
+        "settings"
+      ]
+    },
+    {
+      "preset": "swing",
+      "label": "Swing",
+      "group": "Special",
+      "description": "Swings through a relaxed side arc.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 620,
+      "duration_range_ms": {
+        "min": 380,
+        "max": 920
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Swing rotates the icon as a whole unit, so balanced marks stay readable better than highly directional symbols.",
+        "The arc reads best on icons that feel visually anchored at the top or center; fully radial shapes can flatten the motion."
+      ],
+      "visual_character": "relaxed hanging swing",
+      "emotional_tone": [
+        "playful",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "hover-affordance",
+        "empty-state",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "jitter",
+      "label": "Jitter",
+      "group": "Special",
+      "description": "Breaks into a quick, nervous jitter.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 280,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 450
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Jitter works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "The motion uses repeated quick shifts, so dense icons can become visually noisy unless the intensity stays controlled."
+      ],
+      "visual_character": "nervous rapid jitter",
+      "emotional_tone": [
+        "urgent",
+        "dramatic",
+        "energetic"
+      ],
+      "recommended_contexts": [
+        "attention-cue",
+        "notifications",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "chase",
+      "label": "Chase",
+      "group": "Special",
+      "description": "Creates a chasing motion that feels fast and directional.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 500,
+      "duration_range_ms": {
+        "min": 300,
+        "max": 760
+      },
+      "default_intensity_percent": 62,
+      "intensity_range_percent": {
+        "min": 42,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Chase reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "This preset feels most intentional on icons with visible stroke flow or implied movement; static blocky icons can make the effect feel abstract."
+      ],
+      "visual_character": "fast chasing sweep",
+      "emotional_tone": [
+        "energetic",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "loading",
+        "media-controls",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "settings",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "stream",
+      "label": "Stream",
+      "group": "Special",
+      "description": "Flows through the icon in a steady streamed reveal.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 600,
+      "duration_range_ms": {
+        "min": 360,
+        "max": 900
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Stream relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This reveal is easiest to read when the icon has clear flow direction or visible internal structure instead of a fully solid shape."
+      ],
+      "visual_character": "steady streamed reveal",
+      "emotional_tone": [
+        "precise",
+        "restrained",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "feature-highlight",
+        "loading"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "trace",
+      "label": "Trace",
+      "group": "Special",
+      "description": "Reveals the icon with a directional trace.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 840
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Trace relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This preset reads strongest on icons with clear strokes or an obvious drawing path; filled or highly radial icons weaken the effect."
+      ],
+      "visual_character": "directional line trace",
+      "emotional_tone": [
+        "precise",
+        "professional",
+        "subtle"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "hover-affordance"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "primary-cta"
+      ]
+    },
+    {
+      "preset": "flow",
+      "label": "Flow",
+      "group": "Special",
+      "description": "Moves through the icon in a smooth directional flow.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 600,
+      "duration_range_ms": {
+        "min": 360,
+        "max": 900
+      },
+      "default_intensity_percent": 56,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Flow relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This reveal is easiest to read when the icon has clear flow direction or visible internal structure instead of a fully solid shape."
+      ],
+      "visual_character": "smooth directional flow",
+      "emotional_tone": [
+        "precise",
+        "restrained",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "feature-highlight",
+        "loading"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "converge",
+      "label": "Converge",
+      "group": "Special",
+      "description": "Pulls motion inward until the icon resolves into place.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 640,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 980
+      },
+      "default_intensity_percent": 54,
+      "intensity_range_percent": {
+        "min": 36,
+        "max": 74
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Converge works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This preset is quiet and analytical, so it works best when the surrounding interface is already structured and calm."
+      ],
+      "visual_character": "inward converging resolve",
+      "emotional_tone": [
+        "professional",
+        "precise",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "settings",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "primary-cta"
+      ]
+    },
+    {
+      "preset": "cube",
+      "label": "Cube",
+      "group": "Special",
+      "description": "Tilts through a cubic, box-like spatial motion.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 640,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 980
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Cube uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The depth cue reads best on simple marks with a clear silhouette; cluttered symbols can flatten the spatial effect."
+      ],
+      "visual_character": "cubic spatial tilt",
+      "emotional_tone": [
+        "premium",
+        "mechanical",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "analytics",
+        "loading"
+      ],
+      "avoid_for": [
+        "settings"
+      ]
+    },
+    {
+      "preset": "typing",
+      "label": "Typing",
+      "group": "Special",
+      "description": "Stages the icon in with stepped reveal timing.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 840
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Typing relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This preset reads strongest on icons with clear strokes or an obvious drawing path; filled or highly radial icons weaken the effect."
+      ],
+      "visual_character": "stepped typing reveal",
+      "emotional_tone": [
+        "precise",
+        "professional",
+        "subtle"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "hover-affordance"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "primary-cta"
+      ]
+    },
+    {
+      "preset": "reason",
+      "label": "Reason",
+      "group": "Special",
+      "description": "Builds the icon in measured analytical steps.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 640,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 980
+      },
+      "default_intensity_percent": 54,
+      "intensity_range_percent": {
+        "min": 36,
+        "max": 74
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Reason works best when the icon has simple structure and enough breathing room around it for the motion shape to stay legible.",
+        "This preset is quiet and analytical, so it works best when the surrounding interface is already structured and calm."
+      ],
+      "visual_character": "measured analytical build",
+      "emotional_tone": [
+        "professional",
+        "precise",
+        "restrained"
+      ],
+      "recommended_contexts": [
+        "analytics",
+        "settings",
+        "security-auth"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "primary-cta"
+      ]
+    },
+    {
+      "preset": "sweep",
+      "label": "Sweep",
+      "group": "Special",
+      "description": "Sweeps across the icon with a lit edge.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 560,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 840
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Sweep relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This preset reads strongest on icons with clear strokes or an obvious drawing path; filled or highly radial icons weaken the effect."
+      ],
+      "visual_character": "directional light sweep",
+      "emotional_tone": [
+        "precise",
+        "professional",
+        "subtle"
+      ],
+      "recommended_contexts": [
+        "navigation",
+        "settings",
+        "analytics",
+        "hover-affordance"
+      ],
+      "avoid_for": [
+        "celebratory-ui",
+        "primary-cta"
+      ]
+    },
+    {
+      "preset": "scatter",
+      "label": "Scatter",
+      "group": "Special",
+      "description": "Breaks motion outward into a scattered spread.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 650
+      },
+      "default_intensity_percent": 80,
+      "intensity_range_percent": {
+        "min": 58,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Scatter relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This preset is intentionally loud and needs space; small icons or dense rows can make the burst feel like visual noise."
+      ],
+      "visual_character": "scattered outward burst",
+      "emotional_tone": [
+        "celebratory",
+        "bold",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "celebratory-ui",
+        "feature-highlight",
+        "success-confirmation"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "crest",
+      "label": "Crest",
+      "group": "Special",
+      "description": "Rises and settles in a wave-like crest.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 680,
+      "duration_range_ms": {
+        "min": 420,
+        "max": 980
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 38,
+        "max": 78
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Crest moves the icon on the Y axis, so it reads best on icons with a clear outer silhouette rather than dense inner detail.",
+        "This preset reads best on icons with a clear top edge or upward silhouette; flat dense shapes can make the wave less visible."
+      ],
+      "visual_character": "wave-like crest rise",
+      "emotional_tone": [
+        "premium",
+        "calm",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "loading",
+        "analytics"
+      ],
+      "avoid_for": [
+        "attention-cue"
+      ]
+    },
+    {
+      "preset": "tap",
+      "label": "Tap",
+      "group": "Special",
+      "description": "Presses forward with a quick action glow.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 480
+      },
+      "default_intensity_percent": 72,
+      "intensity_range_percent": {
+        "min": 50,
+        "max": 92
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Tap is strongest as short interaction feedback, so it should be paired with a discrete user action rather than always-on motion.",
+        "The preset relies on a short forward hit, so it works best on explicit user action rather than passive hover or ambient motion."
+      ],
+      "visual_character": "press-forward action hit",
+      "emotional_tone": [
+        "energetic",
+        "precise",
+        "friendly"
+      ],
+      "recommended_contexts": [
+        "click-feedback",
+        "toggle-state",
+        "primary-cta"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    },
+    {
+      "preset": "shuffle",
+      "label": "Shuffle",
+      "group": "Special",
+      "description": "Reorders itself with a quick shuffle-like move.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 460,
+      "duration_range_ms": {
+        "min": 280,
+        "max": 720
+      },
+      "default_intensity_percent": 74,
+      "intensity_range_percent": {
+        "min": 52,
+        "max": 96
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Shuffle reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "This preset benefits from a clear staged rhythm; very centered static icons can make the pattern feel abstract instead of intentional."
+      ],
+      "visual_character": "quick shuffled reposition",
+      "emotional_tone": [
+        "playful",
+        "energetic",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "celebratory-ui",
+        "attention-cue"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "infinity",
+      "label": "Infinity",
+      "group": "Special",
+      "description": "Loops through a smooth infinity-like path.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 640,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 980
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Infinity uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The depth cue reads best on simple marks with a clear silhouette; cluttered symbols can flatten the spatial effect."
+      ],
+      "visual_character": "smooth infinite loop",
+      "emotional_tone": [
+        "premium",
+        "mechanical",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "analytics",
+        "loading"
+      ],
+      "avoid_for": [
+        "settings"
+      ]
+    },
+    {
+      "preset": "spatial",
+      "label": "Spatial",
+      "group": "Special",
+      "description": "Moves through a layered spatial drift.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 640,
+      "duration_range_ms": {
+        "min": 400,
+        "max": 980
+      },
+      "default_intensity_percent": 60,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 82
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Spatial uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The depth cue reads best on simple marks with a clear silhouette; cluttered symbols can flatten the spatial effect."
+      ],
+      "visual_character": "layered spatial drift",
+      "emotional_tone": [
+        "premium",
+        "mechanical",
+        "professional"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "analytics",
+        "loading"
+      ],
+      "avoid_for": [
+        "settings"
+      ]
+    },
+    {
+      "preset": "pageFlip",
+      "label": "Page Flip",
+      "group": "Special",
+      "description": "Turns like a page flipping over.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 540,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 820
+      },
+      "default_intensity_percent": 66,
+      "intensity_range_percent": {
+        "min": 44,
+        "max": 86
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Page Flip uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The metaphor is strongest on icons with a clear front-facing orientation; very abstract symbols can make the turn feel weak."
+      ],
+      "visual_character": "page-like flip turn",
+      "emotional_tone": [
+        "premium",
+        "playful",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "onboarding",
+        "feature-highlight",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "bookOpen",
+      "label": "Book Open",
+      "group": "Special",
+      "description": "Opens outward like a book spread.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 540,
+      "duration_range_ms": {
+        "min": 320,
+        "max": 820
+      },
+      "default_intensity_percent": 66,
+      "intensity_range_percent": {
+        "min": 44,
+        "max": 86
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Book Open uses perspective-style movement, so small or very detailed icons can lose clarity faster than bold simple shapes.",
+        "The metaphor is strongest on icons with a clear front-facing orientation; very abstract symbols can make the turn feel weak."
+      ],
+      "visual_character": "book-spread opening",
+      "emotional_tone": [
+        "premium",
+        "playful",
+        "precise"
+      ],
+      "recommended_contexts": [
+        "onboarding",
+        "feature-highlight",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "security-auth",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "domino",
+      "label": "Domino",
+      "group": "Special",
+      "description": "Falls through like a domino chain reaction.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 460,
+      "duration_range_ms": {
+        "min": 280,
+        "max": 720
+      },
+      "default_intensity_percent": 74,
+      "intensity_range_percent": {
+        "min": 52,
+        "max": 96
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Domino reads most clearly on icons with a directional silhouette or visible stroke flow instead of perfectly radial symbols.",
+        "This preset benefits from a clear staged rhythm; very centered static icons can make the pattern feel abstract instead of intentional."
+      ],
+      "visual_character": "domino chain fall",
+      "emotional_tone": [
+        "playful",
+        "energetic",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "celebratory-ui",
+        "attention-cue"
+      ],
+      "avoid_for": [
+        "settings",
+        "analytics",
+        "security-auth"
+      ]
+    },
+    {
+      "preset": "supernova",
+      "label": "Supernova",
+      "group": "Special",
+      "description": "Bursts outward with a high-energy star-like flare.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 650
+      },
+      "default_intensity_percent": 80,
+      "intensity_range_percent": {
+        "min": 58,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Supernova relies on SVG filters or glow-like effects, so the host environment must preserve inline CSS and SVG filter rendering.",
+        "This preset is intentionally loud and needs space; small icons or dense rows can make the burst feel like visual noise."
+      ],
+      "visual_character": "starburst explosion",
+      "emotional_tone": [
+        "celebratory",
+        "bold",
+        "dramatic"
+      ],
+      "recommended_contexts": [
+        "celebratory-ui",
+        "feature-highlight",
+        "success-confirmation"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "blackHole",
+      "label": "Black Hole",
+      "group": "Special",
+      "description": "Pulls inward with a dense collapsing gravity effect.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 420,
+      "duration_range_ms": {
+        "min": 240,
+        "max": 650
+      },
+      "default_intensity_percent": 80,
+      "intensity_range_percent": {
+        "min": 58,
+        "max": 100
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Black Hole compresses the icon inward toward its center, so bold simple silhouettes hold up better than intricate icons with many thin internal details.",
+        "The inward-collapse effect reads as dramatic transition more than celebration, so it works best when the interface can support a strong focal motion moment."
+      ],
+      "visual_character": "inward gravity collapse",
+      "emotional_tone": [
+        "dramatic",
+        "premium",
+        "mechanical"
+      ],
+      "recommended_contexts": [
+        "feature-highlight",
+        "attention-cue",
+        "media-controls"
+      ],
+      "avoid_for": [
+        "navigation",
+        "settings",
+        "analytics"
+      ]
+    },
+    {
+      "preset": "fingerprint",
+      "label": "Fingerprint",
+      "group": "Special",
+      "description": "Reveals through a layered fingerprint-like scan.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 620,
+      "duration_range_ms": {
+        "min": 380,
+        "max": 940
+      },
+      "default_intensity_percent": 58,
+      "intensity_range_percent": {
+        "min": 40,
+        "max": 80
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Fingerprint relies on clip-path style reveal behavior, so the host environment must preserve inline CSS and clipping support.",
+        "This preset depends on layered reveal detail, so it reads best on icons with visible internal structure instead of flat filled marks."
+      ],
+      "visual_character": "layered scan reveal",
+      "emotional_tone": [
+        "precise",
+        "professional",
+        "premium"
+      ],
+      "recommended_contexts": [
+        "security-auth",
+        "analytics",
+        "feature-highlight"
+      ],
+      "avoid_for": [
+        "celebratory-ui"
+      ]
+    },
+    {
+      "preset": "badgeTap",
+      "label": "Badge Tap",
+      "group": "Special",
+      "description": "Taps forward like a badge confirmation hit.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ],
+      "default_duration_ms": 320,
+      "duration_range_ms": {
+        "min": 180,
+        "max": 480
+      },
+      "default_intensity_percent": 70,
+      "intensity_range_percent": {
+        "min": 48,
+        "max": 90
+      },
+      "export_compatibility": {
+        "css": true,
+        "animated_svg": true,
+        "notes": []
+      },
+      "technical_output_notes": [
+        "Badge Tap is strongest as short interaction feedback, so it should be paired with a discrete user action rather than always-on motion.",
+        "This preset reads best on compact approval-style icons; the glow can feel too informal for neutral navigation or dense data UI."
+      ],
+      "visual_character": "badge-style confirmation tap",
+      "emotional_tone": [
+        "friendly",
+        "precise",
+        "cheerful"
+      ],
+      "recommended_contexts": [
+        "success-confirmation",
+        "toggle-state",
+        "click-feedback"
+      ],
+      "avoid_for": [
+        "analytics",
+        "settings"
+      ]
+    }
+  ]
+}

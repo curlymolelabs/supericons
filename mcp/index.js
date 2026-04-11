@@ -525,10 +525,10 @@ server.tool(
   {
     preset: z.string().describe('Motion preset id, for example pulse, bounce, spin, trace, or typing.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
-    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
-    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
   },
-  async ({ preset, trigger, durationMs, intensityPercent }) => {
+  async ({ preset, trigger, duration_ms, intensity_percent }) => {
     if (!hasProWorkflowAccess(authState)) {
       return buildWorkflowAccessResponse('Motion Lab MCP');
     }
@@ -536,8 +536,8 @@ server.tool(
       return buildTextResponse(buildMotionLabRecipe({
         presetId: preset,
         trigger,
-        durationMs,
-        intensityPercent,
+        durationMs: duration_ms,
+        intensityPercent: intensity_percent,
       }));
     } catch (error) {
       return buildTextResponse({ error: error.message });
@@ -554,10 +554,10 @@ server.tool(
     library: z.string().describe('Library or premium pack name.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
-    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
-    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
   },
-  async ({ id, library, preset, trigger, durationMs, intensityPercent }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent }) => {
     if (!hasProWorkflowAccess(authState)) {
       return buildWorkflowAccessResponse('Motion Lab MCP');
     }
@@ -571,12 +571,12 @@ server.tool(
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs, intensityPercent }),
+        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs: duration_ms, intensityPercent: intensity_percent }),
         css: buildMotionLabExternalCss({
           presetId: preset,
           trigger,
-          durationMs,
-          intensityPercent,
+          durationMs: duration_ms,
+          intensityPercent: intensity_percent,
         }),
       });
     } catch (error) {
@@ -594,11 +594,11 @@ server.tool(
     library: z.string().describe('Library or premium pack name.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
-    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
-    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
     color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
   },
-  async ({ id, library, preset, trigger, durationMs, intensityPercent, color }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color }) => {
     if (!hasProWorkflowAccess(authState)) {
       return buildWorkflowAccessResponse('Motion Lab MCP');
     }
@@ -612,13 +612,13 @@ server.tool(
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs, intensityPercent }),
-        animatedSvg: buildMotionLabAnimatedSvg({
+        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs: duration_ms, intensityPercent: intensity_percent }),
+        animated_svg: buildMotionLabAnimatedSvg({
           svg: icon.svg,
           presetId: preset,
           trigger,
-          durationMs,
-          intensityPercent,
+          durationMs: duration_ms,
+          intensityPercent: intensity_percent,
           color: color || null,
         }),
       });
@@ -637,11 +637,11 @@ server.tool(
     library: z.string().describe('Library or premium pack name.'),
     preset: z.string().describe('Motion preset id.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
-    durationMs: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
-    intensityPercent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
+    duration_ms: z.number().min(100).max(4000).optional().default(500).describe('Animation duration in milliseconds.'),
+    intensity_percent: z.number().min(25).max(200).optional().default(100).describe('Intensity scaling for the preset.'),
     color: z.string().optional().describe('Optional CSS color override for icons that inherit currentColor.'),
   },
-  async ({ id, library, preset, trigger, durationMs, intensityPercent, color }) => {
+  async ({ id, library, preset, trigger, duration_ms, intensity_percent, color }) => {
     if (!hasProWorkflowAccess(authState)) {
       return buildWorkflowAccessResponse('Motion Lab MCP');
     }
@@ -656,8 +656,8 @@ server.tool(
         svg: icon.svg,
         presetId: preset,
         trigger,
-        durationMs,
-        intensityPercent,
+        durationMs: duration_ms,
+        intensityPercent: intensity_percent,
         color: color || null,
       });
       return buildTextResponse({
@@ -665,7 +665,7 @@ server.tool(
         library: icon.library,
         recipe: bundle.preset,
         css: bundle.css,
-        animatedSvg: bundle.animatedSvg,
+        animated_svg: bundle.animated_svg,
       });
     } catch (error) {
       return buildTextResponse({ error: error.message });

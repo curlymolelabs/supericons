@@ -749,7 +749,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An array of ${motionLabPresetCount} preset objects. Each object includes a stable preset id, label, group, description, supported triggers, default duration, intensity range, and export compatibility data. For compatibility, the current response includes both <code>snake_case</code> and <code>camelCase</code> names for the main metadata fields.</p>
+        <p class="docs-section__copy">An array of ${motionLabPresetCount} preset objects. Each object includes <code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>, <code>supported_triggers</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, and <code>avoid_for</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-recipe">
@@ -769,13 +769,13 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             <tbody>
               <tr><td><code>preset</code></td><td>string</td><td>Yes</td><td>-</td><td>Preset ID. Example: "pulse", "bounce", "spin", "trace", "typing"</td></tr>
               <tr><td><code>trigger</code></td><td>string</td><td>No</td><td><code>loop</code></td><td>How the animation starts. Valid values: <code>loop</code>, <code>hover</code>, <code>click</code></td></tr>
-              <tr><td><code>durationMs</code></td><td>integer</td><td>No</td><td>500</td><td>Animation duration in milliseconds. Range: 100 to 4000</td></tr>
-              <tr><td><code>intensityPercent</code></td><td>integer</td><td>No</td><td>100</td><td>Scales the intensity of the animation effect. Range: 25 to 200</td></tr>
+              <tr><td><code>duration_ms</code></td><td>integer</td><td>No</td><td>500</td><td>Animation duration in milliseconds. Range: 100 to 4000</td></tr>
+              <tr><td><code>intensity_percent</code></td><td>integer</td><td>No</td><td>100</td><td>Scales the intensity of the animation effect. Range: 25 to 200</td></tr>
             </tbody>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">Plain-language description of the preset, including label, category, description, trigger behavior, duration, intensity, and usage notes.</p>
+        <p class="docs-section__copy">A recipe object with <code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>, and usage <code>notes</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-animate">
@@ -797,14 +797,14 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               <tr><td><code>library</code></td><td>string</td><td>Yes</td><td>-</td><td>Library or premium pack name</td></tr>
               <tr><td><code>preset</code></td><td>string</td><td>Yes</td><td>-</td><td>Motion preset ID</td></tr>
               <tr><td><code>trigger</code></td><td>string</td><td>No</td><td><code>loop</code></td><td><code>loop</code>, <code>hover</code>, or <code>click</code></td></tr>
-              <tr><td><code>durationMs</code></td><td>integer</td><td>No</td><td>500</td><td>100 to 4000</td></tr>
-              <tr><td><code>intensityPercent</code></td><td>integer</td><td>No</td><td>100</td><td>25 to 200</td></tr>
+              <tr><td><code>duration_ms</code></td><td>integer</td><td>No</td><td>500</td><td>100 to 4000</td></tr>
+              <tr><td><code>intensity_percent</code></td><td>integer</td><td>No</td><td>100</td><td>25 to 200</td></tr>
               <tr><td><code>color</code></td><td>string</td><td>No</td><td>-</td><td>Optional CSS color override for icons that inherit <code>currentColor</code></td></tr>
             </tbody>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the motion recipe object), <code>css</code> (Motion Lab CSS), and <code>animatedSvg</code> (standalone SVG with embedded animation).</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the motion recipe object), <code>css</code> (Motion Lab CSS), and <code>animated_svg</code> (standalone SVG with embedded animation).</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-css">
@@ -824,7 +824,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">Same as <code>animate_icon</code>.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), and <code>animatedSvg</code> (a complete SVG string with a <code>&lt;style&gt;</code> block embedded inside).</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), and <code>animated_svg</code> (a complete SVG string with a <code>&lt;style&gt;</code> block embedded inside).</p>
         <h3>When to use this vs. <code>export_motion_css</code></h3>
         <div class="docs-table-wrap">
           <table class="docs-table">

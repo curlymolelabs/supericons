@@ -502,8 +502,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }
 |---|---|---|
 | `preset` | string | Required. Preset ID (e.g. `pulse`, `bounce`). |
 | `trigger` | string | Optional. `loop`, `hover`, or `click`. Default `loop`. |
-| `durationMs` | integer | Optional. Duration in milliseconds. |
-| `intensityPercent` | integer | Optional. Intensity scaling, 25 to 200. Default 100. |
+| `duration_ms` | integer | Optional. Duration in milliseconds. |
+| `intensity_percent` | integer | Optional. Intensity scaling, 25 to 200. Default 100. |
 
 > Returns: plain-language description of the animation.
 > Access: Pro.
@@ -520,8 +520,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }
 | `library` | string | Required. Library name. |
 | `preset` | string | Required. Preset ID. |
 | `trigger` | string | Optional. `loop`, `hover`, or `click`. Default `loop`. |
-| `durationMs` | integer | Optional. 100 to 4000. Default 500. |
-| `intensityPercent` | integer | Optional. 25 to 200. Default 100. |
+| `duration_ms` | integer | Optional. 100 to 4000. Default 500. |
+| `intensity_percent` | integer | Optional. 25 to 200. Default 100. |
 | `color` | string | Optional. CSS color override. |
 
 > Returns: Motion Lab CSS + animated SVG.

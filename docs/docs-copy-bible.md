@@ -571,8 +571,8 @@ Return a human-readable description of how a preset behaves, including trigger t
 |---|---|---|---|---|
 | `preset` | string | Yes | - | Preset ID. Example: "pulse", "bounce", "spin", "trace", "typing" |
 | `trigger` | string | No | `loop` | How the animation starts. Valid values: `loop`, `hover`, `click` |
-| `durationMs` | integer | No | 500 | Animation duration in milliseconds. Range: 100 to 4000 |
-| `intensityPercent` | integer | No | 100 | Scales the intensity of the animation effect. Range: 25 to 200 |
+| `duration_ms` | integer | No | 500 | Animation duration in milliseconds. Range: 100 to 4000 |
+| `intensity_percent` | integer | No | 100 | Scales the intensity of the animation effect. Range: 25 to 200 |
 
 **Returns:**
 Plain-language description of the preset, including label, category, description, trigger behavior, duration, intensity, and usage notes.
@@ -594,12 +594,12 @@ Generate both the Motion Lab CSS and a self-contained animated SVG for one icon 
 | `library` | string | Yes | - | Library or premium pack name |
 | `preset` | string | Yes | - | Motion preset ID |
 | `trigger` | string | No | `loop` | `loop`, `hover`, or `click` |
-| `durationMs` | integer | No | 500 | 100 to 4000 |
-| `intensityPercent` | integer | No | 100 | 25 to 200 |
+| `duration_ms` | integer | No | 500 | 100 to 4000 |
+| `intensity_percent` | integer | No | 100 | 25 to 200 |
 | `color` | string | No | - | Optional CSS color override for icons that inherit `currentColor` |
 
 **Returns:**
-An object with: `id`, `library`, `recipe` (the motion recipe object), `css` (Motion Lab CSS), and `animatedSvg` (standalone SVG with embedded animation).
+An object with: `id`, `library`, `recipe` (the motion recipe object), `css` (Motion Lab CSS), and `animated_svg` (standalone SVG with embedded animation).
 
 **Access:** Pro.
 
@@ -629,7 +629,7 @@ Generate a self-contained animated SVG with the animation embedded directly in t
 **Parameters:** Same as `animate_icon`.
 
 **Returns:**
-An object with: `id`, `library`, `preset` (the motion recipe), and `animatedSvg` (a complete SVG string with a `<style>` block embedded inside).
+An object with: `id`, `library`, `preset` (the motion recipe), and `animated_svg` (a complete SVG string with a `<style>` block embedded inside).
 
 **When to use this vs. export_motion_css:**
 
