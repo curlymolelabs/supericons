@@ -31,6 +31,14 @@ function fail(message) {
   process.exit(1);
 }
 
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isNonEmptyStringArray(value) {
+  return Array.isArray(value) && value.length > 0 && value.every(isNonEmptyString);
+}
+
 if (!Array.isArray(dataset.groups)) {
   fail('dataset.groups must be an array.');
 }
@@ -60,6 +68,15 @@ for (const record of dataset.presets) {
       fail(`preset "${record.preset}" is missing required field "${field}".`);
     }
   }
+  if (!isNonEmptyString(record.label)) {
+    fail(`preset "${record.preset}" must include a non-empty label.`);
+  }
+  if (!isNonEmptyString(record.group)) {
+    fail(`preset "${record.preset}" must include a non-empty group label.`);
+  }
+  if (!isNonEmptyString(record.description)) {
+    fail(`preset "${record.preset}" must include a non-empty description.`);
+  }
   if (!Array.isArray(record.supported_triggers) || record.supported_triggers.length === 0) {
     fail(`preset "${record.preset}" must include supported_triggers.`);
   }
@@ -77,6 +94,15 @@ for (const record of dataset.presets) {
   if (!Array.isArray(record.export_compatibility.notes)) {
     fail(`preset "${record.preset}" must include export_compatibility.notes array.`);
   }
+  if (!isNonEmptyString(record.visual_character)) {
+    fail(`preset "${record.preset}" must include a non-empty visual_character.`);
+  }
+  if (!isNonEmptyStringArray(record.emotional_tone)) {
+    fail(`preset "${record.preset}" must include at least one non-empty emotional_tone value.`);
+  }
+  if (!isNonEmptyStringArray(record.recommended_contexts)) {
+    fail(`preset "${record.preset}" must include at least one non-empty recommended_contexts value.`);
+  }
 }
 
 const actualPresetIds = dataset.presets.map((record) => record.preset);
@@ -85,4 +111,3 @@ if (actualPresetIds.join('|') !== expectedPresetIds.join('|')) {
 }
 
 console.log(`Motion Lab agent metadata verified: ${actualPresetIds.length} presets across ${dataset.groups.length} groups.`);
-

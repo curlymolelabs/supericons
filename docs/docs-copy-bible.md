@@ -554,7 +554,7 @@ List the Motion Lab presets currently available through Supericons MCP.
 **Parameters:** None.
 
 **Returns:**
-An array of preset objects. Each preset includes: `id`, `label`, `category`, `description`, `supportedTriggers` (always `["loop", "hover", "click"]`), `defaultDurationMs` (500), and `intensityRange` (min: 25, max: 200, default: 100).
+An array of preset objects. Each preset includes: `id`, `preset`, `label`, `group`, `description`, `supported_triggers`, `default_duration_ms`, `duration_range_ms`, `default_intensity_percent`, `intensity_range_percent`, and `export_compatibility`.
 
 **Access:** Pro.
 
@@ -575,7 +575,7 @@ Return a human-readable description of how a preset behaves, including trigger t
 | `intensity_percent` | integer | No | 100 | Scales the intensity of the animation effect. Range: 25 to 200 |
 
 **Returns:**
-Plain-language description of the preset, including label, category, description, trigger behavior, duration, intensity, and usage notes.
+Plain-language description of the preset, including label, group, description, trigger behavior, duration, intensity, and usage notes.
 
 **Access:** Pro.
 

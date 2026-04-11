@@ -486,9 +486,9 @@ env = { SUPERICONS_API_KEY = "your-key-here" }
 
 **`list_motion_presets`**
 
-> Return all available animation presets by name and category.
+> Return all available animation presets by name and group.
 
-> Returns: preset IDs, categories, brief descriptions.
+> Returns: preset IDs, groups, brief descriptions.
 > Access: Pro.
 > Use when: you need to know what presets exist before calling `animate_icon`.
 
@@ -659,7 +659,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }
 
 **Purpose:** Full reference of all Motion Lab presets with descriptions and recommended use cases.
 
-**Format:** Table with preset ID, category, description, best-fit use case.
+**Format:** Table with preset ID, group, description, best-fit use case.
 
 *(Exact preset table to be written from the live `list_motion_presets` output at time of launch verification)*
 

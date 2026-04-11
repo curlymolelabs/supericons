@@ -265,6 +265,25 @@ Use the preset-specific ranges in metadata, then bias downward unless the interf
 - A success badge can tolerate stronger values on `sparkle` or `bloom` because the motion is short-lived.
 - A loading spinner using `spin` or `radar` should use comfort-first timing so it remains readable over time.
 
+## Reduced motion and accessibility-sensitive surfaces
+
+Treat reduced-motion concerns as a product decision first, not as a preset-picking exercise.
+
+For settings panels, account surfaces, or any distraction-sensitive workflow:
+
+- prefer no motion when the interface can remain clear without it
+- avoid decorative celebration, alert-style jitter, or any loop that competes with reading
+- if motion is required, bias toward the most restrained hover-safe options rather than the most expressive ones
+- start below the preset midpoint, not above it
+- keep duration short enough to feel intentional, but not abrupt
+
+Safer fallback presets when motion is explicitly required:
+
+- `glide`
+- `sweep`
+
+These are fallbacks, not defaults. If the best accessibility choice is no motion, choose no motion.
+
 ## CSS vs animated SVG
 
 Use `export_compatibility` to confirm the preset supports the output path, then choose based on the integration surface.
