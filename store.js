@@ -20,6 +20,15 @@ import {
   sanitizeCssCommentMetadata,
   sanitizeSvgExportMarkup,
 } from './lib/public-metadata-sanitizer.js';
+import {
+  MOTION_LAB_PRESETS,
+} from './lib/motion-lab-presets.js';
+import {
+  DOCS_PAGE_GROUPS,
+  DOCS_PAGE_ORDER,
+  DOCS_PAGE_VIEWS,
+  getDocsPageConfig,
+} from './docs-pages.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -158,8 +167,9 @@ async function fetchPremiumAsset(slug, filename) {
   });
 }
 let userPurchases = [];
-let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'api-keys' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'mcp' | 'motion-lab' | 'converter'
+let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'api-keys' | 'docs' | 'docs-claude-code' | 'docs-codex' | 'docs-cursor' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'motion-lab' | 'converter'
 let previousView = 'icons';
+let storeHistorySyncBound = false;
 let currentCollectionData = null; // manifest data for the currently viewed collection
 let currentCollectionBundle = null;
 let activeCollectionProductId = null;
@@ -169,9 +179,11 @@ let toastTimeout = null;
 let removeUpgradePrompt = null;
 let premiumSelectionRequestId = 0;
 let packCatalogNotice = null;
-const PANEL_SUPPRESSED_VIEWS = new Set(['pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
-const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', 'collection-detail', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
-const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', 'pricing', 'privacy', 'terms', 'mcp', 'motion-lab', 'converter']);
+const DOCS_GUIDE_VIEWS = new Set(['docs-claude-code', 'docs-codex', 'docs-cursor']);
+const PERSISTENT_ROUTE_VIEWS = new Set([...DOCS_PAGE_VIEWS]);
+const PANEL_SUPPRESSED_VIEWS = new Set([...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
+const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'collection-detail', 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
+const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -244,7 +256,12 @@ async function restoreAuthIntent(intent) {
     await ensureUserPurchasesLoaded({ force: true, rerender: false });
   }
 
-  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', 'pricing', 'motion-lab', 'converter', 'privacy', 'terms', 'mcp']);
+  if (view === 'mcp') {
+    switchView('docs');
+    return true;
+  }
+
+  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'motion-lab', 'converter', 'privacy', 'terms']);
   switchView(allowedViews.has(view) ? view : 'icons');
   return true;
 }
@@ -278,6 +295,11 @@ function renderPlainFeatureList(items) {
 
 function renderPricingFeatureList(items) {
   return items.map(item => `<li><span class="material-symbols-outlined">check</span> ${item}</li>`).join('');
+}
+
+function redirectToDocs(hash = window.location.hash || '') {
+  const target = `/?view=docs${hash}`;
+  window.location.replace(target);
 }
 
 function formatClaimAvailability(nextAvailable) {
@@ -459,6 +481,7 @@ function closeUpgradePrompt() {
 // ── Init ──────────────────────────────────────────────────────
 export function initStore() {
   wireStoreListeners();
+  ensureStoreHistorySync();
   void fetchProducts();
   window.addEventListener('supericons:auth-signed-in', () => {
     void resumePostAuthIntent();
@@ -482,6 +505,43 @@ export function initStore() {
 }
 
 // ── Fetch Products ────────────────────────────────────────────
+function syncViewFromLocation({ historyMode = 'replace' } = {}) {
+  const params = new URLSearchParams(window.location.search);
+  const requestedView = params.get('view');
+
+  if (requestedView === 'mcp') {
+    switchView('docs', { historyMode });
+    return true;
+  }
+
+  if (PERSISTENT_ROUTE_VIEWS.has(requestedView || '')) {
+    switchView(requestedView, { historyMode });
+    return true;
+  }
+
+  if (DIRECT_ROUTE_VIEWS.has(requestedView || '')) {
+    switchView(requestedView, { historyMode });
+    if (historyMode !== 'silent') {
+      const nextUrl = window.location.hash
+        ? `${window.location.pathname}${window.location.hash}`
+        : window.location.pathname;
+      window.history.replaceState({}, '', nextUrl);
+    }
+    return true;
+  }
+
+  return false;
+}
+
+function ensureStoreHistorySync() {
+  if (storeHistorySyncBound) return;
+  window.addEventListener('popstate', () => {
+    if (syncViewFromLocation({ historyMode: 'silent' })) return;
+    switchView('icons', { historyMode: 'silent' });
+  });
+  storeHistorySyncBound = true;
+}
+
 async function fetchProducts() {
   try {
     const res = await fetch(
@@ -551,8 +611,27 @@ function updatePackCount() {
 }
 
 // ── View Switching ────────────────────────────────────────────
-export function switchView(view) {
+export function switchView(view, { historyMode = 'replace' } = {}) {
   const si = window.__supericons;
+
+  if (view === 'mcp') {
+    view = 'docs';
+  }
+
+  const activeRouteView = new URLSearchParams(window.location.search).get('view');
+  const shouldMutateHistory = historyMode !== 'silent';
+  const historyMethod = historyMode === 'push' ? 'pushState' : 'replaceState';
+  if (shouldMutateHistory && PERSISTENT_ROUTE_VIEWS.has(view)) {
+    const routeHash = activeRouteView === view ? window.location.hash : '';
+    const docsUrl = `${window.location.pathname}?view=${view}${routeHash}`;
+    const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (currentUrl !== docsUrl) {
+      window.history[historyMethod]({}, '', docsUrl);
+    }
+  } else if (shouldMutateHistory && PERSISTENT_ROUTE_VIEWS.has(activeRouteView || '')) {
+    window.history[historyMethod]({}, '', window.location.pathname);
+  }
+
   previousView = currentView;
   closeUpgradePrompt();
   document.getElementById('mlExportModal')?.remove();
@@ -649,6 +728,14 @@ export function switchView(view) {
       if (gridMeta) gridMeta.textContent = '';
       renderApiKeysPage();
       void ensureUserPurchasesLoaded({ rerender: true });
+    } else if (DOCS_PAGE_VIEWS.has(view)) {
+      if (gridTitle) gridTitle.textContent = 'Docs';
+      if (gridMeta) gridMeta.textContent = '';
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
+      }
+      document.body.setAttribute('data-view', 'docs');
+      renderDocsSitePage(view);
     } else if (view === 'pricing') {
       if (gridTitle) gridTitle.textContent = 'Pricing';
       if (gridMeta) gridMeta.textContent = '';
@@ -673,14 +760,6 @@ export function switchView(view) {
       }
       document.body.setAttribute('data-view', 'terms');
       renderTermsPage();
-    } else if (view === 'mcp') {
-      if (gridTitle) gridTitle.textContent = 'Supericons MCP';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
-      document.body.setAttribute('data-view', 'mcp');
-      renderMcpPage();
     } else if (view === 'motion-lab') {
       if (gridTitle) gridTitle.textContent = 'Motion Lab';
       if (gridMeta) gridMeta.textContent = '';
@@ -727,8 +806,8 @@ export function switchView(view) {
     document.getElementById('converterView')?.remove();
     document.getElementById('privacyView')?.remove();
     document.getElementById('termsView')?.remove();
-    document.getElementById('mcpView')?.remove();
     document.getElementById('apiKeysView')?.remove();
+    document.getElementById('docsView')?.remove();
   }
 
   // Update sidebar active state
@@ -749,7 +828,7 @@ function updateSidebarActive(view) {
     document.getElementById('sidebarMyDownloads')?.classList.add('active');
   } else if (view === 'pricing') {
     document.getElementById('sidebarPricing')?.classList.add('active');
-  } else if (view === 'privacy' || view === 'terms' || view === 'mcp' || view === 'dashboard' || view === 'api-keys') {
+  } else if (view === 'privacy' || view === 'terms' || view === 'dashboard' || view === 'api-keys' || DOCS_PAGE_VIEWS.has(view)) {
     // Keep docs/legal views neutral in the sidebar.
   } else if (view === 'motion-lab') {
     document.getElementById('sidebarMotionLab')?.classList.add('active');
@@ -3310,13 +3389,19 @@ function getPlaceholderIcons(slug) {
   return map[slug] || Array.from({ length: 20 }, (_, i) => `icon-${i + 1}`);
 }
 
-function removePackCatalog() {
+function removePackCatalog(options = {}) {
+  const { keepDocs = false } = options;
   const existing = document.getElementById('packCatalog');
   if (existing) existing.remove();
   const existingDash = document.getElementById('dashboardView');
   if (existingDash) existingDash.remove();
   const existingApiKeys = document.getElementById('apiKeysView');
   if (existingApiKeys) existingApiKeys.remove();
+  const existingDocs = document.getElementById('docsView');
+  if (existingDocs && !keepDocs) {
+    cleanupDocsPage();
+    existingDocs.remove();
+  }
   const existingDetail = document.getElementById('collectionDetail');
   if (existingDetail) existingDetail.remove();
   const existingPricing = document.getElementById('pricingView');
@@ -3325,8 +3410,6 @@ function removePackCatalog() {
   if (existingPrivacy) existingPrivacy.remove();
   const existingTerms = document.getElementById('termsView');
   if (existingTerms) existingTerms.remove();
-  const existingMcp = document.getElementById('mcpView');
-  if (existingMcp) existingMcp.remove();
   // Tool views must also be mutually exclusive
   const existingML = document.getElementById('motionLabView');
   if (existingML) {
@@ -3473,9 +3556,13 @@ function renderApiKeysPage() {
 
   page.innerHTML = `
     <div class="dashboard-section">
-      <h3 class="dashboard-section__title">Developer Access</h3>
-      <p class="dashboard-section__copy">Use API keys to connect MCP clients and programmatic workflows to your Supericons account.</p>
-      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys carry the premium access your account already owns through Pro or purchased packs.</p>
+      <h3 class="dashboard-section__title">
+        API Keys
+        <span class="dashboard-section__subtitle">For MCP and programmatic access</span>
+      </h3>
+      <p class="dashboard-section__copy">Connect your MCP client (Cursor, Claude Code, Codex, or any MCP-capable agent) to your Supericons account with an API key.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys unlock the premium collections and Pro workflow tools your account already has access to.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/?view=docs#docs-quickstart">See the setup guide for where to place your key in each client.</a></p>
     </div>
     <div class="dashboard-section">
       <h3 class="dashboard-section__title">
@@ -3483,8 +3570,8 @@ function renderApiKeysPage() {
         <span class="dashboard-section__subtitle">Up to ${API_KEY_LIMIT} active keys</span>
       </h3>
       ${signedIn ? `
-        <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">Loading key usage...</p>
-        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label keys by app or device so you can rotate them later.</p>
+        <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">Loading...</p>
+        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label each key by app or device so you can rotate them independently.</p>
         <div class="api-keys__tabs" id="apiKeysTabs" role="tablist" aria-label="API key states">
           <button class="api-keys__tab is-active" type="button" role="tab" aria-selected="true" data-filter="active">Active <span class="api-keys__tab-count">0</span></button>
           <button class="api-keys__tab" type="button" role="tab" aria-selected="false" data-filter="revoked">Revoked <span class="api-keys__tab-count">0</span></button>
@@ -3501,12 +3588,13 @@ function renderApiKeysPage() {
           </button>
         </div>
         ${canManageKeys ? '' : `
+        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact">API keys require a Pro subscription or at least one purchased collection. Keys carry the access your account already has.</p>
         <div class="api-keys__actions">
-          <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">Browse Packs</button>
+          <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">Browse Collections</button>
           <button class="dashboard-table__view" id="apiKeysPricingBtn">See Pricing</button>
         </div>`}
       ` : `
-        <p class="dashboard-section__empty">Sign in to manage API keys and connect premium MCP access.</p>
+        <p class="dashboard-section__empty">Sign in to generate API keys and connect your MCP client to your Supericons account.</p>
         <div class="api-keys__actions">
           <button class="dashboard-table__view" id="apiKeysSignInBtn">Sign In</button>
         </div>
@@ -3514,6 +3602,7 @@ function renderApiKeysPage() {
     </div>`;
 
   gridArea.appendChild(page);
+  wireShellViewLinks(page);
 
   if (signedIn) {
     apiKeysViewFilter = 'active';
@@ -3696,13 +3785,13 @@ async function fetchAndRenderApiKeys() {
     if (usageEl) usageEl.textContent = `${activeKeyCount} of ${API_KEY_LIMIT} active keys in use`;
     if (limitNoteEl) {
       if (!canCreateKeys) {
-        limitNoteEl.textContent = 'Free MCP works without a key. New keys become available once your account has Pro or at least one purchased premium pack.';
+        limitNoteEl.textContent = 'Free MCP works without a key. New keys become available once your account has Pro or at least one purchased collection.';
       } else if (limitReached) {
         limitNoteEl.textContent = `You have reached the ${API_KEY_LIMIT}-key limit. Revoke one before creating another.`;
       } else if (revokedKeys.length > 0) {
         limitNoteEl.textContent = 'Revoked history is available in its own tab and does not count toward your active-key limit.';
       } else {
-        limitNoteEl.textContent = 'Label keys by app or device so you can rotate them later.';
+        limitNoteEl.textContent = 'Label each key by app or device so you can rotate them independently.';
       }
     }
     if (genBtn) genBtn.disabled = !canCreateKeys || limitReached;
@@ -4335,6 +4424,1119 @@ function renderPricingPage() {
 }
 
 // ── Terms of Service Page ─────────────────────────────────────
+let docsPageCleanup = null;
+let shellViewLinkDelegationBound = false;
+let docsSidebarToggleDelegationBound = false;
+const DOCS_SIDEBAR_STORAGE_KEY = 'supericons-docs-sidebar-open-groups';
+const DEFAULT_OPEN_DOCS_GROUP_KEYS = new Set(['overview', 'mcp-setup']);
+
+function getDocsGroupKey(group) {
+  const label = typeof group === 'string' ? group : group?.label || '';
+  return label
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function loadDocsSidebarOpenGroups() {
+  try {
+    const raw = window.localStorage.getItem(DOCS_SIDEBAR_STORAGE_KEY);
+    if (!raw) return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
+    return new Set(parsed.map((value) => String(value)));
+  } catch {
+    return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
+  }
+}
+
+let docsSidebarOpenGroups = loadDocsSidebarOpenGroups();
+
+function persistDocsSidebarOpenGroups() {
+  try {
+    window.localStorage.setItem(
+      DOCS_SIDEBAR_STORAGE_KEY,
+      JSON.stringify([...docsSidebarOpenGroups]),
+    );
+  } catch {
+    // Ignore storage failures and keep the sidebar usable.
+  }
+}
+
+function getDocsGroupKeyForView(view) {
+  const group = DOCS_PAGE_GROUPS.find((entry) => entry.pages.includes(view));
+  return group ? getDocsGroupKey(group) : null;
+}
+
+function ensureDocsGroupOpenForView(view) {
+  const activeGroupKey = getDocsGroupKeyForView(view);
+  if (!activeGroupKey) return;
+  docsSidebarOpenGroups.add(activeGroupKey);
+  persistDocsSidebarOpenGroups();
+}
+
+function cleanupDocsPage() {
+  if (typeof docsPageCleanup === 'function') {
+    docsPageCleanup();
+  }
+  docsPageCleanup = null;
+}
+
+function ensureShellViewLinkDelegation() {
+  if (shellViewLinkDelegationBound) return;
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented) return;
+    if (event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const link = event.target instanceof Element
+      ? event.target.closest('[data-docs-view]')
+      : null;
+    if (!link) return;
+
+    const targetView = link.getAttribute('data-docs-view');
+    if (!targetView) return;
+
+    event.preventDefault();
+    switchView(targetView, { historyMode: 'push' });
+  }, true);
+  shellViewLinkDelegationBound = true;
+}
+
+function wireShellViewLinks() {
+  ensureShellViewLinkDelegation();
+}
+
+function applyDocsSidebarGroupState(scope = document) {
+  scope.querySelectorAll('.docs-shell__nav-group[data-docs-group]').forEach((group) => {
+    const groupKey = group.getAttribute('data-docs-group');
+    if (!groupKey) return;
+    const isOpen = docsSidebarOpenGroups.has(groupKey);
+    group.classList.toggle('is-collapsed', !isOpen);
+    const trigger = group.querySelector('.docs-shell__nav-trigger');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+  });
+}
+
+function ensureDocsSidebarToggleDelegation() {
+  if (docsSidebarToggleDelegationBound) return;
+  document.addEventListener('click', (event) => {
+    const trigger = event.target instanceof Element
+      ? event.target.closest('[data-docs-group-toggle]')
+      : null;
+    if (!trigger) return;
+    const groupKey = trigger.getAttribute('data-docs-group-toggle');
+    if (!groupKey) return;
+    event.preventDefault();
+    if (docsSidebarOpenGroups.has(groupKey)) {
+      docsSidebarOpenGroups.delete(groupKey);
+    } else {
+      docsSidebarOpenGroups.add(groupKey);
+    }
+    persistDocsSidebarOpenGroups();
+    applyDocsSidebarGroupState(document.getElementById('docsView') || document);
+  });
+  docsSidebarToggleDelegationBound = true;
+}
+
+function wireDocsPage(page) {
+  cleanupDocsPage();
+
+  let tocObserver = null;
+
+  page.querySelectorAll('[data-copy-target]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const target = page.querySelector(`#${button.getAttribute('data-copy-target')}`);
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.textContent || '');
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        showToast('Copied to clipboard');
+        window.setTimeout(() => {
+          button.textContent = original;
+        }, 1800);
+      } catch (error) {
+        console.error('[Store] Docs copy failed:', error);
+        showToast('Copy failed. Please copy manually.');
+      }
+    });
+  });
+
+  wireShellViewLinks(page);
+
+  const tocLinks = [...page.querySelectorAll('.docs-page-toc a[href^="#"], .docs-sidebar .docs-link-list a[href^="#"]')];
+  const fallbackSections = [...page.querySelectorAll('.docs-shell__page section[id], .docs-hub section[id]')];
+  const tocSections = tocLinks.length
+    ? tocLinks
+      .map((link) => page.querySelector(link.getAttribute('href')))
+      .filter(Boolean)
+    : fallbackSections;
+
+  const setActiveTocLink = (id) => {
+    tocLinks.forEach((link) => {
+      const isMatch = link.getAttribute('href') === `#${id}`;
+      link.classList.toggle('is-active', isMatch);
+      if (isMatch) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  const initialHash = window.location.hash.replace(/^#/, '');
+  if (initialHash) {
+    setActiveTocLink(initialHash);
+  } else if (tocLinks[0]) {
+    setActiveTocLink(tocLinks[0].getAttribute('href').replace(/^#/, ''));
+  }
+
+  if (tocSections.length && typeof IntersectionObserver !== 'undefined') {
+    tocObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (visible?.target?.id) {
+        setActiveTocLink(visible.target.id);
+      }
+    }, { rootMargin: '-20% 0px -60% 0px' });
+
+    tocSections.forEach((section) => tocObserver.observe(section));
+  }
+
+  tocLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      setActiveTocLink(link.getAttribute('href').replace(/^#/, ''));
+    });
+  });
+
+  const scrollTopBtn = page.querySelector('#docsScrollTop');
+  const scrollDownBtn = page.querySelector('#docsScrollDown');
+  const docsScroller = document.getElementById('gridArea');
+  const getScrollMetrics = () => {
+    const scrollTop = docsScroller ? docsScroller.scrollTop : window.scrollY;
+    const scrollHeight = docsScroller
+      ? docsScroller.scrollHeight
+      : Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    const clientHeight = docsScroller ? docsScroller.clientHeight : window.innerHeight;
+    const maxScroll = Math.max(scrollHeight - clientHeight, 0);
+    return {
+      scrollTop,
+      maxScroll,
+      remainingScroll: Math.max(maxScroll - scrollTop, 0),
+    };
+  };
+
+  const getSectionScrollTop = (section) => {
+    if (!section) return 0;
+    const sectionRect = section.getBoundingClientRect();
+    if (docsScroller) {
+      const scrollerRect = docsScroller.getBoundingClientRect();
+      return Math.max(docsScroller.scrollTop + (sectionRect.top - scrollerRect.top) - 16, 0);
+    }
+    return Math.max(window.scrollY + sectionRect.top - 24, 0);
+  };
+
+  const scrollDocsTo = (top) => {
+    if (docsScroller) {
+      docsScroller.scrollTo({ top, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
+  const syncScrollButtons = () => {
+    const { scrollTop, remainingScroll } = getScrollMetrics();
+    if (scrollTopBtn) {
+      scrollTopBtn.classList.toggle('is-visible', scrollTop > 600);
+    }
+    if (scrollDownBtn) {
+      scrollDownBtn.classList.toggle('is-visible', remainingScroll > 220);
+    }
+  };
+
+  const handleScrollTopClick = () => {
+    scrollDocsTo(0);
+  };
+
+  const handleScrollDownClick = () => {
+    const { scrollTop, maxScroll } = getScrollMetrics();
+    const nextSection = tocSections.find((section) => getSectionScrollTop(section) > scrollTop + 120);
+    scrollDocsTo(nextSection ? getSectionScrollTop(nextSection) : maxScroll);
+  };
+
+  if (scrollTopBtn || scrollDownBtn) {
+    if (scrollTopBtn) {
+      scrollTopBtn.hidden = false;
+      scrollTopBtn.addEventListener('click', handleScrollTopClick);
+    }
+    if (scrollDownBtn) {
+      scrollDownBtn.hidden = false;
+      scrollDownBtn.addEventListener('click', handleScrollDownClick);
+    }
+    syncScrollButtons();
+    if (docsScroller) {
+      docsScroller.addEventListener('scroll', syncScrollButtons, { passive: true });
+    } else {
+      window.addEventListener('scroll', syncScrollButtons, { passive: true });
+    }
+  }
+
+  page.querySelectorAll('[data-expand]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-expand');
+      const grid = targetId ? page.querySelector(`#${targetId}`) : null;
+      if (!grid) return;
+      grid.classList.add('is-expanded');
+      button.hidden = true;
+      button.setAttribute('aria-expanded', 'true');
+    });
+  });
+
+  docsPageCleanup = () => {
+    tocObserver?.disconnect();
+    if (scrollTopBtn || scrollDownBtn) {
+      if (docsScroller) {
+        docsScroller.removeEventListener('scroll', syncScrollButtons);
+      } else {
+        window.removeEventListener('scroll', syncScrollButtons);
+      }
+      scrollTopBtn?.removeEventListener('click', handleScrollTopClick);
+      scrollDownBtn?.removeEventListener('click', handleScrollDownClick);
+    }
+  };
+}
+
+function scrollDocsHashIntoView() {
+  const hash = window.location.hash;
+  if (!hash || hash === '#') return;
+  const target = document.getElementById(hash.slice(1));
+  if (!target) return;
+  window.requestAnimationFrame(() => {
+    target.scrollIntoView({ block: 'start' });
+  });
+}
+
+function getDocsGuideConfig(view) {
+  const guideConfigs = {
+    'docs-claude-code': {
+      eyebrow: 'Claude Code',
+      title: 'Set up Supericons MCP in Claude Code',
+      heroCopy: 'Add icon search and SVG retrieval to Claude Code without leaving the command line. Search, pick, and insert icons in the same session as your code edits.',
+      snippets: [
+        {
+          id: 'claude-config',
+          label: 'Copy',
+          code: `# macOS / Linux
+claude mcp add supericons -- npx -y supericons-mcp
+
+# Windows
+claude mcp add supericons -- cmd /c npx -y supericons-mcp`,
+        },
+      ],
+      heroNote: 'Prefer JSON config over CLI? Use the same <code>command</code> and <code>args</code> values. Claude Code stores your own MCP servers in <code>~/.claude.json</code>, and shared project MCP servers in <code>.mcp.json</code> at the project root.',
+      flowCards: [
+        {
+          title: '1. Add the server',
+          copy: 'Run the Claude CLI command above to register the local <code>supericons</code> MCP server.',
+        },
+        {
+          title: '2. Confirm Claude can see it',
+          copy: 'Run <code>claude mcp list</code> to verify the server registered, or restart the session if it is not listed.',
+        },
+        {
+          title: '3. Verify with a search',
+          copy: 'Ask Claude Code to find an icon (e.g., a settings or navigation icon) and verify that the results include Lucide or Tabler options.',
+        },
+        {
+          title: '4. Pull SVG into code',
+          copy: 'Once the search result looks right, ask Claude Code to insert the SVG directly into your component or markup.',
+        },
+      ],
+      exampleCode: `Find a settings icon from Lucide for a dashboard header.
+Return two alternatives from Tabler as well.
+Then insert the chosen SVG into my React component.`,
+      premiumCards: [
+        {
+          title: 'How premium access works',
+          copy: 'Premium icons are not unlocked simply by adding a key. They unlock when your Supericons account has an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a>, and <code>SUPERICONS_API_KEY</code> is present in the MCP server config Claude Code uses at startup.',
+        },
+        {
+          title: 'What to do',
+          copy: 'Sign in to Supericons, generate an API key from the <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a> page, then add that key in the env or secrets field Claude Code uses for MCP server configuration.',
+        },
+      ],
+      troubleshootingCards: [
+        {
+          title: 'Server does not appear',
+          copy: 'Run <code>claude mcp list</code> after adding the server. If it still does not appear, restart the Claude Code session.',
+        },
+        {
+          title: 'Windows cannot launch <code>npx</code>',
+          copy: 'On native Windows, use <code>cmd /c npx -y supericons-mcp</code> instead of calling <code>npx</code> directly.',
+        },
+        {
+          title: 'Premium icons are missing',
+          copy: 'Free icons work without a Pro subscription. Premium collections require an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your MCP server config.',
+        },
+      ],
+      relatedGuides: [
+        { href: '/?view=docs', view: 'docs', label: 'Docs' },
+        { href: '/?view=docs-codex', view: 'docs-codex', label: 'Codex setup' },
+        { href: '/?view=docs-cursor', view: 'docs-cursor', label: 'Cursor setup' },
+      ],
+    },
+    'docs-codex': {
+      eyebrow: 'Codex',
+      title: 'Set up Supericons MCP in Codex',
+      heroCopy: 'Add icon search to your Codex session. Find and insert icons without switching to a browser - search, pick, and drop SVGs in the same coding flow as your edits.',
+      snippets: [
+        {
+          id: 'codex-config',
+          label: 'Copy',
+          code: 'codex mcp add supericons -- npx -y supericons-mcp',
+        },
+        {
+          id: 'codex-config-toml',
+          label: 'Copy',
+          code: `[mcp_servers.supericons]
+command = "npx"
+args = ["-y", "supericons-mcp"]`,
+        },
+      ],
+      heroNote: 'MCP is supported in the Codex CLI and IDE extension. The CLI command is the quickest path. Prefer a config file? Add the same values to <code>~/.codex/config.toml</code> under <code>[mcp_servers.supericons]</code>.',
+      flowCards: [
+        {
+          title: '1. Register the MCP server',
+          copy: 'Run <code>codex mcp add supericons -- npx -y supericons-mcp</code> or add the same values to <code>config.toml</code>.',
+        },
+        {
+          title: '2. Confirm Codex can see it',
+          copy: 'Open Codex and use <code>/mcp</code> to confirm the server is active before you rely on icon tool calls.',
+        },
+        {
+          title: '3. Try a narrow prompt',
+          copy: 'Start with a concrete request like a navigation, auth, or dashboard icon so you can verify the flow quickly.',
+        },
+        {
+          title: '4. Insert the SVG',
+          copy: 'After selecting an icon, ask Codex to place the SVG inside your component or template file directly.',
+        },
+      ],
+      exampleCode: `Search Supericons for a secure login icon.
+Show me a Lucide option and a Tabler option.
+Insert the Lucide SVG into the sign-in button component.`,
+      premiumCards: [
+        {
+          title: 'Your account comes first',
+          copy: 'Your API key authenticates to your Supericons account. The collections and tools you can access depend on what your account owns - either a <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection packs</a>. The key alone does not grant access.',
+        },
+        {
+          title: 'How to add your API key in Codex',
+          copy: 'Generate the key in <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>, then add <code>SUPERICONS_API_KEY</code> to the env or secrets field your Codex MCP config uses for the <code>supericons-mcp</code> server.',
+        },
+      ],
+      troubleshootingCards: [
+        {
+          title: 'Server saved but not visible in Codex',
+          copy: 'Use <code>/mcp</code> in Codex to inspect active servers and restart the session after changing MCP config.',
+        },
+        {
+          title: 'The <code>npx</code> command does not run',
+          copy: 'Ensure <code>npx</code> is available in the shell environment that Codex uses for local MCP processes.',
+        },
+        {
+          title: 'Premium icons do not appear',
+          copy: 'Free icons still return 20,000+ results without a Pro subscription. Premium icon access requires an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.',
+        },
+      ],
+      relatedGuides: [
+        { href: '/?view=docs', view: 'docs', label: 'Docs' },
+        { href: '/?view=docs-claude-code', view: 'docs-claude-code', label: 'Claude Code setup' },
+        { href: '/?view=docs-cursor', view: 'docs-cursor', label: 'Cursor setup' },
+      ],
+    },
+    'docs-cursor': {
+      eyebrow: 'Cursor',
+      title: 'Set up Supericons MCP in Cursor',
+      heroCopy: 'Add icon search and SVG retrieval to Cursor. Find and insert icons without leaving the editor - in the same session as your code edits and component builds.',
+      snippets: [
+        {
+          id: 'cursor-config',
+          label: 'Copy',
+          code: `{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}`,
+        },
+      ],
+      flowCards: [
+        {
+          title: '1. Add the MCP entry',
+          copy: 'Open Cursor settings, navigate to MCP, and paste the server config. For a global setup, add it to <code>~/.cursor/mcp.json</code>. For a project-specific setup, use <code>.cursor/mcp.json</code> in the project root.',
+        },
+        {
+          title: '2. Reload MCP servers',
+          copy: 'Save and reload. Verify the <code>supericons</code> server appears in Cursor\'s MCP tool list before continuing.',
+        },
+        {
+          title: '3. Test with a UI prompt',
+          copy: 'Ask Cursor to search for a concrete icon use case like auth, charts, or navigation to validate the setup.',
+        },
+        {
+          title: '4. Apply the result in code',
+          copy: 'Once the icon is selected, have Cursor insert the SVG directly into the file it is already editing.',
+        },
+      ],
+      exampleCode: `Find an icon for a dashboard analytics tab.
+Return one Lucide option and one Phosphor option.
+Then replace the placeholder SVG in my sidebar component.`,
+      premiumCards: [
+        {
+          title: 'What you need for premium access',
+          copy: 'Premium MCP access requires an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your Cursor MCP server config.',
+        },
+        {
+          title: 'What to do first',
+          copy: 'Generate the key in <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>, add it to the env or secrets field Cursor uses for the <code>supericons</code> server, then reload MCP servers.',
+        },
+      ],
+      troubleshootingCards: [
+        {
+          title: 'Cursor cannot see the server',
+          copy: 'Reload Cursor\'s MCP config after saving. Most issues here come from a stale server registry rather than a bad config block.',
+        },
+        {
+          title: '<code>npx</code> is not found or fails to start',
+          copy: 'Make sure Node.js and <code>npx</code> are available to the shell environment Cursor launches for MCP tools.',
+        },
+        {
+          title: 'Premium collections are missing',
+          copy: 'Cursor can still use the free 20,000+ icons without a Pro subscription. Premium results require an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.',
+        },
+      ],
+      relatedGuides: [
+        { href: '/?view=docs', view: 'docs', label: 'Docs' },
+        { href: '/?view=docs-claude-code', view: 'docs-claude-code', label: 'Claude Code setup' },
+        { href: '/?view=docs-codex', view: 'docs-codex', label: 'Codex setup' },
+      ],
+    },
+  };
+
+  return guideConfigs[view] || null;
+}
+
+function renderDocsSidebar(view) {
+  return DOCS_PAGE_GROUPS.map((group) => {
+    const groupKey = getDocsGroupKey(group);
+    const links = group.pages
+      .map((pageView) => {
+        const config = getDocsPageConfig(pageView);
+        const isActive = pageView === view;
+        return `<a class="docs-shell__nav-link${isActive ? ' is-active' : ''}" href="/?view=${pageView}" data-docs-view="${pageView}"${isActive ? ' aria-current="page"' : ''}>${config.navLabel}</a>`;
+      })
+      .join('');
+
+    return `
+      <section class="docs-shell__nav-group" data-docs-group="${groupKey}">
+        <button class="docs-shell__nav-trigger" type="button" data-docs-group-toggle="${groupKey}" aria-expanded="true">
+          <span class="docs-shell__nav-title">${group.label}</span>
+          <span class="material-symbols-outlined docs-shell__nav-chevron" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="docs-shell__nav-list">
+          ${links}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+function updateDocsSidebarState(view, scope = document) {
+  ensureDocsGroupOpenForView(view);
+  scope.querySelectorAll('.docs-shell__nav-link[data-docs-view]').forEach((link) => {
+    const isActive = link.getAttribute('data-docs-view') === view;
+    link.classList.toggle('is-active', isActive);
+    if (isActive) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+  applyDocsSidebarGroupState(scope);
+}
+
+function renderDocsPagination(view) {
+  const index = DOCS_PAGE_ORDER.indexOf(view);
+  if (index === -1) return '';
+
+  const prevView = DOCS_PAGE_ORDER[index - 1] || null;
+  const nextView = DOCS_PAGE_ORDER[index + 1] || null;
+  const prevConfig = prevView ? getDocsPageConfig(prevView) : null;
+  const nextConfig = nextView ? getDocsPageConfig(nextView) : null;
+
+  if (!prevConfig && !nextConfig) return '';
+
+  return `
+    <nav class="docs-shell__pager" aria-label="Docs page navigation">
+      ${prevConfig ? `<a class="docs-shell__pager-link" href="/?view=${prevView}" data-docs-view="${prevView}">
+        <span class="docs-shell__pager-label">Previous</span>
+        <strong>${prevConfig.navLabel}</strong>
+      </a>` : '<span></span>'}
+      ${nextConfig ? `<a class="docs-shell__pager-link docs-shell__pager-link--next" href="/?view=${nextView}" data-docs-view="${nextView}">
+        <span class="docs-shell__pager-label">Next</span>
+        <strong>${nextConfig.navLabel}</strong>
+      </a>` : ''}
+    </nav>`;
+}
+
+function renderDocsSitePage(view = 'docs') {
+  removePackCatalog({ keepDocs: true });
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const config = getDocsPageConfig(view);
+  let page = document.getElementById('docsView');
+  const isNewShell = !page;
+
+  if (!page) {
+    page = document.createElement('div');
+    page.id = 'docsView';
+    page.className = 'docs-view docs-view--site';
+    page.innerHTML = `
+      <div class="docs-shell">
+        <aside class="docs-shell__sidebar" aria-label="Docs navigation">
+          <div class="docs-shell__sidebar-head">
+            <h2 class="docs-shell__sidebar-brand">Supericons Docs</h2>
+        <p class="docs-shell__sidebar-copy">Setup guides and product reference.</p>
+          </div>
+          <div class="docs-shell__sidebar-nav">
+            ${renderDocsSidebar(view)}
+          </div>
+        </aside>
+
+        <div class="docs-shell__content">
+          <article class="docs-shell__page"></article>
+        </div>
+
+        <div class="docs-scroll-actions" aria-label="Page navigation">
+          <button class="docs-scroll-btn" id="docsScrollDown" aria-label="Go to next section" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <button class="docs-scroll-btn" id="docsScrollTop" aria-label="Back to top" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>`;
+    gridArea.appendChild(page);
+  }
+
+  const pillsMarkup = Array.isArray(config.pills) && config.pills.length
+    ? `<div class="docs-pill-list docs-pill-list--hero">${config.pills.map((pill) => `<span class="docs-pill docs-pill--static">${pill}</span>`).join('')}</div>`
+    : '';
+  const verifiedMarkup = config.verifiedNote
+    ? `<p class="docs-shell__verified">${config.verifiedNote}</p>`
+    : '';
+
+  cleanupDocsPage();
+  ensureDocsSidebarToggleDelegation();
+  updateDocsSidebarState(view, page);
+
+  const article = page.querySelector('.docs-shell__page');
+  if (!article) return;
+  article.innerHTML = `
+    <header class="docs-hero docs-hero--page${config.summary ? '' : ' docs-hero--compact'}">
+      <span class="docs-shell__kicker">${config.kicker}</span>
+      <h1 class="docs-hero__title">${config.pageTitle}</h1>
+      ${config.summary ? `<p class="docs-hero__copy">${config.summary}</p>` : ''}
+      ${verifiedMarkup}
+      ${pillsMarkup}
+    </header>
+
+    ${config.bodyHtml}
+    ${renderDocsPagination(view)}`;
+
+  wireDocsPage(page);
+  scrollDocsHashIntoView();
+}
+
+function renderDocsGuidePage(view) {
+  renderDocsSitePage(view);
+  return;
+  removePackCatalog();
+
+  const guide = getDocsGuideConfig(view);
+  if (!guide) {
+    renderDocsPage();
+    return;
+  }
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const snippetsMarkup = guide.snippets
+    .map((snippet, index) => `
+      <div class="docs-code docs-code--with-copy" style="margin-top: ${index === 0 ? '22px' : '16px'};">
+        <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="${snippet.id}">${snippet.label}</button>
+        <pre><code id="${snippet.id}">${snippet.code}</code></pre>
+      </div>`)
+    .join('');
+
+  const relatedGuidesMarkup = guide.relatedGuides
+    .map((link) => `<a href="${link.href}" data-docs-view="${link.view}">${link.label}</a>`)
+    .join('');
+
+  const page = document.createElement('div');
+  page.id = 'docsView';
+  page.className = 'docs-view docs-view--guide';
+
+  page.innerHTML = `
+    <div class="docs-hub">
+      <section class="docs-hero">
+        <span class="docs-eyebrow">${guide.eyebrow}</span>
+        <h1 class="docs-hero__title">${guide.title}</h1>
+        <p class="docs-hero__copy">${guide.heroCopy}</p>
+        <div class="docs-hero__actions">
+          <a class="docs-btn docs-btn--primary" href="/?view=docs" data-docs-view="docs">Back to docs</a>
+          <a class="docs-btn docs-btn--secondary" href="/?view=pricing" data-docs-view="pricing">Pricing</a>
+        </div>
+        ${snippetsMarkup}
+        ${guide.heroNote ? `<p class="docs-section__copy" style="margin-top: 14px;">${guide.heroNote}</p>` : ''}
+      </section>
+
+      <div class="docs-main">
+        <div class="docs-column">
+          <section class="docs-section" id="guide-flow">
+            <h2 class="docs-section__title">${guide.eyebrow} flow</h2>
+            <div class="docs-grid">
+              ${guide.flowCards.map((card) => `
+                <article class="docs-card">
+                  <h3>${card.title}</h3>
+                  <p>${card.copy}</p>
+                </article>`).join('')}
+            </div>
+          </section>
+
+          <section class="docs-section" id="guide-examples">
+            <h2 class="docs-section__title">${guide.eyebrow} examples</h2>
+            <div class="docs-code">
+              <pre><code>${guide.exampleCode}</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="guide-premium">
+            <h2 class="docs-section__title">Premium access</h2>
+            <div class="docs-grid">
+              ${guide.premiumCards.map((card) => `
+                <article class="docs-card">
+                  <h3>${card.title}</h3>
+                  <p>${card.copy}</p>
+                </article>`).join('')}
+            </div>
+          </section>
+
+          <section class="docs-section" id="guide-troubleshooting">
+            <h2 class="docs-section__title">Troubleshooting</h2>
+            <div class="docs-grid">
+              ${guide.troubleshootingCards.map((card) => `
+                <article class="docs-card">
+                  <h3>${card.title}</h3>
+                  <p>${card.copy}</p>
+                </article>`).join('')}
+            </div>
+          </section>
+        </div>
+
+        <aside class="docs-column docs-column--sidebar">
+          <section class="docs-sidebar">
+            <h3>On this page</h3>
+            <div class="docs-link-list">
+              <a href="#guide-flow">${guide.eyebrow} flow</a>
+              <a href="#guide-examples">${guide.eyebrow} examples</a>
+              <a href="#guide-premium">Premium access</a>
+              <a href="#guide-troubleshooting">Troubleshooting</a>
+            </div>
+          </section>
+
+          <section class="docs-sidebar">
+            <h3>Related guides</h3>
+            <div class="docs-link-list">
+              ${relatedGuidesMarkup}
+            </div>
+          </section>
+
+        </aside>
+      </div>
+
+      <div class="docs-scroll-actions" aria-label="Page navigation">
+        <button class="docs-scroll-btn" id="docsScrollDown" aria-label="Go to next section" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <button class="docs-scroll-btn" id="docsScrollTop" aria-label="Back to top" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>`;
+
+  gridArea.appendChild(page);
+  wireDocsPage(page);
+  scrollDocsHashIntoView();
+}
+
+function renderDocsPage() {
+  renderDocsSitePage('docs');
+  return;
+  removePackCatalog();
+
+  const gridArea = document.getElementById('gridArea');
+  if (!gridArea) return;
+
+  const page = document.createElement('div');
+  page.id = 'docsView';
+  page.className = 'docs-view';
+
+  page.innerHTML = `
+    <div class="docs-hub">
+      <section class="docs-hero">
+        <span class="docs-eyebrow">Docs</span>
+        <h1 class="docs-hero__title">Supericons docs and MCP setup</h1>
+        <p class="docs-hero__copy">
+          Everything you need to connect Supericons to your coding agent.
+          Base setup takes under a minute. Add a Supericons API key to your MCP config to access any <a href="/?view=pricing" data-docs-view="pricing">premium collections or Pro workflow tools</a> tied to your account.
+        </p>
+        <div class="docs-hero__actions">
+          <a class="docs-btn docs-btn--primary" href="#docs-quickstart">Quickstart</a>
+          <a class="docs-btn docs-btn--secondary" href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>
+        </div>
+        <div class="docs-pill-list">
+          <a class="docs-pill" href="/" data-docs-view="icons">20,000+ free icons</a>
+          <a class="docs-pill" href="#docs-tools">8 MCP tools</a>
+          <a class="docs-pill" href="/?view=pricing" data-docs-view="pricing">Premium collection access</a>
+          <a class="docs-pill" href="/?view=motion-lab" data-docs-view="motion-lab">Motion Lab MCP for Pro</a>
+          <a class="docs-pill" href="/?view=converter" data-docs-view="converter">Converter MCP for Pro</a>
+        </div>
+      </section>
+
+      <div class="docs-main">
+        <div class="docs-column">
+          <section class="docs-section" id="docs-quickstart">
+            <h2 class="docs-section__title">Quickstart</h2>
+            <p class="docs-section__copy">Start with the base MCP server config. Free icons work immediately. Premium icons require a <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or collection (pack) purchase</a>, plus a Supericons API key.</p>
+            <p class="docs-section__copy">Paste the snippet below into your client's MCP config file. If you are not sure where to find it, pick your client from the guides below.</p>
+            <div class="docs-code docs-code--with-copy">
+              <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-base-config">Copy</button>
+              <pre><code id="docs-base-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+            </div>
+            <div class="docs-grid" style="margin-top: 18px;">
+              <article class="docs-card">
+                <h3>Free path</h3>
+                <ul>
+                  <li>Add the base MCP config to your client.</li>
+                  <li>Restart or reload your MCP client.</li>
+                  <li>Use <code>search_icons</code> or <code>get_icon</code> right away.</li>
+                </ul>
+              </article>
+              <article class="docs-card">
+                <h3>Premium path</h3>
+                <ul>
+                  <li><a href="/?view=pricing" data-docs-view="pricing">Subscribe to Pro or buy the collection you need.</a></li>
+                  <li>Open <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a> and generate an API key.</li>
+                  <li>Add <code>SUPERICONS_API_KEY</code> in the env or secrets field your client supports.</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="docs-section" id="docs-premium">
+            <h2 class="docs-section__title">Premium MCP setup</h2>
+            <p class="docs-section__copy">An API key securely links your coding agent to your Supericons account. It unlocks whatever <a href="/?view=pricing" data-docs-view="pricing">premium collections or Pro workflow tools</a> you already own.</p>
+            <div class="docs-code docs-code--with-copy">
+              <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-premium-config">Copy</button>
+              <pre><code id="docs-premium-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "your_key_here"
+      }
+    }
+  }
+}</code></pre>
+            </div>
+            <p class="docs-section__copy">This JSON-style example fits clients that support an <code>env</code> object in their MCP config. Use the client-specific guide for the exact syntax your editor expects.</p>
+            <p class="docs-section__copy">Today MCP supports icon search, icon retrieval, library discovery, Motion Lab preset exports, and Converter workflows for Pro users.</p>
+          </section>
+
+          <section class="docs-section" id="docs-tools">
+            <h2 class="docs-section__title">MCP tools</h2>
+            <div class="docs-grid docs-grid--collapse" id="toolsGrid">
+              <article class="docs-card">
+                <h3><code>search_icons</code></h3>
+                <p>Find the closest icon match across the free libraries and any premium collections your account can access.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>get_icon</code></h3>
+                <p>Retrieve a specific icon payload with ready-to-use SVG output that can be inserted directly into code.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>list_libraries</code></h3>
+                <p>List the libraries and premium collection sources your MCP session can currently access.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>list_motion_presets</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <p>Browse available Motion Lab presets before generating CSS or animated SVGs.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>export_motion_css</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <p>Generate Motion Lab CSS for a chosen icon, preset, trigger, duration, and intensity without leaving your coding agent.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>export_animated_svg</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <p>Generate a self-contained animated SVG for the selected icon and preset as a single MCP response.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>convert_svg_to_png</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <p>Render SVG input to PNG with a controlled output width and optional background through the Pro converter workflow.</p>
+              </article>
+              <article class="docs-card">
+                <h3><code>convert_png_to_svg</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <p>Trace PNG input to SVG with the same converter-quality controls used by the browser workflow.</p>
+              </article>
+            </div>
+            <button class="docs-expand-btn" type="button" data-expand="toolsGrid" aria-expanded="false">Show all 8 tools</button>
+            <div class="docs-grid" style="margin-top: 14px;">
+              <article class="docs-card docs-card--muted">
+                <h3>Access by plan</h3>
+                <p>Free users can search and retrieve from all free libraries. <a href="/?view=pricing" data-docs-view="pricing">Pro subscribers and collection owners</a> can access their premium assets by connecting an API key.</p>
+              </article>
+              <article class="docs-card docs-card--muted">
+                <h3>Workflow tools require Pro</h3>
+                <p><a href="/?view=motion-lab" data-docs-view="motion-lab">Motion Lab MCP</a> and <a href="/?view=converter" data-docs-view="converter">Converter MCP</a> are Pro-only. Collection ownership unlocks premium icon assets, but workflow tool access requires a <a href="/?view=pricing" data-docs-view="pricing">Pro subscription</a>.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="docs-section" id="docs-guides">
+            <h2 class="docs-section__title">Client guides</h2>
+            <p class="docs-section__copy">The Supericons stdio server can be used with any MCP-capable client. The core configuration is the same, but every client has its own setup process and settings file.</p>
+            <div class="docs-pill-list docs-pill-list--compact" style="margin-top: 14px; margin-bottom: 18px;">
+              <a class="docs-pill" href="/?view=docs-claude-code" data-docs-view="docs-claude-code">Claude Code</a>
+              <a class="docs-pill" href="/?view=docs-codex" data-docs-view="docs-codex">Codex</a>
+              <a class="docs-pill" href="/?view=docs-cursor" data-docs-view="docs-cursor">Cursor</a>
+              <a class="docs-pill" href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a>
+              <a class="docs-pill" href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a>
+              <a class="docs-pill" href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a>
+              <a class="docs-pill" href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a>
+            </div>
+            <div class="docs-grid docs-grid--collapse" id="guidesGrid">
+              <article class="docs-card">
+                <h3><a href="/?view=docs-claude-code" data-docs-view="docs-claude-code">Claude Code</a></h3>
+                <p>Supericons setup guide plus Anthropic's official MCP docs for CLI setup, Windows notes, and troubleshooting.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="/?view=docs-codex" data-docs-view="docs-codex">Codex</a></h3>
+                <p>Supericons setup guide plus OpenAI's official MCP docs for CLI and <code>config.toml</code> setup.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="/?view=docs-cursor" data-docs-view="docs-cursor">Cursor</a></h3>
+                <p>Supericons setup guide plus Cursor's official MCP docs for JSON config and in-app MCP settings.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h3>
+                <p>Official OpenCode MCP docs for server config and CLI flow.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h3>
+                <p>Official Cline docs for the Servers UI and <code>cline_mcp_settings.json</code> config.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h3>
+                <p>Official GitHub docs for repository MCP config and Copilot environment secrets.</p>
+              </article>
+              <article class="docs-card">
+                <h3><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h3>
+                <p>Official Windsurf docs for settings UI and <code>mcp_config.json</code> setup.</p>
+              </article>
+            </div>
+            <button class="docs-expand-btn" type="button" data-expand="guidesGrid" aria-expanded="false">Show all 7 guides</button>
+          </section>
+
+          <section class="docs-section" id="docs-workflow-tools">
+            <h2 class="docs-section__title">Workflow Tools</h2>
+            <p class="docs-section__copy"><a href="/?view=motion-lab" data-docs-view="motion-lab">Motion Lab</a> and <a href="/?view=converter" data-docs-view="converter">Converter</a> are free to browse in the browser. Exports (animation CSS, animated SVG, PNG, and SVG tracing) require a <a href="/?view=pricing" data-docs-view="pricing">Pro subscription</a>, both in the browser and through MCP.</p>
+            <p class="docs-section__copy">Pro subscribers can also run both tools through MCP, triggering the same exports directly from their coding agent.</p>
+            <p class="docs-section__copy">
+              <a href="/?view=motion-lab" data-docs-view="motion-lab">Open Motion Lab in browser</a> &middot;
+              <a href="/?view=converter" data-docs-view="converter">Open Converter in browser</a>
+            </p>
+            <div class="docs-grid">
+              <article class="docs-card">
+                <h3>Motion Lab MCP <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <ul>
+                  <li>Preset discovery</li>
+                  <li>Trigger control</li>
+                  <li>Motion CSS export</li>
+                  <li>Standalone animated SVG export</li>
+                </ul>
+              </article>
+              <article class="docs-card">
+                <h3>Converter MCP <span class="docs-badge docs-badge--pro">Pro</span></h3>
+                <ul>
+                  <li>SVG to PNG conversion</li>
+                  <li>PNG to SVG tracing</li>
+                  <li>Input inspection and warnings</li>
+                  <li>Suggested conversion settings</li>
+                </ul>
+              </article>
+              <article class="docs-card docs-card--muted">
+                <h3>Why this matters</h3>
+                <p>Search-only MCP is useful, but workflow-tool access is the stronger Pro value proposition for design systems, prototyping, and coding-agent automation.</p>
+              </article>
+              <article class="docs-card docs-card--muted">
+                <h3>Current status</h3>
+                <p><a href="/?view=motion-lab" data-docs-view="motion-lab">Motion Lab MCP</a> and <a href="/?view=converter" data-docs-view="converter">Converter MCP</a> are Pro-only workflow tools. Collection ownership still works for icon access, but workflow tooling requires <a href="/?view=pricing" data-docs-view="pricing">Pro</a>.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="docs-section" id="docs-recipes">
+            <h2 class="docs-section__title">Starter prompts</h2>
+            <p class="docs-section__copy">Copy any of these prompts and paste them into your coding agent to get started.</p>
+            <div class="docs-grid">
+              <article class="docs-card">
+                <div class="docs-card__head">
+                  <h3>UI build</h3>
+                  <button class="docs-copy" type="button" data-copy-target="recipe-ui-build">Copy</button>
+                </div>
+                <div class="docs-code docs-code--compact">
+                  <pre><code id="recipe-ui-build">Find a tab icon for analytics.
+Show the Lucide and Tabler options side by side.
+Insert the chosen SVG into my React component.</code></pre>
+                </div>
+              </article>
+              <article class="docs-card">
+                <div class="docs-card__head">
+                  <h3>Brand logos</h3>
+                  <button class="docs-copy" type="button" data-copy-target="recipe-brand-logos">Copy</button>
+                </div>
+                <div class="docs-code docs-code--compact">
+                  <pre><code id="recipe-brand-logos">Search Simple Icons for Stripe, Vercel, and Supabase.
+Return the SVGs in monochrome.
+Place them in a footer component.</code></pre>
+                </div>
+              </article>
+              <article class="docs-card">
+                <div class="docs-card__head">
+                  <h3>Premium assets</h3>
+                  <button class="docs-copy" type="button" data-copy-target="recipe-premium">Copy</button>
+                </div>
+                <div class="docs-code docs-code--compact">
+                  <pre><code id="recipe-premium">Fetch icons from a premium collection tied to my Pro or collection access.
+Drop them into a prototype component.
+Keep access tied to my Supericons API key.</code></pre>
+                </div>
+              </article>
+              <article class="docs-card">
+                <div class="docs-card__head">
+                  <h3>Explore what's available</h3>
+                  <button class="docs-copy" type="button" data-copy-target="recipe-discovery">Copy</button>
+                </div>
+                <div class="docs-code docs-code--compact">
+                  <pre><code id="recipe-discovery">List all Supericons MCP tools available to me.
+Show which are free and which need Pro.
+Then search for a secure login icon.</code></pre>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="docs-section" id="docs-troubleshooting">
+            <h2 class="docs-section__title">Troubleshooting</h2>
+            <div class="docs-grid">
+              <article class="docs-card">
+                <h3>Server installed but no tools appear</h3>
+                <p>Restart or reload the MCP client after saving your config. Most missing-tool issues are simply caused by the client needing a refresh.</p>
+              </article>
+              <article class="docs-card">
+                <h3>Premium icons do not appear</h3>
+                <p>Verify your account has an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or collection purchase</a>, then generate a new API key and update your client's config.</p>
+              </article>
+              <article class="docs-card">
+                <h3>Invalid or revoked key</h3>
+                <p>Open <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>, revoke the old key if needed, generate a new one, and update the MCP env or secrets field.</p>
+              </article>
+              <article class="docs-card">
+                <h3>Need exact client syntax</h3>
+                <p>Use the client guides above when your editor uses a different MCP config format than the JSON-style example on this page.</p>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="docs-column docs-column--sidebar">
+          <section class="docs-sidebar">
+            <h3>On this page</h3>
+            <div class="docs-link-list">
+              <a href="#docs-quickstart">Quickstart</a>
+              <a href="#docs-premium">Premium setup</a>
+              <a href="#docs-tools">MCP tools</a>
+              <a href="#docs-guides">Client guides</a>
+              <a href="#docs-workflow-tools">Workflow tools</a>
+              <a href="#docs-recipes">Starter prompts</a>
+              <a href="#docs-troubleshooting">Troubleshooting</a>
+            </div>
+          </section>
+
+          <section class="docs-callout">
+            <h3>What's live</h3>
+            <p>Supericons MCP includes 8 tools: icon search, icon retrieval, library listing, Motion Lab preset browsing, motion CSS export, animated SVG export, SVG-to-PNG, and PNG-to-SVG tracing. Motion Lab and Converter exports are Pro-only.</p>
+          </section>
+
+        </aside>
+      </div>
+
+      <div class="docs-scroll-actions" aria-label="Page navigation">
+        <button class="docs-scroll-btn" id="docsScrollDown" aria-label="Go to next section" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <button class="docs-scroll-btn" id="docsScrollTop" aria-label="Back to top" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>`;
+
+  gridArea.appendChild(page);
+  wireDocsPage(page);
+  scrollDocsHashIntoView();
+}
+
 function renderTermsPage() {
   removePackCatalog();
 
@@ -4357,7 +5559,7 @@ function renderTermsPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">2. AI Output Rights</h3>
-        <p>Icons retrieved via the SuperIcons MCP server may be used in AI-generated code output. The generated code (HTML, CSS, JSX) that references or embeds our icons is your property.</p>
+        <p>Icons retrieved via the <a href="/?view=docs" data-docs-view="docs">SuperIcons MCP server</a> may be used in AI-generated code output. The generated code (HTML, CSS, JSX) that references or embeds our icons is your property.</p>
         <p>However, the underlying SVG and CSS animation source files remain the intellectual property of Curly Mole Labs. You may not use AI tools to extract, reverse-engineer, or bulk-export raw icon assets.</p>
       </section>
 
@@ -4379,21 +5581,21 @@ function renderTermsPage() {
         <div class="terms-tier-grid">
           <div class="terms-tier">
             <h4>Single Project License</h4>
-            <p>Applies to: A-la-carte purchases and Pro Monthly collection claims</p>
-            <p>Use the purchased collection in one (1) project. Additional projects require additional purchases, Launch Bundle, Pro Annual ownership, or an active Pro subscription.</p>
+            <p>Applies to: A-la-carte purchases and <a href="/?view=pricing" data-docs-view="pricing">Pro Monthly</a> collection claims</p>
+            <p>Use the purchased collection in one (1) project. Additional projects require additional purchases, <a href="/?view=pricing" data-docs-view="pricing">Launch Bundle</a>, <a href="/?view=pricing" data-docs-view="pricing">Pro Annual</a> ownership, or an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription</a>.</p>
           </div>
           <div class="terms-tier">
             <h4>Unlimited Project License</h4>
-            <p>Applies to: Active Pro subscribers, Pro Annual included collections, Launch Edition purchasers</p>
-            <p>Use eligible collections in unlimited projects, including client work. Valid for as long as your subscription is active for monthly Pro and future annual drops, and permanently for Pro Annual included collections and Launch Edition purchases.</p>
+            <p>Applies to: Active <a href="/?view=pricing" data-docs-view="pricing">Pro subscribers</a>, <a href="/?view=pricing" data-docs-view="pricing">Pro Annual</a> included collections, <a href="/?view=pricing" data-docs-view="pricing">Launch Edition</a> purchasers</p>
+            <p>Use eligible collections in unlimited projects, including client work. Valid for as long as your subscription is active for monthly Pro and future annual drops, and permanently for <a href="/?view=pricing" data-docs-view="pricing">Pro Annual</a> included collections and <a href="/?view=pricing" data-docs-view="pricing">Launch Edition</a> purchases.</p>
           </div>
         </div>
       </section>
 
       <section class="terms-section">
         <h3 class="terms-section__title">5. Refund Policy</h3>
-        <p><strong>Pro Subscription:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Monthly claims stay in your library permanently. Pro Annual keeps the 8 included premium collections in your library permanently, while future premium drops and Pro tools end when the annual term ends unless renewed.</p>
-        <p><strong>One-time Purchases:</strong> Due to the digital nature of our products, we do not offer refunds on individual collection purchases or the Launch Edition bundle once download access has been granted.</p>
+        <p><strong><a href="/?view=pricing" data-docs-view="pricing">Pro Subscription</a>:</strong> You may cancel your subscription at any time. No partial refunds are issued for the current billing period. Your benefits remain active until the end of the paid period. Monthly claims stay in your library permanently. <a href="/?view=pricing" data-docs-view="pricing">Pro Annual</a> keeps the 8 included premium collections in your library permanently, while future premium drops and Pro tools end when the annual term ends unless renewed.</p>
+        <p><strong>One-time Purchases:</strong> Due to the digital nature of our products, we do not offer refunds on individual collection purchases or the <a href="/?view=pricing" data-docs-view="pricing">Launch Edition</a> bundle once download access has been granted.</p>
         <p><strong>Exceptions:</strong> If you experience a technical issue that prevents you from accessing your purchased content, contact us within 14 days for a full refund or resolution.</p>
       </section>
 
@@ -4405,6 +5607,7 @@ function renderTermsPage() {
     </div>`;
 
   gridArea.appendChild(page);
+  wireShellViewLinks(page);
 }
 
 function renderPrivacyPage() {
@@ -4429,7 +5632,7 @@ function renderPrivacyPage() {
       <section class="terms-section">
         <h3 class="terms-section__title">2. Data We Collect</h3>
         <p>We may collect account information such as your email address, display name, authentication provider, and account identifiers when you create an account or sign in.</p>
-        <p>We also store purchase, entitlement, and subscription records needed to grant access to premium collections, MCP features, and related product functionality.</p>
+        <p>We also store purchase, entitlement, and subscription records needed to grant access to <a href="/?view=pricing" data-docs-view="pricing">premium collections</a>, <a href="/?view=docs" data-docs-view="docs">MCP features</a>, and related product functionality.</p>
         <p>We collect anonymized, cookie-free usage analytics to understand how the product is used. No personal data is tied to these analytics.</p>
         <p>If you contact us, we may receive the information you include in your email or support request.</p>
       </section>
@@ -4439,7 +5642,7 @@ function renderPrivacyPage() {
         <ul>
           <li>Providing sign-in, account recovery, and account management</li>
           <li>Processing purchases, subscriptions, and entitlements</li>
-          <li>Delivering paid access to premium collections and MCP features</li>
+          <li>Delivering paid access to <a href="/?view=pricing" data-docs-view="pricing">premium collections</a> and <a href="/?view=docs" data-docs-view="docs">MCP features</a></li>
           <li>Responding to support requests and product questions</li>
           <li>Protecting the service against abuse, fraud, and unauthorized access</li>
           <li>Improving product quality and reliability</li>
@@ -4458,7 +5661,7 @@ function renderPrivacyPage() {
 
       <section class="terms-section">
         <h3 class="terms-section__title">6. MCP Access</h3>
-        <p>When you use Supericons through MCP, we may process requests needed to validate access, return icon results, and enforce premium entitlements tied to your account or API key.</p>
+        <p>When you use Supericons through <a href="/?view=docs" data-docs-view="docs">MCP</a>, we may process requests needed to validate access, return icon results, and enforce premium entitlements tied to your account or <a href="/?view=api-keys" data-docs-view="api-keys">API key</a>.</p>
       </section>
 
       <section class="terms-section">
@@ -4483,264 +5686,6 @@ function renderPrivacyPage() {
     </div>`;
 
   gridArea.appendChild(page);
-}
-
-function renderMcpPage() {
-  removePackCatalog();
-
-  const gridArea = document.getElementById('gridArea');
-  if (!gridArea) return;
-
-  const page = document.createElement('div');
-  page.id = 'mcpView';
-  page.className = 'mcp-view';
-
-  page.innerHTML = `
-    <section class="mcp-hero">
-      <span class="mcp-hero__eyebrow">MCP Integration</span>
-      <h2 class="mcp-hero__title">Give your coding agent 20,000+ icons</h2>
-      <p class="mcp-hero__copy">Search, retrieve, and paste SVG icons directly into code through the Model Context Protocol. Free icons work out of the box. Premium collections are available when your account has Pro or purchased pack access and your MCP client is connected with your Supericons API key.</p>
-      <div class="mcp-hero__actions">
-        <a class="mcp-btn mcp-btn--primary" href="#mcpInstall">Install the MCP server</a>
-        <a class="mcp-btn mcp-btn--secondary" href="/docs/index.html">Open docs and guides</a>
-      </div>
-    </section>
-
-    <div class="mcp-layout">
-      <div class="mcp-layout__main">
-        <section class="mcp-card" id="mcpInstall">
-          <h3 class="mcp-card__title">Set up Supericons MCP</h3>
-          <p class="mcp-card__copy">One local stdio server works across every MCP-capable client. Start with the base config below, then add your API key only if you want premium pack access tied to your Supericons account.</p>
-          <div class="mcp-code">
-            <button class="mcp-code__copy" type="button" id="mcpPageCopyBtn">Copy</button>
-            <pre class="mcp-code__pre"><code id="mcpPageConfig">{
-  "mcpServers": {
-    "supericons": {
-      "command": "npx",
-      "args": ["-y", "supericons-mcp"]
-    }
-  }
-}</code></pre>
-          </div>
-          <div class="mcp-grid" style="margin-top: 16px;">
-            <article class="mcp-mini-card">
-              <h4>Free setup</h4>
-              <ul>
-                <li>Add the base server config.</li>
-                <li>Restart or reload your MCP client.</li>
-                <li>Use <code>search_icons</code> or <code>get_icon</code> right away.</li>
-              </ul>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Premium setup</h4>
-              <ul>
-                <li>Subscribe to Pro or buy the premium pack you need.</li>
-                <li>Open <a href="/?view=api-keys">API Keys</a> and generate an API key.</li>
-                <li>Add <code>SUPERICONS_API_KEY</code> in the env or secrets field your MCP client supports.</li>
-              </ul>
-            </article>
-          </div>
-          <p class="mcp-card__copy mcp-card__copy--spaced">JSON-style clients such as Cursor, Claude Code project config, or similar MCP settings surfaces can use an env block like this. For client-specific syntax, use the guides and docs below.</p>
-          <div class="mcp-code">
-            <button class="mcp-code__copy" type="button" id="mcpPremiumCopyBtn">Copy premium example</button>
-            <pre class="mcp-code__pre"><code id="mcpPremiumConfig">{
-  "mcpServers": {
-    "supericons": {
-      "command": "npx",
-      "args": ["-y", "supericons-mcp"],
-      "env": {
-        "SUPERICONS_API_KEY": "your_key_here"
-      }
-    }
-  }
-}</code></pre>
-          </div>
-          <p class="mcp-card__copy mcp-card__copy--spaced">Today MCP supports icon search, icon retrieval, library discovery, Motion Lab preset exports, and Converter workflows for Pro users.</p>
-        </section>
-
-        <section class="mcp-card">
-          <h3 class="mcp-card__title">Current MCP tools</h3>
-          <div class="mcp-grid">
-            <article class="mcp-mini-card">
-              <h4><code>search_icons</code></h4>
-              <p>Find the closest icon match across the free libraries and any premium packs your account is entitled to use.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>get_icon</code></h4>
-              <p>Retrieve a specific icon payload with ready-to-use SVG output that can be inserted directly into code.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>list_libraries</code></h4>
-              <p>List the libraries and pack sources your MCP session can currently see, including premium access state.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>list_motion_presets</code></h4>
-              <p>Browse the Motion Lab presets available through MCP before exporting animation CSS or animated SVG output.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>export_motion_css</code></h4>
-              <p>Generate Motion Lab CSS for a chosen icon, preset, trigger, duration, and intensity without leaving your coding agent.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>export_animated_svg</code></h4>
-              <p>Generate a self-contained animated SVG for the selected icon and preset as a single MCP response.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>convert_svg_to_png</code></h4>
-              <p>Render SVG input to PNG with a controlled output width and optional background through the Pro converter workflow.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><code>convert_png_to_svg</code></h4>
-              <p>Trace PNG input to SVG with the same converter-quality controls used by the browser workflow.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Access-aware entitlements</h4>
-              <p>Free users search 20,000+ icons. Pro subscribers and pack owners can connect an API key to access the premium collections they already own.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Workflow-tool gating</h4>
-              <p>Motion Lab MCP and Converter MCP are Pro workflow tools. Pack ownership unlocks premium icon assets, but workflow tools stay Pro-only.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="mcp-card" id="mcpGuides">
-          <h3 class="mcp-card__title">Docs, guides, and tutorials</h3>
-          <p class="mcp-card__copy">Use the Supericons docs hub for the systematic setup path, entitlement model, current MCP tools, and workflow recipes for Motion Lab and Converter.</p>
-          <div class="mcp-link-list" style="margin-bottom: 18px;">
-            <a href="/docs/index.html">Open docs hub</a>
-            <a href="/docs/index.html#docs-quickstart">Quickstart</a>
-            <a href="/docs/index.html#docs-premium">Premium setup</a>
-            <a href="/docs/index.html#docs-recipes">Recipes and prompts</a>
-            <a href="/docs/index.html#docs-troubleshooting">Troubleshooting</a>
-          </div>
-          <p class="mcp-card__copy">The Supericons stdio server can be used with any MCP-capable client. The configuration concept is shared, but each client has its own setup UX and config surface.</p>
-          <div class="mcp-pill-list">
-            <span class="mcp-pill">Claude Code</span>
-            <span class="mcp-pill">Codex</span>
-            <span class="mcp-pill">Cursor</span>
-            <span class="mcp-pill">OpenCode</span>
-            <span class="mcp-pill">Cline</span>
-            <span class="mcp-pill">Copilot agent</span>
-            <span class="mcp-pill">Windsurf</span>
-          </div>
-          <div class="mcp-grid mcp-grid--guides">
-            <article class="mcp-mini-card">
-              <h4><a href="/mcp/claude-code/">Claude Code</a></h4>
-              <p>Supericons setup guide plus Anthropic's official MCP docs for CLI setup, Windows notes, and troubleshooting.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="/mcp/codex/">Codex</a></h4>
-              <p>Supericons setup guide plus OpenAI's official MCP docs for CLI and <code>config.toml</code> setup.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="/mcp/cursor/">Cursor</a></h4>
-              <p>Supericons setup guide plus Cursor's official MCP docs for JSON config and in-app MCP settings.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h4>
-              <p>Official OpenCode MCP docs for server config and CLI flow.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h4>
-              <p>Official Cline docs for the Servers UI and <code>cline_mcp_settings.json</code> config.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h4>
-              <p>Official GitHub docs for repository MCP config and Copilot environment secrets.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h4>
-              <p>Official Windsurf docs for settings UI and <code>mcp_config.json</code> setup.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="mcp-card">
-          <h3 class="mcp-card__title">Pro Workflow Access</h3>
-          <div class="mcp-grid">
-            <article class="mcp-mini-card">
-              <h4>Motion Lab MCP</h4>
-              <p>Live for Pro workflow access: preset discovery, recipe guidance, motion CSS export, and standalone animated SVG export.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Converter MCP</h4>
-              <p>Live for Pro workflow access: SVG to PNG rendering, PNG to SVG tracing, and option inspection for agent-driven conversion flows.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Why this matters</h4>
-              <p>Search-only MCP is useful, but workflow-tool access is the stronger Pro value proposition for design systems, prototyping, and coding-agent automation.</p>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Current status</h4>
-              <p>Motion Lab MCP and Converter MCP are Pro-only workflow tools. Premium pack ownership still works for icon access, but workflow tooling requires Pro.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="mcp-card">
-          <h3 class="mcp-card__title">Example prompts</h3>
-          <div class="mcp-grid">
-            <article class="mcp-mini-card">
-              <h4>UI build</h4>
-              <ul>
-                <li>Find a tab icon for analytics.</li>
-                <li>Show the Lucide and Tabler options side by side.</li>
-                <li>Insert the chosen SVG into my React component.</li>
-              </ul>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Brand logos</h4>
-              <ul>
-                <li>Search Simple Icons for Stripe, Vercel, and Supabase.</li>
-                <li>Return the SVGs in monochrome.</li>
-                <li>Place them in a footer component.</li>
-              </ul>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Premium assets</h4>
-              <ul>
-                <li>Fetch icons from a premium collection tied to my Pro or pack access.</li>
-                <li>Drop them into a prototype component.</li>
-                <li>Keep access tied to my Supericons API key.</li>
-              </ul>
-            </article>
-            <article class="mcp-mini-card">
-              <h4>Available tools</h4>
-              <ul>
-                <li><code>search_icons</code>: find the closest match.</li>
-                <li><code>get_icon</code>: retrieve a specific SVG by ID.</li>
-                <li><code>list_libraries</code>: list all available icon sources.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-      </div>
-    </div>`;
-
-  gridArea.appendChild(page);
-
-  const bindMcpCopyButton = (buttonId, codeId) => {
-    const button = page.querySelector(buttonId);
-    const code = page.querySelector(codeId);
-    if (!button || !code) return;
-
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(code.textContent || '');
-        const original = button.textContent;
-        button.textContent = 'Copied';
-        window.setTimeout(() => {
-          button.textContent = original;
-        }, 1800);
-      } catch (err) {
-        console.warn('[Store] Failed to copy MCP config:', err?.message || err);
-      }
-    });
-  };
-
-  bindMcpCopyButton('#mcpPageCopyBtn', '#mcpPageConfig');
-  bindMcpCopyButton('#mcpPremiumCopyBtn', '#mcpPremiumConfig');
 }
 
 // ── Launch Edition Card ───────────────────────────────────────
@@ -5103,10 +6048,8 @@ function wireStoreListeners() {
     window.history.replaceState({}, '', window.location.pathname);
   }
 
-  const requestedView = params.get('view');
-  if (DIRECT_ROUTE_VIEWS.has(requestedView || '')) {
-    switchView(requestedView);
-    window.history.replaceState({}, '', window.location.pathname);
+  if (syncViewFromLocation({ historyMode: 'replace' })) {
+    return;
   }
 }
 
@@ -7447,777 +8390,7 @@ function updateLiveTransform(selector) {
 
 // ---- Preset Engine ----------------------------------------
 
-const PRESETS = {
-  pulse: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 0.5,  props: { transform: 'scale(1.15)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'scale(1)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-    // Which numeric values get scaled by intensity (from 1.15 → scaled)
-    intensityTarget: { prop: 'transform', pattern: /scale\(([^)]+)\)/, base: 1, range: 0.15 },
-  },
-  bounce: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateY(0px)' } },
-      { offset: 0.4,  props: { transform: 'translateY(-6px)' } },
-      { offset: 0.65, props: { transform: 'translateY(-2px)' } },
-      { offset: 0.8,  props: { transform: 'translateY(-4px)' } },
-      { offset: 1,    props: { transform: 'translateY(0px)' } },
-    ],
-    easing: 'ease-out',
-  },
-  spin: {
-    keyframes: [
-      { offset: 0, props: { transform: 'rotate(0deg)' } },
-      { offset: 1, props: { transform: 'rotate(360deg)' } },
-    ],
-    easing: 'linear',
-  },
-  shake: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(0px)' } },
-      { offset: 0.15, props: { transform: 'translateX(-3px)' } },
-      { offset: 0.30, props: { transform: 'translateX(3px)' } },
-      { offset: 0.45, props: { transform: 'translateX(-3px)' } },
-      { offset: 0.60, props: { transform: 'translateX(3px)' } },
-      { offset: 0.75, props: { transform: 'translateX(-2px)' } },
-      { offset: 1,    props: { transform: 'translateX(0px)' } },
-    ],
-    easing: 'ease-out',
-  },
-  float: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translateY(0px)' } },
-      { offset: 0.5, props: { transform: 'translateY(-4px)' } },
-      { offset: 1,   props: { transform: 'translateY(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  pop: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(0.85)' } },
-      { offset: 0.55, props: { transform: 'scale(1.1)' } },
-      { offset: 0.75, props: { transform: 'scale(0.97)' } },
-      { offset: 1,    props: { transform: 'scale(1)' } },
-    ],
-    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-  },
-  magneticIn: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(-28px) scale(0.84) rotate(-8deg)', opacity: '0' } },
-      { offset: 0.58, props: { transform: 'translateX(5px) scale(1.06) rotate(2deg)', opacity: '1' } },
-      { offset: 0.82, props: { transform: 'translateX(-1px) scale(0.985) rotate(-0.5deg)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'translateX(0px) scale(1) rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  },
-  // ── Starter customs (Saved quadrant) ──────────────────────────
-  sparkle: {
-    keyframes: [
-      { offset: 0,   props: { filter: 'drop-shadow(0 0 0px transparent)', opacity: '1' } },
-      { offset: 0.5, props: { filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.8))', opacity: '0.85' } },
-      { offset: 1,   props: { filter: 'drop-shadow(0 0 0px transparent)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  swing: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(0deg)' } },
-      { offset: 0.25, props: { transform: 'rotate(15deg)' } },
-      { offset: 0.75, props: { transform: 'rotate(-15deg)' } },
-      { offset: 1,    props: { transform: 'rotate(0deg)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  jitter: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translate(0px, 0px)' } },
-      { offset: 0.2, props: { transform: 'translate(2px, -2px)' } },
-      { offset: 0.4, props: { transform: 'translate(-2px, 2px)' } },
-      { offset: 0.6, props: { transform: 'translate(2px, 2px)' } },
-      { offset: 0.8, props: { transform: 'translate(-2px, -2px)' } },
-      { offset: 1,   props: { transform: 'translate(0px, 0px)' } },
-    ],
-    easing: 'linear',
-  },
-  chase: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translate(0px, 0px) scale(1)' } },
-      { offset: 0.20, props: { transform: 'translate(6px, -4px) scale(1.06)' } },
-      { offset: 0.40, props: { transform: 'translate(10px, 4px) scale(0.97)' } },
-      { offset: 0.60, props: { transform: 'translate(-4px, 8px) scale(1.03)' } },
-      { offset: 0.80, props: { transform: 'translate(-8px, -3px) scale(0.98)' } },
-      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)' } },
-    ],
-    easing: 'linear',
-  },
-  stream: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateY(-14px)', opacity: '0', filter: 'blur(3px)' } },
-      { offset: 0.25, props: { transform: 'translateY(-4px)', opacity: '0.55', filter: 'blur(2px)' } },
-      { offset: 0.50, props: { transform: 'translateY(6px)', opacity: '0.9', filter: 'blur(1px)' } },
-      { offset: 0.75, props: { transform: 'translateY(0px)', opacity: '1', filter: 'blur(0px)' } },
-      { offset: 1,    props: { transform: 'translateY(4px)', opacity: '0.95', filter: 'blur(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  trace: {
-    keyframes: [
-      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', opacity: '0.35', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.55, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.35))' } },
-      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-  },
-  flow: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(-14px)', opacity: '0.3', filter: 'blur(3px)' } },
-      { offset: 0.30, props: { transform: 'translateX(-4px)', opacity: '0.75', filter: 'blur(2px)' } },
-      { offset: 0.60, props: { transform: 'translateX(8px)', opacity: '1', filter: 'blur(0px)' } },
-      { offset: 1,    props: { transform: 'translateX(0px)', opacity: '1', filter: 'blur(0px)' } },
-    ],
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  },
-  converge: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(0.72)', opacity: '0.35', filter: 'blur(6px)' } },
-      { offset: 0.45, props: { transform: 'scale(1.12)', opacity: '1', filter: 'blur(0px)' } },
-      { offset: 0.70, props: { transform: 'scale(0.98)', opacity: '1', filter: 'blur(0px)' } },
-      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
-    ],
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  },
-  cube: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(-18deg) scale(0.82)', opacity: '0.7' } },
-      { offset: 0.35, props: { transform: 'rotate(16deg) scale(1.08)', opacity: '1' } },
-      { offset: 0.65, props: { transform: 'rotate(-8deg) scale(0.96)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'rotate(0deg) scale(1)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-  },
-  typing: {
-    keyframes: [
-      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', opacity: '0.2' } },
-      { offset: 0.55, props: { 'clip-path': 'inset(0 28% 0 0)', opacity: '1' } },
-      { offset: 0.70, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
-      { offset: 0.82, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '0.45' } },
-      { offset: 0.90, props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
-      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', opacity: '1' } },
-    ],
-    easing: 'steps(5, end)',
-  },
-  reason: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translate(-6px, -6px) scale(0.92)', opacity: '0.45' } },
-      { offset: 0.25, props: { transform: 'translate(6px, -2px) scale(1)', opacity: '0.85' } },
-      { offset: 0.50, props: { transform: 'translate(-2px, 6px) scale(1.06)', opacity: '1' } },
-      { offset: 0.75, props: { transform: 'translate(3px, 2px) scale(0.98)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  sweep: {
-    keyframes: [
-      { offset: 0,    props: { 'clip-path': 'inset(0 100% 0 0)', transform: 'translateX(-8px)', opacity: '0.25', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.40, props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(0px)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.28))' } },
-      { offset: 0.70, props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(6px)', opacity: '0.8', filter: 'drop-shadow(0 0 4px rgba(255,107,53,0.18))' } },
-      { offset: 1,    props: { 'clip-path': 'inset(0 0% 0 0)', transform: 'translateX(0px)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  },
-  scatter: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translate(0px, 0px) scale(0.88)', opacity: '0.8', filter: 'blur(0px)' } },
-      { offset: 0.20, props: { transform: 'translate(-8px, -6px) scale(0.94)', opacity: '0.7', filter: 'blur(3px)' } },
-      { offset: 0.40, props: { transform: 'translate(8px, 5px) scale(1.04)', opacity: '1', filter: 'blur(2px)' } },
-      { offset: 0.70, props: { transform: 'translate(-5px, 3px) scale(0.98)', opacity: '0.92', filter: 'blur(1px)' } },
-      { offset: 1,    props: { transform: 'translate(0px, 0px) scale(1)', opacity: '1', filter: 'blur(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  crest: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateY(0px) scale(0.96)' } },
-      { offset: 0.20, props: { transform: 'translateY(-6px) scale(1.06)' } },
-      { offset: 0.45, props: { transform: 'translateY(4px) scale(0.97)' } },
-      { offset: 0.70, props: { transform: 'translateY(-2px) scale(1.02)' } },
-      { offset: 1,    props: { transform: 'translateY(0px) scale(1)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  tap: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(0px) rotate(0deg)', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.40, props: { transform: 'translateX(12px) rotate(8deg)', filter: 'drop-shadow(0 0 10px rgba(74,222,128,0.35))' } },
-      { offset: 0.65, props: { transform: 'translateX(14px) rotate(8deg)', filter: 'drop-shadow(0 0 12px rgba(74,222,128,0.45))' } },
-      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'cubic-bezier(0.2, 0.9, 0.2, 1)',
-  },
-  shuffle: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(-10px) rotate(-8deg)', opacity: '0.8' } },
-      { offset: 0.35, props: { transform: 'translateX(8px) rotate(6deg)', opacity: '1' } },
-      { offset: 0.65, props: { transform: 'translateX(-4px) rotate(-3deg)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  infinity: {
-    keyframes: [
-      { offset: 0,     props: { transform: 'translate(-10px, 0px)' } },
-      { offset: 0.125, props: { transform: 'translate(-5px, -8px)' } },
-      { offset: 0.25,  props: { transform: 'translate(0px, 0px)' } },
-      { offset: 0.375, props: { transform: 'translate(-5px, 8px)' } },
-      { offset: 0.5,   props: { transform: 'translate(-10px, 0px)' } },
-      { offset: 0.625, props: { transform: 'translate(5px, -8px)' } },
-      { offset: 0.75,  props: { transform: 'translate(10px, 0px)' } },
-      { offset: 0.875, props: { transform: 'translate(5px, 8px)' } },
-      { offset: 1,     props: { transform: 'translate(-10px, 0px)' } },
-    ],
-    easing: 'linear',
-  },
-  spatial: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(0.88) rotate(-12deg)', filter: 'blur(2px)', opacity: '0.8' } },
-      { offset: 0.40, props: { transform: 'scale(1.1) rotate(10deg)', filter: 'blur(0px)', opacity: '1' } },
-      { offset: 0.70, props: { transform: 'scale(0.96) rotate(-4deg)', filter: 'blur(0px)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'scale(1) rotate(0deg)', filter: 'blur(0px)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  pageFlip: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'skewY(0deg) scaleX(1)', opacity: '1' } },
-      { offset: 0.35, props: { transform: 'skewY(-14deg) scaleX(0.72)', opacity: '0.85' } },
-      { offset: 0.60, props: { transform: 'skewY(10deg) scaleX(1.04)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'skewY(0deg) scaleX(1)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-  },
-  bookOpen: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(-6px) scaleX(0.72)', opacity: '0.65' } },
-      { offset: 0.45, props: { transform: 'translateX(0px) scaleX(1.14)', opacity: '1' } },
-      { offset: 0.70, props: { transform: 'translateX(0px) scaleX(0.96)', opacity: '1' } },
-      { offset: 1,    props: { transform: 'translateX(0px) scaleX(1)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-  },
-  domino: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(0deg) translateY(0px)' } },
-      { offset: 0.18, props: { transform: 'rotate(8deg) translateY(1px)' } },
-      { offset: 0.36, props: { transform: 'rotate(-6deg) translateY(0px)' } },
-      { offset: 0.54, props: { transform: 'rotate(5deg) translateY(1px)' } },
-      { offset: 0.72, props: { transform: 'rotate(-3deg) translateY(0px)' } },
-      { offset: 1,    props: { transform: 'rotate(0deg) translateY(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  supernova: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(0.72)', opacity: '0.3', filter: 'blur(3px) drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.35, props: { transform: 'scale(0.92)', opacity: '0.8', filter: 'blur(1px) drop-shadow(0 0 8px rgba(255,107,53,0.45))' } },
-      { offset: 0.60, props: { transform: 'scale(1.22)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 14px rgba(255,107,53,0.55))' } },
-      { offset: 0.80, props: { transform: 'scale(0.96)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 5px rgba(255,107,53,0.22))' } },
-      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px) drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  },
-  blackHole: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
-      { offset: 0.45, props: { transform: 'scale(0.35)', opacity: '0.25', filter: 'blur(2px)' } },
-      { offset: 0.65, props: { transform: 'scale(0.18)', opacity: '0.1', filter: 'blur(4px)' } },
-      { offset: 0.66, props: { transform: 'scale(1.18)', opacity: '0', filter: 'blur(0px)' } },
-      { offset: 0.82, props: { transform: 'scale(0.95)', opacity: '1', filter: 'blur(1px)' } },
-      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'blur(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  fingerprint: {
-    keyframes: [
-      { offset: 0,    props: { 'clip-path': 'inset(0 0 100% 0)', opacity: '0.3', filter: 'drop-shadow(0 0 0px rgba(45,212,191,0))' } },
-      { offset: 0.50, props: { 'clip-path': 'inset(0 0 20% 0)', opacity: '1', filter: 'drop-shadow(0 0 12px rgba(45,212,191,0.55))' } },
-      { offset: 0.75, props: { 'clip-path': 'inset(0 0 0% 0)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(45,212,191,0.28))' } },
-      { offset: 1,    props: { 'clip-path': 'inset(0 0 0% 0)', opacity: '1', filter: 'drop-shadow(0 0 0px rgba(45,212,191,0))' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  badgeTap: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(0px) rotate(0deg) scale(1)', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.25, props: { transform: 'translateX(10px) rotate(6deg) scale(1.02)', filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.3))' } },
-      { offset: 0.45, props: { transform: 'translateX(14px) rotate(8deg) scale(1.05)', filter: 'drop-shadow(0 0 12px rgba(74,222,128,0.45))' } },
-      { offset: 0.62, props: { transform: 'translateX(8px) rotate(4deg) scale(1.02)', filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.28))' } },
-      { offset: 0.78, props: { transform: 'translateX(12px) rotate(7deg) scale(1.04)', filter: 'drop-shadow(0 0 10px rgba(74,222,128,0.4))' } },
-      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg) scale(1)', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'cubic-bezier(0.2, 0.9, 0.2, 1)',
-  },
-
-  // ── New Motion presets (NextGen physics-derived) ───────────────
-  heartbeat: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)' } },
-      { offset: 0.14, props: { transform: 'scale(1.18)' } },
-      { offset: 0.28, props: { transform: 'scale(1)' } },
-      { offset: 0.42, props: { transform: 'scale(1.12)' } },
-      { offset: 0.56, props: { transform: 'scale(1)' } },
-      { offset: 1,    props: { transform: 'scale(1)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  rubberband: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1)' } },
-      { offset: 0.3, props: { transform: 'scale(1.2)' } },
-      { offset: 0.5, props: { transform: 'scale(0.9)' } },
-      { offset: 0.7, props: { transform: 'scale(1.05)' } },
-      { offset: 1,   props: { transform: 'scale(1)' } },
-    ],
-    easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-  },
-  jelly: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)' } },
-      { offset: 0.15, props: { transform: 'scale(0.92)' } },
-      { offset: 0.30, props: { transform: 'scale(1.06)' } },
-      { offset: 0.45, props: { transform: 'scale(0.96)' } },
-      { offset: 0.60, props: { transform: 'scale(1.02)' } },
-      { offset: 0.75, props: { transform: 'scale(0.99)' } },
-      { offset: 1,    props: { transform: 'scale(1)' } },
-    ],
-    easing: 'linear',
-  },
-  ring: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'rotate(0deg)' } },
-      { offset: 0.1, props: { transform: 'rotate(18deg)' } },
-      { offset: 0.2, props: { transform: 'rotate(-15deg)' } },
-      { offset: 0.3, props: { transform: 'rotate(12deg)' } },
-      { offset: 0.4, props: { transform: 'rotate(-9deg)' } },
-      { offset: 0.5, props: { transform: 'rotate(5deg)' } },
-      { offset: 0.6, props: { transform: 'rotate(-2deg)' } },
-      { offset: 0.7, props: { transform: 'rotate(0deg)' } },
-      { offset: 1,   props: { transform: 'rotate(0deg)' } },
-    ],
-    easing: 'ease-out',
-  },
-  wobble: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(0deg) translateX(0px)' } },
-      { offset: 0.15, props: { transform: 'rotate(-6deg) translateX(-3px)' } },
-      { offset: 0.30, props: { transform: 'rotate(5deg) translateX(2px)' } },
-      { offset: 0.45, props: { transform: 'rotate(-3deg) translateX(-1px)' } },
-      { offset: 0.60, props: { transform: 'rotate(2deg) translateX(1px)' } },
-      { offset: 0.75, props: { transform: 'rotate(-1deg) translateX(0px)' } },
-      { offset: 1,    props: { transform: 'rotate(0deg) translateX(0px)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  magnetic: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translate(0px, 0px) scale(1)' } },
-      { offset: 0.3, props: { transform: 'translate(3px, -3px) scale(1.08)' } },
-      { offset: 0.5, props: { transform: 'translate(4px, -4px) scale(1.12)' } },
-      { offset: 0.7, props: { transform: 'translate(1px, -1px) scale(1.03)' } },
-      { offset: 1,   props: { transform: 'translate(0px, 0px) scale(1)' } },
-    ],
-    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  },
-  recoil: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1) rotate(0deg)' } },
-      { offset: 0.15, props: { transform: 'scale(0.85) rotate(-3deg)' } },
-      { offset: 0.40, props: { transform: 'scale(1.2) rotate(2deg)' } },
-      { offset: 0.60, props: { transform: 'scale(0.97) rotate(-1deg)' } },
-      { offset: 0.80, props: { transform: 'scale(1.03) rotate(0deg)' } },
-      { offset: 1,    props: { transform: 'scale(1) rotate(0deg)' } },
-    ],
-    easing: 'ease-out',
-  },
-  pendulum: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(0deg)' } },
-      { offset: 0.25, props: { transform: 'rotate(20deg)' } },
-      { offset: 0.5,  props: { transform: 'rotate(0deg)' } },
-      { offset: 0.75, props: { transform: 'rotate(-20deg)' } },
-      { offset: 1,    props: { transform: 'rotate(0deg)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  whiplash: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'rotate(0deg)' } },
-      { offset: 0.2, props: { transform: 'rotate(-12deg)' } },
-      { offset: 0.4, props: { transform: 'rotate(8deg)' } },
-      { offset: 0.6, props: { transform: 'rotate(-4deg)' } },
-      { offset: 0.8, props: { transform: 'rotate(2deg)' } },
-      { offset: 1,   props: { transform: 'rotate(0deg)' } },
-    ],
-    easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-  },
-  tremor: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translate(0px, 0px)' } },
-      { offset: 0.1, props: { transform: 'translate(-2px, 1px)' } },
-      { offset: 0.2, props: { transform: 'translate(1px, -2px)' } },
-      { offset: 0.3, props: { transform: 'translate(-1px, 0px)' } },
-      { offset: 0.4, props: { transform: 'translate(2px, 1px)' } },
-      { offset: 0.5, props: { transform: 'translate(-1px, -1px)' } },
-      { offset: 0.6, props: { transform: 'translate(0px, 2px)' } },
-      { offset: 0.7, props: { transform: 'translate(1px, -1px)' } },
-      { offset: 0.8, props: { transform: 'translate(-2px, 0px)' } },
-      { offset: 0.9, props: { transform: 'translate(1px, 1px)' } },
-      { offset: 1,   props: { transform: 'translate(0px, 0px)' } },
-    ],
-    easing: 'linear',
-  },
-  neonglow: {
-    keyframes: [
-      { offset: 0,   props: { filter: 'drop-shadow(0 0 1px rgba(34,211,238,0.6))', opacity: '1' } },
-      { offset: 0.5, props: { filter: 'drop-shadow(0 0 8px rgba(34,211,238,0.9)) drop-shadow(0 0 16px rgba(34,211,238,0.4))', opacity: '1' } },
-      { offset: 1,   props: { filter: 'drop-shadow(0 0 1px rgba(34,211,238,0.6))', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  breathe: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 0.5, props: { transform: 'scale(1.06)', opacity: '0.85' } },
-      { offset: 1,   props: { transform: 'scale(1)', opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  metronome: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'rotate(0deg)' } },
-      { offset: 0.25, props: { transform: 'rotate(15deg)' } },
-      { offset: 0.5,  props: { transform: 'rotate(0deg)' } },
-      { offset: 0.75, props: { transform: 'rotate(-15deg)' } },
-      { offset: 1,    props: { transform: 'rotate(0deg)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-
-  // ── Entrance presets ──────────────────────────────────────────
-  fadeIn: {
-    keyframes: [
-      { offset: 0, props: { opacity: '0' } },
-      { offset: 1, props: { opacity: '1' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  scaleUp: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(0)', opacity: '0' } },
-      { offset: 0.6, props: { transform: 'scale(1.05)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(1)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  slideUp: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translateY(20px)', opacity: '0' } },
-      { offset: 1, props: { transform: 'translateY(0px)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  springLand: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translateY(-20px) scale(0.8)', opacity: '0' } },
-      { offset: 0.5, props: { transform: 'translateY(3px) scale(1.05)', opacity: '1' } },
-      { offset: 0.7, props: { transform: 'translateY(-2px) scale(0.98)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'translateY(0px) scale(1)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-  },
-  slingshot: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translateX(-30px) scale(0.7)', opacity: '0' } },
-      { offset: 0.4, props: { transform: 'translateX(5px) scale(1.1)', opacity: '1' } },
-      { offset: 0.6, props: { transform: 'translateX(-2px) scale(0.98)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'translateX(0px) scale(1)', opacity: '1' } },
-    ],
-    easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-  },
-  glitchOn: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(0px)', opacity: '0' } },
-      { offset: 0.15, props: { transform: 'translateX(-3px)', opacity: '0.6' } },
-      { offset: 0.30, props: { transform: 'translateX(2px)', opacity: '0.3' } },
-      { offset: 0.45, props: { transform: 'translateX(-1px)', opacity: '0.8' } },
-      { offset: 0.60, props: { transform: 'translateX(1px)', opacity: '0.5' } },
-      { offset: 0.75, props: { transform: 'translateX(0px)', opacity: '0.9' } },
-      { offset: 1,    props: { transform: 'translateX(0px)', opacity: '1' } },
-    ],
-    easing: 'linear',
-  },
-  unfold: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1) translateY(10px)', opacity: '0' } },
-      { offset: 0.6, props: { transform: 'scale(1) translateY(-2px)', opacity: '1' } },
-      { offset: 0.8, props: { transform: 'scale(1) translateY(1px)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(1) translateY(0px)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  warpIn: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(3) rotate(15deg)', opacity: '0' } },
-      { offset: 0.6, props: { transform: 'scale(0.95) rotate(-2deg)', opacity: '1' } },
-      { offset: 0.8, props: { transform: 'scale(1.03) rotate(1deg)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(1) rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-
-  // ── Exit presets ──────────────────────────────────────────────
-  fadeOut: {
-    keyframes: [
-      { offset: 0, props: { opacity: '1' } },
-      { offset: 1, props: { opacity: '0' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  scaleDown: {
-    keyframes: [
-      { offset: 0, props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 1, props: { transform: 'scale(0)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  slideOut: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translateY(0px)', opacity: '1' } },
-      { offset: 1, props: { transform: 'translateY(-20px)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  vortex: {
-    keyframes: [
-      { offset: 0, props: { transform: 'scale(1) rotate(0deg)', opacity: '1' } },
-      { offset: 1, props: { transform: 'scale(0) rotate(540deg)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  glitchOff: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translateX(0px)', opacity: '1' } },
-      { offset: 0.2, props: { transform: 'translateX(2px)', opacity: '0.8' } },
-      { offset: 0.4, props: { transform: 'translateX(-3px)', opacity: '0.5' } },
-      { offset: 0.6, props: { transform: 'translateX(1px)', opacity: '0.3' } },
-      { offset: 0.8, props: { transform: 'translateX(-1px)', opacity: '0.15' } },
-      { offset: 1,   props: { transform: 'translateX(0px)', opacity: '0' } },
-    ],
-    easing: 'linear',
-  },
-  dissolve: {
-    keyframes: [
-      { offset: 0, props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 1, props: { transform: 'scale(1.3)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-
-  // ── Phase 2: Additional Motion presets ─────────────────────────
-  orbit: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translate(3px, 0px)' } },
-      { offset: 0.25, props: { transform: 'translate(0px, 3px)' } },
-      { offset: 0.5,  props: { transform: 'translate(-3px, 0px)' } },
-      { offset: 0.75, props: { transform: 'translate(0px, -3px)' } },
-      { offset: 1,    props: { transform: 'translate(3px, 0px)' } },
-    ],
-    easing: 'linear',
-  },
-  flicker: {
-    keyframes: [
-      { offset: 0,    props: { opacity: '1' } },
-      { offset: 0.15, props: { opacity: '0.4' } },
-      { offset: 0.3,  props: { opacity: '1' } },
-      { offset: 0.5,  props: { opacity: '0.2' } },
-      { offset: 0.7,  props: { opacity: '0.8' } },
-      { offset: 0.85, props: { opacity: '0.3' } },
-      { offset: 1,    props: { opacity: '1' } },
-    ],
-    easing: 'linear',
-  },
-  squish: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)' } },
-      { offset: 0.25, props: { transform: 'scale(1.15)' } },
-      { offset: 0.5,  props: { transform: 'scale(1)' } },
-      { offset: 0.75, props: { transform: 'scale(0.85)' } },
-      { offset: 1,    props: { transform: 'scale(1)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  glide: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'translateX(0px) rotate(0deg)' } },
-      { offset: 0.25, props: { transform: 'translateX(4px) rotate(2deg)' } },
-      { offset: 0.5,  props: { transform: 'translateX(0px) rotate(0deg)' } },
-      { offset: 0.75, props: { transform: 'translateX(-4px) rotate(-2deg)' } },
-      { offset: 1,    props: { transform: 'translateX(0px) rotate(0deg)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  radar: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(0.96)', opacity: '0.92', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.35, props: { transform: 'scale(1.08)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(45,212,191,0.45))' } },
-      { offset: 0.70, props: { transform: 'scale(1.14)', opacity: '0.78', filter: 'drop-shadow(0 0 14px rgba(45,212,191,0.12))' } },
-      { offset: 1,    props: { transform: 'scale(0.96)', opacity: '0.92', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-  beacon: {
-    keyframes: [
-      { offset: 0,    props: { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.12, props: { transform: 'scale(1.06)', opacity: '1', filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.38))' } },
-      { offset: 0.22, props: { transform: 'scale(1)', opacity: '0.55', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.34, props: { transform: 'scale(1.04)', opacity: '1', filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.32))' } },
-      { offset: 0.46, props: { transform: 'scale(1)', opacity: '0.55', filter: 'drop-shadow(0 0 0px transparent)' } },
-      { offset: 0.60, props: { transform: 'scale(1.08)', opacity: '1', filter: 'drop-shadow(0 0 10px rgba(255,107,53,0.45))' } },
-      { offset: 1,    props: { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 0px transparent)' } },
-    ],
-    easing: 'ease-in-out',
-  },
-
-  // ── Phase 2: Additional Entrance presets ──────────────────────
-  slideRight: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translateX(-20px)', opacity: '0' } },
-      { offset: 1, props: { transform: 'translateX(0px)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  slideDown: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translateY(-20px)', opacity: '0' } },
-      { offset: 1, props: { transform: 'translateY(0px)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  flipIn: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'rotate(90deg)', opacity: '0' } },
-      { offset: 0.6, props: { transform: 'rotate(-5deg)', opacity: '1' } },
-      { offset: 0.8, props: { transform: 'rotate(2deg)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  telegram: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translate(-30px, 15px) rotate(-25deg)', opacity: '0' } },
-      { offset: 0.5, props: { transform: 'translate(3px, -2px) rotate(3deg)', opacity: '1' } },
-      { offset: 0.7, props: { transform: 'translate(-1px, 1px) rotate(-1deg)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'translate(0px, 0px) rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  bloom: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(0) rotate(-90deg)', opacity: '0' } },
-      { offset: 0.5, props: { transform: 'scale(1.1) rotate(10deg)', opacity: '1' } },
-      { offset: 0.7, props: { transform: 'scale(0.95) rotate(-3deg)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(1) rotate(0deg)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-  shockwave: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(0.3)', opacity: '0' } },
-      { offset: 0.3, props: { transform: 'scale(1.25)', opacity: '1' } },
-      { offset: 0.5, props: { transform: 'scale(0.92)', opacity: '1' } },
-      { offset: 0.7, props: { transform: 'scale(1.05)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(1)', opacity: '1' } },
-    ],
-    easing: 'ease-out',
-  },
-
-  // ── Phase 2: Additional Exit presets ──────────────────────────
-  popOut: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 0.3, props: { transform: 'scale(1.15)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(0)', opacity: '0' } },
-    ],
-    easing: 'cubic-bezier(0.55, 0.06, 0.68, 0.19)',
-  },
-  slideLeft: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translateX(0px)', opacity: '1' } },
-      { offset: 1, props: { transform: 'translateX(-20px)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  sinkDown: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'translateY(0px) scale(1)', opacity: '1' } },
-      { offset: 0.6, props: { transform: 'translateY(4px) scale(0.9)', opacity: '0.7' } },
-      { offset: 1,   props: { transform: 'translateY(15px) scale(0.6)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  flipOut: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'rotate(0deg)', opacity: '1' } },
-      { offset: 0.3, props: { transform: 'rotate(-5deg)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'rotate(90deg)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  implode: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 0.3, props: { transform: 'scale(1.1)', opacity: '1' } },
-      { offset: 1,   props: { transform: 'scale(0)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  puffOut: {
-    keyframes: [
-      { offset: 0,   props: { transform: 'scale(1)', opacity: '1' } },
-      { offset: 0.5, props: { transform: 'scale(1.15)', opacity: '0.6' } },
-      { offset: 1,   props: { transform: 'scale(1.5)', opacity: '0' } },
-    ],
-    easing: 'ease-out',
-  },
-  launchOut: {
-    keyframes: [
-      { offset: 0, props: { transform: 'translate(0px, 0px) rotate(0deg)', opacity: '1' } },
-      { offset: 1, props: { transform: 'translate(30px, -15px) rotate(25deg)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  shrinkSpin: {
-    keyframes: [
-      { offset: 0, props: { transform: 'scale(1) rotate(0deg)', opacity: '1' } },
-      { offset: 1, props: { transform: 'scale(0) rotate(360deg)', opacity: '0' } },
-    ],
-    easing: 'ease-in',
-  },
-  blinkOut: {
-    keyframes: [
-      { offset: 0,    props: { opacity: '1' } },
-      { offset: 0.15, props: { opacity: '0.3' } },
-      { offset: 0.3,  props: { opacity: '0.8' } },
-      { offset: 0.45, props: { opacity: '0.1' } },
-      { offset: 0.6,  props: { opacity: '0.6' } },
-      { offset: 0.75, props: { opacity: '0.15' } },
-      { offset: 1,    props: { opacity: '0' } },
-    ],
-    easing: 'linear',
-  },
-};
+const PRESETS = MOTION_LAB_PRESETS;
 
 /**
  * Scale preset keyframe numeric values by the current intensity factor.

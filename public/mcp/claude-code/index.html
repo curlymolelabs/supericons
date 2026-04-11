@@ -3,141 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SuperIcons MCP for Claude Code</title>
-  <meta name="description" content="Set up the SuperIcons MCP server for Claude Code and search 20,000+ icons directly from your Claude Code workflow.">
-  <link rel="canonical" href="https://supericons.dev/mcp/claude-code/">
+  <title>Supericons MCP for Claude Code</title>
+  <meta name="description" content="Supericons Claude Code setup now lives inside the main app shell. Redirecting you to the integrated guide.">
+  <meta http-equiv="refresh" content="0; url=/?view=docs-claude-code">
+  <link rel="canonical" href="https://supericons.dev/?view=docs-claude-code">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/mcp/docs.css">
+  <script>
+    const target = '/?view=docs-claude-code' + (window.location.hash || '');
+    window.location.replace(target);
+  </script>
 </head>
 <body>
-  <div class="docs-shell">
-    <nav class="docs-nav" aria-label="Primary">
-      <a class="docs-nav__brand" href="/">
-        <img src="/favicon.svg" alt="">
-        <span>SuperIcons</span>
-      </a>
-      <div class="docs-nav__links">
-        <a class="docs-nav__link" href="/docs/index.html">Docs</a>
-        <a class="docs-nav__link" href="/mcp/">MCP hub</a>
-        <a class="docs-nav__link" href="/mcp/codex/">Codex</a>
-        <a class="docs-nav__link" href="/mcp/cursor/">Cursor</a>
-      </div>
-    </nav>
-
-    <section class="docs-tool-card">
-      <span class="docs-eyebrow">Claude Code</span>
-      <h1 style="margin-top: 16px; font-size: clamp(2rem, 4vw, 3.6rem);">Set up SuperIcons MCP in Claude Code</h1>
-      <p>
-        Use Claude Code with the SuperIcons MCP server when you want icon search and SVG retrieval inside the same
-        coding loop as edits, refactors, and UI iteration.
-      </p>
-      <div class="docs-code" style="margin-top: 22px;">
-        <button class="docs-copy" type="button" data-copy-target="claude-config">Copy</button>
-        <pre><code id="claude-config"># macOS / Linux
-claude mcp add supericons -- npx -y supericons-mcp
-
-# Windows
-claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
-      </div>
-      <p style="margin-top: 14px;">
-        If you manage Claude Code config as JSON instead of CLI commands, use the same <code>command</code> and
-        <code>args</code> values in the MCP server entry Claude Code reads.
-      </p>
-    </section>
-
-    <div class="docs-main" style="margin-top: 24px;">
-      <div class="docs-column">
-        <section class="docs-section">
-          <h2>Claude Code flow</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>1. Add the server</h3>
-              <p>Run the Claude CLI command above to register the local <code>supericons</code> MCP server.</p>
-            </article>
-            <article class="docs-card">
-              <h3>2. Confirm Claude can see it</h3>
-              <p>Use <code>claude mcp list</code> or restart the session so Claude Code discovers the new tool cleanly.</p>
-            </article>
-            <article class="docs-card">
-              <h3>3. Verify with a search</h3>
-              <p>Ask Claude Code to find an icon for a small UI task, then confirm the results come back from SuperIcons.</p>
-            </article>
-            <article class="docs-card">
-              <h3>4. Pull SVG into code</h3>
-              <p>Once the search result looks right, ask Claude Code to insert the SVG directly into your component or markup.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Claude Code examples</h2>
-          <div class="docs-code">
-            <pre><code>Find a settings icon from Lucide for a dashboard header.
-Return two alternatives from Tabler as well.
-Then insert the chosen SVG into my React component.</code></pre>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Premium access</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>How premium actually works</h3>
-              <p>Premium icons do not unlock because a key exists. They unlock when your Supericons account has Pro or purchased pack access and Claude Code launches the MCP server with your <code>SUPERICONS_API_KEY</code>.</p>
-            </article>
-            <article class="docs-card">
-              <h3>What to do</h3>
-              <p>Sign in to Supericons, generate an API key from the API Keys page, then add that key in the env or secrets surface Claude Code uses for MCP server configuration.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Troubleshooting</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>Server does not appear</h3>
-              <p>Run <code>claude mcp list</code> or restart the session after adding the server. Most failures here are stale registry issues.</p>
-            </article>
-            <article class="docs-card">
-              <h3>Windows cannot launch <code>npx</code></h3>
-              <p>On native Windows, use <code>cmd /c npx -y supericons-mcp</code> instead of calling <code>npx</code> directly.</p>
-            </article>
-            <article class="docs-card">
-              <h3>Premium icons are missing</h3>
-              <p>Free icons work without a paid plan. Premium collections require both the right Supericons entitlement and a valid <code>SUPERICONS_API_KEY</code> in your MCP server config.</p>
-            </article>
-          </div>
-        </section>
-      </div>
-
-      <aside class="docs-column">
-        <section class="docs-sidebar">
-          <h3>Related guides</h3>
-          <div class="docs-link-list">
-            <a href="/docs/index.html">Docs hub</a>
-            <a href="/mcp/">MCP hub</a>
-            <a href="/mcp/codex/">Codex setup</a>
-            <a href="/mcp/cursor/">Cursor setup</a>
-          </div>
-        </section>
-      </aside>
-    </div>
-  </div>
-
-  <script>
-    document.querySelectorAll('[data-copy-target]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const target = document.getElementById(button.getAttribute('data-copy-target'));
-        if (!target) return;
-        await navigator.clipboard.writeText(target.textContent || '');
-        const original = button.textContent;
-        button.textContent = 'Copied';
-        window.setTimeout(() => {
-          button.textContent = original;
-        }, 1800);
-      });
-    });
-  </script>
+  <p><a href="/?view=docs-claude-code">Open the Claude Code guide</a></p>
 </body>
 </html>

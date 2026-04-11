@@ -8,11 +8,12 @@
     "dev": "vite",
     "build:material-export-manifest": "node scripts/build-material-export-manifest.js",
     "build:sanitize-public-pack-metadata": "node scripts/sanitize-public-pack-metadata.js",
+    "verify:motion-lab-presets": "node scripts/verify-motion-lab-preset-parity.mjs",
     "seed:material-owned-cache": "node scripts/seed-material-owned-cache.js",
     "build:bundles": "node scripts/build-collection-bundles.js",
     "converter:proof-service": "node tools/converter-proof-service/server.mjs",
     "converter:proof-smoke": "node tools/converter-proof-service/smoke-client.mjs",
-    "build": "npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:bundles && vite build",
+    "build": "npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:bundles && npm run verify:motion-lab-presets && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

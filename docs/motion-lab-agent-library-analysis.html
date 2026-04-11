@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motion Lab Agent Library: Analysis and Journey Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-base: #0a0b0f;
+      --bg-surface: #111318;
+      --bg-elevated: #181c24;
+      --bg-card: #1d2130;
+      --border: rgba(255,255,255,0.06);
+      --border-strong: rgba(255,255,255,0.12);
+      --accent: #7c6ef7;
+      --accent-glow: rgba(124,110,247,0.15);
+      --accent-soft: rgba(124,110,247,0.08);
+      --amber: #f5a623;
+      --amber-soft: rgba(245,166,35,0.1);
+      --green: #3ecf8e;
+      --green-soft: rgba(62,207,142,0.1);
+      --rose: #f06292;
+      --rose-soft: rgba(240,98,146,0.1);
+      --text-primary: #e8eaf0;
+      --text-secondary: #8890a6;
+      --text-muted: #4a5068;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* HEADER */
+    /* ------------------------------------------------------------------ */
+    .site-header {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 0 64px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,110,247,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 80%);
+    }
+
+    .header-inner { position: relative; z-index: 1; padding: 0 24px; }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(124,110,247,0.35);
+      background: var(--accent-soft);
+      color: #a89ef9;
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .site-header h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #e8eaf0 0%, #a89ef9 50%, #7c6ef7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .site-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 580px;
+      margin: 0 auto 32px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-chip span { color: var(--text-secondary); }
+
+    /* ------------------------------------------------------------------ */
+    /* LAYOUT */
+    /* ------------------------------------------------------------------ */
+    .page { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    h2 {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      margin-top: 32px;
+      letter-spacing: -0.01em;
+    }
+
+    h3:first-child { margin-top: 0; }
+
+    p { color: var(--text-secondary); margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ------------------------------------------------------------------ */
+    /* CARDS */
+    /* ------------------------------------------------------------------ */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .card.accent-border { border-color: rgba(124,110,247,0.25); }
+    .card.green-border { border-color: rgba(62,207,142,0.2); }
+    .card.amber-border { border-color: rgba(245,166,35,0.2); }
+
+    /* ------------------------------------------------------------------ */
+    /* TABLES */
+    /* ------------------------------------------------------------------ */
+    .table-wrap { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-md); border: 1px solid var(--border); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+    thead { background: var(--bg-elevated); }
+    thead th {
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-elevated); }
+    tbody td { padding: 11px 16px; color: var(--text-secondary); vertical-align: top; }
+    tbody td:first-child { color: var(--text-primary); font-weight: 500; }
+
+    /* ------------------------------------------------------------------ */
+    /* VERDICT GRID (human vs agent) */
+    /* ------------------------------------------------------------------ */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+
+    @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    .compare-card {
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .compare-card.human { background: var(--amber-soft); border-color: rgba(245,166,35,0.2); }
+    .compare-card.agent { background: var(--accent-soft); border-color: rgba(124,110,247,0.2); }
+
+    .compare-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 14px;
+    }
+
+    .compare-card.human .compare-label { color: var(--amber); }
+    .compare-card.agent .compare-label { color: var(--accent); }
+
+    .compare-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .compare-item:last-child { margin-bottom: 0; }
+
+    .compare-item .icon { margin-top: 1px; flex-shrink: 0; font-size: 14px; }
+
+    /* ------------------------------------------------------------------ */
+    /* JOURNEY MAP */
+    /* ------------------------------------------------------------------ */
+    .journey-container { position: relative; padding-left: 36px; }
+
+    .journey-line {
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--accent) 5%,
+        rgba(124,110,247,0.4) 80%,
+        transparent 100%
+      );
+      border-radius: 2px;
+    }
+
+    .journey-step {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .journey-step:last-child { margin-bottom: 0; }
+
+    .journey-dot {
+      position: absolute;
+      left: -29px;
+      top: 18px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .journey-step-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .journey-step-inner:hover { border-color: rgba(124,110,247,0.25); }
+
+    .journey-phase {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .journey-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .journey-body { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+
+    /* ------------------------------------------------------------------ */
+    /* CODE BLOCKS */
+    /* ------------------------------------------------------------------ */
+    .code-block {
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+
+    .code-block code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: #a89ef9;
+      line-height: 1.7;
+      white-space: pre;
+    }
+
+    .code-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* VERDICT BADGE */
+    /* ------------------------------------------------------------------ */
+    .verdict-box {
+      background: linear-gradient(135deg, rgba(62,207,142,0.07), rgba(124,110,247,0.07));
+      border: 1px solid rgba(62,207,142,0.2);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .verdict-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .verdict-box p { color: var(--text-secondary); }
+
+    /* ------------------------------------------------------------------ */
+    /* PRIORITY TABLE BADGES */
+    /* ------------------------------------------------------------------ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-now { background: var(--rose-soft); color: var(--rose); }
+    .badge-next { background: var(--amber-soft); color: var(--amber); }
+    .badge-build { background: var(--accent-soft); color: var(--accent); }
+    .badge-opt { background: var(--green-soft); color: var(--green); }
+
+    /* ------------------------------------------------------------------ */
+    /* SCHEMA PREVIEW */
+    /* ------------------------------------------------------------------ */
+    .schema-field {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .schema-field:last-child { border-bottom: none; }
+
+    .schema-key {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: #a89ef9;
+      min-width: 230px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .schema-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ------------------------------------------------------------------ */
+    /* MAPPING TABLE GRID */
+    /* ------------------------------------------------------------------ */
+    .mapping-row { display: grid; grid-template-columns: auto auto 1fr auto 1fr; gap: 0; }
+
+    /* ------------------------------------------------------------------ */
+    /* FOOTER */
+    /* ------------------------------------------------------------------ */
+    footer {
+      padding: 48px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer strong { color: var(--text-secondary); }
+
+    /* ------------------------------------------------------------------ */
+    /* NAV */
+    /* ------------------------------------------------------------------ */
+    .toc {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .toc ol { padding-left: 20px; }
+    .toc li { margin-bottom: 6px; }
+    .toc a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color 0.15s;
+    }
+    .toc a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-grid"></div>
+    <div class="header-glow"></div>
+    <div class="header-inner">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Strategy Document
+      </div>
+      <h1>Motion Lab Agent Library<br>Analysis and Journey Map</h1>
+      <p>Can an AI agent use Motion Lab as well as a human? How do we build the library that makes this possible?</p>
+      <div class="meta-row">
+        <div class="meta-chip">Date <span>April 11, 2026</span></div>
+        <div class="meta-chip">Status <span>Pre-implementation</span></div>
+        <div class="meta-chip">Presets <span>80 canonical</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <div class="page">
+
+    <!-- TOC -->
+    <div style="padding-top: 48px;">
+      <nav class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#audit">Architecture Audit Summary</a></li>
+          <li><a href="#verdict">Can an Agent Match a Human?</a></li>
+          <li><a href="#advantages">Where Agents Exceed Humans</a></li>
+          <li><a href="#journey">Full Agent User Journey Map</a></li>
+          <li><a href="#schema">What the Library Must Contain</a></li>
+          <li><a href="#priorities">Build Priorities</a></li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- SECTION 1: AUDIT SUMMARY -->
+    <section id="audit">
+      <div class="section-label">Part 1</div>
+      <h2>Architecture Audit Summary</h2>
+      <p>The Motion Lab product currently operates with two separate preset systems that have never been reconciled.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Interface</th>
+              <th>File</th>
+              <th>Preset count</th>
+              <th>Origin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Browser UI</td>
+              <td><code style="font-family:monospace;font-size:12px;color:#a89ef9">store.js</code></td>
+              <td><strong>80 presets</strong></td>
+              <td>Built first, human-tested</td>
+            </tr>
+            <tr>
+              <td>MCP tools</td>
+              <td><code style="font-family:monospace;font-size:12px;color:#a89ef9">lib/motion-lab-workflow.js</code></td>
+              <td>12 presets</td>
+              <td>Added later, separately authored</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The 12-preset MCP registry was not derived from the 80-preset browser system. It was written as a new file in a single commit (<code style="font-family:monospace;font-size:12px;color:#a89ef9">0c8f3e0</code>), never reconciled with the source. It is not a curated subset. It is an architectural accident.</p>
+
+      <div class="card amber-border" style="margin-top:24px;">
+        <h3 style="margin-top:0;color:var(--amber)">The Two Decisions</h3>
+        <p><strong>Decision 1 (cleanup):</strong> Remove the 12 orphaned MCP presets. Import from the authoritative browser source. This is a pure upgrade. No regression.</p>
+        <p><strong>Decision 2 (build):</strong> Build a semantic metadata layer on top of the 80 correct presets, making them genuinely useful to agents - not just queryable by name.</p>
+      </div>
+
+      <h3>The Correct Sequence</h3>
+      <div class="journey-container" style="margin-top:16px;">
+        <div class="journey-line"></div>
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Step 1</div>
+            <div class="journey-title">Fix the registry split</div>
+            <div class="journey-body">One canonical preset source. Both browser UI and MCP server import from it.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Step 2</div>
+            <div class="journey-title">Expose all 80 via MCP</div>
+            <div class="journey-body"><code style="font-family:monospace;font-size:12px;color:#a89ef9">list_motion_presets()</code> returns all 80, grouped by category.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Step 3</div>
+            <div class="journey-title">Build the agent metadata layer</div>
+            <div class="journey-body">Emotional tone, context guidance, intensity guidance, avoid-for. 80 records.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Step 4</div>
+            <div class="journey-title">Enrich MCP output</div>
+            <div class="journey-body">Tool returns structured metadata per preset, not bare names.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: CAN AN AGENT MATCH A HUMAN? -->
+    <section id="verdict">
+      <div class="section-label">Part 2</div>
+      <h2>Can an Agent Match a Human?</h2>
+      <p>When a human opens Motion Lab in the browser, they have capabilities that seem impossible to replicate for an agent. Let's examine each one honestly.</p>
+
+      <div class="compare-grid">
+        <div class="compare-card human">
+          <div class="compare-label">Human in Browser</div>
+          <div class="compare-item"><span class="icon">👁</span> Visual preview: see the animation playing on an icon in real time</div>
+          <div class="compare-item"><span class="icon">🧠</span> Emotional intuition: immediate gut-feel about fit</div>
+          <div class="compare-item"><span class="icon">🔀</span> Side-by-side exploration: compare bounce vs pop in seconds</div>
+          <div class="compare-item"><span class="icon">✨</span> Serendipitous discovery: stumble onto something better</div>
+          <div class="compare-item"><span class="icon">🎚</span> Adjustment loops: nudge intensity and immediately see the change</div>
+        </div>
+        <div class="compare-card agent">
+          <div class="compare-label">Agent with Library</div>
+          <div class="compare-item"><span class="icon">📋</span> <code style="font-family:monospace;font-size:12px;color:#a89ef9">visual_character</code> field encodes what the motion looks like in plain text</div>
+          <div class="compare-item"><span class="icon">🏷</span> <code style="font-family:monospace;font-size:12px;color:#a89ef9">emotional_tone</code> array maps the gut-feel to structured tags</div>
+          <div class="compare-item"><span class="icon">🔍</span> <code style="font-family:monospace;font-size:12px;color:#a89ef9">recommended_contexts</code> replaces browse-and-compare with filtering</div>
+          <div class="compare-item"><span class="icon">⚠️</span> <code style="font-family:monospace;font-size:12px;color:#a89ef9">avoid_for</code> replaces intuition with explicit constraint enforcement</div>
+          <div class="compare-item"><span class="icon">📐</span> <code style="font-family:monospace;font-size:12px;color:#a89ef9">context_intensity_guidance</code> encodes calibration as data</div>
+        </div>
+      </div>
+
+      <p>Most of what a human does visually can be encoded as semantic metadata. The key insight is that <strong>humans are not doing magic when they browse Motion Lab</strong> - they are applying taste, context knowledge, and pattern recognition. All three can be encoded.</p>
+
+      <h3>The One Honest Gap</h3>
+      <p>The library cannot fully replace <strong>taste-based discovery</strong>. Some of the best animation choices are found by accident - by trying something unexpected and noticing it works. The library encodes known-good patterns. It is excellent at avoiding bad choices and making correct choices. It is less capable of making a surprising, inspired choice that breaks the pattern in a way that feels right.</p>
+      <p>This gap closes over time as the library accumulates <code style="font-family:monospace;font-size:12px;color:#a89ef9">pairing_notes</code> and <code style="font-family:monospace;font-size:12px;color:#a89ef9">unexpected_use_cases</code> from real usage.</p>
+
+      <div class="verdict-box">
+        <div class="verdict-eyebrow">Verdict</div>
+        <p>With a well-built agent library, agents can <strong>match human quality</strong> for systematic, context-driven use cases and <strong>exceed human quality</strong> for consistency, constraint enforcement, and scale. The gap that remains is aesthetic serendipity - which is the smallest part of the job.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: WHERE AGENTS EXCEED HUMANS -->
+    <section id="advantages">
+      <div class="section-label">Part 3</div>
+      <h2>Where Agents Exceed Humans</h2>
+
+      <h3>1. Consistency at scale</h3>
+      <p>A human building a dashboard with 30 icons makes 30 individual aesthetic judgments. Fatigue sets in. By icon 20 they have drifted. An agent applies the same calibrated rules to all 30. Motion semantics stay consistent across the entire UI.</p>
+
+      <h3>2. Constraint enforcement</h3>
+      <p>Tell an agent "no high-intensity animations on destructive actions" and it will apply this rule perfectly across the whole product. A human forgets. The agent never forgets a constraint it has been given because the library's <code style="font-family:monospace;font-size:12px;color:#a89ef9">avoid_for</code> field makes the constraint explicit and checkable at each decision point.</p>
+
+      <h3>3. Context-aware pairing</h3>
+      <p>Humans browse presets then think about icons. An agent reasons in both directions simultaneously: given this icon type and this product context, which presets are valid, which are optimal, and which are forbidden? The library gives it the vocabulary for this reasoning.</p>
+
+      <h3>4. Speed and repeatability</h3>
+      <p>Export 30 animated icons: a human clicks through 30 exports. An agent does it in one tool call loop. The library makes the decisions; the MCP tools do the exports.</p>
+
+      <h3>5. Documented rationale</h3>
+      <p>A human's choice of <code style="font-family:monospace;font-size:12px;color:#a89ef9">spin</code> at 80% intensity is implicit intuition. An agent returns: <em>"Selected sweep at 65% intensity, trigger: hover, for the settings icon. Rationale: enterprise fintech context requires restrained horizontal motion. Sweep signals precision and control. Bounce and pop were excluded due to high playfulness rating per avoid_for guidance."</em></p>
+
+      <div class="table-wrap" style="margin-top:24px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Use case</th>
+              <th>Human advantage</th>
+              <th>Agent advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Single icon, exploratory</td>
+              <td>High - visual discovery</td>
+              <td>Adequate - filtered candidates</td>
+            </tr>
+            <tr>
+              <td>Single icon, defined context</td>
+              <td>Adequate</td>
+              <td>Equal or better</td>
+            </tr>
+            <tr>
+              <td>10+ icons, consistent tone</td>
+              <td>Degrades with fatigue</td>
+              <td>Strong - consistent ruleset</td>
+            </tr>
+            <tr>
+              <td>30+ icons, full UI system</td>
+              <td>Significant drift risk</td>
+              <td>Superior consistency</td>
+            </tr>
+            <tr>
+              <td>Constraint enforcement</td>
+              <td>Best effort</td>
+              <td>Perfect</td>
+            </tr>
+            <tr>
+              <td>Export speed</td>
+              <td>Manual, sequential</td>
+              <td>Programmatic, parallel</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: AGENT JOURNEY MAP -->
+    <section id="journey">
+      <div class="section-label">Part 4</div>
+      <h2>Full Agent User Journey Map</h2>
+
+      <div class="card" style="margin-bottom:32px;background:var(--bg-elevated);">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:10px;">Scenario</div>
+        <p style="font-size:15px;color:var(--text-primary);font-style:italic;margin:0;">"Add hover animations to the icons in our premium fintech dashboard. The brand tone is professional, restrained, and refined. Not playful, not aggressive. These icons are in the primary navigation sidebar."</p>
+      </div>
+
+      <div class="journey-container">
+        <div class="journey-line"></div>
+
+        <!-- Phase 1 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 1</div>
+            <div class="journey-title">Context Capture and Constraint Formation</div>
+            <div class="journey-body">
+              <p>The agent reads the prompt and extracts a structured decision model before querying anything:</p>
+              <div class="code-block">
+                <code>Product type:    fintech dashboard
+Use location:    primary navigation sidebar
+Trigger:         hover (specified)
+Tone include:    professional, restrained, refined
+Tone exclude:    playful, aggressive, high-energy
+Icon function:   navigation affordance (not status, not loading)</code>
+              </div>
+              <p style="margin:0">The agent does not yet know which presets exist. It is building the filter criteria first.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 2</div>
+            <div class="journey-title">Library Consultation and Filtering</div>
+            <div class="journey-body">
+              <p>The agent calls the MCP tool:</p>
+              <div class="code-block">
+                <code>list_motion_presets()</code>
+              </div>
+              <p>The library returns 80 presets with structured metadata. The agent filters immediately:</p>
+              <ul style="color:var(--text-secondary);font-size:14px;padding-left:20px;line-height:1.8;">
+                <li><code style="font-family:monospace;font-size:12px;color:#a89ef9">emotional_tone</code> does not include "playful" or "energetic"</li>
+                <li><code style="font-family:monospace;font-size:12px;color:#a89ef9">recommended_contexts</code> includes "hover-affordance" or "navigation"</li>
+                <li><code style="font-family:monospace;font-size:12px;color:#a89ef9">intensity_level</code> is 1, 2, or 3 out of 5</li>
+                <li>Trigger compatible with hover</li>
+              </ul>
+              <p style="margin-top:12px;margin-bottom:0">This narrows the field from 80 to approximately 8-12 candidate presets. The agent may also call <code style="font-family:monospace;font-size:12px;color:#a89ef9">get_motion_recipe()</code> on any candidate to get a prose description of what the motion feels like.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 3</div>
+            <div class="journey-title">Icon-to-Preset Mapping</div>
+            <div class="journey-body">
+              <p>The agent maps each icon to the most appropriate preset using <code style="font-family:monospace;font-size:12px;color:#a89ef9">best_for</code>, <code style="font-family:monospace;font-size:12px;color:#a89ef9">ui_contexts</code>, and <code style="font-family:monospace;font-size:12px;color:#a89ef9">avoid_for</code> metadata:</p>
+
+              <div class="table-wrap" style="margin-top:16px;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Icon</th>
+                      <th>Context</th>
+                      <th>Selected preset</th>
+                      <th>Intensity</th>
+                      <th>Rationale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Home</td>
+                      <td>Primary anchor</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">glow-soft</code></td>
+                      <td>55%</td>
+                      <td>Subtle illumination, premium signal, low movement</td>
+                    </tr>
+                    <tr>
+                      <td>Analytics</td>
+                      <td>Data, precision</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">trace</code></td>
+                      <td>70%</td>
+                      <td>Stroke trace reads as scanning, analytical</td>
+                    </tr>
+                    <tr>
+                      <td>Portfolio</td>
+                      <td>Commerce, trust</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">scale-soft</code></td>
+                      <td>60%</td>
+                      <td>Gentle scale, warmth without aggression</td>
+                    </tr>
+                    <tr>
+                      <td>Settings</td>
+                      <td>Config, control</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">sweep</code></td>
+                      <td>65%</td>
+                      <td>Horizontal precision sweep, deliberate feel</td>
+                    </tr>
+                    <tr>
+                      <td>Notifications</td>
+                      <td>Alert, attention</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">pulse</code></td>
+                      <td>50%</td>
+                      <td>Low-intensity pulse, present but not alarming</td>
+                    </tr>
+                    <tr>
+                      <td>Team</td>
+                      <td>Human, relational</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">drift-up</code></td>
+                      <td>55%</td>
+                      <td>Gentle upward drift, human warmth signal</td>
+                    </tr>
+                    <tr>
+                      <td>Reports</td>
+                      <td>Static, reference</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">shimmer</code></td>
+                      <td>45%</td>
+                      <td>Subtle light pass, premium surface quality</td>
+                    </tr>
+                    <tr>
+                      <td>Logout</td>
+                      <td>Destructive-adjacent</td>
+                      <td><code style="font-family:monospace;font-size:11px;color:#a89ef9">fade-soft</code></td>
+                      <td>40%</td>
+                      <td>Quiet exit: avoid_for guidance excluded bounce, sweep</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 4</div>
+            <div class="journey-title">Parameter Setting</div>
+            <div class="journey-body">
+              <p>For each selected preset, the agent sets parameters using library guidance - no guessing required:</p>
+              <ul style="color:var(--text-secondary);font-size:14px;padding-left:20px;line-height:1.9;margin-bottom:12px;">
+                <li><strong>Trigger:</strong> <code style="font-family:monospace;font-size:12px;color:#a89ef9">hover</code> - specified in task, confirmed compatible</li>
+                <li><strong>Intensity:</strong> Uses <code style="font-family:monospace;font-size:12px;color:#a89ef9">context_intensity_guidance</code> - navigation-professional range 45-70%, lower half applied because "restrained" was specified</li>
+                <li><strong>Duration:</strong> Uses <code style="font-family:monospace;font-size:12px;color:#a89ef9">timing_character</code> and <code style="font-family:monospace;font-size:12px;color:#a89ef9">duration_range_ms</code> - standard range 350-500ms for professional contexts</li>
+              </ul>
+              <p style="margin:0">Note: <code style="font-family:monospace;font-size:12px;color:#a89ef9">drift</code> and <code style="font-family:monospace;font-size:12px;color:#a89ef9">float</code> presets are flagged by the metadata as needing longer durations (500-700ms) for naturalism. The agent respects this automatically.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 5</div>
+            <div class="journey-title">Export via MCP</div>
+            <div class="journey-body">
+              <p>The agent calls <code style="font-family:monospace;font-size:12px;color:#a89ef9">export_motion_css()</code> for each icon/preset pair:</p>
+              <div class="code-block">
+                <code>export_motion_css(
+  id:          "home",
+  library:     "lucide",
+  preset:      "glow-soft",
+  trigger:     "hover",
+  intensity:   55,
+  duration_ms: 400
+)
+// Returns: production-ready CSS class</code>
+              </div>
+              <p style="margin:0">8 tool calls. 8 exports. A human would have clicked through 8 sequential exports in the browser UI.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 6 -->
+        <div class="journey-step">
+          <div class="journey-dot"></div>
+          <div class="journey-step-inner">
+            <div class="journey-phase">Phase 6</div>
+            <div class="journey-title">Output Report to Developer</div>
+            <div class="journey-body">
+              <p>The agent delivers:</p>
+              <ol style="color:var(--text-secondary);font-size:14px;padding-left:20px;line-height:1.9;margin-bottom:12px;">
+                <li>The animated CSS for each icon, production-ready</li>
+                <li>A rationale document explaining every selection decision</li>
+              </ol>
+              <div class="code-block" style="background:rgba(62,207,142,0.04);border-color:rgba(62,207,142,0.15);">
+                <code style="color:#3ecf8e;">"Applied hover animations to 8 navigation icons. All presets selected from
+the professional/subtle tier (intensity 40-70%). Trace applied to Analytics
+to signal precision. Pulse applied to Notifications at 50% - above this
+threshold the library flags it as attention-seeking in sidebar contexts.
+Logout received fade-soft; sweep and bounce excluded by avoid_for guidance
+on destructive-adjacent actions. Duration range: 350-500ms for consistency."</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 7 -->
+        <div class="journey-step">
+          <div class="journey-dot" style="border-color:var(--green)"></div>
+          <div class="journey-step-inner" style="border-color:rgba(62,207,142,0.2);">
+            <div class="journey-phase" style="color:var(--green)">Phase 7 (Optional)</div>
+            <div class="journey-title">Developer Follow-Up and Targeted Adjustment</div>
+            <div class="journey-body">
+              <p>Developer responds: "Increase the settings icon intensity. It feels too quiet."</p>
+              <p>The agent knows: current is sweep at 65%. Library ceiling for settings in professional contexts is 80% before it reads as aggressive. Agent updates to 75% and explains the ceiling.</p>
+              <p style="margin:0">No re-export from scratch. Targeted adjustment within a defined range. The library gave the agent the vocabulary and the boundary. The agent can communicate exactly where in that range it has moved.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: SCHEMA -->
+    <section id="schema">
+      <div class="section-label">Part 5</div>
+      <h2>What the Library Must Contain</h2>
+      <p>For the above journey to work, the motion preset metadata schema needs the following fields per preset. These are the fields that replace visual inspection with structured knowledge.</p>
+
+      <div class="code-block" style="margin-bottom:32px;">
+        <code>{
+  "preset": "sweep",
+  "category": "Motion",
+  "label": "Sweep",
+  "aliases": ["scan", "trace-horizontal", "wipe"],
+  "visual_character": "Icon strokes animate from left to right as a precision
+                       scan, creating a deliberate, controlled motion impression.",
+  "emotional_tone": ["precise", "subtle", "professional", "premium"],
+  "interaction_type": ["hover-response", "general"],
+  "intensity_level": 2,
+  "recommended_contexts": ["navigation", "settings", "analytics", "hover-affordance"],
+  "avoid_for": ["playful-contexts", "onboarding-celebration", "success-confirmation"],
+  "best_for": ["fintech", "enterprise", "SaaS-professional", "sidebar-navigation"],
+  "context_intensity_guidance": {
+    "navigation-professional": { "min": 55, "max": 80, "default": 65 },
+    "cta":                      { "min": 70, "max": 95, "default": 80 },
+    "subtle-affordance":        { "min": 40, "max": 65, "default": 55 }
+  },
+  "timing_character": "medium-precision",
+  "duration_range_ms": [300, 500],
+  "pairing_notes": "Works well on icons with horizontal lines. Less effective on circular or radial icons.",
+  "output_notes": "CSS output uses stroke-dashoffset. Ensure icon has visible stroke paths."
+}</code>
+      </div>
+
+      <p>All 80 presets need this metadata. That is the curation work. The schema can be defined in a day. Populating 80 records with accurate, non-subjective, tested metadata is 1-2 weeks of editorial work.</p>
+    </section>
+
+    <!-- SECTION 6: PRIORITIES -->
+    <section id="priorities">
+      <div class="section-label">Part 6</div>
+      <h2>Build Priorities</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>What to build</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-now">Now</span></td>
+              <td>Remove 12-preset MCP registry. Import from browser preset source.</td>
+              <td>Prerequisite. Without this, the metadata layer is built on a split.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-now">Now</span></td>
+              <td>Canonical preset registry file. Both browser and MCP import from it.</td>
+              <td>Single source of truth. Architecture fix.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-next">Next</span></td>
+              <td><code style="font-family:monospace;font-size:12px;color:#a89ef9">list_motion_presets()</code> returns all 80 with category grouping.</td>
+              <td>Agents get the real product surface.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-build">Build</span></td>
+              <td>Motion preset metadata: 80 records with full schema.</td>
+              <td>The decision layer. This is the library.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-build">Build</span></td>
+              <td>Enrich <code style="font-family:monospace;font-size:12px;color:#a89ef9">list_motion_presets()</code> to return metadata, not bare names.</td>
+              <td>Agents filter and reason without a separate lookup step.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-opt">Optional</span></td>
+              <td><code style="font-family:monospace;font-size:12px;color:#a89ef9">recommend_preset(context, tone, trigger)</code> MCP tool.</td>
+              <td>Build only after metadata proves useful in practice.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="verdict-box" style="margin-top:40px;">
+        <div class="verdict-eyebrow">Conclusion</div>
+        <p>The agent library is not a documentation project. It is a knowledge encoding project. The goal is to transfer the implicit visual knowledge a human has when browsing Motion Lab into structured metadata an agent can use to make equivalent decisions.</p>
+        <p style="margin-top:12px;">The browser UI remains the discovery surface for humans. The agent library becomes the decision surface for agents. These are not competing products. They are two interfaces to the same Motion Lab system, each optimized for a different kind of user.</p>
+        <p style="margin-top:12px;margin-bottom:0;"><strong>The prerequisite is a single canonical preset registry. Build that first.</strong></p>
+      </div>
+    </section>
+
+  </div><!-- /page -->
+
+  <footer>
+    <div class="page">
+      <strong>Motion Lab Agent Library Analysis</strong> &middot; Supericons &middot; April 11, 2026
+    </div>
+  </footer>
+
+</body>
+</html>

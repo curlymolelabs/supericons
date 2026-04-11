@@ -11,8 +11,11 @@ This document captures the full audit, Socratic analysis, architectural decision
 3. [Socratic Analysis](#socratic-analysis)
 4. [API Key Placement Discussion](#api-key-placement-discussion)
 5. [Architectural Decisions](#architectural-decisions)
-6. [Proposed Docs Page Refinement](#proposed-docs-page-refinement)
-7. [Proposed API Keys Page Refinement](#proposed-api-keys-page-refinement)
+6. [Auditor Review and Execution Plan](#auditor-review-and-execution-plan)
+7. [Proposed Docs Page Refinement](#proposed-docs-page-refinement)
+8. [Exact Copy: Consolidated Docs Page HTML](#exact-copy-consolidated-docs-page-html)
+9. [Exact Copy: API Keys Page (store.js)](#exact-copy-api-keys-page-storejs)
+10. [Proposed API Keys Page Refinement](#proposed-api-keys-page-refinement)
 
 ---
 
@@ -335,7 +338,7 @@ The Supericons dropdown already has API Keys as a **separate menu item** (index.
 | Decision | Resolution | Rationale |
 |---|---|---|
 | Which page survives? | **Docs page** (`/docs/index.html`) | Better SEO, extensibility, shareability, already has TOC |
-| What happens to in-app MCP hub? | **Remove** `renderMcpPage()`, redirect `/?view=mcp` to `/docs/` | Eliminates duplication, circular links |
+| What happens to in-app MCP hub? | **Retire after docs absorbs all content**, then `/?view=mcp` becomes a compatibility redirect to `/docs/` | Eliminates duplication, circular links |
 | Where do the 8 MCP tool cards go? | **Merged into docs page** | Docs currently only has 3; MCP hub has all 8 |
 | Where do the 4 external client links go? | **Merged into docs page client guides section** | OpenCode, Cline, Copilot agent, Windsurf |
 | Client sub-pages? | **Stay at `/mcp/*`** with nav links updated to point to `/docs/` | Preserves existing URLs and SEO |
@@ -354,6 +357,104 @@ The three client guides (Claude Code, Codex, Cursor) currently have a nav bar wi
 - **After**: `Docs | Claude Code | Codex | Cursor`
 
 Docs becomes the single hub. "MCP hub" nav link is removed since it would just go to the same place.
+
+---
+
+## Auditor Review and Execution Plan
+
+### Auditor Findings
+
+The plan was reviewed and the auditor's conclusions are:
+
+- **Core decision is correct**: `/docs/index.html` should become the single canonical MCP surface, and the in-app MCP hub should stop being a second content destination.
+- **Strongest evidence already in the repo**: The landing page already sends users to `/docs/`, the docs page has the cleaner shareable URL and canonical tag, and the current docs/MCP hub are clearly cross-linking each other instead of acting as one source of truth.
+- **Content gap acknowledged**: The docs page is NOT a literal superset of the MCP hub today. It is still missing the fuller tool inventory (8 tools vs 3), the external client links (OpenCode, Cline, Copilot, Windsurf), and some workflow-access framing. The plan correctly identifies these gaps.
+- **Sequencing is critical**: The MCP hub must NOT be removed before docs fully absorbs those gaps. The correct ordering is: merge content first, then redirect, then remove.
+- **API Keys separation is solid**: Keeping API Keys as a standalone in-app view, separate from purchases, matches the current IA and best practices.
+
+### Tightening Recommendations
+
+The auditor recommends the following refinements to the execution approach:
+
+1. **Keep the "docs survives, MCP hub dies" decision exactly as written.**
+2. **Update links first**: Footer MCP link in `index.html`, docs nav/sidebar in `public/docs/index.html`, and client-guide nav in `public/mcp/claude-code/index.html` and siblings.
+3. **Treat `/?view=mcp` as a compatibility redirect, not just a deleted route.** Users who bookmarked or linked to `/?view=mcp` should land at `/docs/` seamlessly.
+4. **Remove `.mcp-*` CSS only after**: (a) the `renderMcpPage()` view code is gone, and (b) a grep confirms nothing else depends on those classes.
+5. **Do not remove the MCP view before docs fully absorbs the content gaps.**
+
+### 3-Pass Rollout
+
+The execution must follow this strict sequence. Each pass has a gate: do not start the next pass until the previous pass is verified.
+
+#### Pass 1: Expand docs to subsume the MCP hub
+
+**Goal**: Make `/docs/index.html` the complete, authoritative surface with zero content gaps relative to `renderMcpPage()`.
+
+**Scope**:
+- Merge the 5 MCP-only tool cards into the docs "Current MCP tools" section (`list_motion_presets`, `export_motion_css`, `export_animated_svg`, `convert_svg_to_png`, `convert_png_to_svg`)
+- Merge the "Workflow-tool gating" meta card into docs
+- Merge the 4 external client links into the docs "Client guides" section (OpenCode, Cline, Copilot agent, Windsurf)
+- Merge the 7-client pill badge list into docs
+- Merge the "Why this matters" and "Current status" cards into the docs "Workflow Tools Through MCP" section
+- Adopt the MCP hub's list-style recipe format in the docs "Recipes" section
+- Add the tool-availability summary line from the MCP hub into the docs "Premium MCP setup" section
+- Update the docs hero: remove "Open MCP hub" CTA, replace with "API Keys" CTA
+- Update the docs sidebar: remove "In-app MCP hub" link
+- Update the docs nav bar: remove "MCP hub" link
+- Update the docs "Current truth" callout to reflect 8 tools
+- Update the docs TOC: add "MCP tools" and "Workflow tools" entries
+
+**Gate**: After Pass 1, a side-by-side comparison of docs vs MCP hub should show that docs contains every piece of content that the MCP hub has. Nothing should be lost.
+
+**Files touched**:
+- `public/docs/index.html` (the primary edit)
+
+#### Pass 2: Repoint every MCP-hub link to `/docs/`
+
+**Goal**: All inbound paths that currently reach `/?view=mcp` should reach `/docs/` instead. `/?view=mcp` itself becomes a compatibility redirect.
+
+**Scope**:
+- `index.html` footer: Change `/?view=mcp` to `/docs/` (line 395)
+- `public/mcp/index.html`: Change redirect target from `/?view=mcp` to `/docs/` (both `meta refresh` and JS redirect)
+- `public/mcp/claude-code/index.html` nav: Change `/mcp/` to `/docs/` (line 21), sidebar (line 118)
+- `public/mcp/cursor/index.html` nav: Change `/mcp/` to `/docs/` (line 21), sidebar (line 118)
+- `public/mcp/codex/index.html` nav: Change `/mcp/` to `/docs/` (line 21), sidebar (line 121)
+- `store.js`: In the `view === 'mcp'` case of `switchView()`, replace `renderMcpPage()` with a `window.location.href = '/docs/'` redirect (compatibility redirect for bookmarks and deep links)
+
+**Gate**: After Pass 2, navigating to `/?view=mcp`, `/mcp/`, clicking the footer "MCP" link, and clicking client-guide nav links should all land the user at `/docs/`. No path should still render the in-app MCP hub.
+
+**Files touched**:
+- `index.html` (footer link)
+- `public/mcp/index.html` (redirect target)
+- `public/mcp/claude-code/index.html` (nav + sidebar links)
+- `public/mcp/cursor/index.html` (nav + sidebar links)
+- `public/mcp/codex/index.html` (nav + sidebar links)
+- `store.js` (compatibility redirect in switchView)
+
+#### Pass 3: Remove the in-app MCP render path and dead CSS
+
+**Goal**: Clean up the now-unreachable code. The MCP hub view is never rendered; only the compatibility redirect remains.
+
+**Scope**:
+- `store.js`: Delete the `renderMcpPage()` function body (lines 4093-4349). Keep the compatibility redirect from Pass 2 in `switchView()` (the `view === 'mcp'` case now just does `window.location.href = '/docs/'`).
+- `store.js`: Remove `document.getElementById('mcpView')?.remove()` cleanup line (line 729) since the view is never created.
+- `style.css`: Grep for `.mcp-` class usage. If no other file references them, remove all `.mcp-*` CSS rules.
+
+**Safety gate before CSS removal**: Run `grep -rn "mcp-" --include="*.html" --include="*.js" public/ index.html store.js` and confirm zero hits outside of `style.css` and the deleted `renderMcpPage()` function. Only then remove the CSS.
+
+**Files touched**:
+- `store.js` (delete renderMcpPage function body)
+- `style.css` (remove dead .mcp-* classes after grep verification)
+
+### Rollout Summary
+
+```
+Pass 1: Merge content into docs    -> Gate: docs is a superset of MCP hub
+Pass 2: Redirect all MCP links     -> Gate: no path renders MCP hub
+Pass 3: Remove dead code and CSS   -> Gate: grep confirms no .mcp-* deps
+```
+
+This "merge, redirect, remove" sequence ensures no content is lost at any point. If a pass needs to be paused or reverted, users still have access to all information through one surface or the other.
 
 ---
 
@@ -682,6 +783,501 @@ Supericons docs. Truth-first setup guidance for free and premium MCP access.
 
 ---
 
+## Exact Copy: Consolidated Docs Page HTML
+
+This is the production-ready HTML for `/public/docs/index.html` after Pass 1. It is a complete, copy-pasteable replacement for the current file. All content from the MCP hub has been merged in. All circular links to `/?view=mcp` have been removed. The CSS class names (`docs-*`) and the `docs.css` stylesheet reference are unchanged.
+
+Changes from current docs page are marked with `<!-- NEW -->` or `<!-- REVISED -->` inline comments. These comments are for review only and should be removed before shipping.
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Docs</title>
+  <meta name="description" content="Supericons documentation: quickstart, MCP setup, premium access, client guides, current MCP tools, recipes, and workflow tools for Motion Lab and Converter.">
+  <link rel="canonical" href="https://supericons.dev/docs/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/mcp/docs.css">
+</head>
+<body>
+  <div class="docs-shell">
+    <!-- REVISED: removed "MCP hub" link -->
+    <nav class="docs-nav" aria-label="Primary">
+      <a class="docs-nav__brand" href="/">
+        <img src="/favicon.svg" alt="">
+        <span>Supericons</span>
+      </a>
+      <div class="docs-nav__links">
+        <a class="docs-nav__link" href="/mcp/claude-code/">Claude Code</a>
+        <a class="docs-nav__link" href="/mcp/codex/">Codex</a>
+        <a class="docs-nav__link" href="/mcp/cursor/">Cursor</a>
+      </div>
+    </nav>
+
+    <!-- REVISED: new title, new copy, replaced "Open MCP hub" CTA with "API Keys", updated pill badges -->
+    <section class="docs-hero">
+      <span class="docs-eyebrow">Docs</span>
+      <h1>Supericons docs and MCP setup</h1>
+      <p>
+        The reference hub for Supericons MCP configuration, premium entitlement,
+        current MCP tools, client-specific setup guides, and workflow recipes
+        for Motion Lab and Converter.
+      </p>
+      <div class="docs-hero__actions">
+        <a class="docs-btn docs-btn--primary" href="#docs-quickstart">Quickstart</a>
+        <a class="docs-btn docs-btn--secondary" href="/?view=api-keys">API Keys</a>
+      </div>
+      <div class="docs-pill-list" style="margin-top: 18px;">
+        <span class="docs-pill">20,000+ free icons</span>
+        <span class="docs-pill">8 MCP tools live</span>
+        <span class="docs-pill">Premium collection access</span>
+        <span class="docs-pill">Motion Lab MCP for Pro</span>
+        <span class="docs-pill">Converter MCP for Pro</span>
+      </div>
+    </section>
+
+    <div class="docs-main">
+      <div class="docs-column">
+
+        <!-- REVISED: minor copy tightening ("pack" -> "collection") -->
+        <section class="docs-section" id="docs-quickstart">
+          <h2>Quickstart</h2>
+          <p>Start with the base MCP server config. Free icons work immediately. Premium icons require a Pro subscription or collection purchase, plus a Supericons API key.</p>
+          <div class="docs-code">
+            <button class="docs-copy" type="button" data-copy-target="docs-base-config">Copy</button>
+            <pre><code id="docs-base-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+          <div class="docs-grid" style="margin-top: 18px;">
+            <article class="docs-card">
+              <h3>Free path</h3>
+              <ul>
+                <li>Add the base MCP config to your client.</li>
+                <li>Restart or reload your MCP client.</li>
+                <li>Use <code>search_icons</code> or <code>get_icon</code> right away.</li>
+              </ul>
+            </article>
+            <article class="docs-card" id="docs-premium">
+              <h3>Premium path</h3>
+              <ul>
+                <li>Subscribe to Pro or buy the collection you need.</li>
+                <li>Open <a href="/?view=api-keys">API Keys</a> and generate an API key.</li>
+                <li>Add <code>SUPERICONS_API_KEY</code> in the env or secrets field your client supports.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- REVISED: "packs" -> "collections", added tool-availability summary from MCP hub -->
+        <section class="docs-section">
+          <h2>Premium MCP setup</h2>
+          <p>The API key does not create entitlement by itself. It carries the access your account already has through Pro or purchased collections.</p>
+          <div class="docs-code">
+            <button class="docs-copy" type="button" data-copy-target="docs-premium-config">Copy premium example</button>
+            <pre><code id="docs-premium-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "your_key_here"
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <p style="margin-top: 14px;">This JSON-style example fits clients that support an <code>env</code> object in their MCP config. Use the client-specific guide for the exact syntax your editor expects.</p>
+          <!-- NEW: tool-availability summary from MCP hub -->
+          <p style="margin-top: 14px;">Today MCP supports icon search, icon retrieval, library discovery, Motion Lab preset exports, and Converter workflows for Pro users.</p>
+        </section>
+
+        <!-- REVISED: expanded from 4 cards to 10 cards by merging all MCP hub tools -->
+        <section class="docs-section" id="docs-tools">
+          <h2>Current MCP tools</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3><code>search_icons</code></h3>
+              <p>Find the closest icon match across the free libraries and any premium collections your account is entitled to use.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>get_icon</code></h3>
+              <p>Retrieve a specific icon payload with ready-to-use SVG output that can be inserted directly into code.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>list_libraries</code></h3>
+              <p>List the libraries and premium collection sources your MCP session can currently access.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><code>list_motion_presets</code></h3>
+              <p>Browse the Motion Lab presets available through MCP before exporting animation CSS or animated SVG output. Pro only.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><code>export_motion_css</code></h3>
+              <p>Generate Motion Lab CSS for a chosen icon, preset, trigger, duration, and intensity without leaving your coding agent. Pro only.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><code>export_animated_svg</code></h3>
+              <p>Generate a self-contained animated SVG for the selected icon and preset as a single MCP response. Pro only.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><code>convert_svg_to_png</code></h3>
+              <p>Render SVG input to PNG with a controlled output width and optional background through the Pro converter workflow. Pro only.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><code>convert_png_to_svg</code></h3>
+              <p>Trace PNG input to SVG with the same converter-quality controls used by the browser workflow. Pro only.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Entitlements</h3>
+              <p>Free users get the free libraries. Pro subscribers and collection owners get access to the premium collections tied to their account when they connect an API key.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3>Workflow-tool gating</h3>
+              <p>Motion Lab MCP and Converter MCP are Pro workflow tools. Collection ownership unlocks premium icon assets, but workflow tools stay Pro-only.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- REVISED: expanded from 4 cards to 7 cards, added intro copy + pill badges from MCP hub -->
+        <section class="docs-section" id="docs-guides">
+          <h2>Client guides</h2>
+          <!-- NEW: intro copy from MCP hub -->
+          <p>The Supericons stdio server can be used with any MCP-capable client. The configuration concept is shared, but each client has its own setup UX and config surface.</p>
+          <!-- NEW: pill badge list from MCP hub -->
+          <div class="docs-pill-list" style="margin-top: 14px; margin-bottom: 18px;">
+            <span class="docs-pill">Claude Code</span>
+            <span class="docs-pill">Codex</span>
+            <span class="docs-pill">Cursor</span>
+            <span class="docs-pill">OpenCode</span>
+            <span class="docs-pill">Cline</span>
+            <span class="docs-pill">Copilot agent</span>
+            <span class="docs-pill">Windsurf</span>
+          </div>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3><a href="/mcp/claude-code/">Claude Code</a></h3>
+              <p>Supericons setup guide plus Anthropic's official MCP docs for CLI setup, Windows notes, and troubleshooting.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="/mcp/codex/">Codex</a></h3>
+              <p>Supericons setup guide plus OpenAI's official MCP docs for CLI and <code>config.toml</code> setup.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="/mcp/cursor/">Cursor</a></h3>
+              <p>Supericons setup guide plus Cursor's official MCP docs for JSON config and in-app MCP settings.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h3>
+              <p>Official OpenCode MCP docs for server config and CLI flow.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h3>
+              <p>Official Cline docs for the Servers UI and <code>cline_mcp_settings.json</code> config.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h3>
+              <p>Official GitHub docs for repository MCP config and Copilot environment secrets.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h3>
+              <p>Official Windsurf docs for settings UI and <code>mcp_config.json</code> setup.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- UNCHANGED -->
+        <section class="docs-section" id="docs-workflows">
+          <h2>Using Supericons today</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Icon search and export</h3>
+              <p>Use the main app to search free icons, customize color and size, and export SVG, PNG, or framework snippets directly.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Premium animated collections</h3>
+              <p>Open a premium collection to preview animated icons, adjust export trigger and color, then export animated SVG or related code formats.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Motion Lab</h3>
+              <p>Use Motion Lab in the browser today for preset-driven animation tuning, motion CSS export, and standalone animated SVG output.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Converter</h3>
+              <p>Use Converter in the browser today for SVG to PNG rendering and PNG to SVG tracing, with copy and download controls for the final output.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- REVISED: expanded from 2 cards to 4 cards with MCP hub "Why this matters" + "Current status" -->
+        <section class="docs-section" id="docs-workflow-tools">
+          <h2>Workflow Tools Through MCP</h2>
+          <p>Motion Lab MCP and Converter MCP are live for Pro users. They extend the browser workflows into coding-agent-friendly tool calls while keeping the same entitlement boundary.</p>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Motion Lab MCP</h3>
+              <ul>
+                <li>Preset discovery</li>
+                <li>Trigger control</li>
+                <li>Motion CSS export</li>
+                <li>Standalone animated SVG export</li>
+              </ul>
+            </article>
+            <article class="docs-card">
+              <h3>Converter MCP</h3>
+              <ul>
+                <li>SVG to PNG conversion</li>
+                <li>PNG to SVG tracing</li>
+                <li>Input inspection and warnings</li>
+                <li>Suggested conversion settings</li>
+              </ul>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3>Why this matters</h3>
+              <p>Search-only MCP is useful, but workflow-tool access is the stronger Pro value proposition for design systems, prototyping, and coding-agent automation.</p>
+            </article>
+            <!-- NEW: merged from MCP hub -->
+            <article class="docs-card">
+              <h3>Current status</h3>
+              <p>Motion Lab MCP and Converter MCP are Pro-only workflow tools. Collection ownership still works for icon access, but workflow tooling requires Pro.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- REVISED: adopted list format from MCP hub for consistency -->
+        <section class="docs-section" id="docs-recipes">
+          <h2>Recipes and prompts</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>UI build</h3>
+              <ul>
+                <li>Find a tab icon for analytics.</li>
+                <li>Show the Lucide and Tabler options side by side.</li>
+                <li>Insert the chosen SVG into my React component.</li>
+              </ul>
+            </article>
+            <article class="docs-card">
+              <h3>Brand logos</h3>
+              <ul>
+                <li>Search Simple Icons for Stripe, Vercel, and Supabase.</li>
+                <li>Return the SVGs in monochrome.</li>
+                <li>Place them in a footer component.</li>
+              </ul>
+            </article>
+            <article class="docs-card">
+              <h3>Premium assets</h3>
+              <ul>
+                <li>Fetch icons from a premium collection tied to my Pro or collection access.</li>
+                <li>Drop them into a prototype component.</li>
+                <li>Keep access tied to my Supericons API key.</li>
+              </ul>
+            </article>
+            <article class="docs-card">
+              <h3>Available tools</h3>
+              <ul>
+                <li><code>search_icons</code>: find the closest match.</li>
+                <li><code>get_icon</code>: retrieve a specific SVG by ID.</li>
+                <li><code>list_libraries</code>: list all available icon sources.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- UNCHANGED -->
+        <section class="docs-section" id="docs-troubleshooting">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Server installed but no tools appear</h3>
+              <p>Restart or reload the MCP client after changing config. Many setup failures are registry refresh issues.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Premium icons do not appear</h3>
+              <p>Check that your account actually has Pro or purchased collection access, then regenerate or replace the API key in your MCP config.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Invalid or revoked key</h3>
+              <p>Open API Keys, revoke the old key if needed, generate a new one, and update the MCP env or secrets field.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Need exact client syntax</h3>
+              <p>Use the client guides above when your editor uses a different MCP config format than the JSON-style example on this page.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- REVISED: updated TOC, removed "In-app MCP hub" link, updated "Current truth" -->
+      <aside class="docs-column">
+        <section class="docs-sidebar">
+          <h3>On this page</h3>
+          <div class="docs-link-list">
+            <a href="#docs-quickstart">Quickstart</a>
+            <a href="#docs-premium">Premium setup</a>
+            <a href="#docs-tools">MCP tools</a>
+            <a href="#docs-guides">Client guides</a>
+            <a href="#docs-workflows">Current workflows</a>
+            <a href="#docs-workflow-tools">Workflow tools</a>
+            <a href="#docs-recipes">Recipes</a>
+            <a href="#docs-troubleshooting">Troubleshooting</a>
+          </div>
+        </section>
+
+        <section class="docs-callout">
+          <h3>Current truth</h3>
+          <p>Supericons MCP is live for icon search, icon retrieval, Motion Lab preset export, and Converter workflows. Motion Lab MCP and Converter MCP are Pro-only workflow tools. 8 MCP tools available today.</p>
+        </section>
+
+        <section class="docs-sidebar">
+          <h3>Useful links</h3>
+          <div class="docs-link-list">
+            <a href="/?view=pricing">Pricing</a>
+            <a href="/?view=api-keys">API Keys</a>
+            <a href="/">Back to app</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <!-- UNCHANGED -->
+    <footer class="docs-footer">
+      <p>Supericons docs. Truth-first setup guidance for free and premium MCP access.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-copy-target]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.getAttribute('data-copy-target'));
+        if (!target) return;
+        await navigator.clipboard.writeText(target.textContent || '');
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        window.setTimeout(() => {
+          button.textContent = original;
+        }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+---
+
+## Exact Copy: API Keys Page (store.js)
+
+This section contains the exact JavaScript string literals for the API Keys page in `store.js`. Each string is the production-ready replacement for the corresponding current value.
+
+### Header Section (store.js `renderApiKeysPage`, lines 3474-3479)
+
+**Current:**
+```js
+page.innerHTML = `
+    <div class="dashboard-section">
+      <h3 class="dashboard-section__title">Developer Access</h3>
+      <p class="dashboard-section__copy">Use API keys to connect MCP clients and programmatic workflows to your Supericons account.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys carry the premium access your account already owns through Pro or purchased packs.</p>
+    </div>
+```
+
+**Proposed:**
+```js
+page.innerHTML = `
+    <div class="dashboard-section">
+      <h3 class="dashboard-section__title">API Keys <span class="dashboard-section__subtitle">For MCP and programmatic access</span></h3>
+      <p class="dashboard-section__copy">Connect your MCP client (Cursor, Claude Code, Codex, or any MCP-capable agent) to your Supericons account with an API key.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys unlock the premium collections and Pro workflow tools your account already has access to.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/docs/index.html#docs-quickstart">See the setup guide</a> for where to place your key in each client.</p>
+    </div>
+```
+
+### Key Management Subtitle (store.js line 3482-3483)
+
+**Current:**
+```js
+      <h3 class="dashboard-section__title">
+        API Keys
+        <span class="dashboard-section__subtitle">Up to ${API_KEY_LIMIT} active keys</span>
+      </h3>
+```
+
+**Proposed (unchanged, kept for reference):**
+```js
+      <h3 class="dashboard-section__title">
+        API Keys
+        <span class="dashboard-section__subtitle">Up to ${API_KEY_LIMIT} active keys</span>
+      </h3>
+```
+
+### Initial Label Guidance (store.js line 3487)
+
+**Current:**
+```js
+      <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label keys by app or device so you can rotate them later.</p>
+```
+
+**Proposed:**
+```js
+      <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label each key by app or device so you can rotate them independently.</p>
+```
+
+### Not-Signed-In State (store.js line 3509)
+
+**Current:**
+```js
+        <p class="dashboard-section__empty">Sign in to manage API keys and connect premium MCP access.</p>
+```
+
+**Proposed:**
+```js
+        <p class="dashboard-section__empty">Sign in to generate API keys and connect your MCP client to your Supericons account.</p>
+```
+
+### No-Entitlement State (store.js line 3699)
+
+**Current:**
+```js
+        limitNoteEl.textContent = 'Free MCP works without a key. New keys become available once your account has Pro or at least one purchased premium pack.';
+```
+
+**Proposed:**
+```js
+        limitNoteEl.textContent = 'API keys require a Pro subscription or at least one purchased collection. Keys carry the access your account already has.';
+```
+
+### Default Label Guidance (store.js line 3705)
+
+**Current:**
+```js
+        limitNoteEl.textContent = 'Label keys by app or device so you can rotate them later.';
+```
+
+**Proposed:**
+```js
+        limitNoteEl.textContent = 'Label each key by app or device so you can rotate them independently.';
+```
+
+---
+
 ## Proposed API Keys Page Refinement
 
 The API Keys page (`/?view=api-keys`, store.js lines 3067-3144) has a top section with explanatory copy before the key management table. Below are proposed refinements to that copy.
@@ -789,49 +1385,60 @@ Keys carry the access your account already has."
 
 ---
 
-## Redirect and Link Updates (Reference)
+## Reference: File-Level Change Map
 
-When implementing the consolidation, the following redirects and link updates are needed:
+This section provides a quick-reference for the implementation across all three passes. Each change is tagged with its pass number.
 
 ### Redirects
 
-| From | To | Method |
-|---|---|---|
-| `/?view=mcp` | `/docs/` | JS redirect in `switchView()` or direct route |
-| `/mcp/index.html` | `/docs/` | Update `meta refresh` + JS redirect target |
+| From | To | Method | Pass |
+|---|---|---|---|
+| `/?view=mcp` | `/docs/` | Compatibility redirect in `switchView()` | Pass 2 |
+| `/mcp/index.html` | `/docs/` | Update `meta refresh` + JS redirect target | Pass 2 |
 
 ### Link Updates
 
-| File | Current | New |
-|---|---|---|
-| `index.html` footer (line 395) | `/?view=mcp` | `/docs/` |
-| `public/mcp/claude-code/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/mcp/cursor/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/mcp/codex/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/mcp/claude-code/index.html` sidebar (line 118) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/mcp/cursor/index.html` sidebar (line 118) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/mcp/codex/index.html` sidebar (line 121) | `/mcp/` (MCP hub) | `/docs/` (Docs) |
-| `public/docs/index.html` hero CTA | `/?view=mcp` (Open MCP hub) | `/?view=api-keys` (API Keys) |
-| `public/docs/index.html` sidebar link | `/?view=mcp` (In-app MCP hub) | Remove |
+| File | Current | New | Pass |
+|---|---|---|---|
+| `public/docs/index.html` content | Missing MCP-only content | Full tool list, client links, workflow framing | Pass 1 |
+| `public/docs/index.html` hero CTA | `/?view=mcp` (Open MCP hub) | `/?view=api-keys` (API Keys) | Pass 1 |
+| `public/docs/index.html` nav bar | Includes "MCP hub" link | Remove "MCP hub" link | Pass 1 |
+| `public/docs/index.html` sidebar link | `/?view=mcp` (In-app MCP hub) | Remove | Pass 1 |
+| `index.html` footer (line 395) | `/?view=mcp` | `/docs/` | Pass 2 |
+| `public/mcp/index.html` redirect | `/?view=mcp` | `/docs/` | Pass 2 |
+| `public/mcp/claude-code/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `public/mcp/claude-code/index.html` sidebar (line 118) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `public/mcp/cursor/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `public/mcp/cursor/index.html` sidebar (line 118) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `public/mcp/codex/index.html` nav (line 21) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `public/mcp/codex/index.html` sidebar (line 121) | `/mcp/` (MCP hub) | `/docs/` (Docs) | Pass 2 |
+| `store.js` `switchView()` (lines 675-682) | `renderMcpPage()` | `window.location.href = '/docs/'` | Pass 2 |
 
 ### Code Removal
 
-| File | What to Remove |
-|---|---|
-| `store.js` | `renderMcpPage()` function (lines 4093-4349) |
-| `store.js` | `view === 'mcp'` case in `switchView()` (lines 675-682) |
-| `store.js` | MCP view cleanup in else block (line 729) |
-| `style.css` | `.mcp-*` CSS classes (if not shared with other views) |
+| File | What to Remove | Pass |
+|---|---|---|
+| `store.js` | `renderMcpPage()` function body (lines 4093-4349) | Pass 3 |
+| `store.js` | MCP view cleanup in else block (line 729: `document.getElementById('mcpView')?.remove()`) | Pass 3 |
+| `style.css` | `.mcp-*` CSS classes (only after grep confirms no remaining deps) | Pass 3 |
+
+### Safety Gates
+
+| Gate | Condition | When |
+|---|---|---|
+| Pass 1 gate | Side-by-side comparison: docs contains every content block from MCP hub | Before starting Pass 2 |
+| Pass 2 gate | Manual test: every MCP-hub path (`/?view=mcp`, `/mcp/`, footer link, client-guide nav) lands at `/docs/` | Before starting Pass 3 |
+| Pass 3 gate | `grep -rn "mcp-" --include="*.html" --include="*.js" public/ index.html store.js` returns zero hits outside `style.css` and the deleted function | Before removing CSS |
 
 ---
 
 ## Open Questions
 
-1. **Should the footer "MCP" link be renamed to "Docs"?** Currently the footer has both "MCP" and "Docs" links. After consolidation, both would point to `/docs/`. Options:
-   - Remove "MCP" link, keep "Docs"
-   - Rename "MCP" to "MCP Docs" and keep it alongside "Docs" (but then "Docs" is redundant)
-   - Keep just "Docs" since it covers everything
+1. **Should the footer "MCP" link be renamed or removed?** After consolidation, both "MCP" and "Docs" in the footer would point to `/docs/`. Options:
+   - Remove "MCP" link, keep "Docs" (cleanest, avoids duplicate links)
+   - Rename "MCP" to "MCP Setup" and keep alongside "Docs" (differentiates intent but adds clutter)
+   - Keep just "Docs" since it covers everything (recommended)
 
-2. **Should the sidebar get a "Docs" link?** Currently docs is only accessible from footer, landing page, and avatar dropdown "API Keys" indirectly. Adding a sidebar item under "Tools" section would increase discoverability.
+2. **Should the sidebar get a "Docs" link?** Currently docs is only accessible from the footer, landing page, and indirectly through client guides. Adding a sidebar item under "Tools" would increase discoverability for returning users.
 
 3. **Should `/docs/` become a multi-page site eventually?** The current single-page structure works for now, but if content grows (changelog, billing FAQ, etc.), a simple `/docs/changelog/`, `/docs/faq/` structure would be natural. This doesn't need to be decided now but informs whether to add a docs-level sidebar nav.

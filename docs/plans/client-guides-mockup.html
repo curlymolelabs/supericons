@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Client Guides - Copy Mockup</title>
+  <meta name="description" content="Copy mockup for the three Supericons client guide pages: Claude Code, Codex, and Cursor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens ────────────────── */
+    :root {
+      --mcp-bg:           #faf8f6;
+      --mcp-surface:      rgba(255,255,255,0.82);
+      --mcp-border:       rgba(0,0,0,0.09);
+      --mcp-text:         #1a1714;
+      --mcp-text-dim:     #6b6560;
+      --mcp-primary:      #e26d2f;
+      --mcp-primary-deep: #b84f18;
+      --mcp-shadow:       0 2px 12px rgba(0,0,0,0.07);
+      --mcp-radius-sm:    6px;
+      --mcp-radius-md:    10px;
+      --mcp-radius-lg:    14px;
+      --mcp-font:         'Inter', system-ui, sans-serif;
+      --mcp-mono:         'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--mcp-font);
+      background: var(--mcp-bg);
+      color: var(--mcp-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Shell ───────────────────────── */
+    .docs-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Nav ─────────────────────────── */
+    .docs-nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; height: 52px;
+      background: rgba(250,248,246,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--mcp-border);
+    }
+    .docs-nav__brand {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: var(--mcp-text); font-weight: 700; font-size: 1rem;
+    }
+    .docs-nav__brand svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .docs-nav__links { display: flex; align-items: center; gap: 6px; }
+    .docs-nav__link {
+      padding: 5px 11px; border-radius: var(--mcp-radius-sm);
+      text-decoration: none; color: var(--mcp-text-dim);
+      font-size: 0.88rem; font-weight: 500;
+      transition: color 0.15s, background 0.15s;
+    }
+    .docs-nav__link:hover { color: var(--mcp-text); background: rgba(0,0,0,0.04); }
+    .docs-nav__link--active { color: var(--mcp-primary-deep); font-weight: 700; }
+
+    /* ── Guide tabs (mock selector) ───── */
+    .guide-tabs {
+      display: flex; gap: 8px;
+      padding: 20px 28px 0;
+      border-bottom: 1px solid var(--mcp-border);
+      background: var(--mcp-bg);
+    }
+    .guide-tab {
+      padding: 8px 18px;
+      border: 1px solid var(--mcp-border);
+      border-bottom: none;
+      border-radius: var(--mcp-radius-sm) var(--mcp-radius-sm) 0 0;
+      background: rgba(255,255,255,0.5);
+      color: var(--mcp-text-dim);
+      font-size: 0.88rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .guide-tab.is-active {
+      background: var(--mcp-bg);
+      color: var(--mcp-primary-deep);
+      border-color: var(--mcp-border);
+      position: relative;
+    }
+    .guide-tab.is-active::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 1px; background: var(--mcp-bg);
+    }
+    .guide-note {
+      font-size: 0.78rem;
+      color: var(--mcp-text-dim);
+      padding: 6px 28px;
+      background: rgba(226,109,47,0.06);
+      border-bottom: 1px solid rgba(226,109,47,0.12);
+    }
+    .guide-note strong { color: var(--mcp-primary-deep); }
+
+    /* ── Guide panels ────────────────── */
+    .guide-panel { display: none; }
+    .guide-panel.is-active { display: block; }
+
+    /* ── Hero ────────────────────────── */
+    .docs-hero {
+      padding: 44px 28px 32px;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .docs-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--mcp-primary);
+      margin-bottom: 10px;
+    }
+    .docs-hero h1 {
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      font-weight: 800; line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .docs-hero p {
+      font-size: 1.05rem;
+      color: var(--mcp-text-dim);
+      max-width: 620px;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .docs-hero__actions {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .docs-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: var(--mcp-radius-sm);
+      font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; transition: all 0.18s;
+      border: 1.5px solid transparent;
+    }
+    .docs-btn--primary {
+      background: var(--mcp-primary); color: #fff;
+    }
+    .docs-btn--primary:hover { background: var(--mcp-primary-deep); }
+    .docs-btn--secondary {
+      background: transparent;
+      border-color: var(--mcp-border);
+      color: var(--mcp-text);
+    }
+    .docs-btn--secondary:hover { background: rgba(0,0,0,0.04); }
+
+    /* ── Code blocks ─────────────────── */
+    .docs-code {
+      position: relative;
+      background: #1e1b18;
+      border-radius: var(--mcp-radius-md);
+      margin-top: 20px;
+      overflow: hidden;
+    }
+    .docs-code + .docs-code { margin-top: 12px; }
+    .docs-code pre {
+      padding: 18px 20px;
+      overflow-x: auto;
+    }
+    .docs-code code {
+      font-family: var(--mcp-mono);
+      font-size: 0.88rem;
+      color: #e8e2da;
+      white-space: pre;
+    }
+    .docs-copy {
+      position: absolute; top: 10px; right: 10px;
+      padding: 4px 12px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--mcp-radius-sm);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .docs-copy:hover { background: rgba(255,255,255,0.2); }
+    .docs-hero-note {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--mcp-text-dim);
+      line-height: 1.55;
+    }
+    .docs-hero-note code {
+      font-family: var(--mcp-mono);
+      font-size: 0.82rem;
+      background: rgba(0,0,0,0.07);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+
+    /* ── Main two-col layout ─────────── */
+    .docs-main {
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 28px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* ── Section ─────────────────────── */
+    .docs-section h2 {
+      font-size: 1.18rem; font-weight: 700;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .docs-section p {
+      font-size: 0.95rem;
+      color: var(--mcp-text-dim);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    /* ── Grid and cards ─────────────── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .docs-grid--2 { grid-template-columns: 1fr 1fr; }
+    .docs-card {
+      background: var(--mcp-surface);
+      border: 1px solid var(--mcp-border);
+      border-radius: var(--mcp-radius-md);
+      padding: 16px 18px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .docs-card:hover {
+      border-color: rgba(226,109,47,0.28);
+      box-shadow: 0 4px 16px rgba(226,109,47,0.08);
+    }
+    .docs-card h3 {
+      font-size: 0.92rem; font-weight: 700;
+      margin-bottom: 7px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .docs-card h3 code {
+      font-family: var(--mcp-mono);
+      font-size: 0.82rem;
+      background: rgba(0,0,0,0.06);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+    .docs-card p {
+      font-size: 0.88rem;
+      color: var(--mcp-text-dim);
+      line-height: 1.55;
+    }
+    .docs-card ul {
+      padding-left: 16px;
+      font-size: 0.88rem;
+      color: var(--mcp-text-dim);
+      line-height: 1.7;
+    }
+    .docs-card p a, .docs-card ul a {
+      color: var(--mcp-primary-deep);
+    }
+    .docs-card p code, .docs-card ul code {
+      font-family: var(--mcp-mono);
+      font-size: 0.82rem;
+      background: rgba(0,0,0,0.06);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+    .docs-card--muted {
+      background: rgba(255,255,255,0.5);
+      border-style: dashed;
+    }
+    .docs-step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(226,109,47,0.12);
+      color: var(--mcp-primary-deep);
+      font-size: 0.72rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .docs-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      background: rgba(226,109,47,0.14);
+      color: var(--mcp-primary-deep);
+    }
+
+    /* ── Compact code in cards ────────── */
+    .docs-code--compact {
+      margin-top: 10px;
+      border-radius: var(--mcp-radius-sm);
+    }
+    .docs-code--compact pre { padding: 12px 14px; }
+    .docs-code--compact code { font-size: 0.82rem; white-space: pre-wrap; }
+
+    /* ── Related guides strip ─────────── */
+    .docs-related {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid var(--mcp-border);
+    }
+    .docs-related a {
+      font-size: 0.88rem;
+      color: var(--mcp-primary-deep);
+      text-decoration: none;
+    }
+    .docs-related a:hover { text-decoration: underline; }
+
+    /* ── Change annotation ────────────── */
+    .changed {
+      outline: 2px solid rgba(226,109,47,0.45);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .change-legend {
+      max-width: 860px; margin: 16px auto 0; padding: 0 28px;
+      font-size: 0.82rem; color: var(--mcp-text-dim);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .change-legend-swatch {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border-radius: 2px;
+      outline: 2px solid rgba(226,109,47,0.45);
+    }
+
+    @media (max-width: 600px) {
+      .guide-tabs { padding: 16px 16px 0; }
+      .docs-hero, .docs-main { padding-left: 16px; padding-right: 16px; }
+      .docs-grid, .docs-grid--2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-shell">
+
+    <nav class="docs-nav" aria-label="Primary">
+      <a class="docs-nav__brand" href="#">
+        <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#e26d2f"/><circle cx="14" cy="14" r="7" fill="#fff" opacity="0.9"/></svg>
+        <span>Supericons</span>
+      </a>
+      <div class="docs-nav__links">
+        <a class="docs-nav__link" href="#">Back to docs</a>
+        <a class="docs-nav__link docs-nav__link--active" href="#">Client guides</a>
+      </div>
+    </nav>
+
+    <!-- Guide selector tabs -->
+    <div class="guide-tabs" role="tablist">
+      <button class="guide-tab is-active" role="tab" data-guide="claude-code" aria-selected="true">Claude Code</button>
+      <button class="guide-tab" role="tab" data-guide="codex" aria-selected="false">Codex</button>
+      <button class="guide-tab" role="tab" data-guide="cursor" aria-selected="false">Cursor</button>
+    </div>
+    <p class="guide-note"><strong>Copy mockup.</strong> Orange outlines mark text that changed from the current version. Reference: <code>store.js</code> &gt; <code>getDocsGuideConfig()</code>. Implementation doc: <code>client-guides-copy-refined.md</code>.</p>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- GUIDE: Claude Code                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="guide-panel is-active" id="panel-claude-code" role="tabpanel">
+
+      <section class="docs-hero">
+        <span class="docs-eyebrow">Claude Code</span>
+        <!-- CC-1 + CG-1: brand casing fix -->
+        <h1 class="changed">Set up Supericons MCP in Claude Code</h1>
+        <!-- CG-5 + CG-1: hero copy rewrite -->
+        <p class="changed">Add icon search and SVG retrieval to Claude Code without leaving the command line. Search, pick, and insert icons in the same session as your code edits.</p>
+        <div class="docs-hero__actions">
+          <!-- CG-4: "Docs hub" -> "Back to docs" -->
+          <a class="docs-btn docs-btn--primary changed" href="#">Back to docs</a>
+          <a class="docs-btn docs-btn--secondary" href="#">Pricing</a>
+        </div>
+
+        <div class="docs-code">
+          <button class="docs-copy" type="button">Copy</button>
+          <pre><code id="claude-config"># macOS / Linux
+claude mcp add supericons -- npx -y supericons-mcp
+
+# Windows
+claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
+        </div>
+
+        <!-- CC-2: heroNote - added config file path reference -->
+        <p class="docs-hero-note changed">Prefer JSON config over CLI? Use the same <code>command</code> and <code>args</code> values in your Claude Code MCP server entry (<code>~/.config/claude-code/mcp.json</code> or equivalent).</p>
+      </section>
+
+      <div class="docs-main">
+
+        <section class="docs-section">
+          <h2>Claude Code flow</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">1</span> Add the server</h3>
+              <p>Run the Claude CLI command above to register the <code>supericons</code> MCP server.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CC-3: removed "cleanly" + clearer instruction -->
+              <h3><span class="docs-step-num">2</span> Confirm Claude can see it</h3>
+              <p class="changed">Run <code>claude mcp list</code> to verify the server registered, or restart the session if it is not listed.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CC-4: specify what results to look for -->
+              <h3><span class="docs-step-num">3</span> Verify with a search</h3>
+              <p class="changed">Ask Claude Code to find an icon (e.g., a settings or navigation icon) and verify that the results include Lucide or Tabler options.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">4</span> Pull SVG into code</h3>
+              <p>Once the icon is selected, ask Claude Code to insert the SVG directly into your component or markup.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Example prompt</h2>
+          <div class="docs-code">
+            <button class="docs-copy" type="button">Copy prompt</button>
+            <pre><code>Find a settings icon from Lucide for a dashboard header.
+Return two alternatives from Tabler as well.
+Then insert the chosen SVG into my React component.</code></pre>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Premium access</h2>
+          <div class="docs-grid docs-grid--2">
+            <article class="docs-card">
+              <!-- CC-5: removed "actually" -->
+              <h3 class="changed">How premium access works</h3>
+              <!-- CC-6: "launches the MCP server" -> "present in the config at startup" -->
+              <p class="changed">Premium icons are not unlocked simply by adding a key. They unlock when your Supericons account has an active <a href="#">Pro subscription or purchased collection</a>, and <code>SUPERICONS_API_KEY</code> is present in the MCP server config Claude Code uses at startup.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3>What to do</h3>
+              <!-- CC-2 adjacent: "surface" -> "field" -->
+              <p class="changed">Sign in to Supericons, generate an API key from the <a href="#">API Keys</a> page, then add that key in the env or secrets <strong>field</strong> Claude Code uses for MCP server configuration.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3>Server does not appear</h3>
+              <!-- CC-7: "stale registry issues" -> actionable step -->
+              <p class="changed">Run <code>claude mcp list</code> after adding the server. If it still does not appear, restart the Claude Code session.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3>Windows cannot launch <code>npx</code></h3>
+              <p>On native Windows, use <code>cmd /c npx -y supericons-mcp</code> instead of calling <code>npx</code> directly.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3>Premium icons are missing</h3>
+              <!-- CG-2 + CG-3: entitlement jargon + "paid plan" -->
+              <p class="changed">Free icons work without a Pro subscription. Premium collections require an active <a href="#">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your MCP server config.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="docs-related">
+          <span style="font-size:0.82rem;color:var(--mcp-text-dim);">Also see:</span>
+          <a href="#">Docs</a>
+          <a href="#">Codex setup</a>
+          <a href="#">Cursor setup</a>
+        </div>
+
+      </div>
+    </div><!-- /claude-code panel -->
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- GUIDE: Codex                                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="guide-panel" id="panel-codex" role="tabpanel">
+
+      <section class="docs-hero">
+        <span class="docs-eyebrow">Codex</span>
+        <!-- CG-1: brand casing -->
+        <h1 class="changed">Set up Supericons MCP in Codex</h1>
+        <!-- CG-5 + CG-1 + CX-2: "agent loop" / "UI fixes" rewrite -->
+        <p class="changed">Add icon search to your Codex session. Find and insert icons without switching to a browser - search, pick, and drop SVGs in the same coding flow as your edits.</p>
+        <div class="docs-hero__actions">
+          <!-- CG-4: "Docs hub" -> "Back to docs" -->
+          <a class="docs-btn docs-btn--primary changed" href="#">Back to docs</a>
+          <a class="docs-btn docs-btn--secondary" href="#">Pricing</a>
+        </div>
+
+        <div class="docs-code">
+          <button class="docs-copy" type="button">Copy</button>
+          <pre><code>codex mcp add supericons -- npx -y supericons-mcp</code></pre>
+        </div>
+        <div class="docs-code">
+          <button class="docs-copy" type="button">Copy</button>
+          <pre><code>[mcp_servers.supericons]
+command = "npx"
+args = ["-y", "supericons-mcp"]</code></pre>
+        </div>
+
+        <!-- CX-3: "manage Codex manually" -> "prefer a config file?" + added config path context -->
+        <p class="docs-hero-note changed">The CLI command is the quickest path. Prefer a config file? Add the same values to <code>~/.codex/config.toml</code> under <code>[mcp_servers.supericons]</code>.</p>
+      </section>
+
+      <div class="docs-main">
+
+        <section class="docs-section">
+          <h2>Codex flow</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">1</span> Register the MCP server</h3>
+              <p>Run <code>codex mcp add supericons -- npx -y supericons-mcp</code> or add the same values to <code>config.toml</code>.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">2</span> Confirm Codex can see it</h3>
+              <p>Open Codex and use <code>/mcp</code> to confirm the server is active before you rely on icon tool calls.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">3</span> Try a narrow prompt</h3>
+              <p>Start with a concrete request like a navigation, auth, or dashboard icon so you can verify the flow quickly.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">4</span> Insert the SVG</h3>
+              <p>After selecting an icon, ask Codex to place the SVG inside your component or template file directly.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Example prompt</h2>
+          <!-- CG-1: "SuperIcons" -> "Supericons" in prompt text -->
+          <div class="docs-code">
+            <button class="docs-copy" type="button">Copy prompt</button>
+            <pre><code class="changed">Search Supericons for a secure login icon.
+Show me a Lucide option and a Tabler option.
+Insert the Lucide SVG into the sign-in button component.</code></pre>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Premium access</h2>
+          <div class="docs-grid docs-grid--2">
+            <article class="docs-card">
+              <!-- CX-4: "Entitlement first" -> "Your account comes first" -->
+              <h3 class="changed">Your account comes first</h3>
+              <!-- CX-5: "key carries" metaphor rewritten -->
+              <p class="changed">Your API key authenticates to your Supericons account. The collections and tools you can access depend on what your account owns - either a <a href="#">Pro subscription or purchased collection packs</a>. The key alone does not grant access.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CX-6: "Codex setup note" -> descriptive heading -->
+              <h3 class="changed">How to add your API key in Codex</h3>
+              <!-- CX-6: "mechanism" -> "field", minor cleanup -->
+              <p class="changed">Generate the key in <a href="#">API Keys</a>, then add <code>SUPERICONS_API_KEY</code> to the env or secrets field your Codex MCP config uses for the <code>supericons-mcp</code> server.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- CX-7: "tool is absent" -> "not visible in Codex" -->
+              <h3 class="changed">Server saved but not visible in Codex</h3>
+              <!-- unchanged copy -->
+              <p>Use <code>/mcp</code> in Codex to inspect active servers and restart the session after changing MCP config.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CX-8: "Package resolution fails" -> "`npx` command does not run" -->
+              <h3 class="changed">The <code>npx</code> command does not run</h3>
+              <!-- unchanged copy -->
+              <p>Ensure <code>npx</code> is available in the shell environment that Codex uses for local MCP processes.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CX-9: "results are unavailable" -> "icons do not appear" -->
+              <h3 class="changed">Premium icons do not appear</h3>
+              <!-- CG-2 + CG-3: entitlement jargon + "paid plan" -->
+              <p class="changed">Free icons still return 20,000+ results without a Pro subscription. Premium icon access requires an active <a href="#">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="docs-related">
+          <span style="font-size:0.82rem;color:var(--mcp-text-dim);">Also see:</span>
+          <a href="#">Docs</a>
+          <a href="#">Claude Code setup</a>
+          <a href="#">Cursor setup</a>
+        </div>
+
+      </div>
+    </div><!-- /codex panel -->
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- GUIDE: Cursor                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="guide-panel" id="panel-cursor" role="tabpanel">
+
+      <section class="docs-hero">
+        <span class="docs-eyebrow">Cursor</span>
+        <!-- CG-1: brand casing -->
+        <h1 class="changed">Set up Supericons MCP in Cursor</h1>
+        <!-- CG-5 + CG-1 + CU-2: "patching workflow" + "SuperIcons" -->
+        <p class="changed">Add icon search and SVG retrieval to Cursor. Find and insert icons without leaving the editor - in the same session as your code edits and component builds.</p>
+        <div class="docs-hero__actions">
+          <!-- CG-4: "Docs hub" -> "Back to docs" -->
+          <a class="docs-btn docs-btn--primary changed" href="#">Back to docs</a>
+          <a class="docs-btn docs-btn--secondary" href="#">Pricing</a>
+        </div>
+
+        <div class="docs-code">
+          <button class="docs-copy" type="button">Copy</button>
+          <pre><code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+        </div>
+        <!-- no heroNote for Cursor in original -->
+      </section>
+
+      <div class="docs-main">
+
+        <section class="docs-section">
+          <h2>Cursor flow</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3><span class="docs-step-num">1</span> Add the MCP entry</h3>
+              <!-- CU-3: "config surface your installation uses" -> specific UI + file path -->
+              <p class="changed">Open Cursor settings, navigate to MCP, and paste the server config. Or add it directly to <code>~/.cursor/mcp.json</code>.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3><span class="docs-step-num">2</span> Reload MCP servers</h3>
+              <!-- CU-4: "should show" hedged -> instruction with "Verify...appears" -->
+              <p class="changed">Save and reload. Verify the <code>supericons</code> server appears in Cursor's MCP tool list before continuing.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">3</span> Test with a UI prompt</h3>
+              <p>Ask Cursor to search for a concrete icon use case like auth, charts, or navigation to validate the setup.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3><span class="docs-step-num">4</span> Apply the result in code</h3>
+              <p>Once the icon is selected, have Cursor insert the SVG directly into the file it is already editing.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Example prompt</h2>
+          <div class="docs-code">
+            <button class="docs-copy" type="button">Copy prompt</button>
+            <pre><code>Find an icon for a dashboard analytics tab.
+Return one Lucide option and one Phosphor option.
+Then replace the placeholder SVG in my sidebar component.</code></pre>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Premium access</h2>
+          <div class="docs-grid docs-grid--2">
+            <article class="docs-card">
+              <!-- CU-5: "What to connect" -> "What you need for premium access" -->
+              <h3 class="changed">What you need for premium access</h3>
+              <!-- CU-6 + CG-2: entitlement jargon -->
+              <p class="changed">Premium MCP access requires an active <a href="#">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your Cursor MCP server config.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3>What to do first</h3>
+              <!-- unchanged copy -->
+              <p>Generate the key in <a href="#">API Keys</a>, add it to the env or secrets field Cursor uses for the <code>supericons</code> server, then reload MCP servers.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <!-- unchanged -->
+              <h3>Cursor cannot see the server</h3>
+              <p>Reload Cursor's MCP config after saving. Most issues here come from a stale server registry rather than a bad config block.</p>
+            </article>
+            <article class="docs-card">
+              <!-- CU-7: "The command does not run" -> "`npx` is not found or fails to start" -->
+              <h3 class="changed"><code>npx</code> is not found or fails to start</h3>
+              <!-- unchanged copy -->
+              <p>Make sure Node.js and <code>npx</code> are available to the shell environment Cursor launches for MCP tools.</p>
+            </article>
+            <article class="docs-card">
+              <!-- unchanged title -->
+              <h3>Premium collections are missing</h3>
+              <!-- CG-2 + CG-3: entitlement jargon + "paid plan" -->
+              <p class="changed">Cursor can still use the free 20,000+ icons without a Pro subscription. Premium results require an active <a href="#">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="docs-related">
+          <span style="font-size:0.82rem;color:var(--mcp-text-dim);">Also see:</span>
+          <a href="#">Docs</a>
+          <a href="#">Claude Code setup</a>
+          <a href="#">Codex setup</a>
+        </div>
+
+      </div>
+    </div><!-- /cursor panel -->
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FOOTER DESIGN DECISION                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div style="background: rgba(226,109,47,0.06); border-top: 2px solid rgba(226,109,47,0.2); padding: 32px 28px;">
+      <div style="max-width: 860px; margin: 0 auto;">
+        <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mcp-primary);margin-bottom:20px;">Footer design decision</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+
+          <!-- Current (remove this) -->
+          <div>
+            <p style="font-size:0.8rem;font-weight:700;color:var(--mcp-text-dim);margin-bottom:10px;">Current - remove this</p>
+            <div style="background:var(--mcp-surface);border:1px solid rgba(200,50,50,0.3);border-radius:var(--mcp-radius-md);padding:18px;opacity:0.6;text-decoration-line:line-through;">
+              <p style="font-size:0.88rem;color:var(--mcp-text-dim);margin-bottom:12px;">Supericons docs. Official setup guidance for free and premium MCP workflows.</p>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:0.85rem;">
+                <span style="color:var(--mcp-primary-deep);">App</span>
+                <span style="color:var(--mcp-primary-deep);">Pricing</span>
+                <span style="color:var(--mcp-primary-deep);">API Keys</span>
+                <span style="color:var(--mcp-primary-deep);">Terms</span>
+                <span style="color:var(--mcp-primary-deep);">Privacy</span>
+              </div>
+            </div>
+            <ul style="margin-top:12px;padding-left:16px;font-size:0.82rem;color:var(--mcp-text-dim);line-height:1.8;">
+              <li>Tagline repeats the H1 - adds nothing</li>
+              <li>All five links already exist in the site footer</li>
+              <li>Pure duplication of what the site already provides</li>
+            </ul>
+          </div>
+
+          <!-- Recommended state -->
+          <div>
+            <p style="font-size:0.8rem;font-weight:700;color:var(--mcp-primary-deep);margin-bottom:10px;">After - no in-page footer</p>
+            <div style="background:var(--mcp-surface);border:2px solid rgba(226,109,47,0.3);border-radius:var(--mcp-radius-md);padding:18px;min-height:72px;display:flex;align-items:center;justify-content:center;">
+              <p style="font-size:0.88rem;color:var(--mcp-text-dim);font-style:italic;text-align:center;">Footer block removed.<br>Site footer handles all navigation and legal links.</p>
+            </div>
+            <ul style="margin-top:12px;padding-left:16px;font-size:0.82rem;color:var(--mcp-text-dim);line-height:1.8;">
+              <li>No duplicate navigation for the user to reconcile</li>
+              <li>Cleaner end-of-page reading experience</li>
+              <li>Site footer is the single canonical navigation surface</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div style="background:rgba(255,255,255,0.7);border:1px dashed var(--mcp-border);border-radius:var(--mcp-radius-md);padding:14px 16px;font-size:0.85rem;color:var(--mcp-text-dim);line-height:1.65;">
+          <strong style="color:var(--mcp-text);">Decision: Remove.</strong>
+          The docs page is embedded in the Supericons site, which already has a persistent site-wide footer containing all navigation and legal links. The in-page footer is pure duplication.
+          The tagline restates the H1. Every link in the footer is already present in the site footer immediately below.
+          Removing it reduces noise and makes the site footer the single, unambiguous navigation surface.
+          Client guide pages (SPA views) do not need their own footer either - the app shell navigation and the related guides strip are sufficient.
+        </div>
+
+        <p style="font-size:0.78rem;color:var(--mcp-text-dim);margin-top:14px;">
+          Implementation: remove the entire <code style="font-family:var(--mcp-mono);font-size:0.75rem;">&lt;footer class="docs-footer"&gt;...&lt;/footer&gt;</code> block from
+          <code style="font-family:var(--mcp-mono);font-size:0.75rem;">public/docs/index.html</code> and the associated <code style="font-family:var(--mcp-mono);font-size:0.75rem;">.docs-footer</code> CSS rules from <code style="font-family:var(--mcp-mono);font-size:0.75rem;">public/mcp/docs.css</code>.
+          Also update <code style="font-family:var(--mcp-mono);font-size:0.75rem;">docs-ui-ux-implementation.md</code> and <code style="font-family:var(--mcp-mono);font-size:0.75rem;">docs-ui-ux-mockup.html</code>.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /docs-shell -->
+
+  <script>
+
+    // Tab switching
+    document.querySelectorAll('.guide-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.guide-tab').forEach(t => {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.guide-panel').forEach(p => p.classList.remove('is-active'));
+
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        const panel = document.getElementById('panel-' + tab.dataset.guide);
+        if (panel) panel.classList.add('is-active');
+      });
+    });
+
+    // Copy buttons
+    document.querySelectorAll('.docs-copy').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const code = btn.closest('.docs-code').querySelector('code');
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code.textContent || '');
+          const orig = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(() => { btn.textContent = orig; }, 1800);
+        } catch {}
+      });
+    });
+  </script>
+</body>
+</html>

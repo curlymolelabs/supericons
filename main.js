@@ -816,6 +816,8 @@ function updateCounts() {
   $('#countAll').textContent = total.toLocaleString();
   els.searchInput.placeholder = 'Search 20,000+ icons...';
 
+  if (isStoreView()) return;
+
   // Check if current library has no solid variant
   const activeLib = state.activeLibrary;
   const noSolid = state.iconStyle === 'solid'
@@ -2734,15 +2736,7 @@ const landingMcpDocsLink = $('#landingMcpDocsLink');
 if (landingMcpDocsLink) {
   landingMcpDocsLink.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.assign('/docs/index.html');
-  });
-}
-
-const footerApiLink = $('#footerApiLink');
-if (footerApiLink) {
-  footerApiLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    switchView('mcp');
+    window.location.assign('/?view=docs');
   });
 }
 
@@ -2751,6 +2745,14 @@ if (footerPricingLink) {
   footerPricingLink.addEventListener('click', (e) => {
     e.preventDefault();
     switchView('pricing');
+  });
+}
+
+const footerDocsLink = $('#footerDocsLink');
+if (footerDocsLink) {
+  footerDocsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    switchView('docs');
   });
 }
 

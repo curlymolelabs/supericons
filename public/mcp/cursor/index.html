@@ -3,140 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SuperIcons MCP for Cursor</title>
-  <meta name="description" content="Set up the SuperIcons MCP server for Cursor and search or insert icons directly into your Cursor workflow.">
-  <link rel="canonical" href="https://supericons.dev/mcp/cursor/">
+  <title>Supericons MCP for Cursor</title>
+  <meta name="description" content="Supericons Cursor setup now lives inside the main app shell. Redirecting you to the integrated guide.">
+  <meta http-equiv="refresh" content="0; url=/?view=docs-cursor">
+  <link rel="canonical" href="https://supericons.dev/?view=docs-cursor">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/mcp/docs.css">
+  <script>
+    const target = '/?view=docs-cursor' + (window.location.hash || '');
+    window.location.replace(target);
+  </script>
 </head>
 <body>
-  <div class="docs-shell">
-    <nav class="docs-nav" aria-label="Primary">
-      <a class="docs-nav__brand" href="/">
-        <img src="/favicon.svg" alt="">
-        <span>SuperIcons</span>
-      </a>
-      <div class="docs-nav__links">
-        <a class="docs-nav__link" href="/docs/index.html">Docs</a>
-        <a class="docs-nav__link" href="/mcp/">MCP hub</a>
-        <a class="docs-nav__link" href="/mcp/claude-code/">Claude Code</a>
-        <a class="docs-nav__link" href="/mcp/codex/">Codex</a>
-      </div>
-    </nav>
-
-    <section class="docs-tool-card">
-      <span class="docs-eyebrow">Cursor</span>
-      <h1 style="margin-top: 16px; font-size: clamp(2rem, 4vw, 3.6rem);">Set up SuperIcons MCP in Cursor</h1>
-      <p>
-        Use Cursor with SuperIcons MCP when you want icon search and SVG retrieval inside the same editor flow as your
-        code assistant and patching workflow.
-      </p>
-      <div class="docs-code" style="margin-top: 22px;">
-        <button class="docs-copy" type="button" data-copy-target="cursor-config">Copy</button>
-        <pre><code id="cursor-config">{
-  "mcpServers": {
-    "supericons": {
-      "command": "npx",
-      "args": ["-y", "supericons-mcp"]
-    }
-  }
-}</code></pre>
-      </div>
-    </section>
-
-    <div class="docs-main" style="margin-top: 24px;">
-      <div class="docs-column">
-        <section class="docs-section">
-          <h2>Cursor flow</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>1. Add the MCP entry</h3>
-              <p>Open Cursor MCP settings and place the <code>supericons</code> server entry in the config surface your installation uses.</p>
-            </article>
-            <article class="docs-card">
-              <h3>2. Reload MCP servers</h3>
-              <p>Cursor should show the server in its MCP tool list after the config is saved and reloaded.</p>
-            </article>
-            <article class="docs-card">
-              <h3>3. Test with a UI prompt</h3>
-              <p>Ask Cursor to search for a concrete icon use case like auth, charts, or navigation to validate the setup.</p>
-            </article>
-            <article class="docs-card">
-              <h3>4. Apply the result in code</h3>
-              <p>Once the icon is selected, have Cursor insert the SVG directly into the file it is already editing.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Cursor examples</h2>
-          <div class="docs-code">
-            <pre><code>Find an icon for a dashboard analytics tab.
-Return one Lucide option and one Phosphor option.
-Then replace the placeholder SVG in my sidebar component.</code></pre>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Premium access</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>What to connect</h3>
-              <p>Premium MCP access requires your Supericons entitlement and a valid <code>SUPERICONS_API_KEY</code> in the Cursor MCP server entry.</p>
-            </article>
-            <article class="docs-card">
-              <h3>What to do first</h3>
-              <p>Generate the key in API Keys, add it to the env or secrets field Cursor uses for the <code>supericons</code> server, then reload MCP servers.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="docs-section">
-          <h2>Troubleshooting</h2>
-          <div class="docs-grid">
-            <article class="docs-card">
-              <h3>Cursor cannot see the server</h3>
-              <p>Reload Cursor's MCP config after saving. Most issues here come from a stale server registry rather than a bad config block.</p>
-            </article>
-            <article class="docs-card">
-              <h3>The command does not run</h3>
-              <p>Make sure Node.js and `npx` are available to the shell environment Cursor launches for MCP tools.</p>
-            </article>
-            <article class="docs-card">
-              <h3>Premium collections are missing</h3>
-              <p>Cursor can still use the free 20,000+ icons without a paid plan. Premium results require the right purchase or Pro access plus a valid <code>SUPERICONS_API_KEY</code>.</p>
-            </article>
-          </div>
-        </section>
-      </div>
-
-      <aside class="docs-column">
-        <section class="docs-sidebar">
-          <h3>Related guides</h3>
-          <div class="docs-link-list">
-            <a href="/docs/index.html">Docs hub</a>
-            <a href="/mcp/">MCP hub</a>
-            <a href="/mcp/claude-code/">Claude Code setup</a>
-            <a href="/mcp/codex/">Codex setup</a>
-          </div>
-        </section>
-      </aside>
-    </div>
-  </div>
-
-  <script>
-    document.querySelectorAll('[data-copy-target]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const target = document.getElementById(button.getAttribute('data-copy-target'));
-        if (!target) return;
-        await navigator.clipboard.writeText(target.textContent || '');
-        const original = button.textContent;
-        button.textContent = 'Copied';
-        window.setTimeout(() => {
-          button.textContent = original;
-        }, 1800);
-      });
-    });
-  </script>
+  <p><a href="/?view=docs-cursor">Open the Cursor guide</a></p>
 </body>
 </html>

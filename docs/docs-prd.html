@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Docs Section - PRD and Blueprint</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --panel: #ffffff;
+      --panel-soft: #f0f2f5;
+      --text: #111827;
+      --text-soft: #4b5563;
+      --text-muted: #9ca3af;
+      --line: #e5e7eb;
+      --accent: #ff5a1f;
+      --accent-soft: rgba(255,90,31,0.1);
+      --ok: #16a34a;
+      --ok-soft: #f0fdf4;
+      --warn: #d97706;
+      --warn-soft: #fffbeb;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .page-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+      padding: 32px 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-logo span {
+      font-size: 18px;
+    }
+    .sidebar-section {
+      margin-bottom: 24px;
+    }
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 0 8px;
+      margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sidebar-link:hover { background: var(--panel-soft); color: var(--text); }
+    .sidebar-link.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .sidebar-sub {
+      padding-left: 14px;
+    }
+    .sidebar-sub .sidebar-link {
+      font-size: 13px;
+    }
+
+    /* Main */
+    .main {
+      max-width: 860px;
+      padding: 48px 48px 96px;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    /* Hero */
+    .doc-hero {
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .doc-hero h1 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .doc-hero p {
+      font-size: 17px;
+      color: var(--text-soft);
+      max-width: 580px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .meta-row span { display: flex; align-items: center; gap: 5px; }
+
+    /* TOC */
+    .toc {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .toc h3 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .toc ol {
+      padding-left: 18px;
+    }
+    .toc li {
+      margin-bottom: 5px;
+      font-size: 13.5px;
+    }
+    .toc a { color: var(--text-soft); }
+    .toc a:hover { color: var(--accent); }
+
+    /* Sections */
+    .doc-section {
+      margin-bottom: 56px;
+    }
+    .doc-section h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      padding-top: 8px;
+    }
+    .doc-section h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 24px 0 10px;
+    }
+    .doc-section h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin: 20px 0 8px;
+    }
+    .doc-section p {
+      color: var(--text-soft);
+      margin-bottom: 14px;
+      max-width: 680px;
+    }
+    .doc-section ul, .doc-section ol {
+      color: var(--text-soft);
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+    .doc-section li { margin-bottom: 6px; }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .card p { font-size: 13.5px; margin-bottom: 0; }
+
+    /* Pills */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text-soft);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .pill.accent {
+      background: var(--accent-soft);
+      border-color: rgba(255,90,31,0.25);
+      color: var(--accent);
+    }
+
+    /* Code */
+    pre, code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    code {
+      background: #f0f2f5;
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 13px;
+      color: #cf4500;
+    }
+    pre {
+      background: #1a1f2e;
+      color: #c9d1d9;
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 12px 0 20px;
+      line-height: 1.65;
+    }
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--line);
+    }
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      color: var(--text-soft);
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* Callouts */
+    .callout {
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 13.5px;
+    }
+    .callout.note {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+    .callout.warning {
+      background: var(--warn-soft);
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+    .callout.success {
+      background: var(--ok-soft);
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    /* Sitemap / tree */
+    .tree {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .tree .root { color: var(--text); font-weight: 700; }
+    .tree .branch { color: var(--accent); }
+    .tree .pro { color: var(--warn); }
+
+    /* Phase blocks */
+    .phase-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .phase-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .phase-label {
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+    .phase-content strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .phase-content p { font-size: 13.5px; margin: 0; }
+
+    /* Gate checklist */
+    .gate-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .gate-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-soft);
+    }
+    .gate-list li::before {
+      content: "☐";
+      font-size: 16px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      margin-top: -1px;
+    }
+
+    /* Page spec blocks */
+    .page-spec {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 20px;
+    }
+    .page-spec-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .page-spec-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .page-spec-title { font-weight: 700; font-size: 15px; }
+    .page-spec-url { font-family: monospace; font-size: 12px; color: var(--text-muted); }
+    .page-spec-body p { font-size: 13.5px; }
+    .spec-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin: 14px 0 6px;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 48px 0;
+    }
+
+    @media (max-width: 900px) {
+      .page-shell { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { padding: 32px 24px; }
+      .card-grid.cols-3 { grid-template-columns: 1fr; }
+      .card-grid.cols-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- Sidebar preview -->
+  <nav class="sidebar">
+    <div class="sidebar-logo"><span>◈</span> Supericons Docs</div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <a class="sidebar-link active">Docs Home</a>
+      <a class="sidebar-link">What Is Supericons</a>
+      <a class="sidebar-link">Quickstart</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">MCP Setup</div>
+      <a class="sidebar-link">Claude Code</a>
+      <a class="sidebar-link">Codex</a>
+      <a class="sidebar-link">Cursor</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">MCP Tools Reference</div>
+      <a class="sidebar-link">Icon Tools</a>
+      <a class="sidebar-link">Motion Lab Tools <span style="font-size:10px;color:#d97706;">Pro</span></a>
+      <a class="sidebar-link">Converter Tools <span style="font-size:10px;color:#d97706;">Pro</span></a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Motion Lab <span style="color:#d97706">Pro</span></div>
+      <a class="sidebar-link">Guide</a>
+      <a class="sidebar-link">Presets</a>
+      <a class="sidebar-link">Trigger Types</a>
+      <a class="sidebar-link">Exports</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Converter <span style="color:#d97706">Pro</span></div>
+      <a class="sidebar-link">Guide</a>
+      <a class="sidebar-link">PNG to SVG</a>
+      <a class="sidebar-link">SVG to PNG</a>
+      <a class="sidebar-link">Settings Reference</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Access and API Keys</div>
+      <a class="sidebar-link">API Keys</a>
+      <a class="sidebar-link">Pro and Collections</a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Support</div>
+      <a class="sidebar-link">Troubleshooting</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="eyebrow">PRD and Blueprint</div>
+    <div class="doc-hero">
+      <h1>Supericons Docs Section</h1>
+      <p>Product requirements, architecture, page specifications, and approved copy for the full docs section launch.</p>
+      <div class="meta-row">
+        <span>📅 10 April 2026</span>
+        <span>📄 21 pages</span>
+        <span>🔒 Ready for implementation</span>
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#s1">Problem Statement</a></li>
+        <li><a href="#s2">Goals and Non-Goals</a></li>
+        <li><a href="#s3">Intended Audience</a></li>
+        <li><a href="#s4">Design Principles</a></li>
+        <li><a href="#s5">Resolved Decisions</a></li>
+        <li><a href="#s6">Information Architecture and Sitemap</a></li>
+        <li><a href="#s7">Page Specifications</a></li>
+        <li><a href="#s8">Launch Quality Gates</a></li>
+        <li><a href="#s9">Execution Phases</a></li>
+        <li><a href="#s10">Writing Standards</a></li>
+        <li><a href="#s11">Appendix: Content Sources</a></li>
+      </ol>
+    </div>
+
+    <!-- 1 -->
+    <div class="doc-section" id="s1">
+      <h2>1. Problem Statement</h2>
+      <p>Supericons launched with a documentation surface that covers MCP setup for three clients. The page is titled "Supericons Docs" but does not represent the full product. Pro users who pay for Motion Lab and Converter have no reference material. The current page creates a trust gap between payment and outcome.</p>
+      <p>The product is now broader than an icon browser:</p>
+      <ul>
+        <li>20,000+ free SVG icons across 10 libraries</li>
+        <li>Premium animated collections</li>
+        <li>MCP integration for coding agents (free and Pro tools)</li>
+        <li>Motion Lab (Pro): animation presets, CSS and SVG exports</li>
+        <li>Converter (Pro): PNG-to-SVG and SVG-to-PNG conversion</li>
+      </ul>
+      <p>A docs section that only covers MCP setup does not serve this product.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 2 -->
+    <div class="doc-section" id="s2">
+      <h2>2. Goals and Non-Goals</h2>
+      <h3>Goals</h3>
+      <ul>
+        <li>Build a docs section that accurately represents every part of Supericons that genuinely needs documentation.</li>
+        <li>Keep the top navigation intact. Introduce a dedicated docs left sidebar.</li>
+        <li>Ship once, cleanly. No placeholder pages. No "coming soon" in the sidebar.</li>
+        <li>Make every page verifiable against the shipped product before it goes live.</li>
+        <li>Position Supericons as a professional-grade developer tool with documentation quality to match.</li>
+      </ul>
+      <h3>Non-Goals</h3>
+      <ul>
+        <li>Do not document the free icon browse UI. It is self-explanatory.</li>
+        <li>Do not document the basic customize panel controls. They are labeled and intuitive.</li>
+        <li>Do not document pricing. The pricing page owns that.</li>
+        <li>Do not document legal content. Terms and Privacy pages own that.</li>
+        <li>Do not add speculative tools or features not yet shipped.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 3 -->
+    <div class="doc-section" id="s3">
+      <h2>3. Intended Audience</h2>
+      <div class="card-grid cols-3">
+        <div class="card">
+          <h3>Primary</h3>
+          <p>Developers integrating Supericons through MCP. Comfortable with CLI tools, config files, and coding agents. Want correct commands and working examples.</p>
+        </div>
+        <div class="card">
+          <h3>Secondary</h3>
+          <p>Pro subscribers using Motion Lab and Converter who need to understand parameters, output formats, and how to integrate exports into their projects.</p>
+        </div>
+        <div class="card">
+          <h3>Tertiary</h3>
+          <p>Developers and designers evaluating Supericons for the first time. Need enough orientation to understand what the product does and whether it fits their stack.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 4 -->
+    <div class="doc-section" id="s4">
+      <h2>4. Design Principles</h2>
+      <div class="card-grid cols-2">
+        <div class="card">
+          <h3>Document complexity, not everything</h3>
+          <p>Write docs for workflows where a user can waste 10 minutes making wrong choices without guidance. Skip docs for things the UI already explains clearly.</p>
+        </div>
+        <div class="card">
+          <h3>One source of truth</h3>
+          <p>Each topic has one canonical page. No duplication of pricing, legal, or setup instructions across multiple unrelated pages.</p>
+        </div>
+        <div class="card">
+          <h3>Honest scope</h3>
+          <p>Every sidebar item points to a finished page. No sidebar items that are promises rather than real content.</p>
+        </div>
+        <div class="card">
+          <h3>Launch once, launch cleanly</h3>
+          <p>Because Supericons has not yet launched publicly, ship the complete first docs experience at once. Avoid a mid-state that requires a second redesign.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 5 -->
+    <div class="doc-section" id="s5">
+      <h2>5. Resolved Decisions</h2>
+
+      <h3>5.1 Hero pill chips</h3>
+      <p>Pills serve ambient awareness (what exists here). The sidebar serves active navigation (where to go). They are sequential, not competing. Keep pills, but refine copy from feature labels to value statements.</p>
+      <p><strong>Approved pills for the docs home page:</strong></p>
+      <div class="pill-row">
+        <span class="pill accent">20,000+ free icons</span>
+        <span class="pill accent">Animated icons and CSS exports</span>
+        <span class="pill accent">Works in Claude Code, Codex, Cursor</span>
+      </div>
+
+      <h3>5.2 Interim title during build</h3>
+      <p>Keep "Supericons Docs" as the title. Scope it with a subtitle: "MCP integration guides for Claude Code, Codex, and Cursor." This is accurate today. Once the full docs ship, remove the subtitle. No rewrite needed.</p>
+
+      <h3>5.3 A, B, or C</h3>
+      <div class="callout success">
+        <strong>Decision: Option C</strong>
+        Patch the live page immediately (accurate title + subtitle). Build the full docs site in parallel. These are orthogonal concerns. Coupling them causes ongoing harm to users during the build window for no benefit.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 6 -->
+    <div class="doc-section" id="s6">
+      <h2>6. Information Architecture and Sitemap</h2>
+
+      <h3>6.1 URL structure</h3>
+      <div class="tree">
+        <span class="root">/docs</span><br>
+        &nbsp;&nbsp;/what-is-supericons<br>
+        &nbsp;&nbsp;/quickstart<br>
+        <br>
+        &nbsp;&nbsp;<span class="branch">/mcp</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/claude-code<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/codex<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/cursor<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/tools<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/icons<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pro">/motion</span> &nbsp;Pro<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pro">/converter</span> &nbsp;Pro<br>
+        <br>
+        &nbsp;&nbsp;<span class="pro">/motion-lab</span> &nbsp;Pro<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/presets<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/triggers<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/exports<br>
+        <br>
+        &nbsp;&nbsp;<span class="pro">/converter</span> &nbsp;Pro<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/png-to-svg<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/svg-to-png<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/settings<br>
+        <br>
+        &nbsp;&nbsp;/access<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/api-keys<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/premium<br>
+        <br>
+        &nbsp;&nbsp;/troubleshooting
+      </div>
+
+      <h3>6.2 Full page inventory</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Page</th><th>URL</th><th>Access</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Docs Home</td><td><code>/docs</code></td><td>All</td></tr>
+            <tr><td>2</td><td>What Is Supericons</td><td><code>/docs/what-is-supericons</code></td><td>All</td></tr>
+            <tr><td>3</td><td>Quickstart</td><td><code>/docs/quickstart</code></td><td>All</td></tr>
+            <tr><td>4</td><td>Claude Code Guide</td><td><code>/docs/mcp/claude-code</code></td><td>All</td></tr>
+            <tr><td>5</td><td>Codex Guide</td><td><code>/docs/mcp/codex</code></td><td>All</td></tr>
+            <tr><td>6</td><td>Cursor Guide</td><td><code>/docs/mcp/cursor</code></td><td>All</td></tr>
+            <tr><td>7</td><td>MCP Tools Overview</td><td><code>/docs/mcp/tools</code></td><td>All</td></tr>
+            <tr><td>8</td><td>Icon Tools Reference</td><td><code>/docs/mcp/tools/icons</code></td><td>Free</td></tr>
+            <tr><td>9</td><td>Motion Lab MCP Tools</td><td><code>/docs/mcp/tools/motion</code></td><td>Pro</td></tr>
+            <tr><td>10</td><td>Converter MCP Tools</td><td><code>/docs/mcp/tools/converter</code></td><td>Pro</td></tr>
+            <tr><td>11</td><td>Motion Lab Guide</td><td><code>/docs/motion-lab</code></td><td>Pro</td></tr>
+            <tr><td>12</td><td>Motion Lab Presets</td><td><code>/docs/motion-lab/presets</code></td><td>Pro</td></tr>
+            <tr><td>13</td><td>Motion Lab Triggers</td><td><code>/docs/motion-lab/triggers</code></td><td>Pro</td></tr>
+            <tr><td>14</td><td>Motion Lab Exports</td><td><code>/docs/motion-lab/exports</code></td><td>Pro</td></tr>
+            <tr><td>15</td><td>Converter Guide</td><td><code>/docs/converter</code></td><td>Pro</td></tr>
+            <tr><td>16</td><td>PNG to SVG</td><td><code>/docs/converter/png-to-svg</code></td><td>Pro</td></tr>
+            <tr><td>17</td><td>SVG to PNG</td><td><code>/docs/converter/svg-to-png</code></td><td>Pro</td></tr>
+            <tr><td>18</td><td>Converter Settings</td><td><code>/docs/converter/settings</code></td><td>Pro</td></tr>
+            <tr><td>19</td><td>API Keys</td><td><code>/docs/access/api-keys</code></td><td>All</td></tr>
+            <tr><td>20</td><td>Pro and Collections</td><td><code>/docs/access/premium</code></td><td>All</td></tr>
+            <tr><td>21</td><td>Troubleshooting</td><td><code>/docs/troubleshooting</code></td><td>All</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 7 -->
+    <div class="doc-section" id="s7">
+      <h2>7. Page Specifications</h2>
+
+      <!-- Page 1 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">1</div>
+          <div>
+            <div class="page-spec-title">Docs Home</div>
+            <div class="page-spec-url">/docs</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="spec-label">Purpose</div>
+          <p>Orient first-time visitors. Communicate what Supericons is and what the docs cover. Route users to the right starting point.</p>
+          <div class="spec-label">Hero copy</div>
+          <p><strong>Title:</strong> Supericons Docs</p>
+          <p><strong>Subtitle:</strong> Everything you need to set up MCP, use Motion Lab exports, and get the most from Converter.</p>
+          <div class="pill-row">
+            <span class="pill">20,000+ free icons</span>
+            <span class="pill">Animated icons and CSS exports</span>
+            <span class="pill">Works in Claude Code, Codex, Cursor</span>
+          </div>
+          <div class="spec-label">Routing cards</div>
+          <div class="card-grid cols-2">
+            <div class="card"><h3>Get started fast</h3><p>Quickstart guide. Free and Pro setup paths in one page.</p></div>
+            <div class="card"><h3>Set up MCP</h3><p>Choose your client: Claude Code, Codex, or Cursor.</p></div>
+            <div class="card"><h3>Learn Motion Lab</h3><p>Presets, triggers, and how to export animations for your project.</p></div>
+            <div class="card"><h3>Use the Converter</h3><p>PNG to SVG, SVG to PNG, and output settings explained.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">3</div>
+          <div>
+            <div class="page-spec-title">Quickstart</div>
+            <div class="page-spec-url">/docs/quickstart</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="spec-label">Free path (3 steps)</div>
+          <p><strong>Step 1.</strong> Add the Supericons MCP server to your client. Choose your client for the exact command.</p>
+          <p><strong>Step 2.</strong> Restart or reload your coding agent session so the server registers.</p>
+          <p><strong>Step 3.</strong> Ask your agent to find an icon. Try: "Find me a settings icon from Lucide."</p>
+          <div class="spec-label">Premium path</div>
+          <p>To use premium collections, Motion Lab, or Converter through MCP, you need three things:</p>
+          <ul>
+            <li>A Supericons account with Pro or a purchased collection</li>
+            <li>An API key from your Supericons dashboard</li>
+            <li>Your <code>SUPERICONS_API_KEY</code> added to your MCP client config</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Page 4 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">4</div>
+          <div>
+            <div class="page-spec-title">Claude Code Guide</div>
+            <div class="page-spec-url">/docs/mcp/claude-code</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="callout note"><strong>Verified as of 10 April 2026</strong> Source: code.claude.com/docs/en/mcp</div>
+          <div class="spec-label">Free setup</div>
+<pre><code># macOS / Linux
+claude mcp add supericons -- npx -y supericons-mcp
+
+# Windows
+claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
+          <p>Config file alternative — Claude Code user scope: <code>~/.claude.json</code><br>
+          Project scope: <code>.mcp.json</code> in project root</p>
+<pre><code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+          <p>Verify the server registered: type <code>/mcp</code> in Claude Code.</p>
+          <div class="spec-label">Premium setup</div>
+<pre><code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "your-key-here"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Page 5 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">5</div>
+          <div>
+            <div class="page-spec-title">Codex Guide</div>
+            <div class="page-spec-url">/docs/mcp/codex</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="callout note"><strong>Verified as of 10 April 2026</strong> Source: developers.openai.com/codex/mcp</div>
+          <div class="callout warning"><strong>Scope note</strong> MCP is available in the Codex CLI and IDE extension only. The Codex web app and cloud task runner do not support MCP server configuration.</div>
+          <div class="spec-label">Free setup - CLI command</div>
+<pre><code>codex mcp add supericons -- npx -y supericons-mcp</code></pre>
+          <div class="spec-label">Config file alternative</div>
+          <p>Add to <code>~/.codex/config.toml</code> (user scope) or <code>.codex/config.toml</code> in your project root (project scope, trusted projects only):</p>
+<pre><code>[mcp_servers.supericons]
+command = "npx"
+args = ["-y", "supericons-mcp"]</code></pre>
+          <p>Verify with the Codex TUI: type <code>/mcp</code></p>
+          <div class="spec-label">Premium setup</div>
+<pre><code>[mcp_servers.supericons]
+command = "npx"
+args = ["-y", "supericons-mcp"]
+env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
+        </div>
+      </div>
+
+      <!-- Page 7 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">7</div>
+          <div>
+            <div class="page-spec-title">MCP Tools Overview</div>
+            <div class="page-spec-url">/docs/mcp/tools</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="spec-label">Intro copy</div>
+          <p>The Supericons MCP server exposes tools your coding agent can call directly. Icon search and retrieval are free. Motion Lab and Converter tools require a Pro subscription or purchased collection and a valid <code>SUPERICONS_API_KEY</code>.</p>
+          <div class="spec-label">Tool access table</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tool</th><th>Category</th><th>Access</th></tr></thead>
+              <tbody>
+                <tr><td><code>search_icons</code></td><td>Icons</td><td>Free</td></tr>
+                <tr><td><code>get_icon</code></td><td>Icons</td><td>Free</td></tr>
+                <tr><td><code>list_libraries</code></td><td>Icons</td><td>Free</td></tr>
+                <tr><td><code>list_motion_presets</code></td><td>Motion Lab</td><td>Pro</td></tr>
+                <tr><td><code>get_motion_recipe</code></td><td>Motion Lab</td><td>Pro</td></tr>
+                <tr><td><code>animate_icon</code></td><td>Motion Lab</td><td>Pro</td></tr>
+                <tr><td><code>export_motion_css</code></td><td>Motion Lab</td><td>Pro</td></tr>
+                <tr><td><code>export_animated_svg</code></td><td>Motion Lab</td><td>Pro</td></tr>
+                <tr><td><code>inspect_converter_options</code></td><td>Converter</td><td>Pro</td></tr>
+                <tr><td><code>convert_svg_to_png</code></td><td>Converter</td><td>Pro</td></tr>
+                <tr><td><code>convert_png_to_svg</code></td><td>Converter</td><td>Pro</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 10 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">10</div>
+          <div>
+            <div class="page-spec-title">Converter MCP Tools Reference</div>
+            <div class="page-spec-url">/docs/mcp/tools/converter</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="callout warning"><strong>traceClass is non-obvious.</strong> The six values have meaningfully different output characteristics. Read the reference before choosing. When unsure, call <code>inspect_converter_options</code> first.</div>
+          <div class="spec-label">traceClass reference</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Value</th><th>Best for</th></tr></thead>
+              <tbody>
+                <tr><td><code>general-color</code></td><td>Most full-color images and photographs</td></tr>
+                <tr><td><code>flat-logo-color</code></td><td>Logos with solid flat color fills</td></tr>
+                <tr><td><code>tile-icon-color</code></td><td>Small repeating tile icons</td></tr>
+                <tr><td><code>tiny-line-icon</code></td><td>Very small icons with fine line detail</td></tr>
+                <tr><td><code>single-color-mark</code></td><td>Single-color logos or marks</td></tr>
+                <tr><td><code>mono-mask</code></td><td>High-contrast black and white images</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="spec-label">qualityMode reference</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Value</th><th>Behavior</th></tr></thead>
+              <tbody>
+                <tr><td><code>exact</code></td><td>Preserves maximum path detail. Larger output file.</td></tr>
+                <tr><td><code>compact</code></td><td>Simplifies paths for smaller file size. Some detail loss.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="spec-label">uiMode reference</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Value</th><th>Behavior</th></tr></thead>
+              <tbody>
+                <tr><td><code>logo</code></td><td>Optimizes for logo-style artwork with free-form shapes.</td></tr>
+                <tr><td><code>icon</code></td><td>Optimizes for icon-style artwork with geometric precision.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 19 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">19</div>
+          <div>
+            <div class="page-spec-title">API Keys</div>
+            <div class="page-spec-url">/docs/access/api-keys</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="spec-label">Core principle</div>
+          <p>An API key does not grant access by itself. It carries whatever entitlement your account already has.</p>
+          <div class="spec-label">What an API key does</div>
+          <p>Your Supericons API key identifies your account when you call MCP tools that require authentication. If your account has an active Pro subscription or a purchased collection, your API key carries that entitlement to the MCP server.</p>
+          <div class="spec-label">What an API key does not do</div>
+          <div class="callout warning">
+            <strong>A key alone does not unlock premium features.</strong>
+            If your account does not have Pro or a purchased collection, adding an API key to your MCP config will not change what tools are available to you. Access is determined by your account, not the key itself.
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 21 -->
+      <div class="page-spec">
+        <div class="page-spec-header">
+          <div class="page-spec-num">21</div>
+          <div>
+            <div class="page-spec-title">Troubleshooting</div>
+            <div class="page-spec-url">/docs/troubleshooting</div>
+          </div>
+        </div>
+        <div class="page-spec-body">
+          <div class="spec-label">Config file locations</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Client</th><th>Scope</th><th>Path</th></tr></thead>
+              <tbody>
+                <tr><td>Claude Code</td><td>User</td><td><code>~/.claude.json</code></td></tr>
+                <tr><td>Claude Code</td><td>Project</td><td><code>.mcp.json</code> (project root)</td></tr>
+                <tr><td>Codex</td><td>User</td><td><code>~/.codex/config.toml</code></td></tr>
+                <tr><td>Codex</td><td>Project</td><td><code>.codex/config.toml</code> (project root)</td></tr>
+                <tr><td>Cursor</td><td>Global</td><td><code>~/.cursor/mcp.json</code></td></tr>
+                <tr><td>Cursor</td><td>Project</td><td><code>.cursor/mcp.json</code> (project root)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="spec-label">Premium access check</div>
+          <p>Confirm three things: (1) your account has active Pro or a purchased collection, (2) you have generated an API key from the dashboard, (3) <code>SUPERICONS_API_KEY</code> is present in the config your MCP client reads at startup.</p>
+        </div>
+      </div>
+
+    </div><!-- /page specs -->
+
+    <hr class="divider">
+
+    <!-- 8 -->
+    <div class="doc-section" id="s8">
+      <h2>8. Launch Quality Gates</h2>
+      <p>The docs section does not ship until all of the following are confirmed:</p>
+      <ul class="gate-list">
+        <li>Every sidebar item points to a completed page</li>
+        <li>No placeholder text exists on any page</li>
+        <li>No "coming soon" appears anywhere in the sidebar or page content</li>
+        <li>All client setup commands are verified against official documentation sources</li>
+        <li>All tool names and parameters match the live MCP server</li>
+        <li>Motion Lab and Converter pages describe real, shipped product behavior</li>
+        <li>All internal links resolve to the correct pages</li>
+        <li>Pricing and entitlement language is consistent across all docs, the pricing page, and the API keys page</li>
+        <li>The verified-as-of timestamp appears on all three client setup guides</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 9 -->
+    <div class="doc-section" id="s9">
+      <h2>9. Execution Phases</h2>
+      <div class="phase-list">
+        <div class="phase-item">
+          <div class="phase-label">Phase 1</div>
+          <div class="phase-content">
+            <strong>Architecture lock</strong>
+            <p>Finalize sidebar structure and URL map. Lock the 21-page set and the docs shell layout. Confirm what is in scope and what is intentionally excluded.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-label">Phase 2</div>
+          <div class="phase-content">
+            <strong>Core docs - orientation layer</strong>
+            <p>Pages: Docs Home, What Is Supericons, Quickstart, API Keys, Pro and Collections, Troubleshooting. These must exist before any reference docs ship.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-label">Phase 3</div>
+          <div class="phase-content">
+            <strong>Client setup guides</strong>
+            <p>Pages: Claude Code, Codex, Cursor. Highest-traffic pages. Near-complete copy already exists. Integrate into routed URL structure with verification timestamps.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-label">Phase 4</div>
+          <div class="phase-content">
+            <strong>MCP tools reference</strong>
+            <p>Pages: MCP Tools Overview, Icon Tools, Motion Lab Tools, Converter Tools. Source material: live MCP server tool definitions.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-label">Phase 5</div>
+          <div class="phase-content">
+            <strong>Product guides - Pro depth</strong>
+            <p>Pages: Motion Lab Guide, Presets, Triggers, Exports, Converter Guide, PNG to SVG, SVG to PNG, Settings Reference. These justify "Supericons Docs" as a title.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-label">Phase 6</div>
+          <div class="phase-content">
+            <strong>Consistency and verification pass</strong>
+            <p>Align terminology across all 21 pages. Verify all setup steps against live official sources. Confirm all internal links. Add verified-as-of dates to client guides.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 10 -->
+    <div class="doc-section" id="s10">
+      <h2>10. Writing Standards</h2>
+      <p>Every page must answer, in order:</p>
+      <ol>
+        <li>What is this?</li>
+        <li>Who is it for?</li>
+        <li>What do they need first?</li>
+        <li>How do they use it?</li>
+        <li>What can go wrong?</li>
+        <li>Where do they go next?</li>
+      </ol>
+      <div class="callout note" style="margin-top:16px;">
+        <strong>Non-negotiables</strong>
+        Every command, file path, and tool parameter must be verified against the live product before the page ships. No jargon that a mid-level developer would not know without looking it up. Every page should be completable in one read sitting (under 4 minutes).
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 11 -->
+    <div class="doc-section" id="s11">
+      <h2>11. Appendix: Content Sources</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Source</th><th>Pages it feeds</th></tr></thead>
+          <tbody>
+            <tr><td><code>docs/factsheet.md</code></td><td>What Is Supericons, Docs Home hero</td></tr>
+            <tr><td><code>docs/plans/client-guides-copy-refined.md</code></td><td>Claude Code, Codex, Cursor guides</td></tr>
+            <tr><td><code>docs/plans/client-guides-verification-report.md</code></td><td>Verified commands and paths</td></tr>
+            <tr><td><code>mcp/index.js</code> (live MCP server)</td><td>All MCP tool reference pages</td></tr>
+            <tr><td>Motion Lab product surface</td><td>Motion Lab guide and sub-pages</td></tr>
+            <tr><td>Converter product surface</td><td>Converter guide and sub-pages</td></tr>
+            <tr><td><code>docs/plans/docs-strategy-discussion.md</code></td><td>Strategic framing for Docs Home</td></tr>
+            <tr><td><code>docs/docs-section-proposal.md</code></td><td>Page definitions and principles</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout success">
+        <strong>No speculative content required.</strong>
+        All 21 pages can be written from material that already exists in the product or its documentation. Nothing in this PRD requires inventing content not yet in the product.
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

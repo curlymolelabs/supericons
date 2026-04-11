@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Docs Mockup</title>
+  <meta name="description" content="Supericons documentation: quickstart, MCP setup, premium access, client guides, current MCP tools, recipes, and workflow tools for Motion Lab and Converter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── docs.css (inlined for standalone mockup) ─────────────── */
+    :root {
+      color-scheme: light;
+      --mcp-bg: #f7f4ed;
+      --mcp-surface: rgba(255, 255, 255, 0.84);
+      --mcp-border: rgba(37, 28, 12, 0.12);
+      --mcp-text: #1f1a13;
+      --mcp-text-dim: #5d5345;
+      --mcp-primary: #e26d2f;
+      --mcp-primary-deep: #a54b1f;
+      --mcp-code-bg: #171411;
+      --mcp-code-text: #f7efe5;
+      --mcp-shadow: 0 16px 40px rgba(40, 26, 7, 0.08);
+      --mcp-radius-lg: 24px;
+      --mcp-radius-md: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(226, 109, 47, 0.14), transparent 32%),
+        linear-gradient(180deg, #fcfaf6 0%, var(--mcp-bg) 100%);
+      color: var(--mcp-text);
+    }
+
+    a { color: inherit; }
+
+    .docs-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 80px;
+    }
+
+    .docs-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .docs-nav__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .docs-nav__brand img,
+    .docs-nav__brand svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .docs-nav__links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .docs-nav__link {
+      color: var(--mcp-text-dim);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .docs-nav__link:hover,
+    .docs-nav__brand:hover { color: var(--mcp-primary-deep); }
+
+    .docs-hero,
+    .docs-section,
+    .docs-sidebar,
+    .docs-callout,
+    .docs-faq,
+    .docs-tool-card {
+      background: var(--mcp-surface);
+      border: 1px solid var(--mcp-border);
+      border-radius: var(--mcp-radius-lg);
+      box-shadow: var(--mcp-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .docs-hero {
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+
+    .docs-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(226, 109, 47, 0.12);
+      color: var(--mcp-primary-deep);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .docs-hero h1,
+    .docs-section h2,
+    .docs-faq h2,
+    .docs-tool-card h2 { margin: 0; line-height: 1.1; }
+
+    .docs-hero h1 {
+      margin-top: 18px;
+      font-size: clamp(2.3rem, 5vw, 4.6rem);
+      max-width: 12ch;
+    }
+
+    .docs-hero p {
+      max-width: 62ch;
+      margin: 18px 0 0;
+      color: var(--mcp-text-dim);
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
+    .docs-hero__actions,
+    .docs-pill-list,
+    .docs-grid,
+    .docs-link-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .docs-hero__actions { margin-top: 28px; }
+
+    .docs-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .docs-btn--primary { background: var(--mcp-primary); color: #fff; }
+    .docs-btn--primary:hover { background: var(--mcp-primary-deep); }
+    .docs-btn--secondary {
+      border-color: var(--mcp-border);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .docs-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .docs-column { display: grid; gap: 24px; }
+
+    .docs-section,
+    .docs-faq,
+    .docs-tool-card,
+    .docs-sidebar,
+    .docs-callout { padding: 30px; }
+
+    .docs-section h2,
+    .docs-faq h2,
+    .docs-tool-card h2 {
+      margin-bottom: 16px;
+      font-size: 1.6rem;
+    }
+
+    .docs-section p,
+    .docs-faq p,
+    .docs-tool-card p,
+    .docs-sidebar p,
+    .docs-callout p {
+      margin: 0 0 14px;
+      color: var(--mcp-text-dim);
+      line-height: 1.7;
+    }
+
+    .docs-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--mcp-border);
+      font-size: 0.9rem;
+      color: var(--mcp-text);
+    }
+
+    .docs-code {
+      position: relative;
+      border-radius: var(--mcp-radius-md);
+      overflow: hidden;
+      background: var(--mcp-code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .docs-code pre {
+      margin: 0;
+      padding: 24px 20px 20px;
+      overflow-x: auto;
+    }
+
+    .docs-code code {
+      font-family: "SF Mono", Consolas, "Liberation Mono", monospace;
+      color: var(--mcp-code-text);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .docs-copy {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-radius: 999px;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .docs-copy:hover { background: rgba(255, 255, 255, 0.16); }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .docs-card {
+      padding: 18px;
+      border-radius: var(--mcp-radius-md);
+      border: 1px solid var(--mcp-border);
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .docs-card h3,
+    .docs-sidebar h3,
+    .docs-callout h3 { margin: 0 0 10px; font-size: 1.02rem; }
+
+    .docs-card p,
+    .docs-card ul,
+    .docs-sidebar ul,
+    .docs-callout ul,
+    .docs-tool-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--mcp-text-dim);
+      line-height: 1.7;
+    }
+
+    .docs-link-list { display: grid; gap: 10px; }
+
+    .docs-link-list a {
+      color: var(--mcp-primary-deep);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .docs-link-list a:hover { text-decoration: underline; }
+
+    .docs-faq__item + .docs-faq__item {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--mcp-border);
+    }
+
+    .docs-footer {
+      margin-top: 28px;
+      color: var(--mcp-text-dim);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 960px) {
+      .docs-main { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .docs-shell {
+        width: min(100% - 20px, 1120px);
+        padding-top: 18px;
+      }
+      .docs-nav { flex-direction: column; align-items: flex-start; }
+      .docs-hero,
+      .docs-section,
+      .docs-faq,
+      .docs-sidebar,
+      .docs-callout,
+      .docs-tool-card { padding: 22px; }
+      .docs-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── UI/UX audit additions ────────────────────────────────── */
+
+    /* Finding 1A: Sticky sidebar on desktop */
+    @media (min-width: 961px) {
+      .docs-main > .docs-column:last-child {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+      }
+    }
+
+    /* Finding 1B: Active TOC link */
+    .docs-link-list a { transition: color 0.15s; }
+    .docs-link-list a.is-active { color: var(--mcp-primary); font-weight: 700; }
+
+    /* Finding 1C: Back-to-top button */
+    .docs-scroll-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--mcp-border);
+      background: var(--mcp-surface);
+      color: var(--mcp-text);
+      cursor: pointer;
+      box-shadow: var(--mcp-shadow);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 100;
+    }
+    .docs-scroll-top[hidden] { display: none; }
+    .docs-scroll-top.is-visible { opacity: 1; transform: translateY(0); }
+    .docs-scroll-top:hover { background: var(--mcp-primary); color: #fff; border-color: transparent; }
+
+    /* Finding 2A: Pro badge */
+    .docs-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    .docs-badge--pro {
+      background: rgba(226, 109, 47, 0.14);
+      color: var(--mcp-primary-deep);
+    }
+
+    /* Finding 2B: Muted meta cards */
+    .docs-card--muted { background: rgba(255, 255, 255, 0.5); border-style: dashed; }
+
+    /* Finding 3: Card hover */
+    .docs-card { transition: border-color 0.2s, box-shadow 0.2s; }
+    .docs-card:hover {
+      border-color: rgba(226, 109, 47, 0.28);
+      box-shadow: 0 4px 16px rgba(226, 109, 47, 0.08);
+    }
+
+    /* Finding 6: Clickable pills */
+    a.docs-pill { text-decoration: none; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    a.docs-pill:hover {
+      background: rgba(226, 109, 47, 0.12);
+      border-color: var(--mcp-primary);
+      color: var(--mcp-primary-deep);
+    }
+
+    /* Finding 7: External link arrow */
+    .docs-card a[target="_blank"]::after { content: ' \2197'; font-size: 0.8em; opacity: 0.5; }
+
+    /* Finding 8: Active nav link */
+    .docs-nav__link--active,
+    .docs-nav__link[aria-current="page"] { color: var(--mcp-primary-deep); font-weight: 700; }
+
+    /* Finding 9: Compact recipe code blocks */
+    .docs-code--compact pre { padding: 14px 16px; }
+    .docs-code--compact code { font-size: 0.84rem; white-space: pre-wrap; }
+
+    /* Finding 10: Footer link strip */
+    .docs-footer__links { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+    .docs-footer__links a { color: var(--mcp-text-dim); text-decoration: none; font-size: 0.85rem; }
+    .docs-footer__links a:hover { color: var(--mcp-primary-deep); text-decoration: underline; }
+
+    /* Finding 11A: Sidebar above content on mobile */
+    @media (max-width: 960px) {
+      .docs-main > .docs-column:last-child { order: -1; }
+    }
+
+    /* Finding 11B: Collapsible grids on mobile */
+    @media (max-width: 720px) {
+      .docs-grid--collapse > .docs-card:nth-child(n+5) { display: none; }
+      .docs-grid--collapse.is-expanded > .docs-card:nth-child(n+5) { display: block; }
+      .docs-expand-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        border: 1px solid var(--mcp-border);
+        border-radius: var(--mcp-radius-md);
+        background: rgba(255, 255, 255, 0.6);
+        color: var(--mcp-text-dim);
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .docs-expand-btn:hover { background: rgba(255, 255, 255, 0.9); }
+      .docs-grid--collapse.is-expanded + .docs-expand-btn { display: none; }
+    }
+
+    @media (min-width: 721px) { .docs-expand-btn { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="docs-shell">
+
+    <nav class="docs-nav" aria-label="Primary">
+      <a class="docs-nav__brand" href="/">
+        <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#e26d2f"/><circle cx="14" cy="14" r="7" fill="#fff" opacity="0.9"/></svg>
+        <span>Supericons</span>
+      </a>
+      <div class="docs-nav__links">
+        <a class="docs-nav__link docs-nav__link--active" href="/docs/" aria-current="page">Docs</a>
+        <a class="docs-nav__link" href="#docs-guides">Client guides</a>
+      </div>
+    </nav>
+
+    <section class="docs-hero">
+      <span class="docs-eyebrow">Docs</span>
+      <h1>Supericons docs and MCP setup</h1>
+      <p>
+        Everything you need to connect Supericons to your coding agent.
+        Base setup takes under a minute. Add a Supericons API key to your MCP config to access any premium collections or Pro workflow tools tied to your account.
+      </p>
+      <div class="docs-hero__actions">
+        <a class="docs-btn docs-btn--primary" href="#docs-quickstart">Quickstart</a>
+        <a class="docs-btn docs-btn--secondary" href="/?view=api-keys">API Keys</a>
+      </div>
+      <div class="docs-pill-list" style="margin-top: 18px;">
+        <span class="docs-pill">20,000+ free icons</span>
+        <span class="docs-pill">8 MCP tools</span>
+        <span class="docs-pill">Premium collection access</span>
+        <span class="docs-pill">Motion Lab MCP for Pro</span>
+        <span class="docs-pill">Converter MCP for Pro</span>
+      </div>
+    </section>
+
+    <div class="docs-main">
+      <div class="docs-column">
+
+        <section class="docs-section" id="docs-quickstart">
+          <h2>Quickstart</h2>
+          <p>Start with the base MCP server config. Free icons work immediately. Premium icons require a Pro subscription or collection (pack) purchase, plus a Supericons API key.</p>
+          <p style="margin-top: 0;">Paste the snippet below into your client's MCP config file. If you are not sure where to find it, pick your client from the guides below.</p>
+          <div class="docs-code">
+            <button class="docs-copy" type="button" data-copy-target="docs-base-config">Copy</button>
+            <pre><code id="docs-base-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"]
+    }
+  }
+}</code></pre>
+          </div>
+          <div class="docs-grid" style="margin-top: 18px;">
+            <article class="docs-card">
+              <h3>Free path</h3>
+              <ul>
+                <li>Add the base MCP config to your client.</li>
+                <li>Restart or reload your MCP client.</li>
+                <li>Use <code>search_icons</code> or <code>get_icon</code> right away.</li>
+              </ul>
+            </article>
+            <article class="docs-card" id="docs-premium">
+              <h3>Premium path</h3>
+              <!-- Updated language -->
+              <ul>
+                <li>Subscribe to Pro or buy a collection.</li>
+                <li>Open <a href="/?view=api-keys">API Keys</a> and generate an API key.</li>
+                <li>Add <code>SUPERICONS_API_KEY</code> in the env or secrets field your client supports.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section">
+          <h2>Premium MCP setup</h2>
+          <!-- Updated language -->
+          <p>An API key securely links your coding agent to your Supericons account. It unlocks whatever premium collections or Pro workflow tools you already own.</p>
+          <div class="docs-code">
+            <button class="docs-copy" type="button" data-copy-target="docs-premium-config">Copy premium example</button>
+            <pre><code id="docs-premium-config">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "your_key_here"
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <p style="margin-top: 14px;">This JSON-style example fits clients that support an <code>env</code> object in their MCP config. Use the client-specific guide for the exact syntax your editor expects.</p>
+          <p style="margin-top: 14px;">Today MCP supports icon search, icon retrieval, library discovery, Motion Lab preset exports, and Converter workflows for Pro users.</p>
+        </section>
+
+        <section class="docs-section" id="docs-tools">
+          <h2>MCP tools</h2>
+          <div class="docs-grid docs-grid--collapse" id="toolsGrid">
+            <article class="docs-card">
+              <h3><code>search_icons</code></h3>
+              <!-- Updated language -->
+              <p>Find the closest icon match across the free libraries and any premium collections your account can access.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>get_icon</code></h3>
+              <p>Retrieve a specific icon payload with ready-to-use SVG output that can be inserted directly into code.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>list_libraries</code></h3>
+              <p>List the libraries and premium collection sources your MCP session can currently access.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>list_motion_presets</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <!-- Updated language -->
+              <p>Browse available Motion Lab presets before generating CSS or animated SVGs.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>export_motion_css</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <p>Generate Motion Lab CSS for a chosen icon, preset, trigger, duration, and intensity without leaving your coding agent.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>export_animated_svg</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <p>Generate a self-contained animated SVG for the selected icon and preset as a single MCP response.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>convert_svg_to_png</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <p>Render SVG input to PNG with a controlled output width and optional background through the Pro converter workflow.</p>
+            </article>
+            <article class="docs-card">
+              <h3><code>convert_png_to_svg</code> <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <p>Trace PNG input to SVG with the same converter-quality controls used by the browser workflow.</p>
+            </article>
+          </div>
+          <button class="docs-expand-btn" type="button" data-expand="toolsGrid">Show all 8 tools</button>
+
+          <div class="docs-grid" style="margin-top: 14px;">
+            <article class="docs-card docs-card--muted">
+              <h3>Access by plan</h3>
+              <p>Free users can search and retrieve from all free libraries. Pro subscribers and collection owners can access their premium assets by connecting an API key.</p>
+            </article>
+            <article class="docs-card docs-card--muted">
+              <h3>Workflow tools require Pro</h3>
+              <p>Motion Lab MCP and Converter MCP are Pro-only. Collection ownership unlocks premium icon assets, but workflow tool access requires a Pro subscription.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="docs-guides">
+          <h2>Client guides</h2>
+          <!-- Updated language -->
+          <p>The core configuration is the same, but every client has its own setup process and settings file.</p>
+          <div class="docs-pill-list" style="margin-top: 14px; margin-bottom: 18px;">
+            <a class="docs-pill" href="/mcp/claude-code/">Claude Code</a>
+            <a class="docs-pill" href="/mcp/codex/">Codex</a>
+            <a class="docs-pill" href="/mcp/cursor/">Cursor</a>
+            <a class="docs-pill" href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a>
+            <a class="docs-pill" href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a>
+            <a class="docs-pill" href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a>
+            <a class="docs-pill" href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a>
+          </div>
+          <div class="docs-grid docs-grid--collapse" id="guidesGrid">
+            <article class="docs-card">
+              <h3><a href="/mcp/claude-code/">Claude Code</a></h3>
+              <p>Supericons setup guide plus Anthropic's official MCP docs for CLI setup, Windows notes, and troubleshooting.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="/mcp/codex/">Codex</a></h3>
+              <p>Supericons setup guide plus OpenAI's official MCP docs for CLI and <code>config.toml</code> setup.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="/mcp/cursor/">Cursor</a></h3>
+              <p>Supericons setup guide plus Cursor's official MCP docs for JSON config and in-app MCP settings.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="https://opencode.ai/docs/mcp-servers" target="_blank" rel="noopener noreferrer">OpenCode</a></h3>
+              <p>Official OpenCode MCP docs for server config and CLI flow.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="https://docs.cline.bot/mcp/adding-and-configuring-servers" target="_blank" rel="noopener noreferrer">Cline</a></h3>
+              <p>Official Cline docs for the Servers UI and <code>cline_mcp_settings.json</code> config.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp" target="_blank" rel="noopener noreferrer">Copilot agent</a></h3>
+              <p>Official GitHub docs for repository MCP config and Copilot environment secrets.</p>
+            </article>
+            <article class="docs-card">
+              <h3><a href="https://docs.windsurf.com/windsurf/cascade/mcp" target="_blank" rel="noopener noreferrer">Windsurf</a></h3>
+              <p>Official Windsurf docs for settings UI and <code>mcp_config.json</code> setup.</p>
+            </article>
+          </div>
+          <button class="docs-expand-btn" type="button" data-expand="guidesGrid">Show all 7 guides</button>
+        </section>
+
+        <section class="docs-section" id="docs-workflow-tools">
+          <h2>Workflow Tools</h2>
+          <p>Motion Lab and Converter are free to browse in the browser. Exports (animation CSS, animated SVG, PNG, and SVG tracing) require a Pro subscription, both in the browser and through MCP.</p>
+          <p style="margin-top: 14px;">Pro subscribers can also run both tools through MCP, triggering the same exports directly from their coding agent.</p>
+          <p style="margin-top: 0;">
+            <a href="/?view=motion-lab">Open Motion Lab in browser</a> ·
+            <a href="/?view=converter">Open Converter in browser</a>
+          </p>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Motion Lab MCP <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <ul>
+                <li>Preset discovery</li>
+                <li>Trigger control</li>
+                <li>Motion CSS export</li>
+                <li>Standalone animated SVG export</li>
+              </ul>
+            </article>
+            <article class="docs-card">
+              <h3>Converter MCP <span class="docs-badge docs-badge--pro">Pro</span></h3>
+              <ul>
+                <li>SVG to PNG conversion</li>
+                <li>PNG to SVG tracing</li>
+                <li>Input inspection and warnings</li>
+                <li>Suggested conversion settings</li>
+              </ul>
+            </article>
+            <article class="docs-card docs-card--muted">
+              <h3>Why this matters</h3>
+              <p>Search-only MCP is useful, but workflow-tool access is the stronger Pro value proposition for design systems, prototyping, and coding-agent automation.</p>
+            </article>
+            <article class="docs-card docs-card--muted">
+              <h3>Current status</h3>
+              <p>Motion Lab MCP and Converter MCP are Pro-only workflow tools. Collection ownership still works for icon access, but workflow tooling requires Pro.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="docs-recipes">
+          <h2>Starter prompts</h2>
+          <p>Copy any of these prompts and paste them into your coding agent to get started.</p>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>UI build</h3>
+              <div class="docs-code docs-code--compact">
+                <button class="docs-copy" type="button" data-copy-target="recipe-ui-build">Copy prompt</button>
+                <pre><code id="recipe-ui-build">Find a tab icon for analytics.
+Show the Lucide and Tabler options side by side.
+Insert the chosen SVG into my React component.</code></pre>
+              </div>
+            </article>
+            <article class="docs-card">
+              <h3>Brand logos</h3>
+              <div class="docs-code docs-code--compact">
+                <button class="docs-copy" type="button" data-copy-target="recipe-brand-logos">Copy prompt</button>
+                <pre><code id="recipe-brand-logos">Search Simple Icons for Stripe, Vercel, and Supabase.
+Return the SVGs in monochrome.
+Place them in a footer component.</code></pre>
+              </div>
+            </article>
+            <article class="docs-card">
+              <h3>Premium assets</h3>
+              <div class="docs-code docs-code--compact">
+                <button class="docs-copy" type="button" data-copy-target="recipe-premium">Copy prompt</button>
+                <pre><code id="recipe-premium">Fetch icons from a premium collection tied to my Pro or collection access.
+Drop them into a prototype component.
+Keep access tied to my Supericons API key.</code></pre>
+              </div>
+            </article>
+            <article class="docs-card">
+              <h3>Explore what's available</h3>
+              <div class="docs-code docs-code--compact">
+                <button class="docs-copy" type="button" data-copy-target="recipe-discovery">Copy prompt</button>
+                <pre><code id="recipe-discovery">List all Supericons MCP tools available to me.
+Show which are free and which need Pro.
+Then search for a secure login icon.</code></pre>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="docs-troubleshooting">
+          <h2>Troubleshooting</h2>
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Server installed but no tools appear</h3>
+              <!-- Updated language -->
+              <p>Restart or reload the MCP client after saving your config. Most missing-tool issues are simply caused by the client needing a refresh.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Premium icons do not appear</h3>
+              <!-- Updated language -->
+              <p>Verify your account has an active Pro subscription or collection purchase, then generate a new API key and update your client's config.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Invalid or revoked key</h3>
+              <p>Open API Keys, revoke the old key if needed, generate a new one, and update the MCP env or secrets field.</p>
+            </article>
+            <article class="docs-card">
+              <h3>Need exact client syntax</h3>
+              <p>Use the client guides above when your editor uses a different MCP config format than the JSON-style example on this page.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="docs-column">
+        <section class="docs-sidebar">
+          <h3>On this page</h3>
+          <div class="docs-link-list">
+            <a href="#docs-quickstart">Quickstart</a>
+            <a href="#docs-premium">Premium setup</a>
+            <a href="#docs-tools">MCP tools</a>
+            <a href="#docs-guides">Client guides</a>
+            <a href="#docs-workflow-tools">Workflow tools</a>
+            <a href="#docs-recipes">Starter prompts</a>
+            <a href="#docs-troubleshooting">Troubleshooting</a>
+          </div>
+        </section>
+
+        <section class="docs-callout">
+          <h3>What's live</h3>
+          <p>Supericons MCP includes 8 tools: icon search, icon retrieval, library listing, Motion Lab preset browsing, motion CSS export, animated SVG export, SVG-to-PNG, and PNG-to-SVG tracing. Motion Lab and Converter exports are Pro-only.</p>
+        </section>
+
+        <section class="docs-sidebar">
+          <h3>Useful links</h3>
+          <div class="docs-link-list">
+            <a href="/?view=pricing">Pricing</a>
+            <a href="/?view=api-keys">API Keys</a>
+            <a href="/">Open Supericons</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="docs-footer">
+      <!-- Updated language -->
+      <p>Supericons docs. Official setup guidance for free and premium MCP workflows.</p>
+      <div class="docs-footer__links">
+        <a href="/">App</a>
+        <a href="/?view=pricing">Pricing</a>
+        <a href="/?view=api-keys">API Keys</a>
+        <a href="/?view=terms">Terms</a>
+        <a href="/?view=privacy">Privacy</a>
+      </div>
+    </footer>
+
+    <button class="docs-scroll-top" id="docsScrollTop" aria-label="Back to top" hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-copy-target]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.getAttribute('data-copy-target'));
+        if (!target) return;
+        await navigator.clipboard.writeText(target.textContent || '');
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        window.setTimeout(() => {
+          button.textContent = original;
+        }, 1800);
+      });
+    });
+
+    const tocLinks = document.querySelectorAll('.docs-sidebar .docs-link-list a[href^="#"]');
+    const tocSections = [...tocLinks].map(a =>
+      document.querySelector(a.getAttribute('href'))
+    ).filter(Boolean);
+
+    if (tocSections.length) {
+      const tocObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(a => a.classList.remove('is-active'));
+            const match = [...tocLinks].find(
+              a => a.getAttribute('href') === '#' + entry.target.id
+            );
+            if (match) match.classList.add('is-active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+
+      tocSections.forEach(s => tocObserver.observe(s));
+    }
+
+    const scrollBtn = document.getElementById('docsScrollTop');
+    if (scrollBtn) {
+      scrollBtn.hidden = false;
+      window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('is-visible', window.scrollY > 600);
+      }, { passive: true });
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    document.querySelectorAll('[data-expand]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const grid = document.getElementById(btn.getAttribute('data-expand'));
+        if (grid) {
+          grid.classList.add('is-expanded');
+          btn.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
