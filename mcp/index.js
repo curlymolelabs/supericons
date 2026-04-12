@@ -26,7 +26,13 @@ import {
   getMaterialManifestEntry,
   normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
 } from '../material-export.js';
-import { buildMotionLabAnimatedSvg, buildMotionLabBundle, buildMotionLabExternalCss, buildMotionLabRecipe, listMotionLabPresets } from './motion-lab.js';
+import { listMotionLabPresets } from './motion-lab.js';
+import {
+  animateMotionLabIconHosted,
+  getMotionLabRecipeHosted,
+  renderMotionLabAnimatedSvgHosted,
+  renderMotionLabCssHosted,
+} from './motion-lab-client.js';
 import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
@@ -362,7 +368,60 @@ function buildTextResponse(payload) {
 }
 
 function buildWorkflowAccessResponse(featureName) {
-  return buildTextResponse(buildProWorkflowAccessError(featureName));
+  return buildTextResponse(buildProWorkflowAccessError(authState, featureName));
+}
+
+function buildStructuredToolErrorResponse(error, fallbackMessage) {
+  const payload = {
+    error: typeof error?.message === 'string' ? error.message : fallbackMessage,
+  };
+
+  if (typeof error?.code === 'string') {
+    payload.code = error.code;
+  }
+  if (typeof error?.hint === 'string') {
+    payload.hint = error.hint;
+  }
+  if (typeof error?.retryable === 'boolean') {
+    payload.retryable = error.retryable;
+  }
+  if (typeof error?.status === 'number') {
+    payload.status = error.status;
+  }
+
+  return buildTextResponse(payload);
+}
+
+function buildSelectorInstructions(selectorMode, selectorToken) {
+  if (selectorMode === 'literal') {
+    return 'The CSS already includes the selector you supplied, so you can use it as returned without replacing any placeholder token.';
+  }
+
+  if (selectorToken) {
+    return `Replace ${selectorToken} with the CSS selector that targets your inline <svg> element, for example ".settings-button svg" or "#login-icon svg".`;
+  }
+
+  return 'Use the returned CSS with the SVG selector that targets your inline icon element.';
+}
+
+function buildMotionLabIconLookupError(id, library) {
+  if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
+    return buildTextResponse({
+      ...buildPremiumLibraryAccessError(
+        libraryMeta[library].name,
+        'Use a Pro-linked SUPERICONS_API_KEY or a key that includes access to this premium pack.'
+      ),
+      message: `Motion Lab could not export "${id}" from "${libraryMeta[library].name}" because this premium pack is not available to the current API key. Visit https://supericons.dev`,
+    });
+  }
+
+  return buildTextResponse({
+    error: 'Icon not found',
+    code: 'icon_not_found',
+    message: `Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`,
+    hint: 'Confirm the icon id and library, or call search_icons before exporting.',
+    retryable: false,
+  });
 }
 
 async function resolveAccessibleIcon(id, library) {
@@ -505,7 +564,7 @@ server.tool(
 // --- Tool: list_motion_presets ---
 server.tool(
   'list_motion_presets',
-  'List the Motion Lab presets currently available through Supericons MCP. Motion Lab MCP is a Pro workflow tool.',
+  'List the Motion Lab presets currently available through Supericons MCP, including preset id, label, group, description, and supported triggers. Motion Lab MCP is a Pro workflow tool.',
   {},
   async () => {
     if (!hasProWorkflowAccess(authState)) {
@@ -521,7 +580,7 @@ server.tool(
 // --- Tool: get_motion_recipe ---
 server.tool(
   'get_motion_recipe',
-  'Return a human-readable Motion Lab recipe for a preset, trigger, and duration. Motion Lab MCP is a Pro workflow tool.',
+  'Return a human-readable Motion Lab recipe for a preset, trigger, and duration. Use this before export tools when you want to compare presets or confirm the motion fit. Motion Lab MCP is a Pro workflow tool.',
   {
     preset: z.string().describe('Motion preset id, for example pulse, bounce, spin, trace, or typing.'),
     trigger: z.enum(['loop', 'hover', 'click']).optional().default('loop').describe('How the animation should start.'),
@@ -533,14 +592,14 @@ server.tool(
       return buildWorkflowAccessResponse('Motion Lab MCP');
     }
     try {
-      return buildTextResponse(buildMotionLabRecipe({
-        presetId: preset,
+      return buildTextResponse(await getMotionLabRecipeHosted({
+        preset,
         trigger,
-        durationMs: duration_ms,
-        intensityPercent: intensity_percent,
+        duration_ms,
+        intensity_percent,
       }));
     } catch (error) {
-      return buildTextResponse({ error: error.message });
+      return buildStructuredToolErrorResponse(error, 'Motion Lab recipe generation failed.');
     }
   }
 );
@@ -548,7 +607,7 @@ server.tool(
 // --- Tool: export_motion_css ---
 server.tool(
   'export_motion_css',
-  'Generate Motion Lab CSS for a Supericons icon. Motion Lab MCP is a Pro workflow tool.',
+  'Generate Motion Lab CSS for a Supericons icon. The returned CSS uses a portable {{ICON_SELECTOR}} token you replace with your inline SVG selector. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
     library: z.string().describe('Library or premium pack name.'),
@@ -564,23 +623,27 @@ server.tool(
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+      return buildMotionLabIconLookupError(id, library);
     }
 
     try {
+      const cssResponse = await renderMotionLabCssHosted({
+        preset,
+        trigger,
+        duration_ms,
+        intensity_percent,
+      });
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs: duration_ms, intensityPercent: intensity_percent }),
-        css: buildMotionLabExternalCss({
-          presetId: preset,
-          trigger,
-          durationMs: duration_ms,
-          intensityPercent: intensity_percent,
-        }),
+        preset: await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+        css: cssResponse.css,
+        selector_mode: cssResponse.selector_mode,
+        ...(cssResponse.selector_token ? { selector_token: cssResponse.selector_token } : {}),
+        selector_instructions: buildSelectorInstructions(cssResponse.selector_mode, cssResponse.selector_token),
       });
     } catch (error) {
-      return buildTextResponse({ error: error.message });
+      return buildStructuredToolErrorResponse(error, 'Motion Lab CSS export failed.');
     }
   }
 );
@@ -588,7 +651,7 @@ server.tool(
 // --- Tool: export_animated_svg ---
 server.tool(
   'export_animated_svg',
-  'Generate a self-contained animated SVG using Motion Lab presets. Motion Lab MCP is a Pro workflow tool.',
+  'Generate a self-contained animated SVG using Motion Lab presets. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
     library: z.string().describe('Library or premium pack name.'),
@@ -605,25 +668,27 @@ server.tool(
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+      return buildMotionLabIconLookupError(id, library);
     }
 
     try {
+      const animatedSvgResponse = await renderMotionLabAnimatedSvgHosted({
+        svg: icon.svg,
+        preset,
+        trigger,
+        duration_ms,
+        intensity_percent,
+        color: color || null,
+      });
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        preset: buildMotionLabRecipe({ presetId: preset, trigger, durationMs: duration_ms, intensityPercent: intensity_percent }),
-        animated_svg: buildMotionLabAnimatedSvg({
-          svg: icon.svg,
-          presetId: preset,
-          trigger,
-          durationMs: duration_ms,
-          intensityPercent: intensity_percent,
-          color: color || null,
-        }),
+        preset: await getMotionLabRecipeHosted({ preset, trigger, duration_ms, intensity_percent }),
+        animated_svg: animatedSvgResponse.animated_svg,
+        ...(animatedSvgResponse.applied_color ? { applied_color: animatedSvgResponse.applied_color } : {}),
       });
     } catch (error) {
-      return buildTextResponse({ error: error.message });
+      return buildStructuredToolErrorResponse(error, 'Motion Lab animated SVG export failed.');
     }
   }
 );
@@ -631,7 +696,7 @@ server.tool(
 // --- Tool: animate_icon ---
 server.tool(
   'animate_icon',
-  'Generate both Motion Lab CSS and a self-contained animated SVG for one icon. Motion Lab MCP is a Pro workflow tool.',
+  'Generate both Motion Lab CSS and a self-contained animated SVG for one icon. The CSS output uses a portable {{ICON_SELECTOR}} token you replace with your inline SVG selector. Call get_motion_recipe first if you want to compare presets before exporting. Motion Lab MCP is a Pro workflow tool.',
   {
     id: z.string().describe('Icon ID, for example heart, scan-virus, or fingerprint-scan.'),
     library: z.string().describe('Library or premium pack name.'),
@@ -648,27 +713,31 @@ server.tool(
 
     const icon = await resolveAccessibleIcon(id, library);
     if (!icon?.svg) {
-      return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
+      return buildMotionLabIconLookupError(id, library);
     }
 
     try {
-      const bundle = buildMotionLabBundle({
+      const bundle = await animateMotionLabIconHosted({
         svg: icon.svg,
-        presetId: preset,
+        preset,
         trigger,
-        durationMs: duration_ms,
-        intensityPercent: intensity_percent,
+        duration_ms,
+        intensity_percent,
         color: color || null,
       });
       return buildTextResponse({
         id: icon.id,
         library: icon.library,
-        recipe: bundle.preset,
+        recipe: bundle.recipe,
         css: bundle.css,
         animated_svg: bundle.animated_svg,
+        selector_mode: bundle.selector_mode,
+        ...(bundle.selector_token ? { selector_token: bundle.selector_token } : {}),
+        selector_instructions: buildSelectorInstructions(bundle.selector_mode, bundle.selector_token),
+        ...(bundle.applied_color ? { applied_color: bundle.applied_color } : {}),
       });
     } catch (error) {
-      return buildTextResponse({ error: error.message });
+      return buildStructuredToolErrorResponse(error, 'Motion Lab bundle export failed.');
     }
   }
 );
