@@ -1,14 +1,14 @@
 # Motion Lab Docs Sidebar Refinement Implementation Plan
 
 Date: April 13, 2026
-Status: Ready for implementation
+Status: Implemented
 Scope: Docs page only
 
 ## Decision Summary
 
 The Motion Lab agent library through MCP is now complete enough to shift primary product work back to docs refinement.
 
-That does **not** mean every operational follow-up is closed. It means the core end-to-end library is real, deployed, and verified enough that the next highest-leverage work is the docs experience.
+That does **not** mean every operational follow-up is closed. It means the core end-to-end library is real, deployed, and verified enough that the next highest-leverage work was the docs experience, and that docs pass is now implemented in the docs page.
 
 ### E2E verdict
 
@@ -20,15 +20,16 @@ Treat Motion Lab MCP as **functionally complete end to end for controlled releas
 - hosted recipe, CSS render, and animated SVG render paths were previously verified
 - negative-path verification exists
 - Postgres-backed rate limiting is deployed
-- live `429` proof was captured through the MCP path
+- live `429` proofs were captured for recipe, session, CSS render, and animated SVG render
+- fail-open degradation was proven in a controlled live run
 
-### Still open, but not blocking this docs pass
+### Still open after this docs pass
 
 - exposed Pro key rotation should still happen out of band
-- session, CSS render, and animated SVG endpoints do not yet each have their own dedicated live `429` proof
-- fail-open limiter degradation has not been intentionally proven live
+- cleanup and retention behavior should still be watched over real traffic
+- user-facing copy can still be polished further after a live reading pass
 
-These remain valid operational follow-ups, but they should not block docs refinement.
+These remain valid follow-ups, but they do not block the sidebar refinement work that is now in place.
 
 ## Current Docs Reality
 
@@ -37,7 +38,7 @@ The current docs experience is split across two layers:
 1. The app docs page already contains a real Motion Lab section in the left sidebar, implemented directly in [docs-pages.js](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/docs-pages.js).
 2. The richer Motion Lab MCP guide exists separately as [motion-lab-mcp-user-guide.md](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/docs/motion-lab-mcp-user-guide.md).
 
-### Important conclusion
+### Important conclusion before implementation
 
 The standalone Markdown guide is **not** built into the docs page today.
 
@@ -75,7 +76,7 @@ Motion Lab MCP reference already exists separately as:
 - more realistic use-case guidance
 - stronger “when to say no motion” guidance
 
-### Important docs gap
+### Important docs gap before implementation
 
 The docs page explains `{{ICON_SELECTOR}}`, but it does **not** currently document the newer `selector_instructions` response field, even though the MCP implementation now returns it from both:
 
@@ -101,7 +102,7 @@ But they do **not** get one coherent Motion Lab learning path inside the left si
 - how to handle CSS selector placeholders confidently
 - how humans and AI agents should use the library differently
 
-This creates avoidable fragmentation.
+This created avoidable fragmentation before the sidebar refinement was implemented.
 
 ## Goal
 
@@ -334,7 +335,23 @@ Verification target:
 
 - [package.json](d:/Personal/Business/Curly%20Mole%20Labs/Experiments/Apps/DailySprint/supericons/package.json)
 
-## Execution Order
+## Implemented Outcome
+
+The docs page now includes:
+
+- the expanded Motion Lab sidebar sequence
+- a clearer Motion Lab landing page with browser-vs-MCP framing
+- a dedicated `MCP Workflow` page
+- a dedicated `Client Setup` page
+- a dedicated `Use Cases` page
+- export docs that now explain:
+  - `selector_mode`
+  - `selector_token`
+  - `selector_instructions`
+
+The standalone guide remains useful as a drafting/reference artifact, but the docs-page Motion Lab section is now the main user-facing learning path.
+
+## Execution Order Used
 
 1. content map the standalone guide against the live docs pages
 2. add the new Motion Lab practical pages to the sidebar
@@ -344,6 +361,6 @@ Verification target:
 
 ## Recommendation
 
-Proceed with the docs-sidebar refinement now.
+Use this plan as the implementation record, not as a pending plan.
 
-The product is past the point where the biggest Motion Lab risk is backend incompleteness. The bigger risk now is that the docs experience undersells or fragments a capability that is already materially built.
+The next useful pass is content polish in the live docs UI: reduce duplication, tighten wording, and check whether any of the new Motion Lab pages can be simplified now that the structural gap is closed.

@@ -24,37 +24,35 @@ If you are using Motion Lab through MCP today, the setup is:
 
 ### What you need
 
-- a local checkout of this repo
-- Node.js installed
-- a Supericons API key linked to Pro
-- an MCP client such as Cursor or Claude Desktop
+- Node.js 18 or later installed
+- A Supericons API key linked to a Pro account or a premium collection purchase
+- An MCP client such as Cursor or Claude Desktop
+- Permission to add an MCP server in that client's config
 
-### Local server command
+### Recommended server command
 
-The current local server entrypoint is:
+Use the published MCP package. Set this as your `command` value in the MCP server config:
+
+```text
+npx -y supericons-mcp
+```
+
+If you are developing against a local checkout, point the server at your own absolute path to `mcp/index.js` instead:
 
 ```text
 node /absolute/path/to/supericons/mcp/index.js
 ```
 
-On this repo, that path looks like:
-
-```text
-node d:\Personal\Business\Curly Mole Labs\Experiments\Apps\DailySprint\supericons\mcp\index.js
-```
-
 ### Cursor setup example
 
-Add this to your MCP config and replace the path and key value:
+Add this to your MCP config and replace the key value:
 
 ```json
 {
   "mcpServers": {
     "supericons": {
-      "command": "node",
-      "args": [
-        "d:/Personal/Business/Curly Mole Labs/Experiments/Apps/DailySprint/supericons/mcp/index.js"
-      ],
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
       "env": {
         "SUPERICONS_API_KEY": "si_your_pro_key_here"
       }
@@ -65,16 +63,14 @@ Add this to your MCP config and replace the path and key value:
 
 ### Claude Desktop setup example
 
-Use the same server block in your Claude Desktop MCP config:
+Claude Desktop uses the same JSON config format as Cursor. Open your Claude Desktop MCP settings file (`claude_desktop_config.json`), add the same server block, and replace the API key value:
 
 ```json
 {
   "mcpServers": {
     "supericons": {
-      "command": "node",
-      "args": [
-        "d:/Personal/Business/Curly Mole Labs/Experiments/Apps/DailySprint/supericons/mcp/index.js"
-      ],
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
       "env": {
         "SUPERICONS_API_KEY": "si_your_pro_key_here"
       }

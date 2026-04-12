@@ -4428,7 +4428,7 @@ let docsPageCleanup = null;
 let shellViewLinkDelegationBound = false;
 let docsSidebarToggleDelegationBound = false;
 const DOCS_SIDEBAR_STORAGE_KEY = 'supericons-docs-sidebar-open-groups';
-const DEFAULT_OPEN_DOCS_GROUP_KEYS = new Set(['overview', 'mcp-setup']);
+const DEFAULT_OPEN_DOCS_GROUP_KEYS = new Set();
 
 function getDocsGroupKey(group) {
   const label = typeof group === 'string' ? group : group?.label || '';
@@ -4445,7 +4445,7 @@ function loadDocsSidebarOpenGroups() {
     if (!raw) return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
-    return new Set(parsed.map((value) => String(value)));
+    return new Set(parsed.slice(0, 1).map((value) => String(value)));
   } catch {
     return new Set(DEFAULT_OPEN_DOCS_GROUP_KEYS);
   }
@@ -4472,7 +4472,8 @@ function getDocsGroupKeyForView(view) {
 function ensureDocsGroupOpenForView(view) {
   const activeGroupKey = getDocsGroupKeyForView(view);
   if (!activeGroupKey) return;
-  docsSidebarOpenGroups.add(activeGroupKey);
+  if (docsSidebarOpenGroups.has(activeGroupKey)) return;
+  docsSidebarOpenGroups = new Set([activeGroupKey]);
   persistDocsSidebarOpenGroups();
 }
 
@@ -4532,9 +4533,9 @@ function ensureDocsSidebarToggleDelegation() {
     if (!groupKey) return;
     event.preventDefault();
     if (docsSidebarOpenGroups.has(groupKey)) {
-      docsSidebarOpenGroups.delete(groupKey);
+      docsSidebarOpenGroups = new Set();
     } else {
-      docsSidebarOpenGroups.add(groupKey);
+      docsSidebarOpenGroups = new Set([groupKey]);
     }
     persistDocsSidebarOpenGroups();
     applyDocsSidebarGroupState(document.getElementById('docsView') || document);

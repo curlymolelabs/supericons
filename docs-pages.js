@@ -76,7 +76,15 @@ const docsPageGroups = [
   },
   {
     label: 'Motion Lab',
-    pages: ['docs-motion-lab', 'docs-motion-lab-presets', 'docs-motion-lab-triggers', 'docs-motion-lab-exports'],
+    pages: [
+      'docs-motion-lab',
+      'docs-motion-lab-presets',
+      'docs-motion-lab-triggers',
+      'docs-motion-lab-exports',
+      'docs-motion-lab-mcp-workflow',
+      'docs-motion-lab-client-setup',
+      'docs-motion-lab-use-cases',
+    ],
   },
   {
     label: 'Converter',
@@ -775,7 +783,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">A recipe object with <code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>, and usage <code>notes</code>.</p>
+        <p class="docs-section__copy">A preset profile with <code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>, and usage <code>notes</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-animate">
@@ -804,7 +812,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the motion recipe object), <code>css</code> (Motion Lab CSS), <code>animated_svg</code> (standalone SVG with embedded animation), and <code>selector_mode</code>. Placeholder CSS responses also include <code>selector_token</code>.</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the preset profile), <code>css</code> (Motion Lab CSS), <code>animated_svg</code> (standalone SVG with embedded animation), and <code>selector_mode</code>. Placeholder CSS responses also include <code>selector_token</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-css">
@@ -813,7 +821,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">Same as <code>animate_icon</code>.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), <code>css</code> (the Motion Lab CSS with <code>@keyframes</code> and animation rules), and <code>selector_mode</code>. Placeholder responses also include <code>selector_token</code>.</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the preset profile), <code>css</code> (the Motion Lab CSS with <code>@keyframes</code> and animation rules), and <code>selector_mode</code>. Placeholder responses also include <code>selector_token</code>.</p>
         <h3>The CSS selector targets</h3>
         <p class="docs-section__copy">The hosted Motion Lab CSS path returns portable CSS by default using the token <code>{{ICON_SELECTOR}}</code>. Replace that token with the selector for your inline SVG before applying the stylesheet.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
@@ -824,7 +832,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">Same as <code>animate_icon</code>.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), and <code>animated_svg</code> (a complete SVG string with a <code>&lt;style&gt;</code> block embedded inside).</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the preset profile), and <code>animated_svg</code> (a complete SVG string with a <code>&lt;style&gt;</code> block embedded inside).</p>
         <h3>When to use this vs. <code>export_motion_css</code></h3>
         <div class="docs-table-wrap">
           <table class="docs-table">
@@ -997,26 +1005,28 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Introduction',
     kicker: 'Motion Lab',
     pageTitle: 'Motion Lab',
-    summary: 'Try presets and preview animations without a Pro account. Export as CSS or animated SVG with a Pro account or a premium collection purchase.',
+    summary: 'Preset-driven icon animation. Export as CSS or animated SVG.',
     bodyHtml: `
       <section class="docs-section" id="motion-lab-intro">
-        <p class="docs-section__copy">Motion Lab is a preset-driven animation workspace for Supericons icons. Choose a preset, adjust the trigger, timing, and intensity, then export the result as a Motion Lab CSS file or a standalone animated SVG. Both outputs are production-ready and require no JavaScript.</p>
+        <p class="docs-section__copy">Pick a preset, set the trigger, timing, and intensity, then export as production-ready CSS or a self-contained animated SVG. Both formats are drop-in ready with no JavaScript.</p>
       </section>
       <section class="docs-section" id="motion-lab-access">
-        <h2 class="docs-section__title">How to access Motion Lab</h2>
-        <p class="docs-section__copy">Motion Lab is available in two ways:</p>
+        <h2 class="docs-section__title">Two ways to use Motion Lab</h2>
         <ul>
-          <li><strong>In the browser</strong>: Open the ${appLink('motion-lab', 'Supericons Motion Lab')} without a Pro account. Select any icon to browse the preset panel and preview animations in real time. Exporting your animation as CSS or SVG requires a Pro account or a premium collection purchase.</li>
-          <li><strong>Through MCP</strong>: Your coding agent can call Motion Lab tools directly. See the ${docsLink('docs-mcp-motion', 'Motion Lab MCP tools reference')}.</li>
+          <li><strong>In the browser</strong>: Open Motion Lab directly and browse presets with any icon. Preview animations in real time. Exporting CSS or SVG requires a Pro account or a premium collection purchase.</li>
+          <li><strong>Through MCP</strong>: Your agent calls Motion Lab tools directly. All tools require a Pro account or a premium collection purchase plus a valid API key. See the ${docsLink('docs-mcp-motion', 'Motion Lab MCP tools reference')} for exact parameters.</li>
         </ul>
-        <p class="docs-section__copy"><strong>Browser:</strong> Open and preview without a Pro account. Exporting CSS or SVG output requires a Pro account or a premium collection purchase.</p>
-        <p class="docs-section__copy"><strong>MCP:</strong> All Motion Lab tools require a Pro account or a premium collection purchase, plus a valid API key.</p>
+      </section>
+      <section class="docs-section" id="motion-lab-mcp-mental-model">
+        <h2 class="docs-section__title">How Motion Lab works through MCP</h2>
+        <p class="docs-section__copy">Motion Lab through MCP runs on two layers by design. The local process handles preset discovery and request orchestration. Premium preset profiles, CSS rendering, and animated SVG rendering resolve through hosted Supericons functions using a short-lived session token. The local package stays lightweight; premium rendering stays behind the hosted path.</p>
+        <p class="docs-section__copy">If you want the practical agent workflow, open ${docsLink('docs-motion-lab-mcp-workflow', 'MCP Workflow')}. If you need exact tool parameters, keep ${docsLink('docs-mcp-motion', 'Motion Lab MCP Tools')} as the API-style reference.</p>
       </section>
       <section class="docs-section" id="motion-lab-output">
         <h2 class="docs-section__title">What Motion Lab produces</h2>
-        <p class="docs-section__copy">Motion Lab generates two types of output from any preset:</p>
-        <p class="docs-section__copy"><strong>Motion Lab CSS</strong> - A stylesheet with <code>@keyframes</code> and animation rules. Replace the placeholder token <code>{{ICON_SELECTOR}}</code> with the selector for your inline SVG, then keep the SVG and animation in separate files.</p>
-        <p class="docs-section__copy"><strong>Animated SVG</strong> - A self-contained SVG file with the animation embedded in a <code>&lt;style&gt;</code> block inside the SVG. Drop it anywhere without external CSS.</p>
+        <p class="docs-section__copy">Motion Lab produces two output types:</p>
+        <p class="docs-section__copy"><strong>Motion Lab CSS</strong>: A stylesheet with <code>@keyframes</code> and animation rules. Keep your SVG inline in markup and link the CSS separately. Replace <code>{{ICON_SELECTOR}}</code> in the returned CSS with your SVG&apos;s selector.</p>
+        <p class="docs-section__copy"><strong>Animated SVG</strong>: A complete SVG with the animation embedded inside a <code>&lt;style&gt;</code> block. No external stylesheet needed. Use it as an <code>&lt;img&gt;</code> reference or paste it inline.</p>
       </section>
       <section class="docs-section" id="motion-lab-next">
         <h2 class="docs-section__title">Where to go next</h2>
@@ -1042,6 +1052,27 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             </div>
             <p>How to use CSS and animated SVG output in your project.</p>
           </article>
+          <article class="docs-card">
+            <div class="docs-card__head">
+              <h3>MCP Workflow</h3>
+              <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-motion-lab-mcp-workflow')}" data-docs-view="docs-motion-lab-mcp-workflow">Open the guide</a>
+            </div>
+            <p>The practical human-and-agent flow for choosing presets and exporting safely.</p>
+          </article>
+          <article class="docs-card">
+            <div class="docs-card__head">
+              <h3>Client Setup</h3>
+              <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-motion-lab-client-setup')}" data-docs-view="docs-motion-lab-client-setup">Open setup</a>
+            </div>
+            <p>If you have not connected a client yet, start here. Add your API key, then run a short verify sequence to confirm the hosted premium path is live.</p>
+          </article>
+          <article class="docs-card">
+            <div class="docs-card__head">
+              <h3>Use Cases</h3>
+              <a class="docs-btn docs-btn--ghost" href="${docsHref('docs-motion-lab-use-cases')}" data-docs-view="docs-motion-lab-use-cases">Open examples</a>
+            </div>
+            <p>Concrete guidance for hover states, security flows, celebrations, ambient motion, and restraint.</p>
+          </article>
         </div>
       </section>
     `,
@@ -1050,10 +1081,10 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Presets',
     kicker: 'Motion Lab',
     pageTitle: 'Motion Lab Presets',
-    summary: `Supericons Motion Lab includes ${motionLabPresetCount} presets across ${motionLabGroupCount} live groups: Motion, Entrances, Exits, and Special. Every preset supports loop, hover, and click triggers, with duration from 100ms to 4000ms and intensity from 25% to 200%.`,
+    summary: `Full preset reference for Motion Lab. ${motionLabPresetCount} presets across ${motionLabGroupCount} groups: Motion, Entrances, Exits, and Special. Every preset works with loop, hover, and click triggers. Duration: 100ms to 4000ms. Intensity: 25% to 200%.`,
     bodyHtml: `
       <section class="docs-section" id="motion-presets-intro">
-        <p class="docs-section__copy">This reference reflects the same Motion Lab preset set used in the browser and exposed through MCP. Use it when you want a complete view of the preset names, groups, and baseline descriptions in one place.</p>
+        <p class="docs-section__copy">Each row includes the preset ID to use as the <code>preset</code> parameter in any Motion Lab tool call. Use the Group column to narrow candidates by intent before committing to an export.</p>
       </section>
       <section class="docs-section" id="motion-presets-table">
         <div class="docs-table-wrap">
@@ -1092,14 +1123,14 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
       </section>
       <section class="docs-section" id="motion-presets-groups">
-        <h2 class="docs-section__title">Preset groups explained</h2>
+        <h2 class="docs-section__title">Preset groups</h2>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
               <tr>
                 <th>Group</th>
                 <th>Preset count</th>
-                <th>How to use it</th>
+                <th>When to reach for it</th>
               </tr>
             </thead>
             <tbody>
@@ -1114,7 +1145,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Trigger Types',
     kicker: 'Motion Lab',
     pageTitle: 'Trigger Types',
-    summary: 'Every Motion Lab preset supports three trigger types. The trigger controls when the animation starts and how many times it plays. Choose based on the context where the icon appears.',
+    summary: 'Three trigger types control when a Motion Lab animation starts and how many times it plays. The right choice depends on how the icon is used in the interface: always-visible, interactive, or state-driven.',
     bodyHtml: `
       <section class="docs-section" id="motion-trigger-loop">
         <h2 class="docs-section__title"><code>loop</code></h2>
@@ -1124,7 +1155,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       </section>
       <section class="docs-section" id="motion-trigger-hover">
         <h2 class="docs-section__title"><code>hover</code></h2>
-        <p class="docs-section__copy">The animation plays while the user hovers the icon element. It starts on <code>mouseenter</code> and stops naturally when the animation completes after <code>mouseleave</code>.</p>
+        <p class="docs-section__copy">The animation plays while the user hovers the icon element. It stops naturally when the animation completes after the pointer leaves. Internally, this uses CSS <code>:hover</code> triggered by <code>mouseenter</code> and <code>mouseleave</code> events.</p>
         <p class="docs-section__copy"><strong>When to use:</strong> Interactive buttons, links, menu items, and call-to-action icons that reward pointer interaction.</p>
         <p class="docs-section__copy"><strong>When not to use:</strong> Touch-only interfaces where hover has no reliable equivalent.</p>
       </section>
@@ -1160,7 +1191,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Exports',
     kicker: 'Motion Lab',
     pageTitle: 'Motion Lab Exports',
-    summary: 'Motion Lab produces two export formats: Motion Lab CSS and animated SVG. Both are production-ready. Exporting requires a Pro account or a premium collection purchase. Choose the format based on how you manage your SVG and animation files.',
+    summary: 'Two production-ready formats: Motion Lab CSS for inline SVG with a separate stylesheet, and animated SVG for a self-contained drop-in file. Both require a Pro account or a premium collection purchase. The right choice depends on how you integrate SVG into your project.',
     bodyHtml: `
       <section class="docs-section" id="motion-exports-css">
         <h2 class="docs-section__title">Motion Lab CSS</h2>
@@ -1171,7 +1202,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           <li>Get the SVG from Supericons using <code>search_icons</code> or <code>get_icon</code>. (Free)</li>
           <li>Call <code>export_motion_css</code> with your chosen preset and trigger to get the CSS. (Requires a Pro account or a premium collection purchase)</li>
           <li>Keep the SVG inline in your markup.</li>
-          <li>Replace <code>{{ICON_SELECTOR}}</code> in the returned CSS with the selector for your inline SVG.</li>
+          <li>Replace <code>{{ICON_SELECTOR}}</code> in the returned CSS with the selector for your inline SVG when <code>selector_mode</code> is <code>placeholder</code>.</li>
           <li>Link the updated CSS file, or paste the rules into your existing stylesheet.</li>
         </ol>
         <h3>What the CSS contains</h3>
@@ -1183,6 +1214,20 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           <li>An animation rule using the placeholder selector token <code>{{ICON_SELECTOR}}</code></li>
           <li><code>overflow: visible</code>, <code>transform-box: fill-box</code>, and <code>transform-origin: center</code> on the SVG and its children to ensure transforms behave correctly</li>
         </ul>
+        <h3>Selector fields in MCP responses</h3>
+        <p class="docs-section__copy">The hosted CSS response is now explicit about how selector replacement works:</p>
+        <ul>
+          <li><code>selector_mode: "placeholder"</code>: The CSS contains <code>{{ICON_SELECTOR}}</code>. Replace it with your SVG&apos;s selector before applying the stylesheet.</li>
+          <li><code>selector_mode: "literal"</code>: The CSS already contains your selector. Use it directly.</li>
+          <li><code>selector_token</code>: The exact placeholder string in the returned CSS. Use it to locate and replace the token programmatically.</li>
+          <li><code>selector_instructions</code>: Plain-language guidance on what selector format to use. This is especially helpful when an agent is handling the replacement step.</li>
+        </ul>
+        <div class="docs-code">
+          <pre><code>.settings-button svg
+#login-icon svg
+.sidebar .nav-icon svg</code></pre>
+        </div>
+        <p class="docs-section__copy">Both <code>export_motion_css</code> and <code>animate_icon</code> can return CSS with these selector fields.</p>
       </section>
       <section class="docs-section" id="motion-exports-svg">
         <h2 class="docs-section__title">Animated SVG</h2>
@@ -1198,7 +1243,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           <pre><code>&lt;!-- paste the entire animated SVG string here --&gt;</code></pre>
         </div>
         <h3>Compatibility note</h3>
-        <p class="docs-section__copy">Self-contained animated SVGs work in most modern browsers. When used as an <code>&lt;img&gt;</code> source, CSS animations play automatically. When pasted inline, hover and click triggers respond to pointer events as normal.</p>
+        <p class="docs-section__copy">Self-contained animated SVGs work in current major browsers. When used as an <code>&lt;img&gt;</code> source, CSS animations play automatically. When pasted inline, hover and click triggers respond to pointer events normally.</p>
       </section>
       <section class="docs-section" id="motion-exports-decision">
         <h2 class="docs-section__title">Which format should I use?</h2>
@@ -1219,6 +1264,183 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             </tbody>
           </table>
         </div>
+      </section>
+    `,
+  },
+  'docs-motion-lab-mcp-workflow': {
+    navLabel: 'MCP Workflow',
+    kicker: 'Motion Lab',
+    pageTitle: 'Motion Lab MCP Workflow',
+    summary: 'A step-by-step workflow for using Motion Lab through MCP. Inspect presets, compare preset profiles, choose an output type, and export with full context before committing.',
+    bodyHtml: `
+      <section class="docs-section" id="motion-mcp-workflow-intro">
+        <p class="docs-section__copy">Motion Lab through MCP is a complete icon animation workflow inside your coding agent: inspect presets, compare preset profiles, export CSS for inline SVG, get a self-contained animated SVG, or generate both in one call.</p>
+      </section>
+      <section class="docs-section" id="motion-mcp-workflow-mental-model">
+        <h2 class="docs-section__title">Core mental model</h2>
+        <p class="docs-section__copy">The local MCP layer handles preset discovery and request orchestration. Premium preset profiles, CSS render, animated SVG render, and bundled <code>animate_icon</code> output resolve through hosted Supericons functions using a short-lived session token.</p>
+        <p class="docs-section__copy">That split is intentional. It keeps the local package lightweight for discovery while moving premium rendering logic behind the hosted path.</p>
+      </section>
+      <section class="docs-section" id="motion-mcp-workflow-order">
+        <h2 class="docs-section__title">Recommended tool order</h2>
+        <ol class="docs-list docs-list--numbered">
+          <li>Call <code>list_motion_presets</code> to see what exists.</li>
+          <li>Call <code>get_motion_recipe</code> on one or more candidates before committing.</li>
+          <li>Choose the output type based on integration needs.</li>
+          <li>Use <code>export_motion_css</code>, <code>export_animated_svg</code>, or <code>animate_icon</code>.</li>
+        </ol>
+        <p class="docs-section__copy">This reduces trial-and-error and makes the final choice easier to explain to teammates or future agents.</p>
+      </section>
+      <section class="docs-section" id="motion-mcp-workflow-tool-map">
+        <h2 class="docs-section__title">When to use each tool</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Use it when you want to...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>list_motion_presets</code></td><td>browse preset IDs, labels, groups, descriptions, and supported triggers</td></tr>
+              <tr><td><code>get_motion_recipe</code></td><td>understand how a preset behaves before exporting</td></tr>
+              <tr><td><code>export_motion_css</code></td><td>keep your SVG inline and apply motion through CSS</td></tr>
+              <tr><td><code>export_animated_svg</code></td><td>get one self-contained animated asset</td></tr>
+              <tr><td><code>animate_icon</code></td><td>get the preset profile, CSS, and animated SVG in one call</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="docs-section__copy">For exact parameter tables and field names, keep ${docsLink('docs-mcp-motion', 'Motion Lab MCP Tools')} open as the strict reference page.</p>
+      </section>
+      <section class="docs-section" id="motion-mcp-workflow-human-vs-agent">
+        <h2 class="docs-section__title">Human vs agent workflow</h2>
+        <p class="docs-section__copy"><strong>Human developers</strong> should start from product intent: subtle hover, security feel, celebration, ambient motion, or no motion at all. Then use <code>get_motion_recipe</code> to confirm the fit before exporting.</p>
+        <p class="docs-section__copy"><strong>AI agents</strong> should inspect presets, narrow candidates by UI context, compare preset profiles, justify the chosen preset, and only then export. A good agent should also explain why noisier presets were avoided.</p>
+      </section>
+      <section class="docs-callout" id="motion-mcp-workflow-no-motion">
+        <h3>Sometimes the right answer is no motion</h3>
+        <p>Accessibility-sensitive surfaces, calm admin panels, and trust-critical flows are usually better with no motion at all. If motion is required, choose the most restrained option available and be able to explain why it does not compete with the user&apos;s focus.</p>
+      </section>
+    `,
+  },
+  'docs-motion-lab-client-setup': {
+    navLabel: 'Client Setup',
+    kicker: 'Motion Lab',
+    pageTitle: 'Motion Lab MCP Client Setup',
+    summary: 'Connect Motion Lab to your MCP client, add your API key, and verify the hosted premium path is live. Includes setup examples for Cursor and Claude Desktop.',
+    bodyHtml: `
+      <section class="docs-section" id="motion-mcp-setup-prereqs">
+        <h2 class="docs-section__title">What you need</h2>
+        <ul>
+          <li>Node.js 18 or later installed</li>
+          <li>A Supericons API key linked to a Pro account or a premium collection purchase</li>
+          <li>An MCP client such as Cursor or Claude Desktop</li>
+          <li>Permission to add an MCP server in that client&apos;s config</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="motion-mcp-setup-command">
+        <h2 class="docs-section__title">Recommended server command</h2>
+        <p class="docs-section__copy">Use the published MCP package. Set this as your <code>command</code> value in the MCP server config:</p>
+        <div class="docs-code">
+          <pre><code>npx -y supericons-mcp</code></pre>
+        </div>
+        <p class="docs-section__copy">If you are developing against a local checkout, keep the same env block but swap the command to <code>node</code> and point the arg at your own absolute path to <code>mcp/index.js</code>.</p>
+      </section>
+      <section class="docs-section" id="motion-mcp-setup-cursor">
+        <h2 class="docs-section__title">Cursor setup example</h2>
+        <p class="docs-section__copy">Add this MCP server block to your Cursor config and replace the API key value:</p>
+        <div class="docs-code">
+          <pre><code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "si_your_pro_key_here"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+      </section>
+      <section class="docs-section" id="motion-mcp-setup-claude">
+        <h2 class="docs-section__title">Claude Desktop setup example</h2>
+        <p class="docs-section__copy">Claude Desktop uses the same JSON config format as Cursor. Open your Claude Desktop MCP settings file (<code>claude_desktop_config.json</code>), add the same server block, and replace the API key value:</p>
+        <div class="docs-code">
+          <pre><code>{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "supericons-mcp"],
+      "env": {
+        "SUPERICONS_API_KEY": "si_your_pro_key_here"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+      </section>
+      <section class="docs-section" id="motion-mcp-setup-verify">
+        <h2 class="docs-section__title">Your first successful Motion Lab call</h2>
+        <p class="docs-section__copy"><strong>What success looks like:</strong> <code>list_motion_presets</code> returns a preset array and <code>get_motion_recipe</code> returns a preset profile. That confirms the local MCP server and the hosted premium path are both live.</p>
+        <p class="docs-section__copy">After restarting your client, confirm these tools appear:</p>
+        <ul>
+          <li><code>list_motion_presets</code></li>
+          <li><code>get_motion_recipe</code></li>
+          <li><code>export_motion_css</code></li>
+          <li><code>export_animated_svg</code></li>
+          <li><code>animate_icon</code></li>
+        </ul>
+        <p class="docs-section__copy">Then run this sequence:</p>
+        <ol class="docs-list docs-list--numbered">
+          <li><code>list_motion_presets</code></li>
+          <li><code>get_motion_recipe</code> with preset <code>sweep</code>, trigger <code>hover</code>, duration <code>240</code>, intensity <code>100</code></li>
+          <li><code>export_motion_css</code> or <code>animate_icon</code></li>
+        </ol>
+      </section>
+      <section class="docs-callout" id="motion-mcp-setup-next">
+        <h3>Need exact tool fields?</h3>
+        <p>Open ${docsLink('docs-mcp-motion', 'Motion Lab MCP Tools')} for the full parameter and return-shape reference.</p>
+      </section>
+    `,
+  },
+  'docs-motion-lab-use-cases': {
+    navLabel: 'Use Cases',
+    kicker: 'Motion Lab',
+    pageTitle: 'Motion Lab Use Cases',
+    summary: 'Match presets to product context, not animation names. Each use case maps UI intent to recommended presets and what to avoid.',
+    bodyHtml: `
+      <section class="docs-section" id="motion-use-cases-intro">
+        <p class="docs-section__copy">Start with the UI context, not the animation name. The best Motion Lab preset is the one that matches the moment in the product, the screen&apos;s tone, and the motion budget appropriate for that user.</p>
+      </section>
+      <section class="docs-section" id="motion-use-cases-table">
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Context</th>
+                <th>Likely presets</th>
+                <th>What to avoid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Professional dashboard hover</td><td><code>sweep</code>, <code>glide</code></td><td>playful or explosive motion that distracts from data</td></tr>
+              <tr><td>Security or authentication</td><td><code>fingerprint</code>, <code>radar</code></td><td>celebratory or bouncy motion that weakens trust</td></tr>
+              <tr><td>Success or celebration</td><td><code>sparkle</code>, <code>bloom</code></td><td>effects that feel childish if the tone is premium</td></tr>
+              <tr><td>Ambient empty state</td><td><code>breathe</code>, <code>float</code></td><td>high-energy motion that becomes tiring over time</td></tr>
+              <tr><td>Accessibility-sensitive settings panel</td><td>prefer no motion; otherwise choose the most restrained option</td><td>constant attention-seeking motion</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="docs-section" id="motion-use-cases-output">
+        <h2 class="docs-section__title">Choosing CSS vs animated SVG</h2>
+        <p class="docs-section__copy">Choose <strong>Motion Lab CSS</strong> when your SVG is already inline in the DOM and you want to control markup placement yourself. Choose <strong>animated SVG</strong> when you want one self-contained output with fewer integration steps.</p>
+        <p class="docs-section__copy">If the choice is still unclear, use ${docsLink('docs-motion-lab-mcp-workflow', 'MCP Workflow')} first, then use ${docsLink('docs-motion-lab-exports', 'Exports')} as the integration guide.</p>
+      </section>
+      <section class="docs-callout" id="motion-use-cases-restraint">
+        <h3>Restraint is part of good motion design</h3>
+        <p>The strongest Motion Lab decisions include recommending no animation at all when it would weaken clarity, trust, or calm. If motion is still needed, choose the most subtle option and be ready to explain why it earns its place.</p>
       </section>
     `,
   },
