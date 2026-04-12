@@ -141,6 +141,9 @@ Acceptance signal:
 | Fallback | repo development fallback still works before hosted deployment | `npm run verify:motion-lab-hosted-fallback` | Passed now | recipe/CSS/SVG smoke evidence using the repo-local fallback path |
 | Fallback | hosted unavailability returns intended hard-fail contract in the protected release path | `npm run verify:motion-lab-negative-paths` | Required now | structured error sample with no local premium fallback |
 | Entitlement | non-Pro user is denied premium Motion Lab endpoints | `npm run verify:motion-lab-negative-paths` with `SUPERICONS_NON_PRO_API_KEY` | Required now | `motion_lab_pro_required` response evidence |
+| Rate limiting | below-limit hosted and MCP paths still work with the limiter enabled | `npm run verify:motion-lab-rate-limits` | Passed now | successful hosted and MCP evidence for recipe, CSS render, animated SVG render, and session exchange |
+| Rate limiting | over-limit `429` preserves retry metadata through the MCP tool response | `SUPERICONS_MOTION_LAB_EXPECT_429=1 npm run verify:motion-lab-rate-limits` after temporarily lowering the live target bucket threshold and redeploying the hosted functions | Passed now | live structured `429` evidence for `motion-lab-recipe:user`, `motion-lab-render-css:user`, `motion-lab-render-animated-svg:user`, and hosted session `motion-lab-session:api_key_hash` |
+| Rate limiting | limiter-function failure fail-open path still returns a valid Motion Lab result | controlled staging run with intentionally broken or unavailable rate-limit function access | Passed now | execute permission on `si_enforce_motion_lab_rate_limit(...)` was revoked, RPC calls returned `403`, hosted CSS and MCP CSS requests still returned `200`, then permission was restored |
 | MCP wrapper | `get_motion_recipe` now uses hosted premium path | wrapper contract review and smoke test | Blocked now | successful MCP tool call using hosted recipe path |
 | MCP wrapper | `export_motion_css` now uses hosted premium path | wrapper contract review and smoke test | Blocked now | successful MCP tool call using hosted CSS render path |
 | MCP wrapper | `export_animated_svg` now uses hosted premium path | wrapper contract review and smoke test | Blocked now | successful MCP tool call using hosted SVG render path |
@@ -158,10 +161,11 @@ Acceptance signal:
 3. `npm run verify:motion-lab-mcp-clean-install`
 4. `npm run verify:motion-lab-hosted-live`
 5. `npm run verify:motion-lab-negative-paths`
-6. `npm run verify:motion-lab-hosted-fallback`
-7. `npm run verify:motion-lab-presets`
-8. `npm run verify:motion-lab-agent-metadata` or revised local-baseline equivalent
-9. `npm run build`
+6. `npm run verify:motion-lab-rate-limits`
+7. `npm run verify:motion-lab-hosted-fallback`
+8. `npm run verify:motion-lab-presets`
+9. `npm run verify:motion-lab-agent-metadata` or revised local-baseline equivalent
+10. `npm run build`
 
 ### Manual review checks
 
@@ -182,8 +186,11 @@ The migration must not be called complete until all of these pass:
 6. hosted animated SVG render contract
 7. hosted outage hard-fail contract
 8. negative-path verification batch
-9. root app build
-10. package verification
+9. rate-limit below-threshold verification
+10. rate-limit `429` pass-through verification
+11. rate-limit fail-open outage verification
+12. root app build
+13. package verification
 
 ## Success Metrics
 
@@ -237,6 +244,7 @@ If any hosted endpoint returns more than the approved safe response shape:
 - clean-install Motion Lab surface import from a migrated package
 - token refresh after expiry
 - live non-Pro denial path if no separate non-Pro key is provided during verification
+- long-run cleanup/retention behavior at real traffic levels
 
 ## Risks And Dependencies
 
@@ -269,3 +277,5 @@ Immediate next run:
 
 - `npm run verify:motion-lab-negative-paths` with a real Pro-linked `SUPERICONS_API_KEY`
 - optionally add `SUPERICONS_NON_PRO_API_KEY` to prove the live non-Pro entitlement denial path too
+- rotate the exposed Pro API key used during rollout evidence capture
+- use this checklist as the active record that the Postgres limiter now has live proofs for recipe, session, CSS render, animated SVG render, and fail-open degradation

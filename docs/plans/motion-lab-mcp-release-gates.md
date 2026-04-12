@@ -100,6 +100,25 @@ Purpose:
 - verify hosted invalid-preset, explicit-selector CSS, malformed SVG, and outage hard-fail behavior
 - optionally verify the live non-Pro session denial path when `SUPERICONS_NON_PRO_API_KEY` is provided
 
+### Gate 7: Hosted rate-limit verification
+
+Status: Implemented and live-proven
+
+Current rule:
+- `npm run verify:motion-lab-rate-limits`
+
+Purpose:
+- verify the hosted Motion Lab path still works below the configured thresholds with local fallback disabled
+- verify a real or controlled live `429` preserves `code`, `retry_after_seconds`, and `limit_scope` through the MCP response path
+- keep limiter rollout evidence separate from the broader negative-path batch
+
+Current live evidence:
+- recipe `429` proven
+- session `429` proven
+- CSS render `429` proven
+- animated SVG render `429` proven
+- fail-open behavior proven by temporarily revoking execute on `si_enforce_motion_lab_rate_limit(...)`, observing `403` RPC failures, and confirming hosted CSS plus MCP CSS still returned `200`
+
 ## Required Commands Before Publish
 
 1. `npm --prefix mcp run verify:package`
@@ -108,7 +127,8 @@ Purpose:
 4. `npm run verify:motion-lab-hosted-fallback`
 5. `npm run verify:motion-lab-hosted-live`
 6. `npm run verify:motion-lab-negative-paths`
-7. `npm run build`
+7. `npm run verify:motion-lab-rate-limits`
+8. `npm run build`
 
 ## Preflight Findings
 
@@ -131,6 +151,8 @@ Interpretation:
 
 - do not publish the Motion Lab protected path until the clean-install Motion Lab surface smoke test passes
 - do not publish the Motion Lab protected path unless the hosted functions have been deployed with `--no-verify-jwt`
+- do not publish the Motion Lab protected path unless the Motion Lab rate-limit migration and SQL function are deployed in Supabase
+- prove the live `429` path in a controlled window by temporarily lowering one Motion Lab bucket threshold, redeploying the hosted functions, and rerunning `npm run verify:motion-lab-rate-limits` with `SUPERICONS_MOTION_LAB_EXPECT_429=1`
 - treat tarball allowlist and package verification as mandatory, not optional hygiene
 - keep Motion Lab release decisions separate from converter release readiness for now
 
@@ -155,12 +177,13 @@ Rollback impact:
 - the repo still lacks dedicated env-doc examples for future hosted Motion Lab service configuration
 - the hosted live smoke test depends on an operator-provided Pro API key and currently remains a manual-release credential step
 - the live non-Pro denial check remains an operator-provided optional credential step until a dedicated non-Pro test key is maintained for release verification
+- the live rate-limit proof depends on an operator-provided Pro API key plus a controlled low-threshold redeploy window whenever thresholds are changed in the future
+- cleanup/retention behavior for the Postgres limiter still needs observation over real traffic patterns
 
 ## Recommended Next Step
 
-Run the live negative-path batch against the deployed Motion Lab backend:
+Keep the Motion Lab verification record aligned with the now-proven Postgres limiter rollout:
 
-- `npm run verify:motion-lab-negative-paths`
-- optionally provide `SUPERICONS_NON_PRO_API_KEY` to verify the real non-Pro denial path
-
-After that, record the evidence in the Motion Lab verification checklist before the next release decision.
+- record the completed rate-limit evidence in the verification checklist and handoff summary
+- rotate the exposed Pro API key used during rollout verification
+- return to user-facing docs and docs-page refinement work
