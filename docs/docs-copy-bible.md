@@ -542,7 +542,7 @@ An array of library objects, each with: `id`, `name`, `count`, `description`, `p
 These five tools expose Motion Lab capabilities to your coding agent. All five are Pro-only and require a valid `SUPERICONS_API_KEY` linked to a Pro account or a purchased animated collection.
 
 **Callout (note):**
-Not sure which preset to use? Call `list_motion_presets` first to see all available options with descriptions, then `get_motion_recipe` to understand what a specific preset does before committing.
+Not sure which preset to use? Call `list_motion_presets` first to see the preset IDs, labels, groups, short descriptions, and supported triggers, then `get_motion_recipe` to understand what a specific preset does before committing.
 
 ---
 
@@ -554,7 +554,7 @@ List the Motion Lab presets currently available through Supericons MCP.
 **Parameters:** None.
 
 **Returns:**
-An array of preset objects. Each preset includes: `id`, `preset`, `label`, `group`, `description`, `supported_triggers`, `default_duration_ms`, `duration_range_ms`, `default_intensity_percent`, `intensity_range_percent`, and `export_compatibility`.
+An array of preset objects. Each preset includes: `preset`, `label`, `group`, `description`, and `supported_triggers`.
 
 **Access:** Pro.
 
@@ -599,7 +599,7 @@ Generate both the Motion Lab CSS and a self-contained animated SVG for one icon 
 | `color` | string | No | - | Optional CSS color override for icons that inherit `currentColor` |
 
 **Returns:**
-An object with: `id`, `library`, `recipe` (the motion recipe object), `css` (Motion Lab CSS), and `animated_svg` (standalone SVG with embedded animation).
+An object with: `id`, `library`, `recipe` (the motion recipe object), `css` (Motion Lab CSS), `animated_svg` (standalone SVG with embedded animation), and `selector_mode`. Placeholder CSS responses also include `selector_token`.
 
 **Access:** Pro.
 
@@ -613,9 +613,9 @@ Generate only the Motion Lab CSS for an icon. Use this when you have the SVG inl
 **Parameters:** Same as `animate_icon`.
 
 **Returns:**
-An object with: `id`, `library`, `preset` (the motion recipe), and `css` (the Motion Lab CSS with `@keyframes` and animation rules).
+An object with: `id`, `library`, `preset` (the motion recipe), `css` (the Motion Lab CSS with `@keyframes` and animation rules), and `selector_mode`. Placeholder CSS responses also include `selector_token`.
 
-**The CSS selector targets:** `#icon-container svg` by default. To animate the SVG, wrap it in a container with `id="icon-container"`.
+**The CSS selector targets:** By default the hosted Motion Lab CSS path returns portable output using the token `{{ICON_SELECTOR}}`. Replace that token with the selector for your inline SVG before applying the stylesheet.
 
 **Access:** Pro.
 
@@ -782,7 +782,7 @@ Motion Lab is available in two ways:
 **Body:**
 Motion Lab generates two types of output from any preset:
 
-**Motion Lab CSS** - A stylesheet with `@keyframes` and animation rules. Apply the animation to an inline SVG element using the class target `#icon-container svg`. The SVG and animation live in separate files.
+**Motion Lab CSS** - A stylesheet with `@keyframes` and animation rules. Replace `{{ICON_SELECTOR}}` with the selector for your inline SVG, then keep the SVG and animation in separate files.
 
 **Animated SVG** - A self-contained SVG file with the animation embedded in a `<style>` block inside the SVG. Drop it anywhere without external CSS.
 
@@ -922,15 +922,9 @@ A stylesheet with `@keyframes` definitions and animation rules. Apply it alongsi
 **Body:**
 1. Get the SVG from Supericons using `search_icons` or `get_icon`.
 2. Get the CSS from `export_motion_css` using your chosen preset and trigger.
-3. Place the SVG inside a container with `id="icon-container"`:
-
-```html
-<div id="icon-container">
-  <!-- paste your SVG here -->
-</div>
-```
-
-4. Link the CSS file, or paste the CSS rules into your existing stylesheet.
+3. Keep the SVG inline in your markup.
+4. Replace `{{ICON_SELECTOR}}` in the returned CSS with the selector for your inline SVG.
+5. Link the updated CSS file, or paste the rules into your existing stylesheet.
 
 **Sub-heading:** What the CSS contains
 
@@ -939,7 +933,7 @@ The CSS export includes:
 - A brand comment: `/* Supericons Motion Lab */`
 - A preset label comment with your chosen preset, trigger, duration, and intensity
 - A `@keyframes` block for the animation
-- An animation rule targeting `#icon-container svg`
+- An animation rule using the placeholder selector token `{{ICON_SELECTOR}}`
 - `overflow: visible`, `transform-box: fill-box`, and `transform-origin: center` on the SVG and its children to ensure transforms behave correctly
 
 ---

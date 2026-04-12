@@ -1,0 +1,886 @@
+{
+  "version": 1,
+  "generated_at": "2026-04-12T18:11:15.206Z",
+  "presets": [
+    {
+      "preset": "bounce",
+      "label": "Bounce",
+      "group": "Motion",
+      "description": "Lifts the icon with a quick rebound.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "float",
+      "label": "Float",
+      "group": "Motion",
+      "description": "Gives the icon a subtle hovering drift.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "shake",
+      "label": "Shake",
+      "group": "Motion",
+      "description": "Adds a quick side-to-side alert motion.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "spin",
+      "label": "Spin",
+      "group": "Motion",
+      "description": "Rotates the full icon around its center.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "pulse",
+      "label": "Pulse",
+      "group": "Motion",
+      "description": "Scales gently in and out for soft emphasis.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "pop",
+      "label": "Pop",
+      "group": "Motion",
+      "description": "Snaps up with a springy overshoot.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "heartbeat",
+      "label": "Heartbeat",
+      "group": "Motion",
+      "description": "Heartbeat Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "rubberband",
+      "label": "Rubber Band",
+      "group": "Motion",
+      "description": "Rubber Band Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "jelly",
+      "label": "Jelly",
+      "group": "Motion",
+      "description": "Jelly Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "ring",
+      "label": "Ring",
+      "group": "Motion",
+      "description": "Ring Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "wobble",
+      "label": "Wobble",
+      "group": "Motion",
+      "description": "Wobble Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "magnetic",
+      "label": "Magnetic",
+      "group": "Motion",
+      "description": "Magnetic Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "recoil",
+      "label": "Recoil",
+      "group": "Motion",
+      "description": "Recoil Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "pendulum",
+      "label": "Pendulum",
+      "group": "Motion",
+      "description": "Pendulum Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "whiplash",
+      "label": "Whiplash",
+      "group": "Motion",
+      "description": "Whiplash Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "tremor",
+      "label": "Tremor",
+      "group": "Motion",
+      "description": "Tremor Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "neonglow",
+      "label": "Neon Glow",
+      "group": "Motion",
+      "description": "Neon Glow Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "breathe",
+      "label": "Breathe",
+      "group": "Motion",
+      "description": "Breathe Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "metronome",
+      "label": "Metronome",
+      "group": "Motion",
+      "description": "Metronome Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "orbit",
+      "label": "Orbit",
+      "group": "Motion",
+      "description": "Orbit Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "flicker",
+      "label": "Flicker",
+      "group": "Motion",
+      "description": "Flicker Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "squish",
+      "label": "Squish",
+      "group": "Motion",
+      "description": "Squish Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "glide",
+      "label": "Glide",
+      "group": "Motion",
+      "description": "Glide Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "radar",
+      "label": "Radar",
+      "group": "Motion",
+      "description": "Radar Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "beacon",
+      "label": "Beacon",
+      "group": "Motion",
+      "description": "Beacon Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "magneticIn",
+      "label": "Magnetic In",
+      "group": "Entrances",
+      "description": "Pulls the icon inward with a magnetic snap.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "fadeIn",
+      "label": "Fade In",
+      "group": "Entrances",
+      "description": "Fade In Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "scaleUp",
+      "label": "Scale Up",
+      "group": "Entrances",
+      "description": "Scale Up Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slideUp",
+      "label": "Slide Up",
+      "group": "Entrances",
+      "description": "Slide Up Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "springLand",
+      "label": "Spring Land",
+      "group": "Entrances",
+      "description": "Spring Land Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slingshot",
+      "label": "Slingshot",
+      "group": "Entrances",
+      "description": "Slingshot Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "glitchOn",
+      "label": "Glitch On",
+      "group": "Entrances",
+      "description": "Glitch On Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "unfold",
+      "label": "Unfold",
+      "group": "Entrances",
+      "description": "Unfold Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "warpIn",
+      "label": "Warp In",
+      "group": "Entrances",
+      "description": "Warp In Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slideRight",
+      "label": "Slide Right",
+      "group": "Entrances",
+      "description": "Slide Right Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slideDown",
+      "label": "Slide Down",
+      "group": "Entrances",
+      "description": "Slide Down Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "flipIn",
+      "label": "Flip In",
+      "group": "Entrances",
+      "description": "Flip In Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "telegram",
+      "label": "Telegram",
+      "group": "Entrances",
+      "description": "Telegram Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "bloom",
+      "label": "Bloom",
+      "group": "Entrances",
+      "description": "Bloom Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "shockwave",
+      "label": "Shockwave",
+      "group": "Entrances",
+      "description": "Shockwave Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "fadeOut",
+      "label": "Fade Out",
+      "group": "Exits",
+      "description": "Fade Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "scaleDown",
+      "label": "Scale Down",
+      "group": "Exits",
+      "description": "Scale Down Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slideOut",
+      "label": "Slide Out",
+      "group": "Exits",
+      "description": "Slide Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "vortex",
+      "label": "Vortex",
+      "group": "Exits",
+      "description": "Vortex Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "glitchOff",
+      "label": "Glitch Off",
+      "group": "Exits",
+      "description": "Glitch Off Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "dissolve",
+      "label": "Dissolve",
+      "group": "Exits",
+      "description": "Dissolve Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "popOut",
+      "label": "Pop Out",
+      "group": "Exits",
+      "description": "Pop Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "slideLeft",
+      "label": "Slide Left",
+      "group": "Exits",
+      "description": "Slide Left Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "sinkDown",
+      "label": "Sink Down",
+      "group": "Exits",
+      "description": "Sink Down Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "flipOut",
+      "label": "Flip Out",
+      "group": "Exits",
+      "description": "Flip Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "implode",
+      "label": "Implode",
+      "group": "Exits",
+      "description": "Implode Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "puffOut",
+      "label": "Puff Out",
+      "group": "Exits",
+      "description": "Puff Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "launchOut",
+      "label": "Launch Out",
+      "group": "Exits",
+      "description": "Launch Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "shrinkSpin",
+      "label": "Shrink Spin",
+      "group": "Exits",
+      "description": "Shrink Spin Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "blinkOut",
+      "label": "Blink Out",
+      "group": "Exits",
+      "description": "Blink Out Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "sparkle",
+      "label": "Sparkle",
+      "group": "Special",
+      "description": "Adds a glow burst that peaks mid-cycle.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "swing",
+      "label": "Swing",
+      "group": "Special",
+      "description": "Swing Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "jitter",
+      "label": "Jitter",
+      "group": "Special",
+      "description": "Jitter Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "chase",
+      "label": "Chase",
+      "group": "Special",
+      "description": "Chase Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "stream",
+      "label": "Stream",
+      "group": "Special",
+      "description": "Stream Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "trace",
+      "label": "Trace",
+      "group": "Special",
+      "description": "Reveals the icon with a directional trace.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "flow",
+      "label": "Flow",
+      "group": "Special",
+      "description": "Flow Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "converge",
+      "label": "Converge",
+      "group": "Special",
+      "description": "Converge Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "cube",
+      "label": "Cube",
+      "group": "Special",
+      "description": "Cube Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "typing",
+      "label": "Typing",
+      "group": "Special",
+      "description": "Stages the icon in with stepped reveal timing.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "reason",
+      "label": "Reason",
+      "group": "Special",
+      "description": "Reason Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "sweep",
+      "label": "Sweep",
+      "group": "Special",
+      "description": "Sweeps across the icon with a lit edge.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "scatter",
+      "label": "Scatter",
+      "group": "Special",
+      "description": "Scatter Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "crest",
+      "label": "Crest",
+      "group": "Special",
+      "description": "Crest Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "tap",
+      "label": "Tap",
+      "group": "Special",
+      "description": "Presses forward with a quick action glow.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "shuffle",
+      "label": "Shuffle",
+      "group": "Special",
+      "description": "Shuffle Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "infinity",
+      "label": "Infinity",
+      "group": "Special",
+      "description": "Infinity Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "spatial",
+      "label": "Spatial",
+      "group": "Special",
+      "description": "Spatial Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "pageFlip",
+      "label": "Page Flip",
+      "group": "Special",
+      "description": "Page Flip Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "bookOpen",
+      "label": "Book Open",
+      "group": "Special",
+      "description": "Book Open Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "domino",
+      "label": "Domino",
+      "group": "Special",
+      "description": "Domino Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "supernova",
+      "label": "Supernova",
+      "group": "Special",
+      "description": "Supernova Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "blackHole",
+      "label": "Black Hole",
+      "group": "Special",
+      "description": "Black Hole Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "fingerprint",
+      "label": "Fingerprint",
+      "group": "Special",
+      "description": "Fingerprint Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    },
+    {
+      "preset": "badgeTap",
+      "label": "Badge Tap",
+      "group": "Special",
+      "description": "Badge Tap Motion Lab preset.",
+      "supported_triggers": [
+        "loop",
+        "hover",
+        "click"
+      ]
+    }
+  ]
+}

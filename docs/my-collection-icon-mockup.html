@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Collection Icons – Two Versions Mockup</title>
+  <style>
+    :root {
+      --si-bg:                       #0f0f11;
+      --si-surface:                  #141417;
+      --si-surface-container:        #1c1c20;
+      --si-ghost-border:             rgba(255,255,255,0.07);
+      --si-text:                     #f0f0f2;
+      --si-text-muted:               #a0a0aa;
+      --si-text-dim:                 #5a5a64;
+      --si-primary:                  #ff4f00;
+      --si-primary-soft:             rgba(255,79,0,0.6);
+      --si-font:                     'Inter', system-ui, sans-serif;
+      --ease-spring:                 cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-out:                    cubic-bezier(0.0, 0.0, 0.2, 1.0);
+      --ease-decel:                  cubic-bezier(0.0, 0.0, 0.2, 1.0);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--si-bg);
+      font-family: var(--si-font);
+      color: var(--si-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Page header ─────────────────────────────────────────────── */
+    .page-header {
+      padding: 32px 40px 8px;
+      border-bottom: 1px solid var(--si-ghost-border);
+    }
+    .page-header h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--si-text);
+    }
+    .page-header p {
+      font-size: 0.8rem;
+      color: var(--si-text-dim);
+      margin-top: 4px;
+    }
+
+    /* ── Two-column stage ────────────────────────────────────────── */
+    .stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      flex: 1;
+    }
+
+    .version {
+      padding: 32px 40px;
+      border-right: 1px solid var(--si-ghost-border);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .version:last-child { border-right: none; }
+
+    .version-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .version-label .tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--si-primary);
+      background: rgba(255,79,0,0.1);
+      border: 1px solid rgba(255,79,0,0.2);
+      border-radius: 4px;
+      padding: 3px 7px;
+    }
+    .version-label h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--si-text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    .version-desc {
+      font-size: 0.78rem;
+      color: var(--si-text-dim);
+      line-height: 1.6;
+    }
+
+    /* ── Sidebar replica ─────────────────────────────────────────── */
+    .sidebar-demo {
+      width: 200px;
+      background: var(--si-surface);
+      border: 1px solid var(--si-ghost-border);
+      border-radius: 10px;
+      padding: 10px 0;
+    }
+
+    .sidebar__section-title {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--si-text-dim);
+      padding: 8px 14px 3px;
+    }
+
+    .sidebar__item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 5px 14px;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      font-size: 0.78rem;
+      color: var(--si-text-muted);
+      transition: background 120ms ease, color 120ms ease;
+      user-select: none;
+    }
+    .sidebar__item:hover {
+      background: var(--si-surface-container);
+      color: var(--si-text);
+    }
+    .sidebar__item.active {
+      border-left-color: var(--si-primary);
+      color: var(--si-primary);
+      background: rgba(255, 79, 0, 0.05);
+    }
+    .sidebar__item.active .sidebar__item-icon { opacity: 1; }
+
+    .sidebar__item-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
+      flex-shrink: 0;
+      overflow: visible;
+      font-size: 0;
+    }
+    .sidebar__item-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .sidebar__item-name { flex: 1; }
+    .sidebar__item-count {
+      font-size: 0.6875rem;
+      color: var(--si-text-dim);
+      min-width: 1.5rem;
+      text-align: right;
+    }
+    .sidebar__item.active .sidebar__item-count { color: var(--si-primary-soft); }
+    .sidebar__divider {
+      height: 1px;
+      background: var(--si-ghost-border);
+      margin: 5px 14px;
+    }
+
+    /* ── Shared hover base rule ───────────────────────────────────── */
+    .sidebar__item .sidebar-icon {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       VERSION 1: Folder + Sparkles
+       Choreography:
+         Real object: A precious personal collection (jewel box)
+         Verb:        Shines / glitters when you look at it
+         Story:       Folder sits still; 3 sparkle crosses ignite
+                      at staggered times, each from opacity:0 to
+                      full brightness then back out. The folder body
+                      gets a gentle scale-up pulse at the same time –
+                      like it's glowing with pride.
+         Pattern:     B (Cascade) – sparks ignite left-to-right
+         Easing:      Decelerate in, Accelerate out (light flash)
+    ══════════════════════════════════════════════════════════════ */
+
+    /* Folder body: gentle pride pulse */
+    .sidebar-icon--v1 .v1-folder-body {
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    /* Sparkle crosses: hidden at rest */
+    .sidebar-icon--v1 .v1-spark-1,
+    .sidebar-icon--v1 .v1-spark-2,
+    .sidebar-icon--v1 .v1-spark-3 {
+      transform-box: fill-box;
+      opacity: 0;
+    }
+    .sidebar-icon--v1 .v1-spark-1 { transform-origin: 6px 5px;  }
+    .sidebar-icon--v1 .v1-spark-2 { transform-origin: 12px 4px; }
+    .sidebar-icon--v1 .v1-spark-3 { transform-origin: 18px 5px; }
+
+    /* Trigger on hover */
+    .sidebar__item:hover .sidebar-icon--v1 .v1-folder-body {
+      animation: v1-folder-glow 700ms var(--ease-spring) infinite;
+    }
+    .sidebar__item:hover .sidebar-icon--v1 .v1-spark-1 {
+      animation: v1-sparkle 700ms var(--ease-out) 0ms infinite;
+    }
+    .sidebar__item:hover .sidebar-icon--v1 .v1-spark-2 {
+      animation: v1-sparkle 700ms var(--ease-out) 120ms infinite;
+    }
+    .sidebar__item:hover .sidebar-icon--v1 .v1-spark-3 {
+      animation: v1-sparkle 700ms var(--ease-out) 240ms infinite;
+    }
+
+    @keyframes v1-folder-glow {
+      0%   { transform: scale(1); }
+      25%  { transform: scale(1.07); }
+      60%  { transform: scale(0.98); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes v1-sparkle {
+      0%   { opacity: 0; transform: scale(0.4) rotate(0deg); }
+      20%  { opacity: 1;   transform: scale(1.2) rotate(15deg); }  /* peak shine */
+      45%  { opacity: 0.7; transform: scale(0.9) rotate(-5deg); }  /* settle */
+      70%  { opacity: 0.3; transform: scale(1.05) rotate(8deg); }
+      100% { opacity: 0;   transform: scale(0.4) rotate(0deg); }   /* fade out */
+    }
+
+    /* Active state glow */
+    .sidebar__item.active .sidebar-icon--v1 {
+      filter: drop-shadow(0 0 6px rgba(255, 79, 0, 0.22));
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       VERSION 2: Supericons Logo Mark – Fireball Launch
+       Choreography:
+         Real object: A stylized lightning bolt / rocket shape
+                      facing right (the Supericons S-mark)
+         Verb:        Fires rightward like a missile launching,
+                      leaving a heat trail. Overshoots, snaps back.
+         Story:       Logo surges right with a strong ease-out
+                      (burst of speed), slightly squashes on launch
+                      (inertia), overshoots 2px, snaps back to rest.
+                      A motion-blur ghost stays behind then fades.
+         Pattern:     A (Cause-and-effect) – logo launches (0ms),
+                      trail ghost fades in then out (60ms)
+         Easing:      Elastic strong for the launch overshoot.
+                      Decelerate for the ghost fade.
+    ══════════════════════════════════════════════════════════════ */
+
+    .sidebar-icon--v2 {
+      transform-box: fill-box;
+      transform-origin: center;
+      overflow: visible;
+    }
+
+    /* The logo mark body */
+    .sidebar-icon--v2 .v2-logo-mark {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* Ghost trail: a duplicate behind the mark, fades in on launch */
+    .sidebar-icon--v2 .v2-trail {
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+    }
+
+    /* Hover triggers */
+    .sidebar__item:hover .sidebar-icon--v2 .v2-logo-mark {
+      animation: v2-fireball-launch 620ms cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+    }
+    .sidebar__item:hover .sidebar-icon--v2 .v2-trail {
+      animation: v2-trail-fade 620ms var(--ease-decel) 40ms infinite;
+    }
+
+    @keyframes v2-fireball-launch {
+      0%   { transform: translateX(0)    scaleX(1)    scaleY(1); }
+      18%  { transform: translateX(-1px) scaleX(0.82) scaleY(1.08); } /* coil before launch */
+      42%  { transform: translateX(5px)  scaleX(1.18) scaleY(0.86); } /* burst right */
+      62%  { transform: translateX(7px)  scaleX(1.05) scaleY(0.94); } /* overshoot */
+      78%  { transform: translateX(5.5px) scaleX(1.02) scaleY(0.98); }
+      100% { transform: translateX(0)    scaleX(1)    scaleY(1); }     /* settle back */
+    }
+
+    @keyframes v2-trail-fade {
+      0%   { opacity: 0;    transform: translateX(0)   scaleX(0.7); }
+      25%  { opacity: 0.28; transform: translateX(-2px) scaleX(0.8); }
+      55%  { opacity: 0.14; transform: translateX(-4px) scaleX(0.6); }
+      100% { opacity: 0;    transform: translateX(-6px) scaleX(0.4); }
+    }
+
+    /* Active state: brand glow */
+    .sidebar__item.active .sidebar-icon--v2 {
+      filter: drop-shadow(0 0 5px rgba(255, 79, 0, 0.3));
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .sidebar__item:hover .sidebar-icon--v1 .v1-folder-body,
+      .sidebar__item:hover .sidebar-icon--v1 .v1-spark-1,
+      .sidebar__item:hover .sidebar-icon--v1 .v1-spark-2,
+      .sidebar__item:hover .sidebar-icon--v1 .v1-spark-3,
+      .sidebar__item:hover .sidebar-icon--v2 .v2-logo-mark,
+      .sidebar__item:hover .sidebar-icon--v2 .v2-trail {
+        animation: none !important;
+      }
+    }
+
+    /* ── Notes panel ─────────────────────────────────────────────── */
+    .notes {
+      padding: 16px 40px 32px;
+      border-top: 1px solid var(--si-ghost-border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 40px;
+    }
+    .note-block { display: flex; flex-direction: column; gap: 6px; }
+    .note-block .note-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--si-primary);
+    }
+    .note-block ul {
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .note-block li { font-size: 0.75rem; color: var(--si-text-dim); line-height: 1.5; }
+    .note-block li strong { color: var(--si-text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Page header ───────────────────────────────────────────── -->
+  <div class="page-header">
+    <h1>My Collection – Two Icon Versions</h1>
+    <p>Hover both "My Collection" rows to trigger the animations. No JS, pure CSS keyframes, matching the sidebar pattern exactly.</p>
+  </div>
+
+  <!-- ── Two-column stage ──────────────────────────────────────── -->
+  <div class="stage">
+
+    <!-- ────────────── VERSION 1: Folder + Sparkles ──────────────── -->
+    <div class="version">
+      <div class="version-label">
+        <span class="tag">Version 1</span>
+        <h2>Existing folder icon + sparkles</h2>
+      </div>
+      <p class="version-desc">
+        The folder shape you already have. On hover, three 4-point star sparkles
+        ignite across the top of the folder in a left-to-right cascade, like
+        precious items inside are shining through. The folder itself gets a
+        subtle pride-pulse scale. Sparkles represent: this is <em>your</em>
+        curated treasure, not just a generic folder.
+      </p>
+
+      <div class="sidebar-demo">
+        <div class="sidebar__section-title">Premium Collections</div>
+
+        <div class="sidebar__item">
+          <span class="sidebar__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <g><rect x="4" y="14" width="16" height="6" rx="1.5"/></g>
+              <g><rect x="6" y="9" width="12" height="6" rx="1.5"/></g>
+              <g><rect x="8" y="4" width="8" height="6" rx="1.5"/></g>
+            </svg>
+          </span>
+          <span class="sidebar__item-name">Collections</span>
+          <span class="sidebar__item-count">8</span>
+        </div>
+
+        <div class="sidebar__item active">
+          <span class="sidebar__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 class="sidebar-icon sidebar-icon--v1" aria-hidden="true">
+
+              <!--
+                Folder body: the existing my-downloads/my-collection folder shape.
+                Using a clean two-part folder: tab + body.
+              -->
+              <g class="v1-folder-body">
+                <!-- Main body -->
+                <path d="M4 9 L4 19 Q4 20 5 20 L19 20 Q20 20 20 19 L20 9 Q20 8 19 8 L12.5 8 Q12 8 11.5 7.5 L10.5 6 Q10 5 9.5 5 L5 5 Q4 5 4 6 L4 9 Z"/>
+              </g>
+
+              <!--
+                Sparkle crosses: 4-point star cross shapes sitting above the folder.
+                Each is a small +/x cross made of two short strokes.
+                They appear from opacity:0 on hover.
+              -->
+
+              <!-- Spark 1: top-left -->
+              <g class="v1-spark-1">
+                <line x1="6" y1="3.5" x2="6" y2="7" stroke-width="1.2"/>
+                <line x1="4.25" y1="5.25" x2="7.75" y2="5.25" stroke-width="1.2"/>
+                <line x1="4.8" y1="3.8" x2="7.2" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+                <line x1="7.2" y1="3.8" x2="4.8" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+              </g>
+
+              <!-- Spark 2: top-center, slightly higher -->
+              <g class="v1-spark-2">
+                <line x1="12" y1="1.5" x2="12" y2="5.5" stroke-width="1.3"/>
+                <line x1="10" y1="3.5" x2="14" y2="3.5" stroke-width="1.3"/>
+                <line x1="10.5" y1="2" x2="13.5" y2="5" stroke-width="0.75" opacity="0.5"/>
+                <line x1="13.5" y1="2" x2="10.5" y2="5" stroke-width="0.75" opacity="0.5"/>
+              </g>
+
+              <!-- Spark 3: top-right -->
+              <g class="v1-spark-3">
+                <line x1="18" y1="3.5" x2="18" y2="7" stroke-width="1.2"/>
+                <line x1="16.25" y1="5.25" x2="19.75" y2="5.25" stroke-width="1.2"/>
+                <line x1="16.8" y1="3.8" x2="19.2" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+                <line x1="19.2" y1="3.8" x2="16.8" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+              </g>
+
+            </svg>
+          </span>
+          <span class="sidebar__item-name">My Collection</span>
+          <span class="sidebar__item-count">4</span>
+        </div>
+
+        <div class="sidebar__divider"></div>
+        <div class="sidebar__section-title">Tools</div>
+        <div class="sidebar__item">
+          <span class="sidebar__item-icon" style="opacity:0.4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+          <span class="sidebar__item-name">Motion Lab</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────── VERSION 2: Supericons Logo Fireball ────────── -->
+    <div class="version">
+      <div class="version-label">
+        <span class="tag">Version 2</span>
+        <h2>Supericons logo mark – fireball launch</h2>
+      </div>
+      <p class="version-desc">
+        The Supericons S-mark (orange, facing right like a bolt of motion).
+        On hover it coils back slightly, then fires rightward in a burst,
+        squashing on launch and overshooting before snapping back. A ghost
+        trail evaporates behind it. This says: <em>this is Your Collection,
+        powered by Supericons, moving fast.</em>
+      </p>
+
+      <div class="sidebar-demo">
+        <div class="sidebar__section-title">Premium Collections</div>
+
+        <div class="sidebar__item">
+          <span class="sidebar__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <g><rect x="4" y="14" width="16" height="6" rx="1.5"/></g>
+              <g><rect x="6" y="9" width="12" height="6" rx="1.5"/></g>
+              <g><rect x="8" y="4" width="8" height="6" rx="1.5"/></g>
+            </svg>
+          </span>
+          <span class="sidebar__item-name">Collections</span>
+          <span class="sidebar__item-count">8</span>
+        </div>
+
+        <div class="sidebar__item active">
+          <span class="sidebar__item-icon">
+            <!--
+              Supericons logo mark, rescaled to 18x18 viewport.
+              The original mark sits in a complex coordinate space.
+              I re-express the "S" shape as a clean simplified
+              stroke-based version matching the sidebar icon style,
+              using the same orange brand color via currentColor.
+              The shape: a stylized S-lightning, wider at top and
+              bottom, cinched in the middle – reads as a fast-moving
+              brand mark.
+            -->
+            <svg viewBox="0 0 24 24" fill="none"
+                 class="sidebar-icon sidebar-icon--v2" aria-hidden="true">
+
+              <!-- Ghost trail (behind, animated) -->
+              <g class="v2-trail">
+                <path d="M6 4 L18 4 Q20 4 20 6 L20 8 Q20 10 18 10 L8 10 Q6 10 6 12 L6 14 Q6 16 8 16 L19 16 Q21 16 21 18 L21 20 Q21 22 19 22 L5 22 Q3 22 3 20"
+                      fill="none" stroke="#ff4f00" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+              </g>
+
+              <!-- Logo mark: Supericons S-shape as clean sidebar-scale strokes -->
+              <g class="v2-logo-mark">
+                <!--
+                  The S-mark is a stylized horizontal-stripe S:
+                  Row 1 (top):    wide bar going right
+                  Row 2 (mid-hi): steps left, narrower
+                  Row 3 (mid-lo): steps left again, narrowest
+                  Row 4 (bot):    wide bar going right again
+                  This matches the S-mark gestalt as rendered in the brand at sidebar scale.
+                -->
+                <path d="M5 4 L18 4 Q19.5 4 19.5 5.5 L19.5 7.5 Q19.5 9 18 9 L7.5 9 Q6 9 6 10.5 L6 13.5 Q6 15 7.5 15 L18.5 15 Q20 15 20 16.5 L20 18.5 Q20 20 18.5 20 L5.5 20 Q4 20 4 18.5"
+                      fill="none" stroke="#ff4f00" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </svg>
+          </span>
+          <span class="sidebar__item-name">My Collection</span>
+          <span class="sidebar__item-count">4</span>
+        </div>
+
+        <div class="sidebar__divider"></div>
+        <div class="sidebar__section-title">Tools</div>
+        <div class="sidebar__item">
+          <span class="sidebar__item-icon" style="opacity:0.4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+          <span class="sidebar__item-name">Motion Lab</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /stage -->
+
+  <!-- ── Notes ─────────────────────────────────────────────────── -->
+  <div class="notes">
+    <div class="note-block">
+      <div class="note-label">Version 1 animation breakdown</div>
+      <ul>
+        <li><strong>v1-spark-1</strong> (0ms, 700ms) – left sparkle cross ignites, peaks at 20%, fades by 100%</li>
+        <li><strong>v1-spark-2</strong> (120ms delay) – center sparkle, slightly taller cross, slightly longer</li>
+        <li><strong>v1-spark-3</strong> (240ms delay) – right sparkle, cascade complete, stagger = 120ms apart</li>
+        <li><strong>v1-folder-body</strong> (0ms) – 1.07x scale pride pulse, spring easing</li>
+        <li>Easing: Decelerate in, Accelerate out per sparkle (flash feel, not bounce)</li>
+      </ul>
+    </div>
+    <div class="note-block">
+      <div class="note-label">Version 2 animation breakdown</div>
+      <ul>
+        <li><strong>v2-logo-mark</strong> (0ms, 620ms) – coils back −1px at 18%, bursts right to +7px at 62%, snaps back to rest</li>
+        <li><strong>v2-trail</strong> (40ms delay) – ghost behind logo fades in as the mark surges, then evaporates leftward</li>
+        <li>squashX at 0.82 on coil, stretchX at 1.18 on burst – classic squash-and-stretch for velocity feel</li>
+        <li>Easing: cubic-bezier(0.175, 0.885, 0.32, 1.275) – strong elastic overshoot on the launch</li>
+        <li>Logo uses orange brand color directly (#ff4f00 / currentColor override) matching the active state</li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>

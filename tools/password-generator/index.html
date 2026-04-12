@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Password Generator</title>
+  <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --bg:         #0a0c12;
+      --surface:    #111520;
+      --surface-2:  #1a1f30;
+      --border:     #252b40;
+      --accent:     #6c63ff;
+      --accent-glow:#6c63ff55;
+      --accent-2:   #00d4aa;
+      --text:       #e8eaf0;
+      --muted:      #7a82a0;
+      --danger:     #ff5c5c;
+      --ok:         #00d4aa;
+      --radius:     12px;
+      --radius-sm:  8px;
+      --font:       'Inter', system-ui, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 50% 0%, #1a1560 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 100%, #0d3d38 0%, transparent 60%);
+    }
+
+    /* ─── Card ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 24px 80px #00000060, 0 0 0 1px #ffffff08 inset;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .logo svg { width: 26px; height: 26px; }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e8eaf0, #9fa4c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .offline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #0d2c25;
+      border: 1px solid #1a4a3a;
+      color: var(--ok);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .offline-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 6px var(--ok);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ─── Output Box ─── */
+    .output-wrap {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 52px 16px 18px;
+      width: 100%;
+      color: var(--accent-2);
+      word-break: break-all;
+      min-height: 58px;
+      line-height: 1.6;
+      transition: border-color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .output:focus { outline: none; border-color: var(--accent); }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: var(--radius-sm);
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); background: #1a1560; }
+    .copy-btn.copied { border-color: var(--ok); color: var(--ok); background: #0d2c25; }
+    .copy-btn svg { width: 16px; height: 16px; pointer-events: none; }
+
+    /* ─── Strength Bar ─── */
+    .strength-wrap { margin-bottom: 24px; }
+    .strength-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .strength-label span:last-child { font-weight: 600; }
+    .strength-bar {
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .strength-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s ease, background 0.4s ease;
+      width: 0%;
+    }
+
+    /* ─── Controls ─── */
+    .section { margin-bottom: 24px; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* Length Slider */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--accent-glow);
+      transition: transform 0.15s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    .length-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 36px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+    }
+
+    /* Checkboxes */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .check-item:hover { border-color: var(--accent); }
+    .check-item input[type="checkbox"] { display: none; }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .check-item input:checked ~ .check-box {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .check-box svg { width: 11px; height: 11px; opacity: 0; transition: opacity 0.15s; }
+    .check-item input:checked ~ .check-box svg { opacity: 1; }
+    .check-text { font-size: 0.82rem; font-weight: 500; }
+    .check-chars { font-size: 0.7rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* Mode Tabs */
+    .mode-tabs {
+      display: flex;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      gap: 3px;
+    }
+    .mode-tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+    }
+    .mode-tab.active {
+      background: linear-gradient(135deg, var(--accent), #5248d0);
+      color: #fff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    /* Entropy info */
+    .entropy-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .entropy-chip {
+      flex: 1;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .entropy-chip .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+    .entropy-chip .lbl {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+
+    /* Generate Button */
+    .gen-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--accent) 0%, #5248d0 50%, #00c4a0 100%);
+      background-size: 200% 200%;
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      position: relative;
+      overflow: hidden;
+    }
+    .gen-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ffffff18, transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .gen-btn:hover::before { opacity: 1; }
+    .gen-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .gen-btn:active { transform: translateY(0); }
+
+    /* History */
+    .history-section { margin-top: 24px; }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .history-clear {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .history-clear:hover { color: var(--danger); }
+    .history-list { display: flex; flex-direction: column; gap: 6px; }
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      gap: 10px;
+    }
+    .history-pw {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .history-copy {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .history-copy:hover { color: var(--accent-2); }
+    .history-copy svg { width: 14px; height: 14px; }
+
+    /* Security notice */
+    .notice {
+      margin-top: 24px;
+      background: #0a1520;
+      border: 1px solid #1a2a40;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .notice strong { color: #5b9bd5; }
+
+    /* Tooltips */
+    [data-tip] { position: relative; cursor: help; }
+    [data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e2440;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.74rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    [data-tip]:hover::after { opacity: 1; }
+
+    /* Animations */
+    @keyframes flash-in {
+      0%   { opacity: 0; transform: translateY(4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .flash { animation: flash-in 0.25s ease forwards; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <h1>Secure Password Generator</h1>
+    <p class="subtitle">100% local. CSPRNG entropy. Zero network calls.</p>
+    <span class="offline-badge">Offline Only</span>
+  </div>
+
+  <!-- Output -->
+  <div class="output-wrap">
+    <div class="output" id="output" aria-label="Generated password">Click Generate</div>
+    <button class="copy-btn" id="copyBtn" title="Copy to clipboard" aria-label="Copy password">
+      <svg id="copyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Strength Bar -->
+  <div class="strength-wrap">
+    <div class="strength-label">
+      <span>Strength</span>
+      <span id="strengthLabel">--</span>
+    </div>
+    <div class="strength-bar">
+      <div class="strength-fill" id="strengthFill"></div>
+    </div>
+  </div>
+
+  <!-- Entropy chips -->
+  <div class="entropy-row">
+    <div class="entropy-chip" data-tip="Bits of entropy = log2(charset^length)">
+      <div class="val" id="entropyBits">--</div>
+      <div class="lbl">Entropy (bits)</div>
+    </div>
+    <div class="entropy-chip" data-tip="Estimated brute-force time at 1 billion guesses/sec">
+      <div class="val" id="crackTime">--</div>
+      <div class="lbl">Crack estimate</div>
+    </div>
+    <div class="entropy-chip" data-tip="Charset pool size">
+      <div class="val" id="charsetSize">--</div>
+      <div class="lbl">Charset size</div>
+    </div>
+  </div>
+
+  <!-- Mode Tabs -->
+  <div class="section">
+    <div class="section-label">Preset mode</div>
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" id="tab-custom"  onclick="setMode('custom')"  role="tab">Custom</button>
+      <button class="mode-tab"        id="tab-supabase" onclick="setMode('supabase')" role="tab">Supabase-grade</button>
+      <button class="mode-tab"        id="tab-hex"     onclick="setMode('hex')"     role="tab">Hex Secret</button>
+      <button class="mode-tab"        id="tab-base64"  onclick="setMode('base64')"  role="tab">Base64url</button>
+    </div>
+  </div>
+
+  <!-- Length -->
+  <div class="section">
+    <div class="section-label">Length</div>
+    <div class="slider-row">
+      <input type="range" id="lengthSlider" min="8" max="128" value="32"
+        aria-label="Password length" oninput="onLengthChange(this.value)">
+      <div class="length-display" id="lengthDisplay">32</div>
+    </div>
+  </div>
+
+  <!-- Character Set -->
+  <div class="section" id="charsetSection">
+    <div class="section-label">Character set</div>
+    <div class="checkbox-grid">
+      <label class="check-item">
+        <input type="checkbox" id="chkUpper" checked onchange="onOptionChange()">
+        <div class="check-box">
+          <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,6 5,9 10,3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="check-text">Uppercase</div>
+          <div class="check-chars">A-Z</div>
+        </div>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="chkLower" checked onchange="onOptionChange()">
+        <div class="check-box">
+          <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,6 5,9 10,3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="check-text">Lowercase</div>
+          <div class="check-chars">a-z</div>
+        </div>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="chkDigits" checked onchange="onOptionChange()">
+        <div class="check-box">
+          <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,6 5,9 10,3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="check-text">Digits</div>
+          <div class="check-chars">0-9</div>
+        </div>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="chkSymbols" checked onchange="onOptionChange()">
+        <div class="check-box">
+          <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,6 5,9 10,3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="check-text">Symbols</div>
+          <div class="check-chars">!@#$%...</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Generate -->
+  <button class="gen-btn" id="generateBtn" onclick="generate()" aria-label="Generate password">
+    Generate Password
+  </button>
+
+  <!-- History -->
+  <div class="history-section">
+    <div class="history-header">
+      <div class="section-label" style="margin:0">Session history <span style="color:var(--accent);font-size:0.68rem">(cleared on close)</span></div>
+      <button class="history-clear" onclick="clearHistory()">Clear all</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <div style="font-size:0.78rem;color:var(--muted);text-align:center;padding:12px 0">
+        No passwords generated yet
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Notice -->
+  <div class="notice">
+    <strong>How this works:</strong> All randomness comes from <code>window.crypto.getRandomValues()</code>, 
+    the same CSPRNG used by browsers for TLS. No values are sent anywhere. History lives only in RAM 
+    and disappears when you close the tab. Open this file directly from your filesystem.
+  </div>
+</div>
+
+<script>
+  /* ─── Charsets ─── */
+  const UPPER   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const LOWER   = 'abcdefghijklmnopqrstuvwxyz';
+  const DIGITS  = '0123456789';
+  const SYMBOLS = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+
+  let currentPassword = '';
+  let history = [];
+  let currentMode = 'custom';
+
+  /* ─── CSPRNG password generator ─── */
+  function csprngPassword(charset, length) {
+    if (!charset.length) return '';
+    const arr = new Uint32Array(length);
+    window.crypto.getRandomValues(arr);
+    // Rejection sampling: discard values that would bias the distribution
+    const limit = Math.floor(0xFFFFFFFF / charset.length) * charset.length;
+    let result = '';
+    let i = 0;
+    // Over-generate to account for rejection
+    const extra = new Uint32Array(length * 4);
+    window.crypto.getRandomValues(extra);
+    let ei = 0;
+    while (result.length < length) {
+      if (ei >= extra.length) {
+        window.crypto.getRandomValues(extra);
+        ei = 0;
+      }
+      const val = extra[ei++];
+      if (val < limit) {
+        result += charset[val % charset.length];
+      }
+    }
+    return result;
+  }
+
+  /* ─── Modes ─── */
+  const MODES = {
+    supabase: () => {
+      // Matches Supabase DB password quality: upper+lower+digits+symbols, 32 chars
+      setCheckboxes(true, true, true, true);
+      setLength(32);
+    },
+    hex: () => {
+      // Raw hex secret (like JWT secret or API signing key), 64 chars = 256-bit
+      setCheckboxes(false, false, true, false);
+      document.getElementById('chkLower').checked = true;
+      // Temporarily override charset to hex only
+      setLength(64);
+    },
+    base64url: () => {
+      setCheckboxes(true, true, true, false);
+      setLength(43); // 43 base64url chars = ~256 bits
+    },
+    custom: () => {
+      // Leave as-is
+    }
+  };
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + mode).classList.add('active');
+    const isHex = mode === 'hex';
+    const isB64 = mode === 'base64';
+    document.getElementById('charsetSection').style.opacity = (mode === 'custom') ? '1' : '0.5';
+    if (mode === 'supabase') MODES.supabase();
+    else if (mode === 'hex')  MODES.hex();
+    else if (mode === 'base64') MODES.base64url();
+    updateStats();
+  }
+
+  function setCheckboxes(upper, lower, digits, symbols) {
+    document.getElementById('chkUpper').checked   = upper;
+    document.getElementById('chkLower').checked   = lower;
+    document.getElementById('chkDigits').checked  = digits;
+    document.getElementById('chkSymbols').checked = symbols;
+  }
+
+  function setLength(n) {
+    document.getElementById('lengthSlider').value = n;
+    document.getElementById('lengthDisplay').textContent = n;
+  }
+
+  /* ─── Build charset from current config ─── */
+  function buildCharset() {
+    if (currentMode === 'hex') return '0123456789abcdef';
+    if (currentMode === 'base64') return UPPER + LOWER + DIGITS + '-_';
+    let cs = '';
+    if (document.getElementById('chkUpper').checked)   cs += UPPER;
+    if (document.getElementById('chkLower').checked)   cs += LOWER;
+    if (document.getElementById('chkDigits').checked)  cs += DIGITS;
+    if (document.getElementById('chkSymbols').checked) cs += SYMBOLS;
+    return cs;
+  }
+
+  /* ─── Entropy calculation ─── */
+  function calcEntropy(charset, length) {
+    if (!charset.length) return 0;
+    return Math.log2(Math.pow(charset.length, length));
+  }
+
+  function crackTimeLabel(bits) {
+    // 1 trillion guesses/sec (modern GPU cluster)
+    const guessesPerSec = 1e12;
+    const seconds = Math.pow(2, bits) / guessesPerSec;
+    if (seconds < 60)           return '<1 min';
+    if (seconds < 3600)         return Math.round(seconds/60) + ' mins';
+    if (seconds < 86400)        return Math.round(seconds/3600) + ' hrs';
+    if (seconds < 31536000)     return Math.round(seconds/86400) + ' days';
+    if (seconds < 3.15e10)      return Math.round(seconds/31536000) + ' yrs';
+    if (seconds < 3.15e13)      return (seconds/3.15e10).toFixed(0) + 'k yrs';
+    if (seconds < 3.15e16)      return (seconds/3.15e13).toFixed(0) + 'M yrs';
+    if (seconds < 3.15e19)      return (seconds/3.15e16).toFixed(0) + 'B yrs';
+    return '>>Universe age';
+  }
+
+  function strengthFromBits(bits) {
+    if (bits < 40)  return { label: 'Very Weak',  pct: 10, color: '#ff4444' };
+    if (bits < 60)  return { label: 'Weak',       pct: 28, color: '#ff8c00' };
+    if (bits < 80)  return { label: 'Fair',       pct: 48, color: '#ffd700' };
+    if (bits < 100) return { label: 'Strong',     pct: 72, color: '#7cfc00' };
+    if (bits < 128) return { label: 'Very Strong', pct: 88, color: '#00d4aa' };
+    return              { label: 'Extreme',       pct: 100, color: '#6c63ff' };
+  }
+
+  function updateStats() {
+    const cs = buildCharset();
+    const len = parseInt(document.getElementById('lengthSlider').value);
+    const bits = calcEntropy(cs, len);
+
+    document.getElementById('entropyBits').textContent = bits.toFixed(1);
+    document.getElementById('crackTime').textContent   = crackTimeLabel(bits);
+    document.getElementById('charsetSize').textContent = cs.length;
+
+    const s = strengthFromBits(bits);
+    document.getElementById('strengthLabel').textContent = s.label;
+    document.getElementById('strengthLabel').style.color = s.color;
+    const fill = document.getElementById('strengthFill');
+    fill.style.width = s.pct + '%';
+    fill.style.background = `linear-gradient(90deg, ${s.color}88, ${s.color})`;
+  }
+
+  /* ─── Generate ─── */
+  function generate() {
+    const cs = buildCharset();
+    if (!cs.length) {
+      document.getElementById('output').textContent = 'Select at least one character set.';
+      return;
+    }
+    const len = parseInt(document.getElementById('lengthSlider').value);
+    const pw = csprngPassword(cs, len);
+    currentPassword = pw;
+
+    const out = document.getElementById('output');
+    out.textContent = pw;
+    out.classList.remove('flash');
+    void out.offsetWidth; // reflow
+    out.classList.add('flash');
+
+    addToHistory(pw);
+    updateStats();
+  }
+
+  /* ─── Copy ─── */
+  document.getElementById('copyBtn').onclick = async () => {
+    if (!currentPassword) return;
+    await navigator.clipboard.writeText(currentPassword);
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg id="copyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>`;
+    }, 2000);
+  };
+
+  /* ─── History ─── */
+  function addToHistory(pw) {
+    history.unshift(pw);
+    if (history.length > 8) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const list = document.getElementById('historyList');
+    if (!history.length) {
+      list.innerHTML = '<div style="font-size:0.78rem;color:var(--muted);text-align:center;padding:12px 0">No passwords generated yet</div>';
+      return;
+    }
+    list.innerHTML = history.map((pw, i) => `
+      <div class="history-item">
+        <div class="history-pw" title="${pw}">${pw}</div>
+        <button class="history-copy" onclick="copyHistoryItem(${i})" aria-label="Copy password ${i+1}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  async function copyHistoryItem(i) {
+    await navigator.clipboard.writeText(history[i]);
+  }
+
+  function clearHistory() {
+    history = [];
+    renderHistory();
+  }
+
+  /* ─── Event wiring ─── */
+  function onLengthChange(val) {
+    document.getElementById('lengthDisplay').textContent = val;
+    updateStats();
+  }
+
+  function onOptionChange() {
+    currentMode = 'custom';
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-custom').classList.add('active');
+    document.getElementById('charsetSection').style.opacity = '1';
+    updateStats();
+  }
+
+  /* ─── Init ─── */
+  updateStats();
+  generate();
+</script>
+</body>
+</html>

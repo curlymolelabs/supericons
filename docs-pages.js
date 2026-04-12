@@ -741,7 +741,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       </section>
       <section class="docs-callout" id="motion-tools-note">
         <h3>Not sure which preset to use?</h3>
-        <p>Call <code>list_motion_presets</code> first to see the full Motion Lab preset set with descriptions, groups, and export compatibility details, then <code>get_motion_recipe</code> to understand what a specific preset does before committing.</p>
+        <p>Call <code>list_motion_presets</code> first to see the Motion Lab preset IDs, labels, groups, short descriptions, and supported triggers, then <code>get_motion_recipe</code> to understand what a specific preset does before committing.</p>
       </section>
       <section class="docs-section" id="motion-tools-list">
         <h2 class="docs-section__title"><code>list_motion_presets</code></h2>
@@ -749,7 +749,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An array of ${motionLabPresetCount} preset objects. Each object includes <code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>, <code>supported_triggers</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, and <code>avoid_for</code>.</p>
+        <p class="docs-section__copy">An array of ${motionLabPresetCount} preset objects. Each object includes <code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>, and <code>supported_triggers</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-recipe">
@@ -804,7 +804,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the motion recipe object), <code>css</code> (Motion Lab CSS), and <code>animated_svg</code> (standalone SVG with embedded animation).</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the motion recipe object), <code>css</code> (Motion Lab CSS), <code>animated_svg</code> (standalone SVG with embedded animation), and <code>selector_mode</code>. Placeholder CSS responses also include <code>selector_token</code>.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-css">
@@ -813,9 +813,9 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>Parameters</h3>
         <p class="docs-section__copy">Same as <code>animate_icon</code>.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), and <code>css</code> (the Motion Lab CSS with <code>@keyframes</code> and animation rules).</p>
+        <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the motion recipe), <code>css</code> (the Motion Lab CSS with <code>@keyframes</code> and animation rules), and <code>selector_mode</code>. Placeholder responses also include <code>selector_token</code>.</p>
         <h3>The CSS selector targets</h3>
-        <p class="docs-section__copy"><code>#icon-container svg</code> by default. To animate the SVG, wrap it in a container with <code>id="icon-container"</code>.</p>
+        <p class="docs-section__copy">The hosted Motion Lab CSS path returns portable CSS by default using the token <code>{{ICON_SELECTOR}}</code>. Replace that token with the selector for your inline SVG before applying the stylesheet.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="motion-tools-svg">
@@ -1015,7 +1015,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       <section class="docs-section" id="motion-lab-output">
         <h2 class="docs-section__title">What Motion Lab produces</h2>
         <p class="docs-section__copy">Motion Lab generates two types of output from any preset:</p>
-        <p class="docs-section__copy"><strong>Motion Lab CSS</strong> - A stylesheet with <code>@keyframes</code> and animation rules. Apply the animation to an inline SVG element using the class target <code>#icon-container svg</code>. The SVG and animation live in separate files.</p>
+        <p class="docs-section__copy"><strong>Motion Lab CSS</strong> - A stylesheet with <code>@keyframes</code> and animation rules. Replace the placeholder token <code>{{ICON_SELECTOR}}</code> with the selector for your inline SVG, then keep the SVG and animation in separate files.</p>
         <p class="docs-section__copy"><strong>Animated SVG</strong> - A self-contained SVG file with the animation embedded in a <code>&lt;style&gt;</code> block inside the SVG. Drop it anywhere without external CSS.</p>
       </section>
       <section class="docs-section" id="motion-lab-next">
@@ -1170,15 +1170,9 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <ol class="docs-list docs-list--numbered">
           <li>Get the SVG from Supericons using <code>search_icons</code> or <code>get_icon</code>. (Free)</li>
           <li>Call <code>export_motion_css</code> with your chosen preset and trigger to get the CSS. (Requires a Pro account or a premium collection purchase)</li>
-          <li>Place the SVG inside a container with <code>id="icon-container"</code>:</li>
-        </ol>
-        <div class="docs-code">
-          <pre><code>&lt;div id="icon-container"&gt;
-  &lt;!-- paste your SVG here --&gt;
-&lt;/div&gt;</code></pre>
-        </div>
-        <ol class="docs-list docs-list--numbered" start="4">
-          <li>Link the CSS file, or paste the CSS rules into your existing stylesheet.</li>
+          <li>Keep the SVG inline in your markup.</li>
+          <li>Replace <code>{{ICON_SELECTOR}}</code> in the returned CSS with the selector for your inline SVG.</li>
+          <li>Link the updated CSS file, or paste the rules into your existing stylesheet.</li>
         </ol>
         <h3>What the CSS contains</h3>
         <p class="docs-section__copy">The CSS export includes:</p>
@@ -1186,7 +1180,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           <li>A brand comment: <code>/* Supericons Motion Lab */</code></li>
           <li>A preset label comment with your chosen preset, trigger, duration, and intensity</li>
           <li>A <code>@keyframes</code> block for the animation</li>
-          <li>An animation rule targeting <code>#icon-container svg</code></li>
+          <li>An animation rule using the placeholder selector token <code>{{ICON_SELECTOR}}</code></li>
           <li><code>overflow: visible</code>, <code>transform-box: fill-box</code>, and <code>transform-origin: center</code> on the SVG and its children to ensure transforms behave correctly</li>
         </ul>
       </section>

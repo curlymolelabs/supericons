@@ -13,6 +13,7 @@
     "verify:motion-lab-hosted-fallback": "node scripts/verify-motion-lab-hosted-fallback.mjs",
     "verify:motion-lab-hosted-live": "node scripts/verify-motion-lab-hosted-live.mjs",
     "verify:motion-lab-negative-paths": "node scripts/verify-motion-lab-negative-paths.mjs",
+    "verify:motion-lab-rate-limits": "node scripts/verify-motion-lab-rate-limits.mjs",
     "verify:motion-lab-presets": "node scripts/verify-motion-lab-preset-parity.mjs",
     "verify:motion-lab-agent-metadata": "node scripts/verify-motion-lab-agent-metadata.mjs",
     "seed:material-owned-cache": "node scripts/seed-material-owned-cache.js",

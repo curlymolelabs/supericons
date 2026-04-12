@@ -388,6 +388,12 @@ function buildStructuredToolErrorResponse(error, fallbackMessage) {
   if (typeof error?.status === 'number') {
     payload.status = error.status;
   }
+  if (typeof error?.retry_after_seconds === 'number') {
+    payload.retry_after_seconds = error.retry_after_seconds;
+  }
+  if (typeof error?.limit_scope === 'string') {
+    payload.limit_scope = error.limit_scope;
+  }
 
   return buildTextResponse(payload);
 }

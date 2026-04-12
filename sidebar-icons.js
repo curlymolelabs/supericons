@@ -118,7 +118,29 @@ const SIDEBAR_ICON_MARKUP = {
     </svg>
   `,
   'my-downloads': `
-    <span class="material-symbols-outlined sidebar__item-glyph">folder_special</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="sidebar-icon sidebar-icon--my-collection" aria-hidden="true">
+      <g class="v1-folder-body">
+        <path d="M4 9L4 19Q4 20 5 20L19 20Q20 20 20 19L20 9Q20 8 19 8L12.5 8Q12 8 11.5 7.5L10.5 6Q10 5 9.5 5L5 5Q4 5 4 6L4 9Z"/>
+      </g>
+      <g class="v1-spark-1">
+        <line x1="6" y1="3.5" x2="6" y2="7" stroke-width="1.2"/>
+        <line x1="4.25" y1="5.25" x2="7.75" y2="5.25" stroke-width="1.2"/>
+        <line x1="4.8" y1="3.8" x2="7.2" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+        <line x1="7.2" y1="3.8" x2="4.8" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+      </g>
+      <g class="v1-spark-2">
+        <line x1="12" y1="1.5" x2="12" y2="5.5" stroke-width="1.3"/>
+        <line x1="10" y1="3.5" x2="14" y2="3.5" stroke-width="1.3"/>
+        <line x1="10.5" y1="2" x2="13.5" y2="5" stroke-width="0.75" opacity="0.5"/>
+        <line x1="13.5" y1="2" x2="10.5" y2="5" stroke-width="0.75" opacity="0.5"/>
+      </g>
+      <g class="v1-spark-3">
+        <line x1="18" y1="3.5" x2="18" y2="7" stroke-width="1.2"/>
+        <line x1="16.25" y1="5.25" x2="19.75" y2="5.25" stroke-width="1.2"/>
+        <line x1="16.8" y1="3.8" x2="19.2" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+        <line x1="19.2" y1="3.8" x2="16.8" y2="6.7" stroke-width="0.7" opacity="0.5"/>
+      </g>
+    </svg>
   `,
 };
 

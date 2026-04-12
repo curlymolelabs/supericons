@@ -4,15 +4,27 @@
  * Returns auth tier: anonymous, authenticated (free), pack buyer, or Pro.
  */
 
-const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
+export const SUPABASE_URL = process.env.SUPERICONS_SUPABASE_URL || 'https://kcjmkakdhsqplvasgkjv.supabase.co';
+export const SUPABASE_ANON = process.env.SUPERICONS_SUPABASE_ANON || 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
+
+export function getConfiguredApiKey() {
+  const apiKey = process.env.SUPERICONS_API_KEY;
+  if (typeof apiKey !== 'string') return null;
+  const trimmed = apiKey.trim();
+  return trimmed || null;
+}
+
+export async function hashApiKey(apiKey) {
+  const { createHash } = await import('crypto');
+  return createHash('sha256').update(apiKey).digest('hex');
+}
 
 /**
  * Validate API key and determine auth tier.
  * @returns {{ authenticated: boolean, isPro: boolean, purchasedSlugs: string[], userId: string|null, error: string|null }}
  */
 export async function validateApiKey() {
-  const apiKey = process.env.SUPERICONS_API_KEY;
+  const apiKey = getConfiguredApiKey();
 
   // No key: anonymous tier (free icons only)
   if (!apiKey) {
@@ -21,8 +33,7 @@ export async function validateApiKey() {
 
   try {
     // SHA-256 hash the key (never send the raw key over the network)
-    const { createHash } = await import('crypto');
-    const keyHash = createHash('sha256').update(apiKey).digest('hex');
+    const keyHash = await hashApiKey(apiKey);
 
     // Validate via Edge Function (server-side, bypasses RLS)
     const res = await fetch(

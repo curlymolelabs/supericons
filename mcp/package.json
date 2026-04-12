@@ -7,8 +7,20 @@
     "supericons-mcp": "index.js"
   },
   "main": "index.js",
+  "files": [
+    "CHANGELOG.md",
+    "auth.js",
+    "converter.js",
+    "generated/motion-lab-baseline.json",
+    "index.js",
+    "motion-lab-client.js",
+    "motion-lab.js",
+    "search.js",
+    "workflow-access.js"
+  ],
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "verify:package": "node ../scripts/build-motion-lab-mcp-artifacts.mjs && node ../scripts/verify-motion-lab-mcp-package.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
