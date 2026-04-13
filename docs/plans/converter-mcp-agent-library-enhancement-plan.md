@@ -28,11 +28,16 @@ At the start of this plan, the converter surface needed five upgrades:
 Those needs have now been addressed across the first three implementation slices:
 
 - Workstream A package/runtime readiness: complete
-- Workstream B first-pass decision support: complete -- one decision pending
+- Workstream B first-pass decision support: complete
 - Workstream C product docs replacement: complete
-- Workstream D verification and evidence: good for the current package/local surface
+- Workstream D verification and evidence: in progress
 
-The main remaining product decision is whether a dedicated `suggest_converter_settings` tool adds enough value to justify another MCP tool.
+The earlier question about a dedicated `suggest_converter_settings` tool is now resolved:
+
+- do not add the tool
+- complete the intent-before-input path by expanding `starterCombinations` instead
+
+That keeps the surface smaller while closing the real gap.
 
 ## Current Reality
 
@@ -99,7 +104,7 @@ The package-boundary problem is fixed, but the converter runtime now exists in t
 
 That is acceptable for now, but it is a real maintenance risk if one copy evolves without the other.
 
-#### 2. The next tool may be optional, not mandatory
+#### 2. Intent guidance is now the right lightweight abstraction
 
 The current decision-support layer is already much stronger than the original converter surface:
 
@@ -108,7 +113,7 @@ The current decision-support layer is already much stronger than the original co
 - agents receive recommended settings and rationale
 - agents receive warnings and metrics after conversion
 
-The open question is whether a dedicated `suggest_converter_settings` tool solves a real workflow gap, or merely duplicates what `inspect_converter_input` already provides once the PNG exists.
+The right way to cover the intent-before-input path is through richer `starterCombinations`, not through another public MCP tool. That keeps the recommendation logic discoverable in `inspect_converter_options` without adding redundant surface area.
 
 #### 3. Product docs will still need normal editorial refinement
 
@@ -120,7 +125,7 @@ The structural docs gap is closed, but the converter docs will still benefit fro
 
 That is normal polish work, not a current readiness blocker.
 
-#### 4. Verification is solid, but not exhaustive forever
+#### 4. Verification is improving, but not exhaustive forever
 
 Converter now has:
 
@@ -129,6 +134,8 @@ Converter now has:
 - fixture-based smoke checks
 - invalid-input rejection coverage
 - structured output verification
+
+The next verification slice adds a small curated converter quality-fixture matrix so the surface is no longer validated by a single minimal smoke path alone.
 
 What it does not yet have is a broader curated quality-fixture matrix for long-term regression tracking. That is a maturity improvement, not a current release blocker.
 
@@ -178,7 +185,7 @@ Success criteria met:
 
 ### Workstream B: Agent decision-support layer
 
-Status: Complete -- one decision pending
+Status: Complete
 
 Delivered:
 
@@ -189,18 +196,15 @@ Delivered:
    - recommended settings
    - next-step guidance
 
-Possible remaining addition:
-
-- `suggest_converter_settings`
-
 Success criteria reached so far:
 
 - agents no longer have to guess blindly once they have the PNG input
 - the docs can recommend a real tool order instead of only parameter tables
 
-Remaining decision:
+Decision taken:
 
-- only add `suggest_converter_settings` if we confirm a real intent-before-input workflow that the current surface cannot already cover well
+- do not add `suggest_converter_settings`
+- expand `starterCombinations` instead so the intent-before-input path remains inside the existing options surface
 
 ### Workstream C: Docs and learning path
 
@@ -223,7 +227,7 @@ Success criteria met:
 
 ### Workstream D: Verification and evidence
 
-Status: Good for the current local/package surface
+Status: In progress
 
 Delivered:
 
@@ -235,9 +239,19 @@ Delivered:
    - PNG-to-SVG conversion
    - invalid-input rejection
 
+Current slice:
+
+3. a first curated quality-fixture matrix is being added to cover:
+   - flat logo
+   - tiny interface icon
+   - single-color mark
+   - small colored badge
+   - high-contrast mask or silhouette
+   - a harder full-color artwork case
+
 Remaining maturity opportunity:
 
-- a broader curated quality-fixture set for long-term converter regression checks
+- broaden the matrix further only if this first slice reveals real gaps worth tracking
 
 ## Recommended Execution Order
 
@@ -247,16 +261,18 @@ Status: Complete
 
 ### Phase 2: Agent ergonomics
 
-Status: Complete -- one decision pending
+Status: Complete
 
 Delivered:
 
 - richer option guidance
 - preflight/input inspection
 
-Decision pending:
+Delivered:
 
-- whether to add a dedicated settings-suggestion tool
+- richer option guidance
+- preflight/input inspection
+- expanded intent-first starter combinations without adding another MCP tool
 
 ### Phase 3: Docs implementation
 
@@ -264,25 +280,21 @@ Status: Complete
 
 ### Phase 4: Verification hardening
 
-Status: Good enough for the current surface
+Status: In progress
 
 ## Next Recommended Slice
 
 The best next slice is no longer package readiness or placeholder docs.
 
-It is one of these:
+The best next slice is:
 
-1. decide whether `suggest_converter_settings` solves a real workflow gap
-2. add a small curated quality-fixture matrix if we want stronger long-term converter regression evidence
-
-My recommendation is to decide the tool question first.
+1. complete and verify the first curated quality-fixture matrix
+2. then decide whether any additional fixture categories are worth keeping permanently
 
 ## Suggested Audit Questions
 
 An independent auditor reviewing the current state should answer:
 
-1. Is `inspect_converter_input` already sufficient for most agent workflows?
-2. Is there a real intent-first use case where an agent needs settings advice before it has the PNG input?
-3. What is the smallest useful fixture set for long-term converter quality regression tracking?
-4. Are the product-side converter docs now clear enough for human developers, or do they still over-index on implementation detail?
-5. Is the `mcp/runtime` vs `lib` duplication acceptable for now, or should boundary unification become a dedicated future slice?
+1. What is the smallest useful fixture set for long-term converter quality regression tracking?
+2. Are the product-side converter docs now clear enough for human developers, or do they still over-index on implementation detail?
+3. Is the `mcp/runtime` vs `lib` duplication acceptable for now, or should boundary unification become a dedicated future slice?

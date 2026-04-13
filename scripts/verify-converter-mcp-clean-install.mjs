@@ -78,6 +78,22 @@ try {
   if (!Array.isArray(options?.workflow?.recommendedOrder) || !options.workflow.recommendedOrder.includes('inspect_converter_input')) {
     throw new Error('Converter options did not include workflow guidance.');
   }
+  if (!Array.isArray(options?.pngToSvg?.starterCombinations) || options.pngToSvg.starterCombinations.length < 6) {
+    throw new Error('Converter options did not include the full starter combinations set.');
+  }
+  const starterLabels = new Set(options.pngToSvg.starterCombinations.map((entry) => entry?.label));
+  for (const label of [
+    'Safe full-color default',
+    'Flat logo pass',
+    'Tiny interface icon',
+    'Single-color wordmark or brand mark',
+    'Small colored icon or badge',
+    'High-contrast mask or silhouette',
+  ]) {
+    if (!starterLabels.has(label)) {
+      throw new Error(`Converter options were missing starter combination "${label}".`);
+    }
+  }
 
   const inspection = converterModule.inspectConverterInput({
     imageBase64: PNG_BASE64_FIXTURE,
@@ -103,12 +119,12 @@ try {
     qualityMode: 'exact',
     colorMode: 'mono',
     traceClass: 'single-color-mark',
-    uiMode: 'icon',
+    uiMode: 'logo',
   });
   if (typeof svgResult?.svg !== 'string' || !svgResult.svg.includes('<svg')) {
     throw new Error('convertPngToSvg did not return SVG text.');
   }
-  if (svgResult.request?.qualityMode !== 'exact' || svgResult.request?.traceClass !== 'single-color-mark' || svgResult.request?.uiMode !== 'icon') {
+  if (svgResult.request?.qualityMode !== 'exact' || svgResult.request?.traceClass !== 'single-color-mark' || svgResult.request?.uiMode !== 'logo') {
     throw new Error('convertPngToSvg returned an unexpected request shape.');
   }
 
@@ -122,7 +138,7 @@ try {
     throw new Error('convertPngToSvg did not reject invalid input as expected.');
   }
 
-  console.log(`Converter clean-install smoke verified: ${options.pngToSvg.traceClasses.length} trace classes, input inspection, SVG-to-PNG, PNG-to-SVG, and invalid-input rejection all passed.`);
+  console.log(`Converter clean-install smoke verified: ${options.pngToSvg.traceClasses.length} trace classes, ${options.pngToSvg.starterCombinations.length} starter combinations, input inspection, SVG-to-PNG, PNG-to-SVG, and invalid-input rejection all passed.`);
 } finally {
   try {
     rmSync(tempRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });

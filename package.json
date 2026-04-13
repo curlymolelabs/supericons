@@ -11,6 +11,7 @@
     "build:motion-lab-mcp-artifacts": "node scripts/build-motion-lab-mcp-artifacts.mjs",
     "verify:motion-lab-mcp-clean-install": "node scripts/verify-motion-lab-mcp-clean-install.mjs",
     "verify:converter-mcp-clean-install": "node scripts/verify-converter-mcp-clean-install.mjs",
+    "verify:converter-quality-fixtures": "node scripts/verify-converter-quality-fixtures.mjs",
     "verify:motion-lab-hosted-fallback": "node scripts/verify-motion-lab-hosted-fallback.mjs",
     "verify:motion-lab-hosted-live": "node scripts/verify-motion-lab-hosted-live.mjs",
     "verify:motion-lab-negative-paths": "node scripts/verify-motion-lab-negative-paths.mjs",

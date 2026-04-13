@@ -70,16 +70,16 @@ function parseBase64Payload(input = '') {
 }
 
 function resolveTraceClassForUiMode(traceClass = 'general-color', requestedColorMode = 'color', uiMode = 'logo') {
-  const iconClasses = new Set(['tiny-line-icon', 'single-color-mark', 'mono-mask']);
-  const logoClasses = new Set(['flat-logo-color', 'tile-icon-color', 'general-color']);
+  const iconClasses = new Set(['tiny-line-icon', 'tile-icon-color']);
+  const logoClasses = new Set(['flat-logo-color', 'general-color', 'single-color-mark', 'mono-mask']);
 
   if (uiMode === 'icon') {
     if (iconClasses.has(traceClass)) return traceClass;
-    return requestedColorMode === 'mono' ? 'mono-mask' : 'tiny-line-icon';
+    return requestedColorMode === 'mono' ? 'tiny-line-icon' : 'tile-icon-color';
   }
 
   if (logoClasses.has(traceClass)) return traceClass;
-  if (requestedColorMode === 'mono') return 'mono-mask';
+  if (requestedColorMode === 'mono') return 'single-color-mark';
   return 'flat-logo-color';
 }
 
@@ -461,6 +461,21 @@ export function getConverterMcpOptions() {
           label: 'Tiny interface icon',
           when: 'The PNG is a very small UI icon where crisp geometry matters more than color complexity.',
           settings: { colorMode: 'mono', qualityMode: 'exact', traceClass: 'tiny-line-icon', uiMode: 'icon' },
+        },
+        {
+          label: 'Single-color wordmark or brand mark',
+          when: 'The PNG is a logo, wordmark, or mark that uses a single foreground color.',
+          settings: { colorMode: 'mono', qualityMode: 'exact', traceClass: 'single-color-mark', uiMode: 'logo' },
+        },
+        {
+          label: 'Small colored icon or badge',
+          when: 'The PNG is a compact color icon, badge, or tile-style UI asset.',
+          settings: { colorMode: 'color', qualityMode: 'exact', traceClass: 'tile-icon-color', uiMode: 'icon' },
+        },
+        {
+          label: 'High-contrast mask or silhouette',
+          when: 'The PNG is a black-and-white silhouette, stencil, or alpha-cutout mask.',
+          settings: { colorMode: 'mono', qualityMode: 'exact', traceClass: 'mono-mask', uiMode: 'logo' },
         },
       ],
     },

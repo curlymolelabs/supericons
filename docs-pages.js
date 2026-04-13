@@ -1018,8 +1018,9 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               <tr><td>Full-color logo with gradients</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code></td></tr>
               <tr><td>Simple flat logo</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code></td></tr>
               <tr><td>Single-color wordmark</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code></td></tr>
+              <tr><td>Small colored icon or badge</td><td><code>tile-icon-color</code>, <code>exact</code>, <code>icon</code></td></tr>
               <tr><td>Small UI icon</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code></td></tr>
-              <tr><td>Black and white illustration</td><td><code>mono-mask</code>, <code>exact</code>, <code>logo</code></td></tr>
+              <tr><td>High-contrast mask or silhouette</td><td><code>mono-mask</code>, <code>exact</code>, <code>logo</code></td></tr>
             </tbody>
           </table>
         </div>
