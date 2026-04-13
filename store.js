@@ -29,6 +29,9 @@ import {
   DOCS_PAGE_VIEWS,
   getDocsPageConfig,
 } from './docs-pages.js';
+import {
+  searchDocs,
+} from './lib/docs-search-index.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -167,7 +170,7 @@ async function fetchPremiumAsset(slug, filename) {
   });
 }
 let userPurchases = [];
-let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'api-keys' | 'docs' | 'docs-claude-code' | 'docs-codex' | 'docs-cursor' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'motion-lab' | 'converter'
+let currentView = 'icons'; // 'icons' | 'packs' | 'downloads' | 'dashboard' | 'api-keys' | 'docs' | 'docs-claude-code' | 'docs-codex' | 'docs-cursor' | 'collection-detail' | 'pricing' | 'privacy' | 'terms' | 'motion-lab' | 'converter' | 'converter-lab'
 let previousView = 'icons';
 let storeHistorySyncBound = false;
 let currentCollectionData = null; // manifest data for the currently viewed collection
@@ -181,9 +184,9 @@ let premiumSelectionRequestId = 0;
 let packCatalogNotice = null;
 const DOCS_GUIDE_VIEWS = new Set(['docs-claude-code', 'docs-codex', 'docs-cursor']);
 const PERSISTENT_ROUTE_VIEWS = new Set([...DOCS_PAGE_VIEWS]);
-const PANEL_SUPPRESSED_VIEWS = new Set([...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
-const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'collection-detail', 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
-const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter']);
+const PANEL_SUPPRESSED_VIEWS = new Set([...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
+const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'collection-detail', 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
+const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -261,7 +264,7 @@ async function restoreAuthIntent(intent) {
     return true;
   }
 
-  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'motion-lab', 'converter', 'privacy', 'terms']);
+  const allowedViews = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'motion-lab', 'converter', 'converter-lab', 'privacy', 'terms']);
   switchView(allowedViews.has(view) ? view : 'icons');
   return true;
 }
@@ -632,6 +635,12 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     window.history[historyMethod]({}, '', window.location.pathname);
   }
 
+  if (currentView === 'converter') {
+    Object.assign(converterStableState, cloneConverterStateSnapshot(converterState));
+  } else if (currentView === 'converter-lab') {
+    Object.assign(converterLabState, cloneConverterStateSnapshot(converterState));
+  }
+
   previousView = currentView;
   closeUpgradePrompt();
   document.getElementById('mlExportModal')?.remove();
@@ -664,6 +673,21 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   }
 
   currentView = view;
+
+  if (view === 'converter') {
+    applyConverterStateSnapshot(converterStableState);
+  } else if (view === 'converter-lab') {
+    applyConverterStateSnapshot(converterLabState);
+  }
+
+  if (DOCS_PAGE_VIEWS.has(view)) {
+    si?.setHeaderSearchMode?.('docs', { value: docsSearchQuery });
+  } else {
+    closeDocsSearch();
+    pendingDocsSearchNavigation = null;
+    resetDocsSearchHeaderUi();
+    si?.setHeaderSearchMode?.('icons', { value: si?.state?.searchQuery || '' });
+  }
 
   const gridArea = document.getElementById('gridArea');
   const gridTitle = document.getElementById('gridTitle');
@@ -776,6 +800,14 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
       }
       document.body.setAttribute('data-view', 'converter');
       renderConverter();
+    } else if (view === 'converter-lab') {
+      if (gridTitle) gridTitle.textContent = 'Converter Lab';
+      if (gridMeta) gridMeta.textContent = '';
+      if (si?.setPanelSuppressed) {
+        si.setPanelSuppressed(true);
+      }
+      document.body.setAttribute('data-view', 'converter-lab');
+      renderConverterLab();
     } else {
       if (gridTitle) gridTitle.textContent = 'My Purchases';
       if (gridMeta) gridMeta.textContent = '';
@@ -804,6 +836,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     // Clean up any tool/store views lingering in the DOM
     document.getElementById('motionLabView')?.remove();
     document.getElementById('converterView')?.remove();
+    document.getElementById('converterLabView')?.remove();
     document.getElementById('privacyView')?.remove();
     document.getElementById('termsView')?.remove();
     document.getElementById('apiKeysView')?.remove();
@@ -833,6 +866,8 @@ function updateSidebarActive(view) {
   } else if (view === 'motion-lab') {
     document.getElementById('sidebarMotionLab')?.classList.add('active');
   } else if (view === 'converter') {
+    document.getElementById('sidebarConverter')?.classList.add('active');
+  } else if (view === 'converter-lab') {
     document.getElementById('sidebarConverter')?.classList.add('active');
   } else {
     // Default view: re-activate All Icons
@@ -3419,6 +3454,8 @@ function removePackCatalog(options = {}) {
   }
   const existingConverter = document.getElementById('converterView');
   if (existingConverter) existingConverter.remove();
+  const existingConverterLab = document.getElementById('converterLabView');
+  if (existingConverterLab) existingConverterLab.remove();
 
   // Clean up any leaked locked panel from collection-detail view
   const panel = document.getElementById('panel');
@@ -4427,8 +4464,47 @@ function renderPricingPage() {
 let docsPageCleanup = null;
 let shellViewLinkDelegationBound = false;
 let docsSidebarToggleDelegationBound = false;
+let docsSearchQuery = '';
+let docsSearchResults = [];
+let docsSearchOpen = false;
+let docsSearchActiveIndex = -1;
+let docsSearchBlurTimeout = null;
+let pendingDocsSearchNavigation = null;
 const DOCS_SIDEBAR_STORAGE_KEY = 'supericons-docs-sidebar-open-groups';
 const DEFAULT_OPEN_DOCS_GROUP_KEYS = new Set();
+
+function getDocsSearchElements({ createResults = false } = {}) {
+  const input = document.getElementById('searchInput');
+  const clearButton = document.getElementById('searchClear');
+  const shortcut = document.getElementById('searchShortcut');
+  const root = input?.closest('.header__search') || null;
+  if (!root || !input) {
+    return {
+      root: null,
+      input: null,
+      clearButton: null,
+      shortcut: null,
+      results: null,
+    };
+  }
+
+  let results = root.querySelector('#docsSearchResults');
+  if (!results && createResults) {
+    results = document.createElement('div');
+    results.id = 'docsSearchResults';
+    results.className = 'docs-search__results docs-search__results--header';
+    results.hidden = true;
+    root.appendChild(results);
+  }
+
+  return {
+    root,
+    input,
+    clearButton,
+    shortcut,
+    results,
+  };
+}
 
 function getDocsGroupKey(group) {
   const label = typeof group === 'string' ? group : group?.label || '';
@@ -4452,6 +4528,245 @@ function loadDocsSidebarOpenGroups() {
 }
 
 let docsSidebarOpenGroups = loadDocsSidebarOpenGroups();
+
+function clearDocsSearchBlurTimeout() {
+  if (docsSearchBlurTimeout) {
+    window.clearTimeout(docsSearchBlurTimeout);
+    docsSearchBlurTimeout = null;
+  }
+}
+
+function closeDocsSearch({ clearQuery = false } = {}) {
+  clearDocsSearchBlurTimeout();
+  docsSearchOpen = false;
+  docsSearchActiveIndex = -1;
+  if (clearQuery) {
+    docsSearchQuery = '';
+    docsSearchResults = [];
+  }
+}
+
+function updateDocsSearchState(query) {
+  docsSearchQuery = query;
+  docsSearchResults = query ? searchDocs(query, { limit: 8 }) : [];
+  docsSearchActiveIndex = docsSearchResults.length ? 0 : -1;
+  docsSearchOpen = Boolean(query);
+}
+
+function renderDocsSearch() {
+  const { root, input, clearButton, shortcut, results } = getDocsSearchElements({ createResults: true });
+  if (!root || !input || !results) return;
+
+  root.classList.add('header__search--docs-mode');
+  window.__supericons?.setHeaderSearchMode?.('docs', { value: docsSearchQuery });
+  const isVisible = docsSearchOpen && Boolean(docsSearchQuery.trim());
+  root.classList.toggle('header__search--docs-open', isVisible);
+  input.setAttribute('aria-expanded', isVisible ? 'true' : 'false');
+  if (shortcut) shortcut.style.display = docsSearchQuery ? 'none' : '';
+  if (clearButton) clearButton.style.display = docsSearchQuery ? 'flex' : 'none';
+  results.hidden = !isVisible;
+
+  if (!isVisible) {
+    results.innerHTML = '';
+    return;
+  }
+
+  if (!docsSearchResults.length) {
+    results.innerHTML = `
+      <div class="docs-search__empty">
+        <strong>No docs matches yet</strong>
+        <p>Try <code>api key</code>, <code>motion lab</code>, <code>converter</code>, or <code>pricing</code>.</p>
+      </div>`;
+    return;
+  }
+
+  results.innerHTML = docsSearchResults.map((result, index) => {
+    const isActive = index === docsSearchActiveIndex;
+    const meta = result.sectionTitle
+      ? `${result.pageTitle} · ${result.sectionTitle}`
+      : result.pageTitle;
+    const preview = result.preview || result.summary || '';
+    return `
+      <button
+        class="docs-search__result${isActive ? ' is-active' : ''}"
+        type="button"
+        data-docs-search-view="${result.view}"
+        data-docs-search-section="${result.sectionId || ''}"
+        aria-selected="${isActive ? 'true' : 'false'}">
+        <span class="docs-search__result-group">${escapeHtml(result.groupLabel)}</span>
+        <strong class="docs-search__result-title">${escapeHtml(meta)}</strong>
+        ${preview ? `<span class="docs-search__result-preview">${escapeHtml(preview)}</span>` : ''}
+      </button>`;
+  }).join('');
+}
+
+function openDocsSearchResult(result, { historyMode = 'push' } = {}) {
+  if (!result?.view) return;
+  const query = docsSearchQuery.trim();
+  const hash = result.sectionId ? `#${result.sectionId}` : '';
+  const nextUrl = `/?view=${result.view}${hash}`;
+  const historyMethod = historyMode === 'replace' ? 'replaceState' : 'pushState';
+  pendingDocsSearchNavigation = query
+    ? {
+      query,
+      sectionId: result.sectionId || '',
+    }
+    : null;
+  window.history[historyMethod]({}, '', nextUrl);
+  closeDocsSearch({ clearQuery: true });
+  switchView(result.view, { historyMode: 'silent' });
+  if (!pendingDocsSearchNavigation && result.sectionId) {
+    window.requestAnimationFrame(scrollDocsHashIntoView);
+  }
+}
+
+function resetDocsSearchHeaderUi() {
+  const { root, results } = getDocsSearchElements();
+  root?.classList.remove('header__search--docs-mode', 'header__search--docs-open');
+  if (results) {
+    results.hidden = true;
+    results.innerHTML = '';
+  }
+}
+
+function buildDocsSearchHighlightCandidates(query) {
+  const raw = String(query || '').trim();
+  if (!raw) return [];
+
+  const clean = raw.replace(/`/g, '').trim();
+  const normalizedTokens = clean
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/[_./:-]+/g, ' ')
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  const candidates = new Set();
+  if (clean) candidates.add(clean);
+
+  if (normalizedTokens.length > 1) {
+    const camel = `${normalizedTokens[0]}${normalizedTokens.slice(1).map((token) => token.charAt(0).toUpperCase() + token.slice(1)).join('')}`;
+    candidates.add(normalizedTokens.join(' '));
+    candidates.add(normalizedTokens.join('_'));
+    candidates.add(normalizedTokens.join('-'));
+    candidates.add(normalizedTokens.join('.'));
+    candidates.add(camel);
+    candidates.add(normalizedTokens.join('_').toUpperCase());
+  }
+
+  return [...candidates]
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+}
+
+function clearDocsSearchHighlights(scope) {
+  scope.querySelectorAll('mark.docs-search-highlight').forEach((mark) => {
+    const parent = mark.parentNode;
+    if (!parent) return;
+    parent.replaceChild(document.createTextNode(mark.textContent || ''), mark);
+    parent.normalize();
+  });
+}
+
+function highlightDocsSearchMatches(scope, query) {
+  if (!scope || !query) return null;
+  clearDocsSearchHighlights(scope);
+
+  const candidates = buildDocsSearchHighlightCandidates(query);
+  if (!candidates.length) return null;
+
+  const textNodes = [];
+  const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.textContent?.trim()) return NodeFilter.FILTER_REJECT;
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('mark.docs-search-highlight')) return NodeFilter.FILTER_REJECT;
+      if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  while (walker.nextNode()) {
+    textNodes.push(walker.currentNode);
+  }
+
+  let firstMatch = null;
+
+  textNodes.forEach((node) => {
+    const text = node.textContent || '';
+    let matchedCandidate = '';
+    let matchIndex = -1;
+
+    for (const candidate of candidates) {
+      const index = text.toLowerCase().indexOf(candidate.toLowerCase());
+      if (index >= 0) {
+        matchedCandidate = candidate;
+        matchIndex = index;
+        break;
+      }
+    }
+
+    if (matchIndex < 0 || !matchedCandidate) return;
+
+    const regex = new RegExp(escapeRegExp(matchedCandidate), 'gi');
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    let didReplace = false;
+
+    text.replace(regex, (match, offset) => {
+      if (offset > lastIndex) {
+        fragment.appendChild(document.createTextNode(text.slice(lastIndex, offset)));
+      }
+      const mark = document.createElement('mark');
+      mark.className = 'docs-search-highlight';
+      mark.textContent = match;
+      fragment.appendChild(mark);
+      if (!firstMatch) firstMatch = mark;
+      lastIndex = offset + match.length;
+      didReplace = true;
+      return match;
+    });
+
+    if (!didReplace) return;
+
+    if (lastIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+
+    node.parentNode?.replaceChild(fragment, node);
+  });
+
+  return firstMatch;
+}
+
+function applyPendingDocsSearchNavigation(page) {
+  if (!pendingDocsSearchNavigation || !page) return;
+
+  const { query, sectionId } = pendingDocsSearchNavigation;
+  pendingDocsSearchNavigation = null;
+
+  const article = page.querySelector('.docs-shell__page');
+  if (!article) {
+    if (sectionId) scrollDocsHashIntoView();
+    return;
+  }
+
+  const firstMatch = highlightDocsSearchMatches(article, query);
+  const target = firstMatch || (sectionId ? document.getElementById(sectionId) : null);
+
+  if (target) {
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    return;
+  }
+
+  if (sectionId) {
+    window.requestAnimationFrame(scrollDocsHashIntoView);
+  }
+}
 
 function persistDocsSidebarOpenGroups() {
   try {
@@ -4482,6 +4797,7 @@ function cleanupDocsPage() {
     docsPageCleanup();
   }
   docsPageCleanup = null;
+  clearDocsSearchBlurTimeout();
 }
 
 function ensureShellViewLinkDelegation() {
@@ -4547,6 +4863,11 @@ function wireDocsPage(page) {
   cleanupDocsPage();
 
   let tocObserver = null;
+  const {
+    input: docsSearchInput,
+    clearButton: docsSearchClearButton,
+    results: docsSearchResultsPanel,
+  } = getDocsSearchElements({ createResults: true });
 
   page.querySelectorAll('[data-copy-target]').forEach((button) => {
     button.addEventListener('click', async () => {
@@ -4568,6 +4889,100 @@ function wireDocsPage(page) {
   });
 
   wireShellViewLinks(page);
+  renderDocsSearch();
+
+  const handleDocsSearchInput = (event) => {
+    updateDocsSearchState(event.target.value || '');
+    renderDocsSearch();
+  };
+
+  const handleDocsSearchFocus = () => {
+    clearDocsSearchBlurTimeout();
+    if (docsSearchQuery.trim()) {
+      docsSearchOpen = true;
+      renderDocsSearch();
+    }
+  };
+
+  const handleDocsSearchBlur = () => {
+    clearDocsSearchBlurTimeout();
+    docsSearchBlurTimeout = window.setTimeout(() => {
+      closeDocsSearch();
+      renderDocsSearch();
+    }, 120);
+  };
+
+  const handleDocsSearchClear = (event) => {
+    event.preventDefault();
+    closeDocsSearch({ clearQuery: true });
+    renderDocsSearch();
+    docsSearchInput?.focus();
+  };
+
+  const handleDocsSearchPointerDown = (event) => {
+    const button = event.target instanceof Element
+      ? event.target.closest('[data-docs-search-view]')
+      : null;
+    if (!button) return;
+    event.preventDefault();
+  };
+
+  const handleDocsSearchClick = (event) => {
+    const button = event.target instanceof Element
+      ? event.target.closest('[data-docs-search-view]')
+      : null;
+    if (!button) return;
+    event.preventDefault();
+    openDocsSearchResult({
+      view: button.getAttribute('data-docs-search-view') || '',
+      sectionId: button.getAttribute('data-docs-search-section') || '',
+    });
+  };
+
+  const handleDocsSearchKeydown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeDocsSearch({ clearQuery: true });
+      renderDocsSearch();
+      docsSearchInput?.blur();
+      return;
+    }
+
+    if (!docsSearchQuery.trim()) return;
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (docsSearchResults.length) {
+        docsSearchOpen = true;
+        docsSearchActiveIndex = (docsSearchActiveIndex + 1 + docsSearchResults.length) % docsSearchResults.length;
+        renderDocsSearch();
+      }
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (docsSearchResults.length) {
+        docsSearchOpen = true;
+        docsSearchActiveIndex = (docsSearchActiveIndex - 1 + docsSearchResults.length) % docsSearchResults.length;
+        renderDocsSearch();
+      }
+      return;
+    }
+
+    if (event.key === 'Enter' && docsSearchResults.length && docsSearchActiveIndex >= 0) {
+      event.preventDefault();
+      openDocsSearchResult(docsSearchResults[docsSearchActiveIndex]);
+    }
+  };
+
+  docsSearchInput?.addEventListener('input', handleDocsSearchInput);
+  docsSearchInput?.addEventListener('focus', handleDocsSearchFocus);
+  docsSearchInput?.addEventListener('blur', handleDocsSearchBlur);
+  docsSearchInput?.addEventListener('keydown', handleDocsSearchKeydown);
+  docsSearchClearButton?.addEventListener('click', handleDocsSearchClear);
+  docsSearchResultsPanel?.addEventListener('pointerdown', handleDocsSearchPointerDown);
+  docsSearchResultsPanel?.addEventListener('click', handleDocsSearchClick);
 
   const tocLinks = [...page.querySelectorAll('.docs-page-toc a[href^="#"], .docs-sidebar .docs-link-list a[href^="#"]')];
   const fallbackSections = [...page.querySelectorAll('.docs-shell__page section[id], .docs-hub section[id]')];
@@ -4687,6 +5102,10 @@ function wireDocsPage(page) {
     }
   }
 
+  window.requestAnimationFrame(() => {
+    applyPendingDocsSearchNavigation(page);
+  });
+
   page.querySelectorAll('[data-expand]').forEach((button) => {
     button.addEventListener('click', () => {
       const targetId = button.getAttribute('data-expand');
@@ -4700,6 +5119,14 @@ function wireDocsPage(page) {
 
   docsPageCleanup = () => {
     tocObserver?.disconnect();
+    docsSearchInput?.removeEventListener('input', handleDocsSearchInput);
+    docsSearchInput?.removeEventListener('focus', handleDocsSearchFocus);
+    docsSearchInput?.removeEventListener('blur', handleDocsSearchBlur);
+    docsSearchInput?.removeEventListener('keydown', handleDocsSearchKeydown);
+    docsSearchClearButton?.removeEventListener('click', handleDocsSearchClear);
+    docsSearchResultsPanel?.removeEventListener('pointerdown', handleDocsSearchPointerDown);
+    docsSearchResultsPanel?.removeEventListener('click', handleDocsSearchClick);
+    clearDocsSearchBlurTimeout();
     if (scrollTopBtn || scrollDownBtn) {
       if (docsScroller) {
         docsScroller.removeEventListener('scroll', syncScrollButtons);
@@ -5016,7 +5443,7 @@ function renderDocsSitePage(view = 'docs') {
         <aside class="docs-shell__sidebar" aria-label="Docs navigation">
           <div class="docs-shell__sidebar-head">
             <h2 class="docs-shell__sidebar-brand">Supericons Docs</h2>
-        <p class="docs-shell__sidebar-copy">Setup guides and product reference.</p>
+            <p class="docs-shell__sidebar-copy">Setup guides and product reference.</p>
           </div>
           <div class="docs-shell__sidebar-nav">
             ${renderDocsSidebar(view)}
@@ -5053,6 +5480,7 @@ function renderDocsSitePage(view = 'docs') {
   cleanupDocsPage();
   ensureDocsSidebarToggleDelegation();
   updateDocsSidebarState(view, page);
+  renderDocsSearch();
 
   const article = page.querySelector('.docs-shell__page');
   if (!article) return;
@@ -8927,7 +9355,86 @@ const converterState = {
   outputExportSize: null,
   inputZoom: 1,
   outputZoom: 1,
+  labStrategy: 'stable',
+  labLastTraceRoute: '',
+  labLastTraceClass: '',
+  labLastServiceRequestedColorMode: '',
+  labLastServiceQualityMode: '',
 };
+
+function createDefaultConverterState() {
+  return {
+    mode: 'svg-to-png',
+    svgText: '',
+    svgPreparedText: '',
+    svgRasterAdvice: null,
+    pngBlob: null,
+    pngDataUrl: '',
+    outputBlob: null,
+    outputDataUrl: '',
+    size: 64,
+    background: 'transparent',
+    bgColor: '#ffffff',
+    padding: 8,
+    quality: 1,
+    fillColor: null,
+    strokeColor: null,
+    paintSupport: {
+      supportsFill: false,
+      supportsStroke: false,
+      mode: 'unknown',
+      fillCount: 0,
+      strokeCount: 0,
+    },
+    threshold: 128,
+    assetMode: 'logo',
+    preset: 'auto',
+    exportSizeMode: 'auto',
+    exportTargetWidth: 512,
+    smoothness: 50,
+    previewBackground: 'transparent',
+    previewBgColor: '#ffffff',
+    compareMode: 'trace',
+    autoCrop: true,
+    enhanceSmallIcons: true,
+    noiseCleanup: 'medium',
+    invert: false,
+    previewOriginalDataUrl: '',
+    traceMetrics: null,
+    traceAdvice: null,
+    outputPreviewSize: null,
+    outputExportSize: null,
+    inputZoom: 1,
+    outputZoom: 1,
+    labStrategy: 'stable',
+    labLastTraceRoute: '',
+    labLastTraceClass: '',
+    labLastServiceRequestedColorMode: '',
+    labLastServiceQualityMode: '',
+  };
+}
+
+function cloneConverterStateSnapshot(source) {
+  return {
+    ...source,
+    paintSupport: source.paintSupport ? { ...source.paintSupport } : { ...createDefaultConverterState().paintSupport },
+    traceMetrics: source.traceMetrics ? { ...source.traceMetrics } : null,
+    traceAdvice: source.traceAdvice ? { ...source.traceAdvice } : null,
+    outputPreviewSize: source.outputPreviewSize ? { ...source.outputPreviewSize } : null,
+    outputExportSize: source.outputExportSize ? { ...source.outputExportSize } : null,
+  };
+}
+
+function applyConverterStateSnapshot(snapshot) {
+  const next = {
+    ...createDefaultConverterState(),
+    ...cloneConverterStateSnapshot(snapshot),
+  };
+  Object.assign(converterState, next);
+}
+
+const converterStableState = cloneConverterStateSnapshot(converterState);
+const converterLabState = cloneConverterStateSnapshot(createDefaultConverterState());
 
 const CONVERTER_SVG_NS = 'http://www.w3.org/2000/svg';
 const CONVERTER_SVG_SHAPES = 'path, circle, rect, polygon, polyline, line, ellipse';
@@ -9321,6 +9828,7 @@ function updateConverterSvgUiState() {
   syncConverterColorDots('convStrokeDots', converterState.strokeColor);
   setConverterColorRowDisabled('convFillDots', !converterState.paintSupport.supportsFill);
   setConverterColorRowDisabled('convStrokeDots', !converterState.paintSupport.supportsStroke);
+  updateConverterLabSummary();
 }
 
 function resetConverterSvgStyleState() {
@@ -9872,6 +10380,57 @@ function getConverterTraceRoute(requestedColorMode, traceProfile) {
   if (traceProfile?.likelySingleHueLogo) return 'mono-exact';
   if (requestedColorMode === 'color' && traceProfile?.likelyFlatArtwork) return 'flat-art-color';
   return 'color-default';
+}
+
+function resolveConverterLabStrategy({
+  requestedColorMode,
+  traceProfile,
+  assetMode,
+  preset,
+}) {
+  const baseTraceRoute = getConverterTraceRoute(requestedColorMode, traceProfile);
+  const baseTraceClass = getConverterTraceClass(traceProfile, requestedColorMode, assetMode);
+  const baseServiceRequestedColorMode = (
+    requestedColorMode === 'mono'
+    || baseTraceClass === 'tiny-line-icon'
+    || baseTraceClass === 'single-color-mark'
+    || baseTraceClass === 'mono-mask'
+  ) ? 'mono' : 'color';
+  const baseServiceQualityMode = getConverterServiceQualityMode(preset, assetMode);
+
+  if (currentView !== 'converter-lab' || converterState.labStrategy === 'stable') {
+    return {
+      traceRoute: baseTraceRoute,
+      traceClass: baseTraceClass,
+      serviceRequestedColorMode: baseServiceRequestedColorMode,
+      serviceQualityMode: baseServiceQualityMode,
+    };
+  }
+
+  if (
+    converterState.labStrategy === 'brand-color-first'
+    && assetMode === 'logo'
+    && requestedColorMode === 'color'
+    && (
+      traceProfile?.likelySingleHueLogo
+      || traceProfile?.likelySingleColorMark
+      || traceProfile?.likelyFlatArtwork
+    )
+  ) {
+    return {
+      traceRoute: 'flat-art-color',
+      traceClass: 'flat-logo-color',
+      serviceRequestedColorMode: 'color',
+      serviceQualityMode: 'exact',
+    };
+  }
+
+  return {
+    traceRoute: baseTraceRoute,
+    traceClass: baseTraceClass,
+    serviceRequestedColorMode: baseServiceRequestedColorMode,
+    serviceQualityMode: baseServiceQualityMode,
+  };
 }
 
 function findNearestConverterPaletteIndex(palette, rgb) {
@@ -10509,6 +11068,7 @@ function updateConverterPngUiState() {
   if (invert) invert.checked = converterState.invert;
   updateConverterPreviewStage();
   updateConverterPreviewZoomUi();
+  updateConverterLabSummary();
 }
 
 function renderConverter() {
@@ -10735,6 +11295,224 @@ function renderConverter() {
   document.getElementById('convMobileBackBtn')?.addEventListener('click', () => switchView('icons'));
   document.getElementById('convMobilePricingBtn')?.addEventListener('click', () => switchView('pricing'));
   initConverterControls();
+}
+
+function renderConverterLab() {
+  renderConverter();
+
+  const view = document.getElementById('converterView');
+  const header = view?.querySelector('.conv__header');
+  if (!view || !header) return;
+
+  view.dataset.converterVariant = 'lab';
+
+  const intro = document.createElement('div');
+  intro.id = 'converterLabIntro';
+  intro.style.marginBottom = '20px';
+  intro.innerHTML = `
+    <div class="desktop-tool-glimpse__eyebrow">Experimental route</div>
+    <p style="margin: 10px 0 0; max-width: 760px; color: var(--si-text-dim);">
+      This lab is isolated from the stable converter. Its settings persist separately so we can test ideas here
+      without mutating the current production browser workflow.
+    </p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 12px;">
+      <button class="collection-detail__buy-btn" id="converterLabOpenStableBtn">Open stable converter</button>
+      <button class="collection-detail__buy-btn collection-detail__buy-btn--ghost" id="converterLabBackBtn">Back to icons</button>
+    </div>
+  `;
+
+  header.prepend(intro);
+  document.getElementById('converterLabOpenStableBtn')?.addEventListener('click', () => switchView('converter'));
+  document.getElementById('converterLabBackBtn')?.addEventListener('click', () => switchView('icons'));
+
+  const options = document.getElementById('convOptions');
+  if (options) {
+    const labPanel = document.createElement('div');
+    labPanel.id = 'converterLabPanel';
+    labPanel.className = 'conv__opts-group';
+    labPanel.style.marginBottom = '16px';
+    labPanel.innerHTML = `
+      <div class="conv__opt-row" style="display:block;">
+        <label class="conv__opt-label">Lab Strategy</label>
+        <p style="margin: 6px 0 12px; color: var(--si-text-dim);">
+          Strategy affects only the lab route. Stable baseline matches the current converter. Brand color first is an experimental logo path for colored marks.
+        </p>
+        <div class="conv__chip-group" id="converterLabStrategyGroup" style="display:flex; flex-wrap:wrap; gap:8px;">
+          ${CONVERTER_LAB_STRATEGIES.map((strategy) => `
+            <button
+              type="button"
+              class="conv__chip-btn"
+              data-converter-lab-strategy="${strategy.key}"
+              title="${strategy.note}"
+            >${strategy.label}</button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="conv__opt-row" style="display:block;">
+        <label class="conv__opt-label">Lab Starter Profiles</label>
+        <p style="margin: 6px 0 12px; color: var(--si-text-dim);">
+          These are lab-only helper presets. They do not change the stable converter and exist to speed up side-by-side testing.
+        </p>
+        <div class="conv__chip-group" id="converterLabStarterGroup" style="display:flex; flex-wrap:wrap; gap:8px;">
+          ${CONVERTER_LAB_STARTERS.map((starter) => `
+            <button
+              type="button"
+              class="conv__chip-btn"
+              data-converter-lab-starter="${starter.key}"
+              title="${starter.note}"
+            >${starter.label}</button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="conv__opt-row" style="display:block; margin-top: 16px;">
+        <label class="conv__opt-label">Live Lab Summary</label>
+        <div
+          id="converterLabSummary"
+          style="margin-top: 8px; padding: 12px; border: 1px solid var(--si-border); border-radius: 12px; background: var(--si-surface-2); color: var(--si-text-dim);"
+        ></div>
+      </div>
+    `;
+    options.prepend(labPanel);
+  }
+
+  document.querySelectorAll('[data-converter-lab-starter]').forEach((button) => {
+    button.addEventListener('click', () => applyConverterLabStarter(button.dataset.converterLabStarter || ''));
+  });
+  document.querySelectorAll('[data-converter-lab-strategy]').forEach((button) => {
+    button.addEventListener('click', () => applyConverterLabStrategy(button.dataset.converterLabStrategy || ''));
+  });
+
+  updateConverterLabSummary();
+}
+
+const CONVERTER_LAB_STARTERS = [
+  {
+    key: 'safe-full-color',
+    label: 'Safe full-color',
+    note: 'Use this as a conservative starting point for logos or artwork with multiple colors.',
+    assetMode: 'logo',
+    preset: 'auto',
+  },
+  {
+    key: 'flat-logo-pass',
+    label: 'Flat logo pass',
+    note: 'A sharper first pass for flat colored logo artwork.',
+    assetMode: 'logo',
+    preset: 'detailed',
+  },
+  {
+    key: 'tiny-interface-icon',
+    label: 'Tiny interface icon',
+    note: 'A detail-preserving pass for small UI icon sources.',
+    assetMode: 'icon',
+    preset: 'detailed',
+  },
+  {
+    key: 'single-color-mark',
+    label: 'Single-color mark',
+    note: 'A tight pass for simple brand marks and wordmarks.',
+    assetMode: 'logo',
+    preset: 'detailed',
+  },
+  {
+    key: 'small-colored-badge',
+    label: 'Small colored badge',
+    note: 'A compact icon-oriented pass for small colored marks or badges.',
+    assetMode: 'icon',
+    preset: 'detailed',
+  },
+  {
+    key: 'high-contrast-mask',
+    label: 'High-contrast mask',
+    note: 'A strong starting point for silhouette-like or mask-like inputs.',
+    assetMode: 'logo',
+    preset: 'detailed',
+  },
+];
+
+const CONVERTER_LAB_STRATEGIES = [
+  {
+    key: 'stable',
+    label: 'Stable baseline',
+    note: 'Uses the same route-selection logic as the current production converter.',
+  },
+  {
+    key: 'brand-color-first',
+    label: 'Brand color first',
+    note: 'Experimental logo strategy that resists mono routing for single-hue colored marks.',
+  },
+];
+
+function getActiveConverterLabStarterKey() {
+  const match = CONVERTER_LAB_STARTERS.find((starter) => (
+    starter.assetMode === converterState.assetMode
+    && starter.preset === converterState.preset
+  ));
+  return match?.key || '';
+}
+
+function updateConverterLabSummary() {
+  const summary = document.getElementById('converterLabSummary');
+  if (!summary) return;
+
+  const proofServiceState = CONVERTER_PROOF_SERVICE_URL ? 'Configured' : 'Browser only';
+  const outputMetrics = converterState.traceMetrics
+    ? `${converterState.traceMetrics.pathCount} paths · ${converterState.traceMetrics.complexity}`
+    : 'No trace metrics yet';
+  const activeStarter = getActiveConverterLabStarterKey();
+  const activeStrategy = CONVERTER_LAB_STRATEGIES.find((strategy) => strategy.key === converterState.labStrategy);
+
+  document.querySelectorAll('[data-converter-lab-starter]').forEach((button) => {
+    button.classList.toggle('conv__chip-btn--active', button.dataset.converterLabStarter === activeStarter);
+  });
+  document.querySelectorAll('[data-converter-lab-strategy]').forEach((button) => {
+    button.classList.toggle('conv__chip-btn--active', button.dataset.converterLabStrategy === converterState.labStrategy);
+  });
+
+  summary.innerHTML = `
+    <div style="display:grid; gap:8px;">
+      <div><strong>Mode:</strong> ${converterState.mode === 'png-to-svg' ? 'PNG → SVG' : 'SVG → PNG'}</div>
+      <div><strong>Strategy:</strong> ${activeStrategy?.label || converterState.labStrategy}</div>
+      <div><strong>Asset mode:</strong> ${converterState.assetMode}</div>
+      <div><strong>Preset:</strong> ${getConverterPresetLabel(converterState.preset)}</div>
+      <div><strong>Compare:</strong> ${converterState.compareMode}</div>
+      <div><strong>Proof service:</strong> ${proofServiceState}</div>
+      <div><strong>Trace route:</strong> ${converterState.labLastTraceRoute || 'Not resolved yet'}</div>
+      <div><strong>Trace class:</strong> ${converterState.labLastTraceClass || 'Not resolved yet'}</div>
+      <div><strong>Service mode:</strong> ${converterState.labLastServiceRequestedColorMode || 'Not resolved yet'}</div>
+      <div><strong>Service quality:</strong> ${converterState.labLastServiceQualityMode || 'Not resolved yet'}</div>
+      <div><strong>Trace summary:</strong> ${outputMetrics}</div>
+      <div><strong>Export target:</strong> ${converterState.exportSizeMode}${converterState.exportSizeMode === 'custom' ? ` (${converterState.exportTargetWidth}px)` : ''}</div>
+    </div>
+  `;
+}
+
+function applyConverterLabStarter(starterKey) {
+  const starter = CONVERTER_LAB_STARTERS.find((item) => item.key === starterKey);
+  if (!starter) return;
+
+  converterState.assetMode = starter.assetMode;
+  converterState.preset = starter.preset;
+  converterState.exportSizeMode = 'auto';
+  converterState.exportTargetWidth = getConverterDefaultExportLongestEdge(starter.assetMode);
+  converterState.compareMode = 'split';
+  converterState.autoCrop = true;
+  updateConverterPngUiState();
+  updateConverterLabSummary();
+
+  if (converterState.mode === 'png-to-svg' && converterState.pngDataUrl) {
+    runConversion();
+  }
+}
+
+function applyConverterLabStrategy(strategyKey) {
+  const strategy = CONVERTER_LAB_STRATEGIES.find((item) => item.key === strategyKey);
+  if (!strategy) return;
+  converterState.labStrategy = strategy.key;
+  updateConverterLabSummary();
+  if (converterState.mode === 'png-to-svg' && converterState.pngDataUrl) {
+    runConversion();
+  }
 }
 
 function initConverterControls() {
@@ -11110,6 +11888,10 @@ function loadConverterSvgText(svgText, filename) {
   converterState.traceAdvice = null;
   converterState.outputExportSize = null;
   converterState.previewOriginalDataUrl = '';
+  converterState.labLastTraceRoute = '';
+  converterState.labLastTraceClass = '';
+  converterState.labLastServiceRequestedColorMode = '';
+  converterState.labLastServiceQualityMode = '';
   converterState.paintSupport = analyzeConverterSvgPaintSupport(rasterPrep.svgText || svgText);
   // Switch to SVG→PNG mode
   document.querySelectorAll('.conv__mode-tab').forEach(t => t.classList.remove('conv__mode-tab--active'));
@@ -11142,6 +11924,10 @@ function loadConverterPng(dataUrl, filename) {
   converterState.traceMetrics = null;
   converterState.traceAdvice = null;
   converterState.outputExportSize = null;
+  converterState.labLastTraceRoute = '';
+  converterState.labLastTraceClass = '';
+  converterState.labLastServiceRequestedColorMode = '';
+  converterState.labLastServiceQualityMode = '';
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -11214,6 +12000,7 @@ function showConverterPendingOutput(message = 'Tracing preview…') {
   }
   if (actions) actions.style.display = 'none';
   updateConverterPreviewStage();
+  updateConverterLabSummary();
 }
 
 function showConverterProofServiceOffline(proofErr) {
@@ -11245,6 +12032,7 @@ function showConverterProofServiceOffline(proofErr) {
   }
   if (actions) actions.style.display = 'none';
   updateConverterPreviewStage();
+  updateConverterLabSummary();
   console.warn('[Converter] Local proof service unavailable:', proofErr);
 }
 
@@ -11294,6 +12082,10 @@ function clearConverterInput() {
   converterState.traceAdvice = null;
   converterState.svgRasterAdvice = null;
   converterState.outputPreviewSize = null;
+  converterState.labLastTraceRoute = '';
+  converterState.labLastTraceClass = '';
+  converterState.labLastServiceRequestedColorMode = '';
+  converterState.labLastServiceQualityMode = '';
   converterState.paintSupport = {
     supportsFill: false,
     supportsStroke: false,
@@ -11312,6 +12104,7 @@ function clearConverterInput() {
   updateConverterSvgUiState();
   updateConverterPngUiState();
   updateConverterPreviewZoomUi();
+  updateConverterLabSummary();
 }
 
 function runConversion() {
@@ -11462,6 +12255,7 @@ function showConverterOutput(url, label, sizeKb, traceMetrics = null, traceAdvic
   }
   if (actions) actions.style.display = '';
   updateConverterPreviewStage();
+  updateConverterLabSummary();
 }
 
 // Lazy-load imagetracerjs from CDN
@@ -11768,7 +12562,13 @@ async function convertPngToSvg() {
       exportTargetWidth,
     });
     const effectivePreset = resolveConverterPreset(preset, traceProfile, requestedColorMode);
-    let traceRoute = getConverterTraceRoute(requestedColorMode, traceProfile);
+    const strategyResolution = resolveConverterLabStrategy({
+      requestedColorMode,
+      traceProfile,
+      assetMode,
+      preset,
+    });
+    let traceRoute = strategyResolution.traceRoute;
     const effectiveColorMode = traceRoute === 'mono-exact' ? 'mono' : requestedColorMode;
     const traceBackgroundFill = (
       effectiveColorMode === 'color' && !sourceBg
@@ -11781,15 +12581,14 @@ async function convertPngToSvg() {
       : null;
     const traceFillColor = logoRouteFill || explicitMonoFill;
     const effectiveThreshold = logoRouteFill ? Math.max(threshold, 170) : threshold;
-    const traceClass = getConverterTraceClass(traceProfile, requestedColorMode, assetMode);
-    const serviceRequestedColorMode = (
-      requestedColorMode === 'mono'
-      || traceClass === 'tiny-line-icon'
-      || traceClass === 'single-color-mark'
-      || traceClass === 'mono-mask'
-    )
-      ? 'mono'
-      : 'color';
+    const traceClass = strategyResolution.traceClass;
+    const serviceRequestedColorMode = strategyResolution.serviceRequestedColorMode;
+    const serviceQualityMode = strategyResolution.serviceQualityMode;
+    converterState.labLastTraceRoute = traceRoute;
+    converterState.labLastTraceClass = traceClass;
+    converterState.labLastServiceRequestedColorMode = serviceRequestedColorMode;
+    converterState.labLastServiceQualityMode = serviceQualityMode;
+    updateConverterLabSummary();
 
     if (CONVERTER_PROOF_SERVICE_URL) {
       try {
@@ -11863,7 +12662,7 @@ async function convertPngToSvg() {
 
         const proofResult = await traceWithConverterProofService(
           proofServiceImageBase64,
-          getConverterServiceQualityMode(preset, assetMode),
+          serviceQualityMode,
           serviceRequestedColorMode,
           traceClass,
           assetMode,

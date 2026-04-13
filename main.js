@@ -394,6 +394,40 @@ const els = {
 
 };
 
+function isDocsHeaderSearchMode() {
+  return document.body.getAttribute('data-view') === 'docs';
+}
+
+function syncHeaderSearchChrome({
+  mode = document.body.dataset.headerSearchMode === 'docs' ? 'docs' : 'icons',
+  value = els.searchInput?.value || '',
+} = {}) {
+  if (!els.searchInput || !els.searchShortcut || !els.searchClear) return;
+
+  const isDocsMode = mode === 'docs';
+  els.searchInput.placeholder = isDocsMode ? 'Search docs' : 'Search 20,000+ icons...';
+  els.searchInput.setAttribute('aria-label', isDocsMode ? 'Search docs' : 'Search icons');
+  if (isDocsMode) {
+    els.searchInput.setAttribute('aria-controls', 'docsSearchResults');
+    els.searchInput.setAttribute('aria-expanded', 'false');
+  } else {
+    els.searchInput.removeAttribute('aria-controls');
+    els.searchInput.removeAttribute('aria-expanded');
+  }
+
+  const hasValue = value.length > 0;
+  els.searchShortcut.style.display = hasValue ? 'none' : '';
+  els.searchClear.style.display = hasValue ? 'flex' : 'none';
+}
+
+function setHeaderSearchMode(mode = 'icons', { value } = {}) {
+  const resolvedMode = mode === 'docs' ? 'docs' : 'icons';
+  document.body.dataset.headerSearchMode = resolvedMode;
+  const nextValue = value ?? (resolvedMode === 'docs' ? '' : (state.searchQuery || ''));
+  els.searchInput.value = nextValue;
+  syncHeaderSearchChrome({ mode: resolvedMode, value: nextValue });
+}
+
 // ============================================================
 // Icon + Synonym Loading
 // ============================================================
@@ -814,7 +848,7 @@ function updateCounts() {
 
 
   $('#countAll').textContent = total.toLocaleString();
-  els.searchInput.placeholder = 'Search 20,000+ icons...';
+  syncHeaderSearchChrome();
 
   if (isStoreView()) return;
 
@@ -2540,6 +2574,7 @@ if (compareDrawerClose) compareDrawerClose.addEventListener('click', () => {
 // Search
 let searchDebounce = null;
 els.searchInput.addEventListener('input', (e) => {
+  if (isDocsHeaderSearchMode()) return;
   const hasValue = e.target.value.length > 0;
   els.searchShortcut.style.display = hasValue ? 'none' : '';
   els.searchClear.style.display = hasValue ? 'flex' : 'none';
@@ -2553,6 +2588,7 @@ els.searchInput.addEventListener('input', (e) => {
   }, 150);
 });
 els.searchClear.addEventListener('click', () => {
+  if (isDocsHeaderSearchMode()) return;
   els.searchInput.value = '';
   els.searchInput.dispatchEvent(new Event('input'));
   els.searchInput.focus();
@@ -2565,6 +2601,7 @@ document.addEventListener('keydown', (e) => {
     els.searchInput.focus();
   }
   if (e.key === 'Escape') {
+    if (isDocsHeaderSearchMode()) return;
     if (document.activeElement === els.searchInput) {
       els.searchInput.value = '';
       els.searchInput.blur();
@@ -2729,6 +2766,8 @@ window.__supericons = {
   libraryMeta,
   getStyledSvg,
   ANIM_CSS,
+  setHeaderSearchMode,
+  syncHeaderSearchChrome,
 };
 
 // MCP links

@@ -7166,7 +7166,6 @@ body[data-view="docs"] .main-layout.panel-hidden {
 body[data-view="docs"] .sidebar,
 body[data-view="docs"] .panel,
 body[data-view="docs"] .grid-header,
-body[data-view="docs"] .header__search,
 body[data-view="docs"] #multiSelectToggle,
 body[data-view="docs"] #panelToggle,
 body[data-view="docs"] #sidebarToggle {
@@ -7229,6 +7228,142 @@ body[data-view="docs"] .grid-area {
   color: var(--si-text-soft);
   font-size: 0.9rem;
   line-height: 1.65;
+}
+
+.docs-view--site .docs-search {
+  position: relative;
+  display: grid;
+  gap: 10px;
+}
+
+.docs-view--site .docs-search__field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--si-outline-variant) 72%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--si-surface-2, var(--si-surface)) 88%, transparent);
+  transition: border-color var(--si-transition-fast), box-shadow var(--si-transition-fast), background var(--si-transition-fast);
+}
+
+.docs-view--site .docs-search:focus-within .docs-search__field {
+  border-color: color-mix(in srgb, var(--si-primary) 78%, white 22%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--si-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--si-surface) 92%, transparent);
+}
+
+.docs-view--site .docs-search__icon {
+  font-size: 18px;
+  color: var(--si-text-dim);
+}
+
+.docs-view--site .docs-search__input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--si-text);
+  font-family: var(--si-font-body);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  outline: none;
+}
+
+.docs-view--site .docs-search__input::placeholder {
+  color: var(--si-text-dim);
+}
+
+body[data-view="docs"] .header__search.header__search--docs-mode .header__search-input {
+  padding-right: calc(var(--si-space-10) + 8px);
+}
+
+body[data-view="docs"] .header__search.header__search--docs-open .header__search-input {
+  border-color: rgba(255, 79, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(255, 79, 0, 0.08);
+  background: var(--si-surface-container-high);
+}
+
+body[data-view="docs"] .docs-search__results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 6;
+  display: grid;
+  gap: 6px;
+  max-height: min(62vh, 420px);
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--si-outline-variant) 78%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--si-surface) 96%, transparent);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+body[data-view="docs"] .docs-search__results[hidden] {
+  display: none !important;
+}
+
+body[data-view="docs"] .docs-search__result {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--si-transition-fast), transform var(--si-transition-fast);
+}
+
+body[data-view="docs"] .docs-search__result:hover,
+body[data-view="docs"] .docs-search__result.is-active {
+  background: color-mix(in srgb, var(--si-primary) 11%, transparent);
+}
+
+body[data-view="docs"] .docs-search__result.is-active {
+  transform: translateX(1px);
+}
+
+body[data-view="docs"] .docs-search__result-group {
+  font-family: var(--si-font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--si-primary);
+}
+
+body[data-view="docs"] .docs-search__result-title {
+  color: var(--si-text);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+body[data-view="docs"] .docs-search__result-preview {
+  color: var(--si-text-soft);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+body[data-view="docs"] .docs-search__empty {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  color: var(--si-text-soft);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+body[data-view="docs"] .docs-search__empty strong {
+  color: var(--si-text);
+  font-size: 0.9rem;
 }
 
 .docs-view--site .docs-shell__nav-group {
@@ -7457,6 +7592,14 @@ body[data-view="docs"] .grid-area {
 
 .docs-view--site .docs-shell__page a:hover {
   text-decoration: underline;
+}
+
+.docs-view--site .docs-search-highlight {
+  padding: 0 0.12em;
+  border-radius: 0.28em;
+  background: color-mix(in srgb, var(--si-primary) 28%, rgba(255, 255, 255, 0.9));
+  color: var(--si-text);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--si-primary) 24%, transparent);
 }
 
 .docs-view--site .docs-link-list--inline,

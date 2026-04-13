@@ -181,9 +181,9 @@ const docsPages = {
       </section>
       <section class="docs-section" id="quickstart-premium">
         <h2 class="docs-section__title">Premium setup</h2>
-        <p class="docs-section__copy">To access premium animated collections, Motion Lab, and Converter through MCP, you need three things in place before your agent can use them.</p>
+        <p class="docs-section__copy">To use paid Supericons access through MCP, set up your account access first. Premium packs use the access already on your account. Motion Lab and Converter are Pro features.</p>
         <ol class="docs-list docs-list--numbered">
-          <li>A Supericons account with a Pro account or a premium collection purchase.</li>
+          <li>A Supericons account. Buy the packs you need, or get Pro if you want Motion Lab and Converter.</li>
           <li>An API key generated from your Supericons dashboard under API Keys.</li>
           <li>Your <code>SUPERICONS_API_KEY</code> environment variable added to your MCP client config.</li>
         </ol>
@@ -197,8 +197,8 @@ const docsPages = {
         </div>
       </section>
       <section class="docs-callout" id="quickstart-note">
-        <h3>Your key carries your account entitlement, not access</h3>
-        <p>Your API key carries your account entitlement. The key itself does not grant access. If your account does not have a Pro account or a premium collection purchase, adding a key will not unlock premium tools.</p>
+        <h3>Your key uses the access your account already has</h3>
+        <p>Your API key does not create new access by itself. Buying packs gives you the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
     `,
   },
@@ -209,7 +209,7 @@ const docsPages = {
     bodyHtml: `
       <section class="docs-section" id="what-is-intro">
         <p class="docs-section__copy">Supericons gives you 20,000+ open-source SVG icons from 10 libraries in one searchable interface. Search by name, concept, or style. Customize color, size, stroke, and fill in real time. Export as SVG, PNG, or React, Vue, or Svelte components with one click.</p>
-        <p class="docs-section__copy">For AI-assisted development, Supericons ships a dedicated MCP server. Your coding agent can search and retrieve icons without switching to a browser. In the browser, you can open Motion Lab and Converter, use the controls, and preview the result without a Pro account. Exporting, downloading, or copying the final output requires a Pro account or a premium collection purchase. Through MCP, Motion Lab and Converter tools require a Pro account or a premium collection purchase.</p>
+        <p class="docs-section__copy">For AI-assisted development, Supericons ships a dedicated MCP server. Your coding agent can search and retrieve icons without switching to a browser. In the browser, you can open Motion Lab and Converter, use the controls, and preview the result without a paid plan. Exporting, downloading, or copying the final output requires the ${appLink('pricing', 'Supericons Pro plan')}. Through MCP, Motion Lab and Converter tools are also part of the ${appLink('pricing', 'Supericons Pro plan')}. Buying packs gives you the premium icons you bought, but it does not unlock Motion Lab or Converter.</p>
       </section>
       <section class="docs-section" id="what-is-free-pro">
         <h2 class="docs-section__title">Free vs. Pro</h2>
@@ -303,7 +303,7 @@ const docsPages = {
       </section>
       <section class="docs-section" id="universal-premium">
         <h2 class="docs-section__title">Premium setup</h2>
-        <p class="docs-section__copy">To unlock premium collections, Motion Lab tools, and Converter tools, add your API key in the server&apos;s env or secrets field:</p>
+        <p class="docs-section__copy">To use premium icons you own, or Pro tools like Motion Lab and Converter, add your API key in the server&apos;s env or secrets field:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-universal-premium">Copy</button>
           <pre><code id="docs-universal-premium">{
@@ -320,7 +320,7 @@ const docsPages = {
         </div>
         <div class="docs-callout">
           <h3>Where to get your key</h3>
-          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Your key must be linked to an account with a ${appLink('pricing', 'Pro account')} or a premium collection purchase. Access is determined by your account, not the key itself.</p>
+          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Use an API key from your Supericons account. Your key uses the access already on your account. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         </div>
       </section>
       <section class="docs-section" id="universal-guides">
@@ -393,7 +393,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
       </section>
       <section class="docs-section" id="claude-premium">
         <h2 class="docs-section__title">Premium setup</h2>
-        <p class="docs-section__copy">To unlock premium collections, Motion Lab tools, and Converter tools, add your API key to the server config. Use the config file method with the <code>env</code> field:</p>
+        <p class="docs-section__copy">To use premium icons you own, or Pro tools like Motion Lab and Converter, add your API key to the server config. Use the config file method with the <code>env</code> field:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-claude-premium">Copy</button>
           <pre><code id="docs-claude-premium">{
@@ -410,7 +410,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
         </div>
         <div class="docs-callout">
           <h3>Where to get your key</h3>
-          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Your key must be linked to an account with a Pro account or a premium collection purchase. Access is determined by your account, not the key itself.</p>
+          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Use an API key from your Supericons account. Your key uses the access already on your account. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         </div>
       </section>
       <section class="docs-section" id="claude-troubleshooting">
@@ -422,7 +422,7 @@ claude mcp add supericons -- cmd /c npx -y supericons-mcp</code></pre>
           </article>
           <article class="docs-card">
             <h3>Premium tools are not available</h3>
-            <p>Confirm three things. (1) Your account has a Pro account or a premium collection purchase. (2) You have generated an API key from the dashboard. (3) <code>SUPERICONS_API_KEY</code> is present in the config Claude Code reads at startup.</p>
+            <p>Confirm three things. (1) Your account access matches what you want to use. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}. (2) You generated an API key from the dashboard. (3) <code>SUPERICONS_API_KEY</code> is present in the config Claude Code reads at startup.</p>
           </article>
           <article class="docs-card">
             <h3>Which config file should I edit?</h3>
@@ -473,7 +473,7 @@ args = ["-y", "supericons-mcp"]</code></pre>
       </section>
       <section class="docs-section" id="codex-premium">
         <h2 class="docs-section__title">Premium setup</h2>
-        <p class="docs-section__copy">To use premium collections, Motion Lab, and Converter tools, add your API key to the server config:</p>
+        <p class="docs-section__copy">To use premium icons you own, or Pro tools like Motion Lab and Converter, add your API key to the server config:</p>
         <div class="docs-code docs-code--with-copy">
           <button class="docs-copy docs-copy--overlay" type="button" data-copy-target="docs-codex-premium">Copy</button>
           <pre><code id="docs-codex-premium">[mcp_servers.supericons]
@@ -483,7 +483,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <div class="docs-callout">
           <h3>Where to get your key</h3>
-          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Your key must be linked to an account with a Pro account or a premium collection purchase.</p>
+          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Use an API key from your Supericons account. Your key uses the access already on your account. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         </div>
       </section>
       <section class="docs-section" id="codex-troubleshooting">
@@ -495,7 +495,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </article>
           <article class="docs-card">
             <h3>Premium tools are not available</h3>
-            <p>Confirm <code>SUPERICONS_API_KEY</code> is in the <code>env</code> block of <code>[mcp_servers.supericons]</code>. Check that your account has a Pro account or a premium collection purchase. Restart after updating the config.</p>
+            <p>Confirm <code>SUPERICONS_API_KEY</code> is in the <code>env</code> block of <code>[mcp_servers.supericons]</code>. Check that your account access matches what you want to use. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}. Restart after updating the config.</p>
           </article>
           <article class="docs-card">
             <h3>Project scope not working</h3>
@@ -550,7 +550,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <div class="docs-callout">
           <h3>Where to get your key</h3>
-          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Your key must be linked to an account with a Pro account or a premium collection purchase.</p>
+          <p>Generate your API key at supericons.dev under ${appLink('api-keys', 'API Keys')}. Use an API key from your Supericons account. Your key uses the access already on your account. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         </div>
       </section>
       <section class="docs-section" id="cursor-troubleshooting">
@@ -562,7 +562,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </article>
           <article class="docs-card">
             <h3>Premium tools are not available</h3>
-            <p>Confirm <code>SUPERICONS_API_KEY</code> is present in the <code>env</code> block. Confirm your account has a Pro account or a premium collection purchase.</p>
+            <p>Confirm <code>SUPERICONS_API_KEY</code> is present in the <code>env</code> block. Confirm your account access matches what you want to use. Bought packs unlock the premium icons in those packs. Motion Lab and Converter require the ${appLink('pricing', 'Supericons Pro plan')}.</p>
           </article>
           <article class="docs-card">
             <h3><code>npx</code> takes a long time on first run</h3>
@@ -628,7 +628,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'MCP Tools Overview',
     bodyHtml: `
       <section class="docs-section" id="mcp-overview-intro">
-        <p class="docs-section__copy">The Supericons MCP server exposes 12 tools your coding agent can call directly. Three tools are free and work without an account. Nine tools require a Pro account or a premium collection purchase, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
+        <p class="docs-section__copy">The Supericons MCP server exposes 12 tools your coding agent can call directly. Three tools are free and work without an account. Premium icon access depends on what your account already has: the packs you bought, the ${appLink('pricing', 'Supericons Pro plan')}, or both. Motion Lab and Converter tools require the ${appLink('pricing', 'Supericons Pro plan')} and a valid <code>SUPERICONS_API_KEY</code>.</p>
         <p class="docs-section__copy">Your agent can discover what tools are available when it first connects to the server. You can also call tools explicitly by name.</p>
       </section>
       <section class="docs-section" id="mcp-overview-tools">
@@ -646,22 +646,22 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               <tr><td><code>search_icons</code></td><td>Search 20,000+ free icons across 10 libraries</td><td>Free</td></tr>
               <tr><td><code>get_icon</code></td><td>Retrieve a specific icon by ID and library</td><td>Free</td></tr>
               <tr><td><code>list_libraries</code></td><td>List all available icon libraries</td><td>Free</td></tr>
-              <tr><td><code>list_motion_presets</code></td><td>List all Motion Lab animation presets</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>get_motion_recipe</code></td><td>Get a plain-language description of any preset</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>animate_icon</code></td><td>Get Motion Lab CSS and animated SVG in one call</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>export_motion_css</code></td><td>Get only the Motion Lab CSS for an icon</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>export_animated_svg</code></td><td>Get only the standalone animated SVG</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>inspect_converter_options</code></td><td>List Converter settings and valid values</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>inspect_converter_input</code></td><td>Inspect a PNG and recommend safe starting settings</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>convert_svg_to_png</code></td><td>Render an SVG as a PNG at any resolution</td><td>Pro account or premium collection purchase</td></tr>
-              <tr><td><code>convert_png_to_svg</code></td><td>Trace a PNG image into an SVG</td><td>Pro account or premium collection purchase</td></tr>
+              <tr><td><code>list_motion_presets</code></td><td>List all Motion Lab animation presets</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>get_motion_recipe</code></td><td>Get a plain-language description of any preset</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>animate_icon</code></td><td>Get Motion Lab CSS and animated SVG in one call</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>export_motion_css</code></td><td>Get only the Motion Lab CSS for an icon</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>export_animated_svg</code></td><td>Get only the standalone animated SVG</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>inspect_converter_options</code></td><td>List Converter settings and valid values</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>inspect_converter_input</code></td><td>Inspect a PNG and recommend safe starting settings</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>convert_svg_to_png</code></td><td>Render an SVG as a PNG at any resolution</td><td>Supericons Pro plan</td></tr>
+              <tr><td><code>convert_png_to_svg</code></td><td>Trace a PNG image into an SVG</td><td>Supericons Pro plan</td></tr>
             </tbody>
           </table>
         </div>
       </section>
       <section class="docs-callout" id="mcp-overview-note">
         <h3>Premium collections also require access</h3>
-        <p>Premium animated icon collections from <code>get_icon</code> and <code>search_icons</code> also require a Pro account or a premium collection purchase, plus a valid API key.</p>
+        <p>Premium animated icon collections from <code>get_icon</code> and <code>search_icons</code> require an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="mcp-overview-links">
         <h2 class="docs-section__title">Detailed references</h2>
@@ -679,11 +679,11 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'Icon Tools Reference',
     bodyHtml: `
       <section class="docs-section" id="icon-tools-intro">
-        <p class="docs-section__copy">These three tools are free and do not require an API key for the standard 20,000+ icon library. Premium animated icon collections from these tools require a Pro account or a premium collection purchase.</p>
+        <p class="docs-section__copy">These three tools are free and do not require an API key for the standard 20,000+ icon library. Premium animated icon collections from these tools require either the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
       </section>
       <section class="docs-section" id="icon-tools-search">
         <h2 class="docs-section__title"><code>search_icons</code></h2>
-        <p class="docs-section__copy">Search 20,000+ free icons across 10 libraries using AI-powered synonym expansion. Returns matching icons with SVG code. Premium collections are available when your API key is linked to a Pro account or a premium collection purchase.</p>
+        <p class="docs-section__copy">Search 20,000+ free icons across 10 libraries using AI-powered synonym expansion. Returns matching icons with SVG code. Premium packs are available when you use an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -708,7 +708,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       </section>
       <section class="docs-section" id="icon-tools-get">
         <h2 class="docs-section__title"><code>get_icon</code></h2>
-        <p class="docs-section__copy">Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require an API key linked to a Pro account or a premium collection purchase.</p>
+        <p class="docs-section__copy">Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>
@@ -727,7 +727,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">Full SVG code plus icon metadata (ID, name, library, premium status). For premium animated icons, also returns the CSS animation block and a usage HTML snippet.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Free for standard icons. A Pro account or a premium collection purchase is required for premium animated icons.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> Free for standard icons. Premium animated icons require the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
       </section>
       <section class="docs-section" id="icon-tools-libraries">
         <h2 class="docs-section__title"><code>list_libraries</code></h2>
@@ -746,7 +746,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'Motion Lab MCP Tools',
     bodyHtml: `
       <section class="docs-section" id="motion-tools-intro">
-        <p class="docs-section__copy">These five tools expose Motion Lab capabilities to your coding agent. All five require a Pro account or a premium collection purchase, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
+        <p class="docs-section__copy">These five tools expose Motion Lab capabilities to your coding agent. All five require the ${appLink('pricing', 'Supericons Pro plan')} plus a valid <code>SUPERICONS_API_KEY</code>.</p>
       </section>
       <section class="docs-callout" id="motion-tools-note">
         <h3>Not sure which preset to use?</h3>
@@ -759,7 +759,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
         <p class="docs-section__copy">An array of ${motionLabPresetCount} preset objects. Each object includes <code>preset</code>, <code>label</code>, <code>group</code>, <code>description</code>, and <code>supported_triggers</code>.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="motion-tools-recipe">
         <h2 class="docs-section__title"><code>get_motion_recipe</code></h2>
@@ -785,7 +785,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">A preset profile with <code>preset_id</code>, <code>preset</code>, <code>group</code>, <code>description</code>, <code>trigger</code>, <code>duration_ms</code>, <code>intensity_percent</code>, <code>default_duration_ms</code>, <code>duration_range_ms</code>, <code>default_intensity_percent</code>, <code>intensity_range_percent</code>, <code>export_compatibility</code>, <code>technical_output_notes</code>, <code>visual_character</code>, <code>emotional_tone</code>, <code>recommended_contexts</code>, <code>avoid_for</code>, <code>behavior</code>, and usage <code>notes</code>.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="motion-tools-animate">
         <h2 class="docs-section__title"><code>animate_icon</code></h2>
@@ -814,7 +814,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>recipe</code> (the preset profile), <code>css</code> (Motion Lab CSS), <code>animated_svg</code> (standalone SVG with embedded animation), and <code>selector_mode</code>. Placeholder CSS responses also include <code>selector_token</code>.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="motion-tools-css">
         <h2 class="docs-section__title"><code>export_motion_css</code></h2>
@@ -825,7 +825,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <p class="docs-section__copy">An object with: <code>id</code>, <code>library</code>, <code>preset</code> (the preset profile), <code>css</code> (the Motion Lab CSS with <code>@keyframes</code> and animation rules), and <code>selector_mode</code>. Placeholder responses also include <code>selector_token</code>.</p>
         <h3>The CSS selector targets</h3>
         <p class="docs-section__copy">The hosted Motion Lab CSS path returns portable CSS by default using the token <code>{{ICON_SELECTOR}}</code>. Replace that token with the selector for your inline SVG before applying the stylesheet.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="motion-tools-svg">
         <h2 class="docs-section__title"><code>export_animated_svg</code></h2>
@@ -851,7 +851,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             </tbody>
           </table>
         </div>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
     `,
   },
@@ -861,7 +861,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'Converter MCP Tools',
     bodyHtml: `
       <section class="docs-section" id="converter-tools-intro">
-        <p class="docs-section__copy">These four tools expose Converter capabilities to your coding agent. All four require a Pro account or a premium collection purchase. The safest workflow is to inspect the PNG first, inspect the option guidance second, then convert with a justified starting configuration.</p>
+        <p class="docs-section__copy">These four tools expose Converter capabilities to your coding agent. All four require the ${appLink('pricing', 'Supericons Pro plan')}. The safest workflow is to inspect the PNG first, inspect the option guidance second, then convert with a justified starting configuration.</p>
       </section>
       <section class="docs-section" id="converter-tools-inspect">
         <h2 class="docs-section__title"><code>inspect_converter_options</code></h2>
@@ -870,7 +870,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
         <p class="docs-section__copy">An object describing all available converter settings, valid values, default values, limits, workflow order, setting guidance, and starter combinations.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="converter-tools-inspect-input">
         <h2 class="docs-section__title"><code>inspect_converter_input</code></h2>
@@ -894,7 +894,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">An object with input metadata, a structural assessment, likely trace risks, and recommended starting settings for the next converter call.</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="converter-tools-svg-png">
         <h2 class="docs-section__title"><code>convert_svg_to_png</code></h2>
@@ -919,7 +919,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">An object with <code>pngBase64</code>, <code>pngDataUrl</code>, <code>metrics</code> (elapsed time, output size, width, and height), and <code>request</code> (the resolved width and background settings).</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="converter-tools-png-svg">
         <h2 class="docs-section__title"><code>convert_png_to_svg</code></h2>
@@ -946,7 +946,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         </div>
         <h3>Returns</h3>
         <p class="docs-section__copy">An object with <code>svg</code>, <code>warnings</code>, <code>metrics</code> (elapsed time, output size, path count, shape count, and viewBox), and <code>request</code> (the resolved converter settings used for the trace).</p>
-        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="converter-tools-trace-class">
         <h2 class="docs-section__title"><code>traceClass</code> reference</h2>
@@ -1039,8 +1039,8 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       <section class="docs-section" id="motion-lab-access">
         <h2 class="docs-section__title">Two ways to use Motion Lab</h2>
         <ul>
-          <li><strong>In the browser</strong>: Open Motion Lab directly and browse presets with any icon. Preview animations in real time. Exporting CSS or SVG requires a Pro account or a premium collection purchase.</li>
-          <li><strong>Through MCP</strong>: Your agent calls Motion Lab tools directly. All tools require a Pro account or a premium collection purchase plus a valid API key. See the ${docsLink('docs-mcp-motion', 'Motion Lab MCP tools reference')} for exact parameters.</li>
+          <li><strong>In the browser</strong>: Open Motion Lab directly and browse presets with any icon. Preview animations in real time. Exporting CSS or SVG requires the ${appLink('pricing', 'Supericons Pro plan')}.</li>
+          <li><strong>Through MCP</strong>: Your agent calls Motion Lab tools directly. All Motion Lab tools require the ${appLink('pricing', 'Supericons Pro plan')} plus a valid API key from your Supericons account. See the ${docsLink('docs-mcp-motion', 'Motion Lab MCP tools reference')} for exact parameters.</li>
         </ul>
       </section>
       <section class="docs-section" id="motion-lab-mcp-mental-model">
@@ -1217,7 +1217,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Exports',
     kicker: 'Motion Lab',
     pageTitle: 'Motion Lab Exports',
-    summary: 'Two production-ready formats: Motion Lab CSS for inline SVG with a separate stylesheet, and animated SVG for a self-contained drop-in file. Both require a Pro account or a premium collection purchase. The right choice depends on how you integrate SVG into your project.',
+    summary: 'Two production-ready formats: Motion Lab CSS for inline SVG with a separate stylesheet, and animated SVG for a self-contained drop-in file. Both require the Supericons Pro plan. The right choice depends on how you integrate SVG into your project.',
     bodyHtml: `
       <section class="docs-section" id="motion-exports-css">
         <h2 class="docs-section__title">Motion Lab CSS</h2>
@@ -1226,7 +1226,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h3>How to use it</h3>
         <ol class="docs-list docs-list--numbered">
           <li>Get the SVG from Supericons using <code>search_icons</code> or <code>get_icon</code>. (Free)</li>
-          <li>Call <code>export_motion_css</code> with your chosen preset and trigger to get the CSS. (Requires a Pro account or a premium collection purchase)</li>
+          <li>Call <code>export_motion_css</code> with your chosen preset and trigger to get the CSS. (Requires the ${appLink('pricing', 'Supericons Pro plan')})</li>
           <li>Keep the SVG inline in your markup.</li>
           <li>Replace <code>{{ICON_SELECTOR}}</code> in the returned CSS with the selector for your inline SVG when <code>selector_mode</code> is <code>placeholder</code>.</li>
           <li>Link the updated CSS file, or paste the rules into your existing stylesheet.</li>
@@ -1359,7 +1359,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
         <h2 class="docs-section__title">What you need</h2>
         <ul>
           <li>Node.js 18 or later installed</li>
-          <li>A Supericons API key linked to a Pro account or a premium collection purchase</li>
+          <li>An API key from a Supericons account with the ${appLink('pricing', 'Supericons Pro plan')}</li>
           <li>An MCP client such as Cursor or Claude Desktop</li>
           <li>Permission to add an MCP server in that client&apos;s config</li>
         </ul>
@@ -1474,10 +1474,10 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Introduction',
     kicker: 'Converter',
     pageTitle: 'Converter Guide',
-    summary: 'Convert PNG to SVG or SVG to PNG. Preview in the browser, then download with a Pro account or a premium collection purchase.',
+    summary: 'Convert PNG to SVG or SVG to PNG. Preview in the browser, then download with the Supericons Pro plan.',
     bodyHtml: `
       <section class="docs-section" id="converter-intro">
-        <p class="docs-section__copy">Converter does two things: it traces flat PNG images into SVG files you can edit and scale, and it exports SVG artwork as PNG images at any size you choose. In the browser, you can preview both directions without a paid plan. Downloading the converted result requires a Pro account or a premium collection purchase.</p>
+        <p class="docs-section__copy">Converter does two things: it traces flat PNG images into SVG files you can edit and scale, and it exports SVG artwork as PNG images at any size you choose. In the browser, you can preview both directions without a paid plan. Downloading the converted result requires the ${appLink('pricing', 'Supericons Pro plan')}.</p>
       </section>
       <section class="docs-section" id="converter-directions">
         <h2 class="docs-section__title">Choose the direction that matches your source file</h2>
@@ -1700,10 +1700,10 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'API Keys',
     kicker: 'Access and API Keys',
     pageTitle: 'API Keys',
-    summary: 'This page will explain what API keys unlock and how access is tied to your account.',
+    summary: 'This page will explain what API keys unlock and how access stays tied to your account.',
     bodyHtml: renderPlaceholderBody({
-      title: 'This page will explain API keys and entitlement',
-      summary: 'It will clarify what the key does, what it does not do by itself, and how it carries the access already present on your account.',
+      title: 'This page will explain API keys and account access',
+      summary: 'It will clarify what the key does, what it does not do by itself, and how it uses the access already on your account.',
       todayLinks: [
         { view: 'api-keys', label: 'API Keys page' },
         { view: 'docs-quickstart', label: 'Quickstart' },
@@ -1714,10 +1714,10 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Pro and Collections',
     kicker: 'Access and API Keys',
     pageTitle: 'Pro and Collections',
-    summary: 'This page will explain the difference between a Pro account and a premium collection purchase.',
+    summary: 'This page will explain the difference between Pro and the packs you bought.',
     bodyHtml: renderPlaceholderBody({
       title: 'This page will explain premium access paths',
-      summary: 'It will show what a Pro account unlocks, what a premium collection purchase unlocks, and how those two paths affect docs, tools, and product access.',
+      summary: 'It will show what Pro unlocks, what bought packs unlock, and how those two paths affect docs, tools, and product access.',
       todayLinks: [
         { view: 'pricing', label: 'Pricing' },
         { view: 'docs-access-api-keys', label: 'API Keys' },
@@ -1731,7 +1731,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     summary: 'This page will gather the recurring setup, access, and export failures in one place.',
     bodyHtml: renderPlaceholderBody({
       title: 'This page will become the main troubleshooting guide',
-      summary: 'It will collect the most common MCP setup issues, Pro account and premium collection purchase issues, Motion Lab output questions, and Converter quality problems.',
+      summary: 'It will collect the most common MCP setup issues, account access issues, Motion Lab output questions, and Converter quality problems.',
       todayLinks: [
         { view: 'docs-claude-code', label: 'Claude Code' },
         { view: 'docs-codex', label: 'Codex' },
