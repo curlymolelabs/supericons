@@ -14,12 +14,14 @@ const expectedFiles = [
   'motion-lab-client.js',
   'motion-lab.js',
   'package.json',
+  'runtime/converter-workflow.js',
+  'runtime/public-metadata-sanitizer.js',
   'search.js',
   'workflow-access.js',
 ];
 
 function fail(message) {
-  console.error(`Motion Lab MCP package check failed: ${message}`);
+  console.error(`Supericons MCP package check failed: ${message}`);
   process.exit(1);
 }
 
@@ -68,4 +70,4 @@ if (unexpected.length) {
   fail(`found unexpected files: ${unexpected.join(', ')}`);
 }
 
-console.log(`Motion Lab MCP package verified: ${packedPaths.length} files.`);
+console.log(`Supericons MCP package verified: ${packedPaths.length} files.`);

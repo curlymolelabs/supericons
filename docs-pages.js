@@ -628,7 +628,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'MCP Tools Overview',
     bodyHtml: `
       <section class="docs-section" id="mcp-overview-intro">
-        <p class="docs-section__copy">The Supericons MCP server exposes 11 tools your coding agent can call directly. Three tools are free and work without an account. Eight tools require a Pro account or a premium collection purchase, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
+        <p class="docs-section__copy">The Supericons MCP server exposes 12 tools your coding agent can call directly. Three tools are free and work without an account. Nine tools require a Pro account or a premium collection purchase, plus a valid <code>SUPERICONS_API_KEY</code>.</p>
         <p class="docs-section__copy">Your agent can discover what tools are available when it first connects to the server. You can also call tools explicitly by name.</p>
       </section>
       <section class="docs-section" id="mcp-overview-tools">
@@ -652,6 +652,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               <tr><td><code>export_motion_css</code></td><td>Get only the Motion Lab CSS for an icon</td><td>Pro account or premium collection purchase</td></tr>
               <tr><td><code>export_animated_svg</code></td><td>Get only the standalone animated SVG</td><td>Pro account or premium collection purchase</td></tr>
               <tr><td><code>inspect_converter_options</code></td><td>List Converter settings and valid values</td><td>Pro account or premium collection purchase</td></tr>
+              <tr><td><code>inspect_converter_input</code></td><td>Inspect a PNG and recommend safe starting settings</td><td>Pro account or premium collection purchase</td></tr>
               <tr><td><code>convert_svg_to_png</code></td><td>Render an SVG as a PNG at any resolution</td><td>Pro account or premium collection purchase</td></tr>
               <tr><td><code>convert_png_to_svg</code></td><td>Trace a PNG image into an SVG</td><td>Pro account or premium collection purchase</td></tr>
             </tbody>
@@ -860,15 +861,39 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'Converter MCP Tools',
     bodyHtml: `
       <section class="docs-section" id="converter-tools-intro">
-        <p class="docs-section__copy">These three tools expose Converter capabilities to your coding agent. All three require a Pro account or a premium collection purchase. The <code>traceClass</code> parameter in <code>convert_png_to_svg</code> has six values with meaningfully different output results. Read the reference below before choosing.</p>
+        <p class="docs-section__copy">These four tools expose Converter capabilities to your coding agent. All four require a Pro account or a premium collection purchase. The safest workflow is to inspect the PNG first, inspect the option guidance second, then convert with a justified starting configuration.</p>
       </section>
       <section class="docs-section" id="converter-tools-inspect">
         <h2 class="docs-section__title"><code>inspect_converter_options</code></h2>
-        <p class="docs-section__copy">List the current Converter MCP options and their valid values. Call this first if you are unsure which settings to use for your source image.</p>
+        <p class="docs-section__copy">List the current Converter MCP options, setting guidance, workflow hints, and recommended starter combinations. Call this when you need the valid values and the reasoning behind them.</p>
         <h3>Parameters</h3>
         <p class="docs-section__copy">None.</p>
         <h3>Returns</h3>
-        <p class="docs-section__copy">An object describing all available converter settings, valid values, default values, and limits.</p>
+        <p class="docs-section__copy">An object describing all available converter settings, valid values, default values, limits, workflow order, setting guidance, and starter combinations.</p>
+        <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
+      </section>
+      <section class="docs-section" id="converter-tools-inspect-input">
+        <h2 class="docs-section__title"><code>inspect_converter_input</code></h2>
+        <p class="docs-section__copy">Inspect a PNG before tracing. Returns structural hints from the file header, likely risks, and recommended starting settings for <code>convert_png_to_svg</code>. Use this when an agent needs a justified first pass instead of guessing at <code>traceClass</code>.</p>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Default</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>imageBase64</code></td><td>string</td><td>Yes</td><td>-</td><td>PNG as base64 text or a data URL</td></tr>
+              <tr><td><code>mimeType</code></td><td>string</td><td>No</td><td><code>image/png</code></td><td>Optional MIME type override if the data URL is not present. Only <code>image/png</code> is currently supported.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Returns</h3>
+        <p class="docs-section__copy">An object with input metadata, a structural assessment, likely trace risks, and recommended starting settings for the next converter call.</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="converter-tools-svg-png">
@@ -893,7 +918,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">PNG as a base64 string.</p>
+        <p class="docs-section__copy">An object with <code>pngBase64</code>, <code>pngDataUrl</code>, <code>metrics</code> (elapsed time, output size, width, and height), and <code>request</code> (the resolved width and background settings).</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="converter-tools-png-svg">
@@ -920,7 +945,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
           </table>
         </div>
         <h3>Returns</h3>
-        <p class="docs-section__copy">SVG string.</p>
+        <p class="docs-section__copy">An object with <code>svg</code>, <code>warnings</code>, <code>metrics</code> (elapsed time, output size, path count, shape count, and viewBox), and <code>request</code> (the resolved converter settings used for the trace).</p>
         <p class="docs-section__copy"><strong>Access:</strong> Pro account or premium collection purchase.</p>
       </section>
       <section class="docs-section" id="converter-tools-trace-class">
@@ -992,7 +1017,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
             <tbody>
               <tr><td>Full-color logo with gradients</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code></td></tr>
               <tr><td>Simple flat logo</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code></td></tr>
-              <tr><td>Single-color wordmark</td><td><code>single-color-mark</code>, <code>compact</code>, <code>logo</code></td></tr>
+              <tr><td>Single-color wordmark</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code></td></tr>
               <tr><td>Small UI icon</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code></td></tr>
               <tr><td>Black and white illustration</td><td><code>mono-mask</code>, <code>exact</code>, <code>logo</code></td></tr>
             </tbody>
@@ -1448,54 +1473,227 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     navLabel: 'Introduction',
     kicker: 'Converter',
     pageTitle: 'Converter Guide',
-    summary: 'Convert PNG to SVG and SVG to PNG. Preview your result in the browser without a Pro account. Downloading the output requires a Pro account or a premium collection purchase.',
-    bodyHtml: renderPlaceholderBody({
-      title: 'Converter: what you can do',
-      summary: 'Upload a PNG or SVG to see your result in real time. Downloading the converted file requires a Pro account or a premium collection purchase. Choose your conversion path below.',
-      todayLinks: [
-        { view: 'docs', label: 'Introduction' },
-        { view: 'pricing', label: 'Pricing' },
-      ],
-    }),
+    summary: 'Convert PNG to SVG or SVG to PNG. Preview in the browser, then download with a Pro account or a premium collection purchase.',
+    bodyHtml: `
+      <section class="docs-section" id="converter-intro">
+        <p class="docs-section__copy">Converter does two things: it traces flat PNG images into SVG files you can edit and scale, and it exports SVG artwork as PNG images at any size you choose. In the browser, you can preview both directions without a paid plan. Downloading the converted result requires a Pro account or a premium collection purchase.</p>
+      </section>
+      <section class="docs-section" id="converter-directions">
+        <h2 class="docs-section__title">Choose the direction that matches your source file</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>You have...</th>
+                <th>You want...</th>
+                <th>Open this guide</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>PNG artwork</td><td>A scalable SVG you can edit, ship, or refine further</td><td>${docsLink('docs-converter-png-to-svg', 'PNG to SVG')}</td></tr>
+              <tr><td>SVG artwork</td><td>A raster PNG at a specific size or with a fixed background</td><td>${docsLink('docs-converter-svg-to-png', 'SVG to PNG')}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="docs-section" id="converter-best-fit">
+        <h2 class="docs-section__title">What Converter is best at</h2>
+        <ul>
+          <li><strong>PNG to SVG</strong>: Best for logos, flat illustrations, marks, UI icons, and other clean artwork with limited colors.</li>
+          <li><strong>SVG to PNG</strong>: Best when you already trust the SVG and just need a precise raster export for social, docs, email, app stores, or presentation decks.</li>
+          <li><strong>Not ideal for tracing</strong>: Photographs, heavy gradients, textured fills, and noisy screenshots usually need manual cleanup after tracing or should stay raster.</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="converter-browser-vs-mcp">
+        <h2 class="docs-section__title">Browser workflow vs MCP workflow</h2>
+        <ul>
+          <li><strong>In the browser</strong>: Fastest way to preview a conversion and visually judge whether the result is good enough.</li>
+          <li><strong>Through MCP</strong>: Best when your agent needs structured output, repeatable settings, or conversion as part of a larger build workflow. Start with ${docsLink('docs-mcp-converter', 'Converter MCP Tools')} if you are wiring this into an agent flow.</li>
+        </ul>
+      </section>
+      <section class="docs-callout" id="converter-expectations">
+        <h3>Preview first, then decide if the output earns a download</h3>
+        <p>The converter is strongest when it helps you make a quick quality judgment. If the preview already looks rough, choppy, or cluttered with noise, changing output format alone will not rescue the source art.</p>
+      </section>
+    `,
   },
   'docs-converter-png-to-svg': {
     navLabel: 'PNG to SVG',
     kicker: 'Converter',
     pageTitle: 'PNG to SVG',
-    summary: 'Trace a PNG into an SVG. Preview the result in the browser. Download the SVG file with a Pro account or a premium collection purchase.',
-    bodyHtml: renderPlaceholderBody({
-      title: 'PNG to SVG: how it works',
-      summary: 'Upload your PNG to preview the traced SVG result. Simple, flat-color images trace best. Complex photos and gradients do not trace cleanly. Downloading your SVG requires a Pro account or a premium collection purchase.',
-      todayLinks: [
-        { view: 'docs-converter-guide', label: 'Converter introduction' },
-      ],
-    }),
+    summary: 'Trace flat PNG artwork into SVG. Best for logos, marks, and icons with clean edges and limited color complexity.',
+    bodyHtml: `
+      <section class="docs-section" id="converter-png-svg-intro">
+        <p class="docs-section__copy">PNG to SVG tracing, which means automatically converting pixels into scalable vector shapes, works best when the source image already behaves like vector art: sharp edges, simple fills, high contrast, and minimal background detail. Use it for logos, single-color marks, UI icons, and flat illustrations. Treat photographs and gradient-heavy artwork as exceptions, not defaults.</p>
+      </section>
+      <section class="docs-section" id="converter-png-svg-best-results">
+        <h2 class="docs-section__title">How to get the cleanest trace</h2>
+        <ul>
+          <li>Start with the highest-quality PNG you have. Tiny, blurry, or compressed inputs lose edge definition before tracing even begins.</li>
+          <li>Prefer flat shapes over gradients, shadows, and textures.</li>
+          <li>Use artwork with clear foreground and background separation.</li>
+          <li>If the original is already SVG somewhere in your pipeline, use that instead of tracing a PNG copy.</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="converter-png-svg-settings">
+        <h2 class="docs-section__title">Which settings matter most</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>What it changes</th>
+                <th>Good starting instinct</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>traceClass</code></td><td>Chooses the tracing profile for the kind of image you uploaded</td><td>Match it to the source: logo, small icon, single-color mark, or general color artwork</td></tr>
+              <tr><td><code>qualityMode</code></td><td>Balances fidelity against file size and visual complexity</td><td>Start with <code>exact</code>; switch to <code>compact</code> only if the SVG is unnecessarily large</td></tr>
+              <tr><td><code>uiMode</code></td><td>Tunes the output for icon-like geometry or logo-like shapes</td><td>Use <code>icon</code> for UI glyphs and <code>logo</code> for marks and wordmarks</td></tr>
+              <tr><td><code>colorMode</code></td><td>Keeps the trace in color or forces a monochrome result</td><td>Use <code>mono</code> only when the artwork is intentionally single-color</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="docs-section__copy">For the full setting reference, open ${docsLink('docs-converter-settings', 'Converter Settings Reference')}. For agent-driven conversion, pair this with ${docsLink('docs-mcp-converter', 'Converter MCP Tools')}.</p>
+      </section>
+      <section class="docs-section" id="converter-png-svg-workflow">
+        <h2 class="docs-section__title">Recommended workflow</h2>
+        <ol>
+          <li>Preview the PNG in the browser and decide whether the source looks traceable at all.</li>
+          <li>Choose the closest tracing profile and start with <code>exact</code> quality.</li>
+          <li>Review the SVG for jagged edges, bloated file size, or missing detail.</li>
+          <li>Only then switch to <code>compact</code> or a different trace class if the first pass is too heavy or too loose.</li>
+        </ol>
+      </section>
+      <section class="docs-callout" id="converter-png-svg-restraint">
+        <h3>Do not force vectorization when the source is telling you no</h3>
+        <p>If a preview already looks patchy, broken up, or missing fine detail, the better decision may be to keep the original as PNG or find the original SVG or design file instead of tracing harder.</p>
+      </section>
+    `,
   },
   'docs-converter-svg-to-png': {
     navLabel: 'SVG to PNG',
     kicker: 'Converter',
     pageTitle: 'SVG to PNG',
-    summary: 'Render an SVG as a PNG at any size. Preview in the browser. Download the PNG with a Pro account or a premium collection purchase.',
-    bodyHtml: renderPlaceholderBody({
-      title: 'SVG to PNG: how it works',
-      summary: 'Paste or upload your SVG and choose an output width and background color to preview the PNG. Output sizes range from 16 to 2048 pixels wide. Downloading the PNG requires a Pro account or a premium collection purchase.',
-      todayLinks: [
-        { view: 'docs-converter-guide', label: 'Converter introduction' },
-      ],
-    }),
+    summary: 'Render SVG into PNG at the size you need. Best when the source vector is already trustworthy and you need a raster export.',
+    bodyHtml: `
+      <section class="docs-section" id="converter-svg-png-intro">
+        <p class="docs-section__copy">SVG to PNG is the simpler direction: you already have vector art, and Converter turns it into a crisp raster output at a specific width. Use this for social previews, docs, presentations, email, app listings, or anywhere you need a fixed image file instead of a live scalable SVG.</p>
+      </section>
+      <section class="docs-section" id="converter-svg-png-controls">
+        <h2 class="docs-section__title">The two controls that matter</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Control</th>
+                <th>What it does</th>
+                <th>Guidance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>targetWidth</code></td><td>Sets the PNG width in pixels</td><td>Choose the smallest width that still covers the real use case. Larger files are not automatically better.</td></tr>
+              <tr><td><code>background</code></td><td>Sets a transparent or solid background behind the SVG</td><td>Use <code>transparent</code> when the PNG needs to sit on multiple surfaces. Use a fixed hex color when the target context already has a known background.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="docs-section" id="converter-svg-png-uses">
+        <h2 class="docs-section__title">Common uses</h2>
+        <ul>
+          <li>Preparing a logo or icon for tools that do not accept SVG uploads.</li>
+          <li>Generating a flat PNG for slide decks, documentation, or marketplace listings.</li>
+          <li>Creating an exact raster export with a known background instead of relying on browser rendering differences.</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="converter-svg-png-quality">
+        <h2 class="docs-section__title">Quality expectations</h2>
+        <p class="docs-section__copy">The PNG can only be as good as the SVG you give it. If the source SVG has clipping issues, missing fills, or broken or incomplete code, the PNG will preserve those problems faithfully. Converter is rendering the file, not redesigning it.</p>
+      </section>
+      <section class="docs-callout" id="converter-svg-png-tip">
+        <h3>Keep the output width intentional</h3>
+        <p>Pick the width based on the real surface where the PNG will be used. Oversized exports increase file weight and can make teams think they solved quality when they only increased pixels.</p>
+      </section>
+    `,
   },
   'docs-converter-settings': {
     navLabel: 'Settings',
     kicker: 'Converter',
     pageTitle: 'Converter Settings Reference',
     summary: 'Reference for traceClass, qualityMode, and uiMode settings in the PNG to SVG converter.',
-    bodyHtml: renderPlaceholderBody({
-      title: 'This page will explain the Converter settings',
-      summary: 'It will define each trace class clearly and show how quality and UI modes change the output.',
-      todayLinks: [
-        { view: 'docs-converter-guide', label: 'Converter introduction' },
-      ],
-    }),
+    bodyHtml: `
+      <section class="docs-section" id="converter-settings-intro">
+        <p class="docs-section__copy">These settings shape how PNG tracing behaves. Getting them right preserves clean edges and keeps the SVG to a manageable size. Getting them wrong can produce noisy paths, blurred or rounded shapes, or output that is technically complete but visually imprecise.</p>
+      </section>
+      <section class="docs-section" id="converter-settings-trace-class">
+        <h2 class="docs-section__title"><code>traceClass</code>: choose the closest source profile</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th><code>traceClass</code></th>
+                <th>Best for</th>
+                <th>Avoid when</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>general-color</code></td><td>Most full-color artwork when you are unsure where to start</td><td>The source is clearly a tiny icon or single-color mark</td></tr>
+              <tr><td><code>flat-logo-color</code></td><td>Logos with solid flat fills and simple separation between shapes</td><td>The artwork uses many gradients or photographic detail</td></tr>
+              <tr><td><code>tile-icon-color</code></td><td>Small repeating tiles or small decorative color icons</td><td>The artwork is a free-form logo rather than a compact icon</td></tr>
+              <tr><td><code>tiny-line-icon</code></td><td>Very small icons with fine strokes and UI-style geometry</td><td>The image is a broad logo or illustration with filled shapes</td></tr>
+              <tr><td><code>single-color-mark</code></td><td>Single-color logos, wordmarks, and simple marks</td><td>The source needs multi-color separation</td></tr>
+              <tr><td><code>mono-mask</code></td><td>High-contrast black-and-white artwork intended to stay monochrome</td><td>The design depends on color relationships</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="docs-section" id="converter-settings-quality">
+        <h2 class="docs-section__title"><code>qualityMode</code>: keep detail or simplify output</h2>
+        <ul>
+          <li><strong><code>exact</code></strong>: Best default. Keeps more path detail and usually gives the cleanest first pass.</li>
+          <li><strong><code>compact</code></strong>: Simplifies paths and reduces file weight. Use it when the first pass is accurate but heavier than it needs to be.</li>
+        </ul>
+        <p class="docs-section__copy">Start with <code>exact</code>. Move to <code>compact</code> only after you have seen that the detailed trace is already faithful.</p>
+      </section>
+      <section class="docs-section" id="converter-settings-ui-mode">
+        <h2 class="docs-section__title"><code>uiMode</code>: shape the output for icons or for logos</h2>
+        <ul>
+          <li><strong><code>logo</code></strong>: Better for free-form marks, curves, and wordmarks.</li>
+          <li><strong><code>icon</code></strong>: Better for geometric UI icons where edge precision matters.</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="converter-settings-color-mode">
+        <h2 class="docs-section__title"><code>colorMode</code>: preserve color or force a monochrome result</h2>
+        <ul>
+          <li><strong><code>color</code></strong>: Keeps color separation in the output and should be the default for most logos and illustrations.</li>
+          <li><strong><code>mono</code></strong>: Collapses the result to monochrome. Use it only when the artwork is single-color, or when collapsing it to one color is the specific result you want.</li>
+        </ul>
+      </section>
+      <section class="docs-section" id="converter-settings-starting-points">
+        <h2 class="docs-section__title">Good starting points</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Source image</th>
+                <th>Start with</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Flat logo</td><td><code>flat-logo-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>
+              <tr><td>Single-color wordmark</td><td><code>single-color-mark</code>, <code>exact</code>, <code>logo</code>, <code>mono</code> if the brand is truly one-color</td></tr>
+              <tr><td>Small UI icon</td><td><code>tiny-line-icon</code>, <code>exact</code>, <code>icon</code>, usually <code>mono</code></td></tr>
+              <tr><td>Multi-color illustration or artwork</td><td><code>general-color</code>, <code>exact</code>, <code>logo</code>, <code>color</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="docs-section__copy">If you are using MCP, ${docsLink('docs-mcp-converter', 'Converter MCP Tools')} exposes the same settings plus guidance and preflight inspection.</p>
+      </section>
+      <section class="docs-callout" id="converter-settings-callout">
+        <h3>The best setting choice is the one that matches the source, not the one that sounds strongest</h3>
+        <p>Most disappointing converter output comes from mismatching the source type. The tracer cannot invent clean vector structure that the source image does not already hint at.</p>
+      </section>
+    `,
   },
   'docs-access-api-keys': {
     navLabel: 'API Keys',

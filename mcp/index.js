@@ -33,7 +33,7 @@ import {
   renderMotionLabAnimatedSvgHosted,
   renderMotionLabCssHosted,
 } from './motion-lab-client.js';
-import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions } from './converter.js';
+import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput } from './converter.js';
 import {
   buildPremiumLibraryAccessError,
   buildProWorkflowAccessError,
@@ -751,13 +751,36 @@ server.tool(
 // --- Tool: inspect_converter_options ---
 server.tool(
   'inspect_converter_options',
-  'List the current Converter MCP options and limits. Converter MCP is a Pro workflow tool.',
+  'List the current Converter MCP options, workflow hints, and recommended starting combinations. Converter MCP is a Pro workflow tool.',
   {},
   async () => {
     if (!hasProWorkflowAccess(authState)) {
       return buildWorkflowAccessResponse('Converter MCP');
     }
     return buildTextResponse(getConverterMcpOptions());
+  }
+);
+
+// --- Tool: inspect_converter_input ---
+server.tool(
+  'inspect_converter_input',
+  'Inspect a PNG before tracing. Returns structural hints, likely risks, and recommended starting settings for Converter MCP.',
+  {
+    imageBase64: z.string().describe('PNG as base64 text or data URL.'),
+    mimeType: z.string().optional().describe('Optional MIME type override. Only image/png is currently supported.'),
+  },
+  async ({ imageBase64, mimeType }) => {
+    if (!hasProWorkflowAccess(authState)) {
+      return buildWorkflowAccessResponse('Converter MCP');
+    }
+    try {
+      return buildTextResponse(inspectConverterInput({
+        imageBase64,
+        mimeType,
+      }));
+    } catch (error) {
+      return buildTextResponse({ error: error.message });
+    }
   }
 );
 

@@ -1,3 +1,8 @@
-import { convertPngToSvg, convertSvgToPng, getConverterMcpOptions } from '../lib/converter-workflow.js';
+import {
+  convertPngToSvg,
+  convertSvgToPng,
+  getConverterMcpOptions,
+  inspectConverterInput,
+} from './runtime/converter-workflow.js';
 
-export { convertPngToSvg, convertSvgToPng, getConverterMcpOptions };
+export { convertPngToSvg, convertSvgToPng, getConverterMcpOptions, inspectConverterInput };
