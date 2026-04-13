@@ -5033,6 +5033,11 @@ function wireDocsPage(page) {
   const scrollTopBtn = page.querySelector('#docsScrollTop');
   const scrollDownBtn = page.querySelector('#docsScrollDown');
   const docsScroller = document.getElementById('gridArea');
+  const syncScrollActionOffset = () => {
+    const footer = document.querySelector('.footer');
+    const footerHeight = footer ? Math.ceil(footer.getBoundingClientRect().height) : 0;
+    page.style.setProperty('--docs-scroll-actions-bottom', `${footerHeight + 20}px`);
+  };
   const getScrollMetrics = () => {
     const scrollTop = docsScroller ? docsScroller.scrollTop : window.scrollY;
     const scrollHeight = docsScroller
@@ -5086,6 +5091,8 @@ function wireDocsPage(page) {
   };
 
   if (scrollTopBtn || scrollDownBtn) {
+    syncScrollActionOffset();
+    window.addEventListener('resize', syncScrollActionOffset, { passive: true });
     if (scrollTopBtn) {
       scrollTopBtn.hidden = false;
       scrollTopBtn.addEventListener('click', handleScrollTopClick);
@@ -5128,6 +5135,7 @@ function wireDocsPage(page) {
     docsSearchResultsPanel?.removeEventListener('click', handleDocsSearchClick);
     clearDocsSearchBlurTimeout();
     if (scrollTopBtn || scrollDownBtn) {
+      window.removeEventListener('resize', syncScrollActionOffset);
       if (docsScroller) {
         docsScroller.removeEventListener('scroll', syncScrollButtons);
       } else {
@@ -5442,8 +5450,20 @@ function renderDocsSitePage(view = 'docs') {
       <div class="docs-shell">
         <aside class="docs-shell__sidebar" aria-label="Docs navigation">
           <div class="docs-shell__sidebar-head">
-            <h2 class="docs-shell__sidebar-brand">Supericons Docs</h2>
-            <p class="docs-shell__sidebar-copy">Setup guides and product reference.</p>
+            <h2 class="docs-shell__sidebar-brand">
+              <a class="docs-shell__sidebar-home" href="/?view=docs" data-docs-view="docs" aria-label="Go to Documentation home">
+                <span class="docs-shell__sidebar-home-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z" fill="none"/>
+                    <path class="docs-shell__sidebar-home-frame" d="M13.228 2.688a2 2 0 0 0-2.456 0l-8.384 6.52C1.636 9.795 2.05 11 3.003 11h1.092l.82 8.199A2 2 0 0 0 6.905 21h10.19a2 2 0 0 0 1.99-1.801l.82-8.199h1.092c.952 0 1.368-1.205.615-1.791l-8.384-6.52ZM5.996 9.91a1.008 1.008 0 0 0-.37-.684L12 4.267l6.374 4.958a1.008 1.008 0 0 0-.37.684L17.095 19H6.905z"/>
+                    <g class="docs-shell__sidebar-home-core">
+                      <circle class="docs-shell__sidebar-home-core-ring" cx="12" cy="13" r="3.5"/>
+                    </g>
+                  </svg>
+                </span>
+                <span>Documentation</span>
+              </a>
+            </h2>
           </div>
           <div class="docs-shell__sidebar-nav">
             ${renderDocsSidebar(view)}

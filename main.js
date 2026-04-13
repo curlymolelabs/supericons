@@ -2378,13 +2378,24 @@ els.panel.addEventListener('click', (e) => {
 // Theme toggle (dark/light)
 const themeToggleBtn = $('#themeToggle');
 if (themeToggleBtn) {
-  themeToggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('theme-light');
+  const syncThemeToggleButton = () => {
     const isLight = document.body.classList.contains('theme-light');
+    const actionLabel = isLight ? 'Dark Mode' : 'Light Mode';
     const icon = themeToggleBtn.querySelector('.material-symbols-outlined');
     if (icon) {
       icon.textContent = isLight ? 'dark_mode' : 'light_mode';
     }
+    themeToggleBtn.setAttribute('aria-label', actionLabel);
+    themeToggleBtn.setAttribute('data-tip', actionLabel);
+    themeToggleBtn.setAttribute('title', actionLabel);
+  };
+
+  syncThemeToggleButton();
+
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('theme-light');
+    const isLight = document.body.classList.contains('theme-light');
+    syncThemeToggleButton();
     // Auto-switch default color to match theme
     if (state.customize.color === '#ffffff' && isLight) {
       state.customize.color = '#1c1917';
