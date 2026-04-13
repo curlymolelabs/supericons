@@ -187,6 +187,9 @@ const PERSISTENT_ROUTE_VIEWS = new Set([...DOCS_PAGE_VIEWS]);
 const PANEL_SUPPRESSED_VIEWS = new Set([...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
 const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'collection-detail', 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
 const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
+const DOCS_SIDEBAR_DRAWER_MEDIA = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+  ? window.matchMedia('(max-width: 960px)')
+  : null;
 
 // ── Product display name overrides (avoids DB migration for renames) ─
 const PRODUCT_NAME_OVERRIDES = {
@@ -621,6 +624,10 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     view = 'docs';
   }
 
+  if (currentView !== view) {
+    closeDocsSidebarDrawer();
+  }
+
   const activeRouteView = new URLSearchParams(window.location.search).get('view');
   const shouldMutateHistory = historyMode !== 'silent';
   const historyMethod = historyMode === 'push' ? 'pushState' : 'replaceState';
@@ -673,6 +680,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   }
 
   currentView = view;
+  si?.syncSidebarToggleButton?.();
 
   if (view === 'converter') {
     applyConverterStateSnapshot(converterStableState);
@@ -4472,6 +4480,107 @@ let docsSearchBlurTimeout = null;
 let pendingDocsSearchNavigation = null;
 const DOCS_SIDEBAR_STORAGE_KEY = 'supericons-docs-sidebar-open-groups';
 const DEFAULT_OPEN_DOCS_GROUP_KEYS = new Set();
+let docsSidebarDrawerOpen = false;
+
+function getDocsSidebarDrawerElements() {
+  const page = document.getElementById('docsView');
+  return {
+    page,
+    backdrop: page?.querySelector('.docs-shell__backdrop') || null,
+    sidebar: page?.querySelector('#docsSidebarNav') || null,
+    homeLink: page?.querySelector('.docs-shell__sidebar-home') || null,
+    activeLink: page?.querySelector('.docs-shell__nav-link[aria-current="page"]') || null,
+  };
+}
+
+export function isDocsSidebarDrawerMode() {
+  return DOCS_PAGE_VIEWS.has(currentView) && Boolean(DOCS_SIDEBAR_DRAWER_MEDIA?.matches);
+}
+
+export function isDocsSidebarDrawerOpen() {
+  return isDocsSidebarDrawerMode() && docsSidebarDrawerOpen;
+}
+
+function syncDocsSidebarDrawerUi({ restoreFocus = false, focusSidebar = false } = {}) {
+  const { page, backdrop, sidebar, homeLink, activeLink } = getDocsSidebarDrawerElements();
+  const isDrawerMode = isDocsSidebarDrawerMode();
+  if (!isDrawerMode) {
+    docsSidebarDrawerOpen = false;
+  }
+  const isOpen = isDrawerMode && docsSidebarDrawerOpen;
+
+  page?.classList.toggle('docs-view--drawer-mode', isDrawerMode);
+  page?.classList.toggle('docs-view--drawer-open', isOpen);
+
+  if (backdrop) {
+    backdrop.hidden = !isOpen;
+    backdrop.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+  }
+
+  if (sidebar) {
+    sidebar.classList.toggle('is-open', isOpen);
+    sidebar.setAttribute('aria-hidden', isDrawerMode && !isOpen ? 'true' : 'false');
+  }
+
+  document.body.classList.toggle('docs-sidebar-open', isOpen);
+  window.__supericons?.syncSidebarToggleButton?.();
+
+  if (restoreFocus && !isOpen) {
+    document.getElementById('sidebarToggle')?.focus();
+  }
+
+  if (focusSidebar && isOpen) {
+    const focusTarget = activeLink || homeLink || sidebar;
+    window.requestAnimationFrame(() => {
+      focusTarget?.focus?.();
+    });
+  }
+}
+
+export function closeDocsSidebarDrawer({ restoreFocus = false } = {}) {
+  const wasOpen = docsSidebarDrawerOpen;
+  docsSidebarDrawerOpen = false;
+  syncDocsSidebarDrawerUi({ restoreFocus });
+  return wasOpen;
+}
+
+export function openDocsSidebarDrawer() {
+  if (!isDocsSidebarDrawerMode()) return false;
+  docsSidebarDrawerOpen = true;
+  syncDocsSidebarDrawerUi({ focusSidebar: true });
+  return true;
+}
+
+export function toggleDocsSidebarDrawer() {
+  if (!isDocsSidebarDrawerMode()) return false;
+  if (docsSidebarDrawerOpen) {
+    closeDocsSidebarDrawer({ restoreFocus: true });
+    return false;
+  }
+  return openDocsSidebarDrawer();
+}
+
+function handleDocsSidebarDrawerMediaChange() {
+  if (!DOCS_PAGE_VIEWS.has(currentView)) {
+    docsSidebarDrawerOpen = false;
+    document.body.classList.remove('docs-sidebar-open');
+    window.__supericons?.syncSidebarToggleButton?.();
+    return;
+  }
+  if (!DOCS_SIDEBAR_DRAWER_MEDIA?.matches) {
+    closeDocsSidebarDrawer();
+    return;
+  }
+  syncDocsSidebarDrawerUi();
+}
+
+if (DOCS_SIDEBAR_DRAWER_MEDIA) {
+  if (typeof DOCS_SIDEBAR_DRAWER_MEDIA.addEventListener === 'function') {
+    DOCS_SIDEBAR_DRAWER_MEDIA.addEventListener('change', handleDocsSidebarDrawerMediaChange);
+  } else if (typeof DOCS_SIDEBAR_DRAWER_MEDIA.addListener === 'function') {
+    DOCS_SIDEBAR_DRAWER_MEDIA.addListener(handleDocsSidebarDrawerMediaChange);
+  }
+}
 
 function getDocsSearchElements({ createResults = false } = {}) {
   const input = document.getElementById('searchInput');
@@ -4612,6 +4721,7 @@ function openDocsSearchResult(result, { historyMode = 'push' } = {}) {
       sectionId: result.sectionId || '',
     }
     : null;
+  closeDocsSidebarDrawer();
   window.history[historyMethod]({}, '', nextUrl);
   closeDocsSearch({ clearQuery: true });
   switchView(result.view, { historyMode: 'silent' });
@@ -4816,6 +4926,7 @@ function ensureShellViewLinkDelegation() {
     if (!targetView) return;
 
     event.preventDefault();
+    closeDocsSidebarDrawer();
     switchView(targetView, { historyMode: 'push' });
   }, true);
   shellViewLinkDelegationBound = true;
@@ -4863,6 +4974,7 @@ function wireDocsPage(page) {
   cleanupDocsPage();
 
   let tocObserver = null;
+  const docsDrawerBackdrop = page.querySelector('.docs-shell__backdrop');
   const {
     input: docsSearchInput,
     clearButton: docsSearchClearButton,
@@ -4939,6 +5051,16 @@ function wireDocsPage(page) {
     });
   };
 
+  const handleDocsDrawerBackdropClick = () => {
+    closeDocsSidebarDrawer({ restoreFocus: true });
+  };
+
+  const handleDocsDrawerKeydown = (event) => {
+    if (event.key !== 'Escape' || !isDocsSidebarDrawerOpen()) return;
+    event.preventDefault();
+    closeDocsSidebarDrawer({ restoreFocus: true });
+  };
+
   const handleDocsSearchKeydown = (event) => {
     if (event.key === 'Escape') {
       event.preventDefault();
@@ -4983,6 +5105,8 @@ function wireDocsPage(page) {
   docsSearchClearButton?.addEventListener('click', handleDocsSearchClear);
   docsSearchResultsPanel?.addEventListener('pointerdown', handleDocsSearchPointerDown);
   docsSearchResultsPanel?.addEventListener('click', handleDocsSearchClick);
+  docsDrawerBackdrop?.addEventListener('click', handleDocsDrawerBackdropClick);
+  document.addEventListener('keydown', handleDocsDrawerKeydown);
 
   const tocLinks = [...page.querySelectorAll('.docs-page-toc a[href^="#"], .docs-sidebar .docs-link-list a[href^="#"]')];
   const fallbackSections = [...page.querySelectorAll('.docs-shell__page section[id], .docs-hub section[id]')];
@@ -5112,6 +5236,7 @@ function wireDocsPage(page) {
   window.requestAnimationFrame(() => {
     applyPendingDocsSearchNavigation(page);
   });
+  syncDocsSidebarDrawerUi();
 
   page.querySelectorAll('[data-expand]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -5133,6 +5258,8 @@ function wireDocsPage(page) {
     docsSearchClearButton?.removeEventListener('click', handleDocsSearchClear);
     docsSearchResultsPanel?.removeEventListener('pointerdown', handleDocsSearchPointerDown);
     docsSearchResultsPanel?.removeEventListener('click', handleDocsSearchClick);
+    docsDrawerBackdrop?.removeEventListener('click', handleDocsDrawerBackdropClick);
+    document.removeEventListener('keydown', handleDocsDrawerKeydown);
     clearDocsSearchBlurTimeout();
     if (scrollTopBtn || scrollDownBtn) {
       window.removeEventListener('resize', syncScrollActionOffset);
@@ -5448,7 +5575,9 @@ function renderDocsSitePage(view = 'docs') {
     page.className = 'docs-view docs-view--site';
     page.innerHTML = `
       <div class="docs-shell">
-        <aside class="docs-shell__sidebar" aria-label="Docs navigation">
+        <div class="docs-shell__backdrop" aria-hidden="true" hidden></div>
+
+        <aside class="docs-shell__sidebar" id="docsSidebarNav" aria-label="Docs navigation" tabindex="-1">
           <div class="docs-shell__sidebar-head">
             <h2 class="docs-shell__sidebar-brand">
               <a class="docs-shell__sidebar-home" href="/?view=docs" data-docs-view="docs" aria-label="Go to Documentation home">
@@ -5517,6 +5646,7 @@ function renderDocsSitePage(view = 'docs') {
     ${renderDocsPagination(view)}`;
 
   wireDocsPage(page);
+  syncDocsSidebarDrawerUi();
   scrollDocsHashIntoView();
 }
 

@@ -5,7 +5,15 @@
 
 import './style.css';
 import { initAuth } from './auth.js';
-import { initStore, switchView, isStoreView, loadSvgIntoMotionLab } from './store.js';
+import {
+  initStore,
+  isDocsSidebarDrawerMode,
+  isDocsSidebarDrawerOpen,
+  isStoreView,
+  loadSvgIntoMotionLab,
+  switchView,
+  toggleDocsSidebarDrawer,
+} from './store.js';
 import { hydrateSidebarIconSlot, renderSidebarIconSlot } from './sidebar-icons.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
@@ -891,9 +899,39 @@ function syncPanelLayout() {
   }
 }
 
+function syncSidebarToggleButton() {
+  const button = els.sidebarToggle;
+  if (!button) return;
+
+  const docsDrawerMode = isDocsSidebarDrawerMode();
+  const docsDrawerOpen = isDocsSidebarDrawerOpen();
+  const icon = button.querySelector('.material-symbols-outlined');
+  const actionLabel = docsDrawerMode
+    ? (docsDrawerOpen ? 'Close docs navigation' : 'Open docs navigation')
+    : 'Menu';
+
+  if (icon) {
+    icon.textContent = docsDrawerMode && docsDrawerOpen ? 'close' : 'menu';
+  }
+
+  button.setAttribute('aria-label', actionLabel);
+  button.setAttribute('data-tip', actionLabel);
+  button.setAttribute('title', actionLabel);
+
+  if (docsDrawerMode) {
+    button.setAttribute('aria-controls', 'docsSidebarNav');
+    button.setAttribute('aria-expanded', docsDrawerOpen ? 'true' : 'false');
+    return;
+  }
+
+  button.setAttribute('aria-controls', 'sidebar');
+  button.setAttribute('aria-expanded', state.sidebarOpen ? 'true' : 'false');
+}
+
 function setSidebarOpen(isOpen) {
   state.sidebarOpen = Boolean(isOpen);
   els.sidebar.classList.toggle('open', state.sidebarOpen && !isLandingActive());
+  syncSidebarToggleButton();
 }
 
 function setPanelOpen(isOpen) {
@@ -936,6 +974,10 @@ function syncShellForViewport() {
 }
 
 function toggleSidebar() {
+  if (isDocsSidebarDrawerMode()) {
+    toggleDocsSidebarDrawer();
+    return;
+  }
   setSidebarOpen(!state.sidebarOpen);
 }
 
@@ -2365,6 +2407,7 @@ if (typeof MOBILE_PANEL_MEDIA.addEventListener === 'function') {
 }
 
 els.sidebarToggle.addEventListener('click', toggleSidebar);
+syncSidebarToggleButton();
 els.panelToggle.addEventListener('click', togglePanel);
 // Panel close button (use delegation on panel in case DOM is rebuilt)
 els.panel.addEventListener('click', (e) => {
@@ -2779,6 +2822,7 @@ window.__supericons = {
   ANIM_CSS,
   setHeaderSearchMode,
   syncHeaderSearchChrome,
+  syncSidebarToggleButton,
 };
 
 // MCP links
@@ -2840,21 +2884,26 @@ if (mcpCloseBtn) {
 
 // Footer: Contact modal
 const contactModal = $('#contactModal');
-const footerContactLink = $('#footerContactLink');
 const contactClose = $('#contactClose');
 const contactBackdrop = $('#contactBackdrop');
 
-if (footerContactLink && contactModal) {
-  footerContactLink.addEventListener('click', (e) => {
-    e.preventDefault();
+if (contactModal) {
+  const openContactModal = () => {
     contactModal.classList.add('open');
-  });
-  contactClose.addEventListener('click', () => {
+  };
+  const closeContactModal = () => {
     contactModal.classList.remove('open');
+  };
+
+  document.addEventListener('click', (e) => {
+    const contactTrigger = e.target.closest('[data-open-contact]');
+    if (!contactTrigger) return;
+    e.preventDefault();
+    openContactModal();
   });
-  contactBackdrop.addEventListener('click', () => {
-    contactModal.classList.remove('open');
-  });
+
+  contactClose?.addEventListener('click', closeContactModal);
+  contactBackdrop?.addEventListener('click', closeContactModal);
 }
 
 // Contact form submission

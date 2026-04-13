@@ -1952,7 +1952,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
       </section>
       <section class="docs-callout" id="troubleshooting-contact">
         <h3>Your problem is still not listed</h3>
-        <p>Visit <a href="https://supericons.dev" target="_blank" rel="noopener noreferrer">supericons.dev</a> or email <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>.</p>
+        <p>Open the <a href="#" data-open-contact="true">contact form</a> or email <a href="mailto:hello@supericons.dev">hello@supericons.dev</a>.</p>
       </section>
     `,
   },
