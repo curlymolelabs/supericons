@@ -18,6 +18,9 @@ type EmailContent = {
   html: string;
 };
 
+type BillingNotificationKind = 'subscription_cancel_scheduled' | 'subscription_ended';
+type SupabaseAdminClient = any;
+
 const DEFAULT_APP_BASE_URL = 'https://supericons.dev';
 const DEFAULT_SUPPORT_EMAIL = 'hello@supericons.dev';
 const DEFAULT_FROM_EMAIL = 'Supericons <receipts@auth.supericons.dev>';
@@ -46,6 +49,177 @@ function formatMoney(amount: number | null | undefined, currency: string | null 
   } catch {
     return `${(amount / 100).toFixed(2)} ${(currency || 'usd').toUpperCase()}`;
   }
+}
+
+function toIsoFromUnixSeconds(value: number | null | undefined) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+  return new Date(value * 1000).toISOString();
+}
+
+function getSubscriptionPeriodEndIso(subscription: Stripe.Subscription) {
+  const itemPeriodEnds = Array.isArray(subscription.items?.data)
+    ? subscription.items.data
+      .map((item: Stripe.SubscriptionItem) => (item as Stripe.SubscriptionItem & { current_period_end?: number | null }).current_period_end)
+      .filter((value: number | null | undefined): value is number => typeof value === 'number' && Number.isFinite(value))
+    : [];
+
+  const subscriptionPeriodEnd = typeof subscription.current_period_end === 'number'
+    && Number.isFinite(subscription.current_period_end)
+    ? subscription.current_period_end
+    : null;
+
+  const periodEnd = itemPeriodEnds.length > 0
+    ? Math.min(...itemPeriodEnds)
+    : subscriptionPeriodEnd;
+
+  return toIsoFromUnixSeconds(periodEnd);
+}
+
+function formatDateLabel(value: string | null | undefined) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return null;
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(date);
+  } catch {
+    return value;
+  }
+}
+
+function buildBillingStatusEmail({
+  recipientEmail,
+  subject,
+  kicker,
+  heading,
+  intro,
+  details,
+  ctaLabel,
+  ctaUrl,
+}: {
+  recipientEmail: string;
+  subject: string;
+  kicker: string;
+  heading: string;
+  intro: string;
+  details: string[];
+  ctaLabel: string;
+  ctaUrl: string;
+}): EmailContent {
+  const escapedEmail = escapeHtml(recipientEmail);
+  const escapedHeading = escapeHtml(heading);
+  const escapedIntro = escapeHtml(intro);
+  const text = [
+    heading,
+    '',
+    intro,
+    ...details.map((detail) => detail.trim()),
+    '',
+    `${ctaLabel}: ${ctaUrl}`,
+    `Questions? Reply to ${DEFAULT_SUPPORT_EMAIL}`,
+  ].filter(Boolean).join('\n');
+
+  const detailMarkup = details
+    .filter(Boolean)
+    .map((detail) => `<p style="margin:0 0 12px;color:#cccaca;font-size:14px;line-height:1.6;">${escapeHtml(detail)}</p>`)
+    .join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="margin:0;padding:0;background-color:#0e0e0e;">
+  <div style="padding:40px 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#ffffff;text-align:center;">
+    <div style="max-width:480px;margin:0 auto;">
+      <a href="${escapeHtml(getAppBaseUrl())}" style="display:inline-flex;align-items:center;justify-content:center;gap:2px;margin-bottom:32px;text-decoration:none;">
+        <img src="${escapeHtml(getAppBaseUrl())}/logo_email_header.png" alt="Supericons" height="34" style="display:block;border:0;outline:none;text-decoration:none;" />
+      </a>
+
+      <div style="background-color:#131313;border:1px solid #262626;border-radius:16px;padding:48px 40px;box-shadow:0 10px 30px rgba(0,0,0,0.4);text-align:left;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#FF4F00;margin-bottom:12px;text-align:center;">${escapeHtml(kicker)}</div>
+        <h1 style="font-size:24px;font-weight:700;margin:0 0 16px;color:#ffffff;text-align:center;">${escapedHeading}</h1>
+        <p style="margin:0 0 24px;color:#cccaca;font-size:15px;line-height:1.6;text-align:center;">${escapedIntro}</p>
+
+        <div style="background:#171717;border:1px solid #262626;border-radius:14px;padding:18px 18px 16px;margin-bottom:24px;">
+          ${detailMarkup}
+        </div>
+
+        <div style="text-align:center;">
+          <a href="${escapeHtml(ctaUrl)}" style="display:inline-block;background-color:#FF4F00;color:#000000;text-decoration:none;font-weight:700;font-size:14px;padding:14px 28px;border-radius:999px;">${escapeHtml(ctaLabel)}</a>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;color:#666;font-size:12px;line-height:1.6;">
+        This email was sent to ${escapedEmail}.<br />
+        Questions? Reply to <a href="mailto:${DEFAULT_SUPPORT_EMAIL}" style="color:#FF8A50;text-decoration:none;">${DEFAULT_SUPPORT_EMAIL}</a>.<br />
+        &copy; 2026 Curly Mole Labs
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  return {
+    subject,
+    text,
+    html,
+  };
+}
+
+function buildCancellationScheduledEmail({
+  recipientEmail,
+  currentPeriodEnd,
+  dashboardUrl,
+}: {
+  recipientEmail: string;
+  currentPeriodEnd: string | null;
+  dashboardUrl: string;
+}): EmailContent {
+  const periodEndLabel = formatDateLabel(currentPeriodEnd);
+  const timelineCopy = periodEndLabel
+    ? `Your subscription stays active until ${periodEndLabel}. After that, billing stops and your account returns to the free experience.`
+    : 'Your subscription stays active until the end of your current billing period. After that, billing stops and your account returns to the free experience.';
+
+  return buildBillingStatusEmail({
+    recipientEmail,
+    subject: 'Your Supericons Pro cancellation is scheduled',
+    kicker: 'Supericons billing',
+    heading: 'Cancellation confirmed',
+    intro: 'Your Supericons Pro cancellation is scheduled.',
+    details: [
+      timelineCopy,
+      'You do not need to do anything else right now.',
+    ],
+    ctaLabel: 'Manage account',
+    ctaUrl: dashboardUrl,
+  });
+}
+
+function buildSubscriptionEndedEmail({
+  recipientEmail,
+  dashboardUrl,
+}: {
+  recipientEmail: string;
+  dashboardUrl: string;
+}): EmailContent {
+  return buildBillingStatusEmail({
+    recipientEmail,
+    subject: 'Your Supericons Pro subscription has ended',
+    kicker: 'Supericons billing',
+    heading: 'Subscription ended',
+    intro: 'Your Supericons Pro subscription has ended.',
+    details: [
+      'Your account is still available, and free icons remain accessible.',
+      'You can resubscribe anytime if you want Pro tools again.',
+    ],
+    ctaLabel: 'Open Supericons',
+    ctaUrl: dashboardUrl,
+  });
 }
 
 function buildPurchaseEmail({
@@ -142,12 +316,21 @@ function buildPurchaseEmail({
 }
 
 async function resolveUserEmail(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseAdminClient,
   userId: string,
   session: Stripe.Checkout.Session,
 ) {
   const sessionEmail = session.customer_details?.email || session.customer_email || '';
   if (sessionEmail) return sessionEmail;
+
+  return resolveAuthUserEmail(supabase, userId);
+}
+
+async function resolveAuthUserEmail(
+  supabase: SupabaseAdminClient,
+  userId: string,
+) {
+  if (!userId) return '';
 
   try {
     const { data, error } = await supabase.auth.admin.getUserById(userId);
@@ -162,8 +345,30 @@ async function resolveUserEmail(
   }
 }
 
+async function resolveSubscriptionUserEmail(
+  supabase: SupabaseAdminClient,
+  stripeSubscriptionId: string,
+) {
+  const { data, error } = await supabase
+    .from('si_subscriptions')
+    .select('user_id')
+    .eq('stripe_subscription_id', stripeSubscriptionId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Failed to resolve subscription email context:', error);
+    return { userId: '', email: '' };
+  }
+
+  const userId = data?.user_id || '';
+  if (!userId) return { userId: '', email: '' };
+
+  const email = await resolveAuthUserEmail(supabase, userId);
+  return { userId, email };
+}
+
 async function fetchProductSummary(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseAdminClient,
   productId: string,
 ) {
   const { data, error } = await supabase
@@ -183,7 +388,7 @@ async function fetchProductSummary(
   };
 }
 
-async function sendPurchaseConfirmationEmail({
+async function sendBillingEmail({
   to,
   subject,
   html,
@@ -221,15 +426,50 @@ async function sendPurchaseConfirmationEmail({
 
   if (!response.ok) {
     const body = await response.text().catch(() => '');
-    console.error(`Purchase confirmation email failed (${response.status}):`, body);
+    console.error(`Billing email failed (${response.status}):`, body);
     return;
   }
 
-  console.log(`Purchase confirmation email sent to ${to}`);
+  console.log(`Billing email sent to ${to}`);
+}
+
+async function reserveBillingNotification({
+  supabase,
+  userId,
+  stripeSubscriptionId,
+  stripeEventId,
+  eventKind,
+  eventContext,
+}: {
+  supabase: SupabaseAdminClient;
+  userId: string;
+  stripeSubscriptionId: string;
+  stripeEventId: string;
+  eventKind: BillingNotificationKind;
+  eventContext: Record<string, unknown>;
+}) {
+  const { error } = await supabase
+    .from('si_billing_notifications')
+    .insert({
+      user_id: userId,
+      stripe_subscription_id: stripeSubscriptionId,
+      stripe_event_id: stripeEventId,
+      event_kind: eventKind,
+      event_context: eventContext,
+    });
+
+  if (!error) return true;
+  if (error.code === '23505') {
+    console.log(`Billing notification already processed: ${stripeEventId}`);
+    return false;
+  }
+
+  console.error('Billing notification reservation failed:', error);
+  return false;
 }
 
 async function grantLaunchProducts(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseAdminClient,
   userId: string,
   source: string,
   stripeReference: string | null,
@@ -289,15 +529,19 @@ serve(async (req) => {
     try {
       event = await stripe.webhooks.constructEventAsync(body, sig, webhookSecret);
     } catch (err) {
-      console.error('Webhook signature verification failed:', err.message);
+      const message = err instanceof Error ? err.message : String(err);
+      console.error('Webhook signature verification failed:', message);
       return new Response(JSON.stringify({ error: 'Invalid signature' }), { status: 400 });
     }
 
     // Admin client for writes (bypasses RLS)
-    const supabase = createClient(
+    const supabase = createClient<any>(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
+    const appBaseUrl = getAppBaseUrl();
+    const downloadsUrl = `${appBaseUrl}/?view=downloads`;
+    const dashboardUrl = `${appBaseUrl}/?view=dashboard`;
 
     // Handle events
     switch (event.type) {
@@ -305,9 +549,6 @@ serve(async (req) => {
         const session = event.data.object as Stripe.Checkout.Session;
         const userId = session.metadata?.user_id;
         const productId = session.metadata?.product_id;
-        const appBaseUrl = getAppBaseUrl();
-        const downloadsUrl = `${appBaseUrl}/?view=downloads`;
-        const dashboardUrl = `${appBaseUrl}/?view=dashboard`;
 
         if (userId && productId && session.mode === 'payment') {
           let shouldSendPurchaseEmail = false;
@@ -337,7 +578,7 @@ serve(async (req) => {
                   downloadsUrl,
                   dashboardUrl,
                 });
-                await sendPurchaseConfirmationEmail({
+                await sendBillingEmail({
                   to: recipientEmail,
                   subject: emailPayload.subject,
                   text: emailPayload.text,
@@ -383,7 +624,7 @@ serve(async (req) => {
                   downloadsUrl,
                   dashboardUrl,
                 });
-                await sendPurchaseConfirmationEmail({
+                await sendBillingEmail({
                   to: recipientEmail,
                   subject: emailPayload.subject,
                   text: emailPayload.text,
@@ -404,6 +645,7 @@ serve(async (req) => {
           const sub = await stripe.subscriptions.retrieve(subscriptionId);
           const plan = sub.items.data[0]?.price?.recurring?.interval === 'year'
             ? 'pro_annual' : 'pro_monthly';
+          const currentPeriodEnd = getSubscriptionPeriodEndIso(sub);
 
           const { data: existingSubscription } = await supabase
             .from('si_subscriptions')
@@ -419,7 +661,7 @@ serve(async (req) => {
               stripe_customer_id: customerId,
               status: 'active',
               plan,
-              current_period_end: null, // Updated by subscription.updated event
+              current_period_end: currentPeriodEnd,
             }, { onConflict: 'user_id' });
 
           if (error) console.error('Subscription insert error:', error);
@@ -448,7 +690,7 @@ serve(async (req) => {
                 downloadsUrl,
                 dashboardUrl,
               });
-              await sendPurchaseConfirmationEmail({
+              await sendBillingEmail({
                 to: recipientEmail,
                 subject: emailPayload.subject,
                 text: emailPayload.text,
@@ -462,18 +704,63 @@ serve(async (req) => {
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription;
+        const previousAttributes = (event.data as { previous_attributes?: Record<string, unknown> }).previous_attributes;
+        const cancelAtPeriodEndChanged = Boolean(
+          previousAttributes && Object.prototype.hasOwnProperty.call(previousAttributes, 'cancel_at_period_end')
+        );
         const plan = subscription.items.data[0]?.price?.recurring?.interval === 'year'
           ? 'pro_annual' : 'pro_monthly';
+        const currentPeriodEnd = getSubscriptionPeriodEndIso(subscription);
         const { error } = await supabase
           .from('si_subscriptions')
           .update({
             status: subscription.status,
             plan,
-            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            current_period_end: currentPeriodEnd,
           })
           .eq('stripe_subscription_id', subscription.id);
 
         if (error) console.error('Subscription update error:', error);
+
+        if (!cancelAtPeriodEndChanged || subscription.cancel_at_period_end !== true) {
+          break;
+        }
+
+        const { userId, email } = await resolveSubscriptionUserEmail(supabase, subscription.id);
+        if (!userId || !email) {
+          console.warn(`Skipping cancellation scheduled email: missing user context for subscription ${subscription.id}`);
+          break;
+        }
+
+        const shouldSendCancellationScheduledEmail = await reserveBillingNotification({
+          supabase,
+          userId,
+          stripeSubscriptionId: subscription.id,
+          stripeEventId: event.id,
+          eventKind: 'subscription_cancel_scheduled',
+          eventContext: {
+            cancel_at_period_end: true,
+            current_period_end: currentPeriodEnd,
+            status: subscription.status,
+          },
+        });
+
+        if (!shouldSendCancellationScheduledEmail) {
+          break;
+        }
+
+        const emailPayload = buildCancellationScheduledEmail({
+          recipientEmail: email,
+          currentPeriodEnd,
+          dashboardUrl,
+        });
+
+        await sendBillingEmail({
+          to: email,
+          subject: emailPayload.subject,
+          text: emailPayload.text,
+          html: emailPayload.html,
+        });
         break;
       }
 
@@ -485,6 +772,40 @@ serve(async (req) => {
           .eq('stripe_subscription_id', subscription.id);
 
         if (error) console.error('Subscription cancel error:', error);
+
+        const { userId, email } = await resolveSubscriptionUserEmail(supabase, subscription.id);
+        if (!userId || !email) {
+          console.warn(`Skipping subscription ended email: missing user context for subscription ${subscription.id}`);
+          break;
+        }
+
+        const shouldSendSubscriptionEndedEmail = await reserveBillingNotification({
+          supabase,
+          userId,
+          stripeSubscriptionId: subscription.id,
+          stripeEventId: event.id,
+          eventKind: 'subscription_ended',
+          eventContext: {
+            status: subscription.status,
+            canceled_at: subscription.canceled_at,
+          },
+        });
+
+        if (!shouldSendSubscriptionEndedEmail) {
+          break;
+        }
+
+        const emailPayload = buildSubscriptionEndedEmail({
+          recipientEmail: email,
+          dashboardUrl,
+        });
+
+        await sendBillingEmail({
+          to: email,
+          subject: emailPayload.subject,
+          text: emailPayload.text,
+          html: emailPayload.html,
+        });
         break;
       }
 
@@ -498,6 +819,7 @@ serve(async (req) => {
     });
   } catch (err) {
     console.error('Webhook error:', err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    return new Response(JSON.stringify({ error: message }), { status: 500 });
   }
 });
