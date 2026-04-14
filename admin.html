@@ -891,6 +891,33 @@
       text-overflow: ellipsis;
       max-width: 160px;
     }
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      max-width: 360px;
+      padding: 0.85rem 1rem;
+      border-radius: var(--si-radius-lg);
+      border: 1px solid rgba(72,72,71,0.45);
+      background: rgba(19,19,19,0.96);
+      box-shadow: var(--si-shadow-md);
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      color: var(--si-text);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity var(--si-transition-base), transform var(--si-transition-base);
+      z-index: 1200;
+    }
+    .toast.open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.error {
+      border-color: rgba(255,113,108,0.45);
+      color: var(--si-error);
+    }
   </style>
 </head>
 <body>
@@ -900,11 +927,15 @@
   <span class="topbar__logo">Supericons</span>
   <span class="topbar__badge">Admin</span>
   <span class="topbar__spacer"></span>
+  <button class="btn btn-ghost btn-sm" id="adminReconnectBtn" type="button">
+    <span class="material-symbols-outlined" style="font-size:14px">vpn_key</span>
+    Reconnect API
+  </button>
   <div class="topbar__meta">
     <span class="topbar__dot"></span>
-    <span>Production</span>
+    <span id="topbarEnvironment">Production</span>
     <span style="color:var(--si-outline-variant)">|</span>
-    <span>supericons.dev</span>
+    <span id="topbarHost">supericons.dev</span>
   </div>
 </header>
 
@@ -925,7 +956,7 @@
       <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
         <span class="material-symbols-outlined nav-item__icon">group</span>
         Users
-        <span class="nav-item__badge">142</span>
+        <span class="nav-item__badge" id="navUsersCount">0</span>
       </div>
       <div class="nav-item" id="nav-audit" onclick="switchPanel('audit')">
         <span class="material-symbols-outlined nav-item__icon">history</span>
@@ -934,10 +965,10 @@
     </div>
     <div class="sidebar__divider"></div>
     <div class="nav-section">
-      <div class="nav-item" onclick="">
+      <a class="nav-item" id="docsLink" href="/docs" target="_blank" rel="noreferrer">
         <span class="material-symbols-outlined nav-item__icon">help_outline</span>
         Documentation
-      </div>
+      </a>
     </div>
   </nav>
 
@@ -953,7 +984,7 @@
             <div class="panel-header__subtitle">Platform health at a glance</div>
           </div>
           <div class="panel-header__actions">
-            <button class="btn btn-ghost btn-sm">
+            <button class="btn btn-ghost btn-sm" id="statsRefreshBtn" type="button">
               <span class="material-symbols-outlined">refresh</span>
               Refresh
             </button>
@@ -968,41 +999,32 @@
               <span class="material-symbols-outlined">group</span>
               Total Users
             </div>
-            <div class="stat-card__value">142</div>
-            <div class="stat-card__delta">
-              <span class="material-symbols-outlined">trending_up</span>
-              +12 this month
-            </div>
+            <div class="stat-card__value" id="statsTotalUsersValue">0</div>
+            <div class="stat-card__delta" id="statsTotalUsersDelta">Waiting for live data</div>
           </div>
           <div class="stat-card">
             <div class="stat-card__label">
               <span class="material-symbols-outlined">workspace_premium</span>
               Active Pro
             </div>
-            <div class="stat-card__value">38</div>
-            <div class="stat-card__delta">
-              <span class="material-symbols-outlined">trending_up</span>
-              +4 this month
-            </div>
+            <div class="stat-card__value" id="statsActiveProValue">0</div>
+            <div class="stat-card__delta" id="statsActiveProDelta">Active paid subscriptions</div>
           </div>
           <div class="stat-card">
             <div class="stat-card__label">
               <span class="material-symbols-outlined">shopping_bag</span>
               Total Purchases
             </div>
-            <div class="stat-card__value">217</div>
-            <div class="stat-card__delta">
-              <span class="material-symbols-outlined">trending_up</span>
-              +29 this month
-            </div>
+            <div class="stat-card__value" id="statsTotalPurchasesValue">0</div>
+            <div class="stat-card__delta" id="statsTotalPurchasesDelta">All recorded purchases</div>
           </div>
           <div class="stat-card">
             <div class="stat-card__label">
               <span class="material-symbols-outlined">person_add</span>
               New (30d)
             </div>
-            <div class="stat-card__value">28</div>
-            <div class="stat-card__delta" style="color:var(--si-info)">
+            <div class="stat-card__value" id="statsNewUsersValue">0</div>
+            <div class="stat-card__delta" style="color:var(--si-info)" id="statsNewUsersDelta">
               <span class="material-symbols-outlined">schedule</span>
               Last 30 days
             </div>
@@ -1015,22 +1037,14 @@
               <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">person_add</span>
               Recent Signups
             </div>
-            <div class="stats-row"><span>vinicius@earth.io</span><span class="stats-row__val">2h ago</span></div>
-            <div class="stats-row"><span>jane.doe@studio.com</span><span class="stats-row__val">5h ago</span></div>
-            <div class="stats-row"><span>mikael.l@co.se</span><span class="stats-row__val">11h ago</span></div>
-            <div class="stats-row"><span>hello@freeagent.io</span><span class="stats-row__val">1d ago</span></div>
-            <div class="stats-row"><span>ops@uxlab.design</span><span class="stats-row__val">2d ago</span></div>
+            <div id="statsRecentSignups"></div>
           </div>
           <div class="stats-section">
             <div class="stats-section__title">
               <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">history</span>
               Recent Actions
             </div>
-            <div class="stats-row"><span class="action-chip delete">user.delete</span><span class="stats-row__val">1h ago</span></div>
-            <div class="stats-row"><span class="action-chip cancel">subscription.cancel</span><span class="stats-row__val">3h ago</span></div>
-            <div class="stats-row"><span class="action-chip revoke">purchase.revoke</span><span class="stats-row__val">8h ago</span></div>
-            <div class="stats-row"><span class="action-chip ban">user.ban</span><span class="stats-row__val">1d ago</span></div>
-            <div class="stats-row"><span class="action-chip delete">user.delete</span><span class="stats-row__val">2d ago</span></div>
+            <div id="statsRecentActions"></div>
           </div>
         </div>
       </div>
@@ -1042,7 +1056,7 @@
         <div class="panel-header__row">
           <div>
             <div class="panel-header__title">Users</div>
-            <div class="panel-header__subtitle">142 total accounts</div>
+            <div class="panel-header__subtitle" id="usersPanelSubtitle">0 total accounts</div>
           </div>
         </div>
         <div class="search-row">
@@ -1050,22 +1064,23 @@
             <span class="material-symbols-outlined">search</span>
             <input class="search-input" placeholder="Search by email or name..." id="user-search" />
           </div>
-          <select class="filter-select">
-            <option>All plans</option>
-            <option>Pro Annual</option>
-            <option>Pro Monthly</option>
-            <option>Free</option>
+          <select class="filter-select" id="userPlanFilter">
+            <option value="">All plans</option>
+            <option value="pro_annual">Pro Annual</option>
+            <option value="pro_monthly">Pro Monthly</option>
+            <option value="free">Free</option>
           </select>
-          <select class="filter-select">
-            <option>All statuses</option>
-            <option>Active</option>
-            <option>Canceled</option>
-            <option>Banned</option>
+          <select class="filter-select" id="userStatusFilter">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="trialing">Trialing</option>
+            <option value="free">Free</option>
+            <option value="canceled">Canceled</option>
           </select>
-          <select class="filter-select">
-            <option>All providers</option>
-            <option>Google</option>
-            <option>Email</option>
+          <select class="filter-select" id="userProviderFilter">
+            <option value="">All providers</option>
+            <option value="google">Google</option>
+            <option value="email">Email</option>
           </select>
         </div>
       </div>
@@ -1083,107 +1098,13 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr onclick="openDrawer('vinicius')">
-              <td>
-                <div class="user-cell">
-                  <div class="avatar google">VN</div>
-                  <div>
-                    <div class="user-cell__email">vinicius@earth.io</div>
-                    <div class="user-cell__name">Vinicius Nakamura</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-google">Google</span></td>
-              <td><span class="badge badge-pro">Pro Annual</span></td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td style="color:var(--si-text)">8</td>
-              <td>Mar 24, 2026</td>
-              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('vinicius')">View</button></td>
-            </tr>
-            <tr onclick="openDrawer('jane')">
-              <td>
-                <div class="user-cell">
-                  <div class="avatar">JD</div>
-                  <div>
-                    <div class="user-cell__email">jane.doe@studio.com</div>
-                    <div class="user-cell__name">Jane Doe</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-email">Email</span></td>
-              <td><span class="badge badge-pro">Pro Monthly</span></td>
-              <td><span class="badge badge-warning">Cancels Apr 30</span></td>
-              <td style="color:var(--si-text)">3</td>
-              <td>Apr 1, 2026</td>
-              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('jane')">View</button></td>
-            </tr>
-            <tr onclick="openDrawer('mikael')">
-              <td>
-                <div class="user-cell">
-                  <div class="avatar">ML</div>
-                  <div>
-                    <div class="user-cell__email">mikael.l@co.se</div>
-                    <div class="user-cell__name">Mikael Lindqvist</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-email">Email</span></td>
-              <td><span class="badge badge-free">Free</span></td>
-              <td><span class="badge badge-free">Free</span></td>
-              <td style="color:var(--si-text)">0</td>
-              <td>Apr 5, 2026</td>
-              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('mikael')">View</button></td>
-            </tr>
-            <tr onclick="openDrawer('hello')">
-              <td>
-                <div class="user-cell">
-                  <div class="avatar google">FA</div>
-                  <div>
-                    <div class="user-cell__email">hello@freeagent.io</div>
-                    <div class="user-cell__name">Free Agent</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-google">Google</span></td>
-              <td><span class="badge badge-pro">Pro Annual</span></td>
-              <td><span class="badge badge-canceled">Canceled</span></td>
-              <td style="color:var(--si-text)">5</td>
-              <td>Feb 18, 2026</td>
-              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('hello')">View</button></td>
-            </tr>
-            <tr onclick="openDrawer('ops')">
-              <td>
-                <div class="user-cell">
-                  <div class="avatar">OX</div>
-                  <div>
-                    <div class="user-cell__email">ops@uxlab.design</div>
-                    <div class="user-cell__name">Ops UXLab</div>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-email">Email</span></td>
-              <td><span class="badge badge-pro">Pro Monthly</span></td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td style="color:var(--si-text)">2</td>
-              <td>Mar 30, 2026</td>
-              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('ops')">View</button></td>
-            </tr>
-          </tbody>
+          <tbody id="usersTableBody"></tbody>
         </table>
       </div>
 
       <div class="pagination">
-        <span class="pagination__info">Showing 1-25 of 142 users</span>
-        <div class="pagination__controls">
-          <button class="page-btn"><span class="material-symbols-outlined">chevron_left</span></button>
-          <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-          <span style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim);padding:0 4px">...</span>
-          <button class="page-btn">6</button>
-          <button class="page-btn"><span class="material-symbols-outlined">chevron_right</span></button>
-        </div>
+        <span class="pagination__info" id="usersPaginationInfo">Loading users...</span>
+        <div class="pagination__controls" id="usersPaginationControls"></div>
       </div>
     </section>
 
@@ -1199,20 +1120,16 @@
         <div class="search-row audit-filters">
           <div class="search-input-wrap" style="max-width:280px">
             <span class="material-symbols-outlined">search</span>
-            <input class="search-input" placeholder="Filter by user ID or email..." />
+            <input class="search-input" placeholder="Filter by user ID or email..." id="auditSearch" />
           </div>
-          <select class="filter-select">
-            <option>All actions</option>
-            <option>user.delete</option>
-            <option>subscription.cancel</option>
-            <option>purchase.revoke</option>
-            <option>user.ban</option>
-          </select>
-          <select class="filter-select">
-            <option>Last 7 days</option>
-            <option>Last 30 days</option>
-            <option>Last 90 days</option>
-            <option>All time</option>
+          <select class="filter-select" id="auditActionFilter">
+            <option value="">All actions</option>
+            <option value="user.delete">user.delete</option>
+            <option value="subscription.cancel">subscription.cancel</option>
+            <option value="purchase.revoke">purchase.revoke</option>
+            <option value="api_key.revoke">api_key.revoke</option>
+            <option value="user.ban">user.ban</option>
+            <option value="user.unban">user.unban</option>
           </select>
         </div>
       </div>
@@ -1229,59 +1146,13 @@
               <th>Payload</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-14 09:12:33</td>
-              <td><span class="action-chip delete">user.delete</span></td>
-              <td><span class="truncate-mono">a1b2c3d4-e5f6...</span></td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">User requested deletion</td>
-              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
-            </tr>
-            <tr>
-              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-14 07:44:10</td>
-              <td><span class="action-chip cancel">subscription.cancel</span></td>
-              <td><span class="truncate-mono">sub_1PxZaB2e...</span></td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Duplicate account</td>
-              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
-            </tr>
-            <tr>
-              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-13 22:05:01</td>
-              <td><span class="action-chip revoke">purchase.revoke</span></td>
-              <td><span class="truncate-mono">status-feedback</span></td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Fraudulent charge</td>
-              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
-            </tr>
-            <tr>
-              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-13 14:30:55</td>
-              <td><span class="action-chip ban">user.ban</span></td>
-              <td><span class="truncate-mono">8f3a9c12-2d44...</span></td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Abuse reported</td>
-              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
-            </tr>
-            <tr>
-              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-12 18:11:40</td>
-              <td><span class="action-chip delete">user.delete</span></td>
-              <td><span class="truncate-mono">c7d8e9f0-a1b2...</span></td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
-              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)"></td>
-              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
-            </tr>
-          </tbody>
+          <tbody id="auditTableBody"></tbody>
         </table>
       </div>
 
       <div class="pagination">
-        <span class="pagination__info">Showing 1-25 of 41 events</span>
-        <div class="pagination__controls">
-          <button class="page-btn"><span class="material-symbols-outlined">chevron_left</span></button>
-          <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn"><span class="material-symbols-outlined">chevron_right</span></button>
-        </div>
+        <span class="pagination__info" id="auditPaginationInfo">Loading audit log...</span>
+        <div class="pagination__controls" id="auditPaginationControls"></div>
       </div>
     </section>
 
@@ -1322,42 +1193,38 @@
     <div class="drawer-section-title">Identity</div>
     <div class="detail-row">
       <span class="detail-row__label">Supabase User ID</span>
-      <span class="detail-row__value mono">a1b2c3d4-e5f6-7890</span>
+      <span class="detail-row__value mono" id="drawerUserId">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Email</span>
-      <span class="detail-row__value">vinicius@earth.io</span>
+      <span class="detail-row__value" id="drawerEmailValue">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Email Verified</span>
-      <span class="detail-row__value" style="color:var(--si-success)">Yes</span>
+      <span class="detail-row__value" style="color:var(--si-success)" id="drawerEmailVerified">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Auth Provider</span>
-      <span class="detail-row__value">google</span>
+      <span class="detail-row__value" id="drawerAuthProvider">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Last Sign-in</span>
-      <span class="detail-row__value">Apr 14, 2026 09:02</span>
+      <span class="detail-row__value" id="drawerLastSignIn">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Joined</span>
-      <span class="detail-row__value">Mar 24, 2026</span>
+      <span class="detail-row__value" id="drawerJoined">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Ban Status</span>
-      <span class="detail-row__value" style="color:var(--si-success)">Not banned</span>
+      <span class="detail-row__value" style="color:var(--si-success)" id="drawerBanStatus">-</span>
     </div>
 
     <div class="drawer-section-title" style="margin-top:1.25rem">Actions</div>
     <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
-      <button class="btn btn-ghost btn-sm">
+      <button class="btn btn-ghost btn-sm" id="drawerBanButton" type="button">
         <span class="material-symbols-outlined" style="font-size:14px">block</span>
         Ban User
-      </button>
-      <button class="btn btn-ghost btn-sm">
-        <span class="material-symbols-outlined" style="font-size:14px">mail</span>
-        Send Email
       </button>
     </div>
 
@@ -1367,7 +1234,7 @@
         Danger Zone
       </div>
       <div class="danger-actions">
-        <button class="btn btn-danger" onclick="openModal()">
+        <button class="btn btn-danger" id="deleteAccountButton" onclick="openModal()" type="button">
           <span class="material-symbols-outlined" style="font-size:15px">delete_forever</span>
           Delete Account
         </button>
@@ -1380,27 +1247,27 @@
     <div class="drawer-section-title">Current Plan</div>
     <div class="detail-row">
       <span class="detail-row__label">Plan</span>
-      <span class="detail-row__value"><span class="badge badge-pro">Pro Annual</span></span>
+      <span class="detail-row__value" id="drawerSubscriptionPlan">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Status</span>
-      <span class="detail-row__value"><span class="badge badge-active">Active</span></span>
+      <span class="detail-row__value" id="drawerSubscriptionStatus">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Period End</span>
-      <span class="detail-row__value">Mar 24, 2027</span>
+      <span class="detail-row__value" id="drawerSubscriptionPeriodEnd">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Stripe Subscription ID</span>
-      <span class="detail-row__value mono">sub_1PxZaB2e...</span>
+      <span class="detail-row__value mono" id="drawerStripeSubscriptionId">-</span>
     </div>
     <div class="detail-row">
       <span class="detail-row__label">Stripe Customer ID</span>
-      <span class="detail-row__value mono">cus_Qr8mN2k...</span>
+      <span class="detail-row__value mono" id="drawerStripeCustomerId">-</span>
     </div>
 
     <div style="margin-top:1.25rem">
-      <button class="btn btn-danger btn-sm">
+      <button class="btn btn-danger btn-sm" id="drawerCancelSubscriptionButton" type="button">
         <span class="material-symbols-outlined" style="font-size:14px">cancel</span>
         Cancel Subscription
       </button>
@@ -1409,61 +1276,19 @@
 
   <!-- Purchases Tab -->
   <div class="drawer-body" id="tab-purchases" style="display:none">
-    <div class="drawer-section-title">8 Purchases</div>
-    <div class="purchase-row">
-      <div>
-        <div class="purchase-row__pack">Status and Feedback</div>
-        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
-      </div>
-      <button class="btn btn-danger btn-sm">Revoke</button>
-    </div>
-    <div class="purchase-row">
-      <div>
-        <div class="purchase-row__pack">Security and Auth</div>
-        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
-      </div>
-      <button class="btn btn-danger btn-sm">Revoke</button>
-    </div>
-    <div class="purchase-row">
-      <div>
-        <div class="purchase-row__pack">Navigation and Menus</div>
-        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
-      </div>
-      <button class="btn btn-danger btn-sm">Revoke</button>
-    </div>
-    <div class="purchase-row">
-      <div>
-        <div class="purchase-row__pack">AI and Agentic</div>
-        <div class="purchase-row__date">Apr 2, 2026 (pro_annual_grant)</div>
-      </div>
-      <button class="btn btn-danger btn-sm">Revoke</button>
-    </div>
+    <div class="drawer-section-title" id="drawerPurchasesTitle">0 Purchases</div>
+    <div id="drawerPurchasesList"></div>
   </div>
 
   <!-- API Keys Tab -->
   <div class="drawer-body" id="tab-keys" style="display:none">
-    <div class="empty-state">
-      <span class="material-symbols-outlined">key_off</span>
-      <span class="empty-state__label">No API keys found</span>
-    </div>
+    <div id="drawerKeysContent"></div>
   </div>
 
   <!-- Audit Log Tab -->
   <div class="drawer-body" id="tab-log" style="display:none">
     <div class="drawer-section-title">Audit History</div>
-    <div class="stats-row" style="flex-direction:column;align-items:flex-start;gap:4px;padding:0.6rem 0">
-      <div style="display:flex;align-items:center;gap:0.5rem">
-        <span class="action-chip revoke">purchase.revoke</span>
-        <span style="font-family:var(--si-font-label);font-size:0.7rem;color:var(--si-text-dim)">Apr 13, 2026</span>
-      </div>
-      <span style="font-family:var(--si-font-label);font-size:0.72rem;color:var(--si-text-dim)">Pack: status-feedback</span>
-    </div>
-    <div style="margin-top:0.75rem">
-      <div class="empty-state">
-        <span class="material-symbols-outlined">checklist</span>
-        <span class="empty-state__label">No other admin actions on this user</span>
-      </div>
-    </div>
+    <div id="drawerAuditContent"></div>
   </div>
 </div>
 
@@ -1477,7 +1302,11 @@
     <div class="modal__desc">
       This will permanently delete the account and cancel any active Stripe subscription immediately. All purchases and subscription history will be removed. This cannot be undone.
     </div>
-    <code class="modal__email-target">vinicius@earth.io</code>
+    <code class="modal__email-target" id="modalEmailTarget">vinicius@earth.io</code>
+    <label class="detail-row" style="margin-bottom:1rem;gap:0.75rem;align-items:flex-start;">
+      <input type="checkbox" id="deleteStripeCustomerToggle" style="margin-top:2px" />
+      <span class="detail-row__label" style="line-height:1.5;">Also delete the Stripe customer after canceling the subscription. Use this for disposable test data only.</span>
+    </label>
     <div class="modal__confirm-label">Type the user's email to confirm</div>
     <input class="modal__confirm-input" id="confirmInput" placeholder="vinicius@earth.io" oninput="checkConfirm()" />
     <div class="modal__actions">
@@ -1489,60 +1318,7 @@
     </div>
   </div>
 </div>
-
-<script>
-  // Panel switching
-  function switchPanel(name) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    document.getElementById('nav-' + name).classList.add('active');
-  }
-
-  // Drawer
-  function openDrawer(user) {
-    document.getElementById('drawerOverlay').classList.add('open');
-    document.getElementById('userDrawer').classList.add('open');
-    // Reset to account tab
-    switchTab(document.querySelector('.drawer-tab'), 'tab-account');
-  }
-  function closeDrawer() {
-    document.getElementById('drawerOverlay').classList.remove('open');
-    document.getElementById('userDrawer').classList.remove('open');
-  }
-
-  // Drawer tabs
-  function switchTab(el, tabId) {
-    document.querySelectorAll('.drawer-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.drawer-body').forEach(b => b.style.display = 'none');
-    el.classList.add('active');
-    document.getElementById(tabId).style.display = 'block';
-  }
-
-  // Modal
-  function openModal() {
-    document.getElementById('deleteModal').classList.add('open');
-    document.getElementById('confirmInput').value = '';
-    document.getElementById('confirmDeleteBtn').disabled = true;
-    document.getElementById('confirmDeleteBtn').style.opacity = '0.4';
-    document.getElementById('confirmDeleteBtn').style.cursor = 'not-allowed';
-  }
-  function closeModal() {
-    document.getElementById('deleteModal').classList.remove('open');
-  }
-  function checkConfirm() {
-    const val = document.getElementById('confirmInput').value;
-    const btn = document.getElementById('confirmDeleteBtn');
-    const match = val === 'vinicius@earth.io';
-    btn.disabled = !match;
-    btn.style.opacity = match ? '1' : '0.4';
-    btn.style.cursor = match ? 'pointer' : 'not-allowed';
-  }
-
-  // Close modal on overlay click
-  document.getElementById('deleteModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-</script>
+<div class="toast" id="adminToast" role="status" aria-live="polite"></div>
+<script src="/admin-app.js"></script>
 </body>
 </html>

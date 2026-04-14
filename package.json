@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build:material-export-manifest": "node scripts/build-material-export-manifest.js",
+    "build:admin-html": "node scripts/build-admin-html.mjs",
     "build:sanitize-public-pack-metadata": "node scripts/sanitize-public-pack-metadata.js",
     "build:motion-lab-mcp-artifacts": "node scripts/build-motion-lab-mcp-artifacts.mjs",
     "verify:motion-lab-mcp-clean-install": "node scripts/verify-motion-lab-mcp-clean-install.mjs",
@@ -23,7 +24,7 @@
     "build:bundles": "node scripts/build-collection-bundles.js",
     "converter:proof-service": "node tools/converter-proof-service/server.mjs",
     "converter:proof-smoke": "node tools/converter-proof-service/smoke-client.mjs",
-    "build": "npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:motion-lab-mcp-artifacts && npm run build:bundles && npm run verify:motion-lab-presets && npm run verify:motion-lab-agent-metadata && vite build",
+    "build": "npm run build:admin-html && npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:motion-lab-mcp-artifacts && npm run build:bundles && npm run verify:motion-lab-presets && npm run verify:motion-lab-agent-metadata && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
