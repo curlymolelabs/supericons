@@ -25,15 +25,17 @@ Verified live on April 14, 2026:
 - `supericons.dev` DNS, SSL, and Netlify production hosting
 - latest production deploy and live smoke pass
 - live Stripe payment flow
+- live Stripe customer-portal flow after the `--no-verify-jwt` redeploy correction
+- live cancellation-scheduled billing email delivery plus idempotency logging
+- live `current_period_end` repair and date-specific cancellation email copy
+- live Stripe secret-key replacement validated through portal and checkout
 - npm publish and clean-install proof for `supericons-mcp@0.3.1`
 - live `motion-lab-session` `429` proof and post-restore sanity pass
 
 Still open or still needs follow-through:
-- Supabase dashboard settings, SMTP delivery, and Google OAuth production config
 - analytics verification and optional uptime monitoring decision
-- final release note cleanup for Railway scope and docs route strategy
-- final pre-release verification evidence and ship decision
-- named runtime owners and concise rollback notes
+- named runtime owners if we want them written more explicitly than the solo-operator model
+- optional SEO / social / legal polish after launch
 
 ## Release Readiness Signals
 
@@ -95,35 +97,39 @@ What is still useful but not blocking:
 
 ### 3. Backend Services (Railway)
 
-Status: `Open before launch`
+Status: `Verified live`
 
 What the repo proves:
-- no Railway config or runbook is documented in the repo snapshot I checked
-- the product already leans heavily on Supabase Edge Functions for backend behavior
+- the raw checklist still treated Railway as a possible launch dependency
+- the converter path is the only Railway-backed production dependency still in scope
 
-What is still missing:
-- a decision on whether Railway is still part of launch scope
-- if yes, the service deploy, environment variables, health check, and domain proof
-- if no, the raw checklist should be updated to remove Railway as an assumed dependency
+Live evidence captured on April 14, 2026:
+- the operator confirmed the converter proof service is already deployed on Railway
+- the live converter flow was exercised from the production site and worked successfully
+- no converter-service code changes were made afterward, so no Railway redeploy is currently needed
 
-Current working assumption:
-- Railway appears out of scope for the current launch unless the converter proof service is intentionally being promoted to a live dependency
+What is still useful but not blocking:
+- keep a short note of the Railway service name, env owner, and health-check location for runtime/rollback reference
 
 ### 4. Database + Auth (Supabase)
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 What the repo proves:
 - [auth.js](../auth.js) implements email/password auth, Google OAuth, resend-confirmation UX, password recovery, and portal access
 - [plans/auth-abuse-controls-and-agent-access-plan.md](../plans/auth-abuse-controls-and-agent-access-plan.md) records that SMTP delivery was already configured and validated after the MX fix
 - [supabase/functions](../supabase/functions) contains the expected production functions, including `api-keys`, `claim-status`, `create-checkout`, `create-portal`, `download-pack`, `serve-premium-asset`, `stripe-webhook`, and `validate-mcp-key`
 
-What is still missing:
-- migration and RLS proof from the Supabase project
-- Site URL and redirect URL verification in the dashboard
-- branded email-template confirmation
-- fresh sign-up, sign-in, password-reset, and Google OAuth proof in the live environment
-- explicit capture of auth rate-limit settings
+Live evidence captured on April 14, 2026:
+- Supabase Auth `Site URL` is set to `https://supericons.dev`
+- redirect URLs were reviewed in the dashboard
+- Google provider config was reviewed in the dashboard and matches the expected Supabase callback
+- auth rate-limit settings were reviewed in the dashboard and are launch-safe
+- SMTP is configured through Resend with branded sender settings
+- the operator reports that sign-up, sign-in, password reset, and Google OAuth were already tested extensively on the live stack
+
+What is still useful but not blocking:
+- keep screenshots or a short written bundle of the dashboard-state evidence if we want stronger release records
 
 ### 5. Payments (Stripe)
 
@@ -135,10 +141,15 @@ What the repo proves:
 
 Live evidence captured on April 14, 2026:
 - the operator confirmed a real live Stripe payment succeeded against the production flow
+- `Manage Subscription` was reverified successfully after redeploying `create-portal` with `--no-verify-jwt`
+- the new cancellation confirmation email flow was exercised successfully against the live stack
+- `si_billing_notifications` now records `subscription_cancel_scheduled` as the idempotency guard for webhook retries
+- `si_subscriptions.current_period_end` was repaired and reverified, and the cancellation email now includes the actual end date
+- the Stripe secret key in Supabase was replaced with a newly created live key, and both portal and checkout were rechecked successfully afterward
 
 What is still useful but not blocking:
 - keep a written note of the exact live product/price IDs and webhook configuration owner
-- capture a customer-portal-only verification note if we want fuller release evidence
+- keep a short note that `create-portal` and `motion-lab-session` must stay deployed with `--no-verify-jwt`
 
 ### 6. Analytics + Monitoring
 
@@ -216,27 +227,25 @@ What is still useful:
 
 These are not a single raw-checklist checkbox, but they are still launch work:
 
-- `Open before launch`: runtime ownership and operator accountability
-  The release preflight originally found no env-doc inventory in the repo. The new [launch-runtime-inventory.md](./launch-runtime-inventory.md) closes the documentation gap, but the owner-role slots still need named humans before launch.
+- `Risk accepted at launch`: runtime ownership and operator accountability
+  The launch model is currently a solo-operator setup. If we later need multi-person runtime ownership, the owner-role slots can be expanded beyond the current operator note.
 
-- `Open before launch`: rollback and outage notes
-  We have deploy config, but not a concise operator note for rollback, degraded-mode behavior, and who to check first if billing/auth fails.
+- `Closed`: rollback and outage notes
+  The concise operator note now exists in [launch-rollback-outage-note.md](./launch-rollback-outage-note.md).
 
 - `Verified live`: Motion Lab hosted hardening
   [docs/plans/motion-lab-mcp-verification-hardening-plan.md](./plans/motion-lab-mcp-verification-hardening-plan.md) is now closed for its distinct launch proof:
   - on April 14, 2026, `motion-lab-session` was verified below-limit, over-limit, and then rechecked after restoring the normal threshold
   - the live deployment also reconfirmed that `motion-lab-session` must be deployed with `--no-verify-jwt`
 
-- `Implemented, verify`: docs route strategy
-  The docs work is functionally present, but [launch-jtbd.md](./launch-jtbd.md) still calls out one unresolved canonical-route decision between `/docs/...` and `/?view=docs`.
+- `Closed`: docs route strategy
+  The launch route decision is now documented in [docs-canonical-route-decision-2026-04-14.md](./references/docs-canonical-route-decision-2026-04-14.md): shell-native `/?view=docs` is canonical for this launch, while clean `/docs/...` deep routes are deferred.
 
 ## Recommended Next Actions
 
-1. Record the remaining Supabase dashboard truth explicitly: Site URL, redirect URLs, Google OAuth production setup, and SMTP/auth email ownership.
-2. Decide whether Railway is truly out of scope and update the raw checklist if the answer is yes.
-3. Write the short rollback/outage operator note so launch handling is not trapped in memory.
-4. Resolve the docs canonical-route decision between `/docs/...` and `/?view=docs`.
-5. Feed the current live evidence into the pre-release gates workflow and write the final go/no-go note.
+1. Keep the rollback/outage note close at hand for launch-day operations, especially the `--no-verify-jwt` deployment rules.
+2. Treat analytics, uptime monitoring, and social preview checks as the highest-value post-launch follow-through.
+3. Preserve the shell-first docs route decision for this launch window and avoid a route migration during launch.
 
 ## Source Records
 

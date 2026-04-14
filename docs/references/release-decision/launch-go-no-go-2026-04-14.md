@@ -1,56 +1,77 @@
 # Launch Go / No-Go Decision
 
 Date: April 14, 2026
-Decision: `NO-GO`
+Decision: `GO`
 
-## Why This Is No-Go
+## Why This Is Go
 
-Supericons is not ready for release today because the public release path is still blocked at the infrastructure layer.
+The launch-critical paths are now verified on the live stack:
 
-The strongest blockers are:
-- `supericons.dev` is not resolving publicly, so there is no launchable production URL
-- `supericons-mcp` is not published on npm, and the publish attempt failed with a registry error
-- live production smoke has not been run because the domain is not live
-- live Stripe purchase and subscription flows are still unproven
-- the distinct live `motion-lab-session` `429` proof is still open
-- owner roles and rollback checks are now documented, but they are not yet assigned or tested
+- `supericons.dev` is live with working HTTPS
+- the current production build is deployed and smoke-tested
+- live Stripe checkout works
+- live Stripe customer portal works
+- live cancellation confirmation emails work and include the real end date
+- the Railway-backed converter works from the live site
+- `supericons-mcp@0.3.1` is published and clean-install verified
+- the distinct live `motion-lab-session` `429` proof is complete and the normal threshold is restored
 
-## What Is In Good Shape
+The remaining open items are mostly operational polish or optional growth surfaces, not blockers to a controlled public launch.
 
-The repo and local production build show strong implementation progress:
-- `npm run build` passed
-- local production smoke passed on desktop, phone, and tablet
-- Supabase public auth settings are reachable and show email + Google auth enabled
-- auth-gated edge functions are deployed and rejecting anonymous access as expected
-- MCP package structure and clean-install verification both passed locally
-- the env/runtime inventory now exists in [launch-runtime-inventory.md](../../launch-runtime-inventory.md)
+## Acceptance / Risk Review
 
-This is not a feature-completeness no-go. It is a release-surface no-go.
+### Met or effectively met
 
-## Hard Conditions To Revisit This Decision
+- production domain and hosting
+- authenticated billing flows
+- entitlement and billing email behavior
+- npm install path for MCP
+- hosted Motion Lab rate-limit proof
+- Google OAuth, auth URL config, SMTP config, and auth rate-limit settings
+- Railway converter dependency in live production
 
-The release decision can be revisited only after all of the following are true:
+### Partial but explicitly risk-accepted
 
-1. `supericons.dev` resolves publicly and serves the expected production site.
-2. `www.supericons.dev` is either intentionally omitted or explicitly configured and verified.
-3. The Netlify production site, SSL, and custom-domain attachment are confirmed.
-4. `supericons-mcp` is published successfully to npm.
-5. A clean registry install succeeds with `npx -y supericons-mcp`.
-6. A production smoke pass is run on the live site for desktop, phone, and tablet.
-7. Stripe live checkout, portal, webhook, and entitlement sync are proven end to end with an authenticated test account.
-8. The live `motion-lab-session` `429` proof is captured using a valid Pro-linked API key and the controlled threshold procedure.
-9. Each owner-role slot in [launch-runtime-inventory.md](../../launch-runtime-inventory.md) is assigned to a named human.
-10. The rollback path for Netlify and Supabase is confirmed as executable, not just documented.
+- mobile/tablet support is launch-minimum only, not full parity
+- rollback is documented and executable in principle, but not fully rehearsed as a live drill
+- observability is practical for a solo launch, but not deeply instrumented
+- docs URL strategy is intentionally shell-first for launch, with clean `/docs/...` migration deferred
 
-## Worst Credible Failure Mode In The Next 24 Hours If We Ignored This
+### Non-blocking follow-ups
 
-Users would be sent to a non-resolving domain, npm users would have no public package to install, and paid flows would still be unproven in the environment that matters. That would turn launch into a broken announcement rather than a controlled release.
+- Umami live verification
+- uptime monitoring setup
+- Search Console / social preview polish
+- optional legal/cookie-consent follow-up if jurisdictional scope expands
+
+## Residual Risk
+
+The most credible near-term failure modes are:
+
+1. a redeploy accidentally removes the required `--no-verify-jwt` mode from `create-portal`, `stripe-webhook`, or `motion-lab-session`
+2. a billing/config regression appears in Stripe or Supabase after launch-day secret or dashboard changes
+3. a desktop-first UI edge case appears on smaller screens outside the already accepted launch minimum
+
+These risks are real, but they are bounded and now have a documented first-response path in [launch-rollback-outage-note.md](../../launch-rollback-outage-note.md).
+
+## Why This Is Not No-Go
+
+The earlier blockers have been cleared:
+
+- the domain is live
+- npm publish is complete
+- live checkout and portal are proven
+- live cancellation-email flow is proven
+- Motion Lab hosted verification is complete
+
+The launch no longer depends on unresolved infrastructure fundamentals.
 
 ## Recommendation
 
-Treat the next batch as release operations, not product development:
-- fix domain and hosting first
-- resolve npm publish permissions and publish the MCP package
-- run the live smoke and billing checks
-- capture the remaining Motion Lab proof
-- then rerun the go/no-go pass with fresh evidence
+Proceed with launch.
+
+Treat the remaining work as post-launch follow-through unless a new blocker appears:
+- keep the rollback/outage note close at hand
+- avoid casual redeploys of the affected edge functions without preserving deployment mode
+- preserve the shell-first docs route decision for this launch window
+- capture optional observability and SEO polish afterward

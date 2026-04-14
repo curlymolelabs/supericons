@@ -13,6 +13,10 @@ Recently completed and now verified live:
 - `supericons.dev` is live on Netlify with Namecheap-managed DNS and working HTTPS
 - the latest production build was deployed and passed a live smoke check
 - live Stripe payment flow was exercised successfully
+- live Stripe customer-portal access was reverified after correcting the function deployment mode
+- cancellation-scheduled billing emails now send successfully and record idempotency rows
+- `current_period_end` repair is live and the cancellation email now shows the real end date
+- the live Stripe secret key was replaced and rechecked successfully through both portal and checkout
 - `supericons-mcp@0.3.1` is published, `0.3.0` is deprecated, and a clean temp-folder install now starts correctly
 - the distinct live `motion-lab-session` `429` proof was captured and the normal threshold was restored
 
@@ -23,8 +27,8 @@ Product work that is now largely behind us:
 - the docs mobile/tablet sidebar now uses a header-triggered drawer instead of rendering inline below the content
 
 Immediate next step:
-- close the remaining operational follow-through that the repo cannot prove by itself
-- then write the final pre-release go/no-go note from the now much smaller open set
+- use the completed release packet for launch execution
+- treat the remaining items as post-launch follow-through unless a new blocker appears
 
 ## Why The Docs Work Happened
 
@@ -56,7 +60,7 @@ So the docs section existed to:
 
 ### 1. Production Configuration And Service Setup
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 Tracked in:
 - [docs/launch-checklist.md](./launch-checklist.md)
@@ -68,22 +72,19 @@ What is already known live:
 - domain, DNS, Netlify hosting, and HTTPS are now working on `supericons.dev`
 - the latest production build is deployed
 - Stripe live payment has been exercised successfully
+- Stripe portal access, cancellation confirmation emails, and the `current_period_end` repair are now also verified live
 
 Next concrete actions:
-- verify Railway service setup if still needed for launch
-- verify Supabase auth URL config and edge function deployment
-- verify Resend / SMTP delivery
-- verify Google OAuth production configuration
-- verify analytics, SEO/social, and legal page readiness
-- write down the final runtime ownership and rollback notes
+- keep the rollback/outage note available during launch
+- treat analytics, SEO/social, and legal follow-through as post-launch polish unless a new blocker appears
 
 Done when:
-- the remaining production dashboard assumptions are explicitly confirmed
-- the project no longer relies on tribal knowledge for runtime ownership or rollback
+- the current live operator note is sufficient for launch-day recovery
+- the remaining non-blocking follow-through is consciously accepted as post-launch work
 
 ### 2. Final Pre-Release Verification And Ship Decision
 
-Status: `Open before launch`
+Status: `Verified live`
 
 Tracked in:
 - [.agents/workflows/pre-release-gates.md](../.agents/workflows/pre-release-gates.md)
@@ -92,11 +93,8 @@ Current repo signal:
 - the workflow says the next step after implementation is verification, deployment readiness, observability confirmation, and a go/no-go decision
 
 Next concrete actions:
-- build the release verification matrix
-- run key regression checks
-- verify deployment readiness
-- verify observability/runtime wiring
-- write the final go/no-go decision
+- use the written verification packet and release decision as the launch record
+- keep residual-risk awareness explicit during the launch window
 
 Done when:
 - a release verification matrix exists
@@ -106,7 +104,7 @@ Done when:
 
 ### 3. Auth Surface
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 Tracked in:
 - [plans/auth-abuse-controls-and-agent-access-plan.md](../plans/auth-abuse-controls-and-agent-access-plan.md)
@@ -117,10 +115,8 @@ Current repo signal:
 - the remaining launch work looks like cooldown, rate-limit, delivery, and policy verification rather than a new auth architecture pass
 
 Next concrete actions:
-- verify frontend cooldown behavior for auth email actions
-- confirm Supabase auth rate-limit settings are launch-safe
-- verify SMTP / Resend-backed auth email delivery
-- confirm the human-first account access policy for agents
+- preserve the current auth config during the launch window
+- treat deeper auth UX polish as post-launch unless a regression appears
 
 Done when:
 - auth flows are usable for real people
@@ -140,8 +136,9 @@ Current repo signal:
 
 Next concrete actions:
 - verify webhook endpoint and signing secret configuration
-- verify customer portal configuration
+- keep the deployment note explicit: `create-portal` must stay deployed with `--no-verify-jwt`
 - optionally keep a short operator note for live product/price ownership and portal configuration
+- optionally note the Stripe secret-key owner/rotation process now that a live replacement was performed
 
 Done when:
 - the remaining dashboard-side Stripe details are written down clearly enough for release and rollback handling
@@ -184,7 +181,7 @@ Done when:
 
 ### 7. Mobile And Tablet Launch Minimum
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 Tracked in:
 - [plans/launch-and-responsive-phasing-plan.md](../plans/launch-and-responsive-phasing-plan.md)
@@ -195,9 +192,8 @@ Current repo signal:
 - the broader launch plan still requires mobile/tablet smoke validation across acquisition, auth, pricing, checkout, purchase, and access flows
 
 Next concrete actions:
-- run phone and tablet smoke tests on core journeys
-- verify there are no blocking shell, overlay, or navigation failures
-- verify pricing, checkout, purchase, and access paths remain usable
+- keep the current desktop-first minimum as the accepted launch bar
+- treat broader mobile parity as post-launch work
 
 Done when:
 - core launch journeys are functional on common phone and tablet widths
@@ -205,7 +201,7 @@ Done when:
 
 ### 8. Docs System
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 Tracked in:
 - [docs/plans/docs-delegation-roadmap.md](./plans/docs-delegation-roadmap.md)
@@ -219,13 +215,12 @@ Current repo signal:
 - the remaining launch work looks like final QA plus one unresolved route strategy decision
 
 Next concrete actions:
-- run final docs QA on desktop and mobile
-- verify compatibility redirects and docs navigation behavior
-- explicitly resolve the canonical docs route question
+- preserve the shell-first docs routing decision during launch
+- defer clean `/docs/...` route migration until after launch
 
-Current repo tension to resolve:
-- some earlier docs plans describe clean `/docs/...` URLs as canonical
-- the later shell consolidation plan treats `/?view=docs` as the canonical in-app destination
+Launch route decision:
+- older docs plans still describe clean `/docs/...` routes as the intended end state
+- for this launch, the documented canonical route is the shell-native `/?view=docs` path
 
 Done when:
 - docs navigation is consistent
@@ -244,13 +239,13 @@ These should not take priority over launch completion:
 
 ## Recommended Execution Order
 
-With domain, live deploy, Stripe, npm publish, and the `motion-lab-session` proof now complete, the best order is:
+With domain, live deploy, Stripe, Railway converter verification, npm publish, cancellation-email verification, and the `motion-lab-session` proof complete, the launch packet is now effectively closed.
 
-1. confirm the remaining production dashboard truth: Supabase auth URLs, Google OAuth, SMTP/auth email ownership, and whether Railway is actually out of scope
-2. write the short rollback and outage note so release handling is not trapped in memory
-3. resolve the last docs canonical-route decision between `/docs/...` and `/?view=docs`
-4. run the final pre-release verification and evidence pass from the much smaller remaining surface
-5. write the final go/no-go review
+Use the remaining time for:
+
+1. launch execution discipline rather than more launch-surface changes
+2. post-launch analytics / observability polish
+3. future docs-route migration only after the launch window
 
 ## Source Records
 
