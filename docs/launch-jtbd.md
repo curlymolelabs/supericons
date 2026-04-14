@@ -1,220 +1,256 @@
 # Launch JTBD
 
-This note compiles the repo-grounded jobs to be done before launch, based on the current plans, audits, and checklists.
+This note is the repo-grounded launch tracker for Supericons.
 
-Important scope note:
-- this is a repo-memory summary, not a claim that every item is still undone in production
-- some work may already be complete outside the repo and only need final verification
+Scope note:
+- this started as a repo-grounded launch map and now also reflects live operator evidence captured on April 14, 2026
+- use this alongside [launch-checklist-status.md](./launch-checklist-status.md) when deciding what is actually left before ship
+- this is still a working note, not a substitute for the final release decision
 
-## Why We Built The Docs Section
+## Current Snapshot
 
-The docs work was driven by a real launch gap, not by random polish.
+Recently completed and now verified live:
+- `supericons.dev` is live on Netlify with Namecheap-managed DNS and working HTTPS
+- the latest production build was deployed and passed a live smoke check
+- live Stripe payment flow was exercised successfully
+- `supericons-mcp@0.3.1` is published, `0.3.0` is deprecated, and a clean temp-folder install now starts correctly
+- the distinct live `motion-lab-session` `429` proof was captured and the normal threshold was restored
+
+Product work that is now largely behind us:
+- the docs section expanded beyond the old MCP-only surface
+- access and API key clarity work landed
+- the troubleshooting page was implemented
+- the docs mobile/tablet sidebar now uses a header-triggered drawer instead of rendering inline below the content
+
+Immediate next step:
+- close the remaining operational follow-through that the repo cannot prove by itself
+- then write the final pre-release go/no-go note from the now much smaller open set
+
+## Why The Docs Work Happened
+
+The docs work was a launch task, not random polish.
 
 According to [docs/docs-section-proposal.md](./docs-section-proposal.md) and [docs/docs-prd.md](./docs-prd.md):
 - Supericons had a docs surface that was still heavily centered on MCP setup
 - the product had already expanded to include premium collections, API keys, Motion Lab, Converter, and troubleshooting needs
-- the old docs did not represent the actual product surface
+- the old docs no longer represented the actual product
 - this created a trust gap between payment, entitlement, and user understanding
 
 According to [plans/mcp-motionlab-converter-docs-expansion-plan.md](../plans/mcp-motionlab-converter-docs-expansion-plan.md):
 - docs were part of the launch roadmap because onboarding, workflows, and troubleshooting were underexplained
-- users and agents needed a systematic path for setup, access, Motion Lab, and Converter
 
-So the docs section was a launch-readiness task:
-- represent the whole product honestly
+So the docs section existed to:
+- represent the real product honestly
 - reduce support confusion
 - help paid users understand what they unlocked
 - give users a recovery path when setup or access fails
 
-## What Looks Complete Or Largely Complete
+## Status Labels
 
-These areas appear to have received major implementation attention already:
-- auth
-- Stripe
-- MCP
-- docs
+- `Implemented, verify`: the product work mostly exists, but launch evidence is still needed
+- `Verified live`: the production path was exercised directly and the result is now known
+- `Open before launch`: still looks like active launch work from the repo record
+- `Deferred`: explicitly pushed out of the launch-critical path
 
-That does not automatically mean they are launch-closed. Based on the repo, some of these now look like verification and production-readiness items rather than major new build work.
+## Launch Tracker
 
-## JTBD Before Launch
+### 1. Production Configuration And Service Setup
 
-### 1. Run The Final Pre-Release Gate
+Status: `Implemented, verify`
 
-Primary job:
-- convert the completed implementation work into release evidence and a ship decision
+Tracked in:
+- [docs/launch-checklist.md](./launch-checklist.md)
 
-Why this is next:
-- [.agents/workflows/pre-release-gates.md](../.agents/workflows/pre-release-gates.md) says the next step after implementation is verification, deployment readiness, observability confirmation, and a go/no-go decision
+Current repo signal:
+- the operational checklist still includes domain, DNS, Netlify, Railway, Supabase, Resend, Google OAuth, Stripe live mode, analytics, SEO/social, and legal checks
+
+What is already known live:
+- domain, DNS, Netlify hosting, and HTTPS are now working on `supericons.dev`
+- the latest production build is deployed
+- Stripe live payment has been exercised successfully
+
+Next concrete actions:
+- verify Railway service setup if still needed for launch
+- verify Supabase auth URL config and edge function deployment
+- verify Resend / SMTP delivery
+- verify Google OAuth production configuration
+- verify analytics, SEO/social, and legal page readiness
+- write down the final runtime ownership and rollback notes
+
+Done when:
+- the remaining production dashboard assumptions are explicitly confirmed
+- the project no longer relies on tribal knowledge for runtime ownership or rollback
+
+### 2. Final Pre-Release Verification And Ship Decision
+
+Status: `Open before launch`
+
+Tracked in:
+- [.agents/workflows/pre-release-gates.md](../.agents/workflows/pre-release-gates.md)
+
+Current repo signal:
+- the workflow says the next step after implementation is verification, deployment readiness, observability confirmation, and a go/no-go decision
+
+Next concrete actions:
+- build the release verification matrix
+- run key regression checks
+- verify deployment readiness
+- verify observability/runtime wiring
+- write the final go/no-go decision
 
 Done when:
 - a release verification matrix exists
-- key regression flows have been tested
-- deployment readiness is checked
-- observability/runtime checks are confirmed
-- a final go/no-go call is written
+- key flows have been tested
+- deployment and observability checks are recorded
+- a final ship decision is documented
 
-### 2. Verify Production Infrastructure And Service Configuration
+### 3. Auth Surface
 
-Primary job:
-- confirm launch-critical external systems are correctly configured for the real production environment
-
-Tracked in:
-- [docs/launch-checklist.md](./launch-checklist.md)
-
-Main buckets:
-- domain and DNS setup
-- Netlify frontend hosting
-- Railway backend/service setup
-- Supabase auth and URL configuration
-- Resend / SMTP email delivery
-- Google OAuth production setup
-- Stripe live mode and webhook configuration
-- analytics
-- SEO and social metadata
-- legal page presence and correctness
-
-Done when:
-- the production configuration checklist is complete
-- key external integrations are proven end to end, not only locally
-
-### 3. Publish And Verify The MCP Package
-
-Primary job:
-- make the MCP entry path real for launch users, not just for local development
-
-Tracked in:
-- [docs/launch-checklist.md](./launch-checklist.md)
-
-Main tasks:
-- publish `supericons-mcp` to npm
-- verify `npx -y supericons-mcp` works
-- confirm setup guides still match the actual install/run experience
-
-Done when:
-- a fresh environment can install and run the package successfully
-- search and retrieval work through the published package path
-
-### 4. Close Remaining Auth Hardening And Abuse-Safety Verification
-
-Primary job:
-- confirm the public auth surface is safe enough for launch without overbuilding
+Status: `Implemented, verify`
 
 Tracked in:
 - [plans/auth-abuse-controls-and-agent-access-plan.md](../plans/auth-abuse-controls-and-agent-access-plan.md)
+- [plans/auth-ux-qa-matrix.md](../plans/auth-ux-qa-matrix.md)
 
-Main tasks:
+Current repo signal:
+- the auth implementation and hardening work appear substantially built
+- the remaining launch work looks like cooldown, rate-limit, delivery, and policy verification rather than a new auth architecture pass
+
+Next concrete actions:
 - verify frontend cooldown behavior for auth email actions
 - confirm Supabase auth rate-limit settings are launch-safe
 - verify SMTP / Resend-backed auth email delivery
-- lock the human-first account access policy for agents
+- confirm the human-first account access policy for agents
 
 Done when:
 - auth flows are usable for real people
-- obvious abuse gaps are covered by launch-safe controls
-- agent guidance does not conflict with the human-owned-account model
+- launch-safe abuse controls are confirmed
+- auth email delivery is verified
 
-### 5. Close The Remaining Motion Lab MCP Hardening Gap
+### 4. Stripe, Billing, And Entitlements
 
-Primary job:
-- capture the one remaining distinct pre-launch proof for Motion Lab rate limiting
+Status: `Verified live`
+
+Tracked in:
+- [docs/launch-checklist.md](./launch-checklist.md)
+- [plans/launch-and-responsive-phasing-plan.md](../plans/launch-and-responsive-phasing-plan.md)
+
+Current repo signal:
+- Stripe and entitlement work are implemented, and the core live payment path has already been exercised successfully
+
+Next concrete actions:
+- verify webhook endpoint and signing secret configuration
+- verify customer portal configuration
+- optionally keep a short operator note for live product/price ownership and portal configuration
+
+Done when:
+- the remaining dashboard-side Stripe details are written down clearly enough for release and rollback handling
+
+### 5. MCP Package And Install Path
+
+Status: `Verified live`
+
+Tracked in:
+- [docs/launch-checklist.md](./launch-checklist.md)
+
+Current repo signal:
+- docs and setup copy now support the product well
+- the package boundary hardening work is in place in the repo
+
+Next concrete actions:
+- keep install docs aligned with the published package path
+- preserve the deprecation note for `0.3.0` in case someone lands on the broken version first
+
+Done when:
+- npm install guidance matches the live package
+- the published package remains healthy for clean installs
+
+### 6. Motion Lab Hosted Hardening
+
+Status: `Verified live`
 
 Tracked in:
 - [docs/plans/motion-lab-mcp-verification-hardening-plan.md](./plans/motion-lab-mcp-verification-hardening-plan.md)
 
-Main task:
-- run and capture a dedicated live `429` proof for `motion-lab-session`
+Current repo signal:
+- the hardening plan narrowed the remaining distinct pre-launch gap to one live `429` proof for `motion-lab-session`
 
-Explicitly deferred by the plan:
-- CSS render `429` proof
-- animated SVG render `429` proof
-- fail-open proof
+Next concrete actions:
+- keep the deployment note visible: `motion-lab-session` must be deployed with `--no-verify-jwt`
 
 Done when:
-- the `motion-lab-session` path has direct live evidence for the structured `429` behavior
+- the live `motion-lab-session` path has direct structured `429` evidence
+- the normal threshold has been restored after the proof run
 
-### 6. Pass The Mobile And Tablet Launch Minimum
+### 7. Mobile And Tablet Launch Minimum
 
-Primary job:
-- ensure the product is usable on mobile and tablet for launch-critical flows, even without desktop parity
+Status: `Implemented, verify`
 
 Tracked in:
 - [plans/launch-and-responsive-phasing-plan.md](../plans/launch-and-responsive-phasing-plan.md)
+- [docs/plans/docs-mobile-tablet-sidebar-toggle-implementation-plan.md](./plans/docs-mobile-tablet-sidebar-toggle-implementation-plan.md)
 
-Main tasks:
-- fix any remaining broken shell or overlay states
-- verify navigation works
-- verify sign-in works
-- verify pricing and checkout flows work
-- verify purchase, entitlement, and access flows work
-- verify there are no blocking layout or interaction failures in core flows
+Current repo signal:
+- the docs mobile/tablet navigation gap is now fixed in the product
+- the broader launch plan still requires mobile/tablet smoke validation across acquisition, auth, pricing, checkout, purchase, and access flows
 
-Important boundary:
-- this is not a full responsive redesign
-- launch minimum means usable, readable, and non-blocking
+Next concrete actions:
+- run phone and tablet smoke tests on core journeys
+- verify there are no blocking shell, overlay, or navigation failures
+- verify pricing, checkout, purchase, and access paths remain usable
 
 Done when:
-- core acquisition, auth, purchase, and access journeys are functional on common phone and tablet widths
+- core launch journeys are functional on common phone and tablet widths
+- no blocking mobile/tablet bugs remain in acquisition or purchase flows
 
-### 7. Finish Docs QA And Close The Docs Routing Decision
+### 8. Docs System
 
-Primary job:
-- make sure the new docs system is launch-safe and internally consistent
+Status: `Implemented, verify`
 
 Tracked in:
 - [docs/plans/docs-delegation-roadmap.md](./plans/docs-delegation-roadmap.md)
 - [docs/plans/docs-full-section-implementation-plan.md](./plans/docs-full-section-implementation-plan.md)
 - [plans/docs-shell-view-consolidation-fix-plan.md](../plans/docs-shell-view-consolidation-fix-plan.md)
 
-Main tasks:
-- run the final docs verification and QA pass
-- confirm all docs routes and compatibility redirects behave as intended
-- explicitly resolve the canonical route question
+Current repo signal:
+- the major docs implementation work is present
+- troubleshooting exists
+- mobile/tablet docs navigation is now drawer-based on smaller screens
+- the remaining launch work looks like final QA plus one unresolved route strategy decision
+
+Next concrete actions:
+- run final docs QA on desktop and mobile
+- verify compatibility redirects and docs navigation behavior
+- explicitly resolve the canonical docs route question
 
 Current repo tension to resolve:
-- some docs plans describe clean `/docs/...` URLs as canonical
-- the later shell consolidation plan treats `/?view=docs` as the canonical in-app docs destination
+- some earlier docs plans describe clean `/docs/...` URLs as canonical
+- the later shell consolidation plan treats `/?view=docs` as the canonical in-app destination
 
 Done when:
 - docs navigation is consistent
 - compatibility redirects behave correctly
 - the project has one documented canonical docs URL strategy
 
-## Suggested Execution Order
+## Deferred Or Not Launch Priority
 
-If auth, Stripe, MCP, and docs are already implemented enough for launch, the most sensible order is:
+Status: `Deferred`
 
-1. finish production configuration verification
-2. run the full pre-release verification matrix and regression pass
-3. close the `motion-lab-session` live `429` proof
-4. run mobile/tablet launch-minimum smoke tests
-5. publish and verify `supericons-mcp`
-6. complete the final go/no-go review
-
-## Practical Launch View
-
-The remaining work appears to fall into three categories.
-
-### Done, But Needs Verification
-
-- auth
-- Stripe
-- MCP
-- docs
-
-### Likely Still Open
-
-- production configuration checklist
-- npm publish and install verification for `supericons-mcp`
-- final pre-release verification matrix
-- final mobile/tablet launch-minimum pass
-- `motion-lab-session` live `429` proof
-- final docs route decision if not already settled elsewhere
-
-### Not The Priority Right Now
-
+These should not take priority over launch completion:
 - broad new feature building
 - full mobile parity
-- post-launch hardening items already marked as deferred in the plans
+- symmetric CSS render / animated SVG `429` proofs
+- fail-open proof work already deferred by the Motion Lab hardening plan
+
+## Recommended Execution Order
+
+With domain, live deploy, Stripe, npm publish, and the `motion-lab-session` proof now complete, the best order is:
+
+1. confirm the remaining production dashboard truth: Supabase auth URLs, Google OAuth, SMTP/auth email ownership, and whether Railway is actually out of scope
+2. write the short rollback and outage note so release handling is not trapped in memory
+3. resolve the last docs canonical-route decision between `/docs/...` and `/?view=docs`
+4. run the final pre-release verification and evidence pass from the much smaller remaining surface
+5. write the final go/no-go review
 
 ## Source Records
 
@@ -224,8 +260,10 @@ The remaining work appears to fall into three categories.
 - [docs/launch-checklist.md](./launch-checklist.md)
 - [.agents/workflows/pre-release-gates.md](../.agents/workflows/pre-release-gates.md)
 - [plans/auth-abuse-controls-and-agent-access-plan.md](../plans/auth-abuse-controls-and-agent-access-plan.md)
+- [plans/auth-ux-qa-matrix.md](../plans/auth-ux-qa-matrix.md)
 - [docs/plans/motion-lab-mcp-verification-hardening-plan.md](./plans/motion-lab-mcp-verification-hardening-plan.md)
 - [plans/launch-and-responsive-phasing-plan.md](../plans/launch-and-responsive-phasing-plan.md)
 - [docs/plans/docs-delegation-roadmap.md](./plans/docs-delegation-roadmap.md)
 - [docs/plans/docs-full-section-implementation-plan.md](./plans/docs-full-section-implementation-plan.md)
 - [plans/docs-shell-view-consolidation-fix-plan.md](../plans/docs-shell-view-consolidation-fix-plan.md)
+- [docs/plans/docs-mobile-tablet-sidebar-toggle-implementation-plan.md](./plans/docs-mobile-tablet-sidebar-toggle-implementation-plan.md)

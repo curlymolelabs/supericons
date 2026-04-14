@@ -512,22 +512,43 @@ function updateProBadge() {
 }
 
 // ── Customer Portal ───────────────────────────────────────────
+async function requestCustomerPortalWithToken(token) {
+  return fetch(`${SUPABASE_URL}/functions/v1/create-portal`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      'apikey': SUPABASE_ANON,
+    },
+    body: JSON.stringify({ return_url: window.location.href }),
+  });
+}
+
 export async function openCustomerPortal() {
   if (!supabase || !currentUser) return;
   showToast('Opening subscription portal...');
   try {
     const { data: { session } } = await supabase.auth.getSession();
-    const token = session?.access_token;
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/create-portal`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        'apikey': SUPABASE_ANON,
-      },
-      body: JSON.stringify({ return_url: window.location.href }),
-    });
-    if (!res.ok) throw new Error('Portal unavailable');
+    let token = session?.access_token;
+    if (!token) throw new Error('Sign in again to open the subscription portal.');
+
+    let res = await requestCustomerPortalWithToken(token);
+    if (res.status === 401) {
+      await supabase.auth.refreshSession();
+      const { data: { session: retrySession } } = await supabase.auth.getSession();
+      token = retrySession?.access_token;
+      if (!token) throw new Error('Sign in again to open the subscription portal.');
+      res = await requestCustomerPortalWithToken(token);
+    }
+
+    if (!res.ok) {
+      const payload = await res.json().catch(() => ({}));
+      const message = typeof payload?.error === 'string' && payload.error.trim()
+        ? payload.error.trim()
+        : 'Portal unavailable';
+      throw new Error(message);
+    }
+
     const { url } = await res.json();
     if (url) window.location.href = url;
   } catch (err) {

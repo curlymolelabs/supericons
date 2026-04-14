@@ -1652,6 +1652,22 @@ body.landing-active .compare-drawer {
   background: var(--si-surface-container-highest);
   color: var(--si-primary);
 }
+.grid-header__utility-btn:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+.grid-header__utility-btn--hidden {
+  display: none !important;
+}
+.grid-header__utility-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.grid-header__utility-btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--si-error) 12%, var(--si-surface-container));
+  color: var(--si-error);
+}
 
 .icon-grid {
   display: grid;
@@ -5132,6 +5148,9 @@ body.theme-light .auth-dropdown {
   gap: var(--si-space-2);
   margin-top: var(--si-space-3);
   align-items: center;
+}
+.api-keys__setup-copy {
+  margin-top: var(--si-space-3);
 }
 .api-keys__tabs {
   display: inline-flex;

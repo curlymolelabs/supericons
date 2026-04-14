@@ -38,14 +38,18 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { data: sub } = await adminClient
+    const { data: sub, error: subError } = await adminClient
       .from('si_subscriptions')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, stripe_subscription_id, status, current_period_end')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
-    if (!sub?.stripe_customer_id) {
-      return new Response(JSON.stringify({ error: 'No active subscription' }), {
+    if (subError) {
+      throw subError;
+    }
+
+    if (!sub) {
+      return new Response(JSON.stringify({ error: 'No subscription record found for this account.' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -57,8 +61,42 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
+    const isExpired = Boolean(sub.current_period_end)
+      && new Date(sub.current_period_end) < new Date();
+    if (sub.status !== 'active' || isExpired) {
+      return new Response(JSON.stringify({ error: 'Your Pro subscription is not active.' }), {
+        status: 409,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    let customerId = sub.stripe_customer_id;
+    if (!customerId && sub.stripe_subscription_id) {
+      const subscription = await stripe.subscriptions.retrieve(sub.stripe_subscription_id);
+      customerId = typeof subscription.customer === 'string'
+        ? subscription.customer
+        : subscription.customer?.id ?? null;
+
+      if (customerId) {
+        const { error: backfillError } = await adminClient
+          .from('si_subscriptions')
+          .update({ stripe_customer_id: customerId })
+          .eq('user_id', user.id);
+        if (backfillError) {
+          console.error('Portal customer backfill error:', backfillError);
+        }
+      }
+    }
+
+    if (!customerId) {
+      return new Response(JSON.stringify({ error: 'Subscription record is missing a Stripe customer ID.' }), {
+        status: 409,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const session = await stripe.billingPortal.sessions.create({
-      customer: sub.stripe_customer_id,
+      customer: customerId,
       return_url: return_url || `${Deno.env.get('SITE_URL') || 'https://supericons.dev'}`,
     });
 

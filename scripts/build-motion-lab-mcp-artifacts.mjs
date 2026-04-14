@@ -1,10 +1,11 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = dirname(__dirname);
 const mcpGeneratedDir = join(repoRoot, 'mcp', 'generated');
+const mcpPublicDir = join(repoRoot, 'mcp', 'public');
 const hostedSharedDir = join(repoRoot, 'supabase', 'functions', '_shared', 'motion-lab');
 
 const presetsModule = await import(pathToFileURL(join(repoRoot, 'lib', 'motion-lab-presets.js')).href);
@@ -71,9 +72,13 @@ export const MOTION_LAB_HOSTED_PRESETS = Object.freeze(${JSON.stringify(payload.
 }
 
 mkdirSync(mcpGeneratedDir, { recursive: true });
+mkdirSync(mcpPublicDir, { recursive: true });
 mkdirSync(hostedSharedDir, { recursive: true });
 
 writeJson(join(mcpGeneratedDir, 'motion-lab-baseline.json'), baselinePayload);
 writeHostedTs(join(hostedSharedDir, 'generated.ts'), hostedPayload);
+copyFileSync(join(repoRoot, 'material-export.js'), join(repoRoot, 'mcp', 'material-export.js'));
+copyFileSync(join(repoRoot, 'public', 'icon-index.json'), join(mcpPublicDir, 'icon-index.json'));
+copyFileSync(join(repoRoot, 'public', 'synonyms.json'), join(mcpPublicDir, 'synonyms.json'));
 
 console.log(`Motion Lab MCP artifacts built: ${baselinePresets.length} presets.`);

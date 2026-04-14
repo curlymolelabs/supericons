@@ -25,7 +25,7 @@ import {
   buildMaterialOwnedSnapshotUrl,
   getMaterialManifestEntry,
   normalizeMaterialSnapshotSvg as normalizeOwnedMaterialSnapshotSvg,
-} from '../material-export.js';
+} from './material-export.js';
 import { listMotionLabPresets } from './motion-lab.js';
 import {
   animateMotionLabIconHosted,
@@ -46,7 +46,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // ============================================================
 // Data Loading
 // ============================================================
-const dataDir = join(__dirname, '..', 'public');
+const dataDir = join(__dirname, 'public');
 const packsDir = join(dataDir, 'packs');
 const manifestPath = join(packsDir, 'manifest.json');
 const materialExportManifestPath = join(dataDir, 'material-export-manifest.json');

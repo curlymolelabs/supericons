@@ -3598,22 +3598,15 @@ function renderApiKeysPage() {
   const page = document.createElement('div');
   page.id = 'apiKeysView';
   page.className = 'dashboard-view';
-
-  page.innerHTML = `
-    <div class="dashboard-section">
-      <h3 class="dashboard-section__title">
-        API Keys
-        <span class="dashboard-section__subtitle">For MCP and programmatic access</span>
-      </h3>
+  const apiKeysSetupCopy = `
+    <div class="api-keys__setup-copy">
       <p class="dashboard-section__copy">Connect your MCP client (Cursor, Claude Code, Codex, or any MCP-capable agent) to your Supericons account with an API key.</p>
       <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys unlock the premium collections and Pro workflow tools your account already has access to.</p>
       <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/?view=docs#docs-quickstart">See the setup guide for where to place your key in each client.</a></p>
-    </div>
+    </div>`;
+
+  page.innerHTML = `
     <div class="dashboard-section">
-      <h3 class="dashboard-section__title">
-        API Keys
-        <span class="dashboard-section__subtitle">Up to ${API_KEY_LIMIT} active keys</span>
-      </h3>
       ${signedIn ? `
         <p class="dashboard-section__copy dashboard-section__copy--compact" id="apiKeysUsage">Loading...</p>
         <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact" id="apiKeysLimitNote">Label each key by app or device so you can rotate them independently.</p>
@@ -3632,6 +3625,7 @@ function renderApiKeysPage() {
             Generate Key
           </button>
         </div>
+        ${apiKeysSetupCopy}
         ${canManageKeys ? '' : `
         <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact">API keys require a Pro subscription or at least one purchased collection. Keys carry the access your account already has.</p>
         <div class="api-keys__actions">
@@ -3643,6 +3637,7 @@ function renderApiKeysPage() {
         <div class="api-keys__actions">
           <button class="dashboard-table__view" id="apiKeysSignInBtn">Sign In</button>
         </div>
+        ${apiKeysSetupCopy}
       `}
     </div>`;
 

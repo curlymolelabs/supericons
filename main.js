@@ -289,12 +289,20 @@ function pushRecentColor(hex) {
 }
 
 function saveFavorites() {
-  localStorage.setItem('si-favorites', JSON.stringify([...state.favorites]));
+  if (state.favorites.size > 0) {
+    localStorage.setItem('si-favorites', JSON.stringify([...state.favorites]));
+  } else {
+    localStorage.removeItem('si-favorites');
+  }
   updateSidebarCounts();
 }
 
 function saveRecent() {
-  localStorage.setItem('si-recent', JSON.stringify(state.recent));
+  if (state.recent.length > 0) {
+    localStorage.setItem('si-recent', JSON.stringify(state.recent));
+  } else {
+    localStorage.removeItem('si-recent');
+  }
   updateSidebarCounts();
 }
 
@@ -312,6 +320,18 @@ function addToRecent(key) {
   state.recent = state.recent.filter((k) => k !== key);
   state.recent.unshift(key);
   if (state.recent.length > 50) state.recent = state.recent.slice(0, 50);
+  saveRecent();
+}
+
+function clearFavorites() {
+  if (state.favorites.size === 0) return;
+  state.favorites.clear();
+  saveFavorites();
+}
+
+function clearRecent() {
+  if (state.recent.length === 0) return;
+  state.recent = [];
   saveRecent();
 }
 
@@ -394,6 +414,7 @@ const els = {
   gridEmpty: $('#gridEmpty'),
   gridTitle: $('#gridTitle'),
   gridMeta: $('#gridMeta'),
+  gridClearCollectionBtn: $('#gridClearCollectionBtn'),
 
   toast: $('#toast'),
   libraryList: $('#libraryList'),
@@ -434,6 +455,35 @@ function setHeaderSearchMode(mode = 'icons', { value } = {}) {
   const nextValue = value ?? (resolvedMode === 'docs' ? '' : (state.searchQuery || ''));
   els.searchInput.value = nextValue;
   syncHeaderSearchChrome({ mode: resolvedMode, value: nextValue });
+}
+
+function syncCollectionClearButton() {
+  const button = els.gridClearCollectionBtn;
+  if (!button) return;
+
+  const currentView = document.body.getAttribute('data-view');
+  const inIconGridView = !currentView || currentView === 'icons';
+  const isFavoritesView = state.activeLibrary === 'favorites';
+  const isRecentView = state.activeLibrary === 'recent';
+  const isVisible = inIconGridView && (isFavoritesView || isRecentView);
+
+  button.hidden = !isVisible;
+  button.classList.toggle('grid-header__utility-btn--hidden', !isVisible);
+  if (!isVisible) {
+    button.disabled = true;
+    button.setAttribute('aria-hidden', 'true');
+    button.removeAttribute('data-tip');
+    button.removeAttribute('title');
+    return;
+  }
+
+  const isEmpty = isFavoritesView ? state.favorites.size === 0 : state.recent.length === 0;
+  const actionLabel = isFavoritesView ? 'Clear favorites' : 'Clear recent';
+  button.disabled = isEmpty;
+  button.removeAttribute('aria-hidden');
+  button.setAttribute('aria-label', actionLabel);
+  button.setAttribute('data-tip', actionLabel);
+  button.removeAttribute('title');
 }
 
 // ============================================================
@@ -628,11 +678,14 @@ function renderGrid() {
     const emptyTitle = $('.grid-empty__title');
     const emptyText = $('.grid-empty__text');
     const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
+    const isRecentView = state.activeLibrary === 'recent' && !state.searchQuery;
     if (emptyTitle) {
       emptyTitle.textContent = state.searchQuery
         ? 'No icons found'
         : isFavoritesView
           ? 'No favorites yet'
+          : isRecentView
+            ? 'No recent icons yet'
           : 'Welcome to SuperIcons';
     }
     if (emptyText) {
@@ -640,6 +693,8 @@ function renderGrid() {
         ? `No icons match "${state.searchQuery}". Try a different search term.`
         : isFavoritesView
           ? 'Select an icon and use Save in Customize to keep it here. Favorites stay on this device.'
+          : isRecentView
+            ? 'Icons you open appear here on this device. Clear them anytime from the header.'
           : '20,000+ icons across 10 libraries including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
     }
   } else {
@@ -857,6 +912,7 @@ function updateCounts() {
 
   $('#countAll').textContent = total.toLocaleString();
   syncHeaderSearchChrome();
+  syncCollectionClearButton();
 
   if (isStoreView()) return;
 
@@ -873,7 +929,6 @@ function updateCounts() {
   } else {
     els.gridMeta.textContent = `Showing ${showing.toLocaleString()} of ${total.toLocaleString()} icons${styleSuffix}`;
   }
-
 
 }
 
@@ -2430,7 +2485,7 @@ if (themeToggleBtn) {
     }
     themeToggleBtn.setAttribute('aria-label', actionLabel);
     themeToggleBtn.setAttribute('data-tip', actionLabel);
-    themeToggleBtn.setAttribute('title', actionLabel);
+    themeToggleBtn.removeAttribute('title');
   };
 
   syncThemeToggleButton();
@@ -2505,6 +2560,37 @@ if (styleSolid) {
     }
     applyFilters();
     if (state.selectedIcon) renderPanelForIcon(state.selectedIcon);
+  });
+}
+
+const gridClearCollectionBtn = els.gridClearCollectionBtn;
+if (gridClearCollectionBtn) {
+  gridClearCollectionBtn.addEventListener('click', async () => {
+    const isFavoritesView = state.activeLibrary === 'favorites';
+    const isRecentView = state.activeLibrary === 'recent';
+    if ((!isFavoritesView && !isRecentView) || gridClearCollectionBtn.disabled) return;
+
+    const confirmed = await showCollectionClearConfirmModal({
+      title: isFavoritesView ? 'Clear all favorites from this device?' : 'Clear recent icons from this device?',
+      description: isFavoritesView
+        ? 'This removes every saved favorite stored in this browser. It does not affect your account or purchased packs.'
+        : 'This removes your recent icon history stored in this browser. It does not affect favorites, purchases, or account access.',
+      confirmLabel: isFavoritesView ? 'Clear favorites' : 'Clear recent',
+    });
+
+    if (!confirmed) return;
+
+    if (isFavoritesView) {
+      clearFavorites();
+    } else {
+      clearRecent();
+    }
+
+    state.selectedIcons.clear();
+    state.selectedIcon = null;
+    applyFilters();
+    resetPanelToPlaceholder();
+    showToast(isFavoritesView ? 'Favorites cleared on this device' : 'Recent icons cleared on this device');
   });
 }
 
@@ -2649,7 +2735,79 @@ els.searchClear.addEventListener('click', () => {
 });
 
 // Keyboard shortcuts
+function showCollectionClearConfirmModal({
+  title = 'Clear saved items from this device?',
+  description = 'This only affects data stored in the current browser.',
+  confirmLabel = 'Clear items',
+} = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'claim-confirm-modal collection-clear-confirm-modal';
+    const safeTitle = escapeHtml(title);
+    const safeDescription = escapeHtml(description);
+    const safeConfirmLabel = escapeHtml(confirmLabel);
+
+    overlay.innerHTML = `
+      <div class="claim-confirm-modal__backdrop"></div>
+      <div class="claim-confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="collectionClearTitle">
+        <button class="claim-confirm-modal__close" type="button" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <p class="claim-confirm-modal__eyebrow">This Device</p>
+        <h3 class="claim-confirm-modal__title" id="collectionClearTitle">${safeTitle}</h3>
+        <p class="claim-confirm-modal__desc">${safeDescription}</p>
+        <p class="claim-confirm-modal__meta">Only this browser storage is affected.</p>
+        <div class="claim-confirm-modal__actions">
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--ghost" type="button" data-action="cancel">Cancel</button>
+          <button class="claim-confirm-modal__btn claim-confirm-modal__btn--danger" type="button" data-action="confirm">${safeConfirmLabel}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const card = overlay.querySelector('.claim-confirm-modal__card');
+    const closeBtn = overlay.querySelector('.claim-confirm-modal__close');
+    const cancelBtn = overlay.querySelector('[data-action="cancel"]');
+    const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+    const backdrop = overlay.querySelector('.claim-confirm-modal__backdrop');
+
+    let settled = false;
+    const close = (accepted) => {
+      if (settled) return;
+      settled = true;
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.remove();
+      resolve(accepted);
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(false);
+      }
+      if (event.key === 'Enter' && document.activeElement === confirmBtn) {
+        event.preventDefault();
+        close(true);
+      }
+    };
+
+    backdrop?.addEventListener('click', () => close(false));
+    closeBtn?.addEventListener('click', () => close(false));
+    cancelBtn?.addEventListener('click', () => close(false));
+    confirmBtn?.addEventListener('click', () => close(true));
+    document.addEventListener('keydown', onKeyDown);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      confirmBtn?.focus();
+      card?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+}
+
 document.addEventListener('keydown', (e) => {
+  if (document.querySelector('.claim-confirm-modal')) return;
   if (e.key === '/' && document.activeElement !== els.searchInput) {
     e.preventDefault();
     els.searchInput.focus();

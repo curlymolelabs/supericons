@@ -1,6 +1,6 @@
 {
   "name": "supericons-mcp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "MCP server for SuperIcons: search icons, animate them with Motion Lab, and access Pro workflow tools",
   "type": "module",
   "bin": {
@@ -13,8 +13,11 @@
     "converter.js",
     "generated/motion-lab-baseline.json",
     "index.js",
+    "material-export.js",
     "motion-lab-client.js",
     "motion-lab.js",
+    "public/icon-index.json",
+    "public/synonyms.json",
     "runtime/converter-workflow.js",
     "runtime/public-metadata-sanitizer.js",
     "search.js",
