@@ -836,6 +836,32 @@
       gap: 0.5rem;
       justify-content: flex-end;
     }
+    .modal__error {
+      display: none;
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      color: var(--si-error);
+      margin: -0.5rem 0 1rem;
+    }
+    .modal__note {
+      font-family: var(--si-font-label);
+      font-size: 0.74rem;
+      color: var(--si-text-dim);
+      line-height: 1.6;
+      margin-top: 0.85rem;
+    }
+    .modal__note strong {
+      color: var(--si-text-muted);
+      font-weight: 600;
+    }
+    .modal--auth .modal__icon {
+      background: rgba(96,165,250,0.1);
+      border-color: rgba(96,165,250,0.2);
+      color: var(--si-info);
+    }
+    .modal--auth .modal__confirm-input {
+      margin-bottom: 0.75rem;
+    }
 
     /* ---- EMPTY STATE ---- */
     .empty-state {
@@ -1289,6 +1315,34 @@
   <div class="drawer-body" id="tab-log" style="display:none">
     <div class="drawer-section-title">Audit History</div>
     <div id="drawerAuditContent"></div>
+  </div>
+</div>
+
+<!-- ===== ADMIN API AUTH MODAL ===== -->
+<div class="modal-overlay open" id="adminSecretModal" aria-hidden="false">
+  <div class="modal modal--auth">
+    <div class="modal__icon">
+      <span class="material-symbols-outlined">admin_panel_settings</span>
+    </div>
+    <div class="modal__title">Connect Admin API</div>
+    <div class="modal__desc" id="adminSecretLead">
+      Enter the Supabase <code>ADMIN_SECRET</code> to unlock the Supericons admin API for this browser tab.
+    </div>
+    <form id="adminSecretForm">
+      <div class="modal__confirm-label">Admin API secret</div>
+      <input class="modal__confirm-input" id="adminSecretInput" type="password" autocomplete="off" placeholder="Paste ADMIN_SECRET" />
+      <div class="modal__error" id="adminSecretError"></div>
+      <div class="modal__actions">
+        <button class="btn btn-ghost" id="adminSecretCancelBtn" type="button" style="display:none;">Cancel</button>
+        <button class="btn" id="adminSecretSubmitBtn" type="submit">
+          <span class="material-symbols-outlined" style="font-size:15px">lock_open</span>
+          Connect
+        </button>
+      </div>
+    </form>
+    <div class="modal__note">
+      This secret is stored only in <strong>this browser tab</strong>. It is separate from the Netlify Basic Auth gate in front of <code>/admin</code>.
+    </div>
   </div>
 </div>
 

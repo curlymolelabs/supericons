@@ -6,11 +6,6 @@
 
 # Keep docs hub as a real static document before the SPA fallback.
 [[redirects]]
-  from = "/admin"
-  to = "/admin.html"
-  status = 200
-
-[[redirects]]
   from = "/docs"
   to = "/docs/index.html"
   status = 200

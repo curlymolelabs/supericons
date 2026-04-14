@@ -11,6 +11,7 @@ const state = {
   auditFilters: { q: '', action: '' },
   selectedUser: null,
   toastTimer: null,
+  adminSecretPrompt: null,
 };
 
 function $(id) {
@@ -67,20 +68,106 @@ function getAdminSecret() {
 }
 
 function setAdminSecret(secret) {
-  window.sessionStorage.setItem(ADMIN_SECRET_STORAGE_KEY, secret);
+  const value = String(secret || '').trim();
+  if (!value) {
+    window.sessionStorage.removeItem(ADMIN_SECRET_STORAGE_KEY);
+    return;
+  }
+  window.sessionStorage.setItem(ADMIN_SECRET_STORAGE_KEY, value);
 }
 
-function promptForAdminSecret(force = false) {
+function setAdminSecretError(message = '') {
+  const errorEl = $('adminSecretError');
+  if (!errorEl) return;
+  errorEl.textContent = message;
+  errorEl.style.display = message ? 'block' : 'none';
+}
+
+function closeAdminSecretModal() {
+  $('adminSecretModal')?.classList.remove('open');
+  $('adminSecretModal')?.setAttribute('aria-hidden', 'true');
+}
+
+function openAdminSecretModal({ force = false, error = '' } = {}) {
+  const existing = getAdminSecret();
+  if (existing && !force) return Promise.resolve(existing);
+  if (state.adminSecretPrompt?.promise) {
+    setAdminSecretError(error);
+    return state.adminSecretPrompt.promise;
+  }
+
+  const overlay = $('adminSecretModal');
+  const input = $('adminSecretInput');
+  const cancelBtn = $('adminSecretCancelBtn');
+  const lead = $('adminSecretLead');
+
+  if (!overlay || !input) {
+    return Promise.reject(new Error('Admin auth modal is unavailable.'));
+  }
+
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  input.value = '';
+  setAdminSecretError(error);
+  if (lead) {
+    lead.innerHTML = force
+      ? 'Enter the current Supabase <code>ADMIN_SECRET</code> to reconnect the Supericons admin API for this browser tab.'
+      : 'Enter the Supabase <code>ADMIN_SECRET</code> to unlock the Supericons admin API for this browser tab.';
+  }
+  if (cancelBtn) {
+    cancelBtn.style.display = existing ? '' : 'none';
+  }
+
+  requestAnimationFrame(() => input.focus());
+
+  const promise = new Promise((resolve, reject) => {
+    state.adminSecretPrompt = { promise: null, resolve, reject };
+  });
+  state.adminSecretPrompt.promise = promise;
+  return promise;
+}
+
+async function ensureAdminSecret(force = false, error = '') {
   const existing = getAdminSecret();
   if (existing && !force) return existing;
-  const value = window.prompt('Enter ADMIN_SECRET for the Supericons admin API');
-  if (!value) return '';
-  setAdminSecret(value.trim());
-  return getAdminSecret();
+  return openAdminSecretModal({ force, error });
+}
+
+function submitAdminSecretForm(event) {
+  event.preventDefault();
+  const input = $('adminSecretInput');
+  const value = String(input?.value || '').trim();
+  if (!value) {
+    setAdminSecretError('Enter the current ADMIN_SECRET to continue.');
+    input?.focus();
+    return;
+  }
+
+  setAdminSecret(value);
+  closeAdminSecretModal();
+  setAdminSecretError('');
+
+  const pending = state.adminSecretPrompt;
+  state.adminSecretPrompt = null;
+  pending?.resolve(getAdminSecret());
+}
+
+function cancelAdminSecretPrompt() {
+  if (!getAdminSecret()) {
+    setAdminSecretError('Admin secret is required to use the dashboard.');
+    $('adminSecretInput')?.focus();
+    return;
+  }
+
+  closeAdminSecretModal();
+  setAdminSecretError('');
+  const pending = state.adminSecretPrompt;
+  state.adminSecretPrompt = null;
+  pending?.reject(new Error('Admin secret update canceled.'));
 }
 
 async function apiRequest(path, options = {}, retry = true) {
-  const secret = getAdminSecret() || promptForAdminSecret();
+  const secret = await ensureAdminSecret();
   if (!secret) {
     throw new Error('Admin secret is required.');
   }
@@ -102,7 +189,8 @@ async function apiRequest(path, options = {}, retry = true) {
   }
 
   if (response.status === 403 && retry) {
-    promptForAdminSecret(true);
+    setAdminSecret('');
+    await ensureAdminSecret(true, 'That ADMIN_SECRET was rejected. Enter the current secret and try again.');
     return apiRequest(path, options, false);
   }
 
@@ -590,10 +678,19 @@ function bindGlobalEvents() {
   $('statsRefreshBtn').addEventListener('click', () => {
     refreshAll().then(() => showToast('Admin data refreshed')).catch((error) => showToast(error.message, 'error'));
   });
-  $('adminReconnectBtn').addEventListener('click', () => {
-    promptForAdminSecret(true);
-    refreshAll().then(() => showToast('Admin secret updated')).catch((error) => showToast(error.message, 'error'));
+  $('adminReconnectBtn').addEventListener('click', async () => {
+    try {
+      await openAdminSecretModal({ force: true });
+      await refreshAll();
+      showToast('Admin secret updated');
+    } catch (error) {
+      if (error?.message !== 'Admin secret update canceled.') {
+        showToast(error.message, 'error');
+      }
+    }
   });
+  $('adminSecretForm').addEventListener('submit', submitAdminSecretForm);
+  $('adminSecretCancelBtn').addEventListener('click', cancelAdminSecretPrompt);
   $('drawerBanButton').addEventListener('click', () => {
     toggleBanUser().catch((error) => showToast(error.message, 'error'));
   });
@@ -615,7 +712,7 @@ async function init() {
   bindSearchInputs();
   bindGlobalEvents();
   try {
-    promptForAdminSecret();
+    await ensureAdminSecret();
     await refreshAll();
   } catch (error) {
     showToast(error.message, 'error');
