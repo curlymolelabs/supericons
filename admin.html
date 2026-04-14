@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supericons Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Nunito:ital,wght@1,900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --si-bg: #0e0e0e;
+      --si-surface: #131313;
+      --si-surface-container: #1a1919;
+      --si-surface-container-high: #201f1f;
+      --si-surface-container-highest: #262626;
+      --si-surface-bright: #2c2c2c;
+      --si-primary: #FF4F00;
+      --si-primary-soft: #ff906c;
+      --si-text: #ffffff;
+      --si-text-muted: #cccaca;
+      --si-text-dim: #767575;
+      --si-text-on-primary: #000000;
+      --si-error: #ff716c;
+      --si-success: #4ade80;
+      --si-info: #60a5fa;
+      --si-warning: #fbbf24;
+      --si-outline: #767575;
+      --si-outline-variant: #484847;
+      --si-font-headline: 'Space Grotesk', system-ui, sans-serif;
+      --si-font-body: 'Manrope', system-ui, sans-serif;
+      --si-font-label: 'Inter', system-ui, sans-serif;
+      --si-radius-sm: 0.25rem;
+      --si-radius-md: 0.5rem;
+      --si-radius-lg: 0.75rem;
+      --si-radius-xl: 1rem;
+      --si-radius-full: 9999px;
+      --si-transition-fast: 150ms ease;
+      --si-transition-base: 250ms ease;
+      --si-shadow-md: 0 8px 24px rgba(0,0,0,0.35);
+      --si-shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+      --sidebar-w: 220px;
+      --drawer-w: 420px;
+      --header-h: 52px;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--si-font-body);
+      background: var(--si-bg);
+      color: var(--si-text);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--si-outline-variant); border-radius: var(--si-radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--si-outline); }
+
+    /* ---- TOPBAR ---- */
+    .topbar {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      background: var(--si-surface);
+      border-bottom: 1px solid rgba(72,72,71,0.2);
+      gap: 1rem;
+      flex-shrink: 0;
+      z-index: 200;
+    }
+    .topbar__logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--si-primary);
+      white-space: nowrap;
+      margin-right: 0.5rem;
+    }
+    .topbar__badge {
+      font-family: var(--si-font-label);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      background: rgba(255,79,0,0.12);
+      border: 1px solid rgba(255,79,0,0.25);
+      border-radius: var(--si-radius-full);
+      color: var(--si-primary);
+    }
+    .topbar__spacer { flex: 1; }
+    .topbar__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      color: var(--si-text-dim);
+    }
+    .topbar__dot {
+      width: 8px; height: 8px;
+      background: var(--si-success);
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(74,222,128,0.5);
+    }
+
+    /* ---- SHELL ---- */
+    .shell {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--si-surface);
+      border-right: 1px solid rgba(72,72,71,0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0;
+      overflow-y: auto;
+    }
+    .nav-section {
+      padding: 0 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .nav-section__label {
+      font-family: var(--si-font-label);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--si-text-dim);
+      padding: 0.5rem 0.5rem 0.35rem;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: var(--si-radius-md);
+      cursor: pointer;
+      font-family: var(--si-font-label);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--si-text-dim);
+      transition: background var(--si-transition-fast), color var(--si-transition-fast);
+      position: relative;
+      user-select: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--si-text-muted); }
+    .nav-item.active {
+      background: rgba(255,79,0,0.1);
+      color: var(--si-primary);
+    }
+    .nav-item.active .nav-item__icon { color: var(--si-primary); }
+    .nav-item__icon {
+      font-size: 18px;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+    }
+    .nav-item.active .nav-item__icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .nav-item__badge {
+      margin-left: auto;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      background: rgba(255,79,0,0.15);
+      color: var(--si-primary);
+      border-radius: var(--si-radius-full);
+    }
+    .sidebar__divider {
+      height: 1px;
+      background: rgba(72,72,71,0.2);
+      margin: 0.5rem 0.75rem;
+    }
+
+    /* ---- MAIN CONTENT ---- */
+    .main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---- PANELS ---- */
+    .panel {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .panel.active { display: flex; }
+
+    .panel-header {
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(72,72,71,0.15);
+      flex-shrink: 0;
+    }
+    .panel-header__row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .panel-header__title {
+      font-family: var(--si-font-headline);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .panel-header__subtitle {
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      color: var(--si-text-dim);
+      margin-top: 0.15rem;
+    }
+    .panel-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+    /* ---- SEARCH ---- */
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+    .search-input-wrap .material-symbols-outlined {
+      position: absolute;
+      left: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--si-text-dim);
+      pointer-events: none;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+    }
+    .search-input {
+      width: 100%;
+      height: 34px;
+      padding: 0 0.75rem 0 2.2rem;
+      background: var(--si-surface-container);
+      border: 1px solid rgba(72,72,71,0.3);
+      border-radius: var(--si-radius-lg);
+      color: var(--si-text);
+      font-family: var(--si-font-label);
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color var(--si-transition-fast), box-shadow var(--si-transition-fast);
+    }
+    .search-input::placeholder { color: var(--si-text-dim); }
+    .search-input:focus {
+      border-color: rgba(255,79,0,0.4);
+      box-shadow: 0 0 0 3px rgba(255,79,0,0.08);
+    }
+    .filter-select {
+      height: 34px;
+      padding: 0 0.65rem;
+      background: var(--si-surface-container);
+      border: 1px solid rgba(72,72,71,0.3);
+      border-radius: var(--si-radius-lg);
+      color: var(--si-text-muted);
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* ---- BUTTONS ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 0.85rem;
+      height: 34px;
+      border-radius: var(--si-radius-lg);
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all var(--si-transition-fast);
+      white-space: nowrap;
+    }
+    .btn .material-symbols-outlined { font-size: 15px; }
+    .btn-primary {
+      background: var(--si-primary);
+      color: #000;
+    }
+    .btn-primary:hover { filter: brightness(1.1); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      color: var(--si-text-muted);
+      border: 1px solid rgba(72,72,71,0.3);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.07); color: var(--si-text); }
+    .btn-danger {
+      background: rgba(255,113,108,0.12);
+      color: var(--si-error);
+      border: 1px solid rgba(255,113,108,0.2);
+    }
+    .btn-danger:hover { background: rgba(255,113,108,0.2); }
+    .btn-sm { height: 28px; font-size: 0.72rem; padding: 0 0.65rem; }
+
+    /* ---- TABLE ---- */
+    .table-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 1.5rem 1rem;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+    }
+    .data-table th {
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--si-text-dim);
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(72,72,71,0.2);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 0.65rem 0.75rem;
+      font-family: var(--si-font-label);
+      font-size: 0.8rem;
+      color: var(--si-text-muted);
+      border-bottom: 1px solid rgba(72,72,71,0.1);
+      vertical-align: middle;
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.018); cursor: pointer; }
+    .data-table tr.selected td { background: rgba(255,79,0,0.06); }
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--si-surface-container-highest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--si-font-label);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--si-text-dim);
+      flex-shrink: 0;
+    }
+    .avatar.google { background: rgba(66,133,244,0.15); color: #4285f4; }
+    .avatar.stripe { background: rgba(99,91,255,0.15); color: #635bff; }
+    .user-cell__email {
+      color: var(--si-text);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .user-cell__name {
+      font-size: 0.7rem;
+      color: var(--si-text-dim);
+    }
+
+    /* ---- BADGES ---- */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      border-radius: var(--si-radius-full);
+      font-family: var(--si-font-label);
+      font-size: 0.65rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-pro { background: rgba(255,79,0,0.12); color: var(--si-primary); border: 1px solid rgba(255,79,0,0.2); }
+    .badge-active { background: rgba(74,222,128,0.1); color: var(--si-success); border: 1px solid rgba(74,222,128,0.2); }
+    .badge-canceled { background: rgba(255,113,108,0.1); color: var(--si-error); border: 1px solid rgba(255,113,108,0.18); }
+    .badge-free { background: rgba(118,117,117,0.1); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.3); }
+    .badge-google { background: rgba(66,133,244,0.1); color: #4285f4; border: 1px solid rgba(66,133,244,0.2); }
+    .badge-email { background: rgba(118,117,117,0.08); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.25); }
+    .badge-warning { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
+
+    /* ---- PAGINATION ---- */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      border-top: 1px solid rgba(72,72,71,0.15);
+      flex-shrink: 0;
+    }
+    .pagination__info {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+    }
+    .pagination__controls {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .page-btn {
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--si-radius-md);
+      border: 1px solid rgba(72,72,71,0.25);
+      background: none;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all var(--si-transition-fast);
+    }
+    .page-btn:hover { background: rgba(255,255,255,0.05); color: var(--si-text); }
+    .page-btn.active {
+      background: rgba(255,79,0,0.12);
+      border-color: rgba(255,79,0,0.3);
+      color: var(--si-primary);
+      font-weight: 700;
+    }
+    .page-btn .material-symbols-outlined { font-size: 14px; }
+
+    /* ---- STATS PANEL ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    .stat-card {
+      background: var(--si-surface-container);
+      border: 1px solid rgba(72,72,71,0.2);
+      border-radius: var(--si-radius-xl);
+      padding: 1.25rem;
+      transition: border-color var(--si-transition-fast);
+    }
+    .stat-card:hover { border-color: rgba(255,79,0,0.2); }
+    .stat-card__label {
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--si-text-dim);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .stat-card__label .material-symbols-outlined {
+      font-size: 15px;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+    }
+    .stat-card__value {
+      font-family: var(--si-font-headline);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--si-text);
+    }
+    .stat-card__delta {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      color: var(--si-success);
+      margin-top: 0.3rem;
+    }
+    .stat-card__delta .material-symbols-outlined { font-size: 13px; }
+    .stats-recent {
+      padding: 0 1.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .stats-section {
+      background: var(--si-surface-container);
+      border: 1px solid rgba(72,72,71,0.2);
+      border-radius: var(--si-radius-xl);
+      padding: 1rem;
+    }
+    .stats-section__title {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--si-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(72,72,71,0.1);
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      color: var(--si-text-muted);
+    }
+    .stats-row:last-child { border-bottom: none; }
+    .stats-row__val { color: var(--si-text); font-weight: 600; }
+
+    /* ---- AUDIT LOG PANEL ---- */
+    .audit-filters {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: var(--si-radius-full);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .action-chip.delete { background: rgba(255,113,108,0.1); color: var(--si-error); border: 1px solid rgba(255,113,108,0.18); }
+    .action-chip.cancel { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
+    .action-chip.revoke { background: rgba(96,165,250,0.1); color: var(--si-info); border: 1px solid rgba(96,165,250,0.2); }
+    .action-chip.ban { background: rgba(99,91,255,0.1); color: #a48dff; border: 1px solid rgba(99,91,255,0.2); }
+
+    .payload-toggle {
+      background: none;
+      border: none;
+      color: var(--si-text-dim);
+      font-family: var(--si-font-label);
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 0;
+    }
+    .payload-toggle:hover { color: var(--si-primary); }
+    .payload-toggle .material-symbols-outlined { font-size: 13px; }
+
+    /* ---- DRAWER ---- */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--si-transition-base);
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--drawer-w);
+      height: 100%;
+      background: var(--si-surface);
+      border-left: 1px solid rgba(72,72,71,0.2);
+      z-index: 301;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 350ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      box-shadow: var(--si-shadow-lg);
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(72,72,71,0.2);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .drawer-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--si-surface-container-highest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--si-font-headline);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--si-primary);
+      flex-shrink: 0;
+      border: 1px solid rgba(255,79,0,0.2);
+    }
+    .drawer-user-info { flex: 1; min-width: 0; }
+    .drawer-user-info__name {
+      font-family: var(--si-font-headline);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-user-info__email {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+      margin-top: 0.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-user-info__badges {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--si-text-dim);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: var(--si-radius-md);
+      transition: all var(--si-transition-fast);
+      display: flex;
+    }
+    .drawer-close:hover { background: rgba(255,255,255,0.06); color: var(--si-text); }
+
+    .drawer-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(72,72,71,0.2);
+      flex-shrink: 0;
+      overflow-x: auto;
+    }
+    .drawer-tab {
+      padding: 0.65rem 1rem;
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--si-text-dim);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--si-transition-fast);
+    }
+    .drawer-tab:hover { color: var(--si-text-muted); }
+    .drawer-tab.active {
+      color: var(--si-primary);
+      border-bottom-color: var(--si-primary);
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(72,72,71,0.1);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row__label {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+    }
+    .detail-row__value {
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      color: var(--si-text-muted);
+      text-align: right;
+      max-width: 60%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .detail-row__value.mono {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.68rem;
+    }
+
+    .drawer-section-title {
+      font-family: var(--si-font-label);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--si-text-dim);
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* ---- DANGER ZONE ---- */
+    .danger-zone {
+      border-top: 1px solid rgba(255,113,108,0.15);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .danger-zone__label {
+      font-family: var(--si-font-label);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--si-error);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .danger-zone__label .material-symbols-outlined { font-size: 14px; }
+    .danger-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    /* ---- MODAL ---- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--si-transition-base);
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--si-surface-container);
+      border: 1px solid rgba(72,72,71,0.3);
+      border-radius: var(--si-radius-xl);
+      padding: 1.75rem;
+      width: 420px;
+      max-width: 90vw;
+      box-shadow: var(--si-shadow-lg);
+      transform: scale(0.96) translateY(8px);
+      transition: transform 250ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal__icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,113,108,0.1);
+      border: 1px solid rgba(255,113,108,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--si-error);
+    }
+    .modal__icon .material-symbols-outlined { font-size: 22px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .modal__title {
+      font-family: var(--si-font-headline);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .modal__desc {
+      font-family: var(--si-font-label);
+      font-size: 0.8rem;
+      color: var(--si-text-dim);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .modal__email-target {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--si-error);
+      background: rgba(255,113,108,0.08);
+      border: 1px solid rgba(255,113,108,0.15);
+      border-radius: var(--si-radius-md);
+      padding: 0.4rem 0.65rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .modal__confirm-label {
+      font-family: var(--si-font-label);
+      font-size: 0.72rem;
+      color: var(--si-text-dim);
+      margin-bottom: 0.4rem;
+    }
+    .modal__confirm-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 0.75rem;
+      background: var(--si-surface-container-high);
+      border: 1px solid rgba(72,72,71,0.4);
+      border-radius: var(--si-radius-md);
+      color: var(--si-text);
+      font-family: 'SF Mono', monospace;
+      font-size: 0.78rem;
+      outline: none;
+      margin-bottom: 1.25rem;
+      transition: border-color var(--si-transition-fast);
+    }
+    .modal__confirm-input:focus { border-color: rgba(255,113,108,0.5); }
+    .modal__actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    /* ---- EMPTY STATE ---- */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--si-text-dim);
+      gap: 0.5rem;
+    }
+    .empty-state .material-symbols-outlined {
+      font-size: 36px;
+      opacity: 0.3;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 36;
+    }
+    .empty-state__label {
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+    }
+
+    /* ---- PURCHASE ROW ---- */
+    .purchase-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--si-radius-md);
+      border: 1px solid rgba(72,72,71,0.15);
+      background: var(--si-surface-container);
+      margin-bottom: 0.4rem;
+    }
+    .purchase-row__pack {
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--si-text);
+    }
+    .purchase-row__date {
+      font-family: var(--si-font-label);
+      font-size: 0.68rem;
+      color: var(--si-text-dim);
+      margin-top: 1px;
+    }
+
+    /* ---- TOOLTIP ---- */
+    .truncate-mono {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--si-text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <span class="topbar__logo">Supericons</span>
+  <span class="topbar__badge">Admin</span>
+  <span class="topbar__spacer"></span>
+  <div class="topbar__meta">
+    <span class="topbar__dot"></span>
+    <span>Production</span>
+    <span style="color:var(--si-outline-variant)">|</span>
+    <span>supericons.dev</span>
+  </div>
+</header>
+
+<!-- ===== SHELL ===== -->
+<div class="shell">
+
+  <!-- ===== SIDEBAR ===== -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="nav-section__label">Overview</div>
+      <div class="nav-item active" id="nav-stats" onclick="switchPanel('stats')">
+        <span class="material-symbols-outlined nav-item__icon">bar_chart</span>
+        Stats
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section__label">Management</div>
+      <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
+        <span class="material-symbols-outlined nav-item__icon">group</span>
+        Users
+        <span class="nav-item__badge">142</span>
+      </div>
+      <div class="nav-item" id="nav-audit" onclick="switchPanel('audit')">
+        <span class="material-symbols-outlined nav-item__icon">history</span>
+        Audit Log
+      </div>
+    </div>
+    <div class="sidebar__divider"></div>
+    <div class="nav-section">
+      <div class="nav-item" onclick="">
+        <span class="material-symbols-outlined nav-item__icon">help_outline</span>
+        Documentation
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ======= STATS PANEL ======= -->
+    <section class="panel active" id="panel-stats">
+      <div class="panel-header">
+        <div class="panel-header__row">
+          <div>
+            <div class="panel-header__title">Overview</div>
+            <div class="panel-header__subtitle">Platform health at a glance</div>
+          </div>
+          <div class="panel-header__actions">
+            <button class="btn btn-ghost btn-sm">
+              <span class="material-symbols-outlined">refresh</span>
+              Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">group</span>
+              Total Users
+            </div>
+            <div class="stat-card__value">142</div>
+            <div class="stat-card__delta">
+              <span class="material-symbols-outlined">trending_up</span>
+              +12 this month
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">workspace_premium</span>
+              Active Pro
+            </div>
+            <div class="stat-card__value">38</div>
+            <div class="stat-card__delta">
+              <span class="material-symbols-outlined">trending_up</span>
+              +4 this month
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">shopping_bag</span>
+              Total Purchases
+            </div>
+            <div class="stat-card__value">217</div>
+            <div class="stat-card__delta">
+              <span class="material-symbols-outlined">trending_up</span>
+              +29 this month
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">person_add</span>
+              New (30d)
+            </div>
+            <div class="stat-card__value">28</div>
+            <div class="stat-card__delta" style="color:var(--si-info)">
+              <span class="material-symbols-outlined">schedule</span>
+              Last 30 days
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-recent">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">person_add</span>
+              Recent Signups
+            </div>
+            <div class="stats-row"><span>vinicius@earth.io</span><span class="stats-row__val">2h ago</span></div>
+            <div class="stats-row"><span>jane.doe@studio.com</span><span class="stats-row__val">5h ago</span></div>
+            <div class="stats-row"><span>mikael.l@co.se</span><span class="stats-row__val">11h ago</span></div>
+            <div class="stats-row"><span>hello@freeagent.io</span><span class="stats-row__val">1d ago</span></div>
+            <div class="stats-row"><span>ops@uxlab.design</span><span class="stats-row__val">2d ago</span></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">history</span>
+              Recent Actions
+            </div>
+            <div class="stats-row"><span class="action-chip delete">user.delete</span><span class="stats-row__val">1h ago</span></div>
+            <div class="stats-row"><span class="action-chip cancel">subscription.cancel</span><span class="stats-row__val">3h ago</span></div>
+            <div class="stats-row"><span class="action-chip revoke">purchase.revoke</span><span class="stats-row__val">8h ago</span></div>
+            <div class="stats-row"><span class="action-chip ban">user.ban</span><span class="stats-row__val">1d ago</span></div>
+            <div class="stats-row"><span class="action-chip delete">user.delete</span><span class="stats-row__val">2d ago</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= USERS PANEL ======= -->
+    <section class="panel" id="panel-users">
+      <div class="panel-header">
+        <div class="panel-header__row">
+          <div>
+            <div class="panel-header__title">Users</div>
+            <div class="panel-header__subtitle">142 total accounts</div>
+          </div>
+        </div>
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="material-symbols-outlined">search</span>
+            <input class="search-input" placeholder="Search by email or name..." id="user-search" />
+          </div>
+          <select class="filter-select">
+            <option>All plans</option>
+            <option>Pro Annual</option>
+            <option>Pro Monthly</option>
+            <option>Free</option>
+          </select>
+          <select class="filter-select">
+            <option>All statuses</option>
+            <option>Active</option>
+            <option>Canceled</option>
+            <option>Banned</option>
+          </select>
+          <select class="filter-select">
+            <option>All providers</option>
+            <option>Google</option>
+            <option>Email</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Provider</th>
+              <th>Plan</th>
+              <th>Status</th>
+              <th>Purchases</th>
+              <th>Joined</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openDrawer('vinicius')">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar google">VN</div>
+                  <div>
+                    <div class="user-cell__email">vinicius@earth.io</div>
+                    <div class="user-cell__name">Vinicius Nakamura</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-google">Google</span></td>
+              <td><span class="badge badge-pro">Pro Annual</span></td>
+              <td><span class="badge badge-active">Active</span></td>
+              <td style="color:var(--si-text)">8</td>
+              <td>Mar 24, 2026</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('vinicius')">View</button></td>
+            </tr>
+            <tr onclick="openDrawer('jane')">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar">JD</div>
+                  <div>
+                    <div class="user-cell__email">jane.doe@studio.com</div>
+                    <div class="user-cell__name">Jane Doe</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-email">Email</span></td>
+              <td><span class="badge badge-pro">Pro Monthly</span></td>
+              <td><span class="badge badge-warning">Cancels Apr 30</span></td>
+              <td style="color:var(--si-text)">3</td>
+              <td>Apr 1, 2026</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('jane')">View</button></td>
+            </tr>
+            <tr onclick="openDrawer('mikael')">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar">ML</div>
+                  <div>
+                    <div class="user-cell__email">mikael.l@co.se</div>
+                    <div class="user-cell__name">Mikael Lindqvist</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-email">Email</span></td>
+              <td><span class="badge badge-free">Free</span></td>
+              <td><span class="badge badge-free">Free</span></td>
+              <td style="color:var(--si-text)">0</td>
+              <td>Apr 5, 2026</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('mikael')">View</button></td>
+            </tr>
+            <tr onclick="openDrawer('hello')">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar google">FA</div>
+                  <div>
+                    <div class="user-cell__email">hello@freeagent.io</div>
+                    <div class="user-cell__name">Free Agent</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-google">Google</span></td>
+              <td><span class="badge badge-pro">Pro Annual</span></td>
+              <td><span class="badge badge-canceled">Canceled</span></td>
+              <td style="color:var(--si-text)">5</td>
+              <td>Feb 18, 2026</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('hello')">View</button></td>
+            </tr>
+            <tr onclick="openDrawer('ops')">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar">OX</div>
+                  <div>
+                    <div class="user-cell__email">ops@uxlab.design</div>
+                    <div class="user-cell__name">Ops UXLab</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-email">Email</span></td>
+              <td><span class="badge badge-pro">Pro Monthly</span></td>
+              <td><span class="badge badge-active">Active</span></td>
+              <td style="color:var(--si-text)">2</td>
+              <td>Mar 30, 2026</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDrawer('ops')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <span class="pagination__info">Showing 1-25 of 142 users</span>
+        <div class="pagination__controls">
+          <button class="page-btn"><span class="material-symbols-outlined">chevron_left</span></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim);padding:0 4px">...</span>
+          <button class="page-btn">6</button>
+          <button class="page-btn"><span class="material-symbols-outlined">chevron_right</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= AUDIT LOG PANEL ======= -->
+    <section class="panel" id="panel-audit">
+      <div class="panel-header">
+        <div class="panel-header__row">
+          <div>
+            <div class="panel-header__title">Audit Log</div>
+            <div class="panel-header__subtitle">All admin actions, tamper-resistant</div>
+          </div>
+        </div>
+        <div class="search-row audit-filters">
+          <div class="search-input-wrap" style="max-width:280px">
+            <span class="material-symbols-outlined">search</span>
+            <input class="search-input" placeholder="Filter by user ID or email..." />
+          </div>
+          <select class="filter-select">
+            <option>All actions</option>
+            <option>user.delete</option>
+            <option>subscription.cancel</option>
+            <option>purchase.revoke</option>
+            <option>user.ban</option>
+          </select>
+          <select class="filter-select">
+            <option>Last 7 days</option>
+            <option>Last 30 days</option>
+            <option>Last 90 days</option>
+            <option>All time</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Action</th>
+              <th>Target</th>
+              <th>Actor</th>
+              <th>Note</th>
+              <th>Payload</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-14 09:12:33</td>
+              <td><span class="action-chip delete">user.delete</span></td>
+              <td><span class="truncate-mono">a1b2c3d4-e5f6...</span></td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">User requested deletion</td>
+              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-14 07:44:10</td>
+              <td><span class="action-chip cancel">subscription.cancel</span></td>
+              <td><span class="truncate-mono">sub_1PxZaB2e...</span></td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Duplicate account</td>
+              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-13 22:05:01</td>
+              <td><span class="action-chip revoke">purchase.revoke</span></td>
+              <td><span class="truncate-mono">status-feedback</span></td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Fraudulent charge</td>
+              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-13 14:30:55</td>
+              <td><span class="action-chip ban">user.ban</span></td>
+              <td><span class="truncate-mono">8f3a9c12-2d44...</span></td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">Abuse reported</td>
+              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">2026-04-12 18:11:40</td>
+              <td><span class="action-chip delete">user.delete</span></td>
+              <td><span class="truncate-mono">c7d8e9f0-a1b2...</span></td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem">admin</td>
+              <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)"></td>
+              <td><button class="payload-toggle"><span class="material-symbols-outlined">data_object</span>View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <span class="pagination__info">Showing 1-25 of 41 events</span>
+        <div class="pagination__controls">
+          <button class="page-btn"><span class="material-symbols-outlined">chevron_left</span></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn"><span class="material-symbols-outlined">chevron_right</span></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== DRAWER OVERLAY ===== -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- ===== USER DETAIL DRAWER ===== -->
+<div class="drawer" id="userDrawer">
+  <div class="drawer-header">
+    <div class="drawer-avatar" id="drawerAvatar">VN</div>
+    <div class="drawer-user-info">
+      <div class="drawer-user-info__name" id="drawerName">Vinicius Nakamura</div>
+      <div class="drawer-user-info__email" id="drawerEmail">vinicius@earth.io</div>
+      <div class="drawer-user-info__badges">
+        <span class="badge badge-google" id="drawerProvider">Google</span>
+        <span class="badge badge-pro" id="drawerPlan">Pro Annual</span>
+        <span class="badge badge-active" id="drawerStatus">Active</span>
+      </div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">
+      <span class="material-symbols-outlined" style="font-size:20px">close</span>
+    </button>
+  </div>
+
+  <div class="drawer-tabs">
+    <div class="drawer-tab active" onclick="switchTab(this,'tab-account')">Account</div>
+    <div class="drawer-tab" onclick="switchTab(this,'tab-subscription')">Subscription</div>
+    <div class="drawer-tab" onclick="switchTab(this,'tab-purchases')">Purchases</div>
+    <div class="drawer-tab" onclick="switchTab(this,'tab-keys')">API Keys</div>
+    <div class="drawer-tab" onclick="switchTab(this,'tab-log')">Audit Log</div>
+  </div>
+
+  <!-- Account Tab -->
+  <div class="drawer-body" id="tab-account">
+    <div class="drawer-section-title">Identity</div>
+    <div class="detail-row">
+      <span class="detail-row__label">Supabase User ID</span>
+      <span class="detail-row__value mono">a1b2c3d4-e5f6-7890</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Email</span>
+      <span class="detail-row__value">vinicius@earth.io</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Email Verified</span>
+      <span class="detail-row__value" style="color:var(--si-success)">Yes</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Auth Provider</span>
+      <span class="detail-row__value">google</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Last Sign-in</span>
+      <span class="detail-row__value">Apr 14, 2026 09:02</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Joined</span>
+      <span class="detail-row__value">Mar 24, 2026</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Ban Status</span>
+      <span class="detail-row__value" style="color:var(--si-success)">Not banned</span>
+    </div>
+
+    <div class="drawer-section-title" style="margin-top:1.25rem">Actions</div>
+    <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+      <button class="btn btn-ghost btn-sm">
+        <span class="material-symbols-outlined" style="font-size:14px">block</span>
+        Ban User
+      </button>
+      <button class="btn btn-ghost btn-sm">
+        <span class="material-symbols-outlined" style="font-size:14px">mail</span>
+        Send Email
+      </button>
+    </div>
+
+    <div class="danger-zone">
+      <div class="danger-zone__label">
+        <span class="material-symbols-outlined">warning</span>
+        Danger Zone
+      </div>
+      <div class="danger-actions">
+        <button class="btn btn-danger" onclick="openModal()">
+          <span class="material-symbols-outlined" style="font-size:15px">delete_forever</span>
+          Delete Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subscription Tab -->
+  <div class="drawer-body" id="tab-subscription" style="display:none">
+    <div class="drawer-section-title">Current Plan</div>
+    <div class="detail-row">
+      <span class="detail-row__label">Plan</span>
+      <span class="detail-row__value"><span class="badge badge-pro">Pro Annual</span></span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Status</span>
+      <span class="detail-row__value"><span class="badge badge-active">Active</span></span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Period End</span>
+      <span class="detail-row__value">Mar 24, 2027</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Stripe Subscription ID</span>
+      <span class="detail-row__value mono">sub_1PxZaB2e...</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Stripe Customer ID</span>
+      <span class="detail-row__value mono">cus_Qr8mN2k...</span>
+    </div>
+
+    <div style="margin-top:1.25rem">
+      <button class="btn btn-danger btn-sm">
+        <span class="material-symbols-outlined" style="font-size:14px">cancel</span>
+        Cancel Subscription
+      </button>
+    </div>
+  </div>
+
+  <!-- Purchases Tab -->
+  <div class="drawer-body" id="tab-purchases" style="display:none">
+    <div class="drawer-section-title">8 Purchases</div>
+    <div class="purchase-row">
+      <div>
+        <div class="purchase-row__pack">Status and Feedback</div>
+        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
+      </div>
+      <button class="btn btn-danger btn-sm">Revoke</button>
+    </div>
+    <div class="purchase-row">
+      <div>
+        <div class="purchase-row__pack">Security and Auth</div>
+        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
+      </div>
+      <button class="btn btn-danger btn-sm">Revoke</button>
+    </div>
+    <div class="purchase-row">
+      <div>
+        <div class="purchase-row__pack">Navigation and Menus</div>
+        <div class="purchase-row__date">Mar 24, 2026 (launch_edition)</div>
+      </div>
+      <button class="btn btn-danger btn-sm">Revoke</button>
+    </div>
+    <div class="purchase-row">
+      <div>
+        <div class="purchase-row__pack">AI and Agentic</div>
+        <div class="purchase-row__date">Apr 2, 2026 (pro_annual_grant)</div>
+      </div>
+      <button class="btn btn-danger btn-sm">Revoke</button>
+    </div>
+  </div>
+
+  <!-- API Keys Tab -->
+  <div class="drawer-body" id="tab-keys" style="display:none">
+    <div class="empty-state">
+      <span class="material-symbols-outlined">key_off</span>
+      <span class="empty-state__label">No API keys found</span>
+    </div>
+  </div>
+
+  <!-- Audit Log Tab -->
+  <div class="drawer-body" id="tab-log" style="display:none">
+    <div class="drawer-section-title">Audit History</div>
+    <div class="stats-row" style="flex-direction:column;align-items:flex-start;gap:4px;padding:0.6rem 0">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="action-chip revoke">purchase.revoke</span>
+        <span style="font-family:var(--si-font-label);font-size:0.7rem;color:var(--si-text-dim)">Apr 13, 2026</span>
+      </div>
+      <span style="font-family:var(--si-font-label);font-size:0.72rem;color:var(--si-text-dim)">Pack: status-feedback</span>
+    </div>
+    <div style="margin-top:0.75rem">
+      <div class="empty-state">
+        <span class="material-symbols-outlined">checklist</span>
+        <span class="empty-state__label">No other admin actions on this user</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DELETE CONFIRM MODAL ===== -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal__icon">
+      <span class="material-symbols-outlined">delete_forever</span>
+    </div>
+    <div class="modal__title">Delete this account?</div>
+    <div class="modal__desc">
+      This will permanently delete the account and cancel any active Stripe subscription immediately. All purchases and subscription history will be removed. This cannot be undone.
+    </div>
+    <code class="modal__email-target">vinicius@earth.io</code>
+    <div class="modal__confirm-label">Type the user's email to confirm</div>
+    <input class="modal__confirm-input" id="confirmInput" placeholder="vinicius@earth.io" oninput="checkConfirm()" />
+    <div class="modal__actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" disabled style="opacity:0.4;cursor:not-allowed">
+        <span class="material-symbols-outlined" style="font-size:15px">delete_forever</span>
+        Delete Account
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Panel switching
+  function switchPanel(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+  }
+
+  // Drawer
+  function openDrawer(user) {
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('userDrawer').classList.add('open');
+    // Reset to account tab
+    switchTab(document.querySelector('.drawer-tab'), 'tab-account');
+  }
+  function closeDrawer() {
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('userDrawer').classList.remove('open');
+  }
+
+  // Drawer tabs
+  function switchTab(el, tabId) {
+    document.querySelectorAll('.drawer-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.drawer-body').forEach(b => b.style.display = 'none');
+    el.classList.add('active');
+    document.getElementById(tabId).style.display = 'block';
+  }
+
+  // Modal
+  function openModal() {
+    document.getElementById('deleteModal').classList.add('open');
+    document.getElementById('confirmInput').value = '';
+    document.getElementById('confirmDeleteBtn').disabled = true;
+    document.getElementById('confirmDeleteBtn').style.opacity = '0.4';
+    document.getElementById('confirmDeleteBtn').style.cursor = 'not-allowed';
+  }
+  function closeModal() {
+    document.getElementById('deleteModal').classList.remove('open');
+  }
+  function checkConfirm() {
+    const val = document.getElementById('confirmInput').value;
+    const btn = document.getElementById('confirmDeleteBtn');
+    const match = val === 'vinicius@earth.io';
+    btn.disabled = !match;
+    btn.style.opacity = match ? '1' : '0.4';
+    btn.style.cursor = match ? 'pointer' : 'not-allowed';
+  }
+
+  // Close modal on overlay click
+  document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
