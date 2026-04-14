@@ -9602,6 +9602,27 @@ const CONVERTER_PREVIEW_ZOOM_MIN = 1;
 const CONVERTER_PREVIEW_ZOOM_MAX = 2;
 const CONVERTER_PREVIEW_ZOOM_STEP = 0.1;
 let converterMonoEngineReady = null;
+let converterInputObjectUrl = '';
+let converterOutputObjectUrl = '';
+
+function revokeConverterObjectUrl(url) {
+  if (!url || typeof url !== 'string' || !url.startsWith('blob:')) return;
+  URL.revokeObjectURL(url);
+}
+
+function replaceConverterInputObjectUrl(nextUrl = '') {
+  if (converterInputObjectUrl && converterInputObjectUrl !== nextUrl) {
+    revokeConverterObjectUrl(converterInputObjectUrl);
+  }
+  converterInputObjectUrl = nextUrl && nextUrl.startsWith('blob:') ? nextUrl : '';
+}
+
+function replaceConverterOutputObjectUrl(nextUrl = '') {
+  if (converterOutputObjectUrl && converterOutputObjectUrl !== nextUrl) {
+    revokeConverterObjectUrl(converterOutputObjectUrl);
+  }
+  converterOutputObjectUrl = nextUrl && nextUrl.startsWith('blob:') ? nextUrl : '';
+}
 
 function renderConverterColorDotRow(type, activeColor, disabled = false) {
   const disabledAttrs = disabled ? ' disabled aria-disabled="true"' : '';
@@ -11720,6 +11741,11 @@ function initConverterControls() {
   document.getElementById('convPreviewStage')?.addEventListener('wheel', (event) => handleConverterPreviewWheel(event, 'output'), { passive: false });
   bindConverterPreviewPan(document.getElementById('convInputStage'), 'input');
   bindConverterPreviewPan(document.getElementById('convPreviewStage'), 'output');
+  ['convInputImg', 'convOriginalOverlayImg', 'convOutputOverlayImg', 'convOriginalSplitImg', 'convOutputSplitImg'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('load', () => {
+      updateConverterPreviewZoomUi({ center: true });
+    });
+  });
 
   // Paste SVG code button
   document.getElementById('convPasteBtn')?.addEventListener('click', async () => {
@@ -12051,6 +12077,7 @@ function loadConverterSvgText(svgText, filename) {
   const previewSvg = rasterPrep.svgText || svgText;
   const blob = new Blob([previewSvg], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
+  replaceConverterInputObjectUrl(url);
   showConverterInput(url, filename || 'Pasted SVG', svgText.length);
   converterState.pngDataUrl = '';
   updateConverterSvgUiState();
@@ -12061,6 +12088,7 @@ function loadConverterSvgText(svgText, filename) {
 
 function loadConverterPng(dataUrl, filename) {
   resetConverterPreviewZoom();
+  replaceConverterInputObjectUrl('');
   converterState.pngDataUrl = dataUrl;
   converterState.svgText = '';
   converterState.svgPreparedText = '';
@@ -12122,6 +12150,7 @@ function resetConverterOutputPlaceholder(message = 'Preview appears here', icon 
 
 function showConverterPendingOutput(message = 'Tracing preview…') {
   converterState.outputBlob = null;
+  replaceConverterOutputObjectUrl('');
   converterState.outputDataUrl = '';
   converterState.traceMetrics = null;
   converterState.traceAdvice = null;
@@ -12150,6 +12179,7 @@ function showConverterPendingOutput(message = 'Tracing preview…') {
 
 function showConverterProofServiceOffline(proofErr) {
   converterState.outputBlob = null;
+  replaceConverterOutputObjectUrl('');
   converterState.outputDataUrl = '';
   converterState.traceMetrics = null;
   converterState.outputPreviewSize = null;
@@ -12183,6 +12213,7 @@ function showConverterProofServiceOffline(proofErr) {
 
 function showConverterSvgDecodeFailure(traceAdvice = null) {
   converterState.outputBlob = null;
+  replaceConverterOutputObjectUrl('');
   converterState.outputDataUrl = '';
   converterState.traceMetrics = null;
   converterState.traceAdvice = traceAdvice;
@@ -12217,6 +12248,8 @@ function showConverterSvgDecodeFailure(traceAdvice = null) {
 
 function clearConverterInput() {
   resetConverterPreviewZoom();
+  replaceConverterInputObjectUrl('');
+  replaceConverterOutputObjectUrl('');
   converterState.svgText = '';
   converterState.svgPreparedText = '';
   converterState.pngDataUrl = '';
@@ -12341,6 +12374,7 @@ function convertSvgToPng() {
       if (!pngBlob || myToken !== _svgConvToken) return;
       converterState.outputBlob = pngBlob;
       const outUrl = URL.createObjectURL(pngBlob);
+      replaceConverterOutputObjectUrl(outUrl);
       converterState.outputDataUrl = outUrl;
       const displayW = Math.round(canvasW / quality);
       const displayH = Math.round(canvasH / quality);
@@ -12376,6 +12410,7 @@ function showConverterOutput(url, label, sizeKb, traceMetrics = null, traceAdvic
 
   if (outputPreview) outputPreview.style.display = '';
   if (outputEmpty) outputEmpty.style.display = 'none';
+  replaceConverterOutputObjectUrl(url);
   converterState.outputDataUrl = url;
   converterState.traceMetrics = traceMetrics;
   converterState.traceAdvice = traceAdvice;
