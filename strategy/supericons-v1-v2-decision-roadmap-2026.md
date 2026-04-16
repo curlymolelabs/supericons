@@ -1,0 +1,685 @@
+# Supericons V1 vs V2 Decision and Roadmap Plan
+
+**Prepared:** April 2026  
+**Purpose:** Decide whether Supericons should begin marketing now with V1 or continue building V2 first  
+**Inputs reviewed:** all current artifacts in `strategy/`
+
+---
+
+## Executive Decision
+
+**Start marketing Supericons now. Do not wait for a full V2.**
+
+But do not market V1 as if the whole long-term vision already exists.
+
+The correct move is:
+
+**Run a dual-track plan: market V1 immediately with a sharp wedge, while building only the V2 capabilities that directly improve trust, conversion, and agent-native differentiation.**
+
+In short:
+
+- **Yes, market now**
+- **Yes, keep building V2**
+- **No, do not delay marketing until V2 is “done”**
+- **No, do not try to market everything at once**
+
+This is not a compromise.
+It is the strategically correct sequence.
+
+---
+
+## Why This Is The Right Decision
+
+After examining the strategy folder, the recurring pattern is extremely clear:
+
+1. **V1 already has marketable uniqueness**
+   The docs repeatedly show that Supericons is not empty-handed. It already has a real product story:
+   - 20K+ icon aggregation
+   - semantic search
+   - MCP integration
+   - premium motion / animated collections
+   - AI-specific vocabulary wedge
+
+2. **The market opportunity is happening now**
+   The strategy docs consistently point to an active shift:
+   - builders are using Cursor, Claude Code, Codex, Windsurf, and Cline
+   - MCP is becoming a real distribution surface
+   - AI product builders lack domain-specific icon vocabulary
+   - premium UI polish matters more, not less
+
+3. **V2 is strongest as a multiplier, not a prerequisite**
+   The curation system, manifests, trust tiers, judgment graph, and recommendation APIs are powerful.
+   But most of them do not need to exist fully before the first serious marketing wave.
+
+4. **Waiting for V2 creates hidden risk**
+   If you keep building without marketing:
+   - you delay feedback
+   - you delay distribution compounding
+   - you delay proof of demand
+   - you risk overbuilding intelligence layers before learning what users actually respond to
+
+5. **Marketing V1 teaches you what V2 should become**
+   V2 becomes much more valuable if it is informed by:
+   - what users search for
+   - which kits they adopt
+   - which agent workflows they try
+   - which concepts confuse them
+   - which pages convert
+
+That means V1 marketing is not a distraction from V2.
+It is one of the inputs required to build the right V2.
+
+---
+
+## What The Strategy Folder Is Really Saying
+
+Across the documents, the same architecture appears from different angles:
+
+### From `business_evaluation.md`
+
+The case is:
+
+- Supericons has an AI-native wedge
+- motion and MCP give it defensibility
+- the visual interaction layer for AI software is underdeveloped
+
+This supports launching now.
+
+### From `genai_marketing_plan.md`
+
+The case is:
+
+- organic and creatively aggressive distribution is possible now
+- the product already has enough visual differentiation to demonstrate
+
+This supports launching now.
+
+### From `marketing_masterplan.html`
+
+The case is:
+
+- Supericons must not be framed as just another icon library
+- the MCP workflow is itself a distribution engine
+- the product should be marketed as part of the AI-builder workflow
+
+This supports launching now, but with a narrow positioning.
+
+### From `icon_curation_system.md` and `icon_curation_design.html`
+
+The case is:
+
+- the true long-term moat is curation, metadata, trust, and agent legibility
+- the ecosystem does not solve the decision layer
+
+This supports building V2, but not waiting for its completion.
+
+### From `supericons-marketing-proposal-2026.md`
+
+The case is:
+
+- free 50-icon build kits are an ideal acquisition unit
+- GitHub-led growth and intent-based collections are the best path
+
+This supports marketing now with useful, limited, job-shaped free offers.
+
+### From `supericons-ultimate-blueprint-2026.md`
+
+The case is:
+
+- Supericons should become an icon intelligence platform
+- that platform is built in layers: discovery, curation, manifests, judgment, distribution
+
+This supports sequencing:
+
+- market the discovery + wedge layer now
+- build the intelligence layer in focused phases
+
+---
+
+## The Actual Strategic Choice
+
+There are three possible paths.
+
+### Option A: Keep Building V2, Delay Marketing
+
+**Verdict: wrong choice**
+
+Why it fails:
+
+- no demand learning
+- no compounding distribution
+- no proof that your wedge resonates
+- too much risk of building elegant infrastructure before market signal
+
+### Option B: Market V1 Aggressively, Pause V2
+
+**Verdict: also wrong**
+
+Why it fails:
+
+- V1 alone is not the full moat
+- if early attention lands on weak curation or weak trust surfaces, conversion may underperform
+- competitors can mimic the broad story faster if you do not deepen the product
+
+### Option C: Market V1 Now, Build V2 Narrowly In Parallel
+
+**Verdict: correct choice**
+
+Why it works:
+
+- marketing creates signal
+- V2 work becomes market-informed
+- you gain compounding discovery earlier
+- you avoid overbuilding
+- you keep momentum on both front and back end of the strategy
+
+This is the path to take.
+
+---
+
+## The Right Framing For V1
+
+Do not market V1 as:
+
+- the complete icon intelligence platform
+- the fully realized agent-curation system
+- a universal answer to all icon workflow problems
+
+Market V1 as:
+
+**the fastest way for modern builders to find and use the right icons, especially in AI-native workflows**
+
+### V1 promise
+
+- search faster
+- export faster
+- reduce context switching
+- access AI-specific icon vocabulary
+- make your UI feel more polished immediately
+
+### V1 proof points
+
+- MCP works now
+- premium motion exists now
+- 20K+ icon discovery exists now
+- agentic vocabulary wedge exists now
+- public packs/build kits can exist now
+
+That is enough for launch.
+
+---
+
+## The Right Role For V2
+
+V2 should not be treated as “the next version of the app.”
+
+It should be treated as:
+
+**the intelligence layer that makes Supericons harder to copy and easier to trust**
+
+### The V2 job
+
+V2 exists to improve:
+
+- recommendation quality
+- conversion quality
+- agent confidence
+- bundle coherence
+- source trust
+- long-term defensibility
+
+### What V2 should not be
+
+- a giant speculative rewrite
+- a broad unbounded research project
+- a huge private build before re-entering the market
+
+V2 should be:
+
+**narrow, staged, externally legible, and tied to growth and product evidence**
+
+---
+
+## The Decision Framework
+
+### Immediate decision
+
+**Launch marketing now, after a short launch-readiness sprint.**
+
+### Execution principle
+
+For the next 90 days, every significant V2 feature must answer at least one of these:
+
+1. Does it improve conversion?
+2. Does it improve trust?
+3. Does it improve agent-native differentiation?
+4. Does it improve distribution?
+5. Does it improve recommendation quality enough to be visible to users?
+
+If not, it should probably wait.
+
+---
+
+## Recommended Strategic Posture
+
+### The posture
+
+**Market-facing V1, intelligence-building V2.**
+
+That means:
+
+- V1 is the public wedge
+- V2 is the internal moat under construction
+- marketing is not paused
+- product work is not paused
+- both are tightly coupled
+
+### Resource split
+
+Recommended for the next 6-8 weeks:
+
+- `40%` launch + distribution + content + pages
+- `35%` V2 features that directly help acquisition and conversion
+- `25%` polish, reliability, instrumentation, and onboarding fixes
+
+This avoids the two common mistakes:
+
+- all build, no distribution
+- all hype, no moat
+
+---
+
+## What To Market Right Now
+
+Do not try to market all possible narratives.
+
+Lead with only three:
+
+### Narrative 1: The MCP Workflow
+
+**Your agent can search and use icons without you leaving the editor.**
+
+Why now:
+
+- real feature
+- strong demo surface
+- clear differentiation
+- aligned with 2026 builder behavior
+
+### Narrative 2: The AI Vocabulary Gap
+
+**Generic icon libraries do not speak the language of AI products. Supericons does.**
+
+Why now:
+
+- strong wedge
+- easy before/after storytelling
+- low direct competition
+
+### Narrative 3: The Instant UI Upgrade
+
+**Supericons makes developer-built products feel more polished immediately.**
+
+Why now:
+
+- broad emotional appeal
+- visually demonstrable
+- works even for people who do not care about MCP
+
+These three are enough.
+
+---
+
+## What To Build Next In V2
+
+Not every V2 idea should be built immediately.
+
+### Priority 1: Market-facing V2 features
+
+Build these first:
+
+1. **Dedicated landing pages for high-value collections**
+   Especially:
+   - Agentic AI Kit
+   - Status Feedback
+   - Dashboard Navigation
+   - Auth and Security
+
+2. **50-icon build kit packaging**
+   Turn free packs into:
+   - GitHub-ready assets
+   - framework exports
+   - preview pages
+   - usage maps
+
+3. **Manifest schema for the first high-value icons**
+   Start with the most marketable wedge:
+   - AI / agentic vocabulary
+   - top free build kits
+
+4. **Three foundational MCP tools**
+   - `get_collection_for_intent`
+   - `get_icon_manifest`
+   - `recommend_co_occurring`
+
+These features are both product work and marketing enablers.
+
+### Priority 2: Trust and recommendation upgrades
+
+Build next:
+
+1. source trust tiers
+2. design-system affinity for first major systems
+3. intent-based ranking
+4. first-pass suitability scoring
+
+These improve product quality and agent confidence.
+
+### Priority 3: Judgment graph foundations
+
+Build after there is enough usage to justify it:
+
+1. contextual voting objects
+2. pairwise comparison flows
+3. retention signals
+4. rationale tags
+5. early reputation
+
+### Priority 4: Visionary systems
+
+Build later, once there is real traffic and behavioral data:
+
+1. taste staking
+2. controversy scoring
+3. full silent-vote behavior system
+4. organization-wide constitutions
+
+These are powerful, but not first-mile requirements.
+
+---
+
+## The Decision In One Sentence
+
+**Market V1 immediately as the wedge, while building only the V2 layers that make the wedge stronger, more trustworthy, and more defensible.**
+
+---
+
+## 90-Day Roadmap
+
+## Phase 0: Launch Readiness Sprint
+
+**Timeline:** 5-7 days
+
+Goal:
+Make V1 sharp enough that traffic is not wasted.
+
+Deliver:
+
+- lock the positioning
+- tighten homepage copy
+- create one clear `/mcp` landing page
+- create one clear `Agentic AI Kit` landing page
+- ensure analytics are installed for key flows
+- define baseline funnel metrics
+- fix obvious onboarding friction
+
+Required outcome:
+
+The product must be understandable within 10 seconds.
+
+---
+
+## Phase 1: Start Marketing V1
+
+**Timeline:** Weeks 1-3
+
+Goal:
+Prove the market reacts to the wedge.
+
+What to ship:
+
+- Show HN / launch post
+- X thread with IDE demo
+- Reddit before/after post
+- MCP registry listings
+- first comparison article
+- first visual transformation video
+
+What to measure:
+
+- landing page CTR
+- MCP install interest
+- free export / search engagement
+- signups
+- replies and qualitative language users use
+
+Success condition:
+
+You learn which story resonates:
+
+- MCP
+- AI vocabulary
+- UI polish
+
+---
+
+## Phase 2: Ship The First Public V2 Layer
+
+**Timeline:** Weeks 2-6
+
+Goal:
+Turn early attention into a more structured product edge.
+
+What to build:
+
+1. Dashboard Navigation 50
+2. Status Feedback 50
+3. Ecommerce Essentials 50
+4. preview pages for each
+5. GitHub packaging for each
+6. tokens/metadata for each
+
+What to market:
+
+- “I curated 50 icons for [job]”
+- GitHub utility releases
+- landing pages and snippets
+
+Success condition:
+
+Supericons starts to be discovered as a useful build-kit source, not only as a search site.
+
+---
+
+## Phase 3: Ship The Agent-Legible Core
+
+**Timeline:** Weeks 4-8
+
+Goal:
+Make the V2 story real in a narrow but visible way.
+
+What to build:
+
+- manifests for top 40-100 icons
+- `get_collection_for_intent`
+- `get_icon_manifest`
+- `recommend_co_occurring`
+- trust tier scoring for initial libraries
+
+What to market:
+
+- “the first icon system your AI agent can reason about”
+- agent demo showing a full set retrieval flow
+- docs/tutorials around structured icon selection
+
+Success condition:
+
+Agents can choose from collections, not only search results.
+
+---
+
+## Phase 4: Upgrade The Conversion Loop
+
+**Timeline:** Weeks 6-10
+
+Goal:
+Turn discovery into upgrade behavior.
+
+What to build:
+
+- stronger premium upgrade pages
+- free-to-premium collection crosslinks
+- “safer vs bolder” alternatives
+- explicit motion upsells
+- clearer collection-level CTAs
+
+What to market:
+
+- premium animated version of free build kits
+- before/after UI upgrades
+- “used the free pack, now make it feel premium”
+
+Success condition:
+
+The user journey from free kit to premium motion becomes obvious.
+
+---
+
+## Phase 5: Start The Judgment Graph Foundations
+
+**Timeline:** Weeks 8-12
+
+Goal:
+Lay the foundation for the long-term moat without overbuilding.
+
+What to build:
+
+- evidence object schema
+- contextual vote model
+- pairwise comparison experiments
+- rationale tags
+- accepted/replaced/retained event capture
+
+What not to build yet:
+
+- full taste staking economy
+- heavy reputation mechanics
+- giant crowdsourced moderation systems
+
+Success condition:
+
+Supericons starts collecting real judgment evidence.
+
+---
+
+## The Decision Gates
+
+Use these checkpoints to decide whether to lean harder into marketing or harder into product.
+
+### Gate 1: After first launch wave
+
+If:
+
+- people are interested in the demos
+- CTR is strong
+- installs or signups are growing
+
+Then:
+
+- continue marketing
+- accelerate landing pages and build-kit releases
+
+If not:
+
+- improve messaging before building larger V2 systems
+
+### Gate 2: After first build kits
+
+If:
+
+- kits get real reuse
+- people clone/star/download
+- intent pages convert
+
+Then:
+
+- expand collection architecture
+
+If not:
+
+- refine packaging and job focus
+
+### Gate 3: After first manifest + MCP tools
+
+If:
+
+- agents actually use the new tools
+- docs/tutorials resonate
+- users value explainability
+
+Then:
+
+- invest deeper into trust scores and judgment graph
+
+If not:
+
+- simplify and tighten the agent workflow
+
+---
+
+## What To Avoid
+
+### Avoid waiting for elegance
+
+Do not hold back marketing because the whole intelligence layer is not complete.
+
+### Avoid broad marketing too early
+
+Do not market to “everyone who needs icons.”
+Own a wedge first.
+
+### Avoid building a grand unseen V2
+
+Do not spend months building scoring and judgment systems without usage data.
+
+### Avoid split messaging
+
+Do not simultaneously pitch:
+
+- a designer-first brand
+- a massive icon library
+- an AI-native agent tool
+- a motion library
+
+Pick a hierarchy and be consistent.
+
+---
+
+## The Recommended Official Decision
+
+If this were written as a board-level recommendation, it would be:
+
+> Supericons should enter the market now with V1 as a focused wedge product, while continuing to build V2 as a narrow intelligence layer that directly strengthens acquisition, trust, and defensibility. The company should not delay go-to-market until the full V2 vision is complete. Instead, V1 marketing should generate the feedback loops that determine which V2 features matter most.
+
+---
+
+## Final Recommendation
+
+**Start marketing Supericons now.**
+
+But market the right version of it:
+
+- the V1 wedge
+- the existing strengths
+- the AI-builder workflow
+- the immediate UI-upgrade value
+
+And build the right version of V2:
+
+- manifests
+- collections
+- trust
+- MCP intelligence
+- evidence-driven curation
+
+That is the right decision.

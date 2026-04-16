@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: Free Layer + Judgment Layer — Execution Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--am),var(--or),var(--pu));z-index:999;transition:width .1s}
+
+    .sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.5rem .75rem;display:flex;flex-direction:column;gap:.1rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--am);box-shadow:0 0 10px var(--am);animation:sbp 2s infinite}
+    @keyframes sbp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.5}}
+    .sb-section{font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tf);padding:.7rem .5rem .2rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:6px;color:var(--td);text-decoration:none;font-size:.76rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{background:rgba(251,191,36,.1);color:var(--am)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.4rem}
+
+    .main{margin-left:230px}
+
+    .hero{padding:4.5rem 4rem 4rem;border-bottom:1px solid var(--bd);
+      background:radial-gradient(ellipse at 70% -5%,rgba(251,191,36,.06),transparent 50%),
+                 radial-gradient(ellipse at 10% 110%,rgba(167,139,250,.05),transparent 50%)}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--am);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:99px;padding:.2rem .8rem;margin-bottom:1.5rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,3vw,2.9rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.85rem}
+    .hero-sub{font-size:.93rem;color:var(--td);max-width:700px;line-height:1.75;margin-bottom:1.5rem}
+
+    section{padding:4rem;border-bottom:1px solid var(--bd)}
+    .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);margin-bottom:.4rem}
+    .sh{font-family:'Space Grotesk',sans-serif;font-size:1.65rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.65rem}
+    .sd{color:var(--td);max-width:700px;line-height:1.7;font-size:.92rem;margin-bottom:1.5rem}
+
+    /* AGENT COMPARE */
+    .agent-compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+    .ac-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem}
+    .ac-label{font-size:.63rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+    .ac-point{font-size:.84rem;color:var(--td);line-height:1.6;margin-bottom:.5rem;display:flex;gap:.5rem}
+    .ac-icon{flex-shrink:0;font-size:.75rem;margin-top:.15rem}
+
+    /* SYNTHESIS BOX */
+    .synth{background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(251,191,36,.04));border:2px solid rgba(167,139,250,.25);border-radius:14px;padding:1.75rem 2rem;margin:1.5rem 0}
+    .synth-label{font-size:.63rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pu);margin-bottom:.5rem}
+    .synth-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:800;color:var(--t);margin-bottom:.65rem}
+    .synth-body{font-size:.87rem;color:var(--td);line-height:1.75}
+    .synth-body strong{color:var(--t)}
+
+    /* DISAGREE BOX */
+    .disagree{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:12px;padding:1.4rem;margin:1rem 0}
+    .disagree-label{font-size:.63rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--re);margin-bottom:.5rem}
+    .disagree-body{font-size:.87rem;color:var(--td);line-height:1.7}
+    .disagree-body strong{color:var(--t)}
+
+    /* PHASE BLOCK */
+    .phase{margin-bottom:2rem}
+    .phase-hdr{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+    .phase-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.9rem;flex-shrink:0}
+    .phase-title{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem;color:var(--t)}
+    .phase-sub{font-size:.78rem;color:var(--td);margin-top:.1rem}
+    .phase-items{display:flex;flex-direction:column;gap:.5rem;margin-left:54px}
+    .phase-item{background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.8rem 1rem}
+    .pi-title{font-size:.86rem;font-weight:600;color:var(--t);margin-bottom:.2rem;display:flex;align-items:center;gap:.5rem}
+    .pi-desc{font-size:.81rem;color:var(--td);line-height:1.55}
+    .pi-desc code{font-family:'JetBrains Mono',monospace;font-size:.75rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.03rem .3rem;color:var(--te)}
+
+    /* KIT SPEC */
+    .kit-spec{background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin:1rem 0}
+    .ks-hdr{background:var(--bg-s);border-bottom:1px solid var(--bd);padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .ks-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--t)}
+    .ks-body{padding:1.4rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .ks-col-title{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.5rem}
+    .ks-icons{font-size:.81rem;color:var(--td);line-height:1.65}
+    .ks-files{display:flex;flex-direction:column;gap:.3rem}
+    .ks-file{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--te);display:flex;align-items:center;gap:.4rem}
+    .ks-file-req{font-size:.62rem;color:var(--gr);background:rgba(52,211,153,.1);border-radius:3px;padding:.05rem .3rem;flex-shrink:0}
+    .ks-file-opt{font-size:.62rem;color:var(--tf);background:var(--bg-s);border-radius:3px;padding:.05rem .3rem;flex-shrink:0}
+    .ks-sources{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--bd);display:flex;gap:.5rem;flex-wrap:wrap}
+
+    /* JUDGMENT DATA MODEL */
+    .schema{background:var(--bg-s);border:1px solid var(--bd2);border-radius:10px;padding:1.25rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.77rem;color:var(--te);line-height:1.85;margin:1rem 0;overflow-x:auto}
+    .schema .k{color:var(--bl)}
+    .schema .v{color:var(--gr)}
+    .schema .s{color:var(--am)}
+    .schema .c{color:var(--tf);font-style:italic}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:4px;margin:.1rem}
+    .t-bl{background:rgba(96,165,250,.12);color:var(--bl)}
+    .t-pu{background:rgba(167,139,250,.12);color:var(--pu)}
+    .t-gr{background:rgba(52,211,153,.12);color:var(--gr)}
+    .t-am{background:rgba(251,191,36,.12);color:var(--am)}
+    .t-re{background:rgba(248,113,113,.12);color:var(--re)}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+    .t-pk{background:rgba(244,114,182,.12);color:var(--pk)}
+
+    /* ALERT */
+    .alert{display:flex;gap:.75rem;align-items:flex-start;border-radius:10px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.87rem;line-height:1.65}
+    .alert-i{flex-shrink:0;font-size:1.1rem}
+    .a-gr{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:#a7f3d0}
+    .a-re{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:#fecaca}
+    .a-am{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:#fde68a}
+    .a-bl{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.25);color:#bfdbfe}
+    .a-pu{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25);color:#ddd6fe}
+
+    /* TASK ROW */
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0}
+    th{text-align:left;padding:.7rem 1rem;background:var(--bg-r);border:1px solid var(--bd);color:var(--td);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+    td{padding:.7rem 1rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+
+    /* CHECKLIST */
+    .ck{display:flex;flex-direction:column;gap:.45rem}
+    .ck-item{display:flex;gap:.75rem;align-items:flex-start;background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.75rem 1rem}
+    .ck-box{width:18px;height:18px;border-radius:4px;border:2px solid var(--bd);flex-shrink:0;margin-top:.1rem;cursor:pointer}
+    .ck-t{font-size:.84rem;color:var(--td);line-height:1.5}
+    .ck-t strong{color:var(--t)}
+    .ck-t code{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.03rem .3rem;color:var(--te)}
+
+    @media(max-width:900px){
+      .sidebar{display:none}.main{margin-left:0}
+      section,.hero{padding:2rem 1.25rem}
+      .agent-compare,.ks-body{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Execution Strategy</div>
+  <div class="sb-section">Agent Analysis</div>
+  <a class="sb-link" href="#compare"><span class="sb-n">01</span>Two Agents Compared</a>
+  <a class="sb-link" href="#disagree"><span class="sb-n">02</span>Where I Disagree</a>
+  <a class="sb-link" href="#resolved"><span class="sb-n">03</span>Resolved Decisions</a>
+  <div class="sb-section">Free Layer</div>
+  <a class="sb-link" href="#github-strategy"><span class="sb-n">04</span>GitHub as Distribution Pillar</a>
+  <a class="sb-link" href="#kit-sequence"><span class="sb-n">05</span>Kit Sequence (3+3+4)</a>
+  <a class="sb-link" href="#kit-01"><span class="sb-n">06</span>Kit 01 Full Spec</a>
+  <a class="sb-link" href="#kit-02"><span class="sb-n">07</span>Kit 02 Full Spec</a>
+  <a class="sb-link" href="#kit-03"><span class="sb-n">08</span>Kit 03 Full Spec</a>
+  <a class="sb-link" href="#packaging"><span class="sb-n">09</span>Mandatory File Standard</a>
+  <div class="sb-section">Judgment Layer</div>
+  <a class="sb-link" href="#naming"><span class="sb-n">10</span>What to Call It</a>
+  <a class="sb-link" href="#v0"><span class="sb-n">11</span>v0 — What to Build First</a>
+  <a class="sb-link" href="#datamodel"><span class="sb-n">12</span>v0 Data Model</a>
+  <a class="sb-link" href="#taste-profile"><span class="sb-n">13</span>Taste Profile Layer</a>
+  <div class="sb-section">Execution</div>
+  <a class="sb-link" href="#roadmap"><span class="sb-n">14</span>Phased Roadmap</a>
+  <a class="sb-link" href="#checklist"><span class="sb-n">15</span>Day 1 Checklist</a>
+</nav>
+
+<main class="main">
+
+<div class="hero">
+  <div class="badge">⚡ Concrete Execution Strategy — April 2026</div>
+  <h1 class="hero-h1" style="background:linear-gradient(135deg,var(--am),var(--or));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Free Layer +<br>Judgment Layer</h1>
+  <p class="hero-sub">Synthesized from two agent analyses. Where they agree, where they differ, and the one point of genuine disagreement that changes the kit launch order. Then: the concrete execution plan — phased roadmap, data model, first 3 kit specs, and the v0 judgment design.</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.6rem 1rem;font-size:.83rem;color:var(--td)"><strong style="color:var(--am)">3</strong> kits first wave</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.6rem 1rem;font-size:.83rem;color:var(--td)"><strong style="color:var(--pu)">5</strong> judgment signal types</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.6rem 1rem;font-size:.83rem;color:var(--td)"><strong style="color:var(--gr)">Week 1</strong> behavioral logging starts</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.6rem 1rem;font-size:.83rem;color:var(--td)"><strong style="color:var(--bl)">v0</strong> judgment = 4 hours of work</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+  AGENT ANALYSIS SECTION
+  ══════════════════════════════════════════ -->
+
+<section id="compare">
+  <div class="sn">// 01 — AGENT ANALYSIS: WHERE BOTH AGREED</div>
+  <h2 class="sh">The Two Analyses Reached the Same Core Conclusions</h2>
+  <p class="sd">Before getting to the one real disagreement, here is a clear statement of what both agent analyses agreed on — because the areas of agreement are the high-confidence foundations of this strategy.</p>
+
+  <div class="agent-compare">
+    <div class="ac-card" style="border-top:3px solid var(--bl)">
+      <div class="ac-label" style="color:var(--bl)">🤖 Agent A (Previous Analysis)</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Simple voting is worthless. Contextual evidence objects are the moat.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Behavioral signals (silent, automatic) are more valuable than explicit votes.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Bootstrap with Human Taste Council editorial data before organic data exists.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>GitHub is the highest-leverage distribution action available right now.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Collections must be job-shaped: "for AI copilot sidebars" not "navigation icons."</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>MCP outcome logging is automatic evidence collection — no user UX needed.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Do not build the full intelligence system before traffic exists.</div>
+    </div>
+    <div class="ac-card" style="border-top:3px solid var(--pu)">
+      <div class="ac-label" style="color:var(--pu)">🤖 Agent B (New Analysis)</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Same: votes are directionally right but "likes" are too weak to build on.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Same: pairwise comparisons and bundle coherence votes over abstract rating.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Same: harvest export/keep/replace behavior as primary signal.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Same: GitHub is a strong high-conviction move. Do it before broad listing.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Same: job-shaped naming. Template: "what are you building?" not "what icon type?"</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Adds: "taste profiles" — team-level preference patterns as a distinct moat layer.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span>Network effects only work if there is a network. Do not overbuild before traffic.</div>
+    </div>
+  </div>
+
+  <div class="synth">
+    <div class="synth-label">Synthesis</div>
+    <div class="synth-title">The core thesis is confirmed by both analyses independently.</div>
+    <div class="synth-body">Both agents — working without seeing each other's output — reached the same destinations: the <strong>judgment layer is the long-term moat</strong>, the <strong>free GitHub layer is the distribution engine</strong>, and the <strong>sequencing must put distribution before intelligence-building</strong>. When two independent analyses converge, that convergence is genuine signal. Build in that order.</div>
+  </div>
+</section>
+
+<section id="disagree">
+  <div class="sn">// 02 — WHERE THE ANALYSES GENUINELY DISAGREE</div>
+  <h2 class="sh">One Real Disagreement: Which Kit Ships First</h2>
+  <p class="sd">Agent B says start with 3 universal kits (Dashboard Navigation, Status Feedback, Auth &amp; Security). Agent A says start with the AI SaaS Dashboard kit because it has unique icons no competitor has. This is a real strategic choice with different logic behind each position.</p>
+
+  <div class="agent-compare">
+    <div class="ac-card" style="border-top:3px solid var(--bl)">
+      <div class="ac-label" style="color:var(--bl)">Agent A position: AI SaaS Dashboard first</div>
+      <div class="ac-point"><span class="ac-icon">→</span>The AI SaaS Dashboard kit contains icons that literally do not exist elsewhere (RAG pipeline, vector-db, orchestrator, guardrail, agent-memory).</div>
+      <div class="ac-point"><span class="ac-icon">→</span>A "Dashboard Navigation" kit competes directly with Lucide, Heroicons, and Tabler on their home turf. You will not win on generic territory.</div>
+      <div class="ac-point"><span class="ac-icon">→</span>The differentiation story requires the AI kit. Without it, Supericons is just another icon curator. With it, Supericons is the only icon system that understands AI product UIs.</div>
+      <div class="ac-point"><span class="ac-icon">→</span>The AI kit attracts the highest-value builders — the ones most likely to use the MCP and pay for premium collections.</div>
+    </div>
+    <div class="ac-card" style="border-top:3px solid var(--pu)">
+      <div class="ac-label" style="color:var(--pu)">Agent B position: Universal kits first</div>
+      <div class="ac-point"><span class="ac-icon">→</span>Dashboard Nav, Status Feedback, Auth &amp; Security solve universal UI jobs that every developer needs regardless of what they are building.</div>
+      <div class="ac-point"><span class="ac-icon">→</span>Universal appeal means more stars, broader initial distribution, and more diverse behavioral signal data early.</div>
+      <div class="ac-point"><span class="ac-icon">→</span>Starting with the niche AI kit risks shallow reach at launch. Most developers are not building AI products specifically.</div>
+      <div class="ac-point"><span class="ac-icon">→</span>Quality depth matters more than positioning in the first 3 kits. Universal kits are easier to curate well on a tight timeline.</div>
+    </div>
+  </div>
+
+  <div class="disagree">
+    <div class="disagree-label">My resolved position: Hybrid sequence — AI kit first, then universals</div>
+    <div class="disagree-body">
+      Both arguments are correct about different things. Agent A is right that <strong>the AI SaaS Dashboard kit is the only differentiator</strong> that establishes Supericons as a distinct identity rather than a curation site. Agent B is right that <strong>universal kits generate broader reach and are faster to curate well</strong>.<br><br>
+      The resolution: <strong>ship the AI SaaS Dashboard kit first (Kit 01), then immediately follow with Dashboard Navigation (Kit 02) and Status Feedback (Kit 03)</strong> in the same week or the following week. The AI kit leads the narrative and establishes identity. The universal kits that follow immediately show Supericons also covers the fundamentals. Anyone who discovers the AI kit via X or r/LocalLLaMA finds two more well-packaged kits already waiting.<br><br>
+      Do NOT do it the other way around. Universal kits first means Supericons introduces itself as "another icon curator" and then has to re-explain what makes it different later. That is a harder messaging problem.
+    </div>
+  </div>
+</section>
+
+<section id="resolved">
+  <div class="sn">// 03 — ALL RESOLVED DECISIONS (LOCKED)</div>
+  <h2 class="sh">The Locked Strategic Decisions</h2>
+  <p class="sd">These are not open questions. Both analyses resolved them in the same direction. Treat these as settled.</p>
+
+  <table>
+    <thead><tr><th>Decision</th><th>Resolved Answer</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Build voting or judgment layer?</strong></td><td>Judgment layer. Never call it "voting" internally. The right internal name is taste graph or evidence layer.</td><td>Both agents</td></tr>
+      <tr><td><strong>Start with full judgment system or lightweight v0?</strong></td><td>v0. Behavioral logging + "best for" tags + kit domain question. Total: ~6 hours of work. Full system comes after traffic exists.</td><td>Both agents</td></tr>
+      <tr><td><strong>Simple likes or contextual signals?</strong></td><td>Contextual signals only. Every signal stores: task, surface, domain, alternatives shown, and outcome. A signal without context is noise.</td><td>Both agents</td></tr>
+      <tr><td><strong>How many kits to launch at once?</strong></td><td>3 in wave 1. Quality beats breadth. Total of 10 is the target, but ship 3 outstanding kits first.</td><td>Agent B, confirmed</td></tr>
+      <tr><td><strong>Which kit ships first?</strong></td><td>AI SaaS Dashboard (unique differentiation), then Dashboard Navigation and Status Feedback immediately after.</td><td>Resolved disagreement above</td></tr>
+      <tr><td><strong>Free kits use free library icons or Supericons premium?</strong></td><td>Free kits use free libraries (Lucide, Phosphor, Heroicons, Tabler). Premium Supericons stays the upsell. Free = distribution. Premium = revenue.</td><td>Agent B</td></tr>
+      <tr><td><strong>When to list in MCP directories?</strong></td><td>After the first GitHub kit is live. Do not list before having a public artifact that validates the product exists.</td><td>Context from marketing_distribution_kit.html</td></tr>
+      <tr><td><strong>What is the free/premium architecture?</strong></td><td>Free layer = distribution + trust + data collection. Premium layer = speed + taste + motion + proprietary agent workflows.</td><td>Agent B</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════
+  FREE LAYER
+  ══════════════════════════════════════════ -->
+
+<section id="github-strategy">
+  <div class="sn">// 04 — FREE LAYER: GITHUB AS DISTRIBUTION PILLAR</div>
+  <h2 class="sh">The Architecture of the Free Layer</h2>
+  <p class="sd">The GitHub repos are not just marketing. They are the product packaging for the free tier and the primary data collection surface for the judgment layer. They have to be excellent, not just functional.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1.5rem 0">
+    <div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);margin-bottom:.5rem">What GitHub Provides</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.65">Trust signal. LLM citation surface. Developer discoverability. Backlinks. Stars that compound passively. Community goodwill. A path from free to paid that feels natural, not coercive. Permanent traffic after a single publication act.</div>
+    </div>
+    <div style="background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.2);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bl);margin-bottom:.5rem">What the Kits Provide to SI</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.65">First behavioral signals from real builders. Kit download domain survey data. CTA-driven conversion to supericons.dev. Proof of quality that validates MCP listing applications (Smithery, GitHub MCP Registry, Glama). A public demonstration that Supericons curates, not just indexes.</div>
+    </div>
+    <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pu);margin-bottom:.5rem">The Conversion Chain</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.65">GitHub star → README CTA → supericons.dev free account → behavioral signal collection → post-copy context tag → use of animated version or MCP → premium conversion. Each step is optional. Each step that happens generates data that makes the next step more likely for future users.</div>
+    </div>
+  </div>
+
+  <div class="alert a-am">
+    <span class="alert-i">⚠️</span>
+    <div><strong>The quality bar for every kit:</strong> "I would not have assembled this exact set this fast on my own." If a developer can find equivalent icons in 5 minutes of searching Lucide.dev, the kit adds no value. The curation rationale in usage-map.md is what makes the kit irreplaceable — not the icons themselves. The icons are the contents. The rationale is the product.</div>
+  </div>
+</section>
+
+<section id="kit-sequence">
+  <div class="sn">// 05 — KIT SEQUENCE: 3 + 3 + 4</div>
+  <h2 class="sh">Three Waves, Not Ten at Once</h2>
+  <p class="sd">Agent B's insight is correct: shipping 10 kits at launch risks shallow curation on all 10. The right approach is three waves, each informed by data from the previous wave.</p>
+
+  <div style="display:flex;flex-direction:column;gap:1.25rem;margin:1.5rem 0">
+
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+      <div style="background:rgba(248,113,113,.08);border-bottom:1px solid rgba(248,113,113,.2);padding:1rem 1.4rem;display:flex;align-items:center;gap:1rem">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--re)">Wave 1 — Weeks 1-2</div>
+        <span class="tag t-re">Ship now</span>
+        <span class="tag t-am">Depth over breadth</span>
+      </div>
+      <div style="padding:1.25rem 1.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 01: AI SaaS Dashboard &amp; Copilot</div>
+          <div style="font-size:.8rem;color:var(--td)">The differentiation kit. Icons that exist nowhere else. Ships first to establish identity. r/LocalLLaMA, r/ClaudeAI, Cursor Discord are the distribution channels.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 02: Dashboard Navigation 50</div>
+          <div style="font-size:.8rem;color:var(--td)">The universal coverage kit. Every SaaS needs these. Ships immediately after Kit 01 so the AI-focused audience finds a "normal" complement waiting.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 03: Status, Feedback &amp; States</div>
+          <div style="font-size:.8rem;color:var(--td)">The forgotten-until-last-minute kit. Loading, error, empty, retrying states that every product needs but few nail. r/webdev gold.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+      <div style="background:rgba(96,165,250,.06);border-bottom:1px solid rgba(96,165,250,.2);padding:1rem 1.4rem;display:flex;align-items:center;gap:1rem">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--bl)">Wave 2 — Weeks 3-5</div>
+        <span class="tag t-bl">Supericons wedge</span>
+        <span class="tag t-gr">Data-informed curation</span>
+      </div>
+      <div style="padding:1.25rem 1.4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 04: Auth &amp; Security</div>
+          <div style="font-size:.8rem;color:var(--td)">Login flows, 2FA, permissions, compliance. Trust-critical surface — gets the iconography right matters for every product.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 05: Data &amp; Analytics</div>
+          <div style="font-size:.8rem;color:var(--td)">Charts, funnels, cohorts, KPIs. Dark-mode dashboard optimized. Every analytics SaaS needs these and none are curated well elsewhere.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.25rem">Kit 06: Ecommerce Essentials</div>
+          <div style="font-size:.8rem;color:var(--td)">Cart, checkout, shipping, refunds. Full buyer journey. Largest addressable audience of all kits. Aligns Supericons with mainstream web builders.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+      <div style="background:rgba(167,139,250,.06);border-bottom:1px solid rgba(167,139,250,.2);padding:1rem 1.4rem;display:flex;align-items:center;gap:1rem">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--pu)">Wave 3 — Weeks 6-10</div>
+        <span class="tag t-pu">Vertical kits</span>
+        <span class="tag t-am">Most brandable, most shareable</span>
+      </div>
+      <div style="padding:1.25rem 1.4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
+        <div>
+          <div style="font-weight:700;font-size:.88rem;color:var(--t);margin-bottom:.2rem">Kit 07: Developer Tools</div>
+          <div style="font-size:.78rem;color:var(--td)">CLI, pipelines, devops. HN + r/devops audience.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.88rem;color:var(--t);margin-bottom:.2rem">Kit 08: Fintech &amp; Payments</div>
+          <div style="font-size:.78rem;color:var(--td)">Compliance-safe icons. High-value audience converts to paid.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.88rem;color:var(--t);margin-bottom:.2rem">Kit 09: Dating &amp; Social</div>
+          <div style="font-size:.78rem;color:var(--td)">Most opinionated kit. Great X viral potential.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.88rem;color:var(--t);margin-bottom:.2rem">Kit 10: Healthcare</div>
+          <div style="font-size:.78rem;color:var(--td)">Most underserved category. Clinically appropriate choices.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="alert a-bl">
+    <span class="alert-i">📊</span>
+    <div><strong>Why waves:</strong> Wave 1 data tells you which domains are over-represented in your early audience. If 80% of Kit 01-03 downloaders are AI tool builders, that validates doubling down on the AI wedge in Wave 2. If 60% are standard SaaS builders, that validates Ecommerce and Fintech moving up. Let the data from Wave 1 inform the exact order of Wave 2.</div>
+  </div>
+</section>
+
+<section id="kit-01">
+  <div class="sn">// 06 — KIT 01 FULL SPEC: AI SAAS DASHBOARD &amp; COPILOT</div>
+  <h2 class="sh">Kit 01 — The Differentiation Kit</h2>
+
+  <div class="kit-spec">
+    <div class="ks-hdr">
+      <div class="ks-name">AI SaaS Dashboard &amp; Copilot — 50 Icons</div>
+      <div style="display:flex;gap:.5rem"><span class="tag t-re">Ship first</span><span class="tag t-pu">Unique icons</span><span class="tag t-am">Agentic AI Kit source</span></div>
+    </div>
+    <div class="ks-body">
+      <div>
+        <div class="ks-col-title">Icon List (50 total)</div>
+        <div class="ks-icons">
+          <strong style="color:var(--re)">Agentic vocabulary (unique — no other library has these):</strong><br>
+          rag-pipeline, vector-database, model-temperature, token-cost, orchestrator, guardrail, agent-memory, copilot-cursor, trace-span, handoff, prompt-template, embedding-layer, inference-call, latency-score, context-window, hallucination-flag, approval-gate, tool-call<br><br>
+          <strong style="color:var(--bl)">Standard dashboard nav (from free libraries, curated):</strong><br>
+          sidebar-collapse, home, search, notification-bell, user-circle, settings-gear, help-circle, keyboard-shortcut<br><br>
+          <strong style="color:var(--gr)">Dashboard actions:</strong><br>
+          filter, sort, refresh, export, import, share, pin, archive<br><br>
+          <strong style="color:var(--am)">Status and feedback:</strong><br>
+          spinner, check-circle, x-circle, warning-triangle, info, empty-state, rate-limited, retrying<br><br>
+          <strong style="color:var(--te)">Data display:</strong><br>
+          chart-bar, chart-line, trend-up, trend-down, metric-card, percentage, target, goal
+        </div>
+      </div>
+      <div>
+        <div class="ks-col-title">Required Files</div>
+        <div class="ks-files">
+          <div class="ks-file"><span class="ks-file-req">REQ</span>README.md (with 1200x630 dark-mode preview image)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>icons/ (50 individual SVG, kebab-case names)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>sprite.svg (all 50 as symbol defs)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>preview.html (self-contained, dark bg grid)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>tokens.json (size scale, stroke, color vars)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>usage-map.md (rationale per icon — this is the product)</div>
+          <div class="ks-file"><span class="ks-file-req">REQ</span>ATTRIBUTION.md (source library credits)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>components/react/ (JSX + TypeScript)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>components/vue/ (.vue SFCs)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>components/svelte/ (Svelte 5)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>package.json (npm installable)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>manifest-lite.json (intent, aliases, surface per icon)</div>
+          <div class="ks-file"><span class="ks-file-opt">OPT</span>mcp-example.md (how to use with Supericons MCP)</div>
+        </div>
+        <div class="ks-sources">
+          <span style="font-size:.72rem;color:var(--tf);margin-right:.25rem">Sources:</span>
+          <span class="tag t-pu">Supericons Agentic AI Kit (exclusive)</span>
+          <span class="tag t-bl">Lucide</span>
+          <span class="tag t-gr">Heroicons</span>
+        </div>
+        <div style="margin-top:.75rem;padding:.75rem;background:var(--bg-s);border-radius:8px;border:1px solid var(--bd2)">
+          <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.35rem">CTA in README footer</div>
+          <div style="font-size:.8rem;color:var(--td)">"Want animated hover versions of these icons? Available in the Motion Lab collection at supericons.dev — free account, no card required."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kit-02">
+  <div class="sn">// 07 — KIT 02 FULL SPEC: DASHBOARD NAVIGATION 50</div>
+  <h2 class="sh">Kit 02 — The Universal Coverage Kit</h2>
+
+  <div class="kit-spec">
+    <div class="ks-hdr">
+      <div class="ks-name">Dashboard Navigation 50</div>
+      <div style="display:flex;gap:.5rem"><span class="tag t-am">Ship week 1</span><span class="tag t-gr">Broadest appeal</span><span class="tag t-bl">r/webdev + r/reactjs</span></div>
+    </div>
+    <div class="ks-body">
+      <div>
+        <div class="ks-col-title">Icon List (50 total)</div>
+        <div class="ks-icons">
+          <strong style="color:var(--bl)">Sidebar navigation:</strong><br>
+          home, dashboard, analytics, reports, projects, tasks, calendar, messages, notifications, team, settings, help<br><br>
+          <strong style="color:var(--gr)">Top bar:</strong><br>
+          search, command-palette, notification-bell, user-avatar, chevron-down, menu-hamburger, close-x<br><br>
+          <strong style="color:var(--am)">Admin section:</strong><br>
+          users, roles, billing, audit-log, integrations, api-keys, webhooks, usage<br><br>
+          <strong style="color:var(--pu)">Navigation actions:</strong><br>
+          sidebar-collapse, sidebar-expand, breadcrumb-separator, back-arrow, forward-arrow, external-link, anchor<br><br>
+          <strong style="color:var(--te)">Utility:</strong><br>
+          drag-handle, sort-handle, resize-handle, grid-view, list-view, fullscreen, minimize, pin, unpin, bookmark, tag, label<br><br>
+          <strong style="color:var(--or)">State indicators:</strong><br>
+          active-dot, badge-count, new-badge, beta-badge, locked, premium-crown
+        </div>
+      </div>
+      <div>
+        <div class="ks-col-title">Curation Rationale (usage-map.md thesis)</div>
+        <div style="background:var(--bg-s);border-radius:8px;padding:.85rem;font-size:.82rem;color:var(--td);line-height:1.65;margin-bottom:.75rem">
+          Every icon in this kit was chosen by asking: "Would a senior designer choose this specific icon over the 6 alternatives in its category?" Where multiple libraries had competing options (e.g., Lucide's `settings` vs Phosphor's `gear` vs Heroicons' `cog`), the selection rationale is documented in usage-map.md. This is the intelligence layer hidden inside a free SVG kit.
+        </div>
+        <div class="ks-col-title">Sources</div>
+        <div class="ks-sources">
+          <span class="tag t-bl">Lucide</span>
+          <span class="tag t-pu">Phosphor</span>
+          <span class="tag t-am">Tabler</span>
+        </div>
+        <div style="margin-top:.75rem">
+          <div style="font-size:.72rem;color:var(--tf);margin-bottom:.3rem">Distribution channels for Kit 02:</div>
+          <span class="tag t-bl">r/webdev</span><span class="tag t-pu">r/reactjs</span><span class="tag t-gr">Reactiflux Discord</span><span class="tag t-am">Figma Community file</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kit-03">
+  <div class="sn">// 08 — KIT 03 FULL SPEC: STATUS, FEEDBACK &amp; STATES</div>
+  <h2 class="sh">Kit 03 — The Forgotten-Until-Last-Minute Kit</h2>
+
+  <div class="kit-spec">
+    <div class="ks-hdr">
+      <div class="ks-name">Status, Feedback &amp; States — 50 Icons</div>
+      <div style="display:flex;gap:.5rem"><span class="tag t-am">Ship week 1-2</span><span class="tag t-te">Evergreen SEO</span><span class="tag t-gr">Highest long-tail search</span></div>
+    </div>
+    <div class="ks-body">
+      <div>
+        <div class="ks-col-title">Icon List (50 total)</div>
+        <div class="ks-icons">
+          <strong style="color:var(--gr)">Success &amp; positive:</strong><br>
+          check-circle, check-badge, verified, complete, approved, published<br><br>
+          <strong style="color:var(--re)">Error &amp; failure:</strong><br>
+          x-circle, error-triangle, failed, rejected, blocked, forbidden<br><br>
+          <strong style="color:var(--am)">Warning &amp; attention:</strong><br>
+          warning-triangle, info-circle, alert-bell, caution<br><br>
+          <strong style="color:var(--bl)">Loading &amp; processing:</strong><br>
+          spinner, loading-dots, syncing, uploading, downloading, processing, queued<br><br>
+          <strong style="color:var(--td)">Empty &amp; zero state:</strong><br>
+          empty-box, no-results, no-data, inbox-zero, no-notifications, first-time<br><br>
+          <strong style="color:var(--pu)">Lifecycle stages:</strong><br>
+          draft, pending, scheduled, active, paused, cancelled, archived, deprecated, expired, beta, new, coming-soon<br><br>
+          <strong style="color:var(--or)">System states:</strong><br>
+          offline, degraded, partial-outage, rate-limited, retrying, timeout
+        </div>
+      </div>
+      <div>
+        <div class="ks-col-title">Why Kit 03 Is Strategically Important</div>
+        <div style="font-size:.83rem;color:var(--td);line-height:1.7;margin-bottom:.75rem">Status and state icons are searched constantly — developers remember they need them at 11pm before a launch. High long-tail SEO value. No other library curates these specifically for SaaS products (most give you raw icons without the stateful vocabulary). This kit converts to supericons.dev at higher rates because users hit it at a moment of active need.</div>
+        <div class="ks-sources">
+          <span class="tag t-bl">Lucide</span>
+          <span class="tag t-gr">Heroicons</span>
+          <span class="tag t-am">Material Symbols</span>
+        </div>
+        <div style="margin-top:.75rem">
+          <div style="font-size:.72rem;color:var(--tf);margin-bottom:.3rem">Distribution channels for Kit 03:</div>
+          <span class="tag t-bl">r/webdev</span><span class="tag t-pu">r/SaaS</span><span class="tag t-gr">dev.to tutorial post</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packaging">
+  <div class="sn">// 09 — MANDATORY FILE STANDARD FOR ALL KITS</div>
+  <h2 class="sh">Every Kit Ships With This or It Does Not Ship</h2>
+  <p class="sd">This is the quality gate. A kit that ships without these files is worse than no kit — it trains developers to expect low quality from Supericons repos.</p>
+
+  <table>
+    <thead><tr><th>File</th><th>Purpose</th><th>Quality Rule</th><th>Required?</th></tr></thead>
+    <tbody>
+      <tr><td><code>README.md</code></td><td>First impression. Determines GitHub stars.</td><td>Must have a 1200x630 dark-mode icon preview image embedded at the top. No preview = 80% fewer stars.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>icons/</code></td><td>The SVG assets</td><td>kebab-case filenames. 24x24 viewBox. Consistent stroke weight. No baked-in colors — use currentColor.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>sprite.svg</code></td><td>Performance-optimized single file</td><td>All icons as &lt;symbol&gt; defs. Referenced via &lt;use href="#icon-name"&gt;. Named identically to individual files.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>preview.html</code></td><td>Visual demo — the "wow" file</td><td>Self-contained. No server needed. Dark background. Icon names below each icon. Copy-name-to-clipboard on click.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>tokens.json</code></td><td>Design system integration</td><td>Size scale (16/20/24/32), stroke width, color tokens. Enables import into Figma tokens and style-dictionary.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>usage-map.md</code></td><td>The intelligence layer in the free kit</td><td>One entry per icon: canonical use case, do-not-use cases, what it was chosen over and why. This is the product, not just documentation.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>ATTRIBUTION.md</code></td><td>Source library credits</td><td>List each source library, its license, and which icons came from it. MIT for all sources. Required for legal integrity.</td><td><span class="tag t-re">Required</span></td></tr>
+      <tr><td><code>components/react/</code></td><td>React developer adoption</td><td>One .tsx file per icon. Props: size, color, strokeWidth, className. Named exports. Worth 50+ stars on its own.</td><td><span class="tag t-am">Wave 1 optional, Wave 2 required</span></td></tr>
+      <tr><td><code>manifest-lite.json</code></td><td>Agent-readable metadata</td><td>Per icon: intent, semantic_aliases[], ui_surface[], contraindications[]. Connects the free kit to the MCP intelligence layer.</td><td><span class="tag t-bl">Kit 01 only (initially)</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════
+  JUDGMENT LAYER
+  ══════════════════════════════════════════ -->
+
+<section id="naming">
+  <div class="sn">// 10 — JUDGMENT LAYER: WHAT TO CALL IT</div>
+  <h2 class="sh">Terminology That Changes How the Team Builds It</h2>
+  <p class="sd">Both agents agreed: do not call this "voting" internally. The word "voting" implies a popularity contest. The goal is not popularity — it is contextual judgment. The naming shapes what gets built.</p>
+
+  <div class="agent-compare">
+    <div class="ac-card" style="border-top:3px solid var(--re)">
+      <div class="ac-label" style="color:var(--re)">Names to avoid and why</div>
+      <div class="ac-point"><span class="ac-icon">✗</span><strong>"Voting system"</strong> — implies popularity contest. Team will build upvotes.</div>
+      <div class="ac-point"><span class="ac-icon">✗</span><strong>"Rating system"</strong> — implies 1-5 stars. Meaningless without context.</div>
+      <div class="ac-point"><span class="ac-icon">✗</span><strong>"Likes"</strong> — Dribbble has this. Zero competitive advantage.</div>
+      <div class="ac-point"><span class="ac-icon">✗</span><strong>"Popularity layer"</strong> — popular icons are not always right for the job. Wrong signal.</div>
+    </div>
+    <div class="ac-card" style="border-top:3px solid var(--gr)">
+      <div class="ac-label" style="color:var(--gr)">Names to use and what they unlock</div>
+      <div class="ac-point"><span class="ac-icon">✓</span><strong>"Judgment layer"</strong> — implies contextual evaluation, not just preference. Builds the right thing.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span><strong>"Taste graph"</strong> — implies a connected network of preferences, suitable for team-level analysis.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span><strong>"Evidence layer"</strong> — implies stored proof, not just opinion. Agent-facing framing.</div>
+      <div class="ac-point"><span class="ac-icon">✓</span><strong>"Signal collection"</strong> — technical framing for behavioral logging. Makes it clear this is a data infrastructure, not a UX feature.</div>
+    </div>
+  </div>
+</section>
+
+<section id="v0">
+  <div class="sn">// 11 — JUDGMENT LAYER v0: WHAT TO BUILD FIRST</div>
+  <h2 class="sh">v0 Is ~6 Hours of Work. No Excuses to Defer It.</h2>
+  <p class="sd">Both analyses agreed: build a lightweight v0 now, not a grand system. Here is exactly what v0 means — specific tools, specific implementation, specific data captured.</p>
+
+  <div class="phase">
+    <div class="phase-hdr">
+      <div class="phase-num" style="background:rgba(52,211,153,.15);border:2px solid var(--gr);color:var(--gr)">v0</div>
+      <div>
+        <div class="phase-title">Behavioral Logging (4 hours)</div>
+        <div class="phase-sub">Add to supericons.dev search + copy flow. Captures everything automatically with zero user friction.</div>
+      </div>
+    </div>
+    <div class="phase-items">
+      <div class="phase-item">
+        <div class="pi-title">What to log on every icon copy event <span class="tag t-gr">Required v0</span></div>
+        <div class="pi-desc"><code>icon_id</code>, <code>search_query_that_found_it</code>, <code>position_in_results</code> (was it the 1st result or 8th?), <code>time_to_copy_ms</code> (fast = strong intent signal), <code>session_domain</code> (if URL context is available), <code>timestamp</code>, <code>anon_session_hash</code>. Store in Supabase. Privacy-safe: no PII ever.</div>
+      </div>
+      <div class="phase-item">
+        <div class="pi-title">Return signal after 14 days <span class="tag t-gr">Required v0</span></div>
+        <div class="pi-desc">If a user who copied an icon returns to the site and searches for/copies a different icon to replace it, that "replacement" event is logged against the original copy. <code>retained_days: null</code> (still kept) vs <code>replaced_with: "tabler:arrow-left"</code> (swapped out). Retention = strong quality signal. Fast replacement = weak fit signal.</div>
+      </div>
+      <div class="phase-item">
+        <div class="pi-title">Kit download domain question (2 hours) <span class="tag t-gr">Required v0</span></div>
+        <div class="pi-desc">On the kit download confirmation page or email: single question, 4 radio options: "AI tool / SaaS product / Internal tool / Other." Tagged against the kit ID and download timestamp. Gives domain context to every download from day one. Even 20% response rate is rich data volume.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-hdr">
+      <div class="phase-num" style="background:rgba(96,165,250,.15);border:2px solid var(--bl);color:var(--bl)">v0+</div>
+      <div>
+        <div class="phase-title">Post-Copy Context Tag (1 day UI work, 4-6 weeks after launch)</div>
+        <div class="phase-sub">Only build this after 500+ monthly active users. Low participation is acceptable at volume — not worth building before volume exists.</div>
+      </div>
+    </div>
+    <div class="phase-items">
+      <div class="phase-item">
+        <div class="pi-title">"What is this icon for?" — one-tap chip <span class="tag t-bl">v0+ (not now)</span></div>
+        <div class="pi-desc">After a user copies an icon, a small chip appears (not a modal, not a toast — a dismissable chip attached to the icon card): "What is this for? <strong>Sidebar nav</strong> | <strong>Status badge</strong> | <strong>Button</strong> | <strong>Empty state</strong> | <strong>Skip</strong>." One tap. Chip disappears. Never shown again for the same icon to the same session hash. Attaches a <code>ui_surface</code> tag to the behavioral copy event. Significantly enriches the evidence object with almost zero friction.</div>
+      </div>
+      <div class="phase-item">
+        <div class="pi-title">Pairwise comparison (Week 12+ only) <span class="tag t-pu">v1 (not now)</span></div>
+        <div class="pi-desc">Show two icons side by side: "For a billing sidebar — which fits better?" Only trigger this for icons where behavioral data is inconclusive (both A and B have similar copy rates for similar search queries). Building pairwise before you know which pairs are contested is wasted effort. Wait for behavioral data to tell you where the ambiguity is.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="datamodel">
+  <div class="sn">// 12 — JUDGMENT LAYER v0: DATA MODEL</div>
+  <h2 class="sh">What v0 Actually Stores</h2>
+  <p class="sd">This is the complete Supabase table spec for the v0 judgment layer. Two tables: one for evidence objects, one for daily aggregates. Nothing more is needed in v0.</p>
+
+  <div class="schema">
+<span class="c">-- Table: icon_evidence (one row per signal event)</span>
+
+<span class="k">id</span>              <span class="s">uuid</span>       <span class="c">-- primary key</span>
+<span class="k">signal_type</span>     <span class="s">text</span>       <span class="c">-- 'copy' | 'replace' | 'kit_download' | 'mcp_call' | 'editorial'</span>
+<span class="k">icon_id</span>         <span class="s">text</span>       <span class="c">-- 'lucide:arrow-right' (library:name format)</span>
+<span class="k">collection_id</span>   <span class="s">text</span>       <span class="c">-- 'kit-ai-dashboard' if from a kit, null otherwise</span>
+<span class="k">search_query</span>    <span class="s">text</span>       <span class="c">-- what the user searched to find this icon</span>
+<span class="k">result_position</span> <span class="s">int</span>        <span class="c">-- position in search results when copied (1 = top result)</span>
+<span class="k">time_to_copy_ms</span> <span class="s">int</span>        <span class="c">-- milliseconds from page load to copy event (intent signal)</span>
+<span class="k">ui_surface</span>      <span class="s">text</span>       <span class="c">-- 'sidebar' | 'button' | 'status' | 'empty-state' | null</span>
+<span class="k">domain</span>          <span class="s">text</span>       <span class="c">-- 'ai-tool' | 'saas' | 'fintech' | null (from kit download question)</span>
+<span class="k">replaced_with</span>   <span class="s">text</span>       <span class="c">-- icon_id that replaced this one. null = still retained.</span>
+<span class="k">retained_days</span>   <span class="s">int</span>        <span class="c">-- days since copy until replacement. null = not yet replaced.</span>
+<span class="k">agent_converged</span> <span class="s">bool</span>       <span class="c">-- for mcp_call signals: did agent stop requesting after this?</span>
+<span class="k">session_hash</span>    <span class="s">text</span>       <span class="c">-- one-way hash of session+date. never reversible to user identity.</span>
+<span class="k">created_at</span>      <span class="s">timestamptz</span>
+
+<span class="c">-- Table: icon_scores (daily aggregate, computed from icon_evidence)</span>
+
+<span class="k">icon_id</span>              <span class="s">text</span>
+<span class="k">copy_count_30d</span>       <span class="s">int</span>        <span class="c">-- copies in last 30 days</span>
+<span class="k">retention_rate</span>       <span class="s">float</span>      <span class="c">-- % of copies where icon was NOT replaced within 30 days</span>
+<span class="k">top_search_queries</span>   <span class="s">jsonb</span>      <span class="c">-- ["billing icon", "lock icon", "secure"] sorted by freq</span>
+<span class="k">top_ui_surfaces</span>      <span class="s">jsonb</span>      <span class="c">-- {"sidebar": 0.42, "button": 0.31, "badge": 0.27}</span>
+<span class="k">top_domains</span>          <span class="s">jsonb</span>      <span class="c">-- {"saas": 0.61, "ai-tool": 0.29, "fintech": 0.10}</span>
+<span class="k">avg_result_position</span>  <span class="s">float</span>      <span class="c">-- average position when copied (lower = stronger match to query)</span>
+<span class="k">mcp_acceptance_rate</span>  <span class="s">float</span>      <span class="c">-- % of MCP calls where this icon led to task convergence</span>
+<span class="k">calculated_at</span>        <span class="s">timestamptz</span>
+  </div>
+
+  <div class="alert a-gr">
+    <span class="alert-i">✅</span>
+    <div><strong>This is the entire v0 data model.</strong> Two tables. No ML. No complex ranking algorithms. The <code>icon_scores</code> table is rebuilt daily via a simple SQL aggregation job. After 90 days of data, the patterns in these two tables already produce better icon recommendations than any static collection. After 12 months, this data is your primary competitive moat.</div>
+  </div>
+</section>
+
+<section id="taste-profile">
+  <div class="sn">// 13 — JUDGMENT LAYER: TASTE PROFILE (AGENT B CONTRIBUTION)</div>
+  <h2 class="sh">Team-Level Taste Profiles — A Layer Agent A Undersold</h2>
+  <p class="sd">Agent B identified something important that the previous analysis mentioned but did not develop: "taste profiles" — not just individual user signals, but team-level aesthetic preference patterns. This is an additional moat layer that compounds with the judgment data.</p>
+
+  <div class="synth">
+    <div class="synth-label">What taste profiles are</div>
+    <div class="synth-title">A team's icon preferences are a stable, learnable pattern — not random noise.</div>
+    <div class="synth-body">An enterprise team building a developer tools product has consistent preferences: high-precision, minimal, sharp, no decorative flourishes. A consumer startup building a social app prefers: expressive, filled, slightly playful, high contrast. These preferences are detectable from behavioral signals <strong>at the team/workspace level</strong>, not just the individual user level.<br><br>
+    If Supericons can detect "this workspace prefers minimal Lucide-style over filled Phosphor-style for their AI dashboard," the MCP can return: "Based on your team's past selections, I recommend the Lucide variant of these 8 icons rather than the Phosphor equivalents." <strong>That specificity is what makes the MCP indispensable rather than convenient.</strong></div>
+  </div>
+
+  <div class="phase-items" style="margin-left:0">
+    <div class="phase-item">
+      <div class="pi-title">How to detect taste profiles from v0 data <span class="tag t-pu">No additional UX</span></div>
+      <div class="pi-desc">Group <code>icon_evidence</code> rows by <code>session_hash</code> patterns. If a session hash consistently copies Lucide icons over Phosphor equivalents when both are returned, that session has a "Lucide preference" signal. Aggregate across sessions from the same domain/workspace. The taste profile emerges from behavioral data — no user survey needed.</div>
+    </div>
+    <div class="phase-item">
+      <div class="pi-title">The taste profile dimensions to track <span class="tag t-am">Week 12+ feature</span></div>
+      <div class="pi-desc">
+        <strong>Style:</strong> minimal vs expressive vs filled vs outline<br>
+        <strong>Weight:</strong> thin (1px) vs regular (1.5px) vs bold (2px) stroke<br>
+        <strong>Corner radius:</strong> sharp vs rounded<br>
+        <strong>Source library affinity:</strong> Lucide vs Phosphor vs Heroicons vs Tabler<br>
+        <strong>Density preference:</strong> detailed icons vs simplified icons at 16px<br>
+        <strong>Domain:</strong> enterprise vs consumer vs technical vs expressive
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="pi-title">How this surfaces to the MCP user <span class="tag t-te">Long-term moat</span></div>
+      <div class="pi-desc">MCP call: <code>get_collection_for_intent(intent: "billing sidebar", workspace_id: "ws_abc123")</code>. Supericons checks the taste profile for <code>ws_abc123</code> → "Lucide-affine, minimal, uses enterprise SaaS" → returns Lucide variants of the recommended icons, not the Phosphor alternatives. The same intent produces different recommendations for different teams based on their taste history. A competitor cannot replicate this without the same historical data.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  EXECUTION
+  ══════════════════════════════════════════ -->
+
+<section id="roadmap">
+  <div class="sn">// 14 — PHASED ROADMAP</div>
+  <h2 class="sh">The Sequenced Plan From Day 1 to Week 12</h2>
+
+  <table>
+    <thead><tr><th>When</th><th>Action</th><th>Layer</th><th>What It Unlocks</th><th>Hours</th></tr></thead>
+    <tbody>
+      <tr style="background:rgba(248,113,113,.04)">
+        <td><strong>Day 1</strong></td>
+        <td>Add behavioral logging to supericons.dev search + copy flow. Two Supabase tables: icon_evidence, icon_scores.</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>Silent data collection starts immediately. Every subsequent action compounds on this foundation.</td>
+        <td>4h</td>
+      </tr>
+      <tr style="background:rgba(251,191,36,.04)">
+        <td><strong>Day 1-3</strong></td>
+        <td>Begin curation of Kit 01 icons. Select, normalize, and write usage-map.md rationale for all 50 AI Dashboard icons.</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>Kit 01 content locked. Builds the editorial seed data for the judgment layer simultaneously.</td>
+        <td>8h</td>
+      </tr>
+      <tr style="background:rgba(251,191,36,.04)">
+        <td><strong>Day 3-5</strong></td>
+        <td>Package Kit 01. Build preview.html, generate 1200x630 social preview image, write README, create sprite.svg, tokens.json.</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>Kit 01 is publishable. Proof of quality that validates MCP registry applications.</td>
+        <td>6h</td>
+      </tr>
+      <tr style="background:rgba(251,191,36,.04)">
+        <td><strong>Day 5</strong></td>
+        <td>Publish Kit 01 to GitHub. Set up GitHub Pages for live preview URL. Enable GitHub Discussions on repo.</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>First public artifact live. Distribution can begin. Star accumulation starts.</td>
+        <td>1h</td>
+      </tr>
+      <tr style="background:rgba(251,191,36,.04)">
+        <td><strong>Day 5</strong></td>
+        <td>Add kit download domain question to the Kit 01 download confirmation flow.</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>First explicit evidence objects start arriving. Domain context on every download.</td>
+        <td>2h</td>
+      </tr>
+      <tr style="background:rgba(96,165,250,.04)">
+        <td><strong>Week 1</strong></td>
+        <td>Begin curation + packaging of Kit 02 (Dashboard Navigation) and Kit 03 (Status Feedback).</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>Wave 1 complete by end of Week 1. Three kits live, three communities to post in.</td>
+        <td>12h</td>
+      </tr>
+      <tr style="background:rgba(96,165,250,.04)">
+        <td><strong>Week 1</strong></td>
+        <td>Submit to GitHub MCP Registry via mcp-publisher CLI. Submit to Smithery, Glama, PulseMCP, mcp.so.</td>
+        <td><span class="tag t-bl">Distribution</span></td>
+        <td>MCP discoverability active. GitHub MCP Registry listing validates the product for enterprise teams.</td>
+        <td>3h</td>
+      </tr>
+      <tr style="background:rgba(96,165,250,.04)">
+        <td><strong>Week 1-2</strong></td>
+        <td>Post Kit 01 to r/LocalLLaMA, r/ClaudeAI, Cursor Discord. Post Kit 02 to r/webdev, r/reactjs.</td>
+        <td><span class="tag t-bl">Distribution</span></td>
+        <td>First 200-500 GitHub stars. First behavioral signals. First kit download domain data.</td>
+        <td>2h</td>
+      </tr>
+      <tr style="background:rgba(167,139,250,.04)">
+        <td><strong>Week 2</strong></td>
+        <td>Write Human Taste Council editorial seed data for Kit 01 icons. 3-5 constitution statements per icon.</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>MCP can return editorially-justified recommendations before organic data exists at scale.</td>
+        <td>4h</td>
+      </tr>
+      <tr style="background:rgba(167,139,250,.04)">
+        <td><strong>Week 3</strong></td>
+        <td>Add MCP outcome logging to get_collection_for_intent tool handler.</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>Agentic evidence objects start accumulating. MCP usage generates judgment data automatically.</td>
+        <td>6h</td>
+      </tr>
+      <tr style="background:rgba(52,211,153,.04)">
+        <td><strong>Weeks 3-5</strong></td>
+        <td>Ship Wave 2 kits: Auth &amp; Security (04), Data &amp; Analytics (05), Ecommerce (06).</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>Six kits live. Broad topic coverage. Multiple active GitHub repos generating passive traffic.</td>
+        <td>18h</td>
+      </tr>
+      <tr style="background:rgba(52,211,153,.04)">
+        <td><strong>Week 6</strong></td>
+        <td>Launch post-copy context tag UI (one-tap surface chip after icon copy).</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>Explicit ui_surface signals now attaching to behavioral copy events. Evidence objects become richer.</td>
+        <td>1d</td>
+      </tr>
+      <tr style="background:rgba(251,191,36,.04)">
+        <td><strong>Weeks 6-10</strong></td>
+        <td>Ship Wave 3 kits: Developer Tools (07), Fintech (08), Dating (09), Healthcare (10).</td>
+        <td><span class="tag t-am">Free</span></td>
+        <td>Full 10-kit library. Supericons GitHub org is the most comprehensive job-shaped icon library on GitHub.</td>
+        <td>24h</td>
+      </tr>
+      <tr style="background:rgba(167,139,250,.04)">
+        <td><strong>Week 12</strong></td>
+        <td>Launch Product Hunt. By this point: 6-10 kits live, 3+ Reddit threads with real engagement, MCP on 4+ registries, 500+ monthly active users.</td>
+        <td><span class="tag t-bl">Distribution</span></td>
+        <td>Concentrated launch day burst. Traffic converts better because evidence of real usage already exists everywhere.</td>
+        <td>2d</td>
+      </tr>
+      <tr style="background:rgba(96,165,250,.04)">
+        <td><strong>Week 12+</strong></td>
+        <td>Surface icon_scores confidence data in the MCP. Return: "Recommended with 84% confidence based on 312 similar selections."</td>
+        <td><span class="tag t-gr">Judgment</span></td>
+        <td>The moat becomes visible. The MCP now explains its recommendations with real evidence. This is the product that cannot be cloned.</td>
+        <td>3d</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="checklist" style="border-bottom:none">
+  <div class="sn">// 15 — DAY 1 CHECKLIST</div>
+  <h2 class="sh">The First 5 Hours — Exactly What to Do</h2>
+  <p class="sd">Both analyses agreed: do not pause to build the full system. Start the two things that have zero prerequisites today.</p>
+
+  <h3 style="font-size:.82rem;font-weight:700;color:var(--re);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.65rem">Hour 1-4: Behavioral Logging</h3>
+  <div class="ck" style="margin-bottom:1.5rem">
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Create <strong>icon_evidence</strong> table in Supabase with the schema defined in Section 12</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Create <strong>icon_scores</strong> aggregate table with the schema defined in Section 12</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Add a <code>logIconCopy(iconId, searchQuery, position, timeToMs)</code> function to the supericons.dev icon copy handler</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Compute <code>session_hash</code> as <code>sha256(session_token + date_string)</code> — never store raw session tokens</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Verify one test copy event appears correctly in the icon_evidence table</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Add a daily cron job (Supabase Edge Function) that rebuilds icon_scores from icon_evidence</div></div>
+  </div>
+
+  <h3 style="font-size:.82rem;font-weight:700;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.65rem">Hour 4-5: Begin Kit 01 Curation</h3>
+  <div class="ck" style="margin-bottom:1.5rem">
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Create the GitHub org for Supericons and the first repo: <code>supericons/kit-ai-dashboard</code></div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Set up the folder structure: <code>icons/</code>, <code>components/</code>, and stub files for README.md, usage-map.md, tokens.json</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Pull the 18 Agentic AI Kit icons (rag-pipeline, vector-db, orchestrator, etc.) as the first batch — these are the differentiated core</div></div>
+    <div class="ck-item"><div class="ck-box"></div><div class="ck-t">Begin writing the first 10 usage-map.md entries — include what each icon depicts and what it should NOT be used for</div></div>
+  </div>
+
+  <div class="alert a-gr">
+    <span class="alert-i">🏁</span>
+    <div><strong>End of Day 1 state:</strong> Behavioral logging is live and collecting silent data from every icon copy event from this point forward. Kit 01 structure is in place and curation has begun. These two things in parallel — data collection and distribution packaging — are the entire Day 1 mission. Everything else comes after these two are running.</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const secs=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

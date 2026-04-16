@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons — Master Action Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+      --p0:#f87171;--p1:#fb923c;--p2:#fbbf24;--p3:#34d399;--p4:#60a5fa;--p5:#a78bfa;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--p0),var(--p1),var(--p2),var(--p3),var(--p4),var(--p5));z-index:999;transition:width .1s}
+
+    /* SIDEBAR */
+    .sidebar{position:fixed;top:0;left:0;width:240px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.25rem .75rem;display:flex;flex-direction:column;gap:.05rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--or);box-shadow:0 0 8px var(--or);animation:p 2s infinite}
+    @keyframes p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .sb-tier{font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.6rem .5rem .15rem;display:flex;align-items:center;gap:.4rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.28rem .6rem;border-radius:5px;color:var(--td);text-decoration:none;font-size:.74rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{color:var(--t);background:var(--bg-h)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--tf);min-width:1.3rem}
+
+    .main{margin-left:240px}
+
+    /* HERO */
+    .hero{padding:4rem;border-bottom:1px solid var(--bd);
+      background:radial-gradient(ellipse at 80% 0%,rgba(251,146,60,.06),transparent 50%),
+                 radial-gradient(ellipse at 5% 100%,rgba(167,139,250,.05),transparent 50%)}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.6rem}
+    .hero-sub{font-size:.9rem;color:var(--td);max-width:680px;line-height:1.7}
+
+    /* TIER SECTIONS */
+    .tier{padding:3rem 4rem;border-bottom:1px solid var(--bd)}
+    .tier-hdr{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+    .tier-badge{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:6px;padding:.25rem .7rem}
+    .tier-name{font-family:'Space Grotesk',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.025em}
+    .tier-why{font-size:.85rem;color:var(--td);line-height:1.65;max-width:720px;margin-bottom:2rem;padding:.75rem 1rem;border-radius:8px}
+
+    /* ACTION BLOCKS */
+    .action-block{margin-bottom:1.25rem;border-radius:12px;overflow:hidden;border:1px solid var(--bd)}
+    .ab-hdr{display:flex;align-items:stretch;gap:0;border-bottom:1px solid var(--bd)}
+    .ab-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;padding:.6rem .75rem;display:flex;align-items:center;justify-content:center;min-width:42px;border-right:1px solid var(--bd);flex-shrink:0}
+    .ab-title{font-weight:700;font-size:.93rem;color:var(--t);padding:.6rem 1rem;display:flex;align-items:center;gap:.6rem;flex:1}
+    .ab-done{font-size:.65rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:.15rem .5rem;border-radius:4px;flex-shrink:0}
+    .ab-body{padding:1rem 1.1rem;background:var(--bg-r)}
+    .ab-desc{font-size:.84rem;color:var(--td);line-height:1.6;margin-bottom:.6rem}
+    .ab-desc strong{color:var(--t)}
+    .ab-steps{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.6rem}
+    .ab-step{font-size:.81rem;color:var(--td);line-height:1.5;display:flex;gap:.55rem}
+    .ab-step-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.5rem;padding-top:.1rem;flex-shrink:0}
+    .ab-step strong{color:var(--t)}
+    .ab-step code{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.03rem .3rem;color:var(--te)}
+    .ab-done-crit{font-size:.79rem;color:var(--tf);border-top:1px solid var(--bd2);padding-top:.5rem;margin-top:.5rem;font-style:italic}
+    .ab-done-crit strong{color:var(--gr)}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.62rem;font-weight:700;padding:.1rem .42rem;border-radius:4px;margin:.08rem}
+    .t-bl{background:rgba(96,165,250,.12);color:var(--bl)}
+    .t-pu{background:rgba(167,139,250,.12);color:var(--pu)}
+    .t-gr{background:rgba(52,211,153,.12);color:var(--gr)}
+    .t-am{background:rgba(251,191,36,.12);color:var(--am)}
+    .t-re{background:rgba(248,113,113,.12);color:var(--re)}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+
+    /* CODE BLOCK */
+    .code{background:var(--bg-s);border:1px solid var(--bd2);border-radius:8px;padding:1rem 1.25rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te);line-height:1.85;margin:.5rem 0;overflow-x:auto}
+    .code .k{color:var(--bl)}
+    .code .v{color:var(--gr)}
+    .code .s{color:var(--am)}
+    .code .c{color:var(--tf);font-style:italic}
+
+    /* ALERT */
+    .alert{display:flex;gap:.6rem;align-items:flex-start;border-radius:8px;padding:.75rem 1rem;margin:.5rem 0;font-size:.83rem;line-height:1.6}
+    .alert-i{flex-shrink:0;font-size:1rem}
+    .a-gr{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);color:#a7f3d0}
+    .a-am{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);color:#fde68a}
+    .a-re{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:#fecaca}
+    .a-bl{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);color:#bfdbfe}
+
+    /* FILE LIST */
+    .file-list{display:flex;flex-direction:column;gap:.25rem;margin:.5rem 0}
+    .file-item{display:flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te)}
+    .file-req{font-family:'Inter',sans-serif;font-size:.6rem;font-weight:800;text-transform:uppercase;background:rgba(248,113,113,.15);color:var(--re);border-radius:3px;padding:.03rem .3rem;flex-shrink:0}
+    .file-opt{font-family:'Inter',sans-serif;font-size:.6rem;font-weight:800;text-transform:uppercase;background:rgba(96,165,250,.1);color:var(--bl);border-radius:3px;padding:.03rem .3rem;flex-shrink:0}
+
+    /* KIT MINI CARD */
+    .kit-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:.75rem 0}
+    .kit-mini{background:var(--bg-s);border:1px solid var(--bd);border-radius:8px;padding:.85rem 1rem}
+    .km-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tf);margin-bottom:.2rem}
+    .km-name{font-weight:700;font-size:.88rem;color:var(--t);margin-bottom:.3rem}
+    .km-why{font-size:.77rem;color:var(--td);line-height:1.55}
+
+    /* TABLE */
+    table{width:100%;border-collapse:collapse;font-size:.82rem;margin:.75rem 0}
+    th{text-align:left;padding:.6rem .9rem;background:var(--bg-s);border:1px solid var(--bd);color:var(--td);font-size:.67rem;text-transform:uppercase;letter-spacing:.06em}
+    td{padding:.6rem .9rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+    td strong{color:var(--t)}
+
+    /* GRID */
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.75rem 0}
+    .g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin:.75rem 0}
+
+    /* TAXONOMY TABLE */
+    .tax-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.85rem}
+    .tax-cat{font-weight:800;font-size:.85rem;color:var(--t);margin-bottom:.2rem}
+    .tax-icons{font-size:.77rem;color:var(--td);line-height:1.6}
+
+    @media(max-width:900px){
+      .sidebar{display:none}.main{margin-left:0}
+      .tier{padding:2rem 1.25rem}.hero{padding:2rem 1.25rem}
+      .kit-row,.g2{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Master Action Plan</div>
+
+  <div class="sb-tier" style="color:var(--p0)">
+    <span style="width:8px;height:8px;border-radius:50%;background:var(--p0);flex-shrink:0;display:inline-block"></span>P0 — Foundation
+  </div>
+  <a class="sb-link" href="#p0-logging"><span class="sb-n">01</span>Behavioral Logging</a>
+  <a class="sb-link" href="#p0-taxonomy"><span class="sb-n">02</span>Job Taxonomy</a>
+
+  <div class="sb-tier" style="color:var(--p1)">
+    <span style="width:8px;height:8px;border-radius:50%;background:var(--p1);flex-shrink:0;display:inline-block"></span>P1 — Free Layer
+  </div>
+  <a class="sb-link" href="#p1-kit01"><span class="sb-n">03</span>Kit 01 — AI Dashboard</a>
+  <a class="sb-link" href="#p1-kit02-03"><span class="sb-n">04</span>Kit 02+03 — Universal</a>
+  <a class="sb-link" href="#p1-packaging"><span class="sb-n">05</span>Kit File Standard</a>
+  <a class="sb-link" href="#p1-github-org"><span class="sb-n">06</span>GitHub Org Setup</a>
+  <a class="sb-link" href="#p1-kit-survey"><span class="sb-n">07</span>Kit Download Survey</a>
+
+  <div class="sb-tier" style="color:var(--p2)">
+    <span style="width:8px;height:8px;border-radius:50%;background:var(--p2);flex-shrink:0;display:inline-block"></span>P2 — Distribution
+  </div>
+  <a class="sb-link" href="#p2-github-mcp"><span class="sb-n">08</span>GitHub MCP Registry</a>
+  <a class="sb-link" href="#p2-mcp-dirs"><span class="sb-n">09</span>All MCP Directories</a>
+  <a class="sb-link" href="#p2-communities"><span class="sb-n">10</span>Community Posts</a>
+  <a class="sb-link" href="#p2-seed"><span class="sb-n">11</span>Editorial Seed Data</a>
+  <a class="sb-link" href="#p2-mcp-log"><span class="sb-n">12</span>MCP Outcome Logging</a>
+
+  <div class="sb-tier" style="color:var(--p3)">
+    <span style="width:8px;height:8px;border-radius:50%;background:var(--p3);flex-shrink:0;display:inline-block"></span>P3 — Wave 2 + 3
+  </div>
+  <a class="sb-link" href="#p3-kits"><span class="sb-n">13</span>Remaining 7 Kits</a>
+  <a class="sb-link" href="#p3-collections"><span class="sb-n">14</span>User Collections</a>
+  <a class="sb-link" href="#p3-context-chip"><span class="sb-n">15</span>Context Chip UI</a>
+
+  <div class="sb-tier" style="color:var(--p4)">
+    <span style="width:8px;height:8px;border-radius:50%;background:var(--p4);flex-shrink:0;display:inline-block"></span>P4 — Growth Layer
+  </div>
+  <a class="sb-link" href="#p4-launch"><span class="sb-n">16</span>Product Hunt Launch</a>
+  <a class="sb-link" href="#p4-social-gallery"><span class="sb-n">17</span>Social Collection Gallery</a>
+  <a class="sb-link" href="#p4-taste"><span class="sb-n">18</span>Taste Profile Layer</a>
+  <a class="sb-link" href="#p4-confidence"><span class="sb-n">19</span>MCP Confidence Scores</a>
+</nav>
+
+<main class="main">
+
+<div class="hero">
+  <div style="display:inline-flex;align-items:center;gap:.5rem;font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--or);background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.25);border-radius:99px;padding:.2rem .8rem;margin-bottom:1.25rem">⚡ Master Action Plan — April 2026</div>
+  <h1 class="hero-h1" style="background:linear-gradient(135deg,var(--or),var(--am),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Everything Supericons<br>Needs to Build — In Order</h1>
+  <p class="hero-sub">Synthesized from all strategy sessions. Every action is prioritized by dependency, not timeline. P0 must exist before P1 creates value. P1 before P2. Use this as the execution source of truth.</p>
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem">
+    <div style="background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:7px;padding:.5rem .9rem;font-size:.82rem;color:var(--re)"><strong>P0</strong> Foundation — 2 items</div>
+    <div style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.25);border-radius:7px;padding:.5rem .9rem;font-size:.82rem;color:var(--or)"><strong>P1</strong> Free Layer — 5 items</div>
+    <div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:7px;padding:.5rem .9rem;font-size:.82rem;color:var(--am)"><strong>P2</strong> Distribution — 5 items</div>
+    <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:.5rem .9rem;font-size:.82rem;color:var(--gr)"><strong>P3</strong> Scale — 3 items</div>
+    <div style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:7px;padding:.5rem .9rem;font-size:.82rem;color:var(--bl)"><strong>P4</strong> Growth Layer — 4 items</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  P0 — FOUNDATION
+  Everything else depends on these existing.
+══════════════════════════════════════════════════════════ -->
+
+<div class="tier" id="p0">
+  <div class="tier-hdr">
+    <div class="tier-badge" style="background:rgba(248,113,113,.15);color:var(--re)">P0 — Foundation</div>
+    <div class="tier-name" style="color:var(--re)">Must exist first. Everything else depends on this.</div>
+  </div>
+  <div class="tier-why" style="background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.15);color:#fecaca">These two actions have no prerequisites and unlock everything that follows. P0 is the only tier where both items should be executed simultaneously, or in the same session.</div>
+
+  <!-- P0.01 -->
+  <div class="action-block" id="p0-logging" style="border-color:rgba(248,113,113,.3)">
+    <div class="ab-hdr" style="background:rgba(248,113,113,.05)">
+      <div class="ab-num" style="color:var(--re)">P0.01</div>
+      <div class="ab-title">Behavioral Logging — The Silent Intelligence Layer<span class="tag t-re">Start here</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Add structured event logging to the supericons.dev copy flow. This starts accumulating the judgment layer's raw data from the very first user. Zero user friction. 100% capture rate. Every single action taken on the site from this point forward becomes an evidence object.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Create <code>icon_evidence</code> table in Supabase with these exact columns:</div>
+      </div>
+      <div class="code">
+<span class="c">-- icon_evidence: one row per signal event (one row per ICON for mcp_call / collection / social_gallery batches)</span>
+<span class="k">id</span>              uuid PRIMARY KEY DEFAULT gen_random_uuid()
+<span class="k">signal_type</span>     text       <span class="c">-- 'copy' | 'replace' | 'kit_download' | 'mcp_call' | 'editorial' | 'favorite' | 'collection' | 'social_gallery'</span>
+<span class="k">icon_id</span>         text       <span class="c">-- 'lucide:arrow-right' (library:name format). Null only for collection-level signals like kit_download.</span>
+<span class="k">batch_id</span>        uuid       <span class="c">-- groups rows from same MCP call, collection event, or social_gallery post. null for single-icon signals.</span>
+<span class="k">collection_id</span>   text       <span class="c">-- kit slug or user collection slug if applicable, null otherwise</span>
+<span class="k">search_query</span>    text       <span class="c">-- what the user searched to find this icon</span>
+<span class="k">result_position</span> int        <span class="c">-- position in results (1 = top). Lower = stronger intent match.</span>
+<span class="k">time_to_copy_ms</span> int        <span class="c">-- ms from page load to copy event. Fast = high intent.</span>
+<span class="k">ui_surface</span>      text       <span class="c">-- 'sidebar' | 'button' | 'status' | 'empty-state' | null</span>
+<span class="k">domain</span>          text       <span class="c">-- 'ai-tool' | 'saas' | 'fintech' | null (from kit survey)</span>
+<span class="k">job_category</span>    text       <span class="c">-- primary browse taxonomy category active when event occurred</span>
+<span class="k">replaced_with</span>   text       <span class="c">-- icon_id of replacement. null = still retained (strong signal).</span>
+<span class="k">retained_days</span>   int        <span class="c">-- days until replacement. null = not yet replaced.</span>
+<span class="k">agent_converged</span> bool       <span class="c">-- mcp_call only: did agent stop requesting after this? Updated async after 60-min timeout.</span>
+<span class="k">confidence</span>      float      <span class="c">-- editorial only: curator confidence (0.5-1.0). null for behavioral signals.</span>
+<span class="k">evidence_text</span>   text       <span class="c">-- editorial constitution statement, gallery caption, or short rationale</span>
+<span class="k">context_url</span>     text       <span class="c">-- screenshot URL, public collection URL, or mediated download URL when relevant</span>
+<span class="k">session_hash</span>    text       <span class="c">-- sha256(session_token + date). Never reversible to user PII.</span>
+<span class="k">created_at</span>      timestamptz DEFAULT now()
+      </div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">2.</span>Create <code>icon_scores</code> aggregate table (rebuilt daily from icon_evidence):</div>
+      </div>
+      <div class="code">
+<span class="k">icon_id</span>              text PRIMARY KEY
+<span class="k">copy_count_30d</span>       int        <span class="c">-- copies in last 30 days</span>
+<span class="k">retention_rate</span>       float      <span class="c">-- % NOT replaced within 30 days (0.0 to 1.0)</span>
+<span class="k">top_search_queries</span>   jsonb      <span class="c">-- [{"q":"billing icon","count":42}, ...] sorted desc</span>
+<span class="k">top_ui_surfaces</span>      jsonb      <span class="c">-- {"sidebar":0.42,"button":0.31,"badge":0.27}</span>
+<span class="k">top_domains</span>          jsonb      <span class="c">-- {"saas":0.61,"ai-tool":0.29,"fintech":0.10}</span>
+<span class="k">avg_result_position</span>  float      <span class="c">-- average position when copied (2.1 = usually top results)</span>
+<span class="k">mcp_acceptance_rate</span>  float      <span class="c">-- % of MCP calls where this led to task convergence</span>
+<span class="k">calculated_at</span>        timestamptz
+      </div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">3.</span>Add <code>logIconCopy(iconId, searchQuery, position, timeToMs)</code> to the icon copy handler in supericons.dev. Compute <code>session_hash = sha256(session_token + today_date_string)</code>. Never store raw session tokens.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Add a <strong>daily cron job</strong> (Supabase Edge Function or pg_cron) that runs: <code>UPSERT INTO icon_scores SELECT ... FROM icon_evidence WHERE created_at > now() - interval '30 days' AND icon_id IS NOT NULL GROUP BY icon_id</code></div>
+        <div class="ab-step"><span class="ab-step-n">5.</span>Add <strong>retention tracking</strong>: when a user copies icon B after having copied icon A from the same session within 30 days — if they searched for a similar query, log icon A <code>replaced_with = B, retained_days = N</code>.</div>
+        <div class="ab-step"><span class="ab-step-n">6.</span>Add <strong>favorites tracking</strong>: when a user favorites an icon, log a signal_type='favorite' row. Weaker signal than copy-and-retain, but captures explicit intent before the copy happens.</div>
+        <div class="ab-step"><span class="ab-step-n">7.</span>Add <strong>MCP convergence resolution</strong> with <code>pg_cron</code> every 15 minutes. Rule: when a new MCP batch is logged for the same <code>session_hash</code>, mark any older unresolved MCP rows in that session as <code>agent_converged = false</code>. The cron job then marks the latest unresolved batch as <code>true</code> after 60 minutes of inactivity.</div>
+      </div>
+      <div class="code">
+<span class="c">-- pg_cron: every 15 minutes mark the latest stale unresolved MCP batch as converged</span>
+<span class="c">-- Previous unresolved batches are set to false in the MCP handler before a new batch is inserted.</span>
+WITH open_batches AS (
+  SELECT session_hash, batch_id, MAX(created_at) AS batch_created_at
+  FROM icon_evidence
+  WHERE signal_type = 'mcp_call'
+    AND agent_converged IS NULL
+  GROUP BY session_hash, batch_id
+),
+stale_latest AS (
+  SELECT ob.batch_id
+  FROM open_batches ob
+  WHERE ob.batch_created_at &lt; now() - interval '60 minutes'
+    AND NOT EXISTS (
+      SELECT 1
+      FROM icon_evidence newer
+      WHERE newer.signal_type = 'mcp_call'
+        AND newer.session_hash = ob.session_hash
+        AND newer.created_at &gt; ob.batch_created_at
+    )
+)
+UPDATE icon_evidence ie
+SET agent_converged = true
+WHERE ie.signal_type = 'mcp_call'
+  AND ie.agent_converged IS NULL
+  AND ie.batch_id IN (SELECT batch_id FROM stale_latest);
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> One test copy event appears correctly in icon_evidence. icon_scores rebuilds on trigger. MCP batches resolve cleanly: earlier superseded batches become <code>false</code>, latest stale batch becomes <code>true</code>. Session hash is non-reversible. Zero PII in either table.</div>
+    </div>
+  </div>
+
+  <!-- P0.02 -->
+  <div class="action-block" id="p0-taxonomy" style="border-color:rgba(248,113,113,.3)">
+    <div class="ab-hdr" style="background:rgba(248,113,113,.05)">
+      <div class="ab-num" style="color:var(--re)">P0.02</div>
+      <div class="ab-title">Job-Shaped Taxonomy — Reorganize the Browse Experience<span class="tag t-re">Editor-curated</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Replace the current library-centric browse categories (Buildings, Arrows, Technology...) with a product-job taxonomy. This is done editorially by the Human Taste Council — no code required initially. Each icon gets ONE primary job category and up to TWO secondary categories. The taxonomy is the core product differentiation and the primary SEO surface.</div>
+
+      <div class="g3" style="margin:.75rem 0">
+        <div class="tax-card">
+          <div class="tax-cat">Navigation &amp; Wayfinding</div>
+          <div class="tax-icons">sidebar, topbar, tabs, breadcrumbs, back/forward, menu toggle</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Actions &amp; Operations</div>
+          <div class="tax-icons">CRUD, send, download, share, import/export, print, copy, paste</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Status &amp; Feedback</div>
+          <div class="tax-icons">loading, success, error, warning, empty states, lifecycle stages</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Identity &amp; People</div>
+          <div class="tax-icons">user, team, roles, profile, avatar, org, guest, admin</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Data &amp; Analytics</div>
+          <div class="tax-icons">charts, metrics, tables, filters, segments, cohorts, KPIs</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Communication</div>
+          <div class="tax-icons">chat, email, notification, mention, announcement, webhook</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Auth &amp; Security</div>
+          <div class="tax-icons">lock, key, permissions, SSO, 2FA, compliance, GDPR, biometric</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Commerce &amp; Finance</div>
+          <div class="tax-icons">billing, payments, invoices, wallets, subscription, tax, refund</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Dev &amp; Infrastructure</div>
+          <div class="tax-icons">terminal, deploy, API, pipeline, container, build, version, log</div>
+        </div>
+        <div class="tax-card" style="border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.04)">
+          <div class="tax-cat" style="color:var(--pu)">AI &amp; Agents ★ Unique</div>
+          <div class="tax-icons">rag-pipeline, vector-db, orchestrator, guardrail, agent-memory, context-window, token-cost, embedding</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Content &amp; Media</div>
+          <div class="tax-icons">files, documents, images, video, audio, text, code, rich-text</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Time &amp; Scheduling</div>
+          <div class="tax-icons">calendar, clock, deadline, recurrence, timezone, reminder</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">Connectivity</div>
+          <div class="tax-icons">API, webhook, integration, connected app, link, embed, plugin</div>
+        </div>
+        <div class="tax-card">
+          <div class="tax-cat">E-commerce</div>
+          <div class="tax-icons">cart, checkout, shipping, discount, coupon, product, inventory, return</div>
+        </div>
+      </div>
+
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Create <code>icon_metadata</code> table in Supabase as the taxonomy source of truth: <code>icon_id text PRIMARY KEY</code>, <code>source_library text</code>, <code>job_category text</code>, <code>secondary_categories text[]</code>, <code>updated_at timestamptz DEFAULT now()</code>.</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Assign each of the 20K+ icons a primary <code>job_category</code> from the 14 above inside <code>icon_metadata</code>. This is an editorial task — start with the icons used in Kits 01-03 first (the highest-traffic icons).</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Update the supericons.dev browse page to query <code>icon_metadata</code> and use this taxonomy as the primary filter instead of library source or visual type.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Populate <code>icon_evidence.job_category</code> from the active browse context whenever an event is logged. This becomes a self-correcting signal — if users copy "billing" icons but they clicked through from "Navigation," the categories drift toward accuracy over time.</div>
+      </div>
+      <div class="alert a-am"><span class="alert-i">⚡</span><div>Start with the AI &amp; Agents category immediately — it is the only category no other library organizes by job context. A developer searching "AI dashboard icons" lands on supericons.dev and finds 40+ icons curated specifically for AI product UIs with documented rationale for each choice. No other browse system offers that. That is an SEO position that is hard to replicate because the rationale is the product.</div></div>
+      <div class="ab-done-crit"><strong>Done when:</strong> <code>icon_metadata</code> exists and powers browse filters. Browse page shows 14 job categories. AI &amp; Agents category is fully populated. At least the 150 most common icons have primary categories assigned.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  P1 — FREE LAYER
+══════════════════════════════════════════════════════════ -->
+
+<div class="tier" id="p1">
+  <div class="tier-hdr">
+    <div class="tier-badge" style="background:rgba(251,146,60,.15);color:var(--or)">P1 — Free Layer</div>
+    <div class="tier-name" style="color:var(--or)">GitHub distribution. The trust + discoverability engine.</div>
+  </div>
+  <div class="tier-why" style="background:rgba(251,146,60,.04);border:1px solid rgba(251,146,60,.15);color:#fed7aa">Requires P0 behavioral logging to be live first (data starts accumulating immediately on Kit launch). Each kit is a permanent, compounding asset — one publication. No ongoing maintenance required. Quality beats breadth: 3 outstanding kits outperform 10 mediocre ones every time.</div>
+
+  <!-- P1.01 -->
+  <div class="action-block" id="p1-github-org" style="border-color:rgba(251,146,60,.3)">
+    <div class="ab-hdr" style="background:rgba(251,146,60,.04)">
+      <div class="ab-num" style="color:var(--or)">P1.01</div>
+      <div class="ab-title">GitHub Org Setup<span class="tag t-or">Prerequisite for all kits</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Create GitHub org: <code>supericons</code> (or <code>supericons-dev</code> if taken)</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Set org description: <strong>"Job-shaped icon kits for product builders. Free from free libraries. Premium animations at supericons.dev"</strong></div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Add org-level topics: <code>icons</code> <code>svg</code> <code>ui</code> <code>design-system</code> <code>icon-kit</code> <code>react-icons</code></div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Create the repo template (see P1.03) so every new kit repo can be scaffolded in one click.</div>
+        <div class="ab-step"><span class="ab-step-n">5.</span>Enable GitHub Pages on each kit repo so <code>preview.html</code> is publicly accessible at <code>supericons.github.io/kit-ai-dashboard/preview.html</code></div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Org exists, description set, one repo template created and tested.</div>
+    </div>
+  </div>
+
+  <!-- P1.02 -->
+  <div class="action-block" id="p1-kit01" style="border-color:rgba(251,146,60,.3)">
+    <div class="ab-hdr" style="background:rgba(251,146,60,.04)">
+      <div class="ab-num" style="color:var(--or)">P1.02</div>
+      <div class="ab-title">Kit 01 — AI SaaS Dashboard &amp; Copilot (50 icons)<span class="tag t-re">Ships first — curation-led differentiation</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">This kit ships first because no other GitHub repo curates icons <strong>specifically for AI product UIs</strong> from across the free library ecosystem. Sourced entirely from open-source libraries. The differentiation is the editorial judgment — which Lucide, Heroicons, or Phosphor icon best represents each AI UI concept, and exactly why — not the uniqueness of the SVG asset itself. That judgment is the product.</div>
+
+      <div class="g2">
+        <div>
+          <div style="font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.5rem">AI-concept icons (curated from free libraries)</div>
+          <div style="font-size:.81rem;color:var(--td);line-height:1.75"><strong style="color:var(--pu)">Lucide:</strong> cpu, brain, network, workflow, shuffle, layers, zap, bot, sparkles, wand-2, git-merge, eye, activity, trending-up<br><strong style="color:var(--bl)">Heroicons:</strong> cpu-chip, server-stack, circle-stack, cloud, signal, bolt, command-line, cog-6-tooth<br><strong style="color:var(--am)">Phosphor:</strong> robot, graph, flow-arrow, lightning, database<br><strong style="color:var(--te)">Tabler:</strong> brain, network, api, cloud-computing<br><br>The <code>usage-map.md</code> is what makes this unique — it documents which icon maps to which AI concept and why (e.g., &quot;use lucide:shuffle for RAG pipeline visualization because it implies non-deterministic retrieval, not sequential flow&quot;).</div>
+        </div>
+        <div>
+          <div style="font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.5rem">Supporting dashboard icons (universal SaaS)</div>
+          <div style="font-size:.81rem;color:var(--td);line-height:1.75">sidebar-collapse, home, search, notifications, user-circle, settings, help — plus dashboard actions (filter, sort, refresh, export) and status icons (spinner, check-circle, error, empty-state).<br><br><strong style="color:var(--gr)">Sources: Lucide + Heroicons + Phosphor + Tabler only.</strong> No premium Supericons collections. ATTRIBUTION.md credits each source library and license.</div>
+        </div>
+      </div>
+
+      <div class="ab-steps" style="margin-top:.75rem">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Curate all 50 icons. Normalize SVG viewBox to 24x24, stroke to currentColor, stroke-width consistent at 1.5.</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Write <code>usage-map.md</code> — one entry per icon with: canonical use case, contraindications, what it was chosen over and why.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Build <code>preview.html</code> — dark bg, responsive grid, copy-name-on-click.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Generate <strong>1200x630 social preview image</strong> — dark mode grid of icons. Set as repository social preview in GitHub settings.</div>
+        <div class="ab-step"><span class="ab-step-n">5.</span>Write <code>manifest-lite.json</code> for this kit only — the agent-readable metadata layer (intent[], semantic_aliases[], ui_surface[], contraindications[] per icon).</div>
+        <div class="ab-step"><span class="ab-step-n">6.</span>Add kit download CTA to README footer: <em>"Want animated hover versions? Available in the Motion Lab at supericons.dev — free account, no credit card."</em></div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Repo is live on GitHub Pages. README shows visual preview. usage-map.md has all 50 entries. manifest-lite.json is valid JSON.</div>
+    </div>
+  </div>
+
+  <!-- P1.03 -->
+  <div class="action-block" id="p1-kit02-03" style="border-color:rgba(251,146,60,.3)">
+    <div class="ab-hdr" style="background:rgba(251,146,60,.04)">
+      <div class="ab-num" style="color:var(--or)">P1.03</div>
+      <div class="ab-title">Kit 02 + 03 — Universal Coverage Kits<span class="tag t-or">Ship immediately after Kit 01</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Ship both in the same session/day as Kit 01 or immediately after. These broaden the audience to all developers (not just AI builders) and show that Supericons covers the fundamentals too. Anyone who discovers Kit 01 from AI communities finds these waiting.</div>
+      <div class="kit-row">
+        <div class="kit-mini" style="border-color:rgba(96,165,250,.25)">
+          <div class="km-num">KIT 02</div>
+          <div class="km-name">Dashboard Navigation 50</div>
+          <div class="km-why">Every SaaS sidebar + topbar icon. Sourced from Lucide + Phosphor + Tabler. The universal coverage kit — no developer building a product can't use this. Distribution: r/webdev, r/reactjs, Reactiflux Discord, Figma Community.</div>
+        </div>
+        <div class="kit-mini" style="border-color:rgba(52,211,153,.25)">
+          <div class="km-num">KIT 03</div>
+          <div class="km-name">Status, Feedback &amp; States 50</div>
+          <div class="km-why">Loading, success, error, warning, empty states, lifecycle stages. The kit developers remember they need at 11pm. High long-tail SEO value. Sourced from Lucide + Heroicons + Material Symbols. Distribution: r/webdev, r/SaaS, dev.to tutorial.</div>
+        </div>
+        <div class="kit-mini">
+          <div class="km-num" style="color:var(--tf)">Coming in P3</div>
+          <div class="km-name" style="color:var(--td)">Kits 04-10</div>
+          <div class="km-why" style="color:var(--tf)">Auth &amp; Security, Data &amp; Analytics, Ecommerce, Dev Tools, Fintech, Dating &amp; Social, Healthcare. Ship after first wave data tells you which domains are over-represented in your audience.</div>
+        </div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Both repos live with GitHub Pages. Both have visual previews in README. Both have usage-map.md complete.</div>
+    </div>
+  </div>
+
+  <!-- P1.04 -->
+  <div class="action-block" id="p1-packaging" style="border-color:rgba(251,146,60,.3)">
+    <div class="ab-hdr" style="background:rgba(251,146,60,.04)">
+      <div class="ab-num" style="color:var(--or)">P1.04</div>
+      <div class="ab-title">Kit File Standard — Every Kit Ships With All of These<span class="tag t-re">Non-negotiable quality gate</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">A kit that ships missing any Required file is worse than no kit — it trains developers to expect low quality. Build a repo template so scaffolding a new kit takes minutes.</div>
+      <div class="g2">
+        <div>
+          <div style="font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.4rem">Required (every kit)</div>
+          <div class="file-list">
+            <div class="file-item"><span class="file-req">req</span>README.md (with 1200x630 dark preview image at top)</div>
+            <div class="file-item"><span class="file-req">req</span>icons/ (50 SVG, kebab-case, currentColor stroke)</div>
+            <div class="file-item"><span class="file-req">req</span>sprite.svg (all 50 as &lt;symbol&gt; defs)</div>
+            <div class="file-item"><span class="file-req">req</span>preview.html (self-contained, dark, copy-on-click)</div>
+            <div class="file-item"><span class="file-req">req</span>tokens.json (size scale, stroke-width, color vars)</div>
+            <div class="file-item"><span class="file-req">req</span>usage-map.md (rationale per icon — this IS the product)</div>
+            <div class="file-item"><span class="file-req">req</span>ATTRIBUTION.md (source library + license per icon)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.4rem">Recommended (adds stars)</div>
+          <div class="file-list">
+            <div class="file-item"><span class="file-opt">opt</span>components/react/ (TSX, named exports, size/color props)</div>
+            <div class="file-item"><span class="file-opt">opt</span>components/vue/ (.vue SFCs)</div>
+            <div class="file-item"><span class="file-opt">opt</span>components/svelte/ (Svelte 5 .svelte)</div>
+            <div class="file-item"><span class="file-opt">opt</span>package.json (enables: npm i @supericons/kit-ai-dashboard)</div>
+            <div class="file-item"><span class="file-opt">opt</span>manifest-lite.json (Kit 01 only initially)</div>
+            <div class="file-item"><span class="file-opt">opt</span>mcp-example.md (Supericons MCP usage with this kit)</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert a-am"><span class="alert-i">⭐</span><div><strong>The README social preview image is the single highest-ROI asset.</strong> Repos with a dark-mode icon grid image get 3-5x more stars. Generate a 1200x630 PNG showing all 50 icons in a dark background grid. Set it as the repo's Social Preview in Settings → General. This is what appears when the repo link is shared on X, LinkedIn, or Discord.</div></div>
+    </div>
+  </div>
+
+  <!-- P1.05 -->
+  <div class="action-block" id="p1-kit-survey" style="border-color:rgba(251,146,60,.3)">
+    <div class="ab-hdr" style="background:rgba(251,146,60,.04)">
+      <div class="ab-num" style="color:var(--or)">P1.05</div>
+      <div class="ab-title">Kit Download Domain Survey — First Active Intelligence Signal<span class="tag t-am">Build same session as Kit 01</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Add a single question to a mediated download flow on supericons.dev. GitHub stays the file host, but every README download button points first to a Supericons redirect page so domain context can be attached before the user lands on the GitHub release asset. Even a 20% response rate is rich data.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Create route: <code>supericons.dev/get/:kitSlug</code>. This page shows the kit title, one required radio question, and a single CTA button: <strong>"Continue to GitHub download"</strong>.</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Update every kit README and supericons.dev collection CTA to link to the mediated URL, not directly to the GitHub release ZIP.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>On submit, log one <code>icon_evidence</code> row with <code>signal_type='kit_download'</code>, <code>icon_id = null</code>, <code>collection_id=[kit_slug]</code>, <code>domain=[answer]</code>, <code>context_url=[github release URL]</code>, and <code>session_hash</code>.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Immediately redirect to the GitHub release asset or latest release page for that kit.</div>
+      </div>
+      <div class="code">
+<span class="c">// Question shown on supericons.dev/get/:kitSlug before redirect</span>
+<span class="s">"What are you building with these icons?"</span>
+
+<span class="c">// Options (radio, required):</span>
+<span class="k">[ ]</span> AI product or agent workflow
+<span class="k">[ ]</span> SaaS product or dashboard
+<span class="k">[ ]</span> Consumer or mobile app
+<span class="k">[ ]</span> Internal tool or admin panel
+<span class="k">[ ]</span> Other / exploring
+
+<span class="c">// Logged as: signal_type='kit_download', icon_id=null, domain=[answer], collection_id=[kit_slug]</span>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> <code>supericons.dev/get/:kitSlug</code> works for Kit 01. README links point to the mediated flow. Answers are logged to icon_evidence with signal_type='kit_download'. Redirect lands on the GitHub release URL correctly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  P2 — DISTRIBUTION
+══════════════════════════════════════════════════════════ -->
+
+<div class="tier" id="p2">
+  <div class="tier-hdr">
+    <div class="tier-badge" style="background:rgba(251,191,36,.15);color:var(--am)">P2 — Distribution</div>
+    <div class="tier-name" style="color:var(--am)">List everywhere. Post in every community. Start the judgment layer.</div>
+  </div>
+  <div class="tier-why" style="background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.15);color:#fde68a">Requires Kit 01 to be live. MCP directories need a public MCP URL and at least one public artifact (the kit) to validate quality. Community posts require something real to share. Do not post before Kit 01 is live.</div>
+
+  <!-- P2.01 -->
+  <div class="action-block" id="p2-github-mcp" style="border-color:rgba(251,191,36,.3)">
+    <div class="ab-hdr" style="background:rgba(251,191,36,.04)">
+      <div class="ab-num" style="color:var(--am)">P2.01</div>
+      <div class="ab-title">GitHub MCP Registry — Highest Prestige Listing<span class="tag t-am">First-party GitHub product</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">This is not a community directory. It is GitHub's own first-party MCP Registry — listed in GitHub's main navigation alongside Copilot, Spark, and Models. Current listings: Microsoft, Stripe, Figma, Atlassian, Supabase, Notion, Vercel. Getting listed here puts Supericons in the same tier as those names for the 1.8M+ GitHub Copilot users.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">Pre.</span><strong>Prerequisite:</strong> <code>@supericons/mcp</code> must be published to npm with a matching version in both package.json and server.json.</div>
+        <div class="ab-step"><span class="ab-step-n">1.</span>Install: <code>npm install -g mcp-publisher</code></div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>In the Supericons MCP package root: <code>mcp-publisher init</code></div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>In server.json: set <code>name: "io.github.supericons/supericons-mcp"</code>. Add tags: <strong>Design Tools, Icons, SVG, UI, Agentic, AI</strong></div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>In package.json: add <code>"mcpName": "io.github.supericons/supericons-mcp"</code> — must exactly match server.json name.</div>
+        <div class="ab-step"><span class="ab-step-n">5.</span><code>mcp-publisher login github</code> (GitHub OAuth)</div>
+        <div class="ab-step"><span class="ab-step-n">6.</span><code>mcp-publisher publish</code></div>
+        <div class="ab-step"><span class="ab-step-n">7.</span>Add <code>/.well-known/mcp/server-card.json</code> to the MCP server URL — enables GitHub to auto-scan capabilities.</div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> mcp-publisher publish returns success. Server card URL responds with valid JSON. Listing appears on github.com/mcp.</div>
+    </div>
+  </div>
+
+  <!-- P2.02 -->
+  <div class="action-block" id="p2-mcp-dirs" style="border-color:rgba(251,191,36,.3)">
+    <div class="ab-hdr" style="background:rgba(251,191,36,.04)">
+      <div class="ab-num" style="color:var(--am)">P2.02</div>
+      <div class="ab-title">All MCP Directories — List in Priority Order<span class="tag t-am">All in one session</span></div>
+    </div>
+    <div class="ab-body">
+      <table>
+        <thead><tr><th>Directory</th><th>URL</th><th>How to Submit</th><th>Effort</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Smithery.ai</strong> <span class="tag t-re">S-tier</span></td><td>smithery.ai/new</td><td>Enter MCP server HTTPS URL. Requires Streamable HTTP transport. CLI: <code>smithery mcp publish "https://supericons.dev/mcp" -n @supericons/supericons-mcp</code></td><td>&lt;60 min</td></tr>
+          <tr><td><strong>Glama.ai</strong> <span class="tag t-re">S-tier</span></td><td>glama.ai/mcp/servers</td><td>Click "Add MCP Server." Provide GitHub repo URL, display name, description, tags. Manual review, clean README required.</td><td>&lt;30 min</td></tr>
+          <tr><td><strong>PulseMCP</strong> <span class="tag t-re">S-tier</span></td><td>pulsemcp.com</td><td>Locate "Add a Server" link. Manually curated — most cited by devs as most reliable.</td><td>&lt;20 min</td></tr>
+          <tr><td><strong>mcp.so</strong> <span class="tag t-re">S-tier</span></td><td>mcp.so</td><td>Community submission form. Ensure GitHub README has tags: <code>mcp</code> <code>icons</code> <code>svg</code> <code>ui</code></td><td>&lt;20 min</td></tr>
+          <tr><td><strong>mcpservers.org</strong> <span class="tag t-am">A-tier</span></td><td>mcpservers.org</td><td>Click "Submit." Consider premium option for Official badge.</td><td>&lt;15 min</td></tr>
+          <tr><td><strong>mcp.directory</strong> <span class="tag t-am">A-tier</span></td><td>mcp.directory</td><td>Submission form. Categories: AI/ML, Design Tools, Developer Tools.</td><td>&lt;15 min</td></tr>
+          <tr><td><strong>awesome-mcp-servers</strong> <span class="tag t-am">A-tier</span></td><td>github.com search</td><td>Fork top repo by stars. Add Supericons in "Design Tools / UI" section. PR title: "Add Supericons MCP — icon search and curation for AI builders"</td><td>&lt;20 min</td></tr>
+          <tr><td><strong>Anthropic Claude Connectors</strong> <span class="tag t-am">A-tier</span></td><td>claude.ai/integrations</td><td>Fill out Connectors Directory review form. Highest prestige after GitHub MCP Registry. 1-4 week review. Apply now, wait.</td><td>1 hour + wait</td></tr>
+          <tr><td><strong>modelcontextprotocol/servers</strong> <span class="tag t-bl">B-tier</span></td><td>github.com/modelcontextprotocol/servers</td><td>PR to add Supericons to community-contributed section. High authority backlink. LLMs cite this repo.</td><td>&lt;20 min</td></tr>
+        </tbody>
+      </table>
+      <div class="ab-done-crit"><strong>Done when:</strong> S-tier dirs listed (same session). A-tier listed (next session). PRs submitted for awesome-mcp-servers and modelcontextprotocol/servers.</div>
+    </div>
+  </div>
+
+  <!-- P2.03 -->
+  <div class="action-block" id="p2-communities" style="border-color:rgba(251,191,36,.3)">
+    <div class="ab-hdr" style="background:rgba(251,191,36,.04)">
+      <div class="ab-num" style="color:var(--am)">P2.03</div>
+      <div class="ab-title">Community Posts — Each Kit Gets Its Own Thread<span class="tag t-am">Match kit to audience</span></div>
+    </div>
+    <div class="ab-body">
+      <table>
+        <thead><tr><th>Kit / Content</th><th>Community</th><th>Angle</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Kit 01 — AI Dashboard</strong></td><td>r/LocalLLaMA, r/ClaudeAI, r/mcp, Cursor Discord (#mcp-servers)</td><td>"Free 50-icon kit for AI product UIs — curated from Lucide, Heroicons, Phosphor, and Tabler with documented rationale for concepts like RAG pipeline, orchestration, agent memory, and copilots. GitHub link."</td></tr>
+          <tr><td><strong>Kit 02 — Dashboard Nav</strong></td><td>r/webdev, r/reactjs, Reactiflux Discord</td><td>"Curated 50 icons for SaaS navigation — React + Vue + Svelte components included. Free GitHub repo."</td></tr>
+          <tr><td><strong>Kit 03 — Status / States</strong></td><td>r/webdev, r/SaaS, dev.to</td><td>"The status icon kit I always forget to curate properly — 50 icons for loading / success / error / empty states. Free."</td></tr>
+          <tr><td><strong>MCP announcement</strong></td><td>r/LocalLLaMA, r/ClaudeAI, r/mcp</td><td>Technical post showing the MCP tool schemas. Show get_collection_for_intent input → output. Explain why icon selection needed MCP integration.</td></tr>
+          <tr><td><strong>Show HN</strong></td><td>news.ycombinator.com</td><td>"Show HN: Icon system where your AI agent chooses icons with structured reasoning (not just search)" — the agentic angle is exactly what HN finds novel. Only after MCP demo recording is ready.</td></tr>
+          <tr><td><strong>Before/after UI</strong></td><td>r/SaaS, r/UI_Design</td><td>"Fixed [known AI startup]'s dashboard UI using zero JavaScript. Before/after." — Supericons branded, respectful redesign.</td></tr>
+          <tr><td><strong>X threads</strong></td><td>X/Twitter</td><td>5 ready templates: vocabulary gap thread, MCP config single tweet, before/after UI, free kit drop (each Tuesday), controversial UX claim. See marketing_distribution_kit.html.</td></tr>
+          <tr><td><strong>Indie Hackers</strong></td><td>indiehackers.com</td><td>Build in public post after first real MRR: "Built the world's first agent-legible icon system — here is what we learned." Include real numbers.</td></tr>
+        </tbody>
+      </table>
+      <div class="ab-done-crit"><strong>Done when:</strong> All 3 kit launches have corresponding community posts. MCP announcement posted after MCP is live on registries. HN only after demo recording exists.</div>
+    </div>
+  </div>
+
+  <!-- P2.04 -->
+  <div class="action-block" id="p2-seed" style="border-color:rgba(251,191,36,.3)">
+    <div class="ab-hdr" style="background:rgba(251,191,36,.04)">
+      <div class="ab-num" style="color:var(--am)">P2.04</div>
+      <div class="ab-title">Editorial Seed Data — Human Taste Council<span class="tag t-am">Bootstrap judgment before organic data exists</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Before enough users exist to generate meaningful behavioral signals, the judgment layer needs manually authored evidence objects. This is the "Spotify human editors before algorithms" phase. Execute as an editorial task — no code required. The output feeds directly into MCP tool responses as the initial recommendation set.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>For each icon in Kit 01, write 3-5 "constitution statements." Insert <strong>one evidence row per statement</strong> using <code>evidence_text</code>. Example row:</div>
+      </div>
+      <div class="code">
+<span class="c">// Example editorial row for the icon chosen to represent "orchestrator"</span>
+{
+  <span class="k">"icon_id"</span>: <span class="s">"lucide:workflow"</span>,
+  <span class="k">"signal_type"</span>: <span class="s">"editorial"</span>,
+  <span class="k">"search_query"</span>: <span class="s">"orchestrator"</span>,
+  <span class="k">"domain"</span>: <span class="s">"ai-tool"</span>,
+  <span class="k">"ui_surface"</span>: <span class="s">"sidebar"</span>,
+  <span class="k">"evidence_text"</span>: <span class="s">"Best choice for: multi-agent workflow coordinator UI, DAG visualization headers, pipeline manager sidebars. Chosen over 'gear' because orchestrator implies dynamic coordination, not static configuration."</span>,
+  <span class="k">"confidence"</span>: <span class="v">0.9</span>
+}
+      </div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">2.</span>Insert these as rows in icon_evidence with signal_type='editorial'. The MCP tool reads icon_evidence to build recommendations — editorial entries immediately improve response quality.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Target: 3-5 constitution statements for each of the 50 Kit 01 icons, starting with the AI-concept icons (the ones requiring most editorial judgment). Then cover Kit 02 and Kit 03 icons. Approximately 2 hours per kit. Use the <code>confidence</code> field (0.7-0.9) to indicate editorial certainty. High confidence = well-established convention. Lower confidence = contested choice that may be overridden by behavioral data.</div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> All 50 Kit 01 icons have at least 3 editorial evidence entries in icon_evidence. MCP get_collection_for_intent returns editorially-justified results for AI dashboard queries.</div>
+    </div>
+  </div>
+
+  <!-- P2.05 -->
+  <div class="action-block" id="p2-mcp-log" style="border-color:rgba(251,191,36,.3)">
+    <div class="ab-hdr" style="background:rgba(251,191,36,.04)">
+      <div class="ab-num" style="color:var(--am)">P2.05</div>
+      <div class="ab-title">MCP Outcome Logging — Automatic Agentic Evidence<span class="tag t-am">Add to MCP tool handlers</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Every MCP tool call is a free evidence collection event. Add structured logging to the MCP handler so every agent interaction builds the judgment layer automatically. No user UX changes needed.</div>
+      <div class="code">
+<span class="c">// Add to get_collection_for_intent handler</span>
+<span class="c">// KEY: log ONE ROW PER RETURNED ICON, not one row per call.</span>
+<span class="c">// batch_id groups all rows from the same MCP call together.</span>
+<span class="k">async function</span> logMcpOutcome(intent, returnedIconIds, sessionId) {
+  <span class="k">const</span> batchId = crypto.randomUUID()
+  <span class="k">const</span> inferredDomain = inferDomainFromIntent(intent) <span class="c">// 'ai-tool' | 'saas' | etc.</span>
+  <span class="k">const</span> sessionHash = sha256(sessionId + todayDateString())
+
+  <span class="c">// A newer request means the previous unresolved batch did not converge.</span>
+  <span class="k">await</span> supabase
+    .<span class="v">from</span>(<span class="s">'icon_evidence'</span>)
+    .<span class="v">update</span>({ agent_converged: <span class="k">false</span> })
+    .<span class="v">eq</span>(<span class="s">'signal_type'</span>, <span class="s">'mcp_call'</span>)
+    .<span class="v">eq</span>(<span class="s">'session_hash'</span>, sessionHash)
+    .<span class="v">is</span>(<span class="s">'agent_converged'</span>, <span class="k">null</span>)
+
+  <span class="k">const</span> rows = returnedIconIds.<span class="v">map</span>(iconId => ({
+    signal_type:     <span class="s">'mcp_call'</span>,
+    icon_id:         iconId,          <span class="c">// one row per icon, never an array</span>
+    batch_id:        batchId,         <span class="c">// ties this row to the same call as siblings</span>
+    search_query:    intent,
+    domain:          inferredDomain,
+    agent_converged: <span class="k">null</span>,            <span class="c">// updated below after 60-min timeout</span>
+    session_hash:    sessionHash
+  }))
+
+  <span class="k">await</span> supabase.<span class="v">from</span>(<span class="s">'icon_evidence'</span>).<span class="v">insert</span>(rows)
+
+  <span class="c">// No inline timer here. The pg_cron job defined in P0.01 marks the</span>
+  <span class="c">// latest unresolved batch as agent_converged = true after 60 minutes of inactivity.</span>
+}
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> MCP tool calls appear in icon_evidence with signal_type='mcp_call'. icon_scores shows mcp_acceptance_rate updating daily.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  P3 — SCALE
+══════════════════════════════════════════════════════════ -->
+
+<div class="tier" id="p3">
+  <div class="tier-hdr">
+    <div class="tier-badge" style="background:rgba(52,211,153,.15);color:var(--gr)">P3 — Scale</div>
+    <div class="tier-name" style="color:var(--gr)">Grow what P1+P2 started. Needs real user volume to be meaningful.</div>
+  </div>
+  <div class="tier-why" style="background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.15);color:#a7f3d0">These items require either user volume (context chip, collections) or the P1-P2 flywheel running (kit data informing Wave 2 curation). Do not skip ahead — building these before user density makes them hollow features, not intelligence moats.</div>
+
+  <!-- P3.01 -->
+  <div class="action-block" id="p3-kits" style="border-color:rgba(52,211,153,.3)">
+    <div class="ab-hdr" style="background:rgba(52,211,153,.04)">
+      <div class="ab-num" style="color:var(--gr)">P3.01</div>
+      <div class="ab-title">Kits 04-10 — Wave 2 and Wave 3<span class="tag t-gr">Data-informed after Wave 1 runs</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">The kit download domain survey from P1.05 now tells you which domains dominate your early user base. Let that data inform the order. If 70% of Kit 01-03 downloaders selected "AI product" → accelerate Kit 04 AI Agent UI. If 60% selected "SaaS product" → accelerate Kit 04 Auth &amp; Security and Kit 05 Data &amp; Analytics.</div>
+      <div class="kit-row">
+        <div class="kit-mini">
+          <div class="km-num">KIT 04</div>
+          <div class="km-name">Auth &amp; Security</div>
+          <div class="km-why">Lock, key, 2FA, passkey, SSO, SAML, permissions, compliance. Every product needs these — high intent searches.</div>
+        </div>
+        <div class="kit-mini">
+          <div class="km-num">KIT 05</div>
+          <div class="km-name">Data &amp; Analytics</div>
+          <div class="km-why">Charts, metrics, funnels, segments, KPIs. Dark-mode dashboard optimized. No other library curates these specifically for SaaS BI.</div>
+        </div>
+        <div class="kit-mini">
+          <div class="km-num">KIT 06</div>
+          <div class="km-name">Ecommerce Essentials</div>
+          <div class="km-why">Cart, checkout, shipping, discounts, returns. Largest addressable audience. Tested for 16px mobile legibility.</div>
+        </div>
+      </div>
+      <div class="kit-row">
+        <div class="kit-mini">
+          <div class="km-num">KIT 07</div>
+          <div class="km-name">Developer Tools</div>
+          <div class="km-why">Terminal, pipeline, deploy, build, version, container, cluster. HN + r/devops. Niche but loyal.</div>
+        </div>
+        <div class="kit-mini">
+          <div class="km-num">KIT 08</div>
+          <div class="km-name">Fintech &amp; Payments</div>
+          <div class="km-why">Wallet, card, transfer, compliance, KYC, freeze. Compliance-safe choices. High-value audience converts to paid.</div>
+        </div>
+        <div class="kit-mini">
+          <div class="km-num">KIT 09 + 10</div>
+          <div class="km-name">Dating &amp; Social + Healthcare</div>
+          <div class="km-why">Most opinionated vertical kits. Dating = X viral potential. Healthcare = most underserved category, no good existing set.</div>
+        </div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> All 10 kits live. GitHub org has 10 repos with combined discovery surface. Each kit has its own community post in the matched audience channel.</div>
+    </div>
+  </div>
+
+  <!-- P3.02 -->
+  <div class="action-block" id="p3-collections" style="border-color:rgba(52,211,153,.3)">
+    <div class="ab-hdr" style="background:rgba(52,211,153,.04)">
+      <div class="ab-num" style="color:var(--gr)">P3.02</div>
+      <div class="ab-title">User Collections — Highest-Value Active Intelligence Signal<span class="tag t-gr">After user volume exists</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">The single active user feature with the most intelligence value. When a user creates a collection ("My fintech app icons," 14 icons), Supericons learns: what icons co-occur, what domain the curator works in, what style preferences they reveal. Unlike comments (noise) or favorites (aspirational), a collection is a declaration of "these belong together for this job." This is manually curated co-occurrence data — richer than behavioral copy signals alone.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Build the collection UI: Pinterest-style boards. Each board has a name (free text), optional description, and icons pinned from the main browse view.</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Add a <strong>visibility toggle</strong>: private (default) or public. Public collections become a discovery surface — browsable by other users as curated sets.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Log collection creation as evidence: when user adds icon X to collection "My fintech app," log icon_evidence rows for each icon in the collection with signal_type='collection', domain inferred from collection name, collection_id set.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Add a <strong>co-occurrence graph update</strong>: every time a collection is created, update a weighted edge between each pair of icons in the collection. This feeds the recommend_co_occurring MCP tool.</div>
+        <div class="ab-step"><span class="ab-step-n">5.</span>Add <strong>"Share this collection"</strong> — generates a public URL like <code>supericons.dev/c/my-fintech-icons</code>. This is the social sharing unit — not the icon, but the curated set.</div>
+      </div>
+      <div class="alert a-gr"><span class="alert-i">💡</span><div><strong>Why collections not open comments:</strong> A collection is an action (curation) that reveals preferences. A comment is a statement that may or may not reflect real usage. Actions are more honest signals than words. The collection IS the comment — it says "I chose these icons for this job."</div></div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Users can create, name, and populate collections. Public collections are browsable. Each collection creation logs evidence objects. Share URL generates correctly.</div>
+    </div>
+  </div>
+
+  <!-- P3.03 -->
+  <div class="action-block" id="p3-context-chip" style="border-color:rgba(52,211,153,.3)">
+    <div class="ab-hdr" style="background:rgba(52,211,153,.04)">
+      <div class="ab-num" style="color:var(--gr)">P3.03</div>
+      <div class="ab-title">Post-Copy Context Chip — One Tap, Zero Friction<span class="tag t-gr">Build after 500+ MAU</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">After a user copies an icon, a small chip appears attached to the icon card. Not a modal. Not a toast. A dismissable inline chip. One tap, never shown again for the same icon to the same session hash. Adds ui_surface context to behavioral copy events — significantly enriches the evidence object for a 15% participation rate assumption.</div>
+      <div class="code">
+<span class="c">// Chip UI appears below icon after copy, disappears in 8s if not tapped</span>
+"What is this for?"
+<span class="k">[ Sidebar nav ]</span>  <span class="k">[ Status badge ]</span>  <span class="k">[ Button icon ]</span>  <span class="k">[ Empty state ]</span>  <span class="k">[ Other ]</span>
+
+<span class="c">// On tap: update the most recent icon_evidence row for this icon+session</span>
+<span class="c">// with ui_surface = selected value. Chip disappears permanently for this icon+session.</span>
+      </div>
+      <div class="alert a-am"><span class="alert-i">⚠️</span><div>Do not build this before 500+ monthly active users. Low participation at low volume produces biased data (early adopters are not representative of mainstream developers). The chip is most valuable when there are enough sessions to make the 15% participation rate statistically meaningful.</div></div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Chip appears after copy. Tap updates icon_evidence.ui_surface. Never shown again for the same icon+session. Disappears automatically after 8 seconds if not tapped.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  P4 — GROWTH LAYER
+══════════════════════════════════════════════════════════ -->
+
+<div class="tier" id="p4" style="border-bottom:none">
+  <div class="tier-hdr">
+    <div class="tier-badge" style="background:rgba(96,165,250,.15);color:var(--bl)">P4 — Growth Layer</div>
+    <div class="tier-name" style="color:var(--bl)">These compound slowly. Start when the flywheel has momentum.</div>
+  </div>
+  <div class="tier-why" style="background:rgba(96,165,250,.04);border:1px solid rgba(96,165,250,.15);color:#bfdbfe">P4 items need user density, behavioral data accumulation, and Distribution (P2) already running. They amplify what already works — they do not create their own gravity. Build after the first real cohort of active users exists.</div>
+
+  <!-- P4.01 -->
+  <div class="action-block" id="p4-launch" style="border-color:rgba(96,165,250,.3)">
+    <div class="ab-hdr" style="background:rgba(96,165,250,.04)">
+      <div class="ab-num" style="color:var(--bl)">P4.01</div>
+      <div class="ab-title">Product Hunt Launch<span class="tag t-bl">After 6+ kits live + MCP on 4+ dirs + Reddit engagement exists</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Product Hunt traffic converts better when users can find evidence of real usage before they upvote. Launch too early and you get upvotes from people who do not convert. Launch after the flywheel has momentum and you get upvotes from people who recognize something they already know about.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">Pre.</span>Requirements before launch: 6+ GitHub kits live. MCP listed on GitHub MCP Registry + Smithery + Glama + PulseMCP. At least 2 Reddit threads that generated real engagement (20+ upvotes). A demo recording of the MCP in action in Cursor.</div>
+        <div class="ab-step"><span class="ab-step-n">1.</span>Tagline: <strong>"The first icon system your AI agent understands."</strong> Subhead: "Icon search and curation for humans. Structured schema for agents. 50-icon build kits. MCP-native."</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Main media: demo GIF of MCP in Cursor returning a justified icon set. Side gallery: preview images of all 6 kits.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Launch time: 12:01am PST on a Tuesday or Wednesday.</div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> All prerequisites met. Listing submitted and goes live at 12:01am. Respond to every comment in the first 90 minutes.</div>
+    </div>
+  </div>
+
+  <!-- P4.02 -->
+  <div class="action-block" id="p4-social-gallery" style="border-color:rgba(96,165,250,.3)">
+    <div class="ab-hdr" style="background:rgba(96,165,250,.04)">
+      <div class="ab-num" style="color:var(--bl)">P4.02</div>
+      <div class="ab-title">Collection-in-Context Social Gallery<span class="tag t-bl">The Midjourney model applied correctly to icons</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">The Midjourney social model works because the social object is the output-in-context, not the tool itself. The equivalent for Supericons: users post "kit I built for my SaaS nav — 12 icons, dark mode" plus a screenshot of their actual UI. The gallery shows icons deployed in real products, not icons in isolation. This is also the single richest evidence signal: screenshot + icon subset + product type = manually annotated usage evidence object.</div>
+      <div class="ab-steps">
+        <div class="ab-step"><span class="ab-step-n">1.</span>Add a "Share your kit" flow: upload screenshot (optional), select the icons you used from a picker, add a product context tag, optional description.</div>
+        <div class="ab-step"><span class="ab-step-n">2.</span>Public gallery page at supericons.dev/gallery — browsable by product type or icon set.</div>
+        <div class="ab-step"><span class="ab-step-n">3.</span>Each gallery post creates one evidence row per selected icon with <code>signal_type='social_gallery'</code>, shared <code>batch_id</code>, <code>domain=[context tag]</code>, <code>context_url=[screenshot URL]</code>, and optional <code>evidence_text</code> from the user caption.</div>
+        <div class="ab-step"><span class="ab-step-n">4.</span>Allow liking a gallery post — these are implicit endorsements of that curated set in that context. Much stronger signal than liking an individual icon.</div>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Upload flow works. Gallery page is live and browsable. Gallery posts generate evidence objects in icon_evidence. First 10 gallery posts exist (seed with your own UI screenshots initially).</div>
+    </div>
+  </div>
+
+  <!-- P4.03 -->
+  <div class="action-block" id="p4-taste" style="border-color:rgba(96,165,250,.3)">
+    <div class="ab-hdr" style="background:rgba(96,165,250,.04)">
+      <div class="ab-num" style="color:var(--bl)">P4.03</div>
+      <div class="ab-title">Taste Profile Layer — Team-Level Aesthetic Intelligence<span class="tag t-bl">Emerges from behavioral data, not surveys</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">Group icon_evidence rows by session_hash patterns. If a session consistently copies Lucide icons over Phosphor equivalents, it has a library preference. Aggregate across sessions from the same domain or workspace. The taste profile emerges from data — no user survey needed. Enables workspace-personalized MCP recommendations.</div>
+      <div class="code">
+<span class="c">-- Taste profile derived from icon_evidence (computed, stored in icon_scores variant)</span>
+<span class="c">-- Run as part of the daily cron rebuild</span>
+
+<span class="k">style_preference</span>    jsonb   <span class="c">-- {"minimal":0.71,"filled":0.18,"outline":0.11} per session_hash cluster</span>
+<span class="k">library_affinity</span>    jsonb   <span class="c">-- {"lucide":0.62,"phosphor":0.21,"tabler":0.17}</span>
+<span class="k">weight_preference</span>   float   <span class="c">-- average stroke-width of copied icons (1.0 = thin, 2.0 = bold)</span>
+<span class="k">corner_preference</span>   text    <span class="c">-- 'sharp' | 'rounded' | 'mixed'</span>
+<span class="k">domain_cluster</span>      text    <span class="c">-- 'enterprise' | 'consumer' | 'technical' | 'expressive'</span>
+
+<span class="c">-- Used in MCP tool call:</span>
+get_collection_for_intent(intent: <span class="s">"billing sidebar"</span>, workspace_id: <span class="s">"ws_abc123"</span>)
+<span class="c">-- Returns Lucide variants for Lucide-affine workspaces, Phosphor for Phosphor-affine.</span>
+<span class="c">-- Same intent, personalized output. Cannot be replicated without the historical data.</span>
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> Daily cron computes taste profiles per session_hash cluster. MCP get_collection_for_intent accepts optional workspace_id. Returns library-personalized results when workspace data exists.</div>
+    </div>
+  </div>
+
+  <!-- P4.04 -->
+  <div class="action-block" id="p4-confidence" style="border-color:rgba(96,165,250,.3)">
+    <div class="ab-hdr" style="background:rgba(96,165,250,.04)">
+      <div class="ab-num" style="color:var(--bl)">P4.04</div>
+      <div class="ab-title">MCP Confidence Scores — The Visible Moat<span class="tag t-bl">The judgment layer, surfaced</span></div>
+    </div>
+    <div class="ab-body">
+      <div class="ab-desc">When enough icon_evidence data exists per icon, surface it in the MCP response as confidence scores. This makes the moat visible and legible — the agent (and the developer reading the transcript) can see that the recommendation is evidence-backed, not guessed.</div>
+      <div class="code">
+<span class="c">// MCP response with confidence scores (after sufficient data accumulation)</span>
+{
+  <span class="k">"icons"</span>: [
+    {
+      <span class="k">"id"</span>: <span class="s">"supericons:orchestrator"</span>,
+      <span class="k">"confidence"</span>: <span class="v">0.87</span>,
+      <span class="k">"evidence_basis"</span>: <span class="s">"Recommended based on 312 similar selections for AI workflow UIs"</span>,
+      <span class="k">"retention_rate"</span>: <span class="v">0.91</span>,
+      <span class="k">"top_context"</span>: <span class="s">"sidebar nav in multi-agent systems (62% of use cases)"</span>,
+      <span class="k">"contraindicated_for"</span>: [<span class="s">"consumer apps"</span>, <span class="s">"single-step automations"</span>]
+    }
+  ]
+}
+      </div>
+      <div class="ab-done-crit"><strong>Done when:</strong> MCP response includes confidence and evidence_basis fields for icons with sufficient data (≥50 evidence rows). Low-data icons return without confidence field rather than returning false confidence.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    if(t>0)p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const secs=[...document.querySelectorAll('[id]')].filter(e=>e.closest('.tier')||e.closest('.hero'));
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('.action-block[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

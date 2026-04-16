@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: Agentic Curation System Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #070b0f;
+      --bg-surface: #0d1117;
+      --bg-raised: #141a22;
+      --bg-hover: #1c2330;
+      --border: #1e2837;
+      --border-subtle: #161e2a;
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      --text-faint: #3d4854;
+      --blue: #58a6ff;
+      --purple: #a371f7;
+      --green: #3fb950;
+      --amber: #d29922;
+      --red: #f85149;
+      --teal: #39c5cf;
+      --pink: #f778ba;
+      --orange: #fa7970;
+      --glow-blue: rgba(88,166,255,0.12);
+      --glow-purple: rgba(163,113,247,0.12);
+      --glow-green: rgba(63,185,80,0.12);
+      --glow-teal: rgba(57,197,207,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.65; overflow-x: hidden; }
+
+    /* LAYOUT */
+    .layout { display: block; min-height: 100vh; }
+
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: 220px; height: 100vh;
+      background: var(--bg-surface); border-right: 1px solid var(--border);
+      overflow-y: auto; padding: 1.5rem 0.75rem; display: flex; flex-direction: column; gap: 0.15rem;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1.25rem; padding: 0 0.4rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .brand-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); animation: pulse-anim 2.2s infinite; }
+    @keyframes pulse-anim { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)} }
+
+    .sidebar-group-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-faint); padding: 0.6rem 0.4rem 0.2rem;
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.6rem;
+      border-radius: 6px; color: var(--text-dim); text-decoration: none;
+      font-size: 0.78rem; font-weight: 500; transition: all .15s; cursor: pointer;
+    }
+    .nav-item:hover { background: var(--bg-hover); color: var(--text); }
+    .nav-item.active { background: var(--glow-teal); color: var(--teal); }
+    .nav-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-faint); min-width: 1.2rem; }
+
+    .main { margin-left: 220px; }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 4rem 4rem; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -300px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(57,197,207,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -200px; left: 20%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(163,113,247,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .tag-eyebrow {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--teal); background: var(--glow-teal); border: 1px solid rgba(57,197,207,.25);
+      border-radius: 99px; padding: .2rem .75rem; margin-bottom: 1.5rem;
+    }
+
+    .hero-h1 {
+      font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 1rem;
+    }
+    .hero-h1 span { background: linear-gradient(135deg, #39c5cf, #a371f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .hero-sub { font-size: 1rem; color: var(--text-dim); max-width: 700px; line-height: 1.75; margin-bottom: 2.5rem; }
+
+    .hero-callout {
+      background: linear-gradient(135deg, rgba(57,197,207,.08), rgba(163,113,247,.08));
+      border: 1px solid rgba(57,197,207,.2); border-radius: 12px; padding: 1.25rem 1.5rem;
+      max-width: 680px;
+    }
+    .hero-callout-q {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600;
+      color: var(--text); margin-bottom: 0.4rem; line-height: 1.4;
+    }
+    .hero-callout-a { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; }
+
+    /* SECTIONS */
+    section { padding: 4rem; border-bottom: 1px solid var(--border); }
+    .sec-num { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--text-faint); margin-bottom: .4rem; }
+    .sec-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .75rem; }
+    .sec-desc { color: var(--text-dim); max-width: 680px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+    /* CARDS */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .card-grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+
+    .card {
+      background: var(--bg-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem; transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--purple)); opacity: 0; transition: opacity .2s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon { font-size: 1.4rem; margin-bottom: .75rem; }
+    .card-title { font-weight: 700; font-size: .9rem; color: var(--text); margin-bottom: .4rem; }
+    .card-body { font-size: .82rem; color: var(--text-dim); line-height: 1.6; }
+
+    /* TAGS */
+    .tag {
+      display: inline-block; font-size: .67rem; font-weight: 600;
+      padding: .12rem .5rem; border-radius: 4px; margin-top: .6rem;
+    }
+    .tag-teal { background: rgba(57,197,207,.15); color: var(--teal); }
+    .tag-purple { background: rgba(163,113,247,.15); color: var(--purple); }
+    .tag-blue { background: rgba(88,166,255,.15); color: var(--blue); }
+    .tag-green { background: rgba(63,185,80,.15); color: var(--green); }
+    .tag-amber { background: rgba(210,153,34,.15); color: var(--amber); }
+    .tag-red { background: rgba(248,81,73,.15); color: var(--red); }
+    .tag-pink { background: rgba(247,120,186,.15); color: var(--pink); }
+    .tag-orange { background: rgba(250,121,112,.15); color: var(--orange); }
+
+    /* DESIGN THINKING PHASES */
+    .dt-phase {
+      border: 1px solid var(--border); border-radius: 16px; margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .dt-phase-header {
+      display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.75rem;
+      background: var(--bg-raised); cursor: pointer; user-select: none;
+    }
+    .dt-phase-num {
+      font-family: 'JetBrains Mono', monospace; font-size: .65rem;
+      color: var(--text-faint); min-width: 1.5rem;
+    }
+    .dt-phase-emoji { font-size: 1.3rem; }
+    .dt-phase-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); }
+    .dt-phase-tag { font-size: .7rem; color: var(--text-dim); }
+    .dt-phase-chevron { margin-left: auto; color: var(--text-faint); font-size: .9rem; transition: transform .25s; }
+    .dt-phase.open .dt-phase-chevron { transform: rotate(180deg); }
+    .dt-phase-body { padding: 1.75rem; display: none; border-top: 1px solid var(--border); }
+    .dt-phase.open .dt-phase-body { display: block; }
+
+    /* CODE BLOCKS */
+    .code { background: #020508; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 1rem 0; }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .6rem 1rem; background: var(--bg-raised); border-bottom: 1px solid var(--border);
+    }
+    .code-lang { font-size: .7rem; font-weight: 600; color: var(--text-faint); }
+    .code-title { font-size: .75rem; color: var(--text-dim); }
+    .code-body {
+      padding: 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: .78rem;
+      color: #9cdcfe; line-height: 1.7; overflow-x: auto; white-space: pre;
+    }
+    .c-key { color: #ce9178; }
+    .c-val { color: #b5cea8; }
+    .c-str { color: #9cdcfe; }
+    .c-bool { color: #569cd6; }
+    .c-comment { color: #6a9955; }
+    .c-num { color: #b5cea8; }
+    .c-prop { color: #dcdcaa; }
+    .c-punct { color: #d4d4d4; }
+
+    /* TABLES */
+    table { width: 100%; border-collapse: collapse; font-size: .83rem; margin: 1rem 0; }
+    th { text-align: left; padding: .7rem 1rem; background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-dim); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+    td { padding: .7rem 1rem; border: 1px solid var(--border); color: var(--text-dim); line-height: 1.5; vertical-align: top; }
+    tr:hover td { background: var(--bg-raised); }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2rem 0; }
+
+    /* ALERT */
+    .alert { border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .84rem; line-height: 1.65; display: flex; gap: .75rem; align-items: flex-start; }
+    .alert-icon { flex-shrink: 0; font-size: 1rem; }
+    .alert-insight { background: rgba(57,197,207,.07); border: 1px solid rgba(57,197,207,.25); color: #94dfe6; }
+    .alert-genius { background: rgba(163,113,247,.07); border: 1px solid rgba(163,113,247,.25); color: #c5a8f5; }
+    .alert-warn { background: rgba(210,153,34,.07); border: 1px solid rgba(210,153,34,.28); color: #e2c16a; }
+    .alert-action { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.25); color: #7fce8a; }
+
+    /* TIER BLOCKS */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .tier { border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); }
+    .tier-t1 { background: rgba(57,197,207,.05); border-color: rgba(57,197,207,.25); }
+    .tier-t2 { background: rgba(88,166,255,.05); border-color: rgba(88,166,255,.2); }
+    .tier-t3 { background: rgba(163,113,247,.05); border-color: rgba(163,113,247,.2); }
+    .tier-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .4rem; }
+    .tier-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: .5rem; }
+    .tier-body { font-size: .8rem; color: var(--text-dim); line-height: 1.6; }
+    .tier-examples { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--text-faint); margin-top: .5rem; }
+
+    /* GITHUB LANDSCAPE BARS */
+    .repo-list { display: flex; flex-direction: column; gap: .65rem; }
+    .repo-item { display: flex; align-items: center; gap: 1rem; }
+    .repo-name { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--text); min-width: 220px; }
+    .repo-bar-wrap { flex: 1; background: var(--bg-border, var(--border)); border-radius: 4px; height: 6px; overflow: hidden; }
+    .repo-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--teal), var(--blue)); }
+    .repo-stars { font-size: .72rem; color: var(--text-dim); min-width: 60px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+    .repo-badge { font-size: .62rem; font-weight: 700; padding: .1rem .35rem; border-radius: 3px; }
+
+    /* COLLECTION INTENT CARDS */
+    .collection-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+    .collection-card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .col-intent { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+    .col-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: .4rem; }
+    .col-desc { font-size: .82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: .75rem; }
+    .col-icons { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .col-icon-tag { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--text-faint); background: var(--bg); border: 1px solid var(--border-subtle); border-radius: 4px; padding: .15rem .4rem; }
+
+    /* SCROLL PROGRESS */
+    #sp { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, #39c5cf, #a371f7); z-index: 200; }
+
+    /* FLOW DIAGRAM */
+    .flow { display: flex; align-items: flex-start; gap: 0; flex-wrap: wrap; margin: 1.5rem 0; }
+    .flow-node { background: var(--bg-raised); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; min-width: 150px; text-align: center; }
+    .flow-node-label { font-size: .68rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .25rem; }
+    .flow-node-val { font-weight: 700; font-size: .88rem; color: var(--text); }
+    .flow-arrow { align-self: center; color: var(--text-faint); padding: 0 .75rem; font-size: 1.2rem; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      section, .hero { padding: 2rem 1.5rem; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="sp"></div>
+
+<div class="layout">
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand"><div class="brand-pulse"></div>Supericons CX</div>
+  <div class="sidebar-group-label">Problem</div>
+  <a class="nav-item" href="#landscape"><span class="nav-num">01</span>Icon Landscape</a>
+  <a class="nav-item" href="#theGap"><span class="nav-num">02</span>The Gap</a>
+  <div class="sidebar-group-label">Design Thinking</div>
+  <a class="nav-item" href="#empathize"><span class="nav-num">03</span>Empathize</a>
+  <a class="nav-item" href="#define"><span class="nav-num">04</span>Define</a>
+  <a class="nav-item" href="#ideate"><span class="nav-num">05</span>Ideate</a>
+  <a class="nav-item" href="#prototype"><span class="nav-num">06</span>Prototype</a>
+  <div class="sidebar-group-label">Architecture</div>
+  <a class="nav-item" href="#trustSystem"><span class="nav-num">07</span>Trust System</a>
+  <a class="nav-item" href="#intentCollections"><span class="nav-num">08</span>Intent Collections</a>
+  <a class="nav-item" href="#manifest"><span class="nav-num">09</span>Icon Manifest Schema</a>
+  <a class="nav-item" href="#mcpApi"><span class="nav-num">10</span>Collections MCP API</a>
+  <div class="sidebar-group-label">Next Steps</div>
+  <a class="nav-item" href="#roadmap"><span class="nav-num">11</span>Product Roadmap</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tag-eyebrow">🧠 Design Systems Research + Design Thinking</div>
+  <h1 class="hero-h1">The Agent-Legibility Problem:<br><span>Building an Icon Curation System for the Agentic Era</span></h1>
+  <p class="hero-sub">
+    There are 4,572+ icon repositories on GitHub. Developers have never had more raw icon material. Yet finding the <em>right</em> icon for a specific context remains broken, not because search is bad, but because icons lack the structured semantic metadata that allows either a human or an AI agent to make a confident, reasoned choice. This is a design problem. We solve it with design thinking.
+  </p>
+  <div class="hero-callout">
+    <div class="hero-callout-q">The core question this document answers:</div>
+    <div class="hero-callout-a">How does an AI agent, which cannot see or visually evaluate an icon, decide which icon from a library of 20,000+ is the most appropriate, trustworthy, and visually-compatible choice for a specific UI context? And how does Supericons build the infrastructure to answer that question confidently, at scale, programmatically?</div>
+  </div>
+</div>
+
+<!-- SECTION 1: ICON LANDSCAPE -->
+<section id="landscape">
+  <div class="sec-num">// 01 — GITHUB ICON ECOSYSTEM RESEARCH</div>
+  <h2 class="sec-title">The Icon Landscape: Abundant, Fragmented, Unsemantic</h2>
+  <p class="sec-desc">Research across the GitHub icon topic (4,572 repositories) reveals a clear pattern: the ecosystem has solved the volume problem completely. It has not solved the relevance, trust, or agent-legibility problems at all.</p>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem">Top Repositories by Stars &mdash; April 2026</h3>
+  <div class="repo-list">
+    <div class="repo-item">
+      <span class="repo-name">FortAwesome/Font-Awesome</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:100%"></div></div>
+      <span class="repo-stars">76.5k ★</span>
+      <span class="repo-badge tag tag-amber">CSS/Font/SVG</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">google/material-design-icons</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:69%"></div></div>
+      <span class="repo-stars">53.1k ★</span>
+      <span class="repo-badge tag tag-blue">Variable Font</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">feathericons/feather</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:34%"></div></div>
+      <span class="repo-stars">25.9k ★</span>
+      <span class="repo-badge tag tag-green">Pure SVG</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">simple-icons/simple-icons</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:32%"></div></div>
+      <span class="repo-stars">24.9k ★</span>
+      <span class="repo-badge tag tag-purple">Brand Icons</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">lucide-icons/lucide</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:29%"></div></div>
+      <span class="repo-stars">22.1k ★</span>
+      <span class="repo-badge tag tag-blue">Feather Fork</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">tabler/tabler-icons</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:27%"></div></div>
+      <span class="repo-stars">20.6k ★</span>
+      <span class="repo-badge tag tag-teal">6000+ SVG MIT</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">ionic-team/ionicons</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:23%"></div></div>
+      <span class="repo-stars">18k ★</span>
+      <span class="repo-badge tag tag-green">Web Components</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">react-icons/react-icons</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:16%"></div></div>
+      <span class="repo-stars">12.5k ★</span>
+      <span class="repo-badge tag tag-pink">Aggregator</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">twbs/icons (Bootstrap)</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:10%"></div></div>
+      <span class="repo-stars">8k ★</span>
+      <span class="repo-badge tag tag-purple">SVG Sprite</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">iconoir-icons/iconoir</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:6%"></div></div>
+      <span class="repo-stars">4.4k ★</span>
+      <span class="repo-badge tag tag-blue">1600+ SVG</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">alexk111/SVG-Morpheus <em style="font-style:italic;color:var(--text-faint)">(defunct 2017)</em></span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:3.5%;background:linear-gradient(90deg,var(--red),var(--amber))"></div></div>
+      <span class="repo-stars">2.7k ★</span>
+      <span class="repo-badge tag tag-orange">SVG Morph</span>
+    </div>
+    <div class="repo-item">
+      <span class="repo-name">Ramotion/animated-tab-bar</span>
+      <div class="repo-bar-wrap"><div class="repo-bar" style="width:14.5%;background:linear-gradient(90deg,var(--purple),var(--pink))"></div></div>
+      <span class="repo-stars">11.1k ★</span>
+      <span class="repo-badge tag tag-purple">Animated iOS</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem">Research Findings: What Exists vs What Is Missing</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">✅</div>
+      <div class="card-title">What Exists (Solved)</div>
+      <div class="card-body">
+        Volume (76K+ icons across all libraries), visual variety (line/fill/duotone/brand), framework wrappers (React, Vue, Svelte packages for every major library), icon aggregators (react-icons already proved this model with 12.5K stars).
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">❌</div>
+      <div class="card-title">What Is Missing (Unsolved)</div>
+      <div class="card-body">
+        Intent-based curation (which icons for which product type), semantic metadata schemas for programmatic selection, agent-legible trust signals, design system affinity scoring, industry-specific vocabulary (AI/ML, fintech, health, devtools), and maintained animated icon web libraries.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💀</div>
+      <div class="card-title">The Dead Innovation: SVG-Morpheus</div>
+      <div class="card-body">
+        In 2015, SVG-Morpheus demonstrated morphing SVG transitions (one icon smoothly transforms into another). It had 2.7K stars and no successor. The concept was profound: <em>icons as animated state machines</em>. This space is still empty in 2026 for web apps.
+      </div>
+      <span class="tag tag-orange">Opportunity for Supericons</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">The Proven Model: Aggregation</div>
+      <div class="card-body">
+        React-Icons wraps 30+ icon libraries into one npm package with consistent API. It has 12.5K stars purely because of the aggregation convenience. Supericons already does this with 20K icons. The next level is <em>curated aggregation with intent filtering</em>.
+      </div>
+      <span class="tag tag-green">Confirmed Strategy</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧀</div>
+      <div class="card-title">The Swiss Cheese Problem</div>
+      <div class="card-body">
+        Every major library has vocabulary gaps. Lucide has no icon for "guardrail." Tabler has no icon for "RAG pipeline." FontAwesome has no icon for "model temperature." Every vertical (healthcare, AI/ML, fintech, devtools) has concepts that exist in documentation but not in any open icon library.
+      </div>
+      <span class="tag tag-red">Supericons fills this gap</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏷️</div>
+      <div class="card-title">The Metadata Desert</div>
+      <div class="card-body">
+        Every major icon library provides: name, SVG viewBox, path data. That is all. No semantic aliases, no use-case tags, no design system affinity scores, no "commonly used alongside" data. Agents searching programmatically hit a metadata wall immediately.
+      </div>
+      <span class="tag tag-purple">The core architectural opportunity</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: THE GAP -->
+<section id="theGap">
+  <div class="sec-num">// 02 — DEFINING THE GAP</div>
+  <h2 class="sec-title">Three Unsolved Curation Problems</h2>
+  <p class="sec-desc">Semantic search is a discovery tool, not a curation system. Discovery finds candidates. Curation makes confident decisions. Supericons currently has excellent discovery. What it needs next is a curation layer that works for humans, for agents, and for AI agents operating without visual capability.</p>
+
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(248,81,73,.3)">
+      <div class="card-icon">👤</div>
+      <div class="card-title">Problem 1: Human Paralysis</div>
+      <div class="card-body">A designer knows they need an icon for "AI processing." They search, find 47 results across 6 libraries: loading spinners, brains, lightning bolts, sparkles, gears, chips. All are semantically adjacent. None is definitively "the right one." Without a curated, opinionated recommendation system, they spend 12 minutes scrolling instead of building.</div>
+      <span class="tag tag-red">Discovery exists; Decision support does not</span>
+    </div>
+    <div class="card" style="border-color:rgba(210,153,34,.3)">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Problem 2: Agent Blindness</div>
+      <div class="card-body">An AI coding agent cannot evaluate "does this icon look modern" or "does this icon match the shadcn/ui aesthetic of this codebase." It navigates by text, by schema, by trust signals. A library with rich semantic metadata (aliases, affinity scores, tier ratings) answers questions an agent can actually process. No library currently provides this.</div>
+      <span class="tag tag-amber">Metadata poverty creates agent failure modes</span>
+    </div>
+    <div class="card" style="border-color:rgba(163,113,247,.3)">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Problem 3: Context Vacuum</div>
+      <div class="card-body">No icon library knows what you are building. Searching for "home" in any library returns a house icon. But "home" in a fintech app means "dashboard." "Home" in a real estate app means "property." "Home" in an AI agent app means "base state." The icon is the same. The correct choice depends entirely on domain context that zero current libraries capture.</div>
+      <span class="tag tag-purple">Intent-based curation does not yet exist</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: EMPATHIZE -->
+<section id="empathize">
+  <div class="sec-num">// 03 — DESIGN THINKING: EMPATHIZE</div>
+  <h2 class="sec-title">Two Users. Radically Different Needs. One System Serves Both.</h2>
+  <p class="sec-desc">Classic design thinking begins by understanding not what users do, but what they actually experience. The human and the agent have superficially similar needs (find an icon) but experience the search in fundamentally different ways.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem">
+    <div style="background:var(--bg-raised);border:1px solid var(--border);border-radius:14px;padding:1.75rem">
+      <div style="font-size:1.75rem;margin-bottom:.75rem">👤</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.5rem">The Human Builder</div>
+      <div style="font-size:.82rem;color:var(--text-dim);line-height:1.65;margin-bottom:1rem">An indie hacker building a AI observability dashboard. Has a design in mind - dark mode, techy, clean lines. Has been staring at Figma for 3 hours.</div>
+      <div style="font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem">What they experience</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:.4rem">
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--amber);flex-shrink:0">→</span> Search "temperature" and get thermometer icons. Not wrong, but not right either.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--amber);flex-shrink:0">→</span> Browse 10 different libraries simultaneously in multiple tabs.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--amber);flex-shrink:0">→</span> Visually compare icon aesthetics but cannot articulate WHY one looks better.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--green);flex-shrink:0">✓</span> Can perceive quality, style match, and aesthetic coherence instantly.</li>
+      </ul>
+      <div style="font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em;margin-top:1rem;margin-bottom:.5rem">What they need</div>
+      <div style="font-size:.82rem;color:var(--blue)">Opinionated, curated collections that reduce decision fatigue. Fewer choices with high confidence signal.</div>
+    </div>
+
+    <div style="background:var(--bg-raised);border:1px solid var(--border);border-radius:14px;padding:1.75rem">
+      <div style="font-size:1.75rem;margin-bottom:.75rem">🤖</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.5rem">The AI Coding Agent</div>
+      <div style="font-size:.82rem;color:var(--text-dim);line-height:1.65;margin-bottom:1rem">Claude Code running inside Cursor, tasked with "add icons to the model comparison table in the settings panel for the AI playground app."</div>
+      <div style="font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem">What it experiences</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:.4rem">
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--red);flex-shrink:0">✗</span> Cannot see what any icon looks like visually.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--red);flex-shrink:0">✗</span> Cannot evaluate whether an icon "matches" the existing design system.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--amber);flex-shrink:0">→</span> Can read names: "model.svg", "model-selector.svg", "model-card.svg" - but cannot rank their suitability.</li>
+        <li style="font-size:.82rem;color:var(--text-dim);display:flex;gap:.5rem;align-items:flex-start"><span style="color:var(--green);flex-shrink:0">✓</span> Can process structured metadata, trust scores, design affinity tags, and semantic aliases.</li>
+      </ul>
+      <div style="font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em;margin-top:1rem;margin-bottom:.5rem">What it needs</div>
+      <div style="font-size:.82rem;color:var(--teal)">Structured metadata that substitutes for visual judgment. Schema-driven selection criteria. Trust signals it can reason about. Collections pre-validated for specific contexts.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-insight">
+    <span class="alert-icon">💡</span>
+    <div><strong>Key Empathy Insight:</strong> Humans need to be <em>stopped from looking</em> (reduce options). Agents need to be <em>given reasons to choose</em> (increase metadata). A curation system that serves both simultaneously is built around the same core: a rich, structured, opinionated semantic layer on top of raw icon data. The human sees it as "collections." The agent sees it as "schema."</div>
+  </div>
+</section>
+
+<!-- SECTION 4: DEFINE -->
+<section id="define">
+  <div class="sec-num">// 04 — DESIGN THINKING: DEFINE</div>
+  <h2 class="sec-title">The Problem Statement</h2>
+  <p class="sec-desc">After empathy comes precise problem definition. A vague problem produces a vague solution. Here is the sharpest possible framing of what Supericons needs to build.</p>
+
+  <div style="background:linear-gradient(135deg,rgba(57,197,207,.08),rgba(163,113,247,.08));border:1px solid rgba(57,197,207,.25);border-radius:14px;padding:2rem;margin-bottom:2rem">
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:.5rem">Problem Statement</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:1rem">"Developers and AI agents searching Supericons's 20,000+ icon library need a structured curation system that reduces choice to confident recommendation, because the gap between 'icon exists' and 'icon is the right choice for this specific context, design system, and trust level' cannot be bridged by semantic search alone."</div>
+    <div style="font-size:.82rem;color:var(--text-dim)">We will know this is solved when: (1) an agent can request "icons for an AI model comparison UI" and receive a pre-curated set with justification metadata, and (2) a human builder lands on a collection page and immediately knows exactly which set is right for their product without scrolling or comparing libraries.</div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem">Root Causes &mdash; Why Current Search Fails</h3>
+  <table>
+    <thead><tr><th>Root Cause</th><th>Current State</th><th>Required State</th></tr></thead>
+    <tbody>
+      <tr><td><strong>No intent taxonomy</strong></td><td>Icons organized by library name/style only</td><td>Icons tagged by use-case intent, product domain, and UI context</td></tr>
+      <tr><td><strong>No trust signal</strong></td><td>All icons appear equally valid</td><td>Provenance score: license, maintenance level, community size, npm downloads</td></tr>
+      <tr><td><strong>No affinity scoring</strong></td><td>Agents cannot match icon style to existing codebase</td><td>Affinity tags: "shadcn-compatible", "material-style", "fluent-weight-2"</td></tr>
+      <tr><td><strong>No co-occurrence data</strong></td><td>Icons exist in isolation in the database</td><td>Each icon knows which other icons appear alongside it in production codebases</td></tr>
+      <tr><td><strong>No negative knowledge</strong></td><td>System only knows what TO use</td><td>System knows what NOT to use in specific contexts (anti-pattern guidance)</td></tr>
+      <tr><td><strong>No collection API</strong></td><td>MCP returns individual icons only</td><td>MCP returns curated collections with full metadata for a given intent</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 5: IDEATE -->
+<section id="ideate">
+  <div class="sec-num">// 05 — DESIGN THINKING: IDEATE</div>
+  <h2 class="sec-title">Seven Novel Curation Mechanisms</h2>
+  <p class="sec-desc">Seven distinct approaches to solving the curation problem, each targeting a different aspect of the agent-legibility gap. These are not sequential; they are complementary layers of the same system.</p>
+
+  <div class="card-grid">
+    <div class="card" style="border-left:3px solid var(--teal)">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">1. Intent-Based Collections</div>
+      <div class="card-body">Re-organize the icon library not by source library or visual style, but by what the developer is <em>building</em>. "Icons for an AI monitoring dashboard." "Icons for a fintech transaction UI." "Icons for a developer tools sidebar." Each collection is a pre-curated, opinionated set of 8-25 icons that work together, sourced across any library.</div>
+      <span class="tag tag-teal">Primary innovation</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--purple)">
+      <div class="card-icon">📋</div>
+      <div class="card-title">2. The Icon Manifest</div>
+      <div class="card-body">A structured JSON document alongside every icon in Supericons providing: semantic aliases, UI use cases, design system affinity scores, trust tier, co-occurrence partners, contraindication contexts (where NOT to use it). This is the machine-readable intelligence layer that agents navigate instead of visual inspection.</div>
+      <span class="tag tag-purple">Agent-legibility core</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--blue)">
+      <div class="card-icon">🏅</div>
+      <div class="card-title">3. Source Trust Tiers</div>
+      <div class="card-body">A transparent, verifiable 3-tier trust system: T1 (Google/GitHub/corporate-backed, 10K+ stars, active maintenance), T2 (established community, 2K+ stars, MIT licensed), T3 (indie/experimental, minimal maintenance signals). Agents select based on the trust tier requirement of the project.</div>
+      <span class="tag tag-blue">Programmatic trust signal</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--green)">
+      <div class="card-icon">🔗</div>
+      <div class="card-title">4. Co-occurrence Graphs</div>
+      <div class="card-body">Mine GitHub production codebases to find which icons appear together in real apps. "settings + user + search + bell + grid" is the sidebar cluster of every major SaaS app. When an agent retrieves one icon, it receives the co-occurrence cluster: "apps using this icon also use these 4 others together."</div>
+      <span class="tag tag-green">Pattern propagation</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--amber)">
+      <div class="card-icon">🎨</div>
+      <div class="card-title">5. Design System Affinity</div>
+      <div class="card-body">An affinity scoring system mapping icon visual characteristics (stroke weight, corner radius, fill style, proportions) to popular component libraries. An agent building with shadcn/ui (2px stroke, sharp corners, neutral) receives Lucide or Tabler icons. Building with Chakra UI (rounded, 1.5px stroke) receives Ionicons or MingCute.</div>
+      <span class="tag tag-amber">Style compatibility proxy</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--pink)">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">6. Icon Morph Pairs</div>
+      <div class="card-body">Reviving the dead SVG-Morpheus concept with modern CSS. Premium animated pairs: "play" morphs to "pause," "mic-off" morphs to "mic-on," "thumbs-up" morphs into "check." These express state transitions using single icon slots. The collection defines semantically valid morph pairs, not arbitrary animations.</div>
+      <span class="tag tag-pink">Motion-native interaction</span>
+    </div>
+    <div class="card" style="border-left:3px solid var(--orange)">
+      <div class="card-icon">🚫</div>
+      <div class="card-title">7. Negative Knowledge ("Don't Use")</div>
+      <div class="card-body">For every intent collection, define icons that are technically findable but contextually wrong. "Don't use a house icon for 'home' in an AI app; use agent.svg because 'home' here means agent base state." Negative knowledge is the most powerful curator signal and is completely absent from every existing library.</div>
+      <span class="tag tag-orange">Anti-pattern guidance</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: PROTOTYPE -->
+<section id="prototype">
+  <div class="sec-num">// 06 — DESIGN THINKING: PROTOTYPE</div>
+  <h2 class="sec-title">The System Architecture</h2>
+  <p class="sec-desc">Design thinking's prototype phase produces a concrete, testable artifact. For Supericons, the prototype is the agent-legibility architecture: the data model and API surface that makes all seven ideation mechanisms real.</p>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem">The Information Flow: From Icon File to Agent Decision</h3>
+  <div class="flow" style="gap:.5rem;margin-bottom:2rem">
+    <div class="flow-node" style="border-color:rgba(57,197,207,.3)">
+      <div class="flow-node-label">Source</div>
+      <div class="flow-node-val" style="color:var(--teal)">Raw SVG file<br><span style="font-size:.7rem;color:var(--text-faint)">path + viewBox</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-node-label">Enrich</div>
+      <div class="flow-node-val">Manifest JSON<br><span style="font-size:.7rem;color:var(--text-faint)">aliases+trust+affinity</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-node-label">Curate</div>
+      <div class="flow-node-val">Intent Collection<br><span style="font-size:.7rem;color:var(--text-faint)">purpose-built set</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-node-label">Expose</div>
+      <div class="flow-node-val">Collections API<br><span style="font-size:.7rem;color:var(--text-faint)">MCP + REST</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node" style="border-color:rgba(163,113,247,.3)">
+      <div class="flow-node-label">Consume</div>
+      <div class="flow-node-val" style="color:var(--purple)">Agent Decision<br><span style="font-size:.7rem;color:var(--text-faint)">with justification</span></div>
+    </div>
+  </div>
+
+  <div class="alert alert-genius">
+    <span class="alert-icon">🧠</span>
+    <div><strong>The Central Insight of the Prototype:</strong> An agent's iconography decision should be as auditable as its code decisions. When an agent picks <code>vector-db.svg</code>, it should be able to say: "I selected this because: (1) semantic match = 0.94 for 'vector database', (2) T1 trust tier (Supericons premium, maintained), (3) affinity score 0.89 for shadcn/ui design system detected in package.json, (4) co-occurrence data shows this icon appears with orchestrator.svg and chain.svg in 83% of similar projects." That chain of reasoning is only possible with a manifest.</div>
+  </div>
+</section>
+
+<!-- SECTION 7: TRUST SYSTEM -->
+<section id="trustSystem">
+  <div class="sec-num">// 07 — ARCHITECTURE: SOURCE TRUST SYSTEM</div>
+  <h2 class="sec-title">How Agents Decide a Source Is Reliable</h2>
+  <p class="sec-desc">An agent evaluating an icon source cannot read reviews or sense "this looks legit." It needs quantifiable, verifiable trust signals. The Supericons Trust Tier system makes this explicit and computable.</p>
+
+  <div class="tier-grid">
+    <div class="tier tier-t1">
+      <div class="tier-label" style="color:var(--teal)">Tier 1 &mdash; Verified Flagship</div>
+      <div class="tier-title">Core Institutional Libraries</div>
+      <div class="tier-body">Corporate-backed or community-established with verifiable maintenance, long-term stability, and clear commercial licensing. An agent can cite T1 as "production-safe with no vendor risk."</div>
+      <div class="tier-examples">
+        Stars: 10K+<br>
+        License: MIT / Apache 2.0<br>
+        Last commit: &lt;90 days<br>
+        npm weekly: 100K+<br>
+        <br>
+        Examples: Google Material, Lucide, Tabler, FontAwesome Free
+      </div>
+    </div>
+    <div class="tier tier-t2">
+      <div class="tier-label" style="color:var(--blue)">Tier 2 &mdash; Active Community</div>
+      <div class="tier-title">Established Community Collections</div>
+      <div class="tier-body">Well-maintained community projects with real adoption signals. Suitable for production. Some upgrade risk. An agent uses T2 when T1 lacks the specific icon needed or when design quality is prioritized over institutional backing.</div>
+      <div class="tier-examples">
+        Stars: 2K&ndash;10K<br>
+        License: MIT<br>
+        Last commit: &lt;180 days<br>
+        npm weekly: 10K+<br>
+        <br>
+        Examples: Iconoir, Phosphor, MingCute, Heroicons
+      </div>
+    </div>
+    <div class="tier tier-t3">
+      <div class="tier-label" style="color:var(--purple)">Tier 3 &mdash; Premium Curated</div>
+      <div class="tier-title">Supericons Premium Collections</div>
+      <div class="tier-body">Purpose-built, professionally curated sets with guaranteed semantic specificity for domain-specific vocabulary. T3 Supericons premium packs are the highest confidence choice for specific domains (AI/ML, agentic tooling) because they are the ONLY source with those icons at all.</div>
+      <div class="tier-examples">
+        Provenance: Supericons verified<br>
+        License: Commercial + Royalty-free<br>
+        Maintenance: Active (Curly Mole Labs)<br>
+        Semantic coverage: Domain-specific<br>
+        <br>
+        Examples: Agentic AI Kit, Status Feedback
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem">The Trust Score Computation</h3>
+  <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:1rem">An agent can compute a trust score for any icon source using publicly verifiable signals:</p>
+
+  <div class="code">
+    <div class="code-header"><span class="code-lang">JSON</span><span class="code-title">trust_score_computation.json</span></div>
+    <div class="code-body"><span class="c-comment">// Trust score formula for a source library</span>
+<span class="c-punct">{</span>
+  <span class="c-key">"source"</span><span class="c-punct">:</span> <span class="c-str">"lucide-icons/lucide"</span><span class="c-punct">,</span>
+  <span class="c-key">"signals"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"github_stars"</span><span class="c-punct">:</span>   <span class="c-num">22100</span><span class="c-punct">,</span>       <span class="c-comment">// normalized 0-1: 0.94</span>
+    <span class="c-key">"npm_weekly"</span><span class="c-punct">:</span>    <span class="c-num">4200000</span><span class="c-punct">,</span>     <span class="c-comment">// normalized 0-1: 0.98</span>
+    <span class="c-key">"days_since_commit"</span><span class="c-punct">:</span> <span class="c-num">3</span><span class="c-punct">,</span>        <span class="c-comment">// normalized (lower=better): 1.0</span>
+    <span class="c-key">"license_permissive"</span><span class="c-punct">:</span> <span class="c-bool">true</span><span class="c-punct">,</span>  <span class="c-comment">// boolean: 1.0</span>
+    <span class="c-key">"has_ts_types"</span><span class="c-punct">:</span> <span class="c-bool">true</span><span class="c-punct">,</span>         <span class="c-comment">// boolean: 1.0</span>
+    <span class="c-key">"breaking_changes_12m"</span><span class="c-punct">:</span> <span class="c-num">0</span>     <span class="c-comment">// normalized (lower=better): 1.0</span>
+  <span class="c-punct">},</span>
+  <span class="c-key">"weights"</span><span class="c-punct">:</span> <span class="c-punct">[</span><span class="c-num">0.25</span><span class="c-punct">,</span> <span class="c-num">0.25</span><span class="c-punct">,</span> <span class="c-num">0.2</span><span class="c-punct">,</span> <span class="c-num">0.15</span><span class="c-punct">,</span> <span class="c-num">0.1</span><span class="c-punct">,</span> <span class="c-num">0.05</span><span class="c-punct">],</span>
+  <span class="c-key">"trust_score"</span><span class="c-punct">:</span> <span class="c-num">0.97</span><span class="c-punct">,</span>              <span class="c-comment">// weighted average</span>
+  <span class="c-key">"tier"</span><span class="c-punct">:</span> <span class="c-str">"T1"</span><span class="c-punct">,</span>
+  <span class="c-key">"agent_reasoning"</span><span class="c-punct">:</span> <span class="c-str">"Highly trusted source. 22K stars, 4.2M npm weekly downloads, committed 3 days ago, MIT license, full TypeScript types. Production-safe."</span>
+<span class="c-punct">}</span></div>
+  </div>
+</section>
+
+<!-- SECTION 8: INTENT COLLECTIONS -->
+<section id="intentCollections">
+  <div class="sec-num">// 08 — ARCHITECTURE: INTENT-BASED COLLECTIONS</div>
+  <h2 class="sec-title">From "Browse Icons" to "What Are You Building?"</h2>
+  <p class="sec-desc">The most powerful design shift: instead of categories ("arrows, filled, outlined"), organize by builder intent. The question is not "what style do you prefer" but "what product feature are you building?" Each collection is an opinionated, cross-library curated set.</p>
+
+  <div class="collection-grid">
+    <div class="collection-card" style="border-left:3px solid var(--purple)">
+      <div class="col-intent" style="color:var(--purple)">AI Builder Pack</div>
+      <div class="col-name">Agent Dashboard Kit</div>
+      <div class="col-desc">For building AI product dashboards: monitoring panels, model configuration UIs, agent orchestration views. All icons semantically mapped to AI/ML concepts, verified T3 Supericons premium.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">agent.svg</span><span class="col-icon-tag">orchestrator.svg</span><span class="col-icon-tag">rag-pipeline.svg</span><span class="col-icon-tag">vector-db.svg</span><span class="col-icon-tag">temperature.svg</span><span class="col-icon-tag">latency.svg</span><span class="col-icon-tag">token-cost.svg</span><span class="col-icon-tag">guardrail.svg</span><span class="col-icon-tag">embedding.svg</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--teal)">
+      <div class="col-intent" style="color:var(--teal)">Developer Tools</div>
+      <div class="col-name">IDE Sidebar Kit</div>
+      <div class="col-desc">For VS Code extensions, coding assistants, developer portals. These are the icons that appear in the left sidebar of every IDE: files, search, git, extensions, debug, terminal, settings.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">files</span><span class="col-icon-tag">search</span><span class="col-icon-tag">source-control</span><span class="col-icon-tag">extensions</span><span class="col-icon-tag">debug</span><span class="col-icon-tag">run</span><span class="col-icon-tag">terminal</span><span class="col-icon-tag">settings</span><span class="col-icon-tag">account</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--blue)">
+      <div class="col-intent" style="color:var(--blue)">SaaS Core</div>
+      <div class="col-name">SaaS App Navigation Kit</div>
+      <div class="col-desc">The 12 icons that appear in every SaaS app's left navigation: home, dashboard, users, settings, billing, notifications, search, reports, integrations, help, logout, profile. Sourced from Lucide T1 for maximum compatibility.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">home</span><span class="col-icon-tag">layout-dashboard</span><span class="col-icon-tag">users</span><span class="col-icon-tag">settings</span><span class="col-icon-tag">credit-card</span><span class="col-icon-tag">bell</span><span class="col-icon-tag">search</span><span class="col-icon-tag">bar-chart</span><span class="col-icon-tag">plug</span><span class="col-icon-tag">help-circle</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--amber)">
+      <div class="col-intent" style="color:var(--amber)">Data & Analytics</div>
+      <div class="col-name">Analytics Dashboard Kit</div>
+      <div class="col-desc">For building data visualization products, BI tools, or analytics dashboards. Icons for chart types, time ranges, export actions, filter controls, and metric display states.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">line-chart</span><span class="col-icon-tag">bar-chart-2</span><span class="col-icon-tag">pie-chart</span><span class="col-icon-tag">filter</span><span class="col-icon-tag">calendar</span><span class="col-icon-tag">download</span><span class="col-icon-tag">trending-up</span><span class="col-icon-tag">trending-down</span><span class="col-icon-tag">refresh</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--green)">
+      <div class="col-intent" style="color:var(--green)">Status & Feedback</div>
+      <div class="col-name">System Status Kit</div>
+      <div class="col-desc">For building monitoring tools, status pages, notification systems, toast messages, and loading states. Already a Supericons premium collection. This is what intent-based curation looks like in practice.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">check-circle</span><span class="col-icon-tag">alert-triangle</span><span class="col-icon-tag">x-circle</span><span class="col-icon-tag">info</span><span class="col-icon-tag">loader</span><span class="col-icon-tag">wifi-off</span><span class="col-icon-tag">server-crash</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--pink)">
+      <div class="col-intent" style="color:var(--pink)">AI State Machine</div>
+      <div class="col-name">Morph Pairs Kit [NEW CONCEPT]</div>
+      <div class="col-desc">Icon pairs designed to animate between states using CSS transitions: send/thinking, mic-on/mic-off, play/pause/stop, expand/collapse, eye/eye-off. The revival of SVG-Morpheus for modern CSS. State-aware iconography.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">send↔spinner</span><span class="col-icon-tag">mic↔mic-off</span><span class="col-icon-tag">eye↔eye-off</span><span class="col-icon-tag">play↔pause</span><span class="col-icon-tag">sun↔moon</span>
+      </div>
+      <span class="tag tag-pink" style="margin-top:.5rem">Novel — No existing library offers this</span>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--red)">
+      <div class="col-intent" style="color:var(--red)">Security & Access</div>
+      <div class="col-name">Auth & Security Kit</div>
+      <div class="col-desc">For building authentication flows, permission management, API key management, 2FA, and access control UIs. Icons that communicate security concepts without feeling threatening or alarming.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">key</span><span class="col-icon-tag">shield</span><span class="col-icon-tag">lock</span><span class="col-icon-tag">unlock</span><span class="col-icon-tag">fingerprint</span><span class="col-icon-tag">user-check</span><span class="col-icon-tag">eye-off</span>
+      </div>
+    </div>
+    <div class="collection-card" style="border-left:3px solid var(--orange)">
+      <div class="col-intent" style="color:var(--orange)">Brand Intelligence</div>
+      <div class="col-name">Tech Brand Stack Kit</div>
+      <div class="col-desc">Curated from Simple Icons (24.9K stars, T1): the exact brand icons needed for an AI/tech product's integration page. AWS, OpenAI, Anthropic, GitHub, Vercel, Supabase, Netlify, Stripe, Google Cloud. Hand-picked for the April 2026 AI stack.</div>
+      <div class="col-icons">
+        <span class="col-icon-tag">openai</span><span class="col-icon-tag">anthropic</span><span class="col-icon-tag">github</span><span class="col-icon-tag">vercel</span><span class="col-icon-tag">supabase</span><span class="col-icon-tag">stripe</span><span class="col-icon-tag">google</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: MANIFEST SCHEMA -->
+<section id="manifest">
+  <div class="sec-num">// 09 — ARCHITECTURE: THE ICON MANIFEST SCHEMA</div>
+  <h2 class="sec-title">The Machine-Readable Intelligence Layer</h2>
+  <p class="sec-desc">Every icon in Supericons should have a companion manifest JSON. This is not documentation. It is a machine-readable specification that allows agents to reason about iconographic choice with the same structured confidence they apply to code selection. Below is the complete schema proposal.</p>
+
+  <div class="code">
+    <div class="code-header"><span class="code-lang">JSON</span><span class="code-title">icon-manifest.schema.json &mdash; Full Specification</span></div>
+    <div class="code-body"><span class="c-punct">{</span>
+  <span class="c-comment">// ── IDENTITY ──────────────────────────────────────────</span>
+  <span class="c-key">"id"</span><span class="c-punct">:</span>              <span class="c-str">"supericons:agentic-ai-kit/vector-db"</span><span class="c-punct">,</span>
+  <span class="c-key">"name"</span><span class="c-punct">:</span>            <span class="c-str">"vector-db"</span><span class="c-punct">,</span>
+  <span class="c-key">"source_library"</span><span class="c-punct">:</span>  <span class="c-str">"supericons/agentic-ai-kit"</span><span class="c-punct">,</span>
+  <span class="c-key">"trust_tier"</span><span class="c-punct">:</span>      <span class="c-str">"T3"</span><span class="c-punct">,</span>            <span class="c-comment">// T1=institutional, T2=community, T3=premium curated</span>
+  <span class="c-key">"trust_score"</span><span class="c-punct">:</span>     <span class="c-num">0.98</span><span class="c-punct">,</span>
+  <span class="c-key">"license"</span><span class="c-punct">:</span>         <span class="c-str">"commercial-royalty-free"</span><span class="c-punct">,</span>
+
+  <span class="c-comment">// ── SEMANTIC INTELLIGENCE ─────────────────────────────</span>
+  <span class="c-key">"primary_concept"</span><span class="c-punct">:</span> <span class="c-str">"vector database storage for AI embeddings"</span><span class="c-punct">,</span>
+  <span class="c-key">"semantic_aliases"</span><span class="c-punct">:</span> <span class="c-punct">[</span>
+    <span class="c-str">"vector store"</span><span class="c-punct">,</span> <span class="c-str">"embedding store"</span><span class="c-punct">,</span> <span class="c-str">"semantic search database"</span><span class="c-punct">,</span>
+    <span class="c-str">"pinecone"</span><span class="c-punct">,</span> <span class="c-str">"chroma"</span><span class="c-punct">,</span> <span class="c-str">"weaviate"</span><span class="c-punct">,</span> <span class="c-str">"qdrant"</span><span class="c-punct">,</span> <span class="c-str">"pgvector"</span>
+  <span class="c-punct">],</span>
+  <span class="c-key">"semantic_score"</span><span class="c-punct">:</span>  <span class="c-num">0.97</span><span class="c-punct">,</span>           <span class="c-comment">// vs primary concept embedding</span>
+  <span class="c-key">"domain"</span><span class="c-punct">:</span>          <span class="c-str">"ai-ml"</span><span class="c-punct">,</span>
+
+  <span class="c-comment">// ── INTENT CONTEXTS ──────────────────────────────────</span>
+  <span class="c-key">"use_cases"</span><span class="c-punct">:</span> <span class="c-punct">[</span>
+    <span class="c-str">"RAG pipeline architecture diagram"</span><span class="c-punct">,</span>
+    <span class="c-str">"AI monitoring dashboard sidebar"</span><span class="c-punct">,</span>
+    <span class="c-str">"LLM infrastructure configuration UI"</span><span class="c-punct">,</span>
+    <span class="c-str">"embedding settings panel"</span>
+  <span class="c-punct">],</span>
+  <span class="c-key">"contraindications"</span><span class="c-punct">:</span> <span class="c-punct">[</span>
+    <span class="c-str">"Do not use for generic database UI (use cylinder/database icon instead)"</span><span class="c-punct">,</span>
+    <span class="c-str">"Do not use in non-AI product contexts - visually specific to ML workflows"</span>
+  <span class="c-punct">],</span>
+
+  <span class="c-comment">// ── DESIGN SYSTEM AFFINITY ───────────────────────────</span>
+  <span class="c-key">"affinity"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"shadcn_ui"</span><span class="c-punct">:</span>      <span class="c-num">0.82</span><span class="c-punct">,</span>         <span class="c-comment">// stylistic compatibility 0-1</span>
+    <span class="c-key">"material_ui"</span><span class="c-punct">:</span>    <span class="c-num">0.74</span><span class="c-punct">,</span>
+    <span class="c-key">"chakra_ui"</span><span class="c-punct">:</span>      <span class="c-num">0.78</span><span class="c-punct">,</span>
+    <span class="c-key">"tailwind_ui"</span><span class="c-punct">:</span>    <span class="c-num">0.85</span><span class="c-punct">,</span>
+    <span class="c-key">"radix_ui"</span><span class="c-punct">:</span>       <span class="c-num">0.80</span><span class="c-punct">,</span>
+    <span class="c-key">"fluent_ui"</span><span class="c-punct">:</span>      <span class="c-num">0.70</span>
+  <span class="c-punct">},</span>
+  <span class="c-key">"style_profile"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"line_weight"</span><span class="c-punct">:</span>    <span class="c-str">"1.5px"</span><span class="c-punct">,</span>
+    <span class="c-key">"corner_style"</span><span class="c-punct">:</span>  <span class="c-str">"rounded"</span><span class="c-punct">,</span>
+    <span class="c-key">"fill_style"</span><span class="c-punct">:</span>    <span class="c-str">"outline"</span><span class="c-punct">,</span>
+    <span class="c-key">"visual_weight"</span><span class="c-punct">:</span> <span class="c-str">"light"</span><span class="c-punct">,</span>
+    <span class="c-key">"palette_fit"</span><span class="c-punct">:</span>   <span class="c-str">"dark-mode-optimized"</span>
+  <span class="c-punct">},</span>
+
+  <span class="c-comment">// ── CO-OCCURRENCE INTELLIGENCE ────────────────────────</span>
+  <span class="c-key">"co_occurs_with"</span><span class="c-punct">:</span> <span class="c-punct">[</span>
+    <span class="c-punct">{</span> <span class="c-key">"id"</span><span class="c-punct">:</span> <span class="c-str">"rag-pipeline"</span><span class="c-punct">,</span>   <span class="c-key">"strength"</span><span class="c-punct">:</span> <span class="c-num">0.91</span> <span class="c-punct">},</span>
+    <span class="c-punct">{</span> <span class="c-key">"id"</span><span class="c-punct">:</span> <span class="c-str">"embedding"</span><span class="c-punct">,</span>      <span class="c-key">"strength"</span><span class="c-punct">:</span> <span class="c-num">0.87</span> <span class="c-punct">},</span>
+    <span class="c-punct">{</span> <span class="c-key">"id"</span><span class="c-punct">:</span> <span class="c-str">"orchestrator"</span><span class="c-punct">,</span>   <span class="c-key">"strength"</span><span class="c-punct">:</span> <span class="c-num">0.83</span> <span class="c-punct">},</span>
+    <span class="c-punct">{</span> <span class="c-key">"id"</span><span class="c-punct">:</span> <span class="c-str">"retrieve"</span><span class="c-punct">,</span>       <span class="c-key">"strength"</span><span class="c-punct">:</span> <span class="c-num">0.79</span> <span class="c-punct">}</span>
+  <span class="c-punct">],</span>
+
+  <span class="c-comment">// ── INTENT COLLECTIONS ────────────────────────────────</span>
+  <span class="c-key">"collections"</span><span class="c-punct">:</span> <span class="c-punct">[</span>
+    <span class="c-str">"agent-dashboard-kit"</span><span class="c-punct">,</span> <span class="c-str">"agentic-ai-kit"</span><span class="c-punct">,</span> <span class="c-str">"rag-workflow"</span>
+  <span class="c-punct">],</span>
+
+  <span class="c-comment">// ── AGENT SELECTION GUIDANCE ──────────────────────────</span>
+  <span class="c-key">"agent_selection_guidance"</span><span class="c-punct">:</span> <span class="c-str">"Select this icon when the UI concept is explicitly a vector database, embedding store, or semantic search data layer in an AI pipeline. Do not select for generic database display."</span><span class="c-punct">,</span>
+
+  <span class="c-comment">// ── TECHNICAL SPEC ────────────────────────────────────</span>
+  <span class="c-key">"viewBox"</span><span class="c-punct">:</span>        <span class="c-str">"0 0 24 24"</span><span class="c-punct">,</span>
+  <span class="c-key">"formats"</span><span class="c-punct">:</span>        <span class="c-punct">[</span><span class="c-str">"svg"</span><span class="c-punct">,</span> <span class="c-str">"react-component"</span><span class="c-punct">,</span> <span class="c-str">"svelte-component"</span><span class="c-punct">,</span> <span class="c-str">"vue-component"</span><span class="c-punct">],</span>
+  <span class="c-key">"animated"</span><span class="c-punct">:</span>       <span class="c-bool">false</span><span class="c-punct">,</span>
+  <span class="c-key">"premium"</span><span class="c-punct">:</span>        <span class="c-bool">true</span>
+<span class="c-punct">}</span></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MCP API -->
+<section id="mcpApi">
+  <div class="sec-num">// 10 — ARCHITECTURE: COLLECTIONS MCP API</div>
+  <h2 class="sec-title">The Collections API: What Agents Actually Call</h2>
+  <p class="sec-desc">The current Supericons MCP exposes search_icons and get_icon. The curation system requires three new tools that unlock the entire intent-based architecture for agents.</p>
+
+  <div class="code">
+    <div class="code-header"><span class="code-lang">JSON</span><span class="code-title">New MCP Tools Specification</span></div>
+    <div class="code-body"><span class="c-comment">// Tool 1: get_collection_for_intent</span>
+<span class="c-comment">// Agent asks: "what icons should I use to build X?"</span>
+<span class="c-punct">{</span>
+  <span class="c-key">"name"</span><span class="c-punct">:</span>        <span class="c-str">"get_collection_for_intent"</span><span class="c-punct">,</span>
+  <span class="c-key">"description"</span><span class="c-punct">:</span> <span class="c-str">"Returns a curated collection of semantically coherent icons for a specific product-building intent. Use this instead of searching individual icons when building a feature area or complete UI section."</span><span class="c-punct">,</span>
+  <span class="c-key">"inputSchema"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"intent"</span><span class="c-punct">:</span>       <span class="c-str">"string"</span><span class="c-punct">,</span>  <span class="c-comment">// e.g. "AI agent dashboard sidebar"</span>
+    <span class="c-key">"design_system"</span><span class="c-punct">:</span> <span class="c-str">"string"</span><span class="c-punct">,</span>  <span class="c-comment">// optional: "shadcn", "material", "tailwind"</span>
+    <span class="c-key">"trust_tier_min"</span><span class="c-punct">:</span> <span class="c-str">"T1|T2|T3"</span><span class="c-punct">,</span>
+    <span class="c-key">"format"</span><span class="c-punct">:</span>      <span class="c-str">"string"</span>    <span class="c-comment">// "react"|"svelte"|"vue"|"svg"</span>
+  <span class="c-punct">}</span>
+<span class="c-punct">}</span>
+
+<span class="c-comment">// Tool 2: get_icon_manifest</span>
+<span class="c-comment">// Agent asks: "tell me everything about this icon so I can decide"</span>
+<span class="c-punct">{</span>
+  <span class="c-key">"name"</span><span class="c-punct">:</span>        <span class="c-str">"get_icon_manifest"</span><span class="c-punct">,</span>
+  <span class="c-key">"description"</span><span class="c-punct">:</span> <span class="c-str">"Returns the full structured manifest for an icon: semantic aliases, trust score, design system affinity, co-occurrence partners, use cases, and contraindications. Use before committing to an icon to validate suitability."</span><span class="c-punct">,</span>
+  <span class="c-key">"inputSchema"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"icon_id"</span><span class="c-punct">:</span> <span class="c-str">"string"</span>  <span class="c-comment">// e.g. "supericons:agentic-ai-kit/vector-db"</span>
+  <span class="c-punct">}</span>
+<span class="c-punct">}</span>
+
+<span class="c-comment">// Tool 3: recommend_co_occurring</span>
+<span class="c-comment">// Agent has one icon, asks what goes with it</span>
+<span class="c-punct">{</span>
+  <span class="c-key">"name"</span><span class="c-punct">:</span>        <span class="c-str">"recommend_co_occurring"</span><span class="c-punct">,</span>
+  <span class="c-key">"description"</span><span class="c-punct">:</span> <span class="c-str">"Given one icon already chosen, returns the strongly co-occurring icons that typically appear alongside it in production applications. Use to complete an icon set for a feature area when you have already selected a primary icon."</span><span class="c-punct">,</span>
+  <span class="c-key">"inputSchema"</span><span class="c-punct">:</span> <span class="c-punct">{</span>
+    <span class="c-key">"icon_id"</span><span class="c-punct">:</span>     <span class="c-str">"string"</span><span class="c-punct">,</span>
+    <span class="c-key">"count"</span><span class="c-punct">:</span>      <span class="c-str">"number"</span><span class="c-punct">,</span>  <span class="c-comment">// how many co-occurring icons to return</span>
+    <span class="c-key">"min_strength"</span><span class="c-punct">:</span> <span class="c-str">"number"</span>  <span class="c-comment">// co-occurrence strength threshold 0-1</span>
+  <span class="c-punct">}</span>
+<span class="c-punct">}</span></div>
+  </div>
+
+  <div class="alert alert-action" style="margin-top:1.5rem">
+    <span class="alert-icon">🤖</span>
+    <div><strong>How an Agent Now Builds an Icon Set:</strong> (1) Call <code>get_collection_for_intent("AI agent dashboard")</code> and receive 12 pre-curated icons with trust scores and React components. (2) Call <code>get_icon_manifest("vector-db")</code> to validate that vector-db matches the shadcn design system detected in package.json. (3) Call <code>recommend_co_occurring("vector-db", 4, 0.8)</code> to get the 4 icons that always appear alongside it. The agent never had to "see" a single icon. It made confident, reasoned choices using structured data.</div>
+  </div>
+</section>
+
+<!-- SECTION 11: ROADMAP -->
+<section id="roadmap" style="border-bottom:none">
+  <div class="sec-num">// 11 — PRODUCT ROADMAP</div>
+  <h2 class="sec-title">Build Sequence: From Concept to Agent-Native Curation</h2>
+  <p class="sec-desc">The curation system is built in four phases. Each phase delivers standalone value. Together they create the most advanced programmatic icon system in the developer ecosystem.</p>
+
+  <table>
+    <thead>
+      <tr><th>Phase</th><th>Deliverable</th><th>What This Unlocks</th><th>Timeline</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Phase 1</strong><br><span class="tag tag-teal" style="margin-top:.25rem">Foundation</span></td>
+        <td>Icon Manifest Schema for the Agentic AI Kit (40 icons). JSON files alongside each SVG with primary_concept, semantic_aliases, trust_tier, use_cases, style_profile.</td>
+        <td>Agents can read the manifest and make justified selections. This is the minimum viable agent-legibility layer. Marketable as "Supericons is the first icon library with AI-readable metadata."</td>
+        <td>2-3 weeks</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 2</strong><br><span class="tag tag-blue" style="margin-top:.25rem">Collections</span></td>
+        <td>Intent-based Collections landing pages. 8 initial collections (AI Dashboard Kit, SaaS Nav Kit, Developer Tools Kit, Status Kit, Brand Stack Kit, Analytics Kit, Auth Kit, Morph Pairs Kit).</td>
+        <td>Human conversion: a developer building an AI dashboard lands on one page and immediately knows which set to buy. Dramatic reduction in decision time. New marketing surface area for each collection.</td>
+        <td>3-4 weeks</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 3</strong><br><span class="tag tag-purple" style="margin-top:.25rem">MCP Tools</span></td>
+        <td>Three new MCP tools: get_collection_for_intent, get_icon_manifest, recommend_co_occurring. Full API with intent matching, trust filtering, design affinity parameter.</td>
+        <td>Agents can now handle complete icon workflows without human input. This enables the viral product marketing: "Your AI agent can build an entire icon-complete feature in one prompt." New category: icon system for agentic pipelines.</td>
+        <td>4-5 weeks</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 4</strong><br><span class="tag tag-orange" style="margin-top:.25rem">Intelligence</span></td>
+        <td>Co-occurrence graph (mined from GitHub production codebases). Design system affinity scores computed from SVG geometry analysis. Negative knowledge ("contraindications") for all premium icons.</td>
+        <td>The complete agent-legibility system. An agent selecting an icon can now produce a full audit trail: "I selected this because of semantic match, trust tier T3, shadcn affinity 0.85, and co-occurrence with 3 already-selected icons." This is unique in the market.</td>
+        <td>8-10 weeks</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-genius" style="margin-top:1.5rem">
+    <span class="alert-icon">✨</span>
+    <div><strong>The Long-Term Vision:</strong> Supericons becomes the first icon system with an index designed for autonomous agents. Not a library you browse. A trusted, structured source that AI coding agents reference the same way they reference npm, PyPI, or a type system. When a developer says "build me a dashboard," the agent queries Supericons the same way it queries a database schema: it gets back typed, trusted, contextually appropriate data and can justify every choice. That repositioning from "icon library" to "icon intelligence layer" is how Supericons wins the agentic era.</div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const sp = document.getElementById('sp');
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    sp.style.width = (window.scrollY / total * 100) + '%';
+  });
+
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-item[href]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(n => n.classList.remove('active'));
+        const a = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
+
+  // Accordion for design thinking phases
+  document.querySelectorAll('.dt-phase-header').forEach(h => {
+    h.addEventListener('click', () => h.closest('.dt-phase').classList.toggle('open'));
+  });
+</script>
+</body>
+</html>

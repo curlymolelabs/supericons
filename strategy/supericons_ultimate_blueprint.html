@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: The Ultimate Blueprint 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#0b0f1a;--bg-r:#111826;--bg-h:#18202e;
+      --bd:#1d2535;--bd2:#141c28;
+      --t:#e8eef6;--td:#8b96a8;--tf:#3a4455;
+      --bl:#58a6ff;--pu:#a371f7;--gr:#3fb950;--am:#d29922;
+      --re:#f85149;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+      --gbl:rgba(88,166,255,.12);--gpu:rgba(163,113,247,.12);--ggr:rgba(63,185,80,.1);--gte:rgba(45,212,191,.1);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+
+    /* SCROLL BAR */
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--te),var(--pu),var(--bl));z-index:999;transition:width .1s}
+
+    /* SIDEBAR */
+    .sidebar{
+      position:fixed;top:0;left:0;width:230px;height:100vh;
+      background:var(--bg-s);border-right:1px solid var(--bd);
+      overflow-y:auto;padding:1.5rem .75rem;display:flex;flex-direction:column;gap:.1rem;z-index:100
+    }
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:800;color:var(--t);
+      padding:.3rem .5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--te);box-shadow:0 0 10px var(--te);animation:sbpulse 2s infinite}
+    @keyframes sbpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.5}}
+    .sb-section{font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tf);padding:.7rem .5rem .2rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:6px;
+      color:var(--td);text-decoration:none;font-size:.76rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{background:var(--gte);color:var(--te)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.4rem}
+
+    /* MAIN */
+    .main{margin-left:230px}
+
+    /* HERO */
+    .hero{
+      padding:5rem 4rem 4.5rem;border-bottom:1px solid var(--bd);
+      position:relative;overflow:hidden;
+      background:radial-gradient(ellipse at 80% -10%,rgba(45,212,191,.06) 0%,transparent 55%),
+                 radial-gradient(ellipse at 20% 110%,rgba(163,113,247,.07) 0%,transparent 55%)
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+      color:var(--te);background:var(--gte);border:1px solid rgba(45,212,191,.25);
+      border-radius:99px;padding:.2rem .8rem;margin-bottom:1.5rem
+    }
+    .hero-h1{
+      font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,3.5vw,3.4rem);
+      font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--t);margin-bottom:1rem
+    }
+    .hero-h1 .g1{background:linear-gradient(135deg,var(--te),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-h1 .g2{background:linear-gradient(135deg,var(--pu),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:1rem;color:var(--td);max-width:720px;line-height:1.75;margin-bottom:2.5rem}
+    .hero-thesis{
+      background:linear-gradient(135deg,rgba(45,212,191,.07),rgba(163,113,247,.07));
+      border:1px solid rgba(45,212,191,.2);border-radius:14px;padding:1.5rem 1.75rem;max-width:760px
+    }
+    .ht-label{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--te);margin-bottom:.5rem}
+    .ht-text{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--t);line-height:1.4}
+
+    .hero-kpis{display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:2rem}
+    .kpi{}
+    .kpi-val{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:800;color:var(--t);letter-spacing:-.02em}
+    .kpi-label{font-size:.72rem;color:var(--td);text-transform:uppercase;letter-spacing:.06em;margin-top:.1rem}
+
+    /* SECTIONS */
+    section{padding:4rem;border-bottom:1px solid var(--bd)}
+    .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);margin-bottom:.4rem}
+    .sh{font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.65rem}
+    .sd{color:var(--td);max-width:700px;line-height:1.7;font-size:.95rem;margin-bottom:2.5rem}
+
+    /* CARDS */
+    .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+    .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+    .card{
+      background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem;
+      transition:all .2s;position:relative;overflow:hidden
+    }
+    .card:hover{border-color:var(--te);transform:translateY(-2px)}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--te),var(--pu));opacity:0;transition:opacity .2s}
+    .card:hover::before{opacity:1}
+    .card-em{font-size:1.4rem;margin-bottom:.65rem}
+    .card-t{font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.35rem}
+    .card-b{font-size:.82rem;color:var(--td);line-height:1.65}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:4px;margin-top:.55rem}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-pu{background:rgba(163,113,247,.12);color:var(--pu)}
+    .t-bl{background:rgba(88,166,255,.12);color:var(--bl)}
+    .t-gr{background:rgba(63,185,80,.12);color:var(--gr)}
+    .t-am{background:rgba(210,153,34,.12);color:var(--am)}
+    .t-re{background:rgba(248,81,73,.12);color:var(--re)}
+    .t-pk{background:rgba(244,114,182,.12);color:var(--pk)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+
+    /* ALERT BOXES */
+    .alert{display:flex;gap:.75rem;align-items:flex-start;border-radius:10px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;line-height:1.65}
+    .alert-i{flex-shrink:0;font-size:1.1rem}
+    .a-key{background:rgba(45,212,191,.07);border:1px solid rgba(45,212,191,.25);color:#a7f0e8}
+    .a-vision{background:rgba(163,113,247,.07);border:1px solid rgba(163,113,247,.25);color:#cbb8f5}
+    .a-action{background:rgba(63,185,80,.07);border:1px solid rgba(63,185,80,.25);color:#8dcea6}
+    .a-warn{background:rgba(210,153,34,.07);border:1px solid rgba(210,153,34,.28);color:#e2c87a}
+
+    /* PILLAR BLOCKS */
+    .pillar{background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;padding:2rem;margin-bottom:1.25rem;position:relative;overflow:hidden;transition:border-color .2s}
+    .pillar:hover{border-color:rgba(45,212,191,.35)}
+    .pillar-stripe{position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+    .ps-te{background:var(--te)} .ps-pu{background:var(--pu)} .ps-bl{background:var(--bl)}
+    .ps-gr{background:var(--gr)} .ps-am{background:var(--am)} .ps-pk{background:var(--pk)}
+    .pillar-num{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf)}
+    .pillar-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--t);margin:.3rem 0}
+    .pillar-hook{font-size:.85rem;color:var(--td);font-style:italic;margin-bottom:.75rem}
+    .pillar-body{font-size:.87rem;color:var(--td);line-height:1.7}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+    .step{display:flex;gap:.75rem;align-items:flex-start}
+    .step-n{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf);min-width:1.6rem;padding-top:.18rem}
+    .step-t{font-size:.84rem;color:var(--td);line-height:1.5}
+    .step-t strong{color:var(--t)}
+    .step-t code{font-family:'JetBrains Mono',monospace;font-size:.78rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:4px;padding:.05rem .3rem;color:var(--te)}
+
+    /* TABLE */
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0}
+    th{text-align:left;padding:.7rem 1rem;background:var(--bg-r);border:1px solid var(--bd);color:var(--td);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+    td{padding:.7rem 1rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+    tr:hover td{background:var(--bg-r)}
+
+    /* CODE */
+    .codeblock{background:#020610;border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin:1rem 0}
+    .codeblock-hdr{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:var(--bg-r);border-bottom:1px solid var(--bd)}
+    .codeblock-lang{font-size:.68rem;font-weight:700;color:var(--tf)}
+    .codeblock-name{font-size:.72rem;color:var(--td)}
+    .codeblock-body{padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.77rem;line-height:1.75;overflow-x:auto;white-space:pre;color:#9cdcfe}
+    .ck{color:#ce9178} .cv{color:#b5cea8} .cs{color:#9cdcfe} .cb{color:#569cd6} .cc{color:#6a9955} .cp{color:#d4d4d4} .cf{color:#dcdcaa}
+
+    /* COLLECTION CARDS */
+    .col-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem;transition:border-color .2s}
+    .col-card:hover{border-color:rgba(163,113,247,.4)}
+    .col-intent{font-size:.67rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.25rem}
+    .col-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.98rem;color:var(--t);margin-bottom:.35rem}
+    .col-desc{font-size:.8rem;color:var(--td);line-height:1.6;margin-bottom:.65rem}
+    .col-icons{display:flex;flex-wrap:wrap;gap:.3rem}
+    .col-ic{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf);background:var(--bg);border:1px solid var(--bd2);border-radius:3px;padding:.12rem .35rem}
+
+    /* SCORE VIZ */
+    .score-bars{display:flex;flex-direction:column;gap:.65rem}
+    .score-row{display:flex;align-items:center;gap:.75rem}
+    .score-label{font-size:.78rem;color:var(--td);min-width:150px}
+    .score-track{flex:1;height:6px;background:var(--bd);border-radius:3px;overflow:hidden}
+    .score-fill{height:100%;border-radius:3px}
+    .score-val{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--td);min-width:35px;text-align:right}
+
+    /* JUDGMENT TIERS */
+    .jtiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .jtier{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.5rem}
+    .jtier-icon{font-size:1.5rem;margin-bottom:.5rem}
+    .jtier-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:var(--t);margin-bottom:.35rem}
+    .jtier-body{font-size:.8rem;color:var(--td);line-height:1.6}
+
+    /* CALENDAR */
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+    .cal-hdr{text-align:center;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tf);padding:.35rem}
+    .cal-day{background:var(--bg-r);border:1px solid var(--bd);border-radius:6px;padding:.5rem;min-height:75px;font-size:.66rem;color:var(--td);line-height:1.3;transition:border-color .15s;cursor:default}
+    .cal-day:hover{border-color:var(--te)}
+    .cal-d{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--tf);margin-bottom:.2rem}
+    .cal-ph{display:inline-block;font-size:.55rem;font-weight:800;padding:.03rem .3rem;border-radius:3px;margin-bottom:.15rem}
+    .ph1{background:rgba(163,113,247,.2);color:var(--pu)}
+    .ph2{background:rgba(88,166,255,.2);color:var(--bl)}
+    .ph3{background:rgba(63,185,80,.2);color:var(--gr)}
+    .ph4{background:rgba(210,153,34,.2);color:var(--am)}
+
+    /* FLOW DIAGRAM */
+    .flow{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0}
+    .flow-node{background:var(--bg-r);border:1px solid var(--bd);border-radius:10px;padding:.9rem 1.1rem;min-width:120px;text-align:center}
+    .flow-label{font-size:.62rem;color:var(--tf);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.2rem}
+    .flow-val{font-weight:700;font-size:.85rem;color:var(--t)}
+    .flow-arr{color:var(--tf);font-size:1.1rem;padding:0 .25rem}
+
+    /* TICKER */
+    .ticker{background:var(--bg-s);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1rem;margin:1rem 0;overflow:hidden}
+    .ticker-inner{display:flex;gap:2.5rem;animation:tick 40s linear infinite;white-space:nowrap}
+    @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .ticker-item{font-size:.78rem;color:var(--te);font-weight:600}
+    .ticker-sep{color:var(--tf);padding:0 .5rem}
+
+    /* DIVIDER */
+    hr.div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);border:none;margin:2rem 0}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      section,.hero{padding:2rem 1.25rem}
+      .jtiers{grid-template-columns:1fr}
+      .hero-kpis{gap:1.5rem}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Supericons Blueprint</div>
+  <div class="sb-section">Foundation</div>
+  <a class="sb-link" href="#positioning"><span class="sb-n">01</span>Positioning Thesis</a>
+  <a class="sb-link" href="#audience"><span class="sb-n">02</span>Target Audience</a>
+  <a class="sb-link" href="#landscape"><span class="sb-n">03</span>Market Landscape</a>
+  <div class="sb-section">Product</div>
+  <a class="sb-link" href="#curation"><span class="sb-n">04</span>Curation System</a>
+  <a class="sb-link" href="#collections"><span class="sb-n">05</span>Intent Collections</a>
+  <a class="sb-link" href="#manifest"><span class="sb-n">06</span>Icon Manifest Schema</a>
+  <a class="sb-link" href="#judgment"><span class="sb-n">07</span>Judgment Engine</a>
+  <a class="sb-link" href="#mcp"><span class="sb-n">08</span>MCP API Tools</a>
+  <div class="sb-section">Growth</div>
+  <a class="sb-link" href="#github"><span class="sb-n">09</span>GitHub Growth Loop</a>
+  <a class="sb-link" href="#channels"><span class="sb-n">10</span>Channel Matrix</a>
+  <a class="sb-link" href="#campaigns"><span class="sb-n">11</span>Campaign Pillars</a>
+  <a class="sb-link" href="#calendar"><span class="sb-n">12</span>90-Day Calendar</a>
+  <div class="sb-section">Execution</div>
+  <a class="sb-link" href="#offer"><span class="sb-n">13</span>Offer Design</a>
+  <a class="sb-link" href="#roadmap"><span class="sb-n">14</span>Product Roadmap</a>
+  <a class="sb-link" href="#kpis"><span class="sb-n">15</span>KPIs & Metrics</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">⚡ Synthesized Blueprint &mdash; April 2026</div>
+  <h1 class="hero-h1">
+    <span class="g1">Supericons</span> is not an icon library.<br>
+    It is the <span class="g2">UI intelligence layer</span><br>for the agentic era.
+  </h1>
+  <p class="hero-sub">This blueprint synthesizes all strategic research, design thinking, market analysis, and curation system design into one unified execution plan. It answers three questions simultaneously: what to build, how to position it, and exactly how to make 100,000 builders find it without spending a dollar on ads.</p>
+  <div class="hero-thesis">
+    <div class="ht-label">The strategic thesis</div>
+    <div class="ht-text">Win on curated semantic structure + reliable source intelligence + workflow-native collections + agent-usable recommendation logic + a defensible judgment graph. That is much harder to commoditize than raw SVG access. Raw SVG access is a commodity. Intelligence is not.</div>
+  </div>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-val">4,572</div><div class="kpi-label">Icon repos on GitHub</div></div>
+    <div class="kpi"><div class="kpi-val">72.2M</div><div class="kpi-label">lucide-react weekly dl</div></div>
+    <div class="kpi"><div class="kpi-val">0</div><div class="kpi-label">Libraries with agent metadata</div></div>
+    <div class="kpi"><div class="kpi-val">50</div><div class="kpi-label">Optimal free kit size</div></div>
+    <div class="kpi"><div class="kpi-val">∞</div><div class="kpi-label">Moat: judgment graph</div></div>
+  </div>
+</div>
+
+<!-- SECTION 1: POSITIONING -->
+<section id="positioning">
+  <div class="sn">// 01 — POSITIONING THESIS</div>
+  <h2 class="sh">The Single Most Important Strategic Decision</h2>
+  <p class="sd">Every word of positioning must flow from one irreversible choice: what category does Supericons own? The answer determines pricing, messaging, distribution, product roadmap, and who you compete against.</p>
+
+  <div class="alert a-key">
+    <span class="alert-i">🎯</span>
+    <div><strong>The Positioning Statement:</strong> Supericons is the UI polish layer for modern product builders. Not "an icon library." Not "the biggest icon search engine." The UI polish layer: curated intent collections, premium motion, agent-native workflows, and the only icon system with machine-readable trust intelligence.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem">
+    <div style="background:var(--bg-r);border:1px solid rgba(248,81,73,.25);border-radius:14px;padding:1.5rem">
+      <div style="font-size:.7rem;font-weight:800;color:var(--re);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem">What NOT to say</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✗</span><span class="step-t">"The largest icon library" &mdash; commodity framing</span></div>
+        <div class="step"><span class="step-n">✗</span><span class="step-t">"20,000+ icons" &mdash; volume arms race you will lose</span></div>
+        <div class="step"><span class="step-n">✗</span><span class="step-t">"For designers" &mdash; wrong primary audience for 2026</span></div>
+        <div class="step"><span class="step-n">✗</span><span class="step-t">"Like Lucide but bigger" &mdash; derivative positioning</span></div>
+      </div>
+    </div>
+    <div style="background:var(--bg-r);border:1px solid rgba(45,212,191,.25);border-radius:14px;padding:1.5rem">
+      <div style="font-size:.7rem;font-weight:800;color:var(--te);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem">What TO say</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✓</span><span class="step-t"><strong>Ship interfaces that feel premium, alive, and intentional</strong></span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t"><strong>The icon workflow for builders who ship with AI agents</strong></span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t"><strong>Curated packs for the exact product surface you are building</strong></span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t"><strong>The first icon system your AI coding agent understands</strong></span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:.75rem">Messaging Architecture</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Message</th><th>Audience</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Core message</strong></td><td>Ship interfaces that feel more premium, more alive, and more intentional</td><td>All</td></tr>
+      <tr><td><strong>Human builder</strong></td><td>Find the right icon in seconds. Build dashboards, sidebars, and AI UIs with coherent packs. Add motion without JavaScript bloat.</td><td>Indie founders, frontend engineers</td></tr>
+      <tr><td><strong>Agent builder</strong></td><td>Let your AI coding workflow use icons directly. Supericons is the first library your AI agent can reason about, not just search.</td><td>Cursor / Claude Code users</td></tr>
+      <tr><td><strong>Anti-commodity</strong></td><td>The enemy is not "no icons." It is generic UI, mismatched styles, dead-feeling product surfaces, and 12 minutes of hunting across 8 browser tabs.</td><td>Anyone who has felt this pain</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 2: AUDIENCE -->
+<section id="audience">
+  <div class="sn">// 02 — TARGET AUDIENCE</div>
+  <h2 class="sh">Three Wedge Audiences. One Growth Funnel.</h2>
+  <p class="sd">The go-to-market wedge is deliberately narrow. Cast wide, convert no one. Cast narrow, own the wedge.</p>
+
+  <div class="grid3" style="margin-bottom:1.5rem">
+    <div class="card" style="border-top:3px solid var(--te)">
+      <div class="card-em">🚀</div>
+      <div class="card-t">Primary: AI SaaS Builders</div>
+      <div class="card-b">Indie founders and frontend engineers shipping AI tools, dashboards, and SaaS MVPs using React, Next.js, or Vite. They use Cursor, Claude Code, Cline, Windsurf. They pay for time saved and for interfaces that look premium on launch day.</div>
+      <span class="tag t-te">Main conversion target</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--pu)">
+      <div class="card-em">🤖</div>
+      <div class="card-t">Secondary: Agent Workflow Users</div>
+      <div class="card-b">Developers who live inside agentic IDE workflows. They need searchable icon retrieval, predictable IDs, metadata, and copy/paste exports. Supericons MCP is the hook. The premium kit is the upsell.</div>
+      <span class="tag t-pu">MCP-first acquisition</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--bl)">
+      <div class="card-em">🎨</div>
+      <div class="card-t">Tertiary: No-Code Creators</div>
+      <div class="card-b">Framer, Figma, and Webflow builders. Care deeply about premium feel, animated iconography, motion in hero sections. Entry via free community content, upgrade via Motion Lab and animated collection packs.</div>
+      <span class="tag t-bl">Design-forward upsell</span>
+    </div>
+  </div>
+
+  <div class="alert a-action">
+    <span class="alert-i">💡</span>
+    <div><strong>Growth Engine Logic:</strong> Free job-shaped icon collections &rarr; GitHub utility repos &rarr; starter kits and preview pages &rarr; organic search + agent discovery &rarr; Supericons as the upgrade path. The free layer is not charity. It is the acquisition surface.</div>
+  </div>
+</section>
+
+<!-- SECTION 3: MARKET LANDSCAPE -->
+<section id="landscape">
+  <div class="sn">// 03 — MARKET LANDSCAPE INTELLIGENCE</div>
+  <h2 class="sh">What the Market Is Telling Us</h2>
+  <p class="sd">Five confirmed market signals from real GitHub star counts, npm download data, Reddit discussions, and MCP ecosystem signals. All verified as of April 2026.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-em">📊</div>
+      <div class="card-t">Signal 1: Icon demand is massive and persistent</div>
+      <div class="card-b">lucide-react shows 72.2M weekly npm downloads. 20.2k GitHub stars. 1.8M "used by" references. Icon selection is still a default frontend job, not a solved problem. Demand is not shrinking.</div>
+      <span class="tag t-gr">Confirmed via npm + GitHub</span>
+    </div>
+    <div class="card">
+      <div class="card-em">🔍</div>
+      <div class="card-t">Signal 2: Curated workflows outsell raw files</div>
+      <div class="card-b">shadcn-iconpicker has significant traction purely for making icon selection faster inside React workflows. Dashboard Icons keeps gaining in self-hosted communities for app tiles. "Finding the right icon fast" is itself a product surface worth owning.</div>
+      <span class="tag t-bl">Curation is a product category</span>
+    </div>
+    <div class="card">
+      <div class="card-em">✨</div>
+      <div class="card-t">Signal 3: Premium feel commands a price premium</div>
+      <div class="card-b">Framer marketplace listings consistently sell "polish," "premium feel," and motion-driven UI upgrades. Builders are paying for feel, not just symbol coverage. The commodity layer is free. The feel layer has pricing power.</div>
+      <span class="tag t-am">Motion Lab monetization signal</span>
+    </div>
+    <div class="card">
+      <div class="card-em">🤖</div>
+      <div class="card-t">Signal 4: Icon MCP servers are a real category</div>
+      <div class="card-b">icon-mcp (agentic-ph) and Icons8 MCP both exist and are gaining traction. Agent-native icon tooling is already a market segment. Supericons MCP is ahead of the curve. The question is not whether to invest in it; it is how fast to move.</div>
+      <span class="tag t-pu">Validated competitor category</span>
+    </div>
+    <div class="card">
+      <div class="card-em">🧀</div>
+      <div class="card-t">Signal 5: The vocabulary gap is real and unoccupied</div>
+      <div class="card-b">Zero major icon libraries have icons for "guardrail," "RAG pipeline," "vector database," "model temperature," "token cost," "orchestrator." These concepts exist in every AI product UI. Supericons Agentic AI Kit is the only source. This is a blue ocean, not a niche.</div>
+      <span class="tag t-re">Supericons owns this completely</span>
+    </div>
+    <div class="card">
+      <div class="card-em">💀</div>
+      <div class="card-t">Signal 6: SVG-Morpheus died in 2017 with 2.7k stars</div>
+      <div class="card-b">The concept of morphing icon pairs (play/pause, send/spinner, mic-on/mic-off) was proven valid by real adoption. The CSS-only animated morph pair collection for 2026 web apps is an entirely unoccupied market segment with proven demand history.</div>
+      <span class="tag t-pk">Supericons revival opportunity</span>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:1rem">Repository Archetype Map &mdash; What Exists vs What Is Missing</h3>
+  <table>
+    <thead><tr><th>Archetype</th><th>Key Examples</th><th>What They Do Well</th><th>Gap Supericons Fills</th></tr></thead>
+    <tbody>
+      <tr><td><strong>General UI systems</strong></td><td>Font Awesome 76.5k, Material 53.1k, Lucide 22.1k, Tabler 20.6k</td><td>Consistency, broad coverage, reliable defaults</td><td>No intent curation, no agent metadata, no domain vocabulary</td></tr>
+      <tr><td><strong>Brand / domain icons</strong></td><td>Simple Icons 24.9k, Devicon, Dashboard Icons, Web3Icons, Skill Icons</td><td>Laser-focused semantic relevance for one domain</td><td>No AI/ML domain. Supericons Agentic AI Kit owns that space</td></tr>
+      <tr><td><strong>Aggregators</strong></td><td>React-Icons 12.5k, Iconify</td><td>One API across many sets, broad compatibility</td><td>Aggregation without curation creates choice overload</td></tr>
+      <tr><td><strong>Animated</strong></td><td>Ramotion/animated-tab-bar 11.1k (iOS), SVG-Morpheus 2.7k (defunct)</td><td>Motion differentiates; people pay for it</td><td>No maintained CSS-only animated icon system for web apps</td></tr>
+      <tr><td><strong>Agent-native</strong></td><td>icon-mcp, smart-icons-kit (small, early)</td><td>Machine-facing selection, synonym matching</td><td>No library has trust scoring, affinity scoring, or collection API</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 4: CURATION SYSTEM -->
+<section id="curation">
+  <div class="sn">// 04 — THE CURATION SYSTEM</div>
+  <h2 class="sh">From Icon Search Engine to Icon Decision Layer</h2>
+  <p class="sd">Supericons began with a semantic search bar. That was the right first move for human discovery. The next evolution is fundamentally different: a decision layer that serves both humans and agents by converting icons from files into decisionable assets.</p>
+
+  <div class="alert a-vision">
+    <span class="alert-i">🧠</span>
+    <div><strong>The central design insight:</strong> Humans and agents both have the same problem in different forms. Humans experience choice paralysis across 20K icons. Agents experience metadata poverty that prevents confident selection. Both are solved by the same thing: a rich, structured, opinionated semantic layer. Humans see it as "Collections." Agents see it as "Schema." One system, two interfaces.</div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:1rem;margin-top:1.5rem">The Five Core Score Families (From Research)</h3>
+  <div class="score-bars" style="margin-bottom:2rem">
+    <div class="score-row">
+      <span class="score-label">Craft Score</span>
+      <div class="score-track"><div class="score-fill" style="width:90%;background:linear-gradient(90deg,var(--te),var(--bl))"></div></div>
+      <span class="score-val">Legibility, geometry, stroke balance, distinctiveness</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Intent Score</span>
+      <div class="score-track"><div class="score-fill" style="width:100%;background:linear-gradient(90deg,var(--pu),var(--pk))"></div></div>
+      <span class="score-val">Semantic match, ambiguity risk, synonym coverage</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Surface Score</span>
+      <div class="score-track"><div class="score-fill" style="width:75%;background:linear-gradient(90deg,var(--bl),var(--pu))"></div></div>
+      <span class="score-val">Sidebar fit, toolbar fit, badge fit, hero fit</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Coherence Score</span>
+      <div class="score-track"><div class="score-fill" style="width:80%;background:linear-gradient(90deg,var(--am),var(--or))"></div></div>
+      <span class="score-val">Family similarity, density match, visual rhythm</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Outcome Score</span>
+      <div class="score-track"><div class="score-fill" style="width:65%;background:linear-gradient(90deg,var(--gr),var(--te))"></div></div>
+      <span class="score-val">Accepted by human, retained, reused, agent success rate</span>
+    </div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:1rem">New Object Types in the Product</h3>
+  <div class="grid3">
+    <div class="card"><div class="card-em">🖼</div><div class="card-t">1. Icon</div><div class="card-b">With full manifest: semantic aliases, trust tier, affinity scores, co-occurrence partners, contraindications.</div></div>
+    <div class="card"><div class="card-em">📦</div><div class="card-t">2. Collection</div><div class="card-b">Intent-based, pre-curated set answering "what icons do I need to build X?"</div></div>
+    <div class="card"><div class="card-em">🔄</div><div class="card-t">3. Workflow Pack</div><div class="card-b">Icons for a complete user flow: onboarding, payment, AI chat, incident response.</div></div>
+    <div class="card"><div class="card-em">🖥</div><div class="card-t">4. Surface Kit</div><div class="card-b">Icons for a specific UI surface: sidebar, command palette, auth settings, billing center.</div></div>
+    <div class="card"><div class="card-em">📚</div><div class="card-t">5. Source Family</div><div class="card-b">A scored, trusted source with reliability tier, maintenance signal, and license clarity.</div></div>
+    <div class="card"><div class="card-em">🤖</div><div class="card-t">6. Agent Recipe</div><div class="card-b">A complete prompt + MCP call sequence for an agent to build a full icon set for a feature area.</div></div>
+  </div>
+</section>
+
+<!-- SECTION 5: INTENT COLLECTIONS -->
+<section id="collections">
+  <div class="sn">// 05 — INTENT COLLECTIONS</div>
+  <h2 class="sh">From "Browse Icons" to "What Are You Building?"</h2>
+  <p class="sd">The 50-icon build kit is the optimal free unit. Large enough to power a serious MVP area. Small enough to curate properly. Generously useful on GitHub. These are real build kits that developers can ship from, not sample packs.</p>
+
+  <div class="alert a-action">
+    <span class="alert-i">📐</span>
+    <div><strong>Pack sizing rule:</strong> 20 icons = teaser pack. 30 icons = lightweight feature pack. 50 icons = real MVP-ready build kit. Supericons standardizes on 50-icon free build kits because a builder must be able to answer YES to: "Could someone build a meaningful product surface with this alone?"</div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin:1.5rem 0 1rem">Wave 1: First 6 Free Build Kits</h3>
+  <div class="grid2" style="margin-bottom:2rem">
+    <div class="col-card" style="border-left:3px solid var(--te)">
+      <div class="col-intent" style="color:var(--te)">Dashboard &mdash; Free Build Kit</div>
+      <div class="col-name">Dashboard Navigation 50</div>
+      <div class="col-desc">The 50 icons that power every SaaS app's navigation. Sidebar, tabs, top nav, breadcrumbs, menus, drawers. Sourced from Lucide T1. Drop-in ready for React, Vue, Svelte.</div>
+      <div class="col-icons"><span class="col-ic">home</span><span class="col-ic">grid</span><span class="col-ic">users</span><span class="col-ic">settings</span><span class="col-ic">bell</span><span class="col-ic">search</span><span class="col-ic">bar-chart</span><span class="col-ic">plug</span><span class="col-ic">help-circle</span><span class="col-ic">+41 more</span></div>
+    </div>
+    <div class="col-card" style="border-left:3px solid var(--gr)">
+      <div class="col-intent" style="color:var(--gr)">Feedback &mdash; Free Build Kit</div>
+      <div class="col-name">Status Feedback 50</div>
+      <div class="col-desc">Already a Supericons premium collection. The 50 icons for status pages, notifications, toast messages, loading states, and error handling. This is intent-based curation proven in production.</div>
+      <div class="col-icons"><span class="col-ic">check-circle</span><span class="col-ic">alert-triangle</span><span class="col-ic">x-circle</span><span class="col-ic">info</span><span class="col-ic">loader</span><span class="col-ic">wifi-off</span><span class="col-ic">server-crash</span><span class="col-ic">+43 more</span></div>
+    </div>
+    <div class="col-card" style="border-left:3px solid var(--am)">
+      <div class="col-intent" style="color:var(--am)">Commerce &mdash; Free Build Kit</div>
+      <div class="col-name">Ecommerce Essentials 50</div>
+      <div class="col-desc">Cart, payment, shipping, loyalty, receipts, orders, coupons, wallet. The 50 icons a checkout flow or marketplace needs to compete with Shopify-level perceived quality.</div>
+      <div class="col-icons"><span class="col-ic">shopping-cart</span><span class="col-ic">credit-card</span><span class="col-ic">truck</span><span class="col-ic">wallet</span><span class="col-ic">receipt</span><span class="col-ic">tag</span><span class="col-ic">package</span><span class="col-ic">+43 more</span></div>
+    </div>
+    <div class="col-card" style="border-left:3px solid var(--pu)">
+      <div class="col-intent" style="color:var(--pu)">AI Builder &mdash; Premium</div>
+      <div class="col-name">AI Agent UI 50 (Supericons Exclusive)</div>
+      <div class="col-desc">The only icon set in the world for agentic AI product UIs. agent, orchestrator, rag-pipeline, vector-db, guardrail, temperature, token-cost, embedding, memory, trace, handoff, approval. No other library has these.</div>
+      <div class="col-icons"><span class="col-ic">agent</span><span class="col-ic">orchestrator</span><span class="col-ic">rag-pipeline</span><span class="col-ic">vector-db</span><span class="col-ic">guardrail</span><span class="col-ic">temperature</span><span class="col-ic">token-cost</span><span class="col-ic">+43 more</span></div>
+      <span class="tag t-pu">Supericons exclusive vocabulary</span>
+    </div>
+    <div class="col-card" style="border-left:3px solid var(--bl)">
+      <div class="col-intent" style="color:var(--bl)">Analytics &mdash; Free Build Kit</div>
+      <div class="col-name">Data Charts 50</div>
+      <div class="col-desc">For BI tools, analytics dashboards, metrics views. Chart types, time ranges, filters, export actions, trend signals, KPI states. Everything a data visualization product needs to feel serious.</div>
+      <div class="col-icons"><span class="col-ic">line-chart</span><span class="col-ic">bar-chart-2</span><span class="col-ic">pie-chart</span><span class="col-ic">filter</span><span class="col-ic">calendar</span><span class="col-ic">trending-up</span><span class="col-ic">download</span><span class="col-ic">+43 more</span></div>
+    </div>
+    <div class="col-card" style="border-left:3px solid var(--re)">
+      <div class="col-intent" style="color:var(--re)">Security &mdash; Free Build Kit</div>
+      <div class="col-name">Auth and Security 50</div>
+      <div class="col-desc">Authentication flows, permission management, API key management, 2FA, access control, identity verification. Icons that communicate security without feeling threatening. Essential for any B2B product settings page.</div>
+      <div class="col-icons"><span class="col-ic">key</span><span class="col-ic">shield</span><span class="col-ic">lock</span><span class="col-ic">fingerprint</span><span class="col-ic">user-check</span><span class="col-ic">eye-off</span><span class="col-ic">+44 more</span></div>
+    </div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:1rem">Wave 2: Agentic Workflow Collections (Premium, Supericons-Exclusive)</h3>
+  <table>
+    <thead><tr><th>Collection</th><th>Icon Examples</th><th>Who Buys It</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agent Console Core 50</strong></td><td>tools, traces, prompts, memory, tasks, approval, retry, run, pause, handoff, cost, tokens</td><td>AI product builders, LangGraph/AutoGen users</td></tr>
+      <tr><td><strong>Copilot Sidebar 40</strong></td><td>chat, suggest, edit, explain, diff, patch, commit, review, diagnostics, apply</td><td>VS Code extension builders, AI IDE teams</td></tr>
+      <tr><td><strong>AI Workflow States 32</strong></td><td>queued, thinking, tool-calling, waiting, approved, blocked, rate-limited, failed, recovered</td><td>Any developer building AI product loading/error states</td></tr>
+      <tr><td><strong>Trust and Guardrails 36</strong></td><td>policy, safety, privacy, moderation, verification, redact, alert, quarantine, secure-export</td><td>Enterprise AI safety teams, compliance products</td></tr>
+      <tr><td><strong>Knowledge Ops 36</strong></td><td>retrieve, index, vector, chunk, source, citation, notebook, grounding, dataset, cache</td><td>RAG pipeline products, knowledge base UIs</td></tr>
+      <tr><td><strong>Morph Pairs Kit</strong></td><td>play/pause, send/spinner, mic-on/mic-off, eye/eye-off, sun/moon, expand/collapse</td><td>Any developer adding animated state transitions</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 6: MANIFEST SCHEMA -->
+<section id="manifest">
+  <div class="sn">// 06 — ICON MANIFEST SCHEMA</div>
+  <h2 class="sh">The Machine-Readable Intelligence Layer</h2>
+  <p class="sd">Every icon in Supericons should have a companion manifest JSON. This is NOT documentation. It is structured intelligence that allows agents to reason about icon selection the way they reason about code: with evidence, justification, and auditable logic.</p>
+
+  <div class="codeblock">
+    <div class="codeblock-hdr"><span class="codeblock-lang">JSON</span><span class="codeblock-name">icon-manifest.schema.json &mdash; Complete Specification</span></div>
+    <div class="codeblock-body"><span class="cp">{</span>
+  <span class="cc">// ── IDENTITY ─────────────────────────────────────────────</span>
+  <span class="ck">"id"</span><span class="cp">:</span>               <span class="cs">"supericons:agentic-ai-kit/vector-db"</span><span class="cp">,</span>
+  <span class="ck">"canonical_intent"</span><span class="cp">:</span> <span class="cs">"vector database storage for AI embeddings"</span><span class="cp">,</span>
+  <span class="ck">"ui_role"</span><span class="cp">:</span>         <span class="cs">"data-store-indicator"</span><span class="cp">,</span>
+  <span class="ck">"domain"</span><span class="cp">:</span>          <span class="cs">"ai-ml"</span><span class="cp">,</span>
+  <span class="ck">"entity_type"</span><span class="cp">:</span>     <span class="cs">"infrastructure"</span><span class="cp">,</span>
+  <span class="ck">"action_type"</span><span class="cp">:</span>     <span class="cs">"store-retrieve"</span><span class="cp">,</span>
+  <span class="ck">"sentiment"</span><span class="cp">:</span>       <span class="cs">"neutral-technical"</span><span class="cp">,</span>
+
+  <span class="cc">// ── SEMANTIC INTELLIGENCE ────────────────────────────────</span>
+  <span class="ck">"aliases"</span><span class="cp">:</span> <span class="cp">[</span><span class="cs">"vector store"</span><span class="cp">,</span> <span class="cs">"embedding store"</span><span class="cp">,</span> <span class="cs">"pinecone"</span><span class="cp">,</span> <span class="cs">"chroma"</span><span class="cp">,</span> <span class="cs">"qdrant"</span><span class="cp">,</span> <span class="cs">"pgvector"</span><span class="cp">],</span>
+  <span class="ck">"anti_aliases"</span><span class="cp">:</span> <span class="cp">[</span><span class="cs">"generic database"</span><span class="cp">,</span> <span class="cs">"SQL"</span><span class="cp">,</span> <span class="cs">"relational"</span><span class="cp">],</span>  <span class="cc">// negative knowledge</span>
+
+  <span class="cc">// ── INTENT CONTEXTS ──────────────────────────────────────</span>
+  <span class="ck">"recommended_surfaces"</span><span class="cp">:</span> <span class="cp">[</span><span class="cs">"rag-pipeline-diagram"</span><span class="cp">,</span> <span class="cs">"ai-dashboard-sidebar"</span><span class="cp">,</span> <span class="cs">"llm-config-panel"</span><span class="cp">],</span>
+  <span class="ck">"contraindications"</span><span class="cp">:</span> <span class="cp">[</span>
+    <span class="cs">"Do not use for generic database UI — use cylinder/database instead"</span><span class="cp">,</span>
+    <span class="cs">"Do not use in non-AI product contexts — semantically specific to ML"</span>
+  <span class="cp">],</span>
+
+  <span class="cc">// ── TRUST &amp; SOURCE ───────────────────────────────────────</span>
+  <span class="ck">"source_library"</span><span class="cp">:</span>      <span class="cs">"supericons/agentic-ai-kit"</span><span class="cp">,</span>
+  <span class="ck">"license_type"</span><span class="cp">:</span>        <span class="cs">"commercial-royalty-free"</span><span class="cp">,</span>
+  <span class="ck">"maintenance_score"</span><span class="cp">:</span>   <span class="cv">0.98</span><span class="cp">,</span>
+  <span class="ck">"coverage_score"</span><span class="cp">:</span>      <span class="cv">1.0</span><span class="cp">,</span>   <span class="cc">// only source with this icon — monopoly</span>
+  <span class="ck">"agent_confidence_score"</span><span class="cp">:</span> <span class="cv">0.97</span><span class="cp">,</span>
+  <span class="ck">"trust_tier"</span><span class="cp">:</span>          <span class="cs">"T3"</span><span class="cp">,</span>    <span class="cc">// T1=institutional, T2=community, T3=premium curated</span>
+
+  <span class="cc">// ── DESIGN SYSTEM AFFINITY ───────────────────────────────</span>
+  <span class="ck">"affinity"</span><span class="cp">:</span> <span class="cp">{</span>
+    <span class="ck">"shadcn_ui"</span><span class="cp">:</span> <span class="cv">0.82</span><span class="cp">,</span> <span class="ck">"material_ui"</span><span class="cp">:</span> <span class="cv">0.74</span><span class="cp">,</span> <span class="ck">"tailwind_ui"</span><span class="cp">:</span> <span class="cv">0.85</span><span class="cp">,</span> <span class="ck">"radix_ui"</span><span class="cp">:</span> <span class="cv">0.80</span>
+  <span class="cp">},</span>
+  <span class="ck">"visual_weight"</span><span class="cp">:</span>       <span class="cs">"light"</span><span class="cp">,</span>
+  <span class="ck">"stroke_fill_mode"</span><span class="cp">:</span>    <span class="cs">"outline"</span><span class="cp">,</span>
+  <span class="ck">"animation_readiness"</span><span class="cp">:</span> <span class="cb">true</span><span class="cp">,</span>
+  <span class="ck">"container_readiness"</span><span class="cp">:</span> <span class="cb">true</span><span class="cp">,</span>
+
+  <span class="cc">// ── CO-OCCURRENCE GRAPH ──────────────────────────────────</span>
+  <span class="ck">"co_occurs_with"</span><span class="cp">:</span> <span class="cp">[</span>
+    <span class="cp">{</span> <span class="ck">"id"</span><span class="cp">:</span> <span class="cs">"rag-pipeline"</span><span class="cp">,</span>   <span class="ck">"strength"</span><span class="cp">:</span> <span class="cv">0.91</span> <span class="cp">},</span>
+    <span class="cp">{</span> <span class="ck">"id"</span><span class="cp">:</span> <span class="cs">"embedding"</span><span class="cp">,</span>      <span class="ck">"strength"</span><span class="cp">:</span> <span class="cv">0.87</span> <span class="cp">},</span>
+    <span class="cp">{</span> <span class="ck">"id"</span><span class="cp">:</span> <span class="cs">"orchestrator"</span><span class="cp">,</span>   <span class="ck">"strength"</span><span class="cp">:</span> <span class="cv">0.83</span> <span class="cp">}</span>
+  <span class="cp">],</span>
+
+  <span class="cc">// ── RECOMMENDATION SCORES ────────────────────────────────</span>
+  <span class="ck">"scores"</span><span class="cp">:</span> <span class="cp">{</span>
+    <span class="ck">"craft"</span><span class="cp">:</span> <span class="cv">0.94</span><span class="cp">,</span> <span class="ck">"intent"</span><span class="cp">:</span> <span class="cv">0.97</span><span class="cp">,</span> <span class="ck">"surface"</span><span class="cp">:</span> <span class="cv">0.88</span><span class="cp">,</span>
+    <span class="ck">"coherence"</span><span class="cp">:</span> <span class="cv">0.91</span><span class="cp">,</span> <span class="ck">"outcome"</span><span class="cp">:</span> <span class="cv">0.79</span>
+  <span class="cp">},</span>
+  <span class="ck">"agent_selection_guidance"</span><span class="cp">:</span> <span class="cs">"Select for vector database or embedding store concepts in AI pipelines. Do not select for generic data storage."</span>
+<span class="cp">}</span></div>
+  </div>
+</section>
+
+<!-- SECTION 7: JUDGMENT ENGINE -->
+<section id="judgment">
+  <div class="sn">// 07 — THE TRI-CAMERAL JUDGMENT ENGINE</div>
+  <h2 class="sh">Who Decides What Is a Good Icon?</h2>
+  <p class="sd">The deepest moat Supericons can build is not more icons. It is a defensible judgment graph built from three distinct intelligence sources. Human-only judgment does not scale. AI-only judgment is too brittle. Popularity-only collapses to the most familiar, not the most suitable.</p>
+
+  <div class="jtiers">
+    <div class="jtier" style="border-top:3px solid var(--te)">
+      <div class="jtier-icon">👤</div>
+      <div class="jtier-title">Tier 1: Human Taste Council</div>
+      <div class="jtier-body">Experts, active builders, and high-signal users who shape the aesthetic and contextual truth. Humans are the only reliable judges of: symbolic appropriateness, emotional tone, cultural nuance, brand fit, product maturity, and whether something feels premium vs generic. They define the constitution.</div>
+      <span class="tag t-te">Constitutional layer</span>
+    </div>
+    <div class="jtier" style="border-top:3px solid var(--pu)">
+      <div class="jtier-icon">🤖</div>
+      <div class="jtier-title">Tier 2: Model Critic Layer</div>
+      <div class="jtier-body">AI evaluates what can be made explicit: legibility at 16px, stroke consistency, silhouette distinctiveness, semantic closeness, collection coherence, duplication detection, ambiguity rate. AI is the structured critic and diagnostic layer, not the final taste judge.</div>
+      <span class="tag t-pu">Diagnostic layer</span>
+    </div>
+    <div class="jtier" style="border-top:3px solid var(--bl)">
+      <div class="jtier-icon">⚡</div>
+      <div class="jtier-title">Tier 3: Agent Outcome Evidence</div>
+      <div class="jtier-body">Agents vote through outcomes, not opinions. What icon did they select? Was it accepted or replaced by the human? Did it survive 7 days in the project? Did the bundle remain coherent? Agent evidence is the most honest signal because it is not self-reported.</div>
+      <span class="tag t-bl">Outcome evidence layer</span>
+    </div>
+  </div>
+
+  <div class="alert a-vision" style="margin-top:1.5rem">
+    <span class="alert-i">🏆</span>
+    <div><strong>The Judgment Graph:</strong> Instead of a "like" button, every vote is an evidence object that records: rater type, task context, surface, confidence, candidate alternatives, selected icon, rationale tags, and downstream outcome (retained/replaced/reused). This is a design intelligence system, not a social engagement metric. It creates earned reputation rather than influencer-style popularity.</div>
+  </div>
+
+  <hr class="div">
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:.75rem">Taste Staking: The Novel Mechanism</h3>
+  <p style="font-size:.85rem;color:var(--td);line-height:1.7;max-width:680px">A voter can stake a contextual claim: "This icon will outperform the current default for enterprise billing sidebars." If later evidence supports the claim, reputation rises. If contradicted, calibration falls. This creates a market of taste and foresight, not a pile of anonymous likes. It rewards design maturity over raw activity.</p>
+</section>
+
+<!-- SECTION 8: MCP API -->
+<section id="mcp">
+  <div class="sn">// 08 — MCP API: AGENT-NATIVE TOOLING</div>
+  <h2 class="sh">Seven Agent Tools That No Icon Library Has</h2>
+  <p class="sd">The current Supericons MCP exposes search_icons and get_icon. Seven additional tools unlock the complete agent-native curation architecture. An agent using these tools can select, justify, and complete an entire icon set for a feature area without any human visual review.</p>
+
+  <div class="grid2">
+    <div class="card"><div class="card-em">🎯</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--te)">get_collection_for_intent</code></div><div class="card-b">Agent asks: "What icons should I use to build X?" Returns a curated, pre-validated collection for a stated intent. Accepts design_system, trust_tier_min, and format as filters.</div><span class="tag t-te">Primary agentic entrypoint</span></div>
+    <div class="card"><div class="card-em">📋</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--pu)">get_icon_manifest</code></div><div class="card-b">Returns the full structured manifest for one icon: semantic aliases, trust score, design affinity, co-occurrence partners, use cases, contraindications. Validate before committing to a selection.</div><span class="tag t-pu">Pre-selection validation</span></div>
+    <div class="card"><div class="card-em">🔗</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--bl)">recommend_co_occurring</code></div><div class="card-b">Given one icon already chosen, returns the strongly co-occurring icons that appear alongside it in production apps. Completes an icon set from a single anchor selection.</div><span class="tag t-bl">Set completion</span></div>
+    <div class="card"><div class="card-em">📊</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--am)">score_icon_candidates</code></div><div class="card-b">Given a list of candidate icons and a context, score them on all five score families: craft, intent, surface, coherence, outcome. Returns a ranked, reasoned shortlist.</div><span class="tag t-am">Comparative ranking</span></div>
+    <div class="card"><div class="card-em">🏛</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--gr)">list_reliable_sources_for_domain</code></div><div class="card-b">Returns ranked source families for a given domain (ai-ml, ecommerce, devtools, security) with trust tier, license, and domain fit scores. Helps agents pick the right library, not just the right icon.</div><span class="tag t-gr">Source intelligence</span></div>
+    <div class="card"><div class="card-em">🔍</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--pk)">explain_icon_choice</code></div><div class="card-b">Returns a human-readable and structured rationale for why a given icon was chosen for a given context. Enables agents to explain their own decisions to human reviewers.</div><span class="tag t-pk">Auditability</span></div>
+    <div class="card"><div class="card-em">🔄</div><div class="card-t"><code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--or)">swap_to_more_coherent_family</code></div><div class="card-b">Given a mixed-family icon set that has style inconsistencies, recommends a replacement set from a single coherent family. Enforces visual system cohesion programmatically.</div><span class="tag t-or">Coherence enforcement</span></div>
+  </div>
+</section>
+
+<!-- SECTION 9: GITHUB GROWTH -->
+<section id="github">
+  <div class="sn">// 09 — GITHUB-LED GROWTH LOOP</div>
+  <h2 class="sh">GitHub Is Not Just Code Hosting in 2026</h2>
+  <p class="sd">GitHub is simultaneously a search surface, a trust surface, an LLM citation source, and a sharing surface inside developer communities. Free build kits on GitHub become long-tail acquisition assets for both humans and AI agents.</p>
+
+  <div class="flow">
+    <div class="flow-node" style="border-color:rgba(45,212,191,.3)">
+      <div class="flow-label">Publish</div>
+      <div class="flow-val" style="color:var(--te)">Free 50-icon<br>Build Kit</div>
+    </div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node">
+      <div class="flow-label">Developer</div>
+      <div class="flow-val">Clones or<br>forks repo</div>
+    </div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node">
+      <div class="flow-label">Ships it</div>
+      <div class="flow-val">In their<br>product</div>
+    </div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node">
+      <div class="flow-label">Wants more</div>
+      <div class="flow-val">Premium pack<br>or Motion Lab</div>
+    </div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node" style="border-color:rgba(163,113,247,.3)">
+      <div class="flow-label">Converts</div>
+      <div class="flow-val" style="color:var(--pu)">supericons.dev<br>paid user</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-bottom:1rem">Each Build Kit Format</h3>
+  <div class="grid3">
+    <div class="card"><div class="card-em">📁</div><div class="card-t">50 SVG icons + sprite.svg</div><div class="card-b">Clean SVGs, standardized viewBox, optimized paths. Drop-in for any project.</div></div>
+    <div class="card"><div class="card-em">⚛</div><div class="card-t">React + Vue + Svelte components</div><div class="card-b">Generated from SVGs. Ready for all major frameworks without npm complexity.</div></div>
+    <div class="card"><div class="card-em">🌐</div><div class="card-t">preview.html</div><div class="card-b">Beautiful, dark-mode preview page demonstrating all 50 icons in context with usage examples.</div></div>
+    <div class="card"><div class="card-em">🗂</div><div class="card-t">tokens.json</div><div class="card-b">Machine-readable: name, tags, categories, aliases. The seed manifest that agents can consume.</div></div>
+    <div class="card"><div class="card-em">📝</div><div class="card-t">usage-map.md</div><div class="card-b">When to use each icon, what surface it fits, what not to pair it with. Human-readable guidance.</div></div>
+    <div class="card"><div class="card-em">🎨</div><div class="card-t">Figma + Framer notes</div><div class="card-b">Import instructions for design tools. Captures the no-code creator audience in the same artifact.</div></div>
+  </div>
+
+  <div class="alert a-key" style="margin-top:1rem">
+    <span class="alert-i">🔑</span>
+    <div><strong>Supericons attribution rule in every repo:</strong> repo description, README hero "Built from the Supericons ecosystem," live preview link, footer of preview page, source comment headers in components, "More collections and animated packs: supericons.dev" in changelog. Strategic, not spammy. The repo should feel genuinely useful first, promotional second.</div>
+  </div>
+</section>
+
+<!-- SECTION 10: CHANNELS -->
+<section id="channels">
+  <div class="sn">// 10 — CHANNEL MATRIX</div>
+  <h2 class="sh">Where to Play. How to Win Each Surface.</h2>
+  <p class="sd">Nine channels. Three tiers. S-tier is the highest leverage; effort compounds. A-tier is strong with sustained input. B-tier is real but secondary.</p>
+
+  <div class="grid2">
+    <div class="card" style="border-left:3px solid var(--re)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">GitHub</div>
+        <span class="tag t-re" style="margin:0">S-tier</span>
+      </div>
+      <div class="card-b">Trust, search, cloning, long-tail discovery, LLM citation. Topics: icons, dashboard-icons, svg-icons, ui-kit, react-icons, mcp. Good screenshots, preview GIFs, install commands.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--re)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">SEO + GEO (LLM Visibility)</div>
+        <span class="tag t-re" style="margin:0">S-tier</span>
+      </div>
+      <div class="card-b">Intent-specific landing pages. llms.txt references. Headings structured around jobs, not brand slogans. "best icons for SaaS dashboards," "free status icons for app UI." Captures both Google and AI-answer visibility.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--am)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">Reddit + Indie Hackers + X</div>
+        <span class="tag t-am" style="margin:0">A-tier</span>
+      </div>
+      <div class="card-b">Lead with useful free asset, visual before/after, tactical build insight. Never lead with "buy my icon pack." Threads: "I curated 50 icons for SaaS dashboard nav," "Why most AI app sidebars look generic."</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--am)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">MCP + Agent Directories</div>
+        <span class="tag t-am" style="margin:0">A-tier</span>
+      </div>
+      <div class="card-b">Own the AI-native tooling wedge. Publish in MCP registries, Cursor extension marketplace, Claude plugin hub. Create "search icon &rarr; export &rarr; paste into code" demos. One config snippet that spreads virally.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">VS Code Marketplace</div>
+        <span class="tag t-gr" style="margin:0">A-tier</span>
+      </div>
+      <div class="card-b">Developer-trusted, high-intent distribution. Material Icon Theme has millions of installs. A Supericons extension that can search + insert icons inline during coding is a category-defining product.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">Framer + Figma Marketplace</div>
+        <span class="tag t-gr" style="margin:0">B-tier</span>
+      </div>
+      <div class="card-b">Reach design-forward no-code builders. Free community build kits, motion preview reels from premium packs. These buyers pay for feel and will upgrade to Motion Lab immediately.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--bl)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">Discord Communities</div>
+        <span class="tag t-bl" style="margin:0">B-tier</span>
+      </div>
+      <div class="card-b">Show up in Tailwind, shadcn, Cursor, LangChain, and indie hacker Discord servers. Share build kits as genuine contributions. Be the person who made the best icon resource for AI builders.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--bl)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">GenAI Video (X, YouTube Shorts)</div>
+        <span class="tag t-bl" style="margin:0">B-tier</span>
+      </div>
+      <div class="card-b">AI-generated demos showing: a dull landing page becoming premium with Supericons, a generic AI dashboard getting the Agentic Kit treatment, a developer adding motion in <60 seconds. Kling-generated, no production budget.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--tf)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
+        <div class="card-t" style="margin:0">Open VSX Registry</div>
+        <span class="tag" style="background:var(--bg-h);color:var(--td);margin:0;font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:4px">B-tier</span>
+      </div>
+      <div class="card-b">VSCode-compatible but open-source focused developers. Important for Linux/open-source builder audience who cannot use Microsoft's marketplace. Mirror the extension here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11: CAMPAIGNS -->
+<section id="campaigns">
+  <div class="sn">// 11 — CAMPAIGN PILLARS</div>
+  <h2 class="sh">Three Parallel Campaigns. One Narrative Arc.</h2>
+  <p class="sd">Each campaign targets a different entry point: the GitHub developer, the AI-native builder, and the "I want my product to look premium" founder. They funnel into the same upgrade path.</p>
+
+  <div class="pillar">
+    <div class="pillar-stripe ps-pu"></div>
+    <div style="padding-left:.75rem">
+      <div class="pillar-num">Campaign 01</div>
+      <div class="pillar-title">The Free Kit Drop</div>
+      <div class="pillar-hook">"I curated 50 icons for your AI app sidebar. Free download."</div>
+      <div class="pillar-body">Drop one free 50-icon build kit per week for 6 weeks. Each has its own GitHub repo, landing page, and community post. The post is always: "I curated X icons for [specific job]. Here is the full kit, free." No selling. No teasing of paid. Pure value.</div>
+      <div class="steps" style="margin-top:.75rem">
+        <div class="step"><span class="step-n">01</span><span class="step-t">Publish repo with preview page, components, tokens.json</span></div>
+        <div class="step"><span class="step-n">02</span><span class="step-t">Post in r/webdev, r/SaaS, Indie Hackers: <strong>"Free [kit name]. Grab it."</strong></span></div>
+        <div class="step"><span class="step-n">03</span><span class="step-t">Share on X as a visual thread showing 10 icons in real UI context screenshots</span></div>
+        <div class="step"><span class="step-n">04</span><span class="step-t">One week later: post the next kit. Reference the previous one.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-stripe ps-te"></div>
+    <div style="padding-left:.75rem">
+      <div class="pillar-num">Campaign 02</div>
+      <div class="pillar-title">The Agentic Demo</div>
+      <div class="pillar-hook">"Your AI agent can now pick icons for you. Here is the exact MCP config."</div>
+      <div class="pillar-body">Demonstrate that Claude Code / Cursor / Cline can retrieve the correct icon set for a stated intent via the Supericons MCP. Create a screen recording (or AI-generated demo) showing: "Build me a settings sidebar for an AI dashboard" &rarr; agent calls get_collection_for_intent &rarr; returns 12 icons with manifests &rarr; agent scaffolds the component. Share on HN, r/LocalLLaMA, Cursor Discord.</div>
+      <div class="steps" style="margin-top:.75rem">
+        <div class="step"><span class="step-n">01</span><span class="step-t"><strong>Record</strong> the exact Claude Code session: one prompt, complete icon-annotated feature generated</span></div>
+        <div class="step"><span class="step-n">02</span><span class="step-t">Post to HN: <strong>"Show HN: Icon system where your AI agent can choose icons (with reasoning)"</strong></span></div>
+        <div class="step"><span class="step-n">03</span><span class="step-t">Publish the <code>.mcp.json</code> config snippet openly. Virality through dotfiles sharing.</span></div>
+        <div class="step"><span class="step-n">04</span><span class="step-t">Follow up 2 weeks later with a full agent recipe blog post</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-stripe ps-am"></div>
+    <div style="padding-left:.75rem">
+      <div class="pillar-num">Campaign 03</div>
+      <div class="pillar-title">The Motion Reveal</div>
+      <div class="pillar-hook">"What happens when your icons wake up."</div>
+      <div class="pillar-body">A series of AI-generated or screen-recorded before/after videos. Generic static icon &rarr; Supericons animated equivalent. Use Kling or Sora to render a product interface coming alive. Post one video per fortnight on X. The narrative: "Your MVP does not need to look like an MVP." The CTA: Motion Lab access.</div>
+      <div class="steps" style="margin-top:.75rem">
+        <div class="step"><span class="step-n">01</span><span class="step-t">Create 5 short videos (15-30s): generic UI &rarr; Supericons UI. <strong>No voiceover needed.</strong></span></div>
+        <div class="step"><span class="step-n">02</span><span class="step-t">Post on X with caption: <strong>"This took 4 minutes to add with Supericons."</strong></span></div>
+        <div class="step"><span class="step-n">03</span><span class="step-t">Repurpose the best one as a Framer/Figma community showcase</span></div>
+        <div class="step"><span class="step-n">04</span><span class="step-t">Gate 3 of the 5 animations behind a free account &mdash; email capture</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 12: CALENDAR -->
+<section id="calendar">
+  <div class="sn">// 12 — 90-DAY EXECUTION CALENDAR</div>
+  <h2 class="sh">Week-by-Week: From Zero to Discovery Engine</h2>
+  <p class="sd">Phase 1 (Weeks 1-4): Build acquisition surface. Phase 2 (Weeks 5-8): Own high-intent content. Phase 3 (Weeks 9-12): Launch upgrade narrative. Every week produces at least one permanent SEO/discovery asset.</p>
+  <div class="cal-grid" style="margin-bottom:.5rem">
+    <div class="cal-hdr">Week 1</div><div class="cal-hdr">Week 2</div><div class="cal-hdr">Week 3</div>
+    <div class="cal-hdr">Week 4</div><div class="cal-hdr">Week 5</div><div class="cal-hdr">Week 6</div><div class="cal-hdr">Week 7+</div>
+  </div>
+  <div class="cal-grid">
+    <div class="cal-day"><div class="cal-ph ph1">Phase 1</div><strong style="color:var(--t);font-size:.7rem">Dashboard Nav 50</strong><br>Publish repo + landing page. Post r/webdev.</div>
+    <div class="cal-day"><div class="cal-ph ph1">Phase 1</div><strong style="color:var(--t);font-size:.7rem">Status Feedback 50</strong><br>Blog: "50 icons every SaaS app needs." Before/after UI shell.</div>
+    <div class="cal-day"><div class="cal-ph ph1">Phase 1</div><strong style="color:var(--t);font-size:.7rem">Ecommerce 50</strong><br>GitHub starter using all 3 kits. AI/agent usage tutorial.</div>
+    <div class="cal-day"><div class="cal-ph ph1">Phase 1</div><strong style="color:var(--t);font-size:.7rem">MCP Demo</strong><br>Claude Code session recording. HN post. Dotfiles config snippet.</div>
+    <div class="cal-day"><div class="cal-ph ph2">Phase 2</div><strong style="color:var(--t);font-size:.7rem">AI Agent Kit 50</strong><br>SEO page: "best icons for AI apps." Cursor Discord share.</div>
+    <div class="cal-day"><div class="cal-ph ph2">Phase 2</div><strong style="color:var(--t);font-size:.7rem">Data Charts 50</strong><br>Reddit r/SaaS visual thread. Co-occurrence data published.</div>
+    <div class="cal-day"><div class="cal-ph ph3">Phase 3</div><strong style="color:var(--t);font-size:.7rem">Motion Reveal</strong><br>5 before/after videos. Motion Lab CTA. Upgrade campaign live.</div>
+  </div>
+
+  <h3 style="font-size:.9rem;font-weight:700;color:var(--t);margin-top:2rem;margin-bottom:.75rem">The Upgrade Narrative (Phase 3 Messaging)</h3>
+  <div class="steps">
+    <div class="step"><span class="step-n">→</span><span class="step-t">Free pack &rarr; <strong>More categories</strong> (more build kits)</span></div>
+    <div class="step"><span class="step-n">→</span><span class="step-t">Free pack &rarr; <strong>Premium animated version</strong> (Motion Lab)</span></div>
+    <div class="step"><span class="step-n">→</span><span class="step-t">Free pack &rarr; <strong>Agent/MCP workflow</strong> (agentic tooling tier)</span></div>
+    <div class="step"><span class="step-n">→</span><span class="step-t">Free pack &rarr; <strong>Larger collection bundles</strong> (AI App Bundle, SaaS Dashboard Bundle)</span></div>
+  </div>
+  <div style="background:var(--bg-r);border:1px solid rgba(45,212,191,.2);border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;font-size:.9rem;color:var(--te);font-family:'Space Grotesk',sans-serif;font-weight:700">
+    "You used the free UI kit. Now make it feel like a product people remember."
+  </div>
+</section>
+
+<!-- SECTION 13: OFFER DESIGN -->
+<section id="offer">
+  <div class="sn">// 13 — OFFER DESIGN</div>
+  <h2 class="sh">Three Tiers. A Clear Ladder. No Dead Ends.</h2>
+  <p class="sd">The product ladder exists so every user has an obvious next step. The free layer is generous enough to be genuinely useful. The mid-ladder creates a natural bridge. The premium layer commands real pricing power because it cannot be replaced by any free library.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;padding:1.75rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--td);margin-bottom:.5rem">Free</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem;color:var(--t);margin-bottom:.75rem">Build Kits</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✓</span><span class="step-t">3-6 public 50-icon build kits</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Preview pages + starter snippets</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">React, Vue, Svelte exports</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">GitHub download + tokens.json</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">App shell starter layout</span></div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(45,212,191,.06),rgba(88,166,255,.06));border:1px solid rgba(45,212,191,.25);border-radius:14px;padding:1.75rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--te);margin-bottom:.5rem">Mid-Tier Bundle</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem;color:var(--t);margin-bottom:.75rem">Domain Bundles</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✓</span><span class="step-t">AI App Bundle (120+ icons)</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">SaaS Dashboard Bundle</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Commerce Bundle</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">One-time purchase, royalty-free</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Icon Manifest JSON included</span></div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(163,113,247,.07),rgba(244,114,182,.07));border:1px solid rgba(163,113,247,.3);border-radius:14px;padding:1.75rem">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pu);margin-bottom:.5rem">Premium</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem;color:var(--t);margin-bottom:.75rem">Pro Intelligence</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Premium animated collections</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Motion Lab full access</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">MCP agent tools (7 tools)</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Full Icon Manifest schema</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Collection API access</span></div>
+        <div class="step"><span class="step-n">✓</span><span class="step-t">Agentic AI Kit + Wave 2 packs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 14: PRODUCT ROADMAP -->
+<section id="roadmap">
+  <div class="sn">// 14 — PRODUCT ROADMAP</div>
+  <h2 class="sh">Four Phases. Each One Standalone. Together Unbeatable.</h2>
+  <p class="sd">The roadmap is structured so each phase delivers marketable, shippable value independently. Phase 1 launches in weeks. Phase 4 is the long-term moat.</p>
+
+  <table>
+    <thead><tr><th>Phase</th><th>Name</th><th>Deliverables</th><th>Marketing Unlock</th><th>Timeline</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Phase 1</strong></td>
+        <td><span class="tag t-te">Foundation</span></td>
+        <td>Icon Manifest JSON for Agentic AI Kit (40 icons). tokens.json for first 3 free build kits. Preview pages for Dashboard Nav 50, Status Feedback 50, Ecommerce 50.</td>
+        <td>"Supericons is the first icon library with AI-readable metadata." GitHub kit drops begin. Community posts launching.</td>
+        <td>Weeks 1-3</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 2</strong></td>
+        <td><span class="tag t-bl">Collections</span></td>
+        <td>8 intent-based collection landing pages on supericons.dev. 3 additional build kit releases. App Shell starter layouts. SEO pages for high-intent searches.</td>
+        <td>Human conversion: builder lands on one page, immediately knows which kit to buy. New organic search surface area per collection.</td>
+        <td>Weeks 4-7</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 3</strong></td>
+        <td><span class="tag t-pu">MCP Tools</span></td>
+        <td>7 new MCP tools live. get_collection_for_intent, get_icon_manifest, recommend_co_occurring, score_icon_candidates, explain_icon_choice, list_reliable_sources_for_domain, swap_to_more_coherent_family.</td>
+        <td>Agentic Demo campaign launches. HN post. Claude Code demo video. Viral MCP config snippet. "Icon system your AI agent understands."</td>
+        <td>Weeks 5-9</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 4</strong></td>
+        <td><span class="tag t-am">Intelligence</span></td>
+        <td>Co-occurrence graph (mined from GitHub production codebases). Design system affinity scores. Tri-cameral judgment engine. Taste staking voting system. Recommendation formula live.</td>
+        <td>The long-term moat. "We have 3 years of human + agent judgment data on which icons work for which jobs." That is not copy-able in a weekend.</td>
+        <td>Weeks 10-16</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 15: KPIS -->
+<section id="kpis" style="border-bottom:none">
+  <div class="sn">// 15 — KPIs &amp; SUCCESS METRICS</div>
+  <h2 class="sh">What to Track. When to Celebrate. When to Pivot.</h2>
+  <p class="sd">The key KPI is not raw traffic. It is qualified builders reaching the premium motion and agent workflow layer.</p>
+
+  <table>
+    <thead><tr><th>KPI</th><th>What It Measures</th><th>30-Day Target</th><th>90-Day Target</th></tr></thead>
+    <tbody>
+      <tr><td><strong>GitHub stars per kit</strong></td><td>Resonance of the free build kit positioning</td><td>50+ per kit</td><td>200+ per kit</td></tr>
+      <tr><td><strong>GitHub clones</strong></td><td>Actual usage, not vanity stars</td><td>100+ per kit</td><td>500+ per kit</td></tr>
+      <tr><td><strong>supericons.dev visits from GitHub</strong></td><td>Conversion from free asset to site</td><td>5% click-through</td><td>8% click-through</td></tr>
+      <tr><td><strong>MCP installs</strong></td><td>Agent-native adoption</td><td>+50 new</td><td>+300 new</td></tr>
+      <tr><td><strong>Collection page organic traffic</strong></td><td>SEO + GEO traction</td><td>200 sessions</td><td>2K sessions/page</td></tr>
+      <tr><td><strong>Branded search lift</strong></td><td>"supericons" search volume growth</td><td>Baseline set</td><td>+40% lift</td></tr>
+      <tr><td><strong>Free to paid conversion</strong></td><td>Revenue efficiency of the free layer</td><td>Track only</td><td>Target 3%+ CVR</td></tr>
+      <tr><td><strong>Email captures from kit previews</strong></td><td>Owned audience building</td><td>50+</td><td>500+</td></tr>
+      <tr><td><strong>get_collection_for_intent calls</strong></td><td>Agent tool adoption depth</td><td>Track only</td><td>1K+ calls/month</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert a-vision" style="margin-top:1.5rem">
+    <span class="alert-i">🏁</span>
+    <div><strong>The ultimate success condition:</strong> Supericons should not ask "How many people liked our icons?" It should ask: <em>"Who trusted this icon, for what job, under what conditions, with what confidence, and did reality prove them right?"</em> That question, answered at scale, is the beginning of a truly next-generation icon intelligence system. And it is the most defensible moat in the icon ecosystem.</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  // Scroll progress
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(window.scrollY/t*100)+'%';
+  });
+  // Active nav
+  const secs=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

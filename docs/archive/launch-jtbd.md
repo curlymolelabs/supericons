@@ -3,7 +3,7 @@
 This note is the repo-grounded launch tracker for Supericons.
 
 Scope note:
-- this started as a repo-grounded launch map and now also reflects live operator evidence captured on April 14, 2026
+- this started as a repo-grounded launch map and now also reflects live operator evidence captured on April 14-15, 2026
 - use this alongside [launch-checklist-status.md](./launch-checklist-status.md) when deciding what is actually left before ship
 - this is still a working note, not a substitute for the final release decision
 
@@ -17,6 +17,10 @@ Recently completed and now verified live:
 - cancellation-scheduled billing emails now send successfully and record idempotency rows
 - `current_period_end` repair is live and the cancellation email now shows the real end date
 - the live Stripe secret key was replaced and rechecked successfully through both portal and checkout
+- the public admin dashboard was removed from production
+- the admin workflow is now local-only at `http://localhost:5173/admin.html`
+- `admin-api` is restricted to localhost and the admin secret was rotated successfully
+- all pre-launch test users were removed from Supabase
 - `supericons-mcp@0.3.1` is published, `0.3.0` is deprecated, and a clean temp-folder install now starts correctly
 - the distinct live `motion-lab-session` `429` proof was captured and the normal threshold was restored
 
@@ -29,6 +33,10 @@ Product work that is now largely behind us:
 Immediate next step:
 - use the completed release packet for launch execution
 - treat the remaining items as post-launch follow-through unless a new blocker appears
+
+Launch blocker status:
+- no known launch blockers remain
+- the remaining work is uptime/monitoring choices, optional polish, or future cleanup consistency
 
 ## Why The Docs Work Happened
 
@@ -112,6 +120,7 @@ Tracked in:
 
 Current repo signal:
 - the auth implementation and hardening work appear substantially built
+- the admin surface is no longer public and now runs local-only against a localhost-restricted `admin-api`
 - the remaining launch work looks like cooldown, rate-limit, delivery, and policy verification rather than a new auth architecture pass
 
 Next concrete actions:
@@ -139,6 +148,7 @@ Next concrete actions:
 - keep the deployment note explicit: `create-portal` must stay deployed with `--no-verify-jwt`
 - optionally keep a short operator note for live product/price ownership and portal configuration
 - optionally note the Stripe secret-key owner/rotation process now that a live replacement was performed
+- treat one-time purchase guest-customer cleanup as a future consistency improvement, not a launch blocker
 
 Done when:
 - the remaining dashboard-side Stripe details are written down clearly enough for release and rollback handling
@@ -237,9 +247,17 @@ These should not take priority over launch completion:
 - symmetric CSS render / animated SVG `429` proofs
 - fail-open proof work already deferred by the Motion Lab hardening plan
 
+## Outstanding Non-Blockers
+
+The launch packet is effectively closed. The meaningful follow-through items are:
+
+1. optional uptime monitoring
+2. optional social preview / Search Console checks
+3. future Stripe customer-resolution cleanup for one-time purchase users
+
 ## Recommended Execution Order
 
-With domain, live deploy, Stripe, Railway converter verification, npm publish, cancellation-email verification, and the `motion-lab-session` proof complete, the launch packet is now effectively closed.
+With domain, live deploy, Stripe, Railway converter verification, npm publish, cancellation-email verification, the `motion-lab-session` proof, and local-only admin hardening complete, the launch packet is now effectively closed.
 
 Use the remaining time for:
 

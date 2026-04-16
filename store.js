@@ -3598,11 +3598,16 @@ function renderApiKeysPage() {
   const page = document.createElement('div');
   page.id = 'apiKeysView';
   page.className = 'dashboard-view';
-  const apiKeysSetupCopy = `
+  const apiKeysSetupCopy = canManageKeys
+    ? `
     <div class="api-keys__setup-copy">
-      <p class="dashboard-section__copy">Connect your MCP client (Cursor, Claude Code, Codex, or any MCP-capable agent) to your Supericons account with an API key.</p>
-      <p class="dashboard-section__copy dashboard-section__copy--muted">Free MCP works without a key. Keys unlock the premium collections and Pro workflow tools your account already has access to.</p>
+      <p class="dashboard-section__copy">Connect your coding agent (Cursor, Claude Code, Codex, or any MCP-capable agent) to Supericons MCP to access your premium icon collections or Pro workflow tools like Motion Lab and Converter.</p>
       <p class="dashboard-section__copy dashboard-section__copy--muted"><a href="/?view=docs#docs-quickstart">See the setup guide for where to place your key in each client.</a></p>
+    </div>`
+    : `
+    <div class="api-keys__setup-copy">
+      <p class="dashboard-section__copy">Free MCP works without a key.</p>
+      <p class="dashboard-section__copy dashboard-section__copy--muted">Purchase any premium collection or subscribe to Pro to use API keys for MCP access.</p>
     </div>`;
 
   page.innerHTML = `
@@ -3627,7 +3632,6 @@ function renderApiKeysPage() {
         </div>
         ${apiKeysSetupCopy}
         ${canManageKeys ? '' : `
-        <p class="dashboard-section__copy dashboard-section__copy--muted dashboard-section__copy--compact">API keys require a Pro subscription or at least one purchased collection. Keys carry the access your account already has.</p>
         <div class="api-keys__actions">
           <button class="dashboard-table__view" id="apiKeysBrowsePacksBtn">Browse Collections</button>
           <button class="dashboard-table__view" id="apiKeysPricingBtn">See Pricing</button>
@@ -3825,7 +3829,7 @@ async function fetchAndRenderApiKeys() {
     if (usageEl) usageEl.textContent = `${activeKeyCount} of ${API_KEY_LIMIT} active keys in use`;
     if (limitNoteEl) {
       if (!canCreateKeys) {
-        limitNoteEl.textContent = 'Free MCP works without a key. New keys become available once your account has Pro or at least one purchased collection.';
+        limitNoteEl.textContent = "You don't currently have access to API keys.";
       } else if (limitReached) {
         limitNoteEl.textContent = `You have reached the ${API_KEY_LIMIT}-key limit. Revoke one before creating another.`;
       } else if (revokedKeys.length > 0) {

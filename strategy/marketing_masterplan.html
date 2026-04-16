@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: Marketing Masterplan 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080c11;
+      --bg-surface: #0d1117;
+      --bg-raised: #161b22;
+      --bg-hover: #1c2330;
+      --border: #212938;
+      --border-subtle: #1a2030;
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      --text-faint: #484f58;
+      --accent-blue: #58a6ff;
+      --accent-purple: #a371f7;
+      --accent-green: #3fb950;
+      --accent-amber: #d29922;
+      --accent-red: #f85149;
+      --accent-teal: #39d353;
+      --accent-pink: #f778ba;
+      --glow-blue: rgba(88, 166, 255, 0.15);
+      --glow-purple: rgba(163, 113, 247, 0.15);
+      --glow-green: rgba(63, 185, 80, 0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ---- NOISE TEXTURE OVERLAY ---- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ---- SIDEBAR NAV ---- */
+    .nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 240px;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      padding: 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    .nav-section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 0.75rem 0.5rem 0.25rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 6px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-hover);
+      color: var(--text);
+    }
+
+    .nav-link.active {
+      background: var(--glow-blue);
+      color: var(--accent-blue);
+    }
+
+    .nav-link .nav-num {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-faint);
+      min-width: 1.2rem;
+    }
+
+    /* ---- MAIN CONTENT ---- */
+    .main {
+      margin-left: 240px;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---- HERO HEADER ---- */
+    .hero {
+      padding: 5rem 4rem 4rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: 30%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(163,113,247,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background: var(--glow-blue);
+      border: 1px solid rgba(88,166,255,0.2);
+      border-radius: 99px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .hero-meta-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hero-meta-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---- SECTIONS ---- */
+    .section {
+      padding: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--text-dim);
+      max-width: 680px;
+      line-height: 1.7;
+    }
+
+    /* ---- SIGNAL CARDS (insight cards) ---- */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .insight-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .insight-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .insight-card:hover::before { opacity: 1; }
+
+    .insight-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .insight-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .insight-body {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .insight-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.75rem;
+    }
+
+    .tag-blue { background: rgba(88,166,255,0.15); color: var(--accent-blue); }
+    .tag-purple { background: rgba(163,113,247,0.15); color: var(--accent-purple); }
+    .tag-green { background: rgba(63,185,80,0.15); color: var(--accent-green); }
+    .tag-amber { background: rgba(210,153,34,0.15); color: var(--accent-amber); }
+    .tag-red { background: rgba(248,81,73,0.15); color: var(--accent-red); }
+    .tag-pink { background: rgba(247,120,186,0.15); color: var(--accent-pink); }
+
+    /* ---- PILLARS ---- */
+    .pillar {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .pillar-accent.blue { background: var(--accent-blue); }
+    .pillar-accent.purple { background: var(--accent-purple); }
+    .pillar-accent.green { background: var(--accent-green); }
+    .pillar-accent.amber { background: var(--accent-amber); }
+    .pillar-accent.pink { background: var(--accent-pink); }
+
+    .pillar-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      padding-top: 0.25rem;
+      min-width: 2rem;
+    }
+
+    .pillar-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .pillar-hook {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .pillar-body {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ---- BLUEPRINT BLOCKS ---- */
+    .blueprint {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .blueprint-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .blueprint-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .blueprint-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .blueprint-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      min-width: 1.5rem;
+      padding-top: 0.15rem;
+    }
+
+    .step-text {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .step-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---- COPY VAULT (post templates) ---- */
+    .copy-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    .copy-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-raised);
+    }
+
+    .copy-block-platform {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .copy-block-type {
+      font-size: 0.7rem;
+      color: var(--text-faint);
+    }
+
+    .copy-block-body {
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      white-space: pre-wrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .copy-block-body em {
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    /* ---- CHANNEL MATRIX ---- */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .channel-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .channel-card:hover { border-color: var(--accent-purple); }
+
+    .channel-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .channel-priority {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .priority-s { background: rgba(248,81,73,0.2); color: #f85149; }
+    .priority-a { background: rgba(210,153,34,0.2); color: #d29922; }
+    .priority-b { background: rgba(63,185,80,0.2); color: #3fb950; }
+
+    .channel-tactic {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
+
+    .channel-metric {
+      font-size: 0.75rem;
+      color: var(--accent-blue);
+      margin-top: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* ---- VIDEO BRIEFS ---- */
+    .video-brief {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .video-brief-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .video-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .video-duration {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-blue);
+      background: var(--glow-blue);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .video-spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-spec {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    .video-spec-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      margin-bottom: 0.25rem;
+    }
+
+    .video-spec-value {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    .video-prompt {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent-green);
+      line-height: 1.6;
+    }
+
+    .video-prompt-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ---- 30-DAY CALENDAR ---- */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-header {
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      padding: 0.4rem;
+    }
+
+    .cal-day {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem;
+      min-height: 80px;
+      position: relative;
+      transition: border-color 0.15s;
+      cursor: default;
+    }
+
+    .cal-day:hover { border-color: var(--accent-blue); }
+
+    .cal-day-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-faint);
+      margin-bottom: 0.25rem;
+    }
+
+    .cal-day-task {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .cal-day-task strong {
+      color: var(--text);
+      display: block;
+      font-size: 0.65rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .cal-phase-badge {
+      display: inline-block;
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 0.05rem 0.3rem;
+      border-radius: 3px;
+      margin-bottom: 0.25rem;
+    }
+
+    .phase-tease { background: rgba(163,113,247,0.2); color: #a371f7; }
+    .phase-reveal { background: rgba(88,166,255,0.2); color: #58a6ff; }
+    .phase-intercept { background: rgba(63,185,80,0.2); color: #3fb950; }
+    .phase-agent { background: rgba(210,153,34,0.2); color: #d29922; }
+    .phase-compound { background: rgba(248,81,73,0.2); color: #f85149; }
+
+    /* ---- PRODUCT IMPROVEMENTS ---- */
+    .improvement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .improvement-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .improvement-item:hover { border-color: var(--accent-green); }
+
+    .improvement-priority {
+      font-size: 0.7rem;
+      font-weight: 800;
+      min-width: 2rem;
+      text-align: center;
+      padding-top: 0.1rem;
+    }
+
+    .improvement-content { flex: 1; }
+
+    .improvement-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .improvement-why {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .improvement-impact {
+      font-size: 0.75rem;
+      color: var(--accent-green);
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    /* ---- TABLES ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    tr:hover td { background: var(--bg-raised); }
+
+    /* ---- CODE SNIPPETS ---- */
+    .code-block {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-green);
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    .code-block .comment { color: var(--text-faint); }
+    .code-block .string { color: #a5d6ff; }
+    .code-block .keyword { color: #ff7b72; }
+
+    /* ---- DIVIDER ---- */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 2rem 0;
+    }
+
+    /* ---- ALERT BOXES ---- */
+    .alert {
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .alert-icon { flex-shrink: 0; font-size: 1rem; }
+
+    .alert-genius {
+      background: rgba(163,113,247,0.08);
+      border: 1px solid rgba(163,113,247,0.25);
+      color: #c9b6f5;
+    }
+
+    .alert-warning {
+      background: rgba(210,153,34,0.08);
+      border: 1px solid rgba(210,153,34,0.3);
+      color: #e5c56a;
+    }
+
+    .alert-insight {
+      background: rgba(88,166,255,0.08);
+      border: 1px solid rgba(88,166,255,0.25);
+      color: #a3c9ff;
+    }
+
+    .alert-action {
+      background: rgba(63,185,80,0.08);
+      border: 1px solid rgba(63,185,80,0.25);
+      color: #7fce8a;
+    }
+
+    /* ---- PROGRESS BAR ---- */
+    .progress-wrap {
+      background: var(--bg);
+      border-radius: 99px;
+      height: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    /* ---- SCROLL PROGRESS ---- */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      z-index: 200;
+      transition: width 0.1s;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .main { margin-left: 0; }
+      .hero, .section { padding: 2rem 1.5rem; }
+      .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+      .video-spec-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ---- SECTION LINKS ---- */
+    :target { scroll-margin-top: 2rem; }
+
+    a { color: var(--accent-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    ul, ol { padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; }
+    li strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- SIDEBAR -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    Supericons
+  </div>
+  <div class="nav-section-label">Overview</div>
+  <a class="nav-link" href="#opportunity"><span class="nav-num">00</span>The Opportunity</a>
+  <a class="nav-link" href="#positioning"><span class="nav-num">01</span>Positioning</a>
+  <div class="nav-section-label">Strategy</div>
+  <a class="nav-link" href="#pillars"><span class="nav-num">02</span>Campaign Pillars</a>
+  <a class="nav-link" href="#channels"><span class="nav-num">03</span>Channel Matrix</a>
+  <a class="nav-link" href="#copyVault"><span class="nav-num">04</span>Copy Vault</a>
+  <div class="nav-section-label">Execution</div>
+  <a class="nav-link" href="#videoEngine"><span class="nav-num">05</span>GenAI Video Engine</a>
+  <a class="nav-link" href="#calendar"><span class="nav-num">06</span>60-Day Calendar</a>
+  <a class="nav-link" href="#mcpBlueprint"><span class="nav-num">07</span>MCP Launch Blueprint</a>
+  <div class="nav-section-label">Product</div>
+  <a class="nav-link" href="#improvements"><span class="nav-num">08</span>Product Improvements</a>
+  <a class="nav-link" href="#kpis"><span class="nav-num">09</span>KPIs & Metrics</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span>⚡</span>
+      Supericons Marketing Masterplan &mdash; April 2026
+    </div>
+    <h1 class="hero-title">The world's only icon library<br>that <span>speaks developer</span></h1>
+    <p class="hero-subtitle">
+      A full-stack, zero-paid-media marketing system built on the most defensible insight in the April 2026 dev market:
+      nobody else has icons for <code style="background:rgba(88,166,255,0.1);color:var(--accent-blue);padding:0.1em 0.4em;border-radius:4px;font-size:0.85em">rag-pipeline</code>,
+      <code style="background:rgba(88,166,255,0.1);color:var(--accent-blue);padding:0.1em 0.4em;border-radius:4px;font-size:0.85em">vector-db</code>,
+      <code style="background:rgba(88,166,255,0.1);color:var(--accent-blue);padding:0.1em 0.4em;border-radius:4px;font-size:0.85em">orchestrator</code>,
+      or a 20K-icon library an AI agent can query at the prompt of a thought.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">3</span>
+        <span class="hero-meta-label">Campaign Pillars</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">9</span>
+        <span class="hero-meta-label">Channels</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">5</span>
+        <span class="hero-meta-label">GenAI Video Briefs</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">60</span>
+        <span class="hero-meta-label">Day Execution Plan</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">$0</span>
+        <span class="hero-meta-label">Paid Media Budget</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 0: THE OPPORTUNITY -->
+  <section class="section" id="opportunity">
+    <div class="section-header">
+      <div class="section-num">// 00 — SIGNAL INTELLIGENCE</div>
+      <h2 class="section-title">The Market Signals That Change Everything</h2>
+      <p class="section-desc">Before a single post is written, understand the April 2026 market conditions that make Supericons uniquely positioned to win without spending a cent on ads.</p>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">🤖</div>
+        <div class="insight-title">MCP Is the New Package Manager</div>
+        <div class="insight-body">Every serious developer now runs Cursor, Claude Code, or Windsurf. They install MCP servers the way they used to install npm packages. Supericons already has <code style="background:rgba(255,255,255,0.07);padding:0.1em 0.3em;border-radius:3px;font-size:0.9em">npx supericons-mcp</code>. This is the viral distribution vector.</div>
+        <span class="insight-tag tag-blue">Opportunity: S-Tier</span>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🧠</div>
+        <div class="insight-title">AI Products Ship Without Icons for AI Concepts</div>
+        <div class="insight-body">There is no Lucide icon for "RAG pipeline." No Phosphor icon for "orchestrator." No Tabler icon for "guardrail." Supericons Agentic AI Kit has 40 purpose-built icons for this exact vocabulary. Zero competition exists.</div>
+        <span class="insight-tag tag-purple">Blue Ocean</span>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">⚡</div>
+        <div class="insight-title">Speed Founders Are Allergic to Browser Tab-Switching</div>
+        <div class="insight-body">Founders using AI IDEs measure workflow in seconds lost. Opening a browser, searching for icons, downloading SVGs, pasting them breaks flow state. Supericons MCP eliminates ALL of that: one sentence to an agent.</div>
+        <span class="insight-tag tag-green">Workflow Fit</span>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📦</div>
+        <div class="insight-title">The "One Search" Consolidation Moment</div>
+        <div class="insight-body">Developers currently maintain 4-6 bookmark tabs for different icon libraries. Supericons' 20K+ icon aggregator + AI semantic search is the "I deleted all my other tabs" product. This story converts instantly with a demo.</div>
+        <span class="insight-tag tag-amber">Viral Hook</span>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🎬</div>
+        <div class="insight-title">GenAI Video Has Zero Credibility Barrier in 2026</div>
+        <div class="insight-body">In April 2026 the default assumption is that good video content was AI-assisted. The technical barrier is gone. A compelling 30-second screen recording + AI voiceover framed correctly can hit 100K views organically. The content IS the product demo.</div>
+        <span class="insight-tag tag-pink">Channel Ready</span>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🏔️</div>
+        <div class="insight-title">HackerNews "Show HN" Is Starving for Real Tools</div>
+        <div class="insight-body">HN's developer community rewards genuine, technical, opinionated builder stories. "I built the only icon library an AI agent can search directly from your IDE" is a Show HN that will front-page. Every front-page HN post generates 5-15K unique visitors.</div>
+        <span class="insight-tag tag-blue">Distribution Gold</span>
+      </div>
+    </div>
+
+    <div class="alert alert-genius">
+      <span class="alert-icon">✨</span>
+      <div><strong>The Core Insight:</strong> Supericons does not need to be pitched as "another icon library." It needs to be pitched as "the first icon tool built for developers who use AI to build." That repositioning changes every piece of copy, every channel, and every demo you create.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: POSITIONING -->
+  <section class="section" id="positioning">
+    <div class="section-header">
+      <div class="section-num">// 01 — POSITIONING ARCHITECTURE</div>
+      <h2 class="section-title">Before You Say Anything: Who You Are</h2>
+      <p class="section-desc">Positioning is not what you say about yourself. It is what fills the gap between your product and the next best alternative in the customer's mind.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Old Framing (Wrong)</th>
+          <th>New Framing (Right)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Category</strong></td>
+          <td>Icon library</td>
+          <td><strong>AI-native developer asset platform</strong></td>
+        </tr>
+        <tr>
+          <td><strong>For Who</strong></td>
+          <td>Designers and front-end devs</td>
+          <td><strong>AI builders who ship fast and think in agents</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Against</strong></td>
+          <td>Lucide, Phosphor, Tabler</td>
+          <td><strong>The friction of leaving your IDE</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Primary Proof</strong></td>
+          <td>20K+ icons</td>
+          <td><strong>The Agentic AI Kit: icons for RAG, agents, vector-db</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tagline</strong></td>
+          <td>"Search, customize, export"</td>
+          <td><strong>"Icons that speak the language of AI builders"</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Hero Social Proof</strong></td>
+          <td>Icon count</td>
+          <td><strong>Works with Claude Code, Cursor, Windsurf,</strong> Codex, Cline</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem">The 3 Personas: Write to These People, Not "Developers"</h3>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">🔨</div>
+        <div class="insight-title">The AI Builder (Primary)</div>
+        <div class="insight-body">Building a standalone AI product: an agent dashboard, an AI monitoring tool, a context-window inspector, a model-comparison UI. They desperately need icons that match the vocabulary of AI engineering. FontAwesome has no icon for "temperature" as a model parameter. Supericons does.</div>
+        <div style="margin-top:0.75rem">
+          <span class="insight-tag tag-purple">Channels: HN, X, Reddit, OpenClaw</span>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🚀</div>
+        <div class="insight-title">The Speed Founder (Secondary)</div>
+        <div class="insight-body">Building a SaaS with an AI copilot. Uses Cursor + Claude Code exclusively. Has the Supericons MCP running already. Every second their agent spends context-switching to a browser tab is a second they're not shipping. The MCP is their oxygen.</div>
+        <div style="margin-top:0.75rem">
+          <span class="insight-tag tag-blue">Channels: X, IndieHackers, VSCode</span>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🎨</div>
+        <div class="insight-title">The Dev-Rel Creator (Tertiary)</div>
+        <div class="insight-body">Building demo apps, API showcase projects, or open-source tools to promote a cloud provider or framework. Needs polished, dark-mode-ready UI out of the box. Premium animated packs make their demos look professional without a designer.</div>
+        <div style="margin-top:0.75rem">
+          <span class="insight-tag tag-green">Channels: YouTube, Dev.to, Conf talks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CAMPAIGN PILLARS -->
+  <section class="section" id="pillars">
+    <div class="section-header">
+      <div class="section-num">// 02 — CAMPAIGN PILLARS</div>
+      <h2 class="section-title">Three Campaigns Running in Parallel</h2>
+      <p class="section-desc">Each pillar owns a distinct awareness stage, a distinct persona, and a distinct distribution channel. Run all three simultaneously. They feed each other.</p>
+    </div>
+
+    <!-- PILLAR 1 -->
+    <div class="pillar">
+      <div class="pillar-accent blue"></div>
+      <div class="pillar-header">
+        <span class="pillar-num">P1</span>
+        <div>
+          <div class="pillar-title">"Your AI Product Is Missing Its Visual Language"</div>
+          <div class="pillar-hook">Hook: There are icons for file, folder, and settings. There are no icons for RAG pipeline, guardrail, or context window. Until now.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        This campaign drives awareness of the Agentic AI Kit specifically. It targets AI builders who are actively shipping products and who have discovered the pain of searching Google Images for "AI agent icon SVG" and finding nothing useful. The content demonstrates the gap, then fills it immediately.
+        <br><br>
+        <strong style="color:var(--text)">Primary content format:</strong> Before/after screenshots of AI product UIs. Side A: generic fallback icons (question marks, generic settings cogs). Side B: Agentic AI Kit icons that perfectly match the concept. The emotional response is immediate recognition.
+      </div>
+      <div class="blueprint">
+        <div class="blueprint-label">Executable Blueprint: Reddit / X / HN</div>
+        <div class="blueprint-steps">
+          <div class="blueprint-step">
+            <span class="step-num">01</span>
+            <div class="step-text">Take a screenshot of <strong>a public AI product UI</strong> (Langfuse, Flowise, n8n, or similar) that uses generic icons for AI-specific concepts.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">02</span>
+            <div class="step-text">Use Figma or SVGOMG to <strong>swap in the Agentic AI Kit icons</strong>: replace their "settings cog" with <code>orchestrator.svg</code>, their chain icon with <code>chain.svg</code>, their database icon with <code>vector-db.svg</code>.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">03</span>
+            <div class="step-text">Create a <strong>split-screen video</strong> (30 seconds, no voiceover, just music) showing the transformation. Open with "Before" text. Cut to "After" with icons named on screen.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">04</span>
+            <div class="step-text">Post to <strong>r/webdev</strong> with title: <em>"I gave [product name]'s UI a vocabulary. Before/after."</em> Never mention Supericons in the title. Let the comment section ask where the icons are from.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">05</span>
+            <div class="step-text">In the top comment (post immediately after): casually mention you used Supericons Agentic AI Kit because it was the only library with AI-specific icons. Include the link.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="pillar">
+      <div class="pillar-accent purple"></div>
+      <div class="pillar-header">
+        <span class="pillar-num">P2</span>
+        <div>
+          <div class="pillar-title">"Your AI Agent Can Find the Perfect Icon Without You"</div>
+          <div class="pillar-hook">Hook: One sentence to your coding agent. It searches 20,000 icons, picks the right one, and pastes the SVG directly into your component. You never left the file.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        This campaign is for the MCP. The audience is speed founders who use AI IDEs exclusively. The insight: they already have 5 MCP servers running. Adding one more is a tab-complete away. But they need to see the magic moment: their agent autonomously completing a UI task that previously required a manual browser workflow.
+        <br><br>
+        <strong style="color:var(--text)">Primary content format:</strong> Terminal + Editor screen recordings. No face cam. No marketing speak. Just a developer prompting their agent, watching it spin up, and then seeing the icon appear perfectly formatted in the codebase. The silence is the aesthetic.
+      </div>
+      <div class="blueprint">
+        <div class="blueprint-label">Executable Blueprint: X (Twitter) Thread</div>
+        <div class="blueprint-steps">
+          <div class="blueprint-step">
+            <span class="step-num">01</span>
+            <div class="step-text">Record a <strong>45-second screen recording</strong> in your IDE showing: adding <code>supericons-mcp</code> to your MCP config, asking your agent "find an icon for AI model temperature and add it to my dashboard sidebar", watching it use the MCP tools to search, retrieve, and paste the SVG.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">02</span>
+            <div class="step-text">Export as MP4 at 1920x1080, <strong>add subtle lo-fi ambient music</strong> (royalty-free from Pixabay). No voiceover. The code doing the work IS the hook.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">03</span>
+            <div class="step-text">Post to X with this exact frame: <br><em>"I just had my Claude Code agent find an animation icon, look up 3 semantic alternatives, pick the best one, and paste the SVG into my React component. Without me leaving the file. This MCP setup:"</em></div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">04</span>
+            <div class="step-text">Thread tweet 2: Show the <strong>3-line MCP config snippet</strong> that makes this work. Use a code screenshot (Carbon.now.sh for aesthetics).</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">05</span>
+            <div class="step-text"><strong>Reply loop strategy:</strong> tag @AnthropicAI @cursor_ai and ask their developer relations accounts: "Would love to know if others are using icon MCPs in their workflows." Watch the quote-tweet chain.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="pillar">
+      <div class="pillar-accent green"></div>
+      <div class="pillar-header">
+        <span class="pillar-num">P3</span>
+        <div>
+          <div class="pillar-title">"The Instant UI Credibility Machine"</div>
+          <div class="pillar-hook">Hook: You can tell in 2 seconds if a product was built by a developer with no designer. Here's how to fix that in 60 seconds using exactly zero design skills.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        This campaign is for the widest funnel: any developer building a SaaS who wants their product to look premium. It does not assume AI-native workflow. It sells the output (premium UI aesthetics) not the toolchain. The Motion Lab animated collections anchor this campaign.
+        <br><br>
+        <strong style="color:var(--text)">Primary content format:</strong> Ultra-short "glow-up" videos showing raw MVPs transformed by dropping in Supericons animated collections. Focus on the emotional reaction ("wait, that actually looks good now") rather than features.
+      </div>
+      <div class="blueprint">
+        <div class="blueprint-label">Executable Blueprint: Reddit / IndieHackers</div>
+        <div class="blueprint-steps">
+          <div class="blueprint-step">
+            <span class="step-num">01</span>
+            <div class="step-text">Post a <strong>"Roast My SaaS UI"</strong> thread in r/indiehackers or r/SaaS monthly. Invite developers to post their product screenshots. Respond to 5-10 of them with a quick Figma mockup swapping their icons for Supericons equivalents.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">02</span>
+            <div class="step-text">Each "roast response" becomes its own shareable asset. Screenshot the exchange, post to X as a thread: <em>"I did 10 free UI reviews today. Here's what I found:"</em>. The Supericons brand becomes synonymous with visual critique expertise.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">03</span>
+            <div class="step-text">Create a <strong>YouTube Short / TikTok</strong> montage: 10 before/after pairs, 1 second each, set to a punchy track. Title: "Developer UIs vs the same UI with Supericons." No face. Pure product.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: CHANNEL MATRIX -->
+  <section class="section" id="channels">
+    <div class="section-header">
+      <div class="section-num">// 03 — CHANNEL MATRIX</div>
+      <h2 class="section-title">Where to Show Up, and Exactly How</h2>
+      <p class="section-desc">Priority-ranked channels with the precise tactic for each. S-tier channels get 60% of effort. Do not dilute across all simultaneously at launch. Sequence matters.</p>
+    </div>
+
+    <div class="channel-grid">
+      <div class="channel-card">
+        <div class="channel-name">
+          X (Twitter)
+          <span class="channel-priority priority-s">S</span>
+        </div>
+        <div class="channel-tactic">
+          The primary virality engine. Dev Twitter amplifies technical demos faster than any other channel. Post 3x/week minimum. 1 screen recording, 1 opinion thread, 1 tip. Never post promotional copy. Every post is education or provocation.
+        </div>
+        <div class="channel-metric">Target: 1K genuine developer followers in 30 days</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          HackerNews Show HN
+          <span class="channel-priority priority-s">S</span>
+        </div>
+        <div class="channel-tactic">
+          <strong>One strategic Show HN post</strong>, posted Tuesday 8-9am ET (highest engagement window). Frame: "Show HN: I built the first icon library you can search from inside your AI IDE via MCP." The MCP + 20K icons story is genuinely novel.
+        </div>
+        <div class="channel-metric">Target: Front-page (25+ upvotes) = 5-15K unique visitors</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          Reddit
+          <span class="channel-priority priority-a">A</span>
+        </div>
+        <div class="channel-tactic">
+          Subreddits in order of priority: r/webdev, r/sveltejs, r/reactjs, r/selfhosted, r/SaaS, r/indiehackers. Post educational/demonstration content, never ads. The "Roast My UI" tactic (Pillar 3) is the highest-converting Reddit format for design tools.
+        </div>
+        <div class="channel-metric">Target: 2 posts/month per subreddit. 500+ upvotes as success bar</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          OpenClaw / Claude MCP Registries
+          <span class="channel-priority priority-a">A</span>
+        </div>
+        <div class="channel-tactic">
+          List the Supericons MCP in every agentic registry: OpenClaw hubs, Smithery, the Community MCP servers list on GitHub, LangChain MCP tools directory, Cursor's community MCP index. Write 1 tutorial per listing using the platform's preferred format.
+        </div>
+        <div class="channel-metric">Target: Listed on 8+ registries in Month 1</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          VS Code Marketplace / Open VSX
+          <span class="channel-priority priority-a">A</span>
+        </div>
+        <div class="channel-tactic">
+          Build a free VS Code extension: <strong>"Supericons: Icon Snippets"</strong>. Search icons by keyword from the command palette, insert SVG inline. This is a Trojan horse. Every developer who installs it sees the premium upsell. Extensions compound: installs drive rankings, rankings drive more installs.
+        </div>
+        <div class="channel-metric">Target: 500 installs in 60 days via Product Hunt + HN dual-post</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          Dev.to / Hashnode
+          <span class="channel-priority priority-b">B</span>
+        </div>
+        <div class="channel-tactic">
+          Long-form articles disguised as tutorials. Best-performing formats: "I tested all major icon libraries for AI apps in 2026 (here's what I found)", "How I saved 2 hours/week by connecting my icon library to my AI agent via MCP." Supericons wins every comparison because it's the only one with MCP + Agentic Kit.
+        </div>
+        <div class="channel-metric">Target: 1 article/week. Tag with #webdev #ai #tools</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          Discord Communities
+          <span class="channel-priority priority-b">B</span>
+        </div>
+        <div class="channel-tactic">
+          Target servers: Cursor Discord (show-and-tell channel), Svelte Discord (resources channel), Claude community, open-source AI builders servers. Share tools and tips genuinely. Never spam. Become a helpful regular, then mention Supericons contextually.
+        </div>
+        <div class="channel-metric">Target: 3-5 authentic contributions per community per week</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          Product Hunt
+          <span class="channel-priority priority-b">B</span>
+        </div>
+        <div class="channel-tactic">
+          Two launch events: (1) The Free Tool launch: "Supericons - 20K icons with MCP server for AI IDE users." (2) Agentic AI Kit launch: "The first icon pack designed for AI product vocabulary." Run both 4 weeks apart. First launch builds email list for second.
+        </div>
+        <div class="channel-metric">Target: Top 5 of the day on Product Hunt</div>
+      </div>
+      <div class="channel-card">
+        <div class="channel-name">
+          GitHub Awesome Lists
+          <span class="channel-priority priority-b">B</span>
+        </div>
+        <div class="channel-tactic">
+          Submit PRs to: awesome-mcp, awesome-design-tools, awesome-svelte-resources, awesome-react-components. These lists drive consistent, compounding SEO traffic. One listing on a popular Awesome list = 50-200 clicks/month forever.
+        </div>
+        <div class="channel-metric">Target: 5+ Awesome list placements in Month 1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: COPY VAULT -->
+  <section class="section" id="copyVault">
+    <div class="section-header">
+      <div class="section-num">// 04 — COPY VAULT</div>
+      <h2 class="section-title">Ready-to-Fire Messaging Templates</h2>
+      <p class="section-desc">Exact copy that can be adapted and deployed immediately. Specificity is what separates these from generic content. Do not water them down.</p>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem">X / Twitter Posts</h3>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">🐦 X (Twitter) &mdash; MCP Announcement</span>
+        <span class="copy-block-type">Hook Thread</span>
+      </div>
+      <div class="copy-block-body">I just asked my Cursor agent to "add an icon for AI model temperature to the settings sidebar."
+
+It:
+1. Used the Supericons MCP to search 20,000 icons semantically
+2. Found temperature.svg from the Agentic AI Kit
+3. Fetched the SVG
+4. Pasted it directly into my React component
+
+Time: 8 seconds. I didn't touch a browser.
+
+The config that makes this work: [screenshot]
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">🐦 X (Twitter) &mdash; Provocative Opinion</span>
+        <span class="copy-block-type">Engagement Bait (honest)</span>
+      </div>
+      <div class="copy-block-body">Hot take: if you're building an AI product in 2026 and your UI still uses a gear icon for "model settings" and a database cylinder for your "vector store" - your UX is lying to your users.
+
+There are now icons specifically designed for agent-loop, rag-pipeline, orchestrator, guardrail, context-window, and embedding.
+
+Your AI product deserves AI iconography.
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">🐦 X (Twitter) &mdash; "Build in Public" tip</span>
+        <span class="copy-block-type">Helpful Thread</span>
+      </div>
+      <div class="copy-block-body">3 things I stopped doing manually now that I set up the Supericons MCP:
+
+1. Googling for SVG icons mid-build
+2. Downloading zip files and hunting through 2000 options
+3. Resizing and reformatting SVG viewBoxes
+
+Just ask the agent. It returns the SVG ready-to-paste.
+
+npx supericons-mcp - add it to your MCP config once, never think about icons again.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem">HackerNews Show HN</h3>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">🟧 HackerNews &mdash; Show HN Post</span>
+        <span class="copy-block-type">Primary Launch Post</span>
+      </div>
+      <div class="copy-block-body">Show HN: Supericons - 20K+ icons with an MCP server for AI IDE workflows
+
+I built Supericons because I'm an AI-first developer and I kept running into two problems:
+
+1. Breaking out of my IDE to search for icons destroyed my flow state
+2. Nobody has icons for the concepts that actually exist in AI products: RAG pipelines, vector databases, guardrails, context windows, orchestrators
+
+So I built both solutions:
+
+Free: 20,000+ icons from 10 libraries (Lucide, Tabler, MingCute, etc.) with AI semantic search, framework component export (React/Vue/Svelte), and a one-command MCP server so AI agents can search and retrieve icons without you leaving your editor.
+
+Premium: The Agentic AI Kit - 40 SVG icons purpose-designed for AI product UIs. The only set I know of that has semantic icons for the vocabulary AI builders actually use.
+
+The MCP config is 5 lines. Works with Claude Code, Cursor, Cline, Windsurf, and Codex.
+
+Curious what you think - and especially whether anyone else has felt the "wrong icons for AI concepts" problem.
+
+Link: supericons.dev
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem">Reddit Posts</h3>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">📱 Reddit r/webdev &mdash; Before/After Post</span>
+        <span class="copy-block-type">Viral Demo Format</span>
+      </div>
+      <div class="copy-block-body">I redesigned a well-known open-source AI tool's sidebar using icons that actually match what the features do. [before/after image]
+
+The "before" uses a database cylinder for their vector store, a cog for their orchestrator settings, and a generic chat bubble for their agent conversation view.
+
+The "after" uses icons that, when you see them without labels, you already know what the feature is.
+
+<em>[In the first comment, within 5 minutes of posting]</em>
+
+Icons from the Agentic AI Kit on supericons.dev - it's the only library I found that has vector-db, orchestrator, rag-pipeline, context-window etc. as actual SVG icons with no dependencies. The site also has 20K free icons across 10 libraries if you need the basics.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem">Dev.to / Long-Form Article Titles (SEO-Optimized)</h3>
+
+    <div class="copy-block">
+      <div class="copy-block-header">
+        <span class="copy-block-platform">✍️ Dev.to / Hashnode</span>
+        <span class="copy-block-type">Article Angles (use one per month)</span>
+      </div>
+      <div class="copy-block-body">Angle 1:
+"I Tested Every Major Icon Library for AI Apps in 2026 - Here's the Only One That Has Icons for RAG Pipelines"
+
+Angle 2:
+"How I Stopped Opening Browser Tabs for Icons (My MCP Setup for Cursor Users)"
+
+Angle 3:
+"The Missing UI Vocabulary: Why Your AI Product Looks Off and How to Fix It in 10 Minutes"
+
+Angle 4:
+"Building a Context Window Inspector? Here Are the Icons You Didn't Know Existed"
+
+Angle 5:
+"Shipping an AI SaaS Alone: My 2026 Toolstack for Staying in Flow State"
+<em>(Supericons MCP is featured as a key tool)</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: GENAI VIDEO ENGINE -->
+  <section class="section" id="videoEngine">
+    <div class="section-header">
+      <div class="section-num">// 05 — GENAI VIDEO ENGINE</div>
+      <h2 class="section-title">Five Production-Ready Video Briefs</h2>
+      <p class="section-desc">Each brief contains the complete creative direction, AI tool recommendation, generation prompt, and post-production spec needed to execute from zero. No video editor required.</p>
+    </div>
+
+    <div class="alert alert-insight">
+      <span class="alert-icon">🎯</span>
+      <div><strong>Tool Recommendation Stack:</strong> Use Kling 2.0 or Sora for cinematic B-roll generation. Use screen recording (OBS + Cursor) for product demos. Use ElevenLabs for voiceover cloning ($0 if you clone your own voice). Use CapCut or DaVinci Resolve free tier for assembly. Total cost per video: $0-3.</div>
+    </div>
+
+    <!-- Video 1 -->
+    <div class="video-brief">
+      <div class="video-brief-header">
+        <div>
+          <span class="insight-tag tag-purple" style="margin-bottom:0.4rem;display:inline-block">Video 1</span>
+          <div class="video-title">The Awakening: "Your Interface Is Not Alive"</div>
+        </div>
+        <span class="video-duration">30 sec</span>
+      </div>
+      <div class="video-spec-grid">
+        <div class="video-spec">
+          <div class="video-spec-label">Format</div>
+          <div class="video-spec-value">GenAI cinematic + product overlay</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Platform</div>
+          <div class="video-spec-value">X, LinkedIn, YouTube Shorts</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Tone</div>
+          <div class="video-spec-value">Dramatic, technical-poetic</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">CTA</div>
+          <div class="video-spec-value">supericons.dev in final frame</div>
+        </div>
+      </div>
+      <div class="video-prompt-label">Kling / Sora Prompt</div>
+      <div class="video-prompt">"Cinematic close-up shot of a holographic computer interface in a dark server room. Monochrome grey flat icons glow faintly on the display. Cut slowly to the same interface but now the icons pulse with color, animate smoothly on hover, and emit subtle light trails. The contrast between the dead interface and the living one should feel like a heartbeat starting. Aspect ratio 16:9, moody dark blue-grey color grading, 8K render quality, cinematic depth of field."</div>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--text-dim)"><strong style="color:var(--text)">Post-production:</strong> Overlay real Supericons animated icon demos side-by-side with static icon library screenshots. No voiceover. Text caption only: "Static icons died in 2025. Your UI should feel alive." End card: supericons.dev</div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-brief">
+      <div class="video-brief-header">
+        <div>
+          <span class="insight-tag tag-blue" style="margin-bottom:0.4rem;display:inline-block">Video 2</span>
+          <div class="video-title">The Agent Demo: "8 Seconds From Prompt to Icon"</div>
+        </div>
+        <span class="video-duration">45 sec</span>
+      </div>
+      <div class="video-spec-grid">
+        <div class="video-spec">
+          <div class="video-spec-label">Format</div>
+          <div class="video-spec-value">Screen recording (real)</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Platform</div>
+          <div class="video-spec-value">X, Reddit, HN linked post</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Tone</div>
+          <div class="video-spec-value">Builder, quiet, technical</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">CTA</div>
+          <div class="video-spec-value">MCP config snippet at end</div>
+        </div>
+      </div>
+      <div class="video-prompt-label">Production Notes (no GenAI needed)</div>
+      <div class="video-prompt"># Record in Cursor or Claude Code
+1. Set terminal font to 16px minimum (legibility)
+2. Prompt: "add an icon for vector database to my sidebar. search supericons for the best one"
+3. Watch the agent call the MCP tools live - record everything
+4. Add subtle lo-fi beat under the recording (not too loud)
+5. Slow down the clip 15% for readability
+6. Add text overlay at key moments: "Agent calls search_icons tool" / "Fetches SVG" / "Pastes into component"
+7. Final frame: the icon in the live app preview, looking polished</div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-brief">
+      <div class="video-brief-header">
+        <div>
+          <span class="insight-tag tag-green" style="margin-bottom:0.4rem;display:inline-block">Video 3</span>
+          <div class="video-title">The Vocabulary Gap: "Icons Missing From Every Library"</div>
+        </div>
+        <span class="video-duration">60 sec</span>
+      </div>
+      <div class="video-spec-grid">
+        <div class="video-spec">
+          <div class="video-spec-label">Format</div>
+          <div class="video-spec-value">Kinetic typography + icon animation</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Platform</div>
+          <div class="video-spec-value">YouTube, LinkedIn</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Tone</div>
+          <div class="video-spec-value">Educational, clear, assertive</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">CTA</div>
+          <div class="video-spec-value">Agentic AI Kit purchase link</div>
+        </div>
+      </div>
+      <div class="video-prompt-label">Script Structure</div>
+      <div class="video-prompt">[0-5s] Black screen. One word appears: "Guardrail." Pause.
+[5-10s] Try to find it in Lucide. Empty search.
+[10-15s] Try Phosphor. Nothing.
+[15-20s] Try Tabler. Zero results.
+[20-25s] "This icon does not exist. Until now."
+[25-40s] Show guardrail.svg from Agentic Kit, animated, beautiful.
+[40-60s] Scroll through: orchestrator, rag-pipeline, vector-db, embedding, context-window. Each icon appears with its name. No words needed.</div>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="video-brief">
+      <div class="video-brief-header">
+        <div>
+          <span class="insight-tag tag-amber" style="margin-bottom:0.4rem;display:inline-block">Video 4</span>
+          <div class="video-title">The Evolution Reel: "Flat HTML to AI-Native UI"</div>
+        </div>
+        <span class="video-duration">90 sec</span>
+      </div>
+      <div class="video-spec-grid">
+        <div class="video-spec">
+          <div class="video-spec-label">Format</div>
+          <div class="video-spec-value">GenAI montage + screen overlay</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Platform</div>
+          <div class="video-spec-value">YouTube, TikTok</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Tone</div>
+          <div class="video-spec-value">Epic, nostalgic, forward-looking</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">CTA</div>
+          <div class="video-spec-value">Full product reveal</div>
+        </div>
+      </div>
+      <div class="video-prompt-label">Kling / Sora Prompt (B-roll segments)</div>
+      <div class="video-prompt">"A rapid-fire visual journey through 30 years of computer interface design. Open with grainy CRT monitor showing early HTML icons. Cut to Windows XP era flat icons. Cut to iPhone-era gradient icons. Cut to flat design era. Cut to 2020s dark-mode minimalism. Final cut: a stunning holographic display showing animated, context-aware icons responding fluidly to user intent. Each era 3-4 seconds. Cinematic grade, high contrast, documentary style."</div>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="video-brief">
+      <div class="video-brief-header">
+        <div>
+          <span class="insight-tag tag-pink" style="margin-bottom:0.4rem;display:inline-block">Video 5</span>
+          <div class="video-title">The Holographic Product: "The UI for the Next Decade"</div>
+        </div>
+        <span class="video-duration">20 sec</span>
+      </div>
+      <div class="video-spec-grid">
+        <div class="video-spec">
+          <div class="video-spec-label">Format</div>
+          <div class="video-spec-value">Pure GenAI cinematic (no screen recording)</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Platform</div>
+          <div class="video-spec-value">X teaser (pre-launch), Instagram Reels</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">Tone</div>
+          <div class="video-spec-value">Mysterious, premium, unbranded teaser</div>
+        </div>
+        <div class="video-spec">
+          <div class="video-spec-label">CTA</div>
+          <div class="video-spec-value">None (pure curiosity generation)</div>
+        </div>
+      </div>
+      <div class="video-prompt-label">Kling / Sora Prompt</div>
+      <div class="video-prompt">"A developer's hands hover over a dark glass surface. Glowing icon-like symbols float above the surface in 3D space, rotating gently. The icons pulse when touched, responding instantly. The symbols represent abstract AI concepts: chain links, neural patterns, flowing data. The room is dark except for the icon glow. Color palette: deep navy, electric blue, gentle purple. Ultra-cinematic, 8K, product reveal energy. No text, no brand visible. Pure aesthetic."</div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: 60-DAY CALENDAR -->
+  <section class="section" id="calendar">
+    <div class="section-header">
+      <div class="section-num">// 06 — 60-DAY EXECUTION CALENDAR</div>
+      <h2 class="section-title">Day-by-Day Launch Sequence</h2>
+      <p class="section-desc">Two phases: Activation (Days 1-30) and Compound Growth (Days 31-60). Each day has a single primary action. Do not try to multi-thread too early.</p>
+    </div>
+
+    <div class="insight-grid" style="margin-bottom:1.5rem">
+      <div class="insight-card" style="padding:1rem">
+        <span class="cal-phase-badge phase-tease">PHASE 1: TEASE</span>
+        <div style="font-size:0.82rem;color:var(--text-dim);margin-top:0.25rem">Days 1-7: Cryptic drops, no brand reveal, build curiosity</div>
+      </div>
+      <div class="insight-card" style="padding:1rem">
+        <span class="cal-phase-badge phase-reveal">PHASE 2: REVEAL</span>
+        <div style="font-size:0.82rem;color:var(--text-dim);margin-top:0.25rem">Days 8-14: Full brand reveal, Show HN, Product Hunt Round 1</div>
+      </div>
+      <div class="insight-card" style="padding:1rem">
+        <span class="cal-phase-badge phase-intercept">PHASE 3: INTERCEPT</span>
+        <div style="font-size:0.82rem;color:var(--text-dim);margin-top:0.25rem">Days 15-25: Developer communities, tutorials, Reddit campaigns</div>
+      </div>
+      <div class="insight-card" style="padding:1rem">
+        <span class="cal-phase-badge phase-agent">PHASE 4: AGENT</span>
+        <div style="font-size:0.82rem;color:var(--text-dim);margin-top:0.25rem">Days 26-35: MCP registries, Agentic Kit launch, VS Code extension</div>
+      </div>
+      <div class="insight-card" style="padding:1rem">
+        <span class="cal-phase-badge phase-compound">PHASE 5: COMPOUND</span>
+        <div style="font-size:0.82rem;color:var(--text-dim);margin-top:0.25rem">Days 36-60: Content engine, community compounding, Product Hunt Round 2</div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto">
+      <table style="min-width:700px">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Phase</th>
+            <th>Primary Action</th>
+            <th>Channel</th>
+            <th>Asset Needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><span class="cal-phase-badge phase-tease">TEASE</span></td><td>Post Video 5 (Holographic teaser, no branding)</td><td>X</td><td>GenAI video from brief</td></tr>
+          <tr><td>2</td><td><span class="cal-phase-badge phase-tease">TEASE</span></td><td>Submit to all 8 MCP registries (Smithery, OpenClaw, etc.)</td><td>Dev registries</td><td>Package listing copy</td></tr>
+          <tr><td>3</td><td><span class="cal-phase-badge phase-tease">TEASE</span></td><td>Post "The Vocabulary Gap" thread to X (icons for AI concepts)</td><td>X</td><td>Icon name list, screenshots</td></tr>
+          <tr><td>5</td><td><span class="cal-phase-badge phase-tease">TEASE</span></td><td>Join Cursor Discord + Claude community. Introduce self as AI builder</td><td>Discord</td><td>None</td></tr>
+          <tr><td>7</td><td><span class="cal-phase-badge phase-tease">TEASE</span></td><td>Post Video 3 (Vocabulary Gap reel) without product name in post</td><td>X, LinkedIn</td><td>Video 3 from brief</td></tr>
+          <tr><td>8</td><td><span class="cal-phase-badge phase-reveal">REVEAL</span></td><td><strong>Show HN launch</strong> (9am ET Tuesday). Full post from Copy Vault</td><td>HackerNews</td><td>MCP demo video, landing page live</td></tr>
+          <tr><td>9</td><td><span class="cal-phase-badge phase-reveal">REVEAL</span></td><td>Respond to every HN comment within 2 hours</td><td>HackerNews</td><td>Responses prepared in advance</td></tr>
+          <tr><td>10</td><td><span class="cal-phase-badge phase-reveal">REVEAL</span></td><td>X thread: "Show HN dropped today. Here is what I learned building an icon library with MCP"</td><td>X</td><td>HN screenshot + story</td></tr>
+          <tr><td>12</td><td><span class="cal-phase-badge phase-reveal">REVEAL</span></td><td>Product Hunt launch (Round 1 - free tool)</td><td>Product Hunt</td><td>PH assets: thumbnail, GIF, tagline</td></tr>
+          <tr><td>14</td><td><span class="cal-phase-badge phase-reveal">REVEAL</span></td><td>Post Video 2 (Agent Demo) with MCP config snippet</td><td>X, Reddit r/webdev</td><td>Screen recording + config screenshot</td></tr>
+          <tr><td>16</td><td><span class="cal-phase-badge phase-intercept">INTERCEPT</span></td><td>Publish Dev.to article: "Why I built an MCP for icons and why you might care"</td><td>Dev.to</td><td>1500-word article</td></tr>
+          <tr><td>18</td><td><span class="cal-phase-badge phase-intercept">INTERCEPT</span></td><td>Reddit "Roast My UI" post in r/indiehackers</td><td>Reddit</td><td>Before/after designs from Pillar 3</td></tr>
+          <tr><td>20</td><td><span class="cal-phase-badge phase-intercept">INTERCEPT</span></td><td>Post Video 1 (Awakening) on X + YouTube Shorts</td><td>X, YouTube</td><td>GenAI video from brief</td></tr>
+          <tr><td>22</td><td><span class="cal-phase-badge phase-intercept">INTERCEPT</span></td><td>Submit PRs to 5 Awesome Lists (awesome-mcp, awesome-design-tools, etc.)</td><td>GitHub</td><td>1-line description for each</td></tr>
+          <tr><td>25</td><td><span class="cal-phase-badge phase-intercept">INTERCEPT</span></td><td>Post r/reactjs: "Here's how I set up icons-on-demand in my AI IDE workflow"</td><td>Reddit</td><td>Tutorial post with screenshots</td></tr>
+          <tr><td>27</td><td><span class="cal-phase-badge phase-agent">AGENT</span></td><td><strong>Agentic AI Kit dedicated launch</strong> on X. Thread: "The 40 icons missing from every AI product"</td><td>X</td><td>All 40 icons in a single showcase image</td></tr>
+          <tr><td>30</td><td><span class="cal-phase-badge phase-agent">AGENT</span></td><td>Discord drops: post the agent demo video in Cursor + Claude community show-and-tell</td><td>Discord</td><td>Video 2</td></tr>
+          <tr><td>33</td><td><span class="cal-phase-badge phase-agent">AGENT</span></td><td>Launch VS Code extension "Supericons Icon Snippets" on Marketplace + Open VSX</td><td>VSCode Marketplace</td><td>Extension package + README</td></tr>
+          <tr><td>35</td><td><span class="cal-phase-badge phase-agent">AGENT</span></td><td>Product Hunt Round 2: "Agentic AI Kit - The first icon pack for AI builders"</td><td>Product Hunt</td><td>Kit-specific PH assets</td></tr>
+          <tr><td>40</td><td><span class="cal-phase-badge phase-compound">COMPOUND</span></td><td>Post Video 4 (Evolution Reel) as a YouTube video + TikTok cut</td><td>YouTube, TikTok</td><td>Assembled evolution reel</td></tr>
+          <tr><td>45</td><td><span class="cal-phase-badge phase-compound">COMPOUND</span></td><td>Publish second Dev.to article targeting "best icons for AI apps 2026" keyword</td><td>Dev.to / Hashnode</td><td>Comparison article</td></tr>
+          <tr><td>50</td><td><span class="cal-phase-badge phase-compound">COMPOUND</span></td><td>X thread: "60 days of building in public with no paid ads. Here's every number."</td><td>X</td><td>Analytics screenshots</td></tr>
+          <tr><td>55</td><td><span class="cal-phase-badge phase-compound">COMPOUND</span></td><td>Reach out to 5 AI-focused newsletter writers for inclusion (Feature Spotlight ask)</td><td>Email outreach</td><td>Press kit: logo, screenshots, one-liner</td></tr>
+          <tr><td>60</td><td><span class="cal-phase-badge phase-compound">COMPOUND</span></td><td>Retrospective post + announce next collection. Start the cycle again.</td><td>X, HN, Reddit</td><td>Analytics + roadmap teaser</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 7: MCP LAUNCH BLUEPRINT -->
+  <section class="section" id="mcpBlueprint">
+    <div class="section-header">
+      <div class="section-num">// 07 — MCP LAUNCH BLUEPRINT</div>
+      <h2 class="section-title">The Developer Distribution Cheat Code</h2>
+      <p class="section-desc">The Supericons MCP is not just a feature. It is a distribution engine. Every developer who adds it to their MCP config becomes a passive ambassador every time they demo their IDE setup.</p>
+    </div>
+
+    <div class="alert alert-genius">
+      <span class="alert-icon">🧠</span>
+      <div><strong>The Insight:</strong> MCP servers propagate through developer culture the same way Homebrew formulas, Raycast extensions, and VS Code themes did. One person tweets their dot files. Their followers clone them. The tool spreads without a single additional marketing action.</div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-accent blue"></div>
+      <div class="pillar-header">
+        <span class="pillar-num">1</span>
+        <div>
+          <div class="pillar-title">The "Dotfiles" Strategy</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        Developer culture has a tradition of sharing dotfiles, MCP configs, and IDE setups publicly on GitHub and X. A single popular developer sharing their <code>.cursor/mcp.json</code> with supericons-mcp included is worth 500 individual marketing posts.
+      </div>
+      <div class="blueprint">
+        <div class="blueprint-label">Action Plan</div>
+        <div class="blueprint-steps">
+          <div class="blueprint-step">
+            <span class="step-num">01</span>
+            <div class="step-text">Create a GitHub repo: <strong>supericons-dotfiles-starter</strong> containing a ready-to-use <code>.cursor/mcp.json</code>, <code>.claude/</code> config, and Windsurf config, all pre-loaded with the Supericons MCP. A developer clones it and gets a premium IDE setup instantly.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">02</span>
+            <div class="step-text">Post the repo to: <strong>r/cursor, r/ClaudeAI, r/cursor_ai</strong>. Title: "My full MCP starter kit for AI IDE workflows (Cursor/Claude Code/Windsurf). Supericons included."</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">03</span>
+            <div class="step-text">Make the README beautiful with a <strong>one-command installer</strong>. Every dev who stars the repo is a warm lead. Every dev who forks it is an ambassador.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-accent purple"></div>
+      <div class="pillar-header">
+        <span class="pillar-num">2</span>
+        <div>
+          <div class="pillar-title">The "First-Result" SEO Moat for MCP Searches</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        When a developer searches "icon MCP server", "icons for cursor AI", or "MCP svelte icons" - Supericons should be the first result. This requires targeted content and listing strategy.
+      </div>
+      <div class="blueprint">
+        <div class="blueprint-label">SEO Content Targets</div>
+        <div class="blueprint-steps">
+          <div class="blueprint-step">
+            <span class="step-num">01</span>
+            <div class="step-text">Write and publish: <strong>"icon MCP server"</strong> (Dev.to + README targeting this phrase)</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">02</span>
+            <div class="step-text">Optimize npm page for <code>supericons-mcp</code>: keywords everywhere, comprehensive README with demo video embedded, "Related keywords" section with MCP, Cursor, Claude Code.</div>
+          </div>
+          <div class="blueprint-step">
+            <span class="step-num">03</span>
+            <div class="step-text">Create a dedicated MCP landing page on supericons.dev (<code>/mcp</code>) optimized for "icon MCP" queries. Embed a live demo showing the tools being called.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: PRODUCT IMPROVEMENTS -->
+  <section class="section" id="improvements">
+    <div class="section-header">
+      <div class="section-num">// 08 — PRODUCT IMPROVEMENTS FOR APRIL 2026</div>
+      <h2 class="section-title">Make the Product Irresistible Before Marketing It</h2>
+      <p class="section-desc">Marketing amplifies what already exists. These improvements, if built before the marketing push, will dramatically increase conversion rate and word-of-mouth virality. Priority-ranked by impact vs. effort.</p>
+    </div>
+
+    <div class="improvement-list">
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-red)">P0</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Dedicated "/agentic-kit" Landing Page</div>
+          <div class="improvement-why">The Agentic AI Kit is the most unique and marketable product in the Supericons portfolio. It currently has no standalone landing page. Every marketing post that drives to supericons.dev loses the specific conversion hook. A dedicated page with the full 40-icon showcase, target use cases ("for AI dashboard builders"), and a clear purchase CTA would dramatically increase the conversion rate from marketing traffic.</div>
+          <div class="improvement-impact">Impact: High. Converts Pillar 1 marketing traffic directly. Takeover vector: weeks, not months.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-red)">P0</div>
+        <div class="improvement-content">
+          <div class="improvement-title">One-Click "Copy SVG" From Search Results Grid</div>
+          <div class="improvement-why">The single most virality-driving UX feature any icon tool can have. When a developer finds the perfect icon and can copy it as SVG with a single click (no panel, no sidebar, no modal), the time between discovery and usage is 1 second. That instant gratification is what triggers the "I have to share this" emotional response. Currently requires clicking into a panel. One-click copy on hover is the fix.</div>
+          <div class="improvement-impact">Impact: Extremely high. The mechanic that turns first-time visitors into advocates in the same session.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-amber)">P1</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Agentic Kit: Add 20 More Icons (AI Infra Vocabulary)</div>
+          <div class="improvement-why">The current 40 icons are excellent but missing key 2026 AI vocabulary: "hallucination", "evaluate", "trace", "feedback-loop", "ab-test", "benchmark", "model-card", "inference-endpoint", "batch-job", "realtime-stream". These terms are appearing in product UIs now. Being first with accurate iconography for these terms compounds the moat.</div>
+          <div class="improvement-impact">Impact: High. Expands marketing angles. Each new icon is a new content piece ("introducing: inference-endpoint icon").</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-amber)">P1</div>
+        <div class="improvement-content">
+          <div class="improvement-title">MCP: Add "get_icon_as_react_component" Tool</div>
+          <div class="improvement-why">Currently the MCP returns SVG strings. React is the dominant front-end framework for AI tools. A tool that returns a complete, typed React component (with size and color props) means the agent does zero post-processing. One MCP call = one complete paste-ready component. This is the difference between a 9/10 and a 10/10 developer experience.</div>
+          <div class="improvement-impact">Impact: High. Removes the last friction point from the MCP workflow. Demo-able in 3 seconds.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-amber)">P1</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Figma Plugin</div>
+          <div class="improvement-why">Designers are the people who influence which icon library a team adopts. Without a Figma plugin, Supericons is invisible to the designer persona entirely. A Figma plugin that includes the Agentic AI Kit would be the first Figma plugin specifically targeting AI product design. That novelty alone drives Figma Community downloads and word of mouth among product design teams at AI startups.</div>
+          <div class="improvement-impact">Impact: Opens an entirely new persona (designers) and Figma Community as a distribution channel.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-green)">P2</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Weekly "Icon Drop" Email Newsletter</div>
+          <div class="improvement-why">A weekly email that features 5 new or curated icons, a use-case example, and one MCP tip. Build the list via the free sign-up flow. This is the inbound marketing engine that guarantees a weekly touchpoint with every user without relying on algorithm changes. Even 1,000 subscribers turns into $MRR when the Agentic Kit is featured.</div>
+          <div class="improvement-impact">Impact: Medium-High. List building is the only marketing asset that compounds without platform risk.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-green)">P2</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Testimonial Wall From MCP Users</div>
+          <div class="improvement-why">Social proof from AI IDE users ("This MCP saved me 15 minutes per debugging session") is worth 10x generic designer testimonials for the Speed Founder persona. Outreach to the first 100 MCP users (via Supabase user list) asking for a short quote. Feature on landing page and in X posts. Developer testimonials in context ("Here's how @username uses it") are the most viral form of social proof.</div>
+          <div class="improvement-impact">Impact: Medium. Converts skeptical visitors who read reviews before purchasing.</div>
+        </div>
+      </div>
+
+      <div class="improvement-item">
+        <div class="improvement-priority" style="color:var(--accent-green)">P2</div>
+        <div class="improvement-content">
+          <div class="improvement-title">Free NPM Package for Free Icons</div>
+          <div class="improvement-why">A free <code>npm install supericons</code> package containing all 20K+ free icons as individually importable SVG components (tree-shakeable for React/Svelte/Vue) would put Supericons in <strong>every package.json</strong> of every project where it's used. The npm page becomes a daily discovery vector. Download count becomes social proof. The free package is the growth driver for the paid premium packs.</div>
+          <div class="improvement-impact">Impact: Medium-High. Long-term compounding distribution through npm ecosystem.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: KPIs -->
+  <section class="section" id="kpis">
+    <div class="section-header">
+      <div class="section-num">// 09 — KPIS & SUCCESS METRICS</div>
+      <h2 class="section-title">What "Working" Looks Like</h2>
+      <p class="section-desc">Every marketing action must be traceable to a metric. No vanity metrics. Only metrics that correlate to revenue and product-market fit.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Day 30 Target</th>
+          <th>Day 60 Target</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MCP installs (<code>npx supericons-mcp</code> weekly runs)</strong></td>
+          <td>200+ /week</td>
+          <td>800+ /week</td>
+          <td>Active developers, not passive visitors. Strongest product-market fit signal.</td>
+        </tr>
+        <tr>
+          <td><strong>Agentic AI Kit paid conversions</strong></td>
+          <td>15-25</td>
+          <td>60-100</td>
+          <td>Direct revenue. Validates the AI builder persona.</td>
+        </tr>
+        <tr>
+          <td><strong>HN Show HN score</strong></td>
+          <td>50+ points</td>
+          <td>N/A (one-shot)</td>
+          <td>Front-page = 5-15K visitors in 24 hours. The acquisition spike anchor.</td>
+        </tr>
+        <tr>
+          <td><strong>Free account sign-ups</strong></td>
+          <td>400+</td>
+          <td>1,500+</td>
+          <td>Email list asset. Converts into paid at 3-8% with nurture.</td>
+        </tr>
+        <tr>
+          <td><strong>X follower growth</strong></td>
+          <td>500 genuine devs</td>
+          <td>2,000+</td>
+          <td>Distribution for future launches without HN dependency.</td>
+        </tr>
+        <tr>
+          <td><strong>Reddit posts with 100+ upvotes</strong></td>
+          <td>2 posts</td>
+          <td>6 posts</td>
+          <td>SEO link equity + direct traffic. Reddit posts rank in Google.</td>
+        </tr>
+        <tr>
+          <td><strong>VS Code extension installs</strong></td>
+          <td>200+</td>
+          <td>1,000+</td>
+          <td>Passive ambient presence in every developer's IDE. Compounding brand.</td>
+        </tr>
+        <tr>
+          <td><strong>MCP registry listings</strong></td>
+          <td>8</td>
+          <td>12+</td>
+          <td>Discovery surface for agents-first developers. Counts never go down.</td>
+        </tr>
+        <tr>
+          <td><strong>Awesome List inclusions</strong></td>
+          <td>3</td>
+          <td>7+</td>
+          <td>Permanent SEO + recurring traffic from curated lists.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <div class="alert alert-action">
+      <span class="alert-icon">✅</span>
+      <div>
+        <strong>The Single Most Important First Action:</strong> Before executing any channel, create the dedicated <code>/agentic-kit</code> landing page and record Video 2 (the agent demo). These two assets are the foundation every other marketing action points back to. A compelling product demo and a dedicated conversion page are non-negotiable prerequisites. Build those first. Then trigger the calendar.
+      </div>
+    </div>
+
+    <div class="alert alert-warning">
+      <span class="alert-icon">⚠️</span>
+      <div>
+        <strong>Anti-Pattern Alert:</strong> Do not attempt to run all 9 channels simultaneously. The Supericons brand voice needs to be consistent and developer-authentic. Spreading across every channel at once produces generic content that converts poorly. Month 1: X + HN + Reddit only. Month 2: add Discord + Dev.to. Month 3: add YouTube + VSCode + Product Hunt Round 2. Sequence is the strategy.
+      </div>
+    </div>
+
+    <div style="padding:2rem;background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;margin-top:2rem;text-align:center">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">The North Star</div>
+      <div style="font-size:2rem;font-weight:900;font-family:'Space Grotesk',sans-serif;background:linear-gradient(135deg,#58a6ff,#a371f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem">"Supericons is the icon library that AI agents use."</div>
+      <div style="font-size:0.875rem;color:var(--text-dim);max-width:500px;margin:0 auto">When a developer hears this, they should immediately understand the product, want to try it, and have a story to tell someone else. If your marketing creates that sentence in someone's head, it is working.</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Scroll progress
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('scroll-progress');
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (window.scrollY / total) * 100;
+    el.style.width = progress + '%';
+  });
+
+  // Active nav link highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

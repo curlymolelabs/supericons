@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: Decision & Roadmap — Market v1 or Build v2?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+      --gbl:rgba(96,165,250,.1);--gpu:rgba(167,139,250,.1);--ggr:rgba(52,211,153,.1);--gte:rgba(45,212,191,.1);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--am),var(--or),var(--re));z-index:999;transition:width .1s}
+
+    /* SIDEBAR */
+    .sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.5rem .75rem;display:flex;flex-direction:column;gap:.1rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--am);box-shadow:0 0 10px var(--am);animation:sbp 2s infinite}
+    @keyframes sbp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.5}}
+    .sb-section{font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tf);padding:.7rem .5rem .2rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:6px;color:var(--td);text-decoration:none;font-size:.76rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{background:rgba(251,191,36,.1);color:var(--am)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.4rem}
+
+    /* MAIN */
+    .main{margin-left:230px}
+
+    /* HERO */
+    .hero{padding:5rem 4rem 4rem;border-bottom:1px solid var(--bd);position:relative;overflow:hidden;
+      background:radial-gradient(ellipse at 70% -5%,rgba(251,191,36,.06),transparent 50%),
+                 radial-gradient(ellipse at 20% 110%,rgba(248,113,113,.05),transparent 50%)}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--am);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:99px;padding:.2rem .8rem;margin-bottom:1.5rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,3.2vw,3.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--t);margin-bottom:1rem}
+    .hero-h1 .ga{background:linear-gradient(135deg,var(--am),var(--or));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-h1 .gb{background:linear-gradient(135deg,var(--gr),var(--te));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:.95rem;color:var(--td);max-width:680px;line-height:1.75;margin-bottom:2.5rem}
+
+    /* VERDICT BOX */
+    .verdict{background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(52,211,153,.06));border:2px solid rgba(251,191,36,.3);border-radius:16px;padding:2rem 2.25rem;margin-bottom:2rem}
+    .verdict-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--am);margin-bottom:.6rem}
+    .verdict-title{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;color:var(--t);line-height:1.2;margin-bottom:1rem}
+    .verdict-body{font-size:.92rem;color:var(--td);line-height:1.75;max-width:700px}
+    .verdict-rule{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--am);margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(251,191,36,.2)}
+
+    /* SECTIONS */
+    section{padding:4rem;border-bottom:1px solid var(--bd)}
+    .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);margin-bottom:.4rem}
+    .sh{font-family:'Space Grotesk',sans-serif;font-size:1.7rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.65rem}
+    .sd{color:var(--td);max-width:700px;line-height:1.7;font-size:.93rem;margin-bottom:2rem}
+
+    /* CARDS */
+    .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+    .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+    .card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem;transition:all .2s;position:relative;overflow:hidden}
+    .card:hover{transform:translateY(-2px);border-color:rgba(251,191,36,.3)}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:4px;margin-top:.4rem}
+    .t-am{background:rgba(251,191,36,.12);color:var(--am)}
+    .t-gr{background:rgba(52,211,153,.12);color:var(--gr)}
+    .t-bl{background:rgba(96,165,250,.12);color:var(--bl)}
+    .t-pu{background:rgba(167,139,250,.12);color:var(--pu)}
+    .t-re{background:rgba(248,113,113,.12);color:var(--re)}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+
+    /* ALERTS */
+    .alert{display:flex;gap:.75rem;align-items:flex-start;border-radius:10px;padding:1rem 1.25rem;margin:1rem 0;font-size:.87rem;line-height:1.65}
+    .alert-i{flex-shrink:0;font-size:1.1rem}
+    .a-am{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:#fde68a}
+    .a-gr{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:#a7f3d0}
+    .a-re{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:#fecaca}
+    .a-bl{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.25);color:#bfdbfe}
+    .a-pu{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25);color:#ddd6fe}
+
+    /* EVIDENCE BLOCKS */
+    .ev{background:var(--bg-s);border:1px solid var(--bd2);border-radius:10px;padding:1rem 1.25rem;margin:.5rem 0}
+    .ev-label{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.35rem}
+    .ev-text{font-size:.85rem;color:var(--td);line-height:1.6}
+    .ev-text strong{color:var(--t)}
+    .ev-source{font-size:.7rem;color:var(--tf);margin-top:.35rem;font-style:italic}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:.45rem}
+    .step{display:flex;gap:.75rem;align-items:flex-start}
+    .step-n{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf);min-width:1.6rem;padding-top:.18rem}
+    .step-t{font-size:.85rem;color:var(--td);line-height:1.5}
+    .step-t strong{color:var(--t)}
+
+    /* SPLIT / DECISION TABLE */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
+    .split-col{background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;padding:1.5rem}
+    .split-col-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.75rem}
+
+    /* TABLE */
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0}
+    th{text-align:left;padding:.7rem 1rem;background:var(--bg-r);border:1px solid var(--bd);color:var(--td);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+    td{padding:.7rem 1rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+    tr:hover td{background:var(--bg-r)}
+
+    /* RATIO VISUAL */
+    .ratio-bar{display:flex;height:48px;border-radius:10px;overflow:hidden;margin:1.25rem 0}
+    .ratio-seg{display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;transition:all .3s}
+    .ratio-label{font-size:.72rem;color:var(--td);margin-bottom:.35rem}
+
+    /* TIMELINE */
+    .timeline{display:flex;flex-direction:column;gap:0}
+    .tl-item{display:flex;gap:1.5rem;position:relative}
+    .tl-item:not(:last-child)::after{content:'';position:absolute;left:19px;top:40px;bottom:0;width:1px;background:var(--bd)}
+    .tl-dot{width:40px;height:40px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;z-index:1;background:var(--bg-r)}
+    .tl-content{flex:1;padding-bottom:2rem}
+    .tl-period{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--tf);margin-bottom:.25rem}
+    .tl-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--t);margin-bottom:.35rem}
+    .tl-body{font-size:.84rem;color:var(--td);line-height:1.65;margin-bottom:.75rem}
+    .tl-tasks{display:flex;flex-direction:column;gap:.3rem}
+    .tl-task{display:flex;gap:.6rem;align-items:flex-start;background:var(--bg-s);border-radius:6px;padding:.4rem .65rem}
+    .tl-task-tag{font-size:.6rem;font-weight:800;padding:.1rem .3rem;border-radius:3px;white-space:nowrap;margin-top:.05rem}
+    .tt-build{background:rgba(96,165,250,.15);color:var(--bl)}
+    .tt-market{background:rgba(251,191,36,.15);color:var(--am)}
+    .tt-both{background:rgba(52,211,153,.15);color:var(--gr)}
+    .tl-task-text{font-size:.8rem;color:var(--td);line-height:1.4}
+    .tl-task-text strong{color:var(--t)}
+
+    /* KPI TABLE */
+    .kpi-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:1px;background:var(--bd);border-radius:10px;overflow:hidden;margin:.5rem 0}
+    .kpi-cell{background:var(--bg-r);padding:.65rem .9rem;font-size:.82rem;color:var(--td)}
+    .kpi-cell:first-child{color:var(--t);font-weight:600}
+    .kpi-header{background:var(--bg-s);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tf)}
+
+    /* DIVIDER */
+    hr.div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);border:none;margin:2rem 0}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      section,.hero{padding:2rem 1.25rem}
+      .split{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Supericons Decision</div>
+  <div class="sb-section">The Decision</div>
+  <a class="sb-link" href="#verdict"><span class="sb-n">01</span>The Verdict</a>
+  <a class="sb-link" href="#evidence"><span class="sb-n">02</span>Evidence Base</a>
+  <a class="sb-link" href="#falsedichotomy"><span class="sb-n">03</span>The False Dichotomy</a>
+  <a class="sb-link" href="#v1assets"><span class="sb-n">04</span>What v1 Has Now</a>
+  <div class="sb-section">The Plan</div>
+  <a class="sb-link" href="#ratio"><span class="sb-n">05</span>Effort Allocation</a>
+  <a class="sb-link" href="#timeline"><span class="sb-n">06</span>12-Week Timeline</a>
+  <a class="sb-link" href="#v2scope"><span class="sb-n">07</span>v2 Scope & Priority</a>
+  <a class="sb-link" href="#marketing"><span class="sb-n">08</span>Marketing Moves Now</a>
+  <div class="sb-section">Execution</div>
+  <a class="sb-link" href="#week1"><span class="sb-n">09</span>Week 1 Actions</a>
+  <a class="sb-link" href="#kpis"><span class="sb-n">10</span>Decision KPIs</a>
+  <a class="sb-link" href="#risks"><span class="sb-n">11</span>Risks & Pivots</a>
+</nav>
+
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">⚖️ Decision & Roadmap — April 2026</div>
+  <h1 class="hero-h1">
+    <span class="ga">Market v1</span> or<br>
+    <span class="gb">Build v2?</span>
+  </h1>
+  <p class="hero-sub">You have just shipped Supericons v1. You have a 20K+ icon library, animated collections, a working MCP, Motion Lab, the world's only agentic AI icon vocabulary, and a full strategy corpus. You are also building v2. This document answers: what do you do right now, in what order, with what allocation, on what timeline.</p>
+
+  <div class="verdict">
+    <div class="verdict-label">The Decision</div>
+    <div class="verdict-title">Do both. In a specific ratio. Starting today.</div>
+    <div class="verdict-body">The question "market v1 or build v2?" is a false binary. The correct answer is a sequenced 70/30 split with a non-obvious insight at the core: the most marketable parts of Supericons are the same things that need to be built for v2. Building in public IS marketing. Every GitHub build kit is a marketing asset AND a product deliverable. Every Icon Manifest schema is a distribution mechanism AND a v2 feature. The work doubles as the campaign.</div>
+    <div class="verdict-rule">Rule: Never pause either marketing or building. The two reinforce each other. Pausing one starves the other.</div>
+  </div>
+</div>
+
+<!-- SECTION 1: VERDICT -->
+<section id="verdict">
+  <div class="sn">// 01 — THE VERDICT IN FULL</div>
+  <h2 class="sh">Why You Cannot Wait on Marketing</h2>
+  <p class="sd">Five strategic facts from the evidence across all strategy documents make the answer clear.</p>
+
+  <div class="ev">
+    <div class="ev-label">Fact 1: Marketing lead time is long, compounding is slow to start</div>
+    <div class="ev-text"><strong>GitHub stars, SEO rankings, and LLM citation accumulate over months, not days.</strong> A GitHub build kit published today takes 4-8 weeks to show up in search, citations, and developer conversations. Every week you wait on marketing is a week of compounding lost. A seed planted in week 1 is producing by week 8. A seed planted in week 8 produces nothing by week 12.</div>
+    <div class="ev-source">Source: GitHub growth loop rationale, supericons-marketing-proposal-2026.md</div>
+  </div>
+
+  <div class="ev">
+    <div class="ev-label">Fact 2: v1 already has category-defining unique value that no competitor has</div>
+    <div class="ev-text">The Agentic AI Kit contains <strong>the only icons in the world</strong> for RAG pipeline, vector-db, guardrail, orchestrator, temperature, token-cost, embedding. Zero other libraries (Font Awesome 76.5k, Lucide 22.1k, Tabler 20.6k) have them. This is a blue ocean. The product is ready to be discovered. Waiting to market it is actively giving competitors time to fill the gap.</div>
+    <div class="ev-source">Source: GitHub icon ecosystem research, icon_curation_design.html</div>
+  </div>
+
+  <div class="ev">
+    <div class="ev-label">Fact 3: v2's best features are also the best marketing assets</div>
+    <div class="ev-text">The Icon Manifest Schema, intent-based collections, and GitHub build kits are all v2 product deliverables AND the primary marketing distribution artifacts. Building them in public (GitHub) is the marketing. This means <strong>every hour spent on v2 features can simultaneously generate marketing traction</strong> if framed and shipped correctly.</div>
+    <div class="ev-source">Source: supericons-ultimate-blueprint-2026.md, distribution engine section</div>
+  </div>
+
+  <div class="ev">
+    <div class="ev-label">Fact 4: The MCP is a live distribution channel right now</div>
+    <div class="ev-text">icon-mcp and Icons8 MCP already exist and have traction. <strong>MCP registries are growing rapidly.</strong> The Supericons MCP is already built. Publishing to Claude's tool directory, Cursor's extension hub, and MCP registries takes hours not weeks. Every week the MCP sits undiscovered in registries is free distribution being left unclaimed.</div>
+    <div class="ev-source">Source: genai_marketing_plan.md, supericons-marketing-proposal-2026.md, business_evaluation.md</div>
+  </div>
+
+  <div class="ev">
+    <div class="ev-label">Fact 5: v2 will be better received if there is already an audience</div>
+    <div class="ev-text"><strong>Product launches to existing audiences convert 10-20x better than cold launches.</strong> Every GitHub star, email capture, MCP install, and Reddit upvote accumulated now is a warm audience for v2. Building v2 in silence and launching blind is the highest-risk approach. Building v2 in public while accumulating discoverers is the lowest-risk, highest-compound approach.</div>
+    <div class="ev-source">Source: genai_marketing_plan.md, business_evaluation.md SOM/SAM/TAM section</div>
+  </div>
+</section>
+
+<!-- SECTION 2: EVIDENCE -->
+<section id="evidence">
+  <div class="sn">// 02 — EVIDENCE BASE (SYNTHESIZED FROM ALL STRATEGY DOCS)</div>
+  <h2 class="sh">What the Full Strategy Corpus Confirms</h2>
+  <p class="sd">Reading across all 13 strategy documents, here is what every single one agrees on:</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--am);margin-bottom:.5rem">business_evaluation.md</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">Zero marginal distribution cost.</strong> Digital asset. Near-zero incremental cost to publish a GitHub kit or post a Reddit thread. Every marketing action has asymmetric upside vs effort. The evaluation explicitly identifies VS Code Marketplace, OpenClaw Registries, and GenAI Dev Twitter as channels that require zero ad spend.</div>
+      <span class="tag t-am">Market immediately</span>
+    </div>
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);margin-bottom:.5rem">genai_marketing_plan.md</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">The 30-day launch sequence is fully designed and ready to execute.</strong> Day 1-5 tease, Day 6-10 revelation, Day 11-20 developer intercept, Day 21-30 agent integration. This plan requires no new product features. It works with v1 today. Delaying execution delays compound growth.</div>
+      <span class="tag t-gr">Execute now with v1</span>
+    </div>
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bl);margin-bottom:.5rem">supericons-marketing-proposal-2026.md</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">First 6 build kit names and contents are already decided.</strong> Dashboard Navigation 50, Status Feedback 50, Ecommerce Essentials 50, AI Agent UI 50, Data Charts 50, Auth and Security 50. Status Feedback 50 is already a production Supericons collection. This is 1 kit away from being ready to publish on GitHub right now.</div>
+      <span class="tag t-bl">1 action away</span>
+    </div>
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pu);margin-bottom:.5rem">icon_curation_system.md</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">The Icon Manifest Schema is fully designed.</strong> Every field is specified. This is a v2 build task that also becomes a marketing artifact the moment it is published. Build it and ship the spec publicly — developers will share it, agents will cite it, and competitors cannot copy the data inside it quickly.</div>
+      <span class="tag t-pu">Build = market</span>
+    </div>
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--or);margin-bottom:.5rem">supericons-ultimate-blueprint-2026.md</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">The category to create is "icon intelligence platform."</strong> No other product occupies this category yet. The window to become the category creator is open now. Category creators who move first capture 60-80% of eventual market share. Waiting cedes first-mover advantage to whoever reads the same GitHub signals.</div>
+      <span class="tag t-or">Category clock is ticking</span>
+    </div>
+    <div class="card">
+      <div style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--te);margin-bottom:.5rem">marketing_masterplan.html</div>
+      <div style="font-size:.86rem;color:var(--td);line-height:1.65"><strong style="color:var(--t)">The 60-day Zero-CAC marketing calendar is fully built.</strong> Every week has a specific action, a specific platform, a specific asset. It requires no budget. It requires only execution time. The masterplan also identifies that the Agentic AI Kit is the marketing crown jewel — positioning Supericons as the world's only AI vocabulary icon system.</div>
+      <span class="tag t-te">Calendar ready, just execute</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: FALSE DICHOTOMY -->
+<section id="falsedichotomy">
+  <div class="sn">// 03 — THE FALSE DICHOTOMY</div>
+  <h2 class="sh">Why "Market v1 OR Build v2" Is the Wrong Frame</h2>
+  <p class="sd">The question assumes marketing and building are separate, competing activities. They are not, for Supericons specifically. Here is the matrix:</p>
+
+  <table>
+    <thead>
+      <tr><th>Activity</th><th>Is It Marketing?</th><th>Is It v2 Building?</th><th>Classification</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Publish Dashboard Nav 50 as a GitHub build kit</strong></td><td>Yes. GitHub stars, SEO, LLM citations, developer sharing.</td><td>Yes. The tokens.json and preview.html are v2 distribution infrastructure.</td><td><span class="tag t-gr">Both</span></td></tr>
+      <tr><td><strong>Write Icon Manifest JSON for Agentic AI Kit</strong></td><td>Yes. Publish the schema publicly; it gets shared by AI developers immediately.</td><td>Yes. This is Phase 1 of the v2 curation system.</td><td><span class="tag t-gr">Both</span></td></tr>
+      <tr><td><strong>Post "Agentic Demo" MCP screen recording</strong></td><td>Yes. HN post, Reddit share, X thread.</td><td>Partially. Validates MCP tool design and surfaces rough edges for v2 improvement.</td><td><span class="tag t-am">Mostly market</span></td></tr>
+      <tr><td><strong>Build get_collection_for_intent MCP tool</strong></td><td>Yes. The tool itself becomes the marketing demo.</td><td>Yes. Core v2 MCP feature.</td><td><span class="tag t-gr">Both</span></td></tr>
+      <tr><td><strong>Write SEO landing pages per collection</strong></td><td>Yes. Organic search surface.</td><td>Partially. These pages become the collection UI in v2.</td><td><span class="tag t-gr">Both</span></td></tr>
+      <tr><td><strong>Build Judgment Engine / tri-cameral voting</strong></td><td>No. This is deep product architecture, not visible to early users.</td><td>Yes. Phase 4 v2 feature.</td><td><span class="tag t-bl">Pure v2</span></td></tr>
+      <tr><td><strong>Build co-occurrence graph from GitHub mining</strong></td><td>No. Backend intelligence, not a public artifact yet.</td><td>Yes. Phase 4 v2 feature.</td><td><span class="tag t-bl">Pure v2</span></td></tr>
+      <tr><td><strong>GenAI before/after motion videos</strong></td><td>Yes. X, Reddit, Framer community shares.</td><td>No. Pure content production.</td><td><span class="tag t-am">Pure market</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert a-gr">
+    <span class="alert-i">💡</span>
+    <div><strong>The insight:</strong> Phases 1 and 2 of the v2 roadmap (Icon Manifests, Collections, Build Kits, MCP tools) are simultaneously the highest-leverage marketing assets. Reframing: when you work on v2 Phases 1-2, label it "marketing." When you work on v2 Phases 3-4 (Judgment Engine, co-occurrence graph), label it "building." This determines sequencing, not an either/or choice.</div>
+  </div>
+</section>
+
+<!-- SECTION 4: WHAT V1 HAS -->
+<section id="v1assets">
+  <div class="sn">// 04 — WHAT v1 HAS RIGHT NOW</div>
+  <h2 class="sh">Supericons v1: An Honest Asset Audit</h2>
+  <p class="sd">Before deciding what to build or market, confirm exactly what is already in production and ready to be marketed today — no changes required.</p>
+
+  <div class="grid3">
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <span class="tag t-gr" style="margin:0 0 .5rem 0">Ready Now</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">20,000+ Icon Library</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Full cross-library search. Semantic search bar already built. The discovery layer is live. This is marketable today as "the fastest way to find the right icon across every major library."</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <span class="tag t-gr" style="margin:0 0 .5rem 0">Ready Now</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Agentic AI Kit (40 icons)</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">The world's only icon vocabulary for AI product UIs: rag-pipeline, vector-db, guardrail, orchestrator, temperature, token-cost, embedding. Zero competitor has these. This is a category-defining asset sitting undiscovered.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <span class="tag t-gr" style="margin:0 0 .5rem 0">Ready Now</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Motion Lab MCP</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">A working, production MCP with tools agents can call right now. This is the primary distribution mechanism for the AI builder audience and it is live. It just needs to be discovered.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <span class="tag t-gr" style="margin:0 0 .5rem 0">Ready Now</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Premium Animated Collections</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">CSS-only animated icons. Zero JS dependency. The Motion Lab premium tier. Before/after demo material is sitting unused. One AI video showing static vs animated is the campaign.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gr)">
+      <span class="tag t-gr" style="margin:0 0 .5rem 0">Ready Now</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Status Feedback 50 Pack</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Already a production collection. Already 50 icons. This is 80% of a publishable GitHub build kit today. Adding tokens.json, usage-map.md, and a preview.html takes one afternoon.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--am)">
+      <span class="tag t-am" style="margin:0 0 .5rem 0">Needs 1-2 days</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Dashboard Navigation 50</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Needs curation + packaging (tokens.json, preview page, framework components). Curating 50 icons from Lucide + existing library takes 1 day. This becomes the first GitHub kit drop.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--re)">
+      <span class="tag t-re" style="margin:0 0 .5rem 0">Not Yet Built</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Icon Manifest Schema</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Fully designed in icon_curation_system.md. Not yet implemented as actual JSON files. This is a v2 Phase 1 build task. When shipped, it doubles as a massive marketing artifact.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--re)">
+      <span class="tag t-re" style="margin:0 0 .5rem 0">Not Yet Built</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">7 New MCP Tools</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">get_collection_for_intent, get_icon_manifest, recommend_co_occurring, and 4 more. Fully specified. Not implemented. These are the agentic tooling that make the HN demo compelling.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--re)">
+      <span class="tag t-re" style="margin:0 0 .5rem 0">Not Yet Built</span>
+      <div style="font-weight:700;color:var(--t);font-size:.9rem;margin-bottom:.3rem">Intent Collection Pages</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">8 landing pages on supericons.dev for the intent-based collections. These are the SEO surface area and the product upgrade path for free kit users. A v2 product + marketing asset.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: RATIO -->
+<section id="ratio">
+  <div class="sn">// 05 — EFFORT ALLOCATION</div>
+  <h2 class="sh">The 70/30 Rule</h2>
+  <p class="sd">Weekly effort should split between building v2 and marketing v1. The ratio is not fixed — it shifts with phase. Here is the governing logic and the specific weekly allocation.</p>
+
+  <div class="alert a-am">
+    <span class="alert-i">⚡</span>
+    <div><strong>The core allocation rule:</strong> 70% of weekly effort goes to product/build work. 30% goes to marketing actions. This ratio holds for the first 8 weeks. After week 8, if marketing is working (GitHub stars growing, MCP installs climbing, SEO showing impressions), shift to 60/40 for weeks 9-12 to compound the distribution surface.</div>
+  </div>
+
+  <div style="margin:1.5rem 0">
+    <div class="ratio-label">Weeks 1-4: Foundation Phase — 70% Build, 30% Market</div>
+    <div class="ratio-bar">
+      <div class="ratio-seg" style="width:70%;background:linear-gradient(135deg,var(--bl),var(--pu));color:white">70% — Build v2 Phase 1+2</div>
+      <div class="ratio-seg" style="width:30%;background:linear-gradient(135deg,var(--am),var(--or));color:#1a1a1a">30% — Market</div>
+    </div>
+    <div class="ratio-label">Weeks 5-8: Amplification Phase — 65% Build, 35% Market</div>
+    <div class="ratio-bar">
+      <div class="ratio-seg" style="width:65%;background:linear-gradient(135deg,var(--bl),var(--pu));color:white">65% — Build v2 Phase 2+3</div>
+      <div class="ratio-seg" style="width:35%;background:linear-gradient(135deg,var(--am),var(--or));color:#1a1a1a">35% — Market</div>
+    </div>
+    <div class="ratio-label">Weeks 9-12: Compound Phase — 60% Build, 40% Market</div>
+    <div class="ratio-bar">
+      <div class="ratio-seg" style="width:60%;background:linear-gradient(135deg,var(--bl),var(--pu));color:white">60% — Build v2 Phase 3+4</div>
+      <div class="ratio-seg" style="width:40%;background:linear-gradient(135deg,var(--am),var(--or));color:#1a1a1a">40% — Market/compound</div>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="split-col" style="border-left:3px solid var(--bl)">
+      <div class="split-col-title" style="color:var(--bl)">Build Bucket (70%) — What to Build</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">B1</span><span class="step-t"><strong>Icon Manifest JSON</strong> for the 40 Agentic AI Kit icons (Phase 1)</span></div>
+        <div class="step"><span class="step-n">B2</span><span class="step-t"><strong>GitHub build kit packaging</strong> (tokens.json, preview.html, components) for each collection</span></div>
+        <div class="step"><span class="step-n">B3</span><span class="step-t"><strong>3 new MCP tools</strong>: get_collection_for_intent, get_icon_manifest, recommend_co_occurring (Phase 3)</span></div>
+        <div class="step"><span class="step-n">B4</span><span class="step-t"><strong>8 intent-based collection pages</strong> on supericons.dev (Phase 2)</span></div>
+        <div class="step"><span class="step-n">B5</span><span class="step-t"><strong>App Shell starter layouts</strong> — one HTML demo per collection family</span></div>
+        <div class="step"><span class="step-n">B6</span><span class="step-t"><strong>Source Trust Tier scoring</strong> for T1/T2/T3 source classification (Phase 2)</span></div>
+      </div>
+    </div>
+    <div class="split-col" style="border-left:3px solid var(--am)">
+      <div class="split-col-title" style="color:var(--am)">Market Bucket (30%) — What to Publish</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">M1</span><span class="step-t"><strong>Week 1:</strong> Publish Dashboard Navigation 50 to GitHub</span></div>
+        <div class="step"><span class="step-n">M2</span><span class="step-t"><strong>Week 1:</strong> Post to r/webdev, Indie Hackers, X with icon-in-context screenshots</span></div>
+        <div class="step"><span class="step-n">M3</span><span class="step-t"><strong>Week 2:</strong> List Supericons MCP on every discoverable MCP registry</span></div>
+        <div class="step"><span class="step-n">M4</span><span class="step-t"><strong>Week 3:</strong> Record the Agentic Demo (Claude Code session), post to HN</span></div>
+        <div class="step"><span class="step-n">M5</span><span class="step-t"><strong>Week 4:</strong> First before/after motion video on X (AI-generated, no budget)</span></div>
+        <div class="step"><span class="step-n">M6</span><span class="step-t"><strong>Ongoing:</strong> One Reddit "Roast my UI / here is the fix" post per fortnight</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: TIMELINE -->
+<section id="timeline">
+  <div class="sn">// 06 — 12-WEEK EXECUTION TIMELINE</div>
+  <h2 class="sh">Week-by-Week: Both Tracks in Parallel</h2>
+  <p class="sd">Every week has a build output and a market output. Neither track is ever empty.</p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--am);background:rgba(251,191,36,.1)">W1</div>
+      <div class="tl-content">
+        <div class="tl-period">Week 1 — Launch Week</div>
+        <div class="tl-title">First contact: GitHub kit + MCP registry</div>
+        <div class="tl-body">The single most important week. Plant two seeds that compound from day one: the first GitHub build kit, and MCP registry listings. Everything else is preparation for amplification.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Package Dashboard Navigation 50: <strong>tokens.json + preview.html + React components + usage-map.md</strong>. Publish to GitHub supericons-org.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Post r/webdev: <strong>"I curated 50 icons for SaaS dashboard nav. Free GitHub repo."</strong> Visual thread on X.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">List Supericons MCP on: MCP.so, OpenClaw registry, Cursor extensions, Claude tool directory.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Begin Icon Manifest JSON for first 10 Agentic AI Kit icons (rag-pipeline, vector-db, orchestrator, guardrail, temperature, embedding, memory, trace, approval, handoff).</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--gr);background:rgba(52,211,153,.1)">W2</div>
+      <div class="tl-content">
+        <div class="tl-period">Week 2 — Second kit + Status 50 upgrade</div>
+        <div class="tl-title">Confirm the pattern, complete the AI Kit manifest</div>
+        <div class="tl-body">Ship the second GitHub build kit. Status Feedback 50 is already a production Supericons collection — this is primarily a packaging task. Publish the first partial Icon Manifest schema publicly as a spec document to generate developer interest.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-both">BOTH</span><span class="tl-task-text">Package and publish <strong>Status Feedback 50</strong> GitHub kit. Write blog post: "The 50 icons every SaaS app actually needs."</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Complete Icon Manifest JSON for all 40 Agentic AI Kit icons. Publish the schema spec as a GitHub gist or docs page.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Post to Indie Hackers with MRR/progress transparency thread. "Building the world's first agent-legible icon system."</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--pu);background:rgba(167,139,250,.1)">W3</div>
+      <div class="tl-content">
+        <div class="tl-period">Week 3 — Agentic Demo Week</div>
+        <div class="tl-title">The HN moment: agent builds a complete icon-annotated UI</div>
+        <div class="tl-body">Record and post the Agentic Demo. This is the single highest-potential viral moment. A real Claude Code / Cursor session: one prompt asking for an AI dashboard sidebar, Supericons MCP returning the curated set, agent scaffolding the component. Real, unscripted, shows the unique value instantly.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Implement <strong>get_collection_for_intent</strong> MCP tool (the one tool needed for the demo). Accept: intent string, design_system, format. Return: curated icon list with manifest data.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text"><strong>Record the demo.</strong> Post to HN: "Show HN: Icon system where your AI agent chooses icons with structured reasoning." Publish the .mcp.json config snippet openly.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-both">BOTH</span><span class="tl-task-text">Publish Ecommerce Essentials 50 GitHub kit. Create monorepo starter using all 3 kits.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--or);background:rgba(251,146,60,.1)">W4</div>
+      <div class="tl-content">
+        <div class="tl-period">Week 4 — Motion Reveal</div>
+        <div class="tl-title">The premium emotional hook: static icons come alive</div>
+        <div class="tl-body">Now that the utility and agent stories are live, introduce the premium emotional layer. One AI-generated before/after video. Generic AI dashboard with placeholder icons vs the same interface lit up with Supericons animated collection. No voiceover needed. The visuals speak.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Generate 3 before/after motion videos using Kling or similar. Post the best one to X: <strong>"This took 4 minutes to add."</strong></span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Build <strong>3 intent-based collection landing pages</strong> on supericons.dev: Dashboard Navigation, Status Feedback, AI Agent UI.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Post Reddit "Roast my UI" thread: take a public AI startup's generic icon layout, rebuild it with Supericons, post the split-screen.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--bl);background:rgba(96,165,250,.1)">W5-8</div>
+      <div class="tl-content">
+        <div class="tl-period">Weeks 5-8 — Amplification Phase</div>
+        <div class="tl-title">Complete the kit library. Build the MCP intelligence layer.</div>
+        <div class="tl-body">Ship remaining free build kits (AI Agent UI 50, Data Charts 50, Auth & Security 50). Build the remaining 6 key MCP tools. Launch the first collection-specific SEO landing pages. The marketing engine is now running on 3 cylinders simultaneously: GitHub, Reddit/X, and MCP discovery.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-both">BOTH</span><span class="tl-task-text">Publish AI Agent UI 50, Data Charts 50, Auth &amp; Security 50 GitHub kits. Each becomes a Reddit / X post.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Implement: <strong>get_icon_manifest, recommend_co_occurring, score_icon_candidates, explain_icon_choice</strong> MCP tools.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Build remaining 5 intent-based collection pages on supericons.dev with SEO metadata and starter snippets.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Publish one "high-intent" SEO blog post per week: "Best icons for AI app sidebars," "Free status icons for SaaS, "Icon pack for React dashboard projects."</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--te);background:rgba(45,212,191,.1)">W9-12</div>
+      <div class="tl-content">
+        <div class="tl-period">Weeks 9-12 — Intelligence Phase</div>
+        <div class="tl-title">Build the moat. Begin the judgment system. Compound the audience.</div>
+        <div class="tl-body">By week 9, GitHub stars are accumulating. MCP installs are climbing. The SEO surface is generating traffic. Now layer in the deeper v2 features that no competitor can replicate: Source Trust Scoring, design system affinity scores, and the foundation of the Judgment Graph. These are building the moat while the marketing engine runs itself.</div>
+        <div class="tl-tasks">
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Source Trust Tier scoring: compute T1/T2/T3 classification for top 20 icon libraries with reasoning traces.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Design system affinity scores: map Supericons visual geometry to shadcn, Material, Tailwind UI, Radix.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-build">BUILD</span><span class="tl-task-text">Judgment Graph prototype: evidence object schema, basic task ballot UI, retention signal logging.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Wave 2 agentic collections launch: Agent Console Core 50, Copilot Sidebar 40, AI Workflow States 32.</span></div>
+          <div class="tl-task"><span class="tl-task-tag tt-market">MARKET</span><span class="tl-task-text">Announce: "Supericons v2: The Icon Intelligence Platform." Show the trust scoring and affinity features publicly.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 7: V2 SCOPE -->
+<section id="v2scope">
+  <div class="sn">// 07 — v2 SCOPE & BUILD PRIORITY</div>
+  <h2 class="sh">What v2 Is. What It is Not.</h2>
+  <p class="sd">v2 is not a redesign of the site. It is the intelligence layer underneath the existing product. Four phases, each independently shippable, each buildable in parallel with marketing.</p>
+
+  <table>
+    <thead>
+      <tr><th>Phase</th><th>Feature Area</th><th>What Gets Built</th><th>Marketing Unlock</th><th>Weeks</th><th>Priority</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Phase 1</strong></td>
+        <td>Icon Manifest</td>
+        <td>manifest.json per icon: id, canonical_intent, aliases, anti_aliases, trust_tier, affinity, co_occurs_with, contraindications, agent_selection_guidance. Start with 40 Agentic AI Kit icons.</td>
+        <td>"Supericons is the first icon library with AI-readable metadata." Publishable schema becomes its own GitHub artifact.</td>
+        <td>1-3</td>
+        <td><span class="tag t-re">Critical</span></td>
+      </tr>
+      <tr>
+        <td><strong>Phase 2</strong></td>
+        <td>Collections + Kits</td>
+        <td>8 intent-based collection landing pages. 6 GitHub build kits with full packaging (tokens.json, preview.html, React/Vue/Svelte components, usage-map.md). App Shell starter layouts.</td>
+        <td>Primary GitHub growth loop. SEO surface area. Free acquisition assets that drive paid conversions.</td>
+        <td>2-7</td>
+        <td><span class="tag t-re">Critical</span></td>
+      </tr>
+      <tr>
+        <td><strong>Phase 3</strong></td>
+        <td>MCP Intelligence</td>
+        <td>7 new MCP tools. get_collection_for_intent, get_icon_manifest, recommend_co_occurring, score_icon_candidates, explain_icon_choice, list_reliable_sources_for_domain, swap_to_more_coherent_family.</td>
+        <td>Agentic Demo campaign, HN post, MCP registry discovery, viral config snippet. "Icon system your AI agent understands."</td>
+        <td>3-9</td>
+        <td><span class="tag t-am">High</span></td>
+      </tr>
+      <tr>
+        <td><strong>Phase 4</strong></td>
+        <td>Judgment Engine</td>
+        <td>Tri-cameral judgment system. Evidence objects. Pairwise comparison UI. Retention signal logging. Co-occurrence graph (GitHub mining). Source Trust Scoring formula. Taste Staking prototype.</td>
+        <td>The long-term moat. Not for immediate marketing. This is the 3-year defensible advantage. "We have N months of human + agent judgment data."</td>
+        <td>8-16</td>
+        <td><span class="tag t-bl">Strategic</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert a-re">
+    <span class="alert-i">⛔</span>
+    <div><strong>What v2 is NOT:</strong> A complete site redesign. A new visual brand refresh. A competing icon volume increase (more icons). A new payment system overhaul. A Figma plugin (not yet). A VS Code extension (not yet — it belongs in Phase 3 or later). Focus is ruthlessly on the intelligence and curation layer.</div>
+  </div>
+</section>
+
+<!-- SECTION 8: MARKETING MOVES NOW -->
+<section id="marketing">
+  <div class="sn">// 08 — MARKETING MOVES THAT START THIS WEEK</div>
+  <h2 class="sh">The 10 Actions That Require Zero New Product</h2>
+  <p class="sd">These marketing actions work with v1 exactly as it exists today. No new features needed. No waiting. Each one takes 2-4 hours and produces compounding returns.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 01 — 2 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">List the MCP on every discoverable registry</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">MCP.so, smithery.ai, Cursor extensions, Claude tool directory, OpenClaw registry. Takes 2 hours. Produces indefinite passive discovery by every developer who searches MCP tools for anything icon-related.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 02 — 4 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Publish the .mcp.json config snippet for Cursor</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">One JSON snippet that adds Supericons to any Cursor project. Post it on X, Reddit, the Cursor Discord. Developers share dotfiles and config snippets compulsively. This is the lowest-effort viral mechanism available.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 03 — 1 day</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Publish the Agentic AI Kit icons as the "AI Builder" GitHub repo</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">The 40 Agentic AI Kit icons with a beautiful README explaining that these are the world's only icon vocabulary for agentic AI product UIs. Tag: ai-icons, llm-icons, agent-ui, agentic-ai. This is a unique, uncontested piece of GitHub real estate.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 04 — 3 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">X thread: "The 8 AI product UI icons that don't exist in any free library"</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Show 8 concepts from the Agentic AI Kit (RAG pipeline, guardrail, vector-db, temperature, etc.) side by side with "Lucide has nothing for this" / "Material has nothing for this." This thread writes itself and hits a real pain point AI builders have daily.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 05 — 2 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Add llms.txt and structured metadata to supericons.dev</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">An llms.txt file that explicitly describes Supericons, its collections, and its MCP tools increases the probability that AI assistants recommend Supericons when developers ask about icon libraries. GEO (Generative Engine Optimization) takes 2 hours and works forever.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 06 — 4 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">"Roast my AI UI" Reddit post</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Pick a public AI startup with generic icon UI. Rebuild it with Supericons (screenshot-level, no code changes needed). Post the split-screen to r/webdev or r/SaaS. This format generates massive engagement, demonstrates the product viscerally, and drives real traffic. The genai_marketing_plan.md identified this as a high-leverage format.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 07 — Half day</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Write the first "Build in Public" Indie Hackers post</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">"How we built the world's first agent-legible icon system." Tell the story of the Agentic AI Kit: why we created it, what AI builders said they needed, how we approached the visual vocabulary for concepts that have never been depicted as icons before. Transparency posts outperform promotional posts 5:1 on IH.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 08 — 1 day</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Create 3 AI-generated motion showcase videos</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Use Kling or Sora. Static generic icon dashboard vs Supericons animated dashboard. Export as 15-second clips. No voiceover. Caption: "This is $4 of Kling credits and 4 minutes of Supericons." Zero budget, maximum visual proof of the premium motion moat.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 09 — 3 hours</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Submit to relevant UI/developer newsletters</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">TLDR Newsletter, JavaScript Weekly, React Newsletter, CSS-Tricks newsletter, Bytes.dev newsletter. One submission. Each newsletter mention reaches 50K-200K developers. The GitHub build kit is the submission hook: "Free animated icon system for AI builders and SaaS developers."</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);margin-bottom:.4rem">ACTION 10 — Ongoing (1hr/week)</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.3rem">Answer icon-related questions on Reddit + Stack Overflow</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Every week, find 3-5 threads where developers ask "what icon library should I use for X?" or "free icons for AI dashboards?" Answer genuinely. Mention Supericons where it is the best answer. This creates a permanent trail of helpful, relevant citations. Compound value over 12 weeks.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: WEEK 1 ACTIONS -->
+<section id="week1">
+  <div class="sn">// 09 — WEEK 1: SPECIFIC ACTIONS IN ORDER</div>
+  <h2 class="sh">What Happens on Monday Morning</h2>
+  <p class="sd">This is not a plan. This is a checklist. Every item is specific, executable, and has a success criterion.</p>
+
+  <table>
+    <thead>
+      <tr><th>Day</th><th>Action</th><th>Output</th><th>Success Signal</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Mon AM</strong></td>
+        <td>List Supericons MCP on MCP.so, smithery.ai, and Cursor extension hub</td>
+        <td>3 live directory listings with description, icon, and install instructions</td>
+        <td>Listings appear in search results for "icon MCP"</td>
+      </tr>
+      <tr>
+        <td><strong>Mon PM</strong></td>
+        <td>Write and publish the .mcp.json config snippet for Cursor / Claude Code</td>
+        <td>One GitHub gist + X post with the config snippet</td>
+        <td>First 3 RTs or bookmarks within 48 hours</td>
+      </tr>
+      <tr>
+        <td><strong>Tue</strong></td>
+        <td>Package Dashboard Navigation 50: add tokens.json, preview.html, usage-map.md to existing icon set</td>
+        <td>Complete GitHub repo: supericons-build-kits/dashboard-navigation-50</td>
+        <td>Repo is live and looks like a real utility, not a sample</td>
+      </tr>
+      <tr>
+        <td><strong>Wed AM</strong></td>
+        <td>Post to r/webdev: "I curated 50 icons for SaaS dashboard nav. Free GitHub repo."</td>
+        <td>Reddit post with 3-4 context screenshots showing icons in real UI</td>
+        <td>20+ upvotes and at least one GitHub clone within 24 hours</td>
+      </tr>
+      <tr>
+        <td><strong>Wed PM</strong></td>
+        <td>Begin Icon Manifest JSON for first 10 Agentic AI Kit icons</td>
+        <td>10 well-structured manifest.json files in the repo</td>
+        <td>You can read one manifest and know exactly where and when to use that icon</td>
+      </tr>
+      <tr>
+        <td><strong>Thu</strong></td>
+        <td>Write and post X thread: "8 AI product UI concepts with no icons in any free library — and how we solved it"</td>
+        <td>8-tweet thread with icon images and "vs Lucide" comparison screenshots</td>
+        <td>10+ bookmarks or replies from AI builders</td>
+      </tr>
+      <tr>
+        <td><strong>Fri</strong></td>
+        <td>Add llms.txt to supericons.dev. Write one high-intent SEO page: "Best icons for SaaS dashboard navigation"</td>
+        <td>llms.txt live. New /icons-for-sas-dashboard page live.</td>
+        <td>Both are indexed by end of following week</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 10: KPIS -->
+<section id="kpis">
+  <div class="sn">// 10 — DECISION KPIs</div>
+  <h2 class="sh">How to Know If the Split Is Working</h2>
+  <p class="sd">At the end of each 4-week phase, evaluate these signals. They tell you whether to hold the 70/30 ratio, shift toward more marketing, or hold and prioritize a build deliverable.</p>
+
+  <div class="kpi-row">
+    <div class="kpi-cell kpi-header">KPI</div>
+    <div class="kpi-cell kpi-header">Week 4 Target</div>
+    <div class="kpi-cell kpi-header">Week 8 Target</div>
+    <div class="kpi-cell kpi-header">Week 12 Target</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">GitHub kit stars (per kit)</div>
+    <div class="kpi-cell">25+</div>
+    <div class="kpi-cell">100+</div>
+    <div class="kpi-cell">250+</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">GitHub kit clones</div>
+    <div class="kpi-cell">50+</div>
+    <div class="kpi-cell">300+</div>
+    <div class="kpi-cell">800+</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">MCP install count</div>
+    <div class="kpi-cell">+30 new</div>
+    <div class="kpi-cell">+150 new</div>
+    <div class="kpi-cell">+400 cumulative</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">supericons.dev sessions from GitHub</div>
+    <div class="kpi-cell">100</div>
+    <div class="kpi-cell">500</div>
+    <div class="kpi-cell">1,500/month</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">SEO collection page sessions</div>
+    <div class="kpi-cell">Baseline set</div>
+    <div class="kpi-cell">200/page/month</div>
+    <div class="kpi-cell">800/page/month</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">v2 Phase 1 completion (Manifest JSON for 40 icons)</div>
+    <div class="kpi-cell">Done</div>
+    <div class="kpi-cell">Done</div>
+    <div class="kpi-cell">Done</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">MCP tools live (Phase 3)</div>
+    <div class="kpi-cell">1 tool</div>
+    <div class="kpi-cell">4 tools</div>
+    <div class="kpi-cell">7 tools</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-cell">Free to paid conversion from kit traffic</div>
+    <div class="kpi-cell">Track only</div>
+    <div class="kpi-cell">1%+</div>
+    <div class="kpi-cell">3%+</div>
+  </div>
+
+  <div class="alert a-pu" style="margin-top:1.5rem">
+    <span class="alert-i">📊</span>
+    <div><strong>Ratio adjustment triggers:</strong> If by week 4 GitHub clones are below 30 total, shift 5% more effort toward marketing (better post writing, more communities). If MCP installs are below 20, prioritize the agentic demo recording over other build tasks. If any v2 phase is falling behind its milestone, shift 5% from marketing back to build. The ratio is a living number, not a fixed rule.</div>
+  </div>
+</section>
+
+<!-- SECTION 11: RISKS -->
+<section id="risks" style="border-bottom:none">
+  <div class="sn">// 11 — RISKS, TRADE-OFFS & PIVOT SIGNALS</div>
+  <h2 class="sh">What Could Go Wrong. What to Do About It.</h2>
+  <p class="sd">Three real risks with specific, pre-planned responses.</p>
+
+  <div class="grid3">
+    <div class="card" style="border-top:3px solid var(--re)">
+      <div style="font-size:.65rem;font-weight:800;color:var(--re);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Risk 01</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.35rem">Marketing takes too much time and v2 slips</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.65;margin-bottom:.5rem">If weekly time budget is genuinely constrained, the 30% marketing allocation is painful to maintain alongside real build work.</div>
+      <div style="font-size:.8rem;color:var(--re);font-weight:600;margin-bottom:.25rem">Response:</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Batch marketing to 1 focused day per week (e.g. Friday = Market Day). This maintains tempo without fragmenting the build flow. Two high-quality actions on Friday beats seven mediocre ones scattered through the week.</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--am)">
+      <div style="font-size:.65rem;font-weight:800;color:var(--am);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Risk 02</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.35rem">A competitor ships intent-based icon collections first</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.65;margin-bottom:.5rem">Lucide, Tabler, or a new entrant reads the same GitHub signals and ships curated collections before Supericons does.</div>
+      <div style="font-size:.8rem;color:var(--am);font-weight:600;margin-bottom:.25rem">Response:</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">The Agentic AI Kit vocabulary (rag-pipeline, guardrail, vector-db, etc.) cannot be rushed or cloned quickly — it requires domain expertise to get right visually. That collection remains uniquely defensible. Double down on that vertical and the MCP layer, which competitors cannot replicate from SVGs alone.</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--bl)">
+      <div style="font-size:.65rem;font-weight:800;color:var(--bl);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Risk 03</div>
+      <div style="font-weight:700;font-size:.9rem;color:var(--t);margin-bottom:.35rem">GitHub kits get stars but do not convert to paid users</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.65;margin-bottom:.5rem">Developers clone the free kits, use them in production, and never visit supericons.dev. GitHub gives discovery but no email, no conversion.</div>
+      <div style="font-size:.8rem;color:var(--bl);font-weight:600;margin-bottom:.25rem">Response:</div>
+      <div style="font-size:.82rem;color:var(--td);line-height:1.6">Every kit's preview.html has a "get the animated version" prompt with email capture. The README includes a live preview link to the supericons.dev collection page. The tokens.json includes a source URL. Gate 3 of 5 motion animations behind a free account — email capture becomes the conversion mechanism, not direct payment.</div>
+    </div>
+  </div>
+
+  <div class="alert a-gr" style="margin-top:2rem">
+    <span class="alert-i">🏁</span>
+    <div><strong>The final call, restated clearly:</strong> Start marketing this week with the actions in Section 08 and 09. Start building v2 Phase 1 this week in parallel. Do not wait for v2 to be "ready" to market — v1 is already the world's most agent-aware icon system. Do not stop building v2 to market — the best v2 features are marketing. The 70/30 split is not a compromise: it is the optimal compounding strategy for a solo or small team with zero marketing budget and a product that genuinely does something no competitor does.</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const secs=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

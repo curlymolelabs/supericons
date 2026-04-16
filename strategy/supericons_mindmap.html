@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons Interactive Strategy Mind Map</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    #mindmap {
+      width: 100%;
+      height: 100%;
+    }
+    .watermark {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 14px;
+      color: #58a6ff;
+      opacity: 0.6;
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15"></script>
+</head>
+<body>
+  <svg id="mindmap"></svg>
+  <div class="watermark">Supericons Strategic Ecosystem Mind Map</div>
+  <script>
+    const markdown = `
+# Supericons
+## 1. Value Proposition
+### Pre-built Premium Animated Icons
+### Motion Lab MCP API Integration
+### "Agent-Native" UI Workflow
+### Zero dependencies (Pure CSS/SVG)
+## 2. Competitive Advantage
+### High Aesthetic Wow-Factor
+### Deep Algorithmic Geometry Moat
+### Server-side Keyframe Protection
+### Hard for VLM models to replicate
+## 3. Target Audience
+### AI Startup Founders
+### Indie Hackers (Speed Builders)
+### VS Code Extension Devs
+### OpenClaw / Agent Creators
+## 4. TAM & Potential
+### Current SOM: $50M (Premium AI/Tech UI)
+### Expanding TAM: $5B+ Agentic Infrastructure
+### High scalability (Digital SaaS)
+## 5. Strengths
+### Beautiful motion physics
+### Frictionless front-end integration
+### High margins
+## 6. Weaknesses
+### Niche early market positioning
+### Requires developer baseline for MCP
+## 7. Threats
+### Native AI UI generation mastering CSS
+### Open-source manual clones
+`;
+    // Initialize markmap
+    const { Transformer, Markmap } = window.markmap;
+    const transformer = new Transformer();
+    const { root, features } = transformer.transform(markdown);
+    
+    // Set custom colors and styling
+    const options = {
+      color: (node) => {
+        const colors = ['#2ea043', '#58a6ff', '#a371f7', '#d29922', '#f85149'];
+        return colors[node.depth % colors.length];
+      },
+      duration: 300,
+      zoom: true,
+      pan: true,
+      initialExpandLevel: 2
+    };
+    
+    // Render the mindmap
+    window.addEventListener('DOMContentLoaded', () => {
+        Markmap.create('#mindmap', options, root);
+    });
+  </script>
+</body>
+</html>

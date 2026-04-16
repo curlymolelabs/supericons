@@ -1,5 +1,12 @@
 # Supericons Launch Checklist
 
+> [!NOTE]
+> This is the raw historical superset checklist.
+>
+> For the current launch-ready status and the real outstanding items, use:
+> - [launch-checklist-status.md](./launch-checklist-status.md)
+> - [launch-jtbd.md](./launch-jtbd.md)
+
 ## 1. Domain + DNS (Cloudflare)
 
 - [ ] Register/transfer `supericons.dev` to Cloudflare (if not done)

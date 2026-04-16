@@ -1,6 +1,6 @@
 # Launch Checklist Status
 
-Last updated: April 14, 2026
+Last updated: April 15, 2026
 
 This note converts the raw [launch checklist](./launch-checklist.md) into a repo-backed status snapshot.
 
@@ -21,7 +21,7 @@ Looks materially built in the repo:
 - legal pages, OG image, sitemap, robots, and Umami tagging
 - MCP package source and package manifest
 
-Verified live on April 14, 2026:
+Verified live on April 14-15, 2026:
 - `supericons.dev` DNS, SSL, and Netlify production hosting
 - latest production deploy and live smoke pass
 - live Stripe payment flow
@@ -29,15 +29,24 @@ Verified live on April 14, 2026:
 - live cancellation-scheduled billing email delivery plus idempotency logging
 - live `current_period_end` repair and date-specific cancellation email copy
 - live Stripe secret-key replacement validated through portal and checkout
+- public `/admin` removed from production
+- local-only admin flow verified at `http://localhost:5173/admin.html`
+- `admin-api` restricted to localhost origin and `ADMIN_SECRET` rotated successfully
+- pre-launch test users removed from Supabase
 - npm publish and clean-install proof for `supericons-mcp@0.3.1`
 - live `motion-lab-session` `429` proof and post-restore sanity pass
 
 Still open or still needs follow-through:
-- analytics verification and optional uptime monitoring decision
+- optional uptime monitoring decision
 - named runtime owners if we want them written more explicitly than the solo-operator model
 - optional SEO / social / legal polish after launch
+- future Stripe cleanup consistency for one-time purchase guest-customer cases
 
 ## Release Readiness Signals
+
+Launch blocker status:
+- no known launch blockers remain
+- remaining items are post-launch polish, observability follow-through, or future consistency improvements
 
 Repo-backed evidence found:
 - [netlify.toml](../netlify.toml) defines the build, publish directory, docs redirect, SPA fallback, cache headers, and security headers.
@@ -70,7 +79,7 @@ Status: `Verified live`
 What the repo proves:
 - the app consistently references `https://supericons.dev` in metadata and product copy
 
-Live evidence captured on April 14, 2026:
+Live evidence captured on April 14-15, 2026:
 - Namecheap remains the DNS manager and Netlify is the production host
 - `supericons.dev` resolves publicly and returns `HTTP/1.1 200 OK`
 - `www.supericons.dev` resolves publicly and returns `301` to `https://supericons.dev/`
@@ -87,10 +96,12 @@ What the repo proves:
 - [netlify.toml](../netlify.toml) sets `npm run build`, `dist`, docs redirects, SPA fallback, cache headers, and security headers
 - [public/og-image.png](../public/og-image.png), [public/robots.txt](../public/robots.txt), and [public/sitemap.xml](../public/sitemap.xml) exist
 
-Live evidence captured on April 14, 2026:
+Live evidence captured on April 14-15, 2026:
 - the latest build was deployed to the live Netlify site
 - the custom domain is attached and serving production traffic
 - post-deploy smoke passed on the live site
+- the public admin route was removed from the production deploy
+- `https://supericons.dev/admin` now returns the expected not-found response instead of exposing the admin shell
 
 What is still useful but not blocking:
 - keep a short record of which live pages were included in the smoke pass
@@ -103,7 +114,7 @@ What the repo proves:
 - the raw checklist still treated Railway as a possible launch dependency
 - the converter path is the only Railway-backed production dependency still in scope
 
-Live evidence captured on April 14, 2026:
+Live evidence captured on April 14-15, 2026:
 - the operator confirmed the converter proof service is already deployed on Railway
 - the live converter flow was exercised from the production site and worked successfully
 - no converter-service code changes were made afterward, so no Railway redeploy is currently needed
@@ -120,13 +131,17 @@ What the repo proves:
 - [plans/auth-abuse-controls-and-agent-access-plan.md](../plans/auth-abuse-controls-and-agent-access-plan.md) records that SMTP delivery was already configured and validated after the MX fix
 - [supabase/functions](../supabase/functions) contains the expected production functions, including `api-keys`, `claim-status`, `create-checkout`, `create-portal`, `download-pack`, `serve-premium-asset`, `stripe-webhook`, and `validate-mcp-key`
 
-Live evidence captured on April 14, 2026:
+Live evidence captured on April 14-15, 2026:
 - Supabase Auth `Site URL` is set to `https://supericons.dev`
 - redirect URLs were reviewed in the dashboard
 - Google provider config was reviewed in the dashboard and matches the expected Supabase callback
 - auth rate-limit settings were reviewed in the dashboard and are launch-safe
 - SMTP is configured through Resend with branded sender settings
 - the operator reports that sign-up, sign-in, password reset, and Google OAuth were already tested extensively on the live stack
+- the destructive admin surface is no longer public:
+  - `admin-api` now accepts only `http://localhost:5173`
+  - production `/admin` has been removed
+  - the operator now uses local `admin.html` for maintenance
 
 What is still useful but not blocking:
 - keep screenshots or a short written bundle of the dashboard-state evidence if we want stronger release records
@@ -139,13 +154,16 @@ What the repo proves:
 - [supabase/functions/create-checkout/index.ts](../supabase/functions/create-checkout/index.ts), [supabase/functions/create-portal/index.ts](../supabase/functions/create-portal/index.ts), and [supabase/functions/stripe-webhook/index.ts](../supabase/functions/stripe-webhook/index.ts) exist
 - [store.js](../store.js) and [auth.js](../auth.js) call checkout and portal endpoints from the product UI
 
-Live evidence captured on April 14, 2026:
+Live evidence captured on April 14-15, 2026:
 - the operator confirmed a real live Stripe payment succeeded against the production flow
 - `Manage Subscription` was reverified successfully after redeploying `create-portal` with `--no-verify-jwt`
 - the new cancellation confirmation email flow was exercised successfully against the live stack
 - `si_billing_notifications` now records `subscription_cancel_scheduled` as the idempotency guard for webhook retries
 - `si_subscriptions.current_period_end` was repaired and reverified, and the cancellation email now includes the actual end date
 - the Stripe secret key in Supabase was replaced with a newly created live key, and both portal and checkout were rechecked successfully afterward
+- the remaining Stripe cleanup edge case is now understood:
+  - subscription users can be fully removed from Stripe through the admin flow
+  - one-time pack buyers can still appear as Stripe guest customers, which is safe but cosmetically imperfect and now documented as a future cleanup-consistency improvement
 
 What is still useful but not blocking:
 - keep a written note of the exact live product/price IDs and webhook configuration owner
@@ -153,14 +171,21 @@ What is still useful but not blocking:
 
 ### 6. Analytics + Monitoring
 
-Status: `Implemented, verify`
+Status: `Verified live`
 
 What the repo proves:
 - [index.html](../index.html) loads the Umami script
 - [main.js](../main.js) tracks key events such as search, icon copy/download, and contact submission
 
+Live evidence captured on April 15, 2026:
+- the Umami script loaded successfully on `supericons.dev`
+- the live analytics send request returned `200`
+- browser network evidence confirmed the request chain:
+  - `https://supericons.dev/`
+  - `https://cloud.umami.is/script.js`
+  - `https://api-gateway.umami.dev/api/send`
+
 What is still missing:
-- proof that the production site is sending page views and key events to the right Umami property
 - a decision on whether uptime monitoring is required before launch
 
 ### 7. SEO + Social
@@ -225,7 +250,7 @@ What is still useful:
 
 ## Cross-Cutting Gaps
 
-These are not a single raw-checklist checkbox, but they are still launch work:
+These are not a single raw-checklist checkbox, but they are still launch follow-through:
 
 - `Risk accepted at launch`: runtime ownership and operator accountability
   The launch model is currently a solo-operator setup. If we later need multi-person runtime ownership, the owner-role slots can be expanded beyond the current operator note.
@@ -241,10 +266,18 @@ These are not a single raw-checklist checkbox, but they are still launch work:
 - `Closed`: docs route strategy
   The launch route decision is now documented in [docs-canonical-route-decision-2026-04-14.md](./references/docs-canonical-route-decision-2026-04-14.md): shell-native `/?view=docs` is canonical for this launch, while clean `/docs/...` deep routes are deferred.
 
+## Outstanding Items
+
+These do **not** block launch, but are still the meaningful follow-through items:
+
+1. Decide whether to add uptime monitoring now or accept manual monitoring for the first launch window.
+2. Optionally run social preview and Search Console checks after launch.
+3. Optionally improve Stripe cleanup consistency for one-time purchase guest-customer cases.
+
 ## Recommended Next Actions
 
 1. Keep the rollback/outage note close at hand for launch-day operations, especially the `--no-verify-jwt` deployment rules.
-2. Treat analytics, uptime monitoring, and social preview checks as the highest-value post-launch follow-through.
+2. Launch with the current release packet and treat analytics, uptime monitoring, and social preview checks as the highest-value post-launch follow-through.
 3. Preserve the shell-first docs route decision for this launch window and avoid a route migration during launch.
 
 ## Source Records

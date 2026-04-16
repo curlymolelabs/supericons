@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: MCP Directories, Forums & Social Media Marketing Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--te),var(--bl),var(--pu));z-index:999;transition:width .1s}
+
+    .sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.5rem .75rem;display:flex;flex-direction:column;gap:.1rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--bl);box-shadow:0 0 10px var(--bl);animation:sbp 2s infinite}
+    @keyframes sbp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.5}}
+    .sb-section{font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tf);padding:.7rem .5rem .2rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:6px;color:var(--td);text-decoration:none;font-size:.76rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{background:rgba(96,165,250,.1);color:var(--bl)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.4rem}
+
+    .main{margin-left:230px}
+
+    .hero{padding:4.5rem 4rem 4rem;border-bottom:1px solid var(--bd);position:relative;overflow:hidden;
+      background:radial-gradient(ellipse at 75% -10%,rgba(96,165,250,.06),transparent 50%),
+                 radial-gradient(ellipse at 15% 115%,rgba(167,139,250,.06),transparent 50%)}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--bl);background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:99px;padding:.2rem .8rem;margin-bottom:1.5rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--t);margin-bottom:.85rem}
+    .hero-h1 .ga{background:linear-gradient(135deg,var(--bl),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:.93rem;color:var(--td);max-width:680px;line-height:1.75;margin-bottom:1.5rem}
+
+    section{padding:4rem;border-bottom:1px solid var(--bd)}
+    .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);margin-bottom:.4rem}
+    .sh{font-family:'Space Grotesk',sans-serif;font-size:1.65rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.6rem}
+    .sd{color:var(--td);max-width:680px;line-height:1.7;font-size:.92rem;margin-bottom:2rem}
+
+    /* DIRECTORY CARD */
+    .dir-grid{display:flex;flex-direction:column;gap:1rem}
+    .dir-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;padding:1.5rem 1.75rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;transition:border-color .2s}
+    .dir-card:hover{border-color:var(--bl)}
+    .dir-left{}
+    .dir-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.05rem;color:var(--t);margin-bottom:.2rem;display:flex;align-items:center;gap:.6rem}
+    .dir-url{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--bl);margin-bottom:.6rem}
+    .dir-desc{font-size:.84rem;color:var(--td);line-height:1.65;margin-bottom:.75rem}
+    .dir-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+    .dir-right{display:flex;flex-direction:column;gap:.5rem;align-items:flex-end;min-width:140px}
+
+    /* PRIORITY BADGE */
+    .pri{font-size:.62rem;font-weight:800;padding:.18rem .55rem;border-radius:5px;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+    .pri-s{background:rgba(248,113,113,.2);color:var(--re)}
+    .pri-a{background:rgba(251,191,36,.2);color:var(--am)}
+    .pri-b{background:rgba(52,211,153,.2);color:var(--gr)}
+
+    /* HOW TO SUBMIT */
+    .submit-box{background:var(--bg-s);border:1px solid var(--bd2);border-radius:10px;padding:1rem 1.25rem;margin-top:.75rem}
+    .submit-label{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);margin-bottom:.4rem}
+    .submit-steps{display:flex;flex-direction:column;gap:.3rem}
+    .submit-step{font-size:.81rem;color:var(--td);line-height:1.5;display:flex;gap:.5rem}
+    .submit-step-n{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf);min-width:1.4rem;padding-top:.1rem}
+    .submit-step strong{color:var(--t)}
+    .submit-step code{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:var(--bg-r);border:1px solid var(--bd);border-radius:3px;padding:.05rem .3rem;color:var(--te)}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:4px}
+    .t-bl{background:rgba(96,165,250,.12);color:var(--bl)}
+    .t-pu{background:rgba(167,139,250,.12);color:var(--pu)}
+    .t-gr{background:rgba(52,211,153,.12);color:var(--gr)}
+    .t-am{background:rgba(251,191,36,.12);color:var(--am)}
+    .t-re{background:rgba(248,113,113,.12);color:var(--re)}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+    .t-pk{background:rgba(244,114,182,.12);color:var(--pk)}
+
+    /* FORUM CARDS */
+    .forum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
+    .forum-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem;transition:all .2s}
+    .forum-card:hover{border-color:var(--pu);transform:translateY(-2px)}
+    .forum-icon{font-size:1.5rem;margin-bottom:.5rem}
+    .forum-name{font-weight:700;font-size:.95rem;color:var(--t);margin-bottom:.2rem}
+    .forum-url{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--bl);margin-bottom:.5rem}
+    .forum-audience{font-size:.8rem;color:var(--td);line-height:1.6;margin-bottom:.6rem}
+    .forum-angle{background:var(--bg-s);border-left:3px solid var(--pu);border-radius:4px;padding:.6rem .75rem;font-size:.8rem;color:var(--td);line-height:1.55;margin-top:.5rem}
+    .forum-angle strong{color:var(--pu)}
+
+    /* POST TEMPLATES */
+    .post-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:1.25rem}
+    .post-hdr{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;background:var(--bg-s);border-bottom:1px solid var(--bd)}
+    .post-platform{display:flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;color:var(--t)}
+    .post-type{font-size:.68rem;color:var(--td)}
+    .post-body{padding:1.25rem;font-size:.84rem;color:var(--td);line-height:1.75;white-space:pre-wrap;font-family:'Inter',sans-serif}
+    .post-body strong{color:var(--t)}
+    .post-body em{color:var(--tf);font-style:italic}
+    .post-footer{padding:.6rem 1.25rem;border-top:1px solid var(--bd);display:flex;gap:.5rem;flex-wrap:wrap}
+    .copy-btn{font-size:.68rem;font-weight:700;color:var(--bl);background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);border-radius:5px;padding:.2rem .6rem;cursor:pointer;transition:all .15s}
+    .copy-btn:hover{background:rgba(96,165,250,.2)}
+
+    /* CHECKLIST */
+    .checklist{display:flex;flex-direction:column;gap:.5rem}
+    .check-item{display:flex;gap:.75rem;align-items:flex-start;background:var(--bg-r);border:1px solid var(--bd);border-radius:8px;padding:.8rem 1rem;transition:border-color .15s}
+    .check-item:hover{border-color:var(--gr)}
+    .check-box{width:18px;height:18px;border-radius:4px;border:2px solid var(--bd);margin-top:.1rem;flex-shrink:0;cursor:pointer;position:relative}
+    .check-text{font-size:.84rem;color:var(--td);line-height:1.5}
+    .check-text strong{color:var(--t)}
+    .check-text code{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.05rem .3rem;color:var(--te)}
+
+    /* ALERT */
+    .alert{display:flex;gap:.75rem;align-items:flex-start;border-radius:10px;padding:1rem 1.25rem;margin:1rem 0;font-size:.87rem;line-height:1.65}
+    .alert-i{flex-shrink:0;font-size:1.1rem}
+    .a-bl{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.25);color:#bfdbfe}
+    .a-gr{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:#a7f3d0}
+    .a-am{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:#fde68a}
+    .a-re{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:#fecaca}
+
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0}
+    th{text-align:left;padding:.7rem 1rem;background:var(--bg-r);border:1px solid var(--bd);color:var(--td);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+    td{padding:.7rem 1rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+    tr:hover td{background:var(--bg-r)}
+
+    hr.div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);border:none;margin:2rem 0}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      section,.hero{padding:2rem 1.25rem}
+      .dir-card{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Supericons GTM Kit</div>
+  <div class="sb-section">MCP Distribution</div>
+  <a class="sb-link" href="#mcp-github"><span class="sb-n">00</span>GitHub MCP Registry ★</a>
+  <a class="sb-link" href="#mcp-tier1"><span class="sb-n">01</span>Tier S — Must List Now</a>
+  <a class="sb-link" href="#mcp-tier2"><span class="sb-n">02</span>Tier A — List This Week</a>
+  <a class="sb-link" href="#mcp-tier3"><span class="sb-n">03</span>Tier B — List This Month</a>
+  <a class="sb-link" href="#mcpconfig"><span class="sb-n">04</span>MCP Config Snippets</a>
+  <div class="sb-section">Forums & Communities</div>
+  <a class="sb-link" href="#forums-dev"><span class="sb-n">05</span>Developer Forums</a>
+  <a class="sb-link" href="#forums-ai"><span class="sb-n">06</span>AI Builder Communities</a>
+  <a class="sb-link" href="#forums-design"><span class="sb-n">07</span>Design Communities</a>
+  <a class="sb-link" href="#forums-launch"><span class="sb-n">08</span>Launch Platforms</a>
+  <div class="sb-section">Social Media Kit</div>
+  <a class="sb-link" href="#posts-x"><span class="sb-n">09</span>X (Twitter) Posts</a>
+  <a class="sb-link" href="#posts-reddit"><span class="sb-n">10</span>Reddit Posts</a>
+  <a class="sb-link" href="#posts-hn"><span class="sb-n">11</span>Hacker News</a>
+  <a class="sb-link" href="#posts-ih"><span class="sb-n">12</span>Indie Hackers</a>
+  <a class="sb-link" href="#newsletter"><span class="sb-n">13</span>Newsletter Submissions</a>
+  <div class="sb-section">Execution</div>
+  <a class="sb-link" href="#checklist"><span class="sb-n">14</span>Master Checklist</a>
+</nav>
+
+<main class="main">
+
+<div class="hero">
+  <div class="badge">📡 GTM Marketing Kit — April 2026</div>
+  <h1 class="hero-h1">Supericons <span class="ga">Distribution & Marketing</span><br>Action Kit</h1>
+  <p class="hero-sub">Every MCP directory to list in. Every community to post in. Every post template ready to copy and send. Researched, ranked, and written for Supericons v1 launch. Zero paid ads. All organic. Start executing today.</p>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1.25rem;font-size:.85rem;color:var(--td)"><strong style="color:var(--t)">11</strong> MCP directories to list in</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1.25rem;font-size:.85rem;color:var(--td)"><strong style="color:var(--t)">20+</strong> forums &amp; communities</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1.25rem;font-size:.85rem;color:var(--td)"><strong style="color:var(--t)">18</strong> ready-to-post templates</div>
+    <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1.25rem;font-size:.85rem;color:var(--td)"><strong style="color:var(--t)">6</strong> newsletter targets</div>
+  </div>
+</div>
+
+<!-- ─── SECTION 0: GITHUB MCP REGISTRY ─── -->
+<section id="mcp-github" style="border-left:4px solid var(--am)">
+  <div class="sn">// 00 — GITHUB MCP REGISTRY (NEWLY IDENTIFIED — DO THIS FIRST)</div>
+  <h2 class="sh" style="display:flex;align-items:center;gap:.75rem">GitHub MCP Registry <span style="font-size:.7rem;font-weight:800;background:rgba(251,191,36,.2);color:var(--am);border:1px solid rgba(251,191,36,.4);border-radius:5px;padding:.2rem .6rem;letter-spacing:.07em;text-transform:uppercase">Missed — Add Now</span></h2>
+  <p class="sd">This was not in the original kit. <strong style="color:var(--t)">github.com/mcp</strong> is GitHub's own first-party MCP Registry — a product-level feature sitting alongside GitHub Copilot, Spark, and Models in GitHub's main navigation. It is not a community directory. It is GitHub's official curated collection of MCP servers, currently listing servers from Microsoft, Stripe, Figma, Atlassian, Supabase, Notion, and Vercel. Getting Supericons listed here is the single highest prestige MCP distribution action possible. Submission uses the official <code style="font-family:monospace;font-size:.83rem;background:var(--bg-r);border:1px solid var(--bd);border-radius:3px;padding:.05rem .3rem;color:var(--te)">mcp-publisher</code> CLI tool.</p>
+
+  <div class="dir-grid">
+
+    <div class="dir-card" style="border:2px solid rgba(251,191,36,.4);background:linear-gradient(135deg,rgba(251,191,36,.04),rgba(251,146,60,.03))">
+      <div class="dir-left">
+        <div class="dir-name">GitHub MCP Registry <span class="pri" style="background:rgba(251,191,36,.25);color:var(--am);font-size:.62rem;font-weight:800;padding:.18rem .55rem;border-radius:5px;text-transform:uppercase;letter-spacing:.07em">HIGHEST PRESTIGE</span></div>
+        <div class="dir-url">github.com/mcp &nbsp;|&nbsp; Official GitHub-hosted first-party registry &nbsp;|&nbsp; Submit via mcp-publisher CLI</div>
+        <div class="dir-desc">This is GitHub's own MCP Registry — a native GitHub platform feature, not a third-party site. It is listed in GitHub's main navigation under Platform &gt; AI Code Creation alongside Copilot, Spark, and Models. Current listings include servers from Microsoft (multiple), Stripe, Figma, Atlassian, Supabase, Notion, Vercel, MongoDB, and Elastic. These are the highest-profile companies in the developer ecosystem. Being listed here puts Supericons in the same product-level registry as those names. Every GitHub Copilot user — over 1.8 million as of 2026 — sees this registry. The prestige and discovery multiplier exceeds all other MCP directories combined.</div>
+        <div class="dir-meta"><span class="tag t-am">GitHub first-party</span><span class="tag t-re">1.8M+ Copilot users</span><span class="tag t-pu">Same tier as Stripe, Figma, Atlassian</span><span class="tag t-gr">Permanent registry listing</span><span class="tag t-bl">mcp-publisher CLI</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit — mcp-publisher CLI (Complete Process)</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">Pre.</span>Ensure <strong>@supericons/mcp</strong> is published to npm. The registry pulls metadata from the npm package. Version in <code>package.json</code> and <code>server.json</code> must match exactly.</div>
+            <div class="submit-step"><span class="submit-step-n">1.</span>Install the publisher CLI: <code>npm install -g mcp-publisher</code> (or <code>brew install mcp-publisher</code> on Mac)</div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Navigate to the Supericons MCP package root directory</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Run <code>mcp-publisher init</code> — follow the interactive prompts to generate <code>server.json</code></div>
+            <div class="submit-step"><span class="submit-step-n">4.</span>In <code>server.json</code>: set name to <code>io.github.supericons/supericons-mcp</code> (GitHub namespace format). Add display name, description, category tags: <strong>Design Tools, UI, Icons, SVG, Agentic</strong></div>
+            <div class="submit-step"><span class="submit-step-n">5.</span>In <code>package.json</code>: add <code>"mcpName": "io.github.supericons/supericons-mcp"</code> — must exactly match the name in <code>server.json</code></div>
+            <div class="submit-step"><span class="submit-step-n">6.</span>Authenticate with GitHub: <code>mcp-publisher login github</code> — uses GitHub OAuth</div>
+            <div class="submit-step"><span class="submit-step-n">7.</span>Publish: <code>mcp-publisher publish</code> — submits to the registry for review</div>
+            <div class="submit-step"><span class="submit-step-n">Note.</span>Also add <code>/.well-known/mcp/server-card.json</code> to the Supericons MCP server URL if hosted remotely. This allows GitHub to auto-scan and index capabilities without a manual metadata entry.</div>
+            <div class="submit-step"><span class="submit-step-n">Ref.</span>Full spec: <code>registry.modelcontextprotocol.io</code> (the official MCP Registry, which GitHub's registry draws from for the Linux Foundation-governed ecosystem)</div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right">
+        <span class="tag t-am" style="font-size:.75rem">Do today — first</span>
+        <span class="tag t-re">Missed in original kit</span>
+        <span class="tag t-bl">~90 min total</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="alert a-am">
+    <span class="alert-i">⭐</span>
+    <div><strong>Why this outranks every other directory:</strong> This is not a community website — it is a product feature on the world's largest developer platform used by 100M+ developers. The Figma MCP, Stripe MCP, and Atlassian MCP are in this registry. When GitHub Copilot users search for tools, this registry is what they see first, natively, inside their existing GitHub workflow. No redirect to an external site. No configuration friction. One-click install from within GitHub. This is the equivalent of being in the App Store vs a third-party app directory.</div>
+  </div>
+</section>
+
+<!-- ─── SECTION 1: TIER S MCP ─── -->
+<section id="mcp-tier1">
+  <div class="sn">// 01 — MCP DIRECTORY: TIER S (DO THESE TODAY — AFTER GITHUB MCP REGISTRY)</div>
+  <h2 class="sh">Must-List MCP Directories</h2>
+  <p class="sd">These are the dominant third-party MCP directories with the most developer traffic. Listing here takes 30-60 minutes each and creates permanent passive discovery. Do these immediately after GitHub MCP Registry.</p>
+
+  <div class="dir-grid">
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">Smithery.ai <span class="pri pri-s">S-TIER</span></div>
+        <div class="dir-url">smithery.ai &nbsp;|&nbsp; smithery.ai/new (submit)</div>
+        <div class="dir-desc">The largest MCP registry and management platform. Thousands of pre-configured servers. Developers install via the Smithery CLI or dashboard. Being listed here means Supericons MCP shows up when anyone searches for "icon," "svg," or "UI" in their tool manager. Also provides hosted/remote server options and usage analytics.</div>
+        <div class="dir-meta"><span class="tag t-re">Highest traffic</span><span class="tag t-bl">CLI install support</span><span class="tag t-gr">Analytics included</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Go to <code>smithery.ai/new</code></div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Enter the public HTTPS URL of the Supericons MCP server</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Server must use <strong>Streamable HTTP transport</strong>. Provide display name, description, tags.</div>
+            <div class="submit-step"><span class="submit-step-n">4.</span>Add <code>/.well-known/mcp/server-card.json</code> to the server if metadata scanning fails</div>
+            <div class="submit-step"><span class="submit-step-n">Alt.</span>CLI publish: <code>smithery mcp publish "https://supericons.dev/mcp" -n @supericons/supericons-mcp</code></div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right">
+        <span class="tag t-re" style="font-size:.75rem">Do today</span>
+        <span class="tag t-bl">&lt;60 min</span>
+      </div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">Glama.ai MCP Servers <span class="pri pri-s">S-TIER</span></div>
+        <div class="dir-url">glama.ai/mcp/servers &nbsp;|&nbsp; "Add MCP Server" button on page</div>
+        <div class="dir-desc">A major registry + infrastructure layer. Glama also provides an API gateway that handles OAuth, token storage, and observability. Being listed here gives Supericons access to Glama's routing infrastructure and their built-in MCP Inspector tool. Developers use Glama to evaluate, test, and debug MCP tools before installing.</div>
+        <div class="dir-meta"><span class="tag t-bl">API gateway included</span><span class="tag t-pu">MCP Inspector tool</span><span class="tag t-gr">Quality vetted</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Go to <code>glama.ai/mcp/servers</code></div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Click <strong>"Add MCP Server"</strong> button</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Provide: GitHub repo URL, display name, short description, tags</div>
+            <div class="submit-step"><span class="submit-step-n">4.</span>Submissions are reviewed for quality. Have a clean README ready.</div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right">
+        <span class="tag t-re" style="font-size:.75rem">Do today</span>
+        <span class="tag t-bl">&lt;30 min</span>
+      </div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">PulseMCP (pulsemcp.com) <span class="pri pri-s">S-TIER</span></div>
+        <div class="dir-url">pulsemcp.com &nbsp;|&nbsp; Manually curated, submit via their site</div>
+        <div class="dir-desc">Highly regarded, manually curated MCP directory. Focus on quality and minimizing duplicates. Because it is curated rather than auto-indexed, a listing here carries higher trust signal with serious developers. PulseMCP is specifically cited in developer discussions (r/LocalLLaMA, r/ClaudeAI) as the most reliable directory.</div>
+        <div class="dir-meta"><span class="tag t-am">Manually curated</span><span class="tag t-gr">High trust signal</span><span class="tag t-bl">Dev community cited</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Visit <code>pulsemcp.com</code> and locate the submission form or "Add a Server" link</div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Provide server details, GitHub repo link, description, use case tags</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Manual review typically takes 2-5 business days</div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right">
+        <span class="tag t-re" style="font-size:.75rem">Do today</span>
+        <span class="tag t-bl">&lt;20 min</span>
+      </div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">mcp.so <span class="pri pri-s">S-TIER</span></div>
+        <div class="dir-url">mcp.so &nbsp;|&nbsp; Community marketplace with submit form</div>
+        <div class="dir-desc">Large third-party MCP marketplace tracking thousands of servers. Categorizes into "Official," "Featured," and community-submitted. Lists compatible clients (Claude Desktop, Cursor, Windsurf). High volume, high discovery. Developers browse mcp.so to find tools for specific categories.</div>
+        <div class="dir-meta"><span class="tag t-re">Highest volume</span><span class="tag t-te">Category browsing</span><span class="tag t-bl">Client compatibility listed</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Go to <code>mcp.so</code> and find the community submission form</div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Submit GitHub repo URL. The platform auto-indexes many repos from GitHub search.</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Ensure the Supericons MCP GitHub README has clear category tags: <code>mcp</code>, <code>icons</code>, <code>svg</code>, <code>ui</code></div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right">
+        <span class="tag t-re" style="font-size:.75rem">Do today</span>
+        <span class="tag t-bl">&lt;20 min</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── SECTION 2: TIER A MCP ─── -->
+<section id="mcp-tier2">
+  <div class="sn">// 02 — MCP DIRECTORY: TIER A (DO THIS WEEK)</div>
+  <h2 class="sh">High-Value MCP Directories</h2>
+  <p class="sd">Strong secondary directories. Each captures a specific segment of the MCP-aware developer audience. Collectively equal or exceed Tier S in total reach.</p>
+
+  <div class="dir-grid">
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">mcpservers.org <span class="pri pri-a">A-TIER</span></div>
+        <div class="dir-url">mcpservers.org &nbsp;|&nbsp; "Submit" link on homepage</div>
+        <div class="dir-desc">Community-driven "Awesome MCP Servers" directory. Featured and trending servers. Free listings. Paid "Premium" option for faster review and an "Official" badge. The "Awesome" format is developer-trusted — cited in GitHub discussions, developer blogs, and Reddit threads.</div>
+        <div class="dir-meta"><span class="tag t-gr">Free listing</span><span class="tag t-am">Premium badge option</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Go to <code>mcpservers.org</code> and click <strong>"Submit"</strong></div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Consider the premium option for Official badge — increases trust signal significantly</div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right"><span class="tag t-am" style="font-size:.75rem">This week</span></div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">mcp.directory <span class="pri pri-a">A-TIER</span></div>
+        <div class="dir-url">mcp.directory &nbsp;|&nbsp; Major index with community install counts</div>
+        <div class="dir-desc">A major index tracking thousands of servers with community installation counts. Categorized by usage: Databases, DevTools, AI/ML, and more. Installation counts are publicly visible, creating social proof the moment early users install Supericons MCP from this directory.</div>
+        <div class="dir-meta"><span class="tag t-bl">Install count visibility</span><span class="tag t-pu">Category: AI/ML + DevTools</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Visit <code>mcp.directory</code></div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Find submission form. Target categories: <strong>AI/ML, Design Tools, Developer Tools</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right"><span class="tag t-am" style="font-size:.75rem">This week</span></div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">Anthropic Claude Connectors Directory <span class="pri pri-a">A-TIER</span></div>
+        <div class="dir-url">claude.ai/integrations &nbsp;|&nbsp; Official Connectors Directory server review form</div>
+        <div class="dir-desc">The official registry for MCP servers compatible with Claude. Manual review with strict security, safety, and compatibility standards required. Being listed here is the highest prestige signal in the MCP ecosystem. It means Anthropic has vouched for the server. Takes longer to get in but the payoff is significant: Claude users discover Supericons directly through Claude's UI.</div>
+        <div class="dir-meta"><span class="tag t-re">Highest prestige</span><span class="tag t-am">Manual review 1-4 weeks</span><span class="tag t-gr">Claude-native discovery</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Ensure Supericons MCP has: proper tool schemas, comprehensive docs, full error handling, privacy policy</div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Fill out the <strong>Connectors Directory server review form</strong> at <code>claude.ai</code></div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Inclusion is not guaranteed. Apply anyway — the process improves the MCP quality even if initial review takes time.</div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right"><span class="tag t-am" style="font-size:.75rem">Apply now, wait</span></div>
+    </div>
+
+    <div class="dir-card">
+      <div class="dir-left">
+        <div class="dir-name">awesome-mcp-servers (GitHub) <span class="pri pri-a">A-TIER</span></div>
+        <div class="dir-url">github.com/search: "awesome-mcp-servers" &nbsp;|&nbsp; PR to add listing</div>
+        <div class="dir-desc">Community-curated GitHub repositories in the "awesome-*" format. Cited in Reddit threads, developer blogs, and newsletters as a reliable source. A PR to add Supericons MCP to the main awesome-mcp-servers repo is a one-time 15-minute action that creates a permanent citation. LLMs scrape these repos and cite them in answers about MCP tools.</div>
+        <div class="dir-meta"><span class="tag t-te">LLM citation source</span><span class="tag t-bl">PR-based listing</span><span class="tag t-gr">Permanent backlink</span></div>
+        <div class="submit-box">
+          <div class="submit-label">How to Submit</div>
+          <div class="submit-steps">
+            <div class="submit-step"><span class="submit-step-n">1.</span>Search GitHub: <code>awesome-mcp-servers</code> — find the top repo by stars</div>
+            <div class="submit-step"><span class="submit-step-n">2.</span>Fork the repo, add Supericons MCP in the correct category section (Design Tools / UI / Developer Assets)</div>
+            <div class="submit-step"><span class="submit-step-n">3.</span>Submit a PR. Title: <strong>"Add Supericons MCP — Icon search and curation for AI builders"</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="dir-right"><span class="tag t-am" style="font-size:.75rem">This week</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── SECTION 3: TIER B MCP ─── -->
+<section id="mcp-tier3">
+  <div class="sn">// 03 — MCP DIRECTORY: TIER B (THIS MONTH)</div>
+  <h2 class="sh">Additional MCP & AI Tool Directories</h2>
+  <p class="sd">Niche or emerging directories. Lower effort, still worth listing in to maximize total surface area.</p>
+
+  <table>
+    <thead><tr><th>Directory</th><th>URL</th><th>Focus</th><th>How to List</th></tr></thead>
+    <tbody>
+      <tr><td><strong>mcpbundles.com</strong></td><td>mcpbundles.com</td><td>Bundled MCP setups for specific use cases</td><td>Submit bundle configuration featuring Supericons MCP as the design/UI component</td></tr>
+      <tr><td><strong>Official MCP GitHub</strong></td><td>github.com/modelcontextprotocol/servers</td><td>Reference implementations by Anthropic-managed community</td><td>PR to add Supericons to the community-contributed section. High authority backlink.</td></tr>
+      <tr><td><strong>Cursor Extensions Hub</strong></td><td>cursor.sh (tools section)</td><td>Cursor-specific tool discovery</td><td>Post a config snippet in Cursor's Discord (see forum section). Community shares spread virally.</td></tr>
+      <tr><td><strong>OpenClaw Registry</strong></td><td>Business evaluation.md references this as a target channel</td><td>Agentic framework builders</td><td>Follow OpenClaw's registry submission process. Mentioned in business_evaluation.md as Tier 1 distribution.</td></tr>
+      <tr><td><strong>Dev.to MCP article</strong></td><td>dev.to</td><td>Developer content community indexed by Google</td><td>Write: "How to add Supericons to your Cursor/Claude MCP setup." Include the config snippet. GEO/SEO asset.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─── SECTION 4: MCP CONFIG ─── -->
+<section id="mcpconfig">
+  <div class="sn">// 04 — MCP CONFIG SNIPPETS (COPY AND PUBLISH THESE)</div>
+  <h2 class="sh">The Viral Config Snippets</h2>
+  <p class="sd">Developers share dotfiles and config snippets compulsively. Publishing these in posts, gists, and repos is the highest-leverage distribution action for the MCP. Each snippet is a permanent acquisition asset.</p>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">⚡ Cursor — .cursor/mcp.json</div><div class="post-type">Config Snippet</div></div>
+    <div class="post-body">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "@supericons/mcp"],
+      "description": "Supericons MCP — icon search, curation, and agent-native collections for AI builders"
+    }
+  }
+}</div>
+    <div class="post-footer"><button class="copy-btn" onclick="copyText(this, '{\n  \"mcpServers\": {\n    \"supericons\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@supericons/mcp\"],\n      \"description\": \"Supericons MCP\"\n    }\n  }\n}')">Copy</button><span class="tag t-bl">Publish as GitHub Gist</span><span class="tag t-pu">Post in Cursor Discord</span><span class="tag t-gr">Include in every README</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">🤖 Claude Desktop — claude_desktop_config.json</div><div class="post-type">Config Snippet</div></div>
+    <div class="post-body">{
+  "mcpServers": {
+    "supericons": {
+      "command": "npx",
+      "args": ["-y", "@supericons/mcp"],
+      "env": {}
+    }
+  }
+}</div>
+    <div class="post-footer"><button class="copy-btn" onclick="copyText(this, 'copied')">Copy</button><span class="tag t-bl">Share in r/ClaudeAI</span><span class="tag t-am">Include in Claude tutorial post</span></div>
+  </div>
+</section>
+
+<!-- ─── SECTION 5: DEVELOPER FORUMS ─── -->
+<section id="forums-dev">
+  <div class="sn">// 05 — DEVELOPER FORUMS</div>
+  <h2 class="sh">Developer Communities to Engage</h2>
+  <p class="sd">These are the primary developer community surfaces where Supericons build kits and MCP tools generate organic traction. Post format: genuinely useful first, branded second.</p>
+
+  <div class="forum-grid">
+    <div class="forum-card">
+      <div class="forum-icon">🌐</div>
+      <div class="forum-name">r/webdev</div>
+      <div class="forum-url">reddit.com/r/webdev &nbsp;|&nbsp; 1.6M members</div>
+      <div class="forum-audience">Frontend developers, full-stack builders, people actively building and shipping web products. The largest general web developer community on Reddit. Posts about free UI resources, icon kits, and developer tools consistently rank highly.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> "I curated 50 icons for [specific job]. Free GitHub repo." Show real icons in real context screenshots. Never lead with pricing.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">⚛</div>
+      <div class="forum-name">r/reactjs</div>
+      <div class="forum-url">reddit.com/r/reactjs &nbsp;|&nbsp; 340K members</div>
+      <div class="forum-audience">React developers. High intent for icon library recommendations. Icon questions appear weekly: "What icon library do you use?" "Best icons for React dashboard?" Supericons has React component exports — this is a perfect match.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Share the React component exports from the build kit. "Free React icon components for SaaS dashboards — 50 included." Code snippet in the post.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">💡</div>
+      <div class="forum-name">r/SaaS</div>
+      <div class="forum-url">reddit.com/r/SaaS &nbsp;|&nbsp; 250K members</div>
+      <div class="forum-audience">Solo founders and small teams building SaaS products. Highly relevant: these people care about product quality, launch assets, and time to ship. Before/after UI quality posts perform very well here.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> "Roast my UI / here is the fix" format. Show a generic SaaS dashboard, then the same layout with Supericons. Visceral proof of value.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">🎯</div>
+      <div class="forum-name">Hacker News</div>
+      <div class="forum-url">news.ycombinator.com &nbsp;|&nbsp; Show HN submissions</div>
+      <div class="forum-audience">Technical founders, senior engineers, AI researchers. High selectivity but massive credibility multiplier. A successful "Show HN" post drives thousands of visits and generates backlinks from dev blogs for months afterward.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> "Show HN: Icon system where your AI agent chooses icons with structured reasoning." The agentic angle is exactly what HN finds novel. Apply with the MCP demo recording.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">📝</div>
+      <div class="forum-name">dev.to</div>
+      <div class="forum-url">dev.to &nbsp;|&nbsp; Developer blogging platform</div>
+      <div class="forum-audience">350K+ active developer writers and readers. Articles rank in Google. Writing a dev.to post about Supericons (tutorial, comparison, how-to) creates a permanent SEO asset. The platform also has a newsletter that surfaces popular articles to 200K+ subscribers.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Tutorial: "How to add Supericons to your Cursor workflow in 5 minutes." Include the MCP config snippet. Gets indexed by Google the same day.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">🔧</div>
+      <div class="forum-name">Indie Hackers</div>
+      <div class="forum-url">indiehackers.com &nbsp;|&nbsp; Solo founder community</div>
+      <div class="forum-audience">Indie founders building and monetizing software products. Extremely supportive of "build in public" posts. Revenue transparency posts consistently get 50-200 upvotes. Dev tool recommendations travel fast in this community because everyone is looking for leverage.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> "Building the world's first agent-legible icon system — here is what we learned." Build in public post with real MRR data if available. Follow with product shares.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 6: AI COMMUNITIES ─── -->
+<section id="forums-ai">
+  <div class="sn">// 06 — AI BUILDER COMMUNITIES</div>
+  <h2 class="sh">AI-Native Developer Communities</h2>
+  <p class="sd">The highest-priority communities for the MCP and Agentic AI Kit angle. These are developers who actively use Claude, Cursor, and MCP tools daily. They are the exact primary audience.</p>
+
+  <div class="forum-grid">
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">🤖</div>
+      <div class="forum-name">r/LocalLLaMA</div>
+      <div class="forum-url">reddit.com/r/LocalLLaMA &nbsp;|&nbsp; 600K+ members</div>
+      <div class="forum-audience">Local AI model users and agentic workflow builders. MCP discussions are frequent here. This community specifically uses and discusses MCP tools, agent frameworks, and developer tooling. High engagement on MCP-related posts.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> The MCP post goes here first. "Added Supericons MCP to my Cursor setup — my AI agent can now choose and justify icon selections." Share the config snippet and a screen recording.</div>
+    </div>
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">🧠</div>
+      <div class="forum-name">r/ClaudeAI</div>
+      <div class="forum-url">reddit.com/r/ClaudeAI &nbsp;|&nbsp; Active MCP discussion hub</div>
+      <div class="forum-audience">Claude users who are specifically MCP-aware. "r/ClaudeAI and r/mcp are the primary hubs for developers sharing, building, and troubleshooting MCP servers." (Confirmed from research.) This is where the MCP config snippet spreads virally.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Share the claude_desktop_config.json snippet. Post: "Just added Supericons MCP to Claude — it now returns icon collections with semantic justification for any UI task." Include a screenshot of Claude's response.</div>
+    </div>
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">⚡</div>
+      <div class="forum-name">r/mcp (dedicated subreddit)</div>
+      <div class="forum-url">reddit.com/r/mcp &nbsp;|&nbsp; MCP-specific community</div>
+      <div class="forum-audience">The dedicated MCP subreddit. Developers building, using, and sharing MCP servers. A post here about the Supericons MCP with the config snippet reaches the most technically-invested MCP users. This is the equivalent of posting in the niche community that cares most.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Technical post showing the MCP tool schemas. Show the get_collection_for_intent tool input/output. Explain why icon selection needed MCP integration.</div>
+    </div>
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">💻</div>
+      <div class="forum-name">Cursor Discord</div>
+      <div class="forum-url">discord.gg/cursor &nbsp;|&nbsp; #mcp-servers or #tools channel</div>
+      <div class="forum-audience">Cursor users actively building with the AI editor. The MCP and tools channels see constant sharing of config snippets and new server announcements. Config snippets shared here get spread in dotfiles repos, blog posts, and GitHub starter kits.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Post the .cursor/mcp.json snippet. "Just set up Supericons MCP in Cursor — now I can ask Cursor to choose icons for any UI task and it returns a justified set. Here is the config." One-click share.</div>
+    </div>
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">🔗</div>
+      <div class="forum-name">LangChain / LangGraph Discord</div>
+      <div class="forum-url">discord.gg/langchain &nbsp;|&nbsp; #tools-and-integrations</div>
+      <div class="forum-audience">Agent framework builders. LangChain/LangGraph developers are building orchestration systems and need icon assets for their demo UIs and dashboard outputs. The Agentic AI Kit is directly relevant to this audience — they are building the exact products the icons depict.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Share the Agentic AI Kit icons in context. "Building a RAG pipeline UI? These are the only purpose-built icons for rag-pipeline, vector-db, embedding, orchestrator. Free set available."</div>
+    </div>
+    <div class="forum-card" style="border-top:3px solid var(--pu)">
+      <div class="forum-icon">🛠</div>
+      <div class="forum-name">Reactiflux Discord</div>
+      <div class="forum-url">discord.gg/reactiflux &nbsp;|&nbsp; 200K+ React developers</div>
+      <div class="forum-audience">One of the most active real-time React developer communities. Frequently cited as the best place for icon library recommendations. Supericons React component exports make this a natural match. Share the npm install command and framework components.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Answer existing icon-related questions in #help. Mention Supericons when genuinely applicable. Post the Dashboard Nav 50 kit in #show-and-tell.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 7: DESIGN COMMUNITIES ─── -->
+<section id="forums-design">
+  <div class="sn">// 07 — DESIGN COMMUNITIES</div>
+  <h2 class="sh">Design & No-Code Communities</h2>
+  <p class="sd">The tertiary audience. These users come for premium feel and Motion Lab. They convert to paid faster than developers because they pay for aesthetics directly.</p>
+
+  <div class="forum-grid">
+    <div class="forum-card">
+      <div class="forum-icon">🎨</div>
+      <div class="forum-name">Framer Community</div>
+      <div class="forum-url">framer.community &nbsp;|&nbsp; Official Framer forum</div>
+      <div class="forum-audience">Framer builders and template creators. Premium UI kits and motion components sell consistently here. The Motion Lab animated collection is directly relevant. Framer marketplace validates that builders pay for premium motion.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Share the animated collection preview. "CSS-only animated icons with zero JS — plug into Framer flows directly." Show the hover animation demo.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">🖼</div>
+      <div class="forum-name">r/UI_Design</div>
+      <div class="forum-url">reddit.com/r/UI_Design &nbsp;|&nbsp; 300K members</div>
+      <div class="forum-audience">UI designers sharing work and tools. Before/after comparisons and icon system showcases perform well. This community shares high-quality UI resources widely, including on X and LinkedIn.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Visual showcase post. Share 8-10 icons from the Agentic AI Kit in a clean dark-mode context. "How we designed icons for concepts that have never been depicted as icons before."</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">✏️</div>
+      <div class="forum-name">r/UXDesign</div>
+      <div class="forum-url">reddit.com/r/UXDesign &nbsp;|&nbsp; Active UX community</div>
+      <div class="forum-audience">UX designers and researchers. Interested in icon semantics, meaning, and usability — which maps directly to Supericons' curation thesis. A post about "icon vocabulary for AI products" is intellectually interesting to this audience.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Write about the vocabulary problem: "What icon do you use for 'agent memory'? There wasn't one until now." Positions Supericons as solving a design systems problem, not just selling assets.</div>
+    </div>
+    <div class="forum-card">
+      <div class="forum-icon">🌈</div>
+      <div class="forum-name">Figma Community</div>
+      <div class="forum-url">figma.com/community &nbsp;|&nbsp; Publish free Figma file</div>
+      <div class="forum-audience">Designers using Figma for product and UI design. Publishing a free Figma community file with the 50-icon Dashboard Navigation kit puts Supericons in front of every designer who searches for "dashboard icons" in Figma. One-time action, permanent discovery.</div>
+      <div class="forum-angle"><strong>Supericons angle:</strong> Publish a Figma community file: "Dashboard Navigation Icons 50 — Free AI Builder UI Kit." This gets indexed in Figma's search. Each download is a warm lead.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 8: LAUNCH PLATFORMS ─── -->
+<section id="forums-launch">
+  <div class="sn">// 08 — LAUNCH PLATFORMS</div>
+  <h2 class="sh">Product Launch Surfaces</h2>
+  <p class="sd">One-time launch events that generate concentrated bursts of traffic and email captures. Plan and execute in the right order.</p>
+
+  <table>
+    <thead><tr><th>Platform</th><th>Timing</th><th>Angle</th><th>Expected Outcome</th><th>Effort</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Product Hunt</strong><br><span style="font-size:.73rem;color:var(--td)">producthunt.com</span></td><td>Week 4-6 (after GitHub kits launch and warm audience exists)</td><td>"Supericons — Icon intelligence platform for AI builders and agentic workflows." Tagline: "The first icon system your AI agent understands." Demo GIF on launch page showing MCP in action.</td><td>500-2000 visits on launch day. 50-200 upvotes. Newsletter features. Long-tail SEO article from community writers.</td><td>1-2 days prep</td></tr>
+      <tr><td><strong>Peerlist</strong><br><span style="font-size:.73rem;color:var(--td)">peerlist.io</span></td><td>Week 3-4</td><td>Developer-specific launch platform. More targeted than PH. Strong AI tools category. Founders and senior engineers are the audience.</td><td>200-500 targeted developer visits. High quality traffic vs PH's broader audience.</td><td>3 hours prep</td></tr>
+      <tr><td><strong>BetaList</strong><br><span style="font-size:.73rem;color:var(--td)">betalist.com</span></td><td>Week 2</td><td>"Agent-native icon library for AI product builders." BetaList reaches early adopters who actively look for new dev tools.</td><td>50-200 beta signups. Email list building for the free tier.</td><td>1 hour</td></tr>
+      <tr><td><strong>Uneed.app</strong><br><span style="font-size:.73rem;color:var(--td)">uneed.app</span></td><td>Week 2-3</td><td>Daily product discovery for makers. Free listing. Good for MCP tool and developer asset categories.</td><td>100-400 visits. Modest but adds to the total acquisition surface.</td><td>30 min</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert a-am">
+    <span class="alert-i">⚡</span>
+    <div><strong>Product Hunt sequencing rule:</strong> Do NOT launch on Product Hunt before you have at least 3 GitHub build kits live, the MCP listed on Smithery + Glama, and at least 2 Reddit posts that generated real engagement. Product Hunt traffic converts better when people can find evidence of real usage and community validation before they upvote.</div>
+  </div>
+</section>
+
+<!-- ─── SECTION 9: X POSTS ─── -->
+<section id="posts-x">
+  <div class="sn">// 09 — SOCIAL MEDIA KIT: X (TWITTER)</div>
+  <h2 class="sh">X Post Templates — Copy, Customize, Post</h2>
+  <p class="sd">Five ready-to-post X thread templates. Each one is designed as a specific hook. Attach screenshots or screen recordings for maximum reach.</p>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">𝕏 Thread — Hook: Vocabulary Gap</div><div class="post-type">Week 1 — Post with icon images</div></div>
+    <div class="post-body"><strong>There are icons for "file," "folder," and "settings."</strong>
+
+There are basically zero credible icons for:
+— RAG pipeline
+— vector database
+— model guardrail
+— token cost
+— agent memory
+— orchestrator
+
+Every AI product builder hits this wall.
+
+🧵 We built the vocabulary. Here is what we designed and why:</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-bl">Attach: Agentic AI Kit grid image</span><span class="tag t-am">End thread with supericons.dev link</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">𝕏 Single Tweet — Hook: MCP Config</div><div class="post-type">Week 2 — Viral config snippet</div></div>
+    <div class="post-body"><strong>Added Supericons to my Cursor setup.</strong>
+
+Now I can type "add icons to the AI dashboard sidebar" and it returns a justified icon set — with semantic reasoning for each choice.
+
+Config:
+
+.cursor/mcp.json
+{"mcpServers": {"supericons": {"command": "npx", "args": ["-y", "@supericons/mcp"]}}}
+
+supericons.dev/mcp</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-pu">Attach: Screen recording of Claude selecting icons</span><span class="tag t-gr">Tag @cursor_ai if possible</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">𝕏 Thread — Hook: Before/After UI</div><div class="post-type">Week 3 — Visual proof</div></div>
+    <div class="post-body"><strong>Two interfaces. Same layout. Different icons.</strong>
+
+One looks like an MVP.
+One looks like a funded product.
+
+The only difference: Supericons vs generic icon pack.
+
+This took 4 minutes to swap.
+
+🧵 Here is what changed (and why it matters for your launch screenshots):</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-or">Attach: Side-by-side screenshot or AI video</span><span class="tag t-te">End with free kit link</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">𝕏 Single Tweet — Hook: Free Kit Drop</div><div class="post-type">Each week a new kit drops</div></div>
+    <div class="post-body"><strong>Free: 50 icons for SaaS dashboard navigation.</strong>
+
+React + Vue + Svelte components included.
+Sprite SVG included.
+Usage guide included.
+
+It is on GitHub. No email required.
+
+Built from the Supericons ecosystem.
+→ [GitHub repo link]</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-gr">Post every Tuesday when a new kit drops</span><span class="tag t-bl">Attach: Preview of the 50 icons in grid</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">𝕏 Controversial Take — Hook: Polarizing UX Claim</div><div class="post-type">Week 4 — Sparks debate</div></div>
+    <div class="post-body"><strong>If your AI SaaS uses generic font icons, you look like a legacy bank.</strong>
+
+I know that is harsh.
+
+But designers can tell in 2 seconds. And so can your users, even if they cannot say why.
+
+The bar for AI product UI in 2026 is higher than it was in 2023.
+
+Here is the fastest way to close the gap 👇</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-re">This will generate pushback — engage it. Debate = reach.</span><span class="tag t-am">From genai_marketing_plan.md — proven format</span></div>
+  </div>
+</section>
+
+<!-- ─── SECTION 10: REDDIT POSTS ─── -->
+<section id="posts-reddit">
+  <div class="sn">// 10 — REDDIT POST TEMPLATES</div>
+  <h2 class="sh">Reddit Post Templates</h2>
+  <p class="sd">Reddit rewards genuine utility. These posts lead with value, never with promotion. The Supericons mention is always contextual and relevant.</p>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">r/webdev — Free Resource Drop</div><div class="post-type">Week 1 — Post with preview screenshots</div></div>
+    <div class="post-body"><strong>I curated 50 icons specifically for SaaS dashboard navigation. Free GitHub repo.</strong>
+
+After building a few dashboards and realizing I was hunting across 6 different libraries every time, I just curated the 50 icons that actually show up in every SaaS nav:
+
+— sidebar navigation
+— top bar actions
+— settings and user controls
+— notification states
+— analytics views
+
+Includes React, Vue, and Svelte components. Sprite SVG. Usage guide.
+
+→ [GitHub link]
+
+Built from the Supericons ecosystem. Everything is MIT licensed. No email required.
+
+<em>[Attach 2-3 screenshots showing icons in real UI context]</em></div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-bl">r/webdev</span><span class="tag t-pu">r/reactjs</span><span class="tag t-gr">r/SaaS</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">r/LocalLLaMA — MCP Announcement</div><div class="post-type">Week 2 — Technical MCP post</div></div>
+    <div class="post-body"><strong>Built an MCP server so your AI agent can choose and justify icon selections — figured this community might find it useful.</strong>
+
+Context: I was tired of asking Cursor to "add icons" and getting random Lucide choices with no reasoning. So I built an MCP server for it.
+
+Now when the agent hits an iconography task, it calls Supericons MCP, which returns:
+— a curated set for the stated intent
+— semantic justification for each icon
+— trust tier of the source library
+— contraindications (icons to avoid for this context)
+
+The config for Cursor:
+
+{"mcpServers": {"supericons": {"command": "npx", "args": ["-y", "@supericons/mcp"]}}}
+
+Still early. Would love feedback on the tool schema design if anyone wants to poke at it.
+
+→ supericons.dev/mcp</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-pu">r/LocalLLaMA</span><span class="tag t-bl">r/ClaudeAI</span><span class="tag t-te">r/mcp</span></div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">r/SaaS — Roast My UI / Before-After</div><div class="post-type">Week 3-4 — Visual proof format</div></div>
+    <div class="post-body"><strong>I fixed [Popular AI startup]'s dashboard UI using zero JavaScript. Before/after.</strong>
+
+Not a roast, more of a respectful redesign exercise. Their product is great. The iconography just felt generic.
+
+What changed:
+— replaced 8 generic Lucide icons with purpose-built equivalents
+— swapped the spinner for a CSS-only animated icon
+— used an actual "agent" icon instead of a robot emoji in the sidebar
+
+Time to do the swap: 12 minutes.
+
+The result is in the comments.
+
+<em>[Post before screenshot as post image, after screenshot in first comment]</em>
+
+Tools: Supericons (supericons.dev) — the icons are free for the standard set.</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-re">Research target company first — pick one everyone knows</span><span class="tag t-am">Respectful, not a takedown</span></div>
+  </div>
+
+</section>
+
+<!-- ─── SECTION 11: HACKER NEWS ─── -->
+<section id="posts-hn">
+  <div class="sn">// 11 — HACKER NEWS (SHOW HN)</div>
+  <h2 class="sh">Hacker News submission</h2>
+  <p class="sd">One shot. The title must be specific, honest, and technically interesting. HN readers reward novel technical claims with real-world demos. The agentic angle is the hook.</p>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">Hacker News — Show HN</div><div class="post-type">Week 3 — After MCP demo is recorded</div></div>
+    <div class="post-body"><strong>Show HN: Icon system where your AI agent chooses icons with structured reasoning (not just search)</strong>
+
+Most icon libraries return a list of search results. The agent then guesses which one "looks right."
+
+Supericons MCP does something different: when an agent asks for icons for a stated UI context, it returns a curated set with:
+
+— canonical intent per icon (what concept this icon communicates)
+— semantic aliases (so agents can match intent, not just keyword)
+— contraindications (what contexts to avoid this icon in)
+— source trust tier (is this library maintained, licensed, and coherent?)
+— design system affinity scores
+
+The result: an agent building a RAG pipeline dashboard gets a specific, justified set — not a random list from a search query.
+
+Demo: [link to screen recording of Claude building a sidebar]
+
+It is built on top of MCP. Config snippet and docs at supericons.dev/mcp.
+
+Happy to discuss the manifest schema design — it is the core of how the structured reasoning works.</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-re">Do NOT post until the demo recording is complete</span><span class="tag t-am">Post at 9am PST on a Tuesday or Wednesday</span></div>
+  </div>
+
+  <div class="alert a-bl">
+    <span class="alert-i">🎯</span>
+    <div><strong>HN success factors:</strong> The demo must be real and unscripted. HN readers can detect staged demos instantly. Post at 9am PST Tue-Thu for maximum visibility. Respond to every comment in the first 90 minutes. The "manifest schema" technical depth in the post comment section is what keeps the thread alive for 24 hours.</div>
+  </div>
+</section>
+
+<!-- ─── SECTION 12: INDIE HACKERS ─── -->
+<section id="posts-ih">
+  <div class="sn">// 12 — INDIE HACKERS</div>
+  <h2 class="sh">Indie Hackers Post Template</h2>
+  <p class="sd">IH rewards transparency and build-in-public honesty. Revenue data, real user stories, and lessons learned outperform promotional posts 5:1. This post is the foundation of the brand story.</p>
+
+  <div class="post-card">
+    <div class="post-hdr"><div class="post-platform">Indie Hackers — Build in Public Post</div><div class="post-type">Week 2 — After first GitHub kit is live</div></div>
+    <div class="post-body"><strong>We just shipped Supericons v1: the world's first agent-legible icon system. Here is what we learned.</strong>
+
+The core insight that drove everything: humans and agents have the same icon problem in completely different forms.
+
+Humans experience choice paralysis — 20,000 icons, no guidance on which belongs where.
+Agents experience metadata poverty — they can read a filename, but they cannot understand intent, trust a source, or know when NOT to use an icon.
+
+We built the same system to solve both: a semantic intention layer that humans see as "curated collections" and agents access as structured schema.
+
+What we shipped in v1:
+— 20K+ icon search and discovery
+— Agentic AI Kit: 40 icons built specifically for AI product UIs (the only ones in the world for concepts like vector-db, rag-pipeline, orchestrator, guardrail)
+— Motion Lab: CSS-only animated collections
+— MCP server: agents can search, retrieve, and justify icon choices programmatically
+
+What surprised us:
+— The Agentic AI Kit was the hardest thing to design. Depicting "model temperature" or "context window" as a 24x24px icon with no prior art is a genuine design problem.
+— MCP distribution is faster-compounding than SEO. One config snippet shared in a Discord = 50 installs.
+— The "roast my UI" format on Reddit outperformed every promotional post we tried.
+
+Current MRR: [your number]
+Next milestone: [your goal]
+
+If you are building AI products and struggling with the iconography, the Agentic AI Kit is free. Link in comments.</div>
+    <div class="post-footer"><button class="copy-btn" onclick="this.textContent='Copied!'">Copy</button><span class="tag t-gr">Fill in real MRR number for max credibility</span><span class="tag t-am">Post on a Tuesday morning</span></div>
+  </div>
+</section>
+
+<!-- ─── SECTION 13: NEWSLETTERS ─── -->
+<section id="newsletter">
+  <div class="sn">// 13 — NEWSLETTER SUBMISSIONS</div>
+  <h2 class="sh">Developer Newsletter Targets</h2>
+  <p class="sd">Each newsletter mention reaches 50K-200K developers and generates a long-tail backlink. One submission per week for 6 weeks covers the full tier.</p>
+
+  <table>
+    <thead><tr><th>Newsletter</th><th>Audience</th><th>Reach</th><th>Angle</th><th>Submit URL</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>TLDR Newsletter</strong></td>
+        <td>Developers, founders, AI builders</td>
+        <td>700K+ subscribers</td>
+        <td>"Supericons MCP — the icon system your AI coding agent can actually use." Emphasize the agentic angle, link the MCP demo.</td>
+        <td>tldr.tech/sponsor (or editorial submission via site contact)</td>
+      </tr>
+      <tr>
+        <td><strong>JavaScript Weekly</strong></td>
+        <td>Frontend and fullstack JS developers</td>
+        <td>185K+ subscribers</td>
+        <td>Submit the GitHub build kit as a "cool resource." This newsletter links interesting GitHub repos and tools every week. The React component exports are the hook.</td>
+        <td>javascriptweekly.com/issues (submit link in response form)</td>
+      </tr>
+      <tr>
+        <td><strong>React Newsletter</strong></td>
+        <td>React ecosystem developers</td>
+        <td>30K-50K subscribers</td>
+        <td>"50 free React icon components for dashboard navigation — curated from the Supericons ecosystem." Direct match to audience need.</td>
+        <td>ui.dev/react-newsletter</td>
+      </tr>
+      <tr>
+        <td><strong>Bytes.dev (ui.dev)</strong></td>
+        <td>Frontend developers, React/TypeScript</td>
+        <td>200K+ subscribers</td>
+        <td>Submit as a tool. Bytes.dev has a "Cool Stuff" section featuring new dev tools. The visual nature of Supericons makes for good newsletter content.</td>
+        <td>bytes.dev (submit form on site)</td>
+      </tr>
+      <tr>
+        <td><strong>Ben's Bites (AI newsletter)</strong></td>
+        <td>AI builders, founders, product people</td>
+        <td>100K+ subscribers</td>
+        <td>"First icon MCP for AI-native product builders." The MCP angle is the hook — this newsletter specifically covers AI developer tooling.</td>
+        <td>bensbites.co (editorial, submit interesting AI tools)</td>
+      </tr>
+      <tr>
+        <td><strong>The Rundown AI</strong></td>
+        <td>AI professionals and builders</td>
+        <td>600K+ subscribers</td>
+        <td>Angle: "The first icon vocabulary built for AI product UIs — RAG pipelines, guardrails, orchestrators, vector databases depicted as icons for the first time." The novelty is the hook.</td>
+        <td>therundown.ai (contact or editorial submission)</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─── SECTION 14: MASTER CHECKLIST ─── -->
+<section id="checklist" style="border-bottom:none">
+  <div class="sn">// 14 — MASTER EXECUTION CHECKLIST</div>
+  <h2 class="sh">Everything in Order. Check Off as You Go.</h2>
+  <p class="sd">Complete in this exact sequence. Each action unlocks the next. Do not skip ahead.</p>
+
+  <h3 style="font-size:.85rem;font-weight:700;color:var(--re);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">Day 1 (Today)</h3>
+  <div class="checklist" style="margin-bottom:1.5rem">
+    <div class="check-item"><div class="check-box"></div><div class="check-text">List Supericons MCP on <strong>Smithery.ai</strong> — go to <code>smithery.ai/new</code></div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">List Supericons MCP on <strong>Glama.ai</strong> — go to <code>glama.ai/mcp/servers</code>, click "Add MCP Server"</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">List Supericons MCP on <strong>mcp.so</strong></div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">List Supericons MCP on <strong>PulseMCP</strong> — <code>pulsemcp.com</code></div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Publish <strong>.cursor/mcp.json</strong> config snippet as a GitHub Gist and link it from the MCP README</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Add <code>llms.txt</code> to supericons.dev root describing the product, collections, and MCP tools</div></div>
+  </div>
+
+  <h3 style="font-size:.85rem;font-weight:700;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">Week 1</h3>
+  <div class="checklist" style="margin-bottom:1.5rem">
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit PR to <strong>awesome-mcp-servers</strong> GitHub repo: add Supericons MCP to Design Tools section</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit Supericons MCP to <strong>mcp.directory</strong></div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">List on <strong>mcpservers.org</strong> — consider Premium badge option</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Package and publish <strong>Dashboard Navigation 50</strong> GitHub build kit</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post to <strong>r/webdev</strong>: "I curated 50 icons for SaaS dashboard nav. Free GitHub repo." (template in Section 10)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post <strong>X Thread #1</strong>: Vocabulary Gap thread with Agentic AI Kit icons (template in Section 09)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Share config snippet in <strong>Cursor Discord</strong> #tools channel</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit to <strong>BetaList</strong></div></div>
+  </div>
+
+  <h3 style="font-size:.85rem;font-weight:700;color:var(--gr);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">Week 2</h3>
+  <div class="checklist" style="margin-bottom:1.5rem">
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Apply to <strong>Anthropic Claude Connectors Directory</strong> (long review time, start early)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Publish <strong>Status Feedback 50</strong> GitHub build kit</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post to <strong>r/LocalLLaMA</strong>: MCP announcement thread (template in Section 10)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post to <strong>Indie Hackers</strong>: Build in public post (template in Section 12)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post <strong>X Tweet #2</strong>: MCP config snippet (template in Section 09)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit to <strong>Bytes.dev</strong> newsletter</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Write and publish <strong>dev.to article</strong>: "How to add Supericons to your Cursor MCP setup in 5 minutes"</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Publish <strong>Figma Community file</strong>: Dashboard Navigation Icons 50</div></div>
+  </div>
+
+  <h3 style="font-size:.85rem;font-weight:700;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">Week 3</h3>
+  <div class="checklist" style="margin-bottom:1.5rem">
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Record the <strong>Agentic Demo</strong> (Claude Code / Cursor MCP session, unscripted)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post <strong>Show HN</strong>: "Icon system where your AI agent chooses icons with structured reasoning" (template in Section 11)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post to <strong>r/ClaudeAI</strong> and <strong>r/mcp</strong> with MCP config snippet</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Publish <strong>Ecommerce Essentials 50</strong> GitHub kit</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit to <strong>JavaScript Weekly</strong> newsletter</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit to <strong>LangChain Discord</strong> #tools-and-integrations — Agentic AI Kit post</div></div>
+  </div>
+
+  <h3 style="font-size:.85rem;font-weight:700;color:var(--pu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">Week 4</h3>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post <strong>r/SaaS</strong> "Roast my UI" / before-after post (template in Section 10)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Generate 3 <strong>motion showcase videos</strong> with Kling or equivalent. Post best one to X.</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Launch on <strong>Product Hunt</strong> (after warm audience from Weeks 1-3 is built)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Submit to <strong>Ben's Bites</strong> and <strong>The Rundown AI</strong> newsletters</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post <strong>X Thread #3</strong>: Before/after UI reveal (template in Section 09)</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post in <strong>Framer Community</strong> with animated icon showcase</div></div>
+    <div class="check-item"><div class="check-box"></div><div class="check-text">Post in <strong>Reactiflux Discord</strong> #show-and-tell with build kit</div></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const secs=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  secs.forEach(s=>obs.observe(s));
+
+  function copyText(btn, text) {
+    navigator.clipboard.writeText(text).then(()=>{
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(()=>btn.textContent=orig, 1800);
+    });
+  }
+</script>
+</body>
+</html>

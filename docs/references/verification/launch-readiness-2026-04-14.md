@@ -1,7 +1,7 @@
 # Launch Readiness Verification
 
-Date: April 14, 2026
-Scope: final launch evidence for Supericons after live domain, billing, converter, package, and hosted Motion Lab verification work completed
+Date: April 14-15, 2026
+Scope: final launch evidence for Supericons after live domain, billing, converter, package, hosted Motion Lab, and local-only admin hardening verification work completed
 
 ## Live Evidence Captured
 
@@ -11,6 +11,10 @@ Scope: final launch evidence for Supericons after live domain, billing, converte
 - `www.supericons.dev` redirects to the apex domain
 - the latest production build was deployed successfully
 - the operator reported a live smoke pass after deployment
+- Umami analytics was verified live on April 15, 2026:
+  - `https://cloud.umami.is/script.js` loaded successfully
+  - the live send request returned `200`
+  - the request chain confirmed production analytics traffic from `supericons.dev`
 
 ### 2. Supabase Auth and Email Configuration
 
@@ -26,6 +30,10 @@ Dashboard verification completed:
 
 Operator-confirmed:
 - auth flows were already tested extensively on the live stack before this final pass
+- admin maintenance is now local-only:
+  - `admin-api` accepts only `http://localhost:5173`
+  - production `/admin` and `/admin.html` no longer expose the admin dashboard
+  - the rotated `ADMIN_SECRET` was re-tested successfully from local `admin.html`
 
 ### 3. Stripe Billing and Entitlements
 
@@ -47,6 +55,7 @@ Verified live:
 - the Railway-backed converter service is already deployed
 - the converter flow was exercised from the live production site
 - no converter-service code changes were made afterward, so no new Railway deploy was needed
+- the production bundle was rebuilt with the Railway converter URL embedded so live and local converter quality now match
 
 ### 5. MCP Package and Registry
 
@@ -72,11 +81,17 @@ Operator-confirmed:
 - the launch minimum was completed at a desktop-first level
 - this is intentionally not a full mobile-parity claim
 
+### 8. Pre-Launch Data Hygiene
+
+Operator-confirmed:
+- pre-launch test users were removed from Supabase
+- the only remaining Stripe oddity is the known guest-customer residue for some one-time purchase flows
+- that guest-customer behavior is documented as a future cleanup-consistency improvement, not a launch blocker
+
 ## Checks Treated As Non-Blocking For Launch
 
 These are still useful, but are not treated as hard release blockers:
 
-- Umami live verification
 - uptime monitoring setup
 - Search Console submission
 - social preview checks

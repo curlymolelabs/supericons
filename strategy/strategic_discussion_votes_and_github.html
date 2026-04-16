@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supericons: Strategic Discussion — Votes & GitHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--pk:#f472b6;--or:#fb923c;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gr),var(--bl));z-index:999;transition:width .1s}
+
+    .sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.5rem .75rem;display:flex;flex-direction:column;gap:.1rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .sb-dot{width:8px;height:8px;border-radius:50%;background:var(--gr);box-shadow:0 0 10px var(--gr);animation:sbp 2s infinite}
+    @keyframes sbp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7);opacity:.5}}
+    .sb-section{font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tf);padding:.7rem .5rem .2rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .6rem;border-radius:6px;color:var(--td);text-decoration:none;font-size:.76rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{background:rgba(52,211,153,.1);color:var(--gr)}
+    .sb-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);min-width:1.4rem}
+
+    .main{margin-left:230px}
+
+    .hero{padding:4.5rem 4rem 4rem;border-bottom:1px solid var(--bd);
+      background:radial-gradient(ellipse at 60% -10%,rgba(52,211,153,.05),transparent 50%),
+                 radial-gradient(ellipse at 20% 110%,rgba(96,165,250,.05),transparent 50%)}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gr);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:99px;padding:.2rem .8rem;margin-bottom:1.5rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,3vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.85rem}
+    .hero-sub{font-size:.93rem;color:var(--td);max-width:700px;line-height:1.75}
+
+    section{padding:4rem;border-bottom:1px solid var(--bd)}
+    .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);margin-bottom:.4rem}
+    .sh{font-family:'Space Grotesk',sans-serif;font-size:1.65rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.65rem}
+    .sd{color:var(--td);max-width:700px;line-height:1.7;font-size:.92rem;margin-bottom:1.5rem}
+
+    /* VERDICT */
+    .verdict{border-radius:14px;padding:1.75rem 2rem;margin:1.5rem 0}
+    .v-yes{background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(45,212,191,.06));border:2px solid rgba(52,211,153,.3)}
+    .v-no{background:linear-gradient(135deg,rgba(248,113,113,.08),rgba(251,146,60,.06));border:2px solid rgba(248,113,113,.3)}
+    .v-nuance{background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(251,146,60,.06));border:2px solid rgba(251,191,36,.3)}
+    .v-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    .v-title{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:800;color:var(--t);line-height:1.25;margin-bottom:.6rem}
+    .v-body{font-size:.89rem;color:var(--td);line-height:1.75}
+    .v-body strong{color:var(--t)}
+
+    /* ARGUMENT CARD */
+    .arg{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.4rem;margin:.75rem 0}
+    .arg-label{font-size:.63rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem}
+    .arg-body{font-size:.87rem;color:var(--td);line-height:1.7}
+    .arg-body strong{color:var(--t)}
+
+    /* GRID */
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+    .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+
+    /* SPLIT COMPARE */
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin:1.5rem 0}
+    .compare-col{padding:1.5rem}
+    .compare-col:first-child{border-right:1px solid var(--bd);background:rgba(248,113,113,.04)}
+    .compare-col:last-child{background:rgba(52,211,153,.04)}
+    .compare-title{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.75rem}
+    .compare-list{display:flex;flex-direction:column;gap:.4rem}
+    .compare-item{font-size:.83rem;color:var(--td);line-height:1.5;display:flex;gap:.5rem}
+    .ci-icon{flex-shrink:0;margin-top:.1rem}
+
+    /* KIT CARDS */
+    .kit-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;padding:1.3rem;transition:all .2s}
+    .kit-card:hover{border-color:var(--bl);transform:translateY(-2px)}
+    .kit-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--tf);margin-bottom:.25rem}
+    .kit-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:var(--t);margin-bottom:.25rem}
+    .kit-desc{font-size:.8rem;color:var(--td);line-height:1.6;margin-bottom:.6rem}
+    .kit-icons{font-size:.74rem;color:var(--tf);margin-bottom:.5rem}
+    .kit-sources{font-size:.72rem;color:var(--tf)}
+
+    /* TAGS */
+    .tag{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:4px;margin:.1rem}
+    .t-bl{background:rgba(96,165,250,.12);color:var(--bl)}
+    .t-pu{background:rgba(167,139,250,.12);color:var(--pu)}
+    .t-gr{background:rgba(52,211,153,.12);color:var(--gr)}
+    .t-am{background:rgba(251,191,36,.12);color:var(--am)}
+    .t-re{background:rgba(248,113,113,.12);color:var(--re)}
+    .t-te{background:rgba(45,212,191,.12);color:var(--te)}
+    .t-or{background:rgba(251,146,60,.12);color:var(--or)}
+
+    /* ALERT */
+    .alert{display:flex;gap:.75rem;align-items:flex-start;border-radius:10px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.87rem;line-height:1.65}
+    .alert-i{flex-shrink:0;font-size:1.1rem}
+    .a-gr{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);color:#a7f3d0}
+    .a-re{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:#fecaca}
+    .a-am{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:#fde68a}
+    .a-bl{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.25);color:#bfdbfe}
+    .a-pu{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25);color:#ddd6fe}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:.5rem}
+    .step{display:flex;gap:.7rem;align-items:flex-start}
+    .step-n{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--tf);min-width:1.6rem;padding-top:.2rem}
+    .step-t{font-size:.86rem;color:var(--td);line-height:1.55}
+    .step-t strong{color:var(--t)}
+
+    /* SCHEMA BLOCK */
+    .schema{background:var(--bg-s);border:1px solid var(--bd2);border-radius:10px;padding:1.25rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--te);line-height:1.8;margin:1rem 0;overflow-x:auto}
+    .schema .k{color:var(--bl)}
+    .schema .v{color:var(--gr)}
+    .schema .s{color:var(--am)}
+    .schema .c{color:var(--tf);font-style:italic}
+
+    /* DECISION TABLE */
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0}
+    th{text-align:left;padding:.7rem 1rem;background:var(--bg-r);border:1px solid var(--bd);color:var(--td);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+    td{padding:.7rem 1rem;border:1px solid var(--bd);color:var(--td);line-height:1.5;vertical-align:top}
+    tr:hover td{background:rgba(255,255,255,.02)}
+
+    /* MOAT DIAGRAM */
+    .moat{display:flex;flex-direction:column;gap:.75rem;margin:1.5rem 0}
+    .moat-layer{border-radius:10px;padding:1rem 1.25rem;position:relative}
+    .moat-label{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+    .moat-desc{font-size:.84rem;line-height:1.55}
+    .moat-copy{font-size:.72rem;margin-top:.35rem;font-style:italic}
+
+    hr.div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);border:none;margin:2rem 0}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      section,.hero{padding:2rem 1.25rem}
+      .grid2,.compare{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-dot"></div>Strategic Discussion</div>
+  <div class="sb-section">Idea 1: Votes</div>
+  <a class="sb-link" href="#vote-verdict"><span class="sb-n">01</span>The Honest Verdict</a>
+  <a class="sb-link" href="#vote-moat"><span class="sb-n">02</span>Is the Moat Real?</a>
+  <a class="sb-link" href="#vote-weak"><span class="sb-n">03</span>The Real Weakness</a>
+  <a class="sb-link" href="#vote-right"><span class="sb-n">04</span>The Right Version</a>
+  <a class="sb-link" href="#vote-schema"><span class="sb-n">05</span>Evidence Object Schema</a>
+  <a class="sb-link" href="#vote-sequence"><span class="sb-n">06</span>Build Sequence</a>
+  <div class="sb-section">Idea 2: GitHub</div>
+  <a class="sb-link" href="#gh-verdict"><span class="sb-n">07</span>The Honest Verdict</a>
+  <a class="sb-link" href="#gh-taxonomy"><span class="sb-n">08</span>Taxonomy Design</a>
+  <a class="sb-link" href="#gh-kits"><span class="sb-n">09</span>The 10 Collections</a>
+  <a class="sb-link" href="#gh-packaging"><span class="sb-n">10</span>What Makes a Kit Viral</a>
+  <div class="sb-section">Combined</div>
+  <a class="sb-link" href="#synthesis"><span class="sb-n">11</span>How They Work Together</a>
+  <a class="sb-link" href="#order"><span class="sb-n">12</span>What to Build First</a>
+</nav>
+
+<main class="main">
+
+<div class="hero">
+  <div class="badge">💬 Honest Strategic Discussion — April 2026</div>
+  <h1 class="hero-h1" style="background:linear-gradient(135deg,var(--gr),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Votes + GitHub:<br>Are These the Right Moves?</h1>
+  <p class="hero-sub">Two ideas discussed honestly. What is right, what is wrong, what the right version of each idea looks like, and what order to build them in. No validation for its own sake — only what is actually true.</p>
+</div>
+
+<!-- ===================================================
+  IDEA 1: VOTING
+  =================================================== -->
+
+<section id="vote-verdict">
+  <div class="sn">// IDEA 1: VOTING — 01 THE HONEST VERDICT</div>
+  <h2 class="sh">The Core Idea Is Correct. The Execution Risk Is High.</h2>
+  <p class="sd">Yes, network-effect data is hard to copy. Yes, contextual judgment is more valuable than raw popularity. But the idea only works if Supericons builds the RIGHT kind of voting — not the kind that first comes to mind.</p>
+
+  <div class="verdict v-yes">
+    <div class="v-label" style="color:var(--gr)">✅ What Is Correct</div>
+    <div class="v-title">The moat logic is valid. Data with network effects is genuinely hard to replicate.</div>
+    <div class="v-body">A competitor can clone the icon collection. They can copy the MCP tool schemas. They can read your open-source code. But they <strong>cannot clone three years of accumulated human judgment about which icon works best for a billing UI vs a copilot sidebar vs an empty state screen</strong>. That data requires real users making real choices over real time. It cannot be manufactured or synthetically generated with enough fidelity to compete. The moat logic is correct.</div>
+  </div>
+
+  <div class="verdict v-no">
+    <div class="v-label" style="color:var(--re)">⚠️ What Is Risky</div>
+    <div class="v-title">Simple voting ("thumbs up / thumbs down") is almost worthless as competitive data.</div>
+    <div class="v-body"><strong>A raw upvote on a Lucide "arrow-right" icon tells you almost nothing.</strong> It does not tell you why someone wanted it, where they placed it, what it replaced, or whether the UI was better afterward. Dribbble has millions of likes. Flaticon has "most downloaded" metrics. These numbers do not create any intelligence advantage. If Supericons builds a simple voting layer and calls it an intelligence moat, it is building a vanity leaderboard, not a judgment graph. The competitor who clones Supericons tomorrow can add votes too. What they <em>cannot</em> clone is <strong>contextual evidence attached to each vote</strong>. That is the entire difference.</div>
+  </div>
+</section>
+
+<section id="vote-moat">
+  <div class="sn">// IDEA 1: VOTING — 02 IS THE MOAT REAL?</div>
+  <h2 class="sh">The Moat Is Real — But Only Under One Condition</h2>
+  <p class="sd">The condition: every signal stored must be contextual. A vote without context is noise. A vote with context is intelligence. Here is the difference concretely.</p>
+
+  <div class="compare">
+    <div class="compare-col">
+      <div class="compare-title" style="color:var(--re)">❌ Weak Version — Replicable</div>
+      <div class="compare-list">
+        <div class="compare-item"><span class="ci-icon">—</span>"1,420 people liked this icon"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>"Downloaded 8,200 times"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>"Trending this week: sparkle, robot, brain"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Aggregate popularity with no task context</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Anyone can build this in a weekend</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Competitor ships it in the next update</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Users game it (bias toward familiar icons)</div>
+        <div class="compare-item"><span class="ci-icon">—</span>No agent value: "popular" is not "correct for this job"</div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-title" style="color:var(--gr)">✅ Strong Version — Network Moat</div>
+      <div class="compare-list">
+        <div class="compare-item"><span class="ci-icon">→</span>"For a billing flow, 83% of users preferred this over the alternative"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>"This icon was chosen then NOT replaced 91% of the time (retention signal)"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>"When building a copilot sidebar, this icon co-occurs with these 7 others"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Each signal is tagged with: task, surface, domain, UI density, alternatives shown</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Takes 12-18 months of real usage to generate meaningful signal volume</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Cannot be synthetically replicated without an actual user base</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Agents get a specific, justified answer — not just "this is popular"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Data improves the longer Supericons runs. Competitors start at zero.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert a-am">
+    <span class="alert-i">💡</span>
+    <div><strong>The moat is not the voting. The moat is the accumulated contextual signal.</strong> The voting mechanism is just the UX layer on top of signal collection. This means the design of what get collected at each vote is more important than the voting UI itself.</div>
+  </div>
+</section>
+
+<section id="vote-weak">
+  <div class="sn">// IDEA 1: VOTING — 03 THE REAL WEAKNESS TO CONFRONT HONESTLY</div>
+  <h2 class="sh">Three Legitimate Problems With This Strategy</h2>
+  <p class="sd">Before committing to building a voting layer, these three problems need real answers — not optimistic hand-waving.</p>
+
+  <div class="arg">
+    <div class="arg-label" style="color:var(--re)">⛔ Problem 1: Cold Start — You Need Votes to Have Intelligence, But You Need Intelligence to Get Users</div>
+    <div class="arg-body">
+      The intelligence layer is only valuable after significant signal accumulates. <strong>The first 500 users will experience Supericons with no voting data, no contextual signals, and no judgment graph.</strong> They have no reason to vote, and their votes add no immediate value to their experience. This is a classic cold-start chicken-and-egg problem.<br><br>
+      <strong>The honest answer:</strong> Supericons cannot wait for organic signals to accumulate at scale. The first phase of "voting" should be internal curation — a small Human Taste Council (you + 2-3 designers you trust) making the first 500 explicit contextual judgments. These manually authored evidence objects bootstrap the system. Organic voting extends it. This is how Spotify started genre classification: human editors first, algorithms second.
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="arg-label" style="color:var(--re)">⛔ Problem 2: Voting Friction — Most Users Will Not Vote Unless the UI Makes It Effortless</div>
+    <div class="arg-body">
+      Icon voting platforms that require deliberate effort (open a modal, choose between options, submit) have extremely low participation rates. Flaticon has tens of millions of users and its "likes" system generates very low signal relative to traffic. <strong>If Supericons requires users to consciously decide to vote, most will not.</strong><br><br>
+      <strong>The honest answer:</strong> The most valuable votes are silent behavioral signals, not explicit button presses. "User searched for X, browsed 6 options, copied this one and did not come back to replace it for 30 days" is a stronger signal than 100 thumbs-up clicks. The voting architecture should capture behavioral evidence automatically, with explicit voting as a supplementary layer — not the primary mechanism.
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="arg-label" style="color:var(--re)">⛔ Problem 3: Free Library Icons Do Not Belong to Supericons — Attribution and Data Ownership Are Complicated</div>
+    <div class="arg-body">
+      Lucide, Tabler, Material, and Heroicons are MIT licensed. Supericons can display them and build metadata on top of them. But if Supericons builds a public "which Lucide icon is better" voting layer, <strong>it is essentially building a quality-ranking service on top of another open-source project's assets</strong>. The free library maintainers could: (a) add their own voting systems, making Supericons redundant; (b) scrape the ranking data Supericons generates; (c) object to how their icons are being evaluated.<br><br>
+      <strong>The honest answer:</strong> The safest version focuses judgment on Supericons' proprietary layer — the curation decisions (which icon from which library for which job), not which icon within a library is "better" in the abstract. Judging "the Lucide collection vs Tabler collection for a billing flow" is Supericons' proprietary opinion and protectable. Judging "which of these 50 Lucide icons is prettiest" is just a Lucide quality review.
+    </div>
+  </div>
+</section>
+
+<section id="vote-right">
+  <div class="sn">// IDEA 1: VOTING — 04 THE RIGHT VERSION OF THIS IDEA</div>
+  <h2 class="sh">What to Build Instead of Simple Votes</h2>
+  <p class="sd">The right version of the voting layer looks nothing like a "rate this icon 1-5 stars" interface. It looks like a lightweight contextual preference system embedded in the normal icon selection workflow.</p>
+
+  <div class="moat">
+    <div class="moat-layer" style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2)">
+      <div class="moat-label" style="color:var(--gr)">Layer 1: Behavioral Signals (Silent, Automatic)</div>
+      <div class="moat-desc" style="color:var(--td)">Every time a user searches, browses results, copies an icon, and returns more than 14 days later without replacing it — that is a silent vote. Supericons logs: search query, results shown, result selected, time to selection, whether the user returned to change it. Zero friction. 100% capture rate. This is the primary data layer.</div>
+      <div class="moat-copy" style="color:var(--tf)">Effort to build: Low. Already implicit in normal usage analytics. Add structured logging to the search + copy flow.</div>
+    </div>
+    <div class="moat-layer" style="background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.2)">
+      <div class="moat-label" style="color:var(--bl)">Layer 2: Pairwise Choice (Lightweight, Contextual)</div>
+      <div class="moat-desc" style="color:var(--td)">After a user copies an icon, show ONE optional question: "What is this icon for?" with 5-6 quick-select context tags (sidebar nav / status indicator / empty state / button / hero / other). One tap, no modal, no form. The answer attaches purpose context to the behavioral signal. Even 15% participation rate generates rich data fast.</div>
+      <div class="moat-copy" style="color:var(--tf)">Effort to build: Low-Medium. One post-copy UI chip that appears once per session per unique icon, then never again.</div>
+    </div>
+    <div class="moat-layer" style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2)">
+      <div class="moat-label" style="color:var(--pu)">Layer 3: Collection Ballot (During Kit Download)</div>
+      <div class="moat-desc" style="color:var(--td)">When a user downloads a GitHub build kit, ask: "What are you building?" (4 options: SaaS product / AI tool / Internal tool / Other). This attaches domain context to the entire 50-icon collection download. Now Supericons knows: "The AI Agent UI kit was used by 74% AI tool builders and 26% SaaS builders." That shapes future curation decisions.</div>
+      <div class="moat-copy" style="color:var(--tf)">Effort to build: Minimal. Email confirmation step after kit download. One-question survey with 4 radios.</div>
+    </div>
+    <div class="moat-layer" style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2)">
+      <div class="moat-label" style="color:var(--am)">Layer 4: Agent Outcome Evidence (Automatic from MCP)</div>
+      <div class="moat-desc" style="color:var(--td)">Every MCP tool call logs: the intent string the agent sent, the icons returned, and (if the session continues) whether the agent called the tool again or moved forward with the recommendation. "Agent asked for sidebar icons, got 8 results, called get_icon_manifest on 2 of them, then stopped asking — task converged" is an evidence object that tells Supericons which icons work for agents. No user action required.</div>
+      <div class="moat-copy" style="color:var(--tf)">Effort to build: Medium. Structured logging in the MCP tool handlers. Privacy-safe: log intent categories and icon IDs, not user identity.</div>
+    </div>
+    <div class="moat-layer" style="background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.2)">
+      <div class="moat-label" style="color:var(--te)">Layer 5: Human Taste Council (Manual, Editorial)</div>
+      <div class="moat-desc" style="color:var(--td)">You + 2-3 trusted designers make explicit contextual judgments as "seed data" before any user data exists. Format: for each curated collection, write 3-5 "constitution" statements — "this icon is the canonical choice for 'loading state in an AI tool' because X." These authored judgments bootstrap the system and define the baseline that user signals refine over time.</div>
+      <div class="moat-copy" style="color:var(--tf)">Effort to build: None technically. Time-boxing: 2 hours per collection, 10 collections = 20 hours of editorial work over 4 weeks.</div>
+    </div>
+  </div>
+
+  <div class="alert a-gr">
+    <span class="alert-i">✅</span>
+    <div><strong>The correct framing:</strong> Do not think of this as "adding voting to the icon library." Think of it as "building a contextual preference logging system where voting is one of five signal sources." The system is the moat. The voting UI is just the most visible part of a larger data collection architecture.</div>
+  </div>
+</section>
+
+<section id="vote-schema">
+  <div class="sn">// IDEA 1: VOTING — 05 THE EVIDENCE OBJECT SCHEMA</div>
+  <h2 class="sh">What Gets Stored at Every Signal Event</h2>
+  <p class="sd">This is the data structure that makes the intelligence layer copyable vs uncopyable. Every signal — whether behavioral, explicit, or agentic — stores this structure.</p>
+
+  <div class="schema">
+<span class="c">// Evidence Object — stored per signal event in Supabase</span>
+{
+  <span class="k">"id"</span>: <span class="s">"ev_8f3k..."</span>,
+  <span class="k">"signal_type"</span>: <span class="s">"behavioral" | "explicit_tag" | "kit_download" | "agent_mcp" | "editorial"</span>,
+
+  <span class="c">// What icon was involved</span>
+  <span class="k">"icon_id"</span>: <span class="s">"lucide:arrow-right"</span>,
+  <span class="k">"collection_id"</span>: <span class="s">"dashboard-navigation-50"</span>,
+  <span class="k">"source_library"</span>: <span class="s">"lucide"</span>,
+
+  <span class="c">// What the user was doing</span>
+  <span class="k">"intent_query"</span>: <span class="s">"back button for wizard flow"</span>,
+  <span class="k">"ui_surface"</span>: <span class="s">"modal | sidebar | toolbar | empty-state | hero | badge | button"</span>,
+  <span class="k">"domain"</span>: <span class="s">"ai-tool | saas | fintech | ecommerce | devtools | healthcare | other"</span>,
+  <span class="k">"product_stage"</span>: <span class="s">"mvp | growth | enterprise"</span>,
+
+  <span class="c">// What alternatives were shown (so we know what this beat)</span>
+  <span class="k">"alternatives_shown"</span>: [<span class="s">"lucide:chevron-left"</span>, <span class="s">"heroicons:arrow-left"</span>],
+  <span class="k">"chosen_over"</span>: [<span class="s">"lucide:chevron-left"</span>],
+
+  <span class="c">// Outcome signals</span>
+  <span class="k">"retained_days"</span>: <span class="v">30</span>, <span class="c">// days until user returned to replace it (null = still retained)</span>
+  <span class="k">"replaced_with"</span>: <span class="s">null</span>, <span class="c">// if they did replace it, what with?</span>
+  <span class="k">"agent_task_converged"</span>: <span class="v">true</span>, <span class="c">// for MCP signals: did the agent stop asking after this?</span>
+
+  <span class="c">// Who judged</span>
+  <span class="k">"rater_type"</span>: <span class="s">"human | agent | editorial"</span>,
+  <span class="k">"rater_id"</span>: <span class="s">"anon_hash_xyz"</span>, <span class="c">// anonymized, never PII</span>
+
+  <span class="c">// Confidence and metadata</span>
+  <span class="k">"confidence"</span>: <span class="v">0.72</span>,
+  <span class="k">"timestamp"</span>: <span class="s">"2026-04-16T10:31:00Z"</span>
+}
+  </div>
+
+  <div class="alert a-bl">
+    <span class="alert-i">🔐</span>
+    <div><strong>Privacy rule:</strong> Never store user identity, session IDs, or personal data in evidence objects. rater_id is a one-way hash computed from session + date (so the same user on the same day gets the same hash, but you cannot reverse it to a person). GDPR-safe by design. This also means a competitor cannot subpoena the data and get user lists.</div>
+  </div>
+</section>
+
+<section id="vote-sequence">
+  <div class="sn">// IDEA 1: VOTING — 06 BUILD SEQUENCE</div>
+  <h2 class="sh">When to Build Each Layer</h2>
+
+  <table>
+    <thead><tr><th>Layer</th><th>When to Build</th><th>Prerequisite</th><th>Effort</th><th>Why This Order</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Behavioral logging</strong> (silent)</td><td>Now — Week 1</td><td>None. Just add structured logging to search + copy flow.</td><td>4 hours</td><td>Zero friction, 100% capture. Start accumulating data today.</td></tr>
+      <tr><td><strong>Editorial seed data</strong> (Human Taste Council)</td><td>Weeks 1-4, 2hrs/collection</td><td>10 curated collections defined first</td><td>20 hours total</td><td>Bootstraps the system before organic data exists.</td></tr>
+      <tr><td><strong>MCP agent outcome logging</strong></td><td>During MCP tool implementation</td><td>get_collection_for_intent MCP tool built</td><td>6 hours</td><td>Free signal from agentic usage. No user UX needed.</td></tr>
+      <tr><td><strong>Post-copy context tag</strong> (one-tap)</td><td>Week 6-8, after user volume exists</td><td>1,000+ monthly active users first</td><td>1 day UI work</td><td>Low participation is acceptable at volume. Needs volume to be meaningful.</td></tr>
+      <tr><td><strong>Kit download domain question</strong></td><td>Week 3, during GitHub kit launch</td><td>First kit published</td><td>2 hours (email confirmation flow)</td><td>The kit download is the natural moment to ask. Works even with very small numbers.</td></tr>
+      <tr><td><strong>Pairwise comparison UI</strong></td><td>Week 12+</td><td>Existing behavioral data to know where ambiguity exists</td><td>1 week</td><td>Pairwise only matters for icons where behavioral data is inconclusive. Build after you know which icons those are.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================================================
+  IDEA 2: GITHUB
+  =================================================== -->
+
+<section id="gh-verdict">
+  <div class="sn">// IDEA 2: GITHUB — 07 THE HONEST VERDICT</div>
+  <h2 class="sh">This Is the Highest-Leverage Action Available Right Now.</h2>
+  <p class="sd">No caveats. The GitHub distribution strategy is correct, immediately actionable, and the only marketing move that compounds without ongoing effort. Start here.</p>
+
+  <div class="verdict v-yes">
+    <div class="v-label" style="color:var(--gr)">✅ Why This Is Correct</div>
+    <div class="v-title">GitHub is where developers look for vetted resources. A well-packaged icon kit is the ideal GitHub asset.</div>
+    <div class="v-body">GitHub stars accumulate passively. Once a dev stars a repo, it appears in their activity feed, visible to their followers. LLMs (GPT, Claude, Gemini) are trained on GitHub content — a well-keyword-tagged repo increases the probability that AI coding assistants recommend Supericons when users ask about icon libraries. <strong>One good repo published in Week 1 will still be generating traffic in Week 52.</strong> No other channel has that compounding property for zero ongoing effort.</div>
+  </div>
+
+  <div class="arg">
+    <div class="arg-label" style="color:var(--am)">⚠️ The One Real Risk: Curation Quality Must Be Genuinely Better Than "Just Searching Lucide Yourself"</div>
+    <div class="arg-body">If someone downloads the "SaaS Dashboard Kit" and finds they could have found the same icons in 5 minutes of browsing Lucide.dev, the kit provides zero value and generates zero word-of-mouth. <strong>The quality bar is: "I would not have assembled this exact set this fast on my own."</strong> That requires genuine curation decisions, not just "50 popular Lucide icons." Each collection must have icons from multiple libraries thoughtfully combined, with rationale explaining why each one was chosen over alternatives. That is what makes the kit feel like expertise, not just a zip file.</div>
+  </div>
+</section>
+
+<section id="gh-taxonomy">
+  <div class="sn">// IDEA 2: GITHUB — 08 TAXONOMY DESIGN: JOB-SHAPED NOT CATEGORY-SHAPED</div>
+  <h2 class="sh">The Taxonomy That Makes These Kits Shareable</h2>
+  <p class="sd">The naming and framing of the 10 collections is as important as their contents. Collections named by job (what you are building) travels better than collections named by category (what type of icon).</p>
+
+  <div class="compare">
+    <div class="compare-col">
+      <div class="compare-title" style="color:var(--re)">❌ Category-Shaped (Weak)</div>
+      <div class="compare-list">
+        <div class="compare-item"><span class="ci-icon">—</span>"50 Outline Icons"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>"Navigation Icons Pack"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>"General Purpose SVG Set"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>"Arrow and Chevron Icons"</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Could describe any collection from any library</div>
+        <div class="compare-item"><span class="ci-icon">—</span>Developer asks: "Do I need this? All icon libraries have this."</div>
+        <div class="compare-item"><span class="ci-icon">—</span>No reason to share it: generic content does not travel</div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-title" style="color:var(--gr)">✅ Job-Shaped (Strong)</div>
+      <div class="compare-list">
+        <div class="compare-item"><span class="ci-icon">→</span>"50 Icons for AI SaaS Dashboards"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>"Icon Kit for Dating App Discovery Feeds"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>"Fintech App Icon Set — Compliance-Safe"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>"50 Icons for Developer Tool UIs"</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Immediately answers "Is this for me?" in one second</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Developer building a dating app thinks: "This was made for me."</div>
+        <div class="compare-item"><span class="ci-icon">→</span>Shares naturally: "Found this great icon kit specifically for [X]"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert a-bl">
+    <span class="alert-i">🎯</span>
+    <div><strong>The naming rule:</strong> Every collection name should complete the sentence "I am building a _____ and I need icons for it." If it does not answer that sentence, the name is wrong. "Navigation Icons" fails. "Icons for an AI Copilot Sidebar" succeeds. The specificity is what creates the "this was made for me" feeling that drives stars and shares.</div>
+  </div>
+</section>
+
+<section id="gh-kits">
+  <div class="sn">// IDEA 2: GITHUB — 09 THE 10 COLLECTIONS (FULLY DESIGNED)</div>
+  <h2 class="sh">All 10 GitHub Collections — Names, Contents, and Source Mix</h2>
+  <p class="sd">Each collection is 50 icons, drawn from at least 2-3 different free libraries (to demonstrate curation across the ecosystem), with a specific job and audience in mind.</p>
+
+  <div class="grid3">
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 01 — Priority: NOW</div>
+      <div class="kit-name">AI SaaS Dashboard & Copilot</div>
+      <div class="kit-desc">For teams building AI-powered SaaS products, agent dashboards, and copilot interfaces. Includes the unique Agentic AI vocabulary no other library has.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> rag-pipeline, vector-db, model-temp, token-cost, orchestrator, guardrail, agent-memory, copilot, trace, handoff, prompt, embedding, inference, latency-score, context-window, hallucination-flag, approval-gate + standard dashboard nav (settings, notifications, user, search, filter, sort)</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Supericons Agentic AI Kit (exclusive) + Lucide + Heroicons</div>
+      <div><span class="tag t-re">Build first</span><span class="tag t-pu">Unique positioning</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 02 — Priority: Week 1</div>
+      <div class="kit-name">SaaS Admin & Settings</div>
+      <div class="kit-desc">For every SaaS app's settings, account, and admin panel. The most universally needed set — every SaaS needs these icons to look like a professional product.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Profile, team, billing, subscription, plan-upgrade, API-key, webhooks, permissions, roles, audit-log, notifications, preferences, theme, password, 2FA, sessions, danger-zone, data-export, integrations, connected-apps, usage, limits, invoices, cancel-subscription, downgrade</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Phosphor + Tabler</div>
+      <div><span class="tag t-am">Broad appeal</span><span class="tag t-gr">Highest search volume</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 03 — Priority: Week 2</div>
+      <div class="kit-name">Status, Feedback & States</div>
+      <div class="kit-desc">All the state-communication icons a UI needs: loading, success, error, warning, empty, blocked, retrying. The icons developers always forget until the last minute.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Spinner, check-circle, x-circle, warning-triangle, info, empty-box, no-results, forbidden, rate-limited, queued, retrying, syncing, offline, degraded, partial, pending, draft, locked, archived, deprecated, beta-tag, new-tag, scheduled, paused, cancelled</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Heroicons + Material Symbols</div>
+      <div><span class="tag t-bl">Evergreen need</span><span class="tag t-te">Strong SEO</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 04 — Priority: Week 2</div>
+      <div class="kit-name">Developer Tools & CLI UIs</div>
+      <div class="kit-desc">For teams building dev tools, CLIs, terminal UIs, code editors, and infrastructure products. Specific vocabulary that generic icon sets do not cover well.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Terminal, branch, commit, merge, pull-request, fork, deploy, rollback, pipeline, build, test, coverage, log, trace, monitor, alert, incident, postmortem, version, release, changelog, dependency, package, namespace, cluster, node, pod, container, registry</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Tabler + Phosphor</div>
+      <div><span class="tag t-pu">Niche but loyal</span><span class="tag t-bl">HN + r/devops appeal</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 05 — Priority: Week 3</div>
+      <div class="kit-name">Fintech, Payments & Banking</div>
+      <div class="kit-desc">For fintech apps, payment platforms, and banking UIs. Compliance-safe icon choices — conservative, clear, and universally legible at small sizes.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Wallet, card, bank, transfer, send-money, receive, exchange, currency, chart-up, chart-down, balance, statement, transaction, receipt, invoice, tax, compliance, kyc, verification, account, savings, loan, interest, limit, freeze-card, dispute, refund</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Heroicons + Iconoir</div>
+      <div><span class="tag t-am">High-value audience</span><span class="tag t-gr">Converts to paid</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 06 — Priority: Week 3</div>
+      <div class="kit-name">Dating, Social & Discovery Apps</div>
+      <div class="kit-desc">For consumer social apps, dating platforms, and community products. Warm, expressive icons that match the emotional register of social interaction.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Heart, match, spark, swipe-right, swipe-left, profile-card, compatibility, message, wave, gift, location-pin, verified-badge, mutual, discover, explore, filter-age, filter-distance, filter-interests, boost, super-like, undo, block, report, privacy, ghost, streak</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Phosphor + Lucide + Solar Icons</div>
+      <div><span class="tag t-pk">Novel category</span><span class="tag t-or">X viral potential</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 07 — Priority: Week 4</div>
+      <div class="kit-name">E-commerce & Shopping</div>
+      <div class="kit-desc">For online stores, marketplaces, and checkout flows. Covers the full buyer journey from discovery to post-purchase. Tested for legibility at 16px (mobile icon size).</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Cart, wishlist, checkout, coupon, discount, shipping, tracking, delivery, return, review, rating, seller, store, inventory, out-of-stock, bundle, gift-wrap, COD, express, pickup, product-compare, size-guide, try-before-buy, subscription-box, reorder</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Tabler + Iconoir</div>
+      <div><span class="tag t-gr">Large addressable market</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 08 — Priority: Week 4</div>
+      <div class="kit-name">Analytics, Data & Reporting</div>
+      <div class="kit-desc">For analytics dashboards, BI tools, and data-heavy SaaS products. Every data visualization surface needs these icons. Optimized for dark-mode dashboards.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Bar-chart, line-chart, area-chart, scatter-plot, funnel, cohort, retention, conversion, heatmap, distribution, percentile, median, trend-up, trend-down, segment, filter, dimension, metric, KPI, goal, target, forecast, anomaly, export-data, share-report, schedule-report</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Material Symbols + Tabler</div>
+      <div><span class="tag t-te">Dark mode optimized</span><span class="tag t-bl">SaaS adjacent</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 09 — Priority: Week 5</div>
+      <div class="kit-name">Auth, Security & Trust</div>
+      <div class="kit-desc">For the security-critical surfaces of any product: login flows, 2FA, permissions, compliance badges. Accurate iconography here builds user trust directly.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Lock, unlock, shield, key, password, passkey, biometric, fingerprint, face-id, 2FA, authenticator, SSO, SAML, OAuth, permissions, roles, access-revoked, session-expire, suspicious-login, recovery-code, backup-codes, audit, compliance, gdpr, data-retention, vulnerability</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Heroicons + Phosphor</div>
+      <div><span class="tag t-re">High intent</span><span class="tag t-am">Security audience is paying</span></div>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-n">KIT 10 — Priority: Week 6</div>
+      <div class="kit-name">Healthcare, Medical & Wellness</div>
+      <div class="kit-desc">For health apps, telemedicine platforms, and wellness products. Internationally legible, clinically appropriate iconography. Conservative choices — icons that will not look dated or culturally inappropriate.</div>
+      <div class="kit-icons"><strong>Key icons:</strong> Stethoscope, heart-rate, medication, prescription, appointment, calendar-health, doctor, patient, vitals, blood-pressure, glucose, sleep, activity, mental-health, anxiety, mood, nutrition, hydration, steps, weight, bmi, lab-result, imaging, vaccination, insurance, emergency</div>
+      <div class="kit-sources" style="margin-bottom:.5rem"><strong>Sources:</strong> Lucide + Solar Icons + Tabler</div>
+      <div><span class="tag t-gr">High-growth sector</span><span class="tag t-pu">Underserved category</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="gh-packaging">
+  <div class="sn">// IDEA 2: GITHUB — 10 WHAT MAKES A KIT ACTUALLY GO VIRAL</div>
+  <h2 class="sh">Packaging Is the Differentiator. Never Ship a Bare Zip File.</h2>
+  <p class="sd">The difference between a 3-star repo and a 300-star repo is almost never the icons themselves. It is how the repo is packaged, documented, and presented. Every kit must follow this standard.</p>
+
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:.88rem;font-weight:700;color:var(--t);margin-bottom:.75rem">Required Files (Minimum)</h3>
+      <div class="steps">
+        <div class="step"><span class="step-n">📄</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">README.md</code> — <strong>The one file that determines GitHub stars.</strong> Must include: visual preview grid (JPG/PNG), "why this collection" rationale (2-3 sentences), quick-start code for React/Vue/Svelte, and a supericons.dev link. Zero fluff.</span></div>
+        <div class="step"><span class="step-n">🎨</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">icons/</code> — 50 individual SVG files, clean naming convention: <code>kebab-case.svg</code>. No spaces. No numbers as prefixes.</span></div>
+        <div class="step"><span class="step-n">🔗</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">sprite.svg</code> — All 50 icons as a single sprite. Many developers prefer this for performance.</span></div>
+        <div class="step"><span class="step-n">🖥</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">preview.html</code> — A self-contained HTML file showing all 50 icons in a responsive grid. Opens in the browser, no server needed. This is the "wow" file.</span></div>
+        <div class="step"><span class="step-n">🎨</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">tokens.json</code> — Design tokens: size scale, stroke width, color variables. Integrates into design systems.</span></div>
+        <div class="step"><span class="step-n">📝</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">usage-map.md</code> — Which icon for which use case. "Use <code>lock.svg</code> for password fields, locked state modals, and encrypted content indicators. Do not use for 'premium' features — use <code>crown.svg</code> instead." This is the curated intelligence, not just an asset list.</span></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:.88rem;font-weight:700;color:var(--t);margin-bottom:.75rem">Optional but High-Leverage</h3>
+      <div class="steps">
+        <div class="step"><span class="step-n">⚛</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">components/react/</code> — One .jsx file per icon. Named exports. TypeScript props. This alone is worth 50+ stars from React developers.</span></div>
+        <div class="step"><span class="step-n">💚</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">components/vue/</code> — Same for Vue. Expands addressable audience by 30%.</span></div>
+        <div class="step"><span class="step-n">🟠</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">components/svelte/</code> — Svelte 5 .svelte components. Small but passionate community that shares aggressively.</span></div>
+        <div class="step"><span class="step-n">📦</span><span class="step-t"><code style="font-family:monospace;font-size:.78rem;color:var(--te)">package.json</code> — Makes it installable via npm: <code>npm install @supericons/kit-ai-dashboard</code>. Changes the use case from "download a zip" to "install a dependency." Very different psychological commitment.</span></div>
+        <div class="step"><span class="step-n">🌐</span><span class="step-t"><strong>GitHub Pages preview URL</strong> — Enable GitHub Pages on the repo so <code>preview.html</code> is accessible at a public URL. Include this URL in the README and in all social posts. One click to see all icons without downloading.</span></div>
+        <div class="step"><span class="step-n">🔗</span><span class="step-t"><strong>"Get the animated version" CTA</strong> — In the README and preview.html footer: "Want the animated versions? These icons are available with CSS hover animations at supericons.dev. Free account, no credit card." Email capture built into the conversion path.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert a-am">
+    <span class="alert-i">⚠️</span>
+    <div><strong>The README visual preview is non-negotiable.</strong> Repos with a screenshot/GIF of all icons in the README get 3-5x more stars than repos without one. The GitHub card preview (the image shown when someone shares the repo link on X or LinkedIn) must be visually compelling. A dark-mode grid of 50 beautiful icons is the correct thumbnail. Generate this as a 1200x630px PNG and set it as the Social Preview in the repo settings.</div>
+  </div>
+</section>
+
+<!-- ===================================================
+  SYNTHESIS
+  =================================================== -->
+
+<section id="synthesis">
+  <div class="sn">// SYNTHESIS — 11 HOW VOTES AND GITHUB WORK TOGETHER</div>
+  <h2 class="sh">These Are Not Two Separate Ideas. They Are One Flywheel.</h2>
+  <p class="sd">The GitHub kits and the voting/intelligence layer are not independently valuable — they are mutually reinforcing. Here is the flywheel.</p>
+
+  <div style="background:var(--bg-r);border:1px solid var(--bd);border-radius:16px;padding:2rem;margin:1.5rem 0">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.95rem;color:var(--t);margin-bottom:1.25rem;text-align:center">The Supericons Flywheel</div>
+
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(251,191,36,.15);border:2px solid var(--am);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--am);flex-shrink:0">1</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6"><strong style="color:var(--t)">GitHub kits attract developers</strong> who would never find supericons.dev through search or ads. They star the repo, clone it, and use the icons in their product.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(96,165,250,.15);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--bl);flex-shrink:0">2</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6"><strong style="color:var(--t)">The kit download asks one question</strong>: "What are you building?" This is the first evidence object — domain context from a real builder at the moment they need the kit.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,.15);border:2px solid var(--pu);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--pu);flex-shrink:0">3</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6">The preview.html CTA <strong style="color:var(--t)">converts kit users to supericons.dev</strong>. Now their usage on-site generates behavioral signals — which icons get searched, copied, and retained.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(52,211,153,.15);border:2px solid var(--gr);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--gr);flex-shrink:0">4</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6"><strong style="color:var(--t)">The MCP users generate agent outcome evidence</strong> automatically. Agents call get_collection_for_intent, receive results, and their selections are logged as evidence objects.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(251,146,60,.15);border:2px solid var(--or);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--or);flex-shrink:0">5</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6"><strong style="color:var(--t)">The accumulated evidence improves the MCP recommendations.</strong> The MCP becomes smarter. Agents get better results. Developers recommend the MCP to each other.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(244,114,182,.15);border:2px solid var(--pk);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--pk);flex-shrink:0">6</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6">Better MCP recommendations lead to <strong style="color:var(--t)">new GitHub kit ideas</strong> based on real evidence: "Agents serving fintech workflows request these 5 icons together 73% of the time. We should curate a Fintech kit around them." The data generates the next product decision.</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1rem">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(251,191,36,.15);border:2px solid var(--am);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:var(--am);flex-shrink:0">↩</div>
+        <div style="font-size:.86rem;color:var(--td);line-height:1.6">The new kit attracts more developers. The flywheel turns faster. Each rotation adds more signal, which improves the product, which attracts more users.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="order" style="border-bottom:none">
+  <div class="sn">// SYNTHESIS — 12 WHAT TO BUILD FIRST</div>
+  <h2 class="sh">Exact Sequence Given Both Ideas Are Now Approved</h2>
+  <p class="sd">Both ideas are valid. Both should be built. Here is the order that maximizes early signal accumulation while shipping the most marketing-visible work first.</p>
+
+  <table>
+    <thead><tr><th>Week</th><th>Action</th><th>Idea</th><th>What It Unlocks</th></tr></thead>
+    <tbody>
+      <tr style="background:rgba(248,113,113,.04)"><td><strong>Now</strong></td><td>Add structured behavioral logging to supericons.dev search + copy flow</td><td><span class="tag t-gr">Votes</span></td><td>Silent data starts accumulating from the first user, zero ongoing effort</td></tr>
+      <tr style="background:rgba(251,191,36,.04)"><td><strong>Week 1</strong></td><td>Build and publish AI SaaS Dashboard Kit (Kit 01) to GitHub</td><td><span class="tag t-bl">GitHub</span></td><td>First GitHub asset live. First external traffic. First behavioral signals.</td></tr>
+      <tr style="background:rgba(251,191,36,.04)"><td><strong>Week 1</strong></td><td>Add one-question domain survey to Kit 01 download flow</td><td><span class="tag t-gr">Votes</span></td><td>First explicit evidence objects tagged with domain context</td></tr>
+      <tr style="background:rgba(251,191,36,.04)"><td><strong>Week 2</strong></td><td>Build and publish SaaS Admin Kit (Kit 02) + Status Kit (Kit 03)</td><td><span class="tag t-bl">GitHub</span></td><td>Second and third GitHub assets. Broader topic coverage. More search surface.</td></tr>
+      <tr style="background:rgba(52,211,153,.04)"><td><strong>Week 3</strong></td><td>Write editorial seed data (Human Taste Council) for Kit 01 icons</td><td><span class="tag t-gr">Votes</span></td><td>Bootstraps the intelligence layer. MCP can now return justified recommendations.</td></tr>
+      <tr style="background:rgba(52,211,153,.04)"><td><strong>Week 3</strong></td><td>Add MCP outcome logging to get_collection_for_intent tool</td><td><span class="tag t-gr">Votes</span></td><td>Agent usage starts generating evidence objects automatically</td></tr>
+      <tr style="background:rgba(52,211,153,.04)"><td><strong>Weeks 4-6</strong></td><td>Publish Kits 04-07 (DevTools, Fintech, Dating, Ecommerce)</td><td><span class="tag t-bl">GitHub</span></td><td>Full spectrum of job-shaped kits. Different communities discover Supericons simultaneously.</td></tr>
+      <tr style="background:rgba(96,165,250,.04)"><td><strong>Week 8</strong></td><td>Launch post-copy context tag UI (one-tap surface tagger)</td><td><span class="tag t-gr">Votes</span></td><td>Now that user volume exists, explicit signal collection begins meaningfully</td></tr>
+      <tr style="background:rgba(96,165,250,.04)"><td><strong>Weeks 8-10</strong></td><td>Publish Kits 08-10 (Analytics, Auth, Healthcare)</td><td><span class="tag t-bl">GitHub</span></td><td>Full 10-kit library complete. GitHub org now has 10 repos with combined signal.</td></tr>
+      <tr style="background:rgba(167,139,250,.04)"><td><strong>Week 12+</strong></td><td>Surface the intelligence layer in the MCP as confidence scores</td><td><span class="tag t-gr">Votes</span></td><td>"This icon is recommended with 84% confidence for billing flow sidebars based on 240 similar selections." This is the moat, visibly working.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert a-gr">
+    <span class="alert-i">🏁</span>
+    <div><strong>The final summary of this discussion:</strong><br>
+    Idea 1 (Voting) is correct but only if you build <em>contextual evidence objects</em>, not raw upvotes. Start with behavioral logging today (zero effort), bootstrap with editorial seed data, and add MCP outcome logging when the agent tools are built. The post-copy explicit tag comes later when you have volume. Never build a thumbs-up button and call it intelligence.<br><br>
+    Idea 2 (GitHub kits) is the single highest-leverage action available right now. Start with the AI SaaS Dashboard Kit because it has unique icons no competitor has. Ship one kit per week for 10 weeks. Package each one properly — README with visual preview, usage-map.md with curated rationale, components for React/Vue/Svelte, and a "get the animated version" CTA that converts to supericons.dev.<br><br>
+    Both ideas work together as a flywheel. GitHub drives users. Users generate evidence. Evidence improves the MCP. The MCP attracts more developers. More developers generate more evidence. The flywheel compounds with zero ongoing marketing spend.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const secs=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
