@@ -692,6 +692,8 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
   if (recentEvidenceResult.error) throw recentEvidenceResult.error;
 
   const copyCounts = new Map<string, number>();
+  const downloadCounts = new Map<string, number>();
+  const favoriteCounts = new Map<string, number>();
   const replaceCounts = new Map<string, number>();
   const jobCategoryCounts = new Map<string, number>();
   const mcpAcceptance = new Map<string, { total: number; converged: number }>();
@@ -711,11 +713,17 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
       copyEvents += 1;
       if (iconId) {
         copyCounts.set(iconId, (copyCounts.get(iconId) || 0) + 1);
+        if (typeof row.evidence_text === 'string' && row.evidence_text.startsWith('download:')) {
+          downloadCounts.set(iconId, (downloadCounts.get(iconId) || 0) + 1);
+        }
       }
     }
 
     if (signalType === 'favorite') {
       favoriteEvents += 1;
+      if (iconId) {
+        favoriteCounts.set(iconId, (favoriteCounts.get(iconId) || 0) + 1);
+      }
     }
 
     if (signalType === 'kit_download') {
@@ -742,15 +750,20 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
     }
   }
 
-  const topIcons = [...copyCounts.entries()]
-    .sort((a, b) => {
-      if (b[1] !== a[1]) return b[1] - a[1];
-      return a[0].localeCompare(b[0]);
-    })
-    .slice(0, 8)
-    .map(([iconId, copyCount]) => {
+  const topIconIds = new Set<string>([
+    ...copyCounts.keys(),
+    ...downloadCounts.keys(),
+    ...favoriteCounts.keys(),
+  ]);
+
+  const topIcons = [...topIconIds]
+    .map((iconId) => {
+      const copyCount = copyCounts.get(iconId) || 0;
+      const downloadCount = downloadCounts.get(iconId) || 0;
+      const favoriteCount = favoriteCounts.get(iconId) || 0;
       const replaceCount = replaceCounts.get(iconId) || 0;
       const mcpStats = mcpAcceptance.get(iconId);
+      const popularityScore = copyCount + (downloadCount * 1.5) + (favoriteCount * 0.75);
       const retentionRate = copyCount > 0
         ? Math.max(0, 1 - (replaceCount / copyCount))
         : null;
@@ -761,10 +774,19 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
       return {
         icon_id: iconId,
         copy_count: copyCount,
+        download_count: downloadCount,
+        favorite_count: favoriteCount,
+        popularity_score: popularityScore,
         retention_rate: retentionRate,
         mcp_acceptance_rate: mcpAcceptanceRate,
       };
     });
+  topIcons.sort((a, b) => {
+    if (b.popularity_score !== a.popularity_score) return b.popularity_score - a.popularity_score;
+    if (b.copy_count !== a.copy_count) return b.copy_count - a.copy_count;
+    return a.icon_id.localeCompare(b.icon_id);
+  });
+  topIcons.splice(8);
 
   const topJobCategories = [...jobCategoryCounts.entries()]
     .sort((a, b) => {
@@ -808,6 +830,9 @@ async function handleIntelligenceOverview(req: Request, adminClient: SupabaseCli
       top_icons: topIcons.map((entry) => ({
         ...entry,
         copy_count_30d: entry.copy_count,
+        download_count_30d: entry.download_count,
+        favorite_count_30d: entry.favorite_count,
+        popularity_score_30d: entry.popularity_score,
       })),
       top_replaced_icons: topReplacedIcons,
       recent_evidence: recentEvidenceResult.data || [],

@@ -859,10 +859,13 @@ function renderIntelligence() {
     (overview.top_icons || []).map((icon) => ({
       label: icon.icon_id,
       copy_count: icon.copy_count,
+      download_count: icon.download_count ?? icon.download_count_30d,
+      favorite_count: icon.favorite_count ?? icon.favorite_count_30d,
+      popularity_score: icon.popularity_score ?? icon.popularity_score_30d,
       retention_rate: icon.retention_rate,
       mcp_acceptance_rate: icon.mcp_acceptance_rate,
     })),
-    (row) => `${escapeHtml(String(row.copy_count || 0))} copies - ${escapeHtml(formatPercent(row.retention_rate))}`
+    (row) => `${escapeHtml(String(row.copy_count || 0))} copies - ${escapeHtml(String(row.download_count || 0))} downloads - ${escapeHtml(String(row.favorite_count || 0))} saves - score ${escapeHtml(String(row.popularity_score || 0))}`
   );
 
   renderIntelligenceRows(

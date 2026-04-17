@@ -33,6 +33,14 @@ import {
   logSearchAttempt,
 } from './lib/icon-intelligence.js';
 import {
+  addRecentSearchEntry,
+  applyPopularityDelta,
+  compareBrowseIconsByPopularity,
+  compareSearchMatches,
+  getPopularityRecord,
+  shouldSyncSearchOnBlur,
+} from './lib/icon-grid-behavior.js';
+import {
   JOB_CATEGORY_DEFINITIONS,
   createIconTaxonomyMap,
   createJobCategoryMap,
@@ -68,6 +76,8 @@ const COLOR_PALETTES = {
 };
 
 const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
+const RECENT_SEARCHES_STORAGE_KEY = 'si-recent-searches';
+const MAX_RECENT_SEARCHES = 8;
 
 const state = {
   sidebarOpen: false,
@@ -87,6 +97,7 @@ const state = {
   batchSize: 200,
   favorites: new Set(),
   recent: [],
+  recentSearches: [],
   multiSelect: false,
   selectedIcons: new Set(),
   customize: { ...CUSTOMIZE_DEFAULTS },
@@ -101,6 +112,8 @@ const state = {
 const SEARCH_ATTEMPT_IDLE_MS = 2500;
 let pendingSearchAttemptPayload = null;
 let pendingSearchAttemptTimer = null;
+let pendingBlurSearchCommitTimer = null;
+let pendingRecentSearchHideTimer = null;
 
 const iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
@@ -278,6 +291,8 @@ function loadCollections() {
     if (favs) state.favorites = new Set(JSON.parse(favs));
     const rec = localStorage.getItem('si-recent');
     if (rec) state.recent = JSON.parse(rec);
+    const recentSearches = localStorage.getItem(RECENT_SEARCHES_STORAGE_KEY);
+    if (recentSearches) state.recentSearches = JSON.parse(recentSearches);
     const rc = localStorage.getItem('si-recent-colors');
     if (rc) state.recentColors = JSON.parse(rc);
   } catch (e) {
@@ -310,6 +325,14 @@ function saveRecent() {
   updateSidebarCounts();
 }
 
+function saveRecentSearches() {
+  if (state.recentSearches.length > 0) {
+    localStorage.setItem(RECENT_SEARCHES_STORAGE_KEY, JSON.stringify(state.recentSearches));
+  } else {
+    localStorage.removeItem(RECENT_SEARCHES_STORAGE_KEY);
+  }
+}
+
 function toggleFavorite(key) {
   if (state.favorites.has(key)) {
     state.favorites.delete(key);
@@ -327,6 +350,15 @@ function addToRecent(key) {
   saveRecent();
 }
 
+function rememberRecentSearch(query) {
+  const nextEntries = addRecentSearchEntry(state.recentSearches, query, MAX_RECENT_SEARCHES);
+  const didChange = JSON.stringify(nextEntries) !== JSON.stringify(state.recentSearches);
+  if (!didChange) return;
+  state.recentSearches = nextEntries;
+  saveRecentSearches();
+  renderRecentSearches();
+}
+
 function clearFavorites() {
   if (state.favorites.size === 0) return;
   state.favorites.clear();
@@ -337,6 +369,13 @@ function clearRecent() {
   if (state.recent.length === 0) return;
   state.recent = [];
   saveRecent();
+}
+
+function clearRecentSearches() {
+  if (state.recentSearches.length === 0) return;
+  state.recentSearches = [];
+  saveRecentSearches();
+  renderRecentSearches();
 }
 
 function iconKey(icon) {
@@ -390,7 +429,17 @@ function flushPendingSearchAttempt({ useCurrentState = false } = {}) {
 
   clearPendingSearchAttempt();
   if (!payload) return;
+  rememberRecentSearch(payload.searchQuery);
   void logSearchAttempt(payload);
+}
+
+function flushPendingSearchAttemptSafely({ useCurrentState = false } = {}) {
+  if (pendingBlurSearchCommitTimer) {
+    clearTimeout(pendingBlurSearchCommitTimer);
+    pendingBlurSearchCommitTimer = null;
+    applyFilters();
+  }
+  flushPendingSearchAttempt({ useCurrentState });
 }
 
 function queueCurrentSearchAttempt() {
@@ -416,7 +465,97 @@ function syncSearchStateFromInput({ resetSearchContext = false } = {}) {
   if (resetSearchContext || queryChanged) {
     state.searchContextStartedAt = typeof performance !== 'undefined' ? performance.now() : 0;
   }
-  applyFilters();
+  return queryChanged;
+}
+
+function commitSearchStateFromInput({ resetSearchContext = false, apply = true } = {}) {
+  const queryChanged = syncSearchStateFromInput({ resetSearchContext });
+  if (apply) {
+    applyFilters();
+  }
+  return queryChanged;
+}
+
+function queueDeferredSearchRefresh({ flushSearchAttempt = false } = {}) {
+  if (pendingBlurSearchCommitTimer) {
+    clearTimeout(pendingBlurSearchCommitTimer);
+  }
+  pendingBlurSearchCommitTimer = setTimeout(() => {
+    pendingBlurSearchCommitTimer = null;
+    applyFilters();
+    if (flushSearchAttempt) {
+      flushPendingSearchAttempt({ useCurrentState: true });
+    }
+  }, 0);
+}
+
+function shouldUsePopularityRanking() {
+  const activeJobCategoryId = getActiveJobCategoryId();
+  return Boolean(state.searchQuery)
+    || (!activeJobCategoryId && state.activeLibrary === 'all' && !state.searchQuery);
+}
+
+function bumpLocalPopularity(icon, delta) {
+  const key = iconKey(icon);
+  state.popularityMap[key] = applyPopularityDelta(getPopularityRecord(state.popularityMap, key), delta);
+  if (shouldUsePopularityRanking()) {
+    applyFilters();
+  }
+}
+
+function shouldShowRecentSearches() {
+  return !isDocsHeaderSearchMode()
+    && document.activeElement === els.searchInput
+    && !els.searchInput?.value?.trim()
+    && state.recentSearches.length > 0;
+}
+
+function renderRecentSearches() {
+  if (!els.searchHistory || !els.searchHistoryList || !els.searchHistoryClear) return;
+  if (!shouldShowRecentSearches()) {
+    els.searchHistory.hidden = true;
+    els.searchHistoryList.innerHTML = '';
+    return;
+  }
+
+  els.searchHistory.hidden = false;
+  els.searchHistoryList.innerHTML = state.recentSearches
+    .map((query) => `
+      <button type="button" class="search-history__item" data-search-history-query="${escapeHtml(query)}">
+        <span class="material-symbols-outlined search-history__item-icon" aria-hidden="true">history</span>
+        <span class="search-history__item-label">${escapeHtml(query)}</span>
+      </button>
+    `)
+    .join('');
+  els.searchHistoryClear.hidden = state.recentSearches.length === 0;
+}
+
+function scheduleRecentSearchHide() {
+  if (pendingRecentSearchHideTimer) {
+    clearTimeout(pendingRecentSearchHideTimer);
+  }
+  pendingRecentSearchHideTimer = setTimeout(() => {
+    pendingRecentSearchHideTimer = null;
+    renderRecentSearches();
+  }, 120);
+}
+
+function cancelScheduledRecentSearchHide() {
+  if (pendingRecentSearchHideTimer) {
+    clearTimeout(pendingRecentSearchHideTimer);
+    pendingRecentSearchHideTimer = null;
+  }
+}
+
+function applyRecentSearchQuery(query) {
+  const nextQuery = String(query || '').trim();
+  if (!nextQuery) return;
+  cancelScheduledRecentSearchHide();
+  els.searchInput.value = nextQuery;
+  syncHeaderSearchChrome({ value: nextQuery });
+  commitSearchStateFromInput({ resetSearchContext: true });
+  queueCurrentSearchAttempt();
+  renderRecentSearches();
 }
 
 function escapeHtml(value) {
@@ -490,6 +629,9 @@ const els = {
   searchInput: $('#searchInput'),
   searchShortcut: $('#searchShortcut'),
   searchClear: $('#searchClear'),
+  searchHistory: $('#searchHistory'),
+  searchHistoryList: $('#searchHistoryList'),
+  searchHistoryClear: $('#searchHistoryClear'),
   iconGrid: $('#iconGrid'),
   gridEmpty: $('#gridEmpty'),
   gridTitle: $('#gridTitle'),
@@ -528,6 +670,7 @@ function syncHeaderSearchChrome({
   const hasValue = value.length > 0;
   els.searchShortcut.style.display = hasValue ? 'none' : '';
   els.searchClear.style.display = hasValue ? 'flex' : 'none';
+  renderRecentSearches();
 }
 
 function setHeaderSearchMode(mode = 'icons', { value } = {}) {
@@ -774,9 +917,10 @@ function hydrateSidebarIcons() {
 // ============================================================
 function renderIconCell(icon) {
   const c = state.customize;
-  const isSelected = state.selectedIcons.has(iconKey(icon));
-  const selectClass = isSelected ? ' multi-selected' : '';
-  const checkmark = state.multiSelect ? `<span class="icon-cell__check ${isSelected ? 'checked' : ''}"><span class="material-symbols-outlined" style="font-size:14px">check_circle</span></span>` : '';
+  const isMultiSelected = state.selectedIcons.has(iconKey(icon));
+  const isSingleSelected = state.selectedIcon && iconKey(state.selectedIcon) === iconKey(icon);
+  const selectClass = `${isSingleSelected ? ' selected' : ''}${isMultiSelected ? ' multi-selected' : ''}`;
+  const checkmark = state.multiSelect ? `<span class="icon-cell__check ${isMultiSelected ? 'checked' : ''}"><span class="material-symbols-outlined" style="font-size:14px">check_circle</span></span>` : '';
   const compareBtn = `
     <div class="icon-cell__controls">
       <button
@@ -1163,15 +1307,7 @@ function applyFilters() {
         directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
       }))
       .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
-      .sort((a, b) => {
-        if (b.aliasScore !== a.aliasScore) return b.aliasScore - a.aliasScore;
-        if (b.directScore !== a.directScore) return b.directScore - a.directScore;
-
-        const rankDiff = getIconJobRank(a.icon) - getIconJobRank(b.icon);
-        if (rankDiff !== 0) return rankDiff;
-
-        return a.icon.name.localeCompare(b.icon.name);
-      })
+      .sort((a, b) => compareSearchMatches(a, b, state.popularityMap, getIconJobRank))
       .map(({ icon }) => icon);
 
     const tier1Keys = new Set(tier1.map(i => iconKey(i)));
@@ -1189,13 +1325,7 @@ function applyFilters() {
 
   // Popularity sort: in default 'All Icons' view with no search, sort popular icons first
   if (!activeJobCategoryId && state.activeLibrary === 'all' && !state.searchQuery && Object.keys(state.popularityMap).length > 0) {
-    const pop = state.popularityMap;
-    icons.sort((a, b) => {
-      const aCount = pop[`${a.lib}:${a.id}`] || 0;
-      const bCount = pop[`${b.lib}:${b.id}`] || 0;
-      if (aCount !== bCount) return bCount - aCount; // popular first
-      return a.name.localeCompare(b.name);            // then alphabetical
-    });
+    icons.sort((a, b) => compareBrowseIconsByPopularity(a, b, state.popularityMap));
   }
 
   state.filteredIcons = icons;
@@ -1400,7 +1530,7 @@ function selectIcon(iconId, iconLib) {
   const icon = state.icons.find((i) => i.id === iconId && i.lib === iconLib);
   if (!icon) return;
 
-  flushPendingSearchAttempt();
+  flushPendingSearchAttemptSafely();
 
   // Multi-select mode
   if (state.multiSelect) {
@@ -2155,7 +2285,7 @@ function attachCustomizeListeners(icon) {
       updatePanelFavoriteButton(panelFavoriteBtn, icon, isFav);
 
       if (isFav) {
-        flushPendingSearchAttempt();
+        flushPendingSearchAttemptSafely();
         void logFavoriteEvent({
           icon,
           searchQuery: getCurrentSearchQuery(),
@@ -2163,6 +2293,7 @@ function attachCustomizeListeners(icon) {
           jobCategory: getTelemetryJobCategory(icon),
           uiSurface: 'panel',
         });
+        bumpLocalPopularity(icon, { favorite: 1 });
       }
 
       if (!isFav && state.activeLibrary === 'favorites') {
@@ -2374,7 +2505,7 @@ function attachCustomizeListeners(icon) {
       const resolved = await resolveExportSvg(icon);
       if (resolved?.svg) {
         navigator.clipboard.writeText(resolved.svg).then(() => {
-          flushPendingSearchAttempt();
+          flushPendingSearchAttemptSafely();
           showToast(resolved.snapped ? 'SVG copied using nearest Material snapshot' : 'SVG copied to clipboard');
           window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: 'svg' });
           void logCopyEvent({
@@ -2386,6 +2517,7 @@ function attachCustomizeListeners(icon) {
             uiSurface: 'panel',
             evidenceText: 'copy:svg',
           });
+          bumpLocalPopularity(icon, { copy: 1 });
         });
       } else {
         showToast('This icon could not be resolved for SVG export');
@@ -2400,7 +2532,21 @@ function attachCustomizeListeners(icon) {
       const resolved = await resolveExportSvg(icon);
       if (resolved?.svg) {
         const b64 = svgToBase64(resolved.svg);
-        navigator.clipboard.writeText(b64).then(() => showToast(resolved.snapped ? 'Base64 copied using nearest Material snapshot' : 'Base64 data URI copied'));
+        navigator.clipboard.writeText(b64).then(() => {
+          flushPendingSearchAttemptSafely();
+          showToast(resolved.snapped ? 'Base64 copied using nearest Material snapshot' : 'Base64 data URI copied');
+          window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: 'base64' });
+          void logCopyEvent({
+            icon,
+            searchQuery: getCurrentSearchQuery(),
+            resultPosition: getResultPositionForIcon(icon),
+            timeToCopyMs: getTimeToCopyMs(),
+            jobCategory: getTelemetryJobCategory(icon),
+            uiSurface: 'panel',
+            evidenceText: 'copy:base64',
+          });
+          bumpLocalPopularity(icon, { copy: 1 });
+        });
       } else {
         showToast('This icon could not be resolved for Base64 export');
       }
@@ -2414,7 +2560,7 @@ function attachCustomizeListeners(icon) {
       const resolved = await resolveExportSvg(icon);
       if (resolved?.svg) {
         downloadBlob(new Blob([resolved.svg], { type: 'image/svg+xml' }), `${icon.id}.svg`);
-        flushPendingSearchAttempt();
+        flushPendingSearchAttemptSafely();
         showToast(resolved.snapped ? 'SVG downloaded using nearest Material snapshot' : 'SVG downloaded');
         window.umami?.track('icon-download', { lib: icon.lib, id: icon.id, format: 'svg' });
         void logCopyEvent({
@@ -2426,6 +2572,7 @@ function attachCustomizeListeners(icon) {
           uiSurface: 'panel',
           evidenceText: 'download:svg',
         });
+        bumpLocalPopularity(icon, { copy: 1, download: 1 });
       } else {
         showToast('This icon could not be resolved for SVG export');
       }
@@ -2606,11 +2753,23 @@ async function exportAsPng(icon) {
         return;
       }
       downloadBlob(pngBlob, `${icon.id}-${size}px.png`);
+      flushPendingSearchAttemptSafely();
       showToast(
         resolved.snapped
           ? `PNG downloaded (${size}x${size}px, snapped to nearest Material snapshot)`
           : `PNG downloaded (${size}x${size}px)`
       );
+      window.umami?.track('icon-download', { lib: icon.lib, id: icon.id, format: 'png' });
+      void logCopyEvent({
+        icon,
+        searchQuery: getCurrentSearchQuery(),
+        resultPosition: getResultPositionForIcon(icon),
+        timeToCopyMs: getTimeToCopyMs(),
+        jobCategory: getTelemetryJobCategory(icon),
+        uiSurface: 'panel',
+        evidenceText: 'download:png',
+      });
+      bumpLocalPopularity(icon, { copy: 1, download: 1 });
     });
     URL.revokeObjectURL(url);
   };
@@ -2704,11 +2863,23 @@ async function exportAsIco(icon) {
     });
 
     downloadBlob(new Blob([buf], { type: 'image/x-icon' }), `${icon.id}.ico`);
+    flushPendingSearchAttemptSafely();
     showToast(
       resolved.snapped
         ? 'ICO downloaded (16, 32, 48px, snapped to nearest Material snapshot)'
         : 'ICO downloaded (16, 32, 48px)'
     );
+    window.umami?.track('icon-download', { lib: icon.lib, id: icon.id, format: 'ico' });
+    void logCopyEvent({
+      icon,
+      searchQuery: getCurrentSearchQuery(),
+      resultPosition: getResultPositionForIcon(icon),
+      timeToCopyMs: getTimeToCopyMs(),
+      jobCategory: getTelemetryJobCategory(icon),
+      uiSurface: 'panel',
+      evidenceText: 'download:ico',
+    });
+    bumpLocalPopularity(icon, { copy: 1, download: 1 });
   }).catch(() => showToast('ICO export failed - try a different icon'));
 }
 
@@ -2774,7 +2945,7 @@ async function copyComponent(icon, framework) {
     return;
   }
   await navigator.clipboard.writeText(code);
-  flushPendingSearchAttempt();
+  flushPendingSearchAttemptSafely();
   showToast(`${framework.charAt(0).toUpperCase() + framework.slice(1)} component copied`);
   window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: framework });
   void logCopyEvent({
@@ -2786,6 +2957,7 @@ async function copyComponent(icon, framework) {
     uiSurface: 'component-export',
     evidenceText: `copy:${framework}`,
   });
+  bumpLocalPopularity(icon, { copy: 1 });
 }
 
 async function generateComponentCode(icon, framework) {
@@ -3091,12 +3263,11 @@ if (compareDrawerClose) compareDrawerClose.addEventListener('click', () => {
 let searchDebounce = null;
 els.searchInput.addEventListener('input', (e) => {
   if (isDocsHeaderSearchMode()) return;
-  const hasValue = e.target.value.length > 0;
-  els.searchShortcut.style.display = hasValue ? 'none' : '';
-  els.searchClear.style.display = hasValue ? 'flex' : 'none';
+  cancelScheduledRecentSearchHide();
+  syncHeaderSearchChrome({ value: e.target.value });
   clearTimeout(searchDebounce);
   searchDebounce = setTimeout(() => {
-    syncSearchStateFromInput({ resetSearchContext: true });
+    commitSearchStateFromInput({ resetSearchContext: true });
     queueCurrentSearchAttempt();
     if (state.searchQuery.length > 1) {
       window.umami?.track('search', { query: state.searchQuery, results: state.filteredIcons.length });
@@ -3108,16 +3279,27 @@ els.searchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     clearTimeout(searchDebounce);
     searchDebounce = null;
-    syncSearchStateFromInput();
+    commitSearchStateFromInput();
     flushPendingSearchAttempt({ useCurrentState: true });
+    renderRecentSearches();
   }
+});
+els.searchInput.addEventListener('focus', () => {
+  if (isDocsHeaderSearchMode()) return;
+  cancelScheduledRecentSearchHide();
+  renderRecentSearches();
 });
 els.searchInput.addEventListener('blur', () => {
   if (isDocsHeaderSearchMode()) return;
   clearTimeout(searchDebounce);
   searchDebounce = null;
-  syncSearchStateFromInput();
-  flushPendingSearchAttempt({ useCurrentState: true });
+  if (shouldSyncSearchOnBlur(els.searchInput.value, state.searchQuery)) {
+    syncSearchStateFromInput();
+    queueDeferredSearchRefresh({ flushSearchAttempt: true });
+  } else {
+    flushPendingSearchAttempt({ useCurrentState: true });
+  }
+  scheduleRecentSearchHide();
 });
 els.searchClear.addEventListener('click', () => {
   if (isDocsHeaderSearchMode()) return;
@@ -3126,6 +3308,27 @@ els.searchClear.addEventListener('click', () => {
   els.searchInput.dispatchEvent(new Event('input'));
   els.searchInput.focus();
 });
+if (els.searchHistory) {
+  els.searchHistory.addEventListener('pointerdown', (e) => {
+    const queryButton = e.target.closest('[data-search-history-query]');
+    if (queryButton) {
+      e.preventDefault();
+    }
+  });
+  els.searchHistory.addEventListener('click', (e) => {
+    const queryButton = e.target.closest('[data-search-history-query]');
+    if (queryButton) {
+      applyRecentSearchQuery(queryButton.dataset.searchHistoryQuery);
+    }
+  });
+}
+if (els.searchHistoryClear) {
+  els.searchHistoryClear.addEventListener('pointerdown', (e) => e.preventDefault());
+  els.searchHistoryClear.addEventListener('click', () => {
+    clearRecentSearches();
+    els.searchInput.focus();
+  });
+}
 
 // Keyboard shortcuts
 function showCollectionClearConfirmModal({

@@ -46,6 +46,54 @@ const fixtures = [
       'lucide:server',
     ],
   },
+  {
+    query: 'latency',
+    topN: 8,
+    requiredFirst: 'lucide:timer',
+    requiredIncluded: [
+      'material:network_ping',
+      'tabler:gauge',
+    ],
+  },
+  {
+    query: 'hallucination',
+    topN: 8,
+    requiredFirst: 'lucide:bot-off',
+    requiredIncluded: [
+      'tabler:robot-off',
+      'lucide:alert-triangle',
+      'material:robot',
+    ],
+  },
+  {
+    query: 'hallucinate',
+    topN: 8,
+    requiredFirst: 'lucide:bot-off',
+    requiredIncluded: [
+      'tabler:robot-off',
+      'lucide:alert-triangle',
+    ],
+  },
+  {
+    query: 'worktree',
+    topN: 8,
+    requiredFirst: 'lucide:folder-git-2',
+    requiredIncluded: [
+      'lucide:git-branch',
+      'tabler:git-branch',
+      'material:account_tree',
+    ],
+  },
+  {
+    query: 'ai drifting',
+    topN: 8,
+    requiredFirst: 'lucide:brain-circuit',
+    requiredIncluded: [
+      'material:compare_arrows',
+      'material:model_training',
+      'tabler:brain',
+    ],
+  },
 ];
 
 let failed = false;

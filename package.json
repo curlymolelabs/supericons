@@ -20,6 +20,7 @@
     "verify:motion-lab-rate-limits": "node scripts/verify-motion-lab-rate-limits.mjs",
     "verify:motion-lab-presets": "node scripts/verify-motion-lab-preset-parity.mjs",
     "verify:motion-lab-agent-metadata": "node scripts/verify-motion-lab-agent-metadata.mjs",
+    "verify:icon-grid-behavior": "node scripts/verify-icon-grid-behavior.mjs",
     "verify:search-query-fixtures": "node scripts/verify-search-query-fixtures.mjs",
     "backfill:subscription-period-ends": "node scripts/backfill-subscription-current-period-ends.mjs",
     "seed:material-owned-cache": "node scripts/seed-material-owned-cache.js",
