@@ -307,6 +307,11 @@
       color: #000;
     }
     .btn-primary:hover { filter: brightness(1.1); }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      filter: none;
+    }
     .btn-ghost {
       background: rgba(255,255,255,0.04);
       color: var(--si-text-muted);
@@ -404,6 +409,11 @@
     .badge-google { background: rgba(66,133,244,0.1); color: #4285f4; border: 1px solid rgba(66,133,244,0.2); }
     .badge-email { background: rgba(118,117,117,0.08); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.25); }
     .badge-warning { background: rgba(251,191,36,0.1); color: var(--si-warning); border: 1px solid rgba(251,191,36,0.2); }
+    .badge-review-resolved { background: rgba(74,222,128,0.1); color: var(--si-success); border: 1px solid rgba(74,222,128,0.2); }
+    .badge-review-needs-alias { background: rgba(96,165,250,0.1); color: var(--si-info); border: 1px solid rgba(96,165,250,0.2); }
+    .badge-review-needs-icon { background: rgba(255,79,0,0.12); color: var(--si-primary); border: 1px solid rgba(255,79,0,0.2); }
+    .badge-review-ignore { background: rgba(118,117,117,0.1); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.3); }
+    .badge-review-untriaged { background: rgba(255,255,255,0.04); color: var(--si-text-dim); border: 1px solid rgba(72,72,71,0.25); }
 
     /* ---- PAGINATION ---- */
     .pagination {
@@ -531,6 +541,128 @@
     }
     .stats-row:last-child { border-bottom: none; }
     .stats-row__val { color: var(--si-text); font-weight: 600; }
+    .stats-row__label-group {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: 0;
+    }
+    .stats-row--reviewable {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: color var(--si-transition-fast), background var(--si-transition-fast);
+    }
+    .stats-row--reviewable:hover {
+      color: var(--si-text);
+      background: rgba(255,255,255,0.02);
+    }
+    .stats-row--reviewable:focus-visible {
+      outline: 2px solid rgba(255,79,0,0.4);
+      outline-offset: 2px;
+      border-radius: var(--si-radius-md);
+    }
+    .query-review-panel {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .query-review-toolbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+    .query-review-toolbar__copy {
+      display: grid;
+      gap: 0.35rem;
+      min-width: 0;
+    }
+    .query-review-toolbar__lead {
+      font-family: var(--si-font-label);
+      font-size: 0.76rem;
+      line-height: 1.55;
+      color: var(--si-text-dim);
+      max-width: 42rem;
+    }
+    .query-review-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem 0.75rem;
+    }
+    .query-review-summary__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      color: var(--si-text-dim);
+    }
+    .query-review-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--si-radius-full);
+      border: 1px solid rgba(72,72,71,0.28);
+      background: var(--si-surface-container-high);
+      font-family: var(--si-font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--si-text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .query-review-toggle:hover {
+      color: var(--si-text);
+      border-color: rgba(255,79,0,0.28);
+    }
+    .query-review-toggle input {
+      margin: 0;
+      accent-color: var(--si-primary);
+    }
+    .query-review-lead {
+      font-family: var(--si-font-label);
+      font-size: 0.76rem;
+      line-height: 1.6;
+      color: var(--si-text-dim);
+    }
+    .query-review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem 1rem;
+    }
+    .query-review-form {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .query-review-textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      padding: 0.75rem;
+      background: var(--si-surface-container-high);
+      border: 1px solid rgba(72,72,71,0.35);
+      border-radius: var(--si-radius-lg);
+      color: var(--si-text);
+      font-family: var(--si-font-label);
+      font-size: 0.78rem;
+      outline: none;
+      transition: border-color var(--si-transition-fast), box-shadow var(--si-transition-fast);
+    }
+    .query-review-textarea:focus {
+      border-color: rgba(255,79,0,0.4);
+      box-shadow: 0 0 0 3px rgba(255,79,0,0.08);
+    }
+    .query-review-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
 
     /* ---- AUDIT LOG PANEL ---- */
     .audit-filters {
@@ -979,6 +1111,10 @@
     </div>
     <div class="nav-section">
       <div class="nav-section__label">Management</div>
+      <div class="nav-item" id="nav-intelligence" onclick="switchPanel('intelligence')">
+        <span class="material-symbols-outlined nav-item__icon">insights</span>
+        Icon Intelligence
+      </div>
       <div class="nav-item" id="nav-users" onclick="switchPanel('users')">
         <span class="material-symbols-outlined nav-item__icon">group</span>
         Users
@@ -1072,6 +1208,292 @@
             </div>
             <div id="statsRecentActions"></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= INTELLIGENCE PANEL ======= -->
+    <section class="panel" id="panel-intelligence">
+      <div class="panel-header">
+        <div class="panel-header__row">
+          <div>
+            <div class="panel-header__title">Icon Intelligence</div>
+            <div class="panel-header__subtitle">Behavioral evidence, MCP convergence, and curation signals</div>
+          </div>
+          <div class="panel-header__actions">
+            <button class="btn btn-ghost btn-sm" id="intelligenceRefreshBtn" type="button">
+              <span class="material-symbols-outlined">refresh</span>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div class="search-row audit-filters">
+          <div class="search-input-wrap" style="max-width:280px">
+            <span class="material-symbols-outlined">search</span>
+            <input class="search-input" placeholder="Filter icon evidence..." id="intelligenceSearch" />
+          </div>
+          <select class="filter-select" id="intelligenceWindowFilter" aria-label="Intelligence time window">
+            <option value="7d">Last 7 days</option>
+            <option value="30d" selected>Last 30 days</option>
+            <option value="90d">Last 90 days</option>
+            <option value="1y">Last 12 months</option>
+            <option value="all">All time</option>
+          </select>
+          <select class="filter-select" id="intelligenceSignalFilter">
+            <option value="">All signals</option>
+            <option value="search_attempt">search_attempt</option>
+            <option value="copy">copy</option>
+            <option value="favorite">favorite</option>
+            <option value="replace">replace</option>
+            <option value="mcp_call">mcp_call</option>
+            <option value="editorial">editorial</option>
+            <option value="kit_download">kit_download</option>
+            <option value="collection">collection</option>
+            <option value="social_gallery">social_gallery</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">database</span>
+              <span id="intelligenceTotalEvidenceLabel">Evidence Rows (30d)</span>
+            </div>
+            <div class="stat-card__value" id="intelligenceTotalEvidenceValue">0</div>
+            <div class="stat-card__delta" id="intelligenceTotalEvidenceDelta">Raw signals captured in the current window</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">content_copy</span>
+              <span id="intelligenceCopyEventsLabel">Copy Events (30d)</span>
+            </div>
+            <div class="stat-card__value" id="intelligenceCopyEventsValue">0</div>
+            <div class="stat-card__delta" id="intelligenceCopyEventsDelta">Selection pressure in the current window</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">neurology</span>
+              <span id="intelligenceMcpBatchesLabel">MCP Batches (30d)</span>
+            </div>
+            <div class="stat-card__value" id="intelligenceMcpBatchesValue">0</div>
+            <div class="stat-card__delta" id="intelligenceMcpBatchesDelta">Agent search sessions logged in the current window</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">download</span>
+              <span id="intelligenceKitDownloadsLabel">Kit Downloads (30d)</span>
+            </div>
+            <div class="stat-card__value" id="intelligenceKitDownloadsValue">0</div>
+            <div class="stat-card__delta" id="intelligenceKitDownloadsDelta">Collection pulls routed through Supericons in the current window</div>
+          </div>
+        </div>
+
+        <div class="stats-recent">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">bolt</span>
+              Top Icons
+            </div>
+            <div id="intelligenceTopIcons"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">category</span>
+              Top Purposes
+            </div>
+            <div id="intelligenceTopCategories"></div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">swap_horiz</span>
+              Top Replaced Icons
+            </div>
+            <div id="intelligenceTopReplaced"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">insights</span>
+              Key Signals
+            </div>
+            <div id="intelligenceKeySignals"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid" style="padding-top:0;">
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">manage_search</span>
+              <span id="searchIntelUniqueQueriesLabel">Unique Queries (30d)</span>
+            </div>
+            <div class="stat-card__value" id="searchIntelUniqueQueriesValue">0</div>
+            <div class="stat-card__delta" id="searchIntelUniqueQueriesDelta">Distinct search queries with captured evidence</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">travel_explore</span>
+              <span id="searchIntelSearchAttemptsLabel">Search Attempts (30d)</span>
+            </div>
+            <div class="stat-card__value" id="searchIntelSearchAttemptsValue">0</div>
+            <div class="stat-card__delta" id="searchIntelSearchAttemptsDelta">Settled searches captured in the current window</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">warning</span>
+              <span id="searchIntelZeroResultQueriesLabel">Zero-Result Queries (30d)</span>
+            </div>
+            <div class="stat-card__value" id="searchIntelZeroResultQueriesValue">0</div>
+            <div class="stat-card__delta" id="searchIntelZeroResultQueriesDelta">Distinct queries that returned no results</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">
+              <span class="material-symbols-outlined">filter_alt</span>
+              <span id="searchIntelLowResultQueriesLabel">Low-Result Queries (30d)</span>
+            </div>
+            <div class="stat-card__value" id="searchIntelLowResultQueriesValue">0</div>
+            <div class="stat-card__delta" id="searchIntelLowResultQueriesDelta">Distinct queries with 1-3 results</div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">query_stats</span>
+              Top Successful Queries
+            </div>
+            <div id="searchIntelTopQueries"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">psychology</span>
+              Top MCP Queries
+            </div>
+            <div id="searchIntelTopMcpQueries"></div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;">
+          <div class="stats-section" style="grid-column:1 / -1;">
+            <div class="query-review-toolbar">
+              <div class="query-review-toolbar__copy">
+                <div class="stats-section__title" style="margin-bottom:0;">
+                  <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">playlist_add_check_circle</span>
+                  Review Queue
+                </div>
+                <div class="query-review-toolbar__lead">
+                  Active queue mode keeps triage focused on untriaged issues plus items that still need alias or icon work. Reviewed items stay available whenever you turn them back on.
+                </div>
+              </div>
+              <label class="query-review-toggle" for="queryReviewShowReviewed">
+                <input type="checkbox" id="queryReviewShowReviewed" />
+                <span>Show reviewed</span>
+              </label>
+            </div>
+            <div class="query-review-summary" id="queryReviewSummary"></div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">crisis_alert</span>
+              Top Zero-Result Queries
+            </div>
+            <div id="searchIntelZeroResultQueries"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">filter_alt</span>
+              Low-Result Queries
+            </div>
+            <div id="searchIntelLowResultQueries"></div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">sync_problem</span>
+              Replacement-Heavy Queries
+            </div>
+            <div id="searchIntelReplacementQueries"></div>
+          </div>
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">info</span>
+              Search Intelligence Notes
+            </div>
+            <div id="searchIntelNotes"></div>
+          </div>
+        </div>
+
+        <div class="stats-recent" style="padding-top:0;grid-template-columns:1fr;">
+          <div class="stats-section">
+            <div class="stats-section__title">
+              <span class="material-symbols-outlined" style="font-size:13px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">rate_review</span>
+              Query Review
+            </div>
+            <div class="query-review-panel">
+              <p class="query-review-lead" id="queryReviewLead">Select a query above to start reviewing it.</p>
+              <div class="query-review-grid">
+                <div class="detail-row">
+                  <span class="detail-row__label">Query</span>
+                  <span class="detail-row__value" id="queryReviewQuery">-</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-row__label">Library</span>
+                  <span class="detail-row__value" id="queryReviewLibrary">-</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-row__label">Purpose</span>
+                  <span class="detail-row__value" id="queryReviewPurpose">-</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-row__label">Current status</span>
+                  <span class="detail-row__value" id="queryReviewCurrentStatus"><span class="badge badge-review-untriaged">Untriaged</span></span>
+                </div>
+              </div>
+              <form class="query-review-form" id="queryReviewForm">
+                <select class="filter-select" id="queryReviewStatus" aria-label="Query review status">
+                  <option value="">Select status</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="needs_alias">Needs Alias</option>
+                  <option value="needs_icon">Needs Icon</option>
+                  <option value="ignore">Ignore</option>
+                </select>
+                <textarea
+                  class="query-review-textarea"
+                  id="queryReviewNote"
+                  placeholder="Optional note. Example: map to lucide:network or add to icon backlog."
+                ></textarea>
+                <div class="query-review-actions">
+                  <button class="btn btn-ghost" type="button" id="queryReviewClearBtn">Clear Selection</button>
+                  <button class="btn btn-primary" type="submit" id="queryReviewSaveBtn">Save Review</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="padding:0 1.5rem 1.5rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Signal</th>
+                <th>Icon</th>
+                <th>Query</th>
+                <th>Purpose</th>
+                <th>Surface</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="intelligenceEvidenceBody"></tbody>
+          </table>
         </div>
       </div>
     </section>

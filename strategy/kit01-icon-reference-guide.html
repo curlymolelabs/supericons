@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit 01 — AI Dashboard Icon Reference Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--or:#fb923c;
+      --lu:#60a5fa;--he:#a78bfa;--ph:#34d399;--ta:#fbbf24;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--lu),var(--he),var(--ph),var(--ta));z-index:999;transition:width .1s}
+    .sidebar{position:fixed;top:0;left:0;width:240px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.25rem .75rem;display:flex;flex-direction:column;gap:.05rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:.5rem;line-height:1.3}
+    .sb-sub{font-size:.62rem;color:var(--td);padding:0 .5rem;margin-bottom:.75rem}
+    .sb-lib{font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.6rem .5rem .15rem;display:flex;align-items:center;gap:.4rem}
+    .sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.25rem .6rem;border-radius:5px;color:var(--td);text-decoration:none;font-size:.72rem;font-weight:500;transition:all .15s}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{color:var(--t);background:var(--bg-h)}
+    .sb-code{font-family:'JetBrains Mono',monospace;font-size:.62rem}
+    .main{margin-left:240px}
+    .hero{padding:3.5rem 4rem 2.5rem;border-bottom:1px solid var(--bd);
+      background:radial-gradient(ellipse at 70% 0%,rgba(96,165,250,.06),transparent 50%),
+                 radial-gradient(ellipse at 5% 100%,rgba(52,211,153,.04),transparent 50%)}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bl);background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);border-radius:99px;padding:.2rem .8rem;margin-bottom:1rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:.5rem;background:linear-gradient(135deg,var(--bl),var(--pu),var(--gr));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:.88rem;color:var(--td);max-width:640px;line-height:1.7;margin-bottom:1.25rem}
+    .lib-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .lib-pill{font-size:.72rem;font-weight:700;padding:.25rem .7rem;border-radius:99px}
+    .lu-pill{background:rgba(96,165,250,.12);color:var(--lu);border:1px solid rgba(96,165,250,.25)}
+    .he-pill{background:rgba(167,139,250,.12);color:var(--he);border:1px solid rgba(167,139,250,.25)}
+    .ph-pill{background:rgba(52,211,153,.12);color:var(--ph);border:1px solid rgba(52,211,153,.25)}
+    .ta-pill{background:rgba(251,191,36,.12);color:var(--ta);border:1px solid rgba(251,191,36,.25)}
+    .search-legend{display:flex;gap:1.5rem;flex-wrap:wrap;padding:.75rem 1rem;background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:8px;font-size:.78rem;line-height:1.55}
+    .sl-item{display:flex;align-items:center;gap:.5rem}
+    .sl-swatch{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.67rem;padding:.1rem .35rem;border-radius:4px}
+    .sl-find{background:rgba(52,211,153,.08);color:var(--gr);border:1px solid rgba(52,211,153,.2)}
+    .sl-alias{background:rgba(251,191,36,.07);color:var(--am);border:1px solid rgba(251,191,36,.18)}
+    .sl-text{color:var(--td)}
+    .rule-box{margin:2rem 4rem;background:rgba(251,146,60,.04);border:1px solid rgba(251,146,60,.2);border-radius:10px;padding:1rem 1.25rem;font-size:.85rem;color:#fed7aa;line-height:1.65}
+    .rule-box strong{color:var(--or)}
+    .lib-section{padding:2.5rem 4rem;border-bottom:1px solid var(--bd)}
+    .lib-hdr{display:flex;align-items:center;gap:.9rem;margin-bottom:1.5rem}
+    .lib-badge{font-size:.65rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:.25rem .7rem;border-radius:6px}
+    .lib-name{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-.02em}
+    .lib-count{font-size:.75rem;color:var(--tf)}
+    .icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:1rem}
+    .icon-card{background:var(--bg-r);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:border-color .2s}
+    .icon-card:hover{border-color:var(--bd2)}
+    .ic-head{display:flex;align-items:center;gap:.75rem;padding:.8rem 1rem;border-bottom:1px solid var(--bd2)}
+    .ic-name{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;flex:1}
+    .ic-concept{font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border-radius:4px;flex-shrink:0}
+    .ic-body{padding:.85rem 1rem;display:flex;flex-direction:column;gap:.65rem}
+    .ic-row{display:grid;grid-template-columns:auto 1fr;gap:.4rem .75rem;align-items:start}
+    .ic-label{font-size:.63rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--tf);padding-top:.08rem;white-space:nowrap}
+    .ic-val{font-size:.81rem;color:var(--td);line-height:1.55}
+    .ic-val strong{color:var(--t)}
+    .ic-val code{font-family:'JetBrains Mono',monospace;font-size:.74rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.02rem .28rem;color:var(--te)}
+    .ic-list{font-size:.81rem;color:var(--td);line-height:1.55;padding-left:.85rem}
+    .ic-list li{margin-bottom:.1rem;list-style:disc}
+    .ic-note{font-size:.8rem;color:var(--am);line-height:1.55;padding:.5rem .7rem;background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.15);border-radius:6px}
+    .ic-note strong{color:var(--am)}
+    .ic-same{font-size:.8rem;color:var(--tf);font-style:italic;line-height:1.5;padding:.4rem .6rem;background:var(--bg-s);border-radius:5px}
+    /* Search terms section */
+    .ic-search{padding:.6rem 1rem .85rem;border-top:1px dashed var(--bd2);display:flex;flex-direction:column;gap:.35rem}
+    .ic-search-row{display:flex;flex-direction:column;gap:.22rem}
+    .ic-search-lbl{font-size:.57rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+    .ic-tags{display:flex;flex-wrap:wrap;gap:.2rem;margin-top:.05rem}
+    .tag-find{font-size:.68rem;font-family:'JetBrains Mono',monospace;background:rgba(52,211,153,.07);color:var(--gr);border:1px solid rgba(52,211,153,.18);border-radius:4px;padding:.1rem .35rem}
+    .tag-alias{font-size:.68rem;font-family:'JetBrains Mono',monospace;background:rgba(251,191,36,.06);color:var(--am);border:1px solid rgba(251,191,36,.16);border-radius:4px;padding:.1rem .35rem}
+    .tag-warn{font-size:.68rem;font-family:'JetBrains Mono',monospace;background:rgba(248,113,113,.07);color:var(--re);border:1px solid rgba(248,113,113,.18);border-radius:4px;padding:.1rem .35rem}
+    .strategy{padding:2.5rem 4rem 3rem;background:var(--bg-s)}
+    .st-hdr{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:1rem;letter-spacing:-.02em}
+    .st-steps{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
+    .st-step{display:flex;gap:.75rem;font-size:.84rem;color:var(--td);line-height:1.55}
+    .st-n{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--tf);min-width:1.2rem;padding-top:.08rem;flex-shrink:0}
+    .st-step strong{color:var(--t)}
+    .code-block{background:var(--bg);border:1px solid var(--bd2);border-radius:8px;padding:1rem 1.25rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te);line-height:1.85;margin-top:.75rem}
+    .ck{color:var(--bl)}.cv{color:var(--gr)}.cs{color:var(--am)}.cc{color:var(--tf);font-style:italic}
+    @media(max-width:900px){
+      .sidebar{display:none}.main{margin-left:0}
+      .lib-section,.hero,.rule-box,.strategy{padding-left:1.25rem;padding-right:1.25rem}
+      .icon-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo">Kit 01 Icon<br>Reference Guide</div>
+  <div class="sb-sub">AI SaaS Dashboard — curation + semantic search reference</div>
+  <div class="sb-lib"><span class="sb-dot" style="background:var(--lu)"></span><span style="color:var(--lu)">Lucide (14)</span></div>
+  <a class="sb-link" href="#lu-cpu"><span class="sb-code">cpu</span></a>
+  <a class="sb-link" href="#lu-brain"><span class="sb-code">brain</span></a>
+  <a class="sb-link" href="#lu-network"><span class="sb-code">network</span></a>
+  <a class="sb-link" href="#lu-workflow"><span class="sb-code">workflow</span></a>
+  <a class="sb-link" href="#lu-shuffle"><span class="sb-code">shuffle</span></a>
+  <a class="sb-link" href="#lu-layers"><span class="sb-code">layers</span></a>
+  <a class="sb-link" href="#lu-zap"><span class="sb-code">zap</span></a>
+  <a class="sb-link" href="#lu-bot"><span class="sb-code">bot</span></a>
+  <a class="sb-link" href="#lu-sparkles"><span class="sb-code">sparkles</span></a>
+  <a class="sb-link" href="#lu-wand-2"><span class="sb-code">wand-2</span></a>
+  <a class="sb-link" href="#lu-git-merge"><span class="sb-code">git-merge</span></a>
+  <a class="sb-link" href="#lu-eye"><span class="sb-code">eye</span></a>
+  <a class="sb-link" href="#lu-activity"><span class="sb-code">activity</span></a>
+  <a class="sb-link" href="#lu-trending-up"><span class="sb-code">trending-up</span></a>
+  <div class="sb-lib"><span class="sb-dot" style="background:var(--he)"></span><span style="color:var(--he)">Heroicons (8)</span></div>
+  <a class="sb-link" href="#he-cpu-chip"><span class="sb-code">cpu-chip</span></a>
+  <a class="sb-link" href="#he-server-stack"><span class="sb-code">server-stack</span></a>
+  <a class="sb-link" href="#he-circle-stack"><span class="sb-code">circle-stack</span></a>
+  <a class="sb-link" href="#he-cloud"><span class="sb-code">cloud</span></a>
+  <a class="sb-link" href="#he-signal"><span class="sb-code">signal</span></a>
+  <a class="sb-link" href="#he-bolt"><span class="sb-code">bolt</span></a>
+  <a class="sb-link" href="#he-command-line"><span class="sb-code">command-line</span></a>
+  <a class="sb-link" href="#he-cog-6-tooth"><span class="sb-code">cog-6-tooth</span></a>
+  <div class="sb-lib"><span class="sb-dot" style="background:var(--ph)"></span><span style="color:var(--ph)">Phosphor (5)</span></div>
+  <a class="sb-link" href="#ph-robot"><span class="sb-code">robot</span></a>
+  <a class="sb-link" href="#ph-graph"><span class="sb-code">graph</span></a>
+  <a class="sb-link" href="#ph-flow-arrow"><span class="sb-code">flow-arrow</span></a>
+  <a class="sb-link" href="#ph-lightning"><span class="sb-code">lightning</span></a>
+  <a class="sb-link" href="#ph-database"><span class="sb-code">database</span></a>
+  <div class="sb-lib"><span class="sb-dot" style="background:var(--ta)"></span><span style="color:var(--ta)">Tabler (4)</span></div>
+  <a class="sb-link" href="#ta-brain"><span class="sb-code">brain</span></a>
+  <a class="sb-link" href="#ta-network"><span class="sb-code">network</span></a>
+  <a class="sb-link" href="#ta-api"><span class="sb-code">api</span></a>
+  <a class="sb-link" href="#ta-cloud-computing"><span class="sb-code">cloud-computing</span></a>
+  <div class="sb-lib" style="margin-top:.5rem"><span style="color:var(--or)">Strategy</span></div>
+  <a class="sb-link" href="#strategy">Selection Process</a>
+</nav>
+
+<main class="main">
+<div class="hero">
+  <div class="hero-tag">Kit 01 — AI SaaS Dashboard</div>
+  <h1 class="hero-h1">Icon Reference Guide</h1>
+  <p class="hero-sub">Curation reference with semantic search mapping. Each card shows what to search in Supericons today, plus the AI-domain vocabulary that should return this icon — the semantic gap we close through <code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--te)">icon_metadata</code> and <code style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--te)">manifest-lite.json</code>.</p>
+  <div class="lib-pills">
+    <div class="lib-pill lu-pill">Lucide — 14 icons</div>
+    <div class="lib-pill he-pill">Heroicons — 8 icons</div>
+    <div class="lib-pill ph-pill">Phosphor — 5 icons</div>
+    <div class="lib-pill ta-pill">Tabler — 4 icons</div>
+  </div>
+  <div class="search-legend">
+    <div class="sl-item"><span class="sl-swatch sl-find">cpu</span><span class="sl-text">Green = works in Supericons search today</span></div>
+    <div class="sl-item"><span class="sl-swatch sl-alias">inference</span><span class="sl-text">Amber = semantic gap — what devs type but get wrong or zero results. These become <code style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--te)">semantic_aliases[]</code> in manifest-lite.json.</span></div>
+  </div>
+</div>
+
+<div class="rule-box">
+  <strong>Rule:</strong> One icon per AI concept. One concept per icon. Every <code style="font-family:'JetBrains Mono',monospace;font-size:.8rem">usage-map.md</code> entry must answer: "Why this icon and not the obvious alternative?" The semantic aliases become the intelligence layer that routes developer intent to the right icon via MCP.
+</div>
+
+<!-- ═══ LUCIDE ═══ -->
+<div class="lib-section" id="lucide">
+  <div class="lib-hdr">
+    <div class="lib-badge" style="background:rgba(96,165,250,.12);color:var(--lu)">Lucide</div>
+    <div class="lib-name" style="color:var(--lu)">Lucide Icons</div>
+    <div class="lib-count">14 icons — AI SaaS Dashboard</div>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card" id="lu-cpu">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:cpu</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Compute</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A square microchip with connector pins on all four sides.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Compute resources, inference processing, "the model is running."</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Inference compute metric in a cost dashboard</li><li>CPU/GPU usage panel header</li><li>Processing loading state</li><li>Compute allocation or quota indicator</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">The AI model itself (use <code>brain</code>), speed (use <code>zap</code>), storage.</span></div>
+        <div class="ic-note"><strong>Note:</strong> Searching "gpu" returns a separate <code>lucide:gpu</code> icon. Use that for GPU-specific cards. Use <code>lucide:cpu</code> for generic "compute/inference" concepts where the hardware type does not matter.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">cpu</span><span class="tag-find">chip</span><span class="tag-find">processor</span><span class="tag-find">microchip</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (currently zero results)</div>
+          <div class="ic-tags"><span class="tag-alias">inference</span><span class="tag-alias">compute</span><span class="tag-alias">quota</span><span class="tag-alias">processing</span><span class="tag-alias">workload</span><span class="tag-alias">silicon</span><span class="tag-alias">hardware</span><span class="tag-alias">inference-compute</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-brain">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:brain</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">AI Model</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A simplified brain silhouette — left and right hemisphere outline.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>The AI model itself, reasoning capability, memory, knowledge base.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Model section header</li><li>AI Memory / Knowledge base label</li><li>Reasoning or thinking process indicator</li><li>Model hub navigation item</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Infrastructure (use <code>cpu</code>), outputs (use <code>sparkles</code>).</span></div>
+        <div class="ic-note"><strong>Note:</strong> <code>bot</code> = the agent as an entity. <code>brain</code> = the reasoning or intelligence inside it. An agent roster uses bots. A model selector uses brains.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">brain</span><span class="tag-find">mind</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">model</span><span class="tag-alias">llm</span><span class="tag-alias">ai</span><span class="tag-alias">reasoning</span><span class="tag-alias">intelligence</span><span class="tag-alias">cognition</span><span class="tag-alias">knowledge</span><span class="tag-alias">foundation-model</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-network">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:network</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Multi-Agent</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Dots (nodes) connected by lines — a topology or mesh diagram.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Multi-agent systems, connected services, RAG retrieval graph, knowledge graph.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Agent Network view header</li><li>Connected data sources section</li><li>Multi-model routing visualization</li><li>Knowledge graph navigation item</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Sequential pipelines (use <code>workflow</code>). Network = mesh. Workflow = directed sequence.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">network</span><span class="tag-find">nodes</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">agents</span><span class="tag-alias">multi-agent</span><span class="tag-alias">mesh</span><span class="tag-alias">topology</span><span class="tag-alias">connections</span><span class="tag-alias">distributed</span><span class="tag-alias">graph</span><span class="tag-alias">interconnected</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-workflow">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:workflow</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Pipeline</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A simplified flow diagram — boxes connected by directed arrows (left-to-right or top-to-bottom).</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Pipelines, LangGraph chains, processing sequences, orchestration flows, DAGs.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Pipeline view header</li><li>Workflow builder navigation item</li><li>Chain steps or processing flow visualization</li><li>LangGraph or n8n-style orchestration UI</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Parallel/mesh architectures (use <code>network</code>), real-time streaming (use <code>signal</code>).</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">workflow</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">pipeline</span><span class="tag-alias">dag</span><span class="tag-alias">chain</span><span class="tag-alias">sequence</span><span class="tag-alias">orchestration</span><span class="tag-alias">langchain</span><span class="tag-alias">flow</span><span class="tag-alias">process</span><span class="tag-alias">langgraph</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-shuffle">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:shuffle</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">RAG Retrieval</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Two arrows crossing — like the shuffle button on a music player.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>RAG retrieval (probabilistic), semantic/vector search, sampling, ANN lookup.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>RAG retrieval step in a pipeline diagram (the R in RAG)</li><li>Vector search indicator</li><li>Sampling / temperature visualization</li><li>Approximate nearest neighbor results</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Deterministic sequential operations (use <code>workflow</code>), exact keyword search.</span></div>
+        <div class="ic-note"><strong>Note:</strong> The crossing arrows mean "finding across a space, not following a path." Do not use a magnifying glass for semantic search — that implies exact text match, not probabilistic retrieval. In a RAG pipeline: Retrieve = <code>shuffle</code>, Augment = <code>git-merge</code>, Generate = <code>sparkles</code>.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">shuffle</span><span class="tag-find">random</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">rag</span><span class="tag-alias">retrieval</span><span class="tag-alias">vector-search</span><span class="tag-alias">semantic-search</span><span class="tag-alias">probabilistic</span><span class="tag-alias">sampling</span><span class="tag-alias">nearest-neighbor</span><span class="tag-alias">knn</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-layers">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:layers</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Embedding Layer</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Three or four horizontal stacked sheets — like a stack of paper or geological strata.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Model layers, embedding layers, abstraction layers, context stack, RAG as layered tiers.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Embedding layer label in a model visualization</li><li>Context layers in a prompt inspector</li><li>Processing stack or abstraction levels</li><li>Model architecture overview</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Sequential steps (use <code>workflow</code>), connections (use <code>network</code>), compute (use <code>cpu</code>).</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">layers</span><span class="tag-find">stack</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">embedding</span><span class="tag-alias">abstraction</span><span class="tag-alias">architecture</span><span class="tag-alias">context</span><span class="tag-alias">tiers</span><span class="tag-alias">model-layers</span><span class="tag-alias">embedding-layer</span><span class="tag-alias">context-window</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-zap">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:zap</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Fast / Trigger</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A single diagonal lightning bolt / flash strike.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Fast inference, instant mode, real-time triggers, streaming, webhook events.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Streaming mode toggle label</li><li>Fast inference badge</li><li>Trigger / event indicators</li><li>Real-time status pill / webhook event</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Batch / async processing. <code>signal</code> = stream is flowing. <code>zap</code> = triggered or fast.</span></div>
+        <div class="ic-note"><strong>Note:</strong> <code>heroicons:bolt</code> serves the same purpose. Choose one library per concept and do not use both in the same kit.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">zap</span><span class="tag-find">lightning</span><span class="tag-find">flash</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">fast</span><span class="tag-alias">instant</span><span class="tag-alias">streaming</span><span class="tag-alias">realtime</span><span class="tag-alias">trigger</span><span class="tag-alias">event</span><span class="tag-alias">webhook</span><span class="tag-alias">reactive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-bot">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:bot</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Agent Entity</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A cartoon robot face — two square eyes, simple antenna on top, rectangular head outline.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>AI agent as an entity, chatbot instance, automated assistant in a roster.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Agent label in a list of agents</li><li>Chatbot interface entry point</li><li>AI assistant section header</li><li>Agent avatar placeholder in a roster</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Underlying model infrastructure (use <code>brain</code> or <code>cpu</code>), observability (use <code>eye</code>).</span></div>
+        <div class="ic-note"><strong>Note:</strong> <code>bot</code> = the agent as a thing/entity. <code>brain</code> = the reasoning inside it. An agent roster uses bots. A model selector uses brains.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">bot</span><span class="tag-find">robot</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">agent</span><span class="tag-alias">chatbot</span><span class="tag-alias">assistant</span><span class="tag-alias">automated</span><span class="tag-alias">ai-agent</span><span class="tag-alias">copilot-entity</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-sparkles">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:sparkles</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">AI-Generated</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Three or four small star / glimmer shapes in a cluster — the universal "magic" sparkle pattern.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>AI-generated content, "powered by AI" badge, AI suggestions, generative output.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>AI-generated badge on content</li><li>Enhance with AI button label</li><li>AI suggestions section header</li><li>Copilot / AI assist features (user-facing)</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Backend infrastructure, technical AI concepts. This reads as user-facing AI, not engineering infra.</span></div>
+        <div class="ic-note"><strong>Note:</strong> Now the globally understood "AI is here" signal — GitHub Copilot, Notion AI, Linear AI all use sparkles. <code>sparkles</code> = "AI was here" (passive). <code>wand-2</code> = "click to use AI" (active).</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">sparkles</span><span class="tag-find">sparkle</span><span class="tag-find">stars</span><span class="tag-find">magic</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">ai-generated</span><span class="tag-alias">copilot</span><span class="tag-alias">generated</span><span class="tag-alias">ai-powered</span><span class="tag-alias">enhance</span><span class="tag-alias">generative</span><span class="tag-alias">ai-badge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-wand-2">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:wand-2</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Apply AI</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A wand with a decorative star or sparkle at the tip (more ornate than plain <code>wand</code>).</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>"Apply AI to this" — one-click AI transformation, generate / rewrite action button.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Auto-generate button</li><li>Rewrite with AI action</li><li>Transform CTA on existing content</li><li>Any button that triggers AI on content</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Showing content IS AI-generated (use <code>sparkles</code>), infrastructure.</span></div>
+        <div class="ic-note"><strong>Note:</strong> <code>sparkles</code> = "AI was here" (passive badge). <code>wand-2</code> = "click to invoke AI" (active button). An AI output label = sparkles. A generate button = wand-2.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">wand</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">generate</span><span class="tag-alias">transform</span><span class="tag-alias">apply-ai</span><span class="tag-alias">auto-generate</span><span class="tag-alias">rewrite</span><span class="tag-alias">create</span><span class="tag-alias">ai-action</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-git-merge">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:git-merge</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Augmentation</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A git merge diagram — two lines (branches) converging into one with nodes at branch points.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>The A in RAG (Augmentation) — merging retrieved context with query, agent handoff, combining outputs.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Augmentation step in a RAG pipeline (the A)</li><li>Context merge indicator</li><li>Agent handoff visualization</li><li>Tool call result aggregation</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Pure retrieval (use <code>shuffle</code>), generation (use <code>sparkles</code>), diverging processes.</span></div>
+        <div class="ic-note"><strong>Note:</strong> In a RAG visualization — Retrieve = <code>shuffle</code>, Augment = <code>git-merge</code>, Generate = <code>sparkles</code>. Three distinct, immediately readable stages.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">merge</span><span class="tag-find">git-merge</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">augmentation</span><span class="tag-alias">combine</span><span class="tag-alias">context-merge</span><span class="tag-alias">rag-augment</span><span class="tag-alias">handoff</span><span class="tag-alias">aggregate</span><span class="tag-alias">convergence</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-eye">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:eye</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Observability</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">An eye — the classic open eye outline.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Observability, tracing, monitoring what the model is doing internally, LLM ops, span tracing.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Observability section header</li><li>Trace viewer navigation item</li><li>Monitor / Audit tool UI</li><li>Span / trace logging indicator (Langfuse, LangSmith)</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Access-control visibility (use <code>lock</code>), live metrics (use <code>activity</code>).</span></div>
+        <div class="ic-note"><strong>Note:</strong> In AI ops, "observability" is a distinct category — seeing inside model calls, tracking spans, debugging prompts. <code>eye</code> is specific to this. Do not use <code>activity</code> which implies live metrics, not inspection.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">eye</span><span class="tag-find">view</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">observability</span><span class="tag-alias">tracing</span><span class="tag-alias">monitoring</span><span class="tag-alias">langsmith</span><span class="tag-alias">langfuse</span><span class="tag-alias">spans</span><span class="tag-alias">audit</span><span class="tag-alias">inspect</span><span class="tag-alias">llm-ops</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-activity">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:activity</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Live Metrics</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A heartbeat / ECG line — the oscillating waveform seen on a heart monitor.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Real-time metrics, live system health, token throughput, current performance, live activity feed.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Live metrics widget header</li><li>System health indicator</li><li>Token throughput / requests-per-second label</li><li>Activity feed section (recent events)</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Historical trends (use <code>trending-up</code>), deep inspection (use <code>eye</code>).</span></div>
+        <div class="ic-note"><strong>Note:</strong> Activity = right now, live, pulse. Trending-up = direction over time. If data refreshes every second, use <code>activity</code>. If it shows a 30-day chart, use <code>trending-up</code>.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">activity</span><span class="tag-find">heartbeat</span><span class="tag-find">pulse</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">live</span><span class="tag-alias">realtime-metrics</span><span class="tag-alias">throughput</span><span class="tag-alias">health</span><span class="tag-alias">performance</span><span class="tag-alias">requests</span><span class="tag-alias">latency</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="lu-trending-up">
+      <div class="ic-head" style="border-left:3px solid var(--lu)">
+        <div class="ic-name" style="color:var(--lu)">lucide:trending-up</div>
+        <div class="ic-concept" style="background:rgba(96,165,250,.1);color:var(--lu)">Performance Trends</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A line chart with an upward slope and an arrow at the end — the standard growth chart icon.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Improving performance metrics, model improvement over time, usage growth, accuracy trends.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Performance trends chart header</li><li>Model improvement section</li><li>Usage growth KPI widget</li><li>Cost / accuracy trend indicators</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Real-time current state (use <code>activity</code>), neutral metrics (use <code>bar-chart</code>).</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">trending-up</span><span class="tag-find">trending</span><span class="tag-find">trend</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">improvement</span><span class="tag-alias">growth</span><span class="tag-alias">accuracy</span><span class="tag-alias">performance-trends</span><span class="tag-alias">metrics</span><span class="tag-alias">analytics</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ HEROICONS ═══ -->
+<div class="lib-section" id="heroicons">
+  <div class="lib-hdr">
+    <div class="lib-badge" style="background:rgba(167,139,250,.12);color:var(--he)">Heroicons</div>
+    <div class="lib-name" style="color:var(--he)">Heroicons</div>
+    <div class="lib-count">8 icons — AI SaaS Dashboard</div>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card" id="he-cpu-chip">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:cpu-chip</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Compute</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A semiconductor chip — square with internal circuit traces, slightly more detailed than <code>lucide:cpu</code>.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val">Same concept as <code>lucide:cpu</code> — inference compute, GPU/TPU usage, hardware resources.</span></div>
+        <div class="ic-same">Use in Heroicons-heavy kits instead of <code>lucide:cpu</code>. Do not use both in the same kit.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">cpu</span><span class="tag-find">chip</span><span class="tag-find">processor</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same gap as lucide:cpu)</div>
+          <div class="ic-tags"><span class="tag-alias">inference</span><span class="tag-alias">compute</span><span class="tag-alias">quota</span><span class="tag-alias">processing</span><span class="tag-alias">workload</span><span class="tag-alias">hardware</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-server-stack">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:server-stack</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Model Hosting</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Two or three stacked server or rack units — a typical data-center server tower stack.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Model hosting infrastructure, LLM API server, backend deployment, self-hosted model setup.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>"Hosted on" infrastructure indicator</li><li>Model server status</li><li>Deployment section header</li><li>Self-hosted LLM configuration panel</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Data storage (use <code>circle-stack</code>). <code>server-stack</code> = running machines. <code>circle-stack</code> = stored records.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">server</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">hosting</span><span class="tag-alias">deployment</span><span class="tag-alias">backend</span><span class="tag-alias">infrastructure</span><span class="tag-alias">llm-server</span><span class="tag-alias">self-hosted</span><span class="tag-alias">model-server</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-circle-stack">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:circle-stack</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Vector DB</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Stacked circles or ovals — like a stack of coins or database table records.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Vector database, stored embeddings, indexed knowledge base records.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Vector DB label</li><li>Knowledge base section (the stored/indexed data layer)</li><li>Indexed documents count indicator</li><li>Embeddings store label</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Compute infrastructure (use <code>server-stack</code>), live retrieval (use <code>shuffle</code>).</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">stack</span><span class="tag-find">circle-stack</span><span class="tag-find">database</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">vector-db</span><span class="tag-alias">embeddings</span><span class="tag-alias">knowledge-base</span><span class="tag-alias">indexed</span><span class="tag-alias">pinecone</span><span class="tag-alias">weaviate</span><span class="tag-alias">chroma</span><span class="tag-alias">stored-data</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-cloud">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:cloud</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Cloud API</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Standard cloud outline shape.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Cloud API calls to external models (OpenAI, Anthropic, Google), cloud deployment, remote model access.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Cloud API connection indicator</li><li>Remote model badge</li><li>Cloud deployment status</li><li>External API provider label</li></ul></div></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">cloud</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">openai</span><span class="tag-alias">anthropic</span><span class="tag-alias">api-gateway</span><span class="tag-alias">remote-model</span><span class="tag-alias">hosted</span><span class="tag-alias">external</span><span class="tag-alias">managed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-signal">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:signal</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Streaming</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Radiating arcs like wifi bars or radio waves — signal strength pattern.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Streaming output, live token stream, SSE / WebSocket connection, real-time inference stream.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Streaming mode indicator</li><li>Live connection status</li><li>Token streaming visualization</li><li>SSE / WebSocket health</li></ul></div></div>
+        <div class="ic-note"><strong>Note:</strong> <code>signal</code> = the stream is actively flowing. <code>zap</code> = it was triggered or is fast. Different moments in the user experience.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">signal</span><span class="tag-find">wifi</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">streaming</span><span class="tag-alias">sse</span><span class="tag-alias">websocket</span><span class="tag-alias">realtime</span><span class="tag-alias">live-stream</span><span class="tag-alias">tokens-flowing</span><span class="tag-alias">stream</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-bolt">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:bolt</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Fast / Trigger</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A lightning bolt — slightly heavier visual weight than <code>lucide:zap</code>.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val">Same concept as <code>lucide:zap</code> — fast inference, triggers, reactive events, streaming.</span></div>
+        <div class="ic-same">Use in Heroicons-heavy kits instead of <code>lucide:zap</code>. Choose one or the other — never both.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">bolt</span><span class="tag-find">lightning</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same as lucide:zap)</div>
+          <div class="ic-tags"><span class="tag-alias">fast</span><span class="tag-alias">instant</span><span class="tag-alias">trigger</span><span class="tag-alias">event</span><span class="tag-alias">webhook</span><span class="tag-alias">reactive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-command-line">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:command-line</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Prompt / Dev Mode</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A terminal prompt — typically <code>&gt;_</code> in a box.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Prompt interface, raw model interaction, developer mode, direct API access.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Prompt input area header</li><li>Developer mode toggle label</li><li>Direct model interaction panel</li><li>Raw API or terminal-style interface</li></ul></div></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">terminal</span><span class="tag-find">command</span><span class="tag-find">prompt</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">cli</span><span class="tag-alias">developer-mode</span><span class="tag-alias">prompt-interface</span><span class="tag-alias">raw-api</span><span class="tag-alias">bash</span><span class="tag-alias">shell</span><span class="tag-alias">system-prompt</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="he-cog-6-tooth">
+      <div class="ic-head" style="border-left:3px solid var(--he)">
+        <div class="ic-name" style="color:var(--he)">heroicons:cog-6-tooth</div>
+        <div class="ic-concept" style="background:rgba(167,139,250,.1);color:var(--he)">Model Config</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A gear with 6 teeth.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Model configuration, inference parameters — temperature, max tokens, system prompt, model selection.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>Model settings panel header</li><li>Configuration tab</li><li>Parameter tuning UI entry point</li></ul></div></div>
+        <div class="ic-row"><span class="ic-label">Not for</span><span class="ic-val">Orchestration (cog = static config, not dynamic coordination — use <code>workflow</code> or <code>network</code> for that).</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">cog</span><span class="tag-find">gear</span><span class="tag-find">settings</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">temperature</span><span class="tag-alias">model-settings</span><span class="tag-alias">parameters</span><span class="tag-alias">configuration</span><span class="tag-alias">system-prompt</span><span class="tag-alias">max-tokens</span><span class="tag-alias">hyperparameters</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PHOSPHOR ═══ -->
+<div class="lib-section" id="phosphor">
+  <div class="lib-hdr">
+    <div class="lib-badge" style="background:rgba(52,211,153,.12);color:var(--ph)">Phosphor</div>
+    <div class="lib-name" style="color:var(--ph)">Phosphor Icons</div>
+    <div class="lib-count">5 icons — AI SaaS Dashboard</div>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card" id="ph-robot">
+      <div class="ic-head" style="border-left:3px solid var(--ph)">
+        <div class="ic-name" style="color:var(--ph)">phosphor:robot</div>
+        <div class="ic-concept" style="background:rgba(52,211,153,.1);color:var(--ph)">Agent Entity</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-same">Same concept as <code>lucide:bot</code>. Use in Phosphor-heavy contexts for visual consistency.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">robot</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same as lucide:bot)</div>
+          <div class="ic-tags"><span class="tag-alias">agent</span><span class="tag-alias">chatbot</span><span class="tag-alias">assistant</span><span class="tag-alias">automated</span><span class="tag-alias">ai-agent</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ph-graph">
+      <div class="ic-head" style="border-left:3px solid var(--ph)">
+        <div class="ic-name" style="color:var(--ph)">phosphor:graph</div>
+        <div class="ic-concept" style="background:rgba(52,211,153,.1);color:var(--ph)">Knowledge Graph</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Nodes and edges in a mathematical graph — more abstract/geometric than <code>lucide:network</code>.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Knowledge graph, entity relationships, GraphRAG, entity linking.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><span class="ic-val">GraphRAG or knowledge graph-specific contexts where "graph as data structure" is the intended reading. More technical than <code>network</code>.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">graph</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">knowledge-graph</span><span class="tag-alias">graphrag</span><span class="tag-alias">entity</span><span class="tag-alias">relationship</span><span class="tag-alias">neo4j</span><span class="tag-alias">rdf</span><span class="tag-alias">ontology</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ph-flow-arrow">
+      <div class="ic-head" style="border-left:3px solid var(--ph)">
+        <div class="ic-name" style="color:var(--ph)">phosphor:flow-arrow</div>
+        <div class="ic-concept" style="background:rgba(52,211,153,.1);color:var(--ph)">Direction / Flow</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">An arrow that bends or flows — a directional path indicator with a curve.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Data flow direction, input-to-output path, the connector arrow between pipeline stages.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><span class="ic-val">Showing directionality within a pipeline diagram — the connecting arrow between stages, not the stage itself.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">flow</span><span class="tag-find">arrow</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">direction</span><span class="tag-alias">data-flow</span><span class="tag-alias">pipeline-arrow</span><span class="tag-alias">stage-connector</span><span class="tag-alias">sequence-flow</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ph-lightning">
+      <div class="ic-head" style="border-left:3px solid var(--ph)">
+        <div class="ic-name" style="color:var(--ph)">phosphor:lightning</div>
+        <div class="ic-concept" style="background:rgba(52,211,153,.1);color:var(--ph)">Fast / Trigger</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-same">Same concept as <code>lucide:zap</code> / <code>heroicons:bolt</code>. Use in Phosphor-heavy contexts. Choose one source library per concept across the kit.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">lightning</span><span class="tag-find">bolt</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same as lucide:zap)</div>
+          <div class="ic-tags"><span class="tag-alias">fast</span><span class="tag-alias">instant</span><span class="tag-alias">trigger</span><span class="tag-alias">event</span><span class="tag-alias">webhook</span><span class="tag-alias">reactive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ph-database">
+      <div class="ic-head" style="border-left:3px solid var(--ph)">
+        <div class="ic-name" style="color:var(--ph)">phosphor:database</div>
+        <div class="ic-concept" style="background:rgba(52,211,153,.1);color:var(--ph)">Data Store</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">The classic cylinder or barrel database icon.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Data persistence, traditional database, SQL / relational data layer.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><span class="ic-val">The persistence layer in a system diagram, database connections, traditional data store labels.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">database</span><span class="tag-find">db</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">persistence</span><span class="tag-alias">storage</span><span class="tag-alias">sql</span><span class="tag-alias">postgres</span><span class="tag-alias">relational</span><span class="tag-alias">data-store</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TABLER ═══ -->
+<div class="lib-section" id="tabler">
+  <div class="lib-hdr">
+    <div class="lib-badge" style="background:rgba(251,191,36,.12);color:var(--ta)">Tabler</div>
+    <div class="lib-name" style="color:var(--ta)">Tabler Icons</div>
+    <div class="lib-count">4 icons — AI SaaS Dashboard</div>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card" id="ta-brain">
+      <div class="ic-head" style="border-left:3px solid var(--ta)">
+        <div class="ic-name" style="color:var(--ta)">tabler:brain</div>
+        <div class="ic-concept" style="background:rgba(251,191,36,.1);color:var(--ta)">AI Model</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-same">Same concept as <code>lucide:brain</code>. Use in Tabler-heavy contexts for visual consistency.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">brain</span><span class="tag-find">mind</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same as lucide:brain)</div>
+          <div class="ic-tags"><span class="tag-alias">model</span><span class="tag-alias">llm</span><span class="tag-alias">reasoning</span><span class="tag-alias">intelligence</span><span class="tag-alias">knowledge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ta-network">
+      <div class="ic-head" style="border-left:3px solid var(--ta)">
+        <div class="ic-name" style="color:var(--ta)">tabler:network</div>
+        <div class="ic-concept" style="background:rgba(251,191,36,.1);color:var(--ta)">Multi-Agent</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-same">Same concept as <code>lucide:network</code>. Use in Tabler-heavy contexts for visual consistency.</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">network</span><span class="tag-find">nodes</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (same as lucide:network)</div>
+          <div class="ic-tags"><span class="tag-alias">agents</span><span class="tag-alias">multi-agent</span><span class="tag-alias">mesh</span><span class="tag-alias">connections</span><span class="tag-alias">distributed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ta-api">
+      <div class="ic-head" style="border-left:3px solid var(--ta)">
+        <div class="ic-name" style="color:var(--ta)">tabler:api</div>
+        <div class="ic-concept" style="background:rgba(251,191,36,.1);color:var(--ta)">Tool Calls / API</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">Often "API" framed in a box, or connected blocks suggesting an interface boundary.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>API calls, REST / GraphQL endpoints, tool calls (function calling), external service calls from an agent.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><div><ul class="ic-list"><li>API calls metric label</li><li>Tool calls count in agent observability</li><li>Function or tool use visualization in an agent trace</li><li>Integration entry point</li></ul></div></div>
+        <div class="ic-note"><strong>Note:</strong> Specifically "calling an external interface." When an agent makes tool calls, each call is an API event. This is the correct icon for function/tool-call UIs — distinct from the agent itself (<code>bot</code>) or the knowledge base (<code>circle-stack</code>).</div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">api</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">tool-call</span><span class="tag-alias">function-call</span><span class="tag-alias">rest</span><span class="tag-alias">graphql</span><span class="tag-alias">endpoint</span><span class="tag-alias">integration</span><span class="tag-alias">tool-use</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-card" id="ta-cloud-computing">
+      <div class="ic-head" style="border-left:3px solid var(--ta)">
+        <div class="ic-name" style="color:var(--ta)">tabler:cloud-computing</div>
+        <div class="ic-concept" style="background:rgba(251,191,36,.1);color:var(--ta)">Cloud Inference</div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-label">Looks like</span><span class="ic-val">A cloud combined with a CPU or grid symbol — cloud outline with a circuit/compute pattern.</span></div>
+        <div class="ic-row"><span class="ic-label">Represents</span><span class="ic-val"><strong>Cloud inference, hosted AI compute, inference-as-a-service.</strong></span></div>
+        <div class="ic-row"><span class="ic-label">Use for</span><span class="ic-val">Cloud AI compute label when distinguishing cloud-hosted inference from local or self-hosted inference. More specific than plain <code>cloud</code>.</span></div>
+      </div>
+      <div class="ic-search">
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--gr)">Find by searching</div>
+          <div class="ic-tags"><span class="tag-find">cloud</span><span class="tag-find">computing</span></div>
+        </div>
+        <div class="ic-search-row">
+          <div class="ic-search-lbl" style="color:var(--am)">Semantic aliases (semantic gap)</div>
+          <div class="ic-tags"><span class="tag-alias">cloud-inference</span><span class="tag-alias">hosted-ai</span><span class="tag-alias">cloud-gpu</span><span class="tag-alias">inference-as-a-service</span><span class="tag-alias">managed-ai</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ STRATEGY ═══ -->
+<div class="strategy" id="strategy">
+  <div class="st-hdr">Selection Strategy</div>
+  <div class="st-steps">
+    <div class="st-step"><span class="st-n">1.</span><div>Identify the AI concept you need (RAG retrieval, agent handoff, observability, etc.).</div></div>
+    <div class="st-step"><span class="st-n">2.</span><div>Find the candidate icon. Use the green "Find by searching" terms to locate it in Supericons.</div></div>
+    <div class="st-step"><span class="st-n">3.</span><div>Ask: does the visual shape match the concept <strong>without explanation</strong>?</div></div>
+    <div class="st-step"><span class="st-n">4.</span><div>Check for conflicts: is this icon already assigned to a different concept in the kit?</div></div>
+    <div class="st-step"><span class="st-n">5.</span><div>Write the <code>usage-map.md</code> entry with the "chosen over X because Y" rationale.</div></div>
+    <div class="st-step"><span class="st-n">6.</span><div>Carry the amber semantic aliases into <code>manifest-lite.json</code> as <code>semantic_aliases[]</code> — this is what makes the MCP tool smart enough to return <code>lucide:cpu</code> when an agent asks for "inference compute quota".</div></div>
+  </div>
+
+  <div class="st-hdr" style="margin-top:1.5rem">usage-map.md Entry Format</div>
+  <div class="code-block">
+<span class="cc">## icon-name (library:icon-name)</span>
+
+<span class="ck">**Concept:**</span>          <span class="cs">[one-line AI concept label]</span>
+<span class="ck">**Use for:**</span>          <span class="cs">[2-4 bullet points of specific UI surfaces]</span>
+<span class="ck">**Not for:**</span>          <span class="cs">[1-2 bullet points of contraindications]</span>
+<span class="ck">**Chosen over:**</span>      <span class="cs">[alternative icon]</span> because <span class="cs">[1 sentence rationale]</span>
+<span class="ck">**Pairs with:**</span>       <span class="cs">[2-3 icons commonly used in the same UI surface]</span>
+<span class="ck">**Semantic aliases:**</span> <span class="cs">[comma-separated list of amber tags from this guide]</span>
+  </div>
+
+  <div style="margin-top:1.25rem;padding:.85rem 1rem;background:rgba(96,165,250,.05);border:1px solid rgba(96,165,250,.15);border-radius:8px;font-size:.83rem;color:#bfdbfe;line-height:1.65">
+    <strong style="color:var(--bl)">RAG pipeline — the three-icon sequence:</strong>&nbsp;
+    Retrieve = <code style="font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te)">lucide:shuffle</code> &nbsp;→&nbsp;
+    Augment = <code style="font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te)">lucide:git-merge</code> &nbsp;→&nbsp;
+    Generate = <code style="font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--te)">lucide:sparkles</code>.
+    Three visually distinct stages, immediately readable to any AI developer without a legend.
+  </div>
+</div>
+
+</main>
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=document.getElementById('prog');
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    if(t>0)p.style.width=(window.scrollY/t*100)+'%';
+  });
+  const cards=document.querySelectorAll('.icon-card[id]');
+  const links=document.querySelectorAll('.sb-link[href]');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-15% 0px -75% 0px'});
+  cards.forEach(c=>obs.observe(c));
+</script>
+</body>
+</html>

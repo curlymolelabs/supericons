@@ -3,6 +3,11 @@
  * Ported from main.js browser search logic.
  * 5-layer synonym expansion + tiered results.
  */
+import { createIconSemanticAliasMap } from '../lib/icon-semantic-aliases.js';
+import { createIconTaxonomyMap } from '../lib/icon-taxonomy-seed.js';
+
+const iconSemanticAliasMap = createIconSemanticAliasMap();
+const iconTaxonomyMap = createIconTaxonomyMap();
 
 /** Inline Levenshtein distance (capped early for performance) */
 function editDistance(a, b) {
@@ -20,6 +25,112 @@ function editDistance(a, b) {
     prev.splice(0, n + 1, ...curr);
   }
   return prev[n];
+}
+
+function normalizeSemanticText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[_:]+/g, ' ')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function tokenizeSemanticText(value) {
+  const normalized = normalizeSemanticText(value);
+  return normalized ? normalized.split(' ') : [];
+}
+
+function iconKey(icon) {
+  return `${icon.lib}:${icon.id}`;
+}
+
+function getIconJobRank(icon) {
+  return iconTaxonomyMap.get(iconKey(icon))?.rank ?? Number.MAX_SAFE_INTEGER;
+}
+
+function getIconSemanticAliases(icon) {
+  return iconSemanticAliasMap.get(iconKey(icon)) || null;
+}
+
+function getDirectSearchScore(icon, normalizedQuery, queryWords) {
+  if (!normalizedQuery) return 0;
+
+  const name = normalizeSemanticText(icon.name);
+  const id = normalizeSemanticText(icon.id);
+  const fullId = normalizeSemanticText(iconKey(icon));
+  const tokens = new Set([
+    ...tokenizeSemanticText(icon.name),
+    ...tokenizeSemanticText(icon.id),
+    ...tokenizeSemanticText(iconKey(icon)),
+  ]);
+
+  if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
+    return 320;
+  }
+
+  if (normalizedQuery.length > 2 && (
+    name.includes(normalizedQuery)
+    || id.includes(normalizedQuery)
+    || fullId.includes(normalizedQuery)
+  )) {
+    return 250;
+  }
+
+  if (queryWords.length > 0 && queryWords.every((word) => tokens.has(word))) {
+    return 190;
+  }
+
+  if (queryWords.length > 0 && queryWords.every((word) => (
+    name.includes(word) || id.includes(word) || fullId.includes(word)
+  ))) {
+    return 150;
+  }
+
+  return 0;
+}
+
+function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
+  if (!normalizedQuery) return 0;
+
+  const aliases = getIconSemanticAliases(icon);
+  if (!aliases?.length) return 0;
+
+  let bestScore = 0;
+
+  for (const alias of aliases) {
+    const normalizedAlias = normalizeSemanticText(alias);
+    if (!normalizedAlias) continue;
+
+    const aliasTokens = new Set(tokenizeSemanticText(normalizedAlias));
+
+    if (normalizedAlias === normalizedQuery) {
+      bestScore = Math.max(bestScore, 420);
+      continue;
+    }
+
+    if (normalizedQuery.length > 3 && normalizedAlias.includes(normalizedQuery)) {
+      bestScore = Math.max(bestScore, 360);
+      continue;
+    }
+
+    if (queryWords.length > 1 && queryWords.every((word) => aliasTokens.has(word))) {
+      bestScore = Math.max(bestScore, 320);
+      continue;
+    }
+
+    if (queryWords.length === 1 && aliasTokens.has(queryWords[0])) {
+      bestScore = Math.max(bestScore, 260);
+      continue;
+    }
+
+    if (queryWords.length > 0 && queryWords.every((word) => normalizedAlias.includes(word))) {
+      bestScore = Math.max(bestScore, 220);
+    }
+  }
+
+  return bestScore;
 }
 
 /** Expand a single search word into a set of matching terms */
@@ -107,9 +218,9 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     return filtered.slice(0, limit);
   }
 
-  const q = query.toLowerCase();
-  const queryWords = q.trim().split(/\s+/).filter(Boolean);
-  const termSets = expandSearchTerms(q, synonyms);
+  const normalizedQuery = normalizeSemanticText(query);
+  const queryWords = tokenizeSemanticText(query);
+  const termSets = expandSearchTerms(normalizedQuery, synonyms);
 
   // Helper: check if icon matches a set of term-sets
   const iconMatchesTermSets = (icon, sets) => {
@@ -125,13 +236,28 @@ export function searchIcons(query, icons, synonyms, options = {}) {
   };
 
   // Tier 1: direct query words match
-  const directSets = queryWords.map(w => [w]);
-  const tier1 = filtered.filter(icon => iconMatchesTermSets(icon, directSets));
-  const tier1Keys = new Set(tier1.map(i => `${i.lib}:${i.id}`));
+  const tier1 = filtered
+    .map((icon) => ({
+      icon,
+      aliasScore: getCuratedAliasScore(icon, normalizedQuery, queryWords),
+      directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
+    }))
+    .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
+    .sort((a, b) => {
+      if (b.aliasScore !== a.aliasScore) return b.aliasScore - a.aliasScore;
+      if (b.directScore !== a.directScore) return b.directScore - a.directScore;
+
+      const rankDiff = getIconJobRank(a.icon) - getIconJobRank(b.icon);
+      if (rankDiff !== 0) return rankDiff;
+
+      return a.icon.name.localeCompare(b.icon.name);
+    })
+    .map(({ icon }) => icon);
+  const tier1Keys = new Set(tier1.map((i) => iconKey(i)));
 
   // Tier 2: synonym expansion matches
   const tier2 = filtered.filter(icon =>
-    !tier1Keys.has(`${icon.lib}:${icon.id}`) && iconMatchesTermSets(icon, termSets)
+    !tier1Keys.has(iconKey(icon)) && iconMatchesTermSets(icon, termSets)
   );
 
   return [...tier1, ...tier2].slice(0, limit);

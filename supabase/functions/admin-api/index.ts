@@ -5,6 +5,22 @@ import Stripe from 'https://esm.sh/stripe@14?target=deno';
 type AuditOutcome = 'started' | 'succeeded' | 'failed';
 type JsonRecord = Record<string, unknown>;
 type SupabaseClient = any;
+type IntelligenceWindowKey = '7d' | '30d' | '90d' | '1y' | 'all';
+type QueryReviewStatus = 'resolved' | 'needs_alias' | 'needs_icon' | 'ignore';
+type IntelligenceWindow = {
+  key: IntelligenceWindowKey;
+  shortLabel: string;
+  longLabel: string;
+  days: number | null;
+};
+type QueryReviewRow = {
+  normalized_query: string;
+  library_filter: string;
+  job_category: string;
+  status: QueryReviewStatus;
+  note?: string | null;
+  updated_at?: string | null;
+};
 type AuthUser = {
   id: string;
   email?: string | null;
@@ -30,6 +46,16 @@ const DEFAULT_FROM_EMAIL = 'Supericons <receipts@auth.supericons.dev>';
 const RESEND_EMAILS_URL = 'https://api.resend.com/emails';
 const PAGE_SIZE = 25;
 const DELETE_CANCELABLE_STATUSES = new Set(['active', 'trialing', 'past_due', 'unpaid']);
+const EVIDENCE_PAGE_SIZE = 1000;
+const LOW_RESULT_THRESHOLD = 3;
+const QUERY_REVIEW_STATUSES = new Set<QueryReviewStatus>(['resolved', 'needs_alias', 'needs_icon', 'ignore']);
+const INTELLIGENCE_WINDOWS: Record<IntelligenceWindowKey, IntelligenceWindow> = {
+  '7d': { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days', days: 7 },
+  '30d': { key: '30d', shortLabel: '30d', longLabel: 'Last 30 days', days: 30 },
+  '90d': { key: '90d', shortLabel: '90d', longLabel: 'Last 90 days', days: 90 },
+  '1y': { key: '1y', shortLabel: '1y', longLabel: 'Last 12 months', days: 365 },
+  all: { key: 'all', shortLabel: 'All time', longLabel: 'All recorded history', days: null },
+};
 
 function getAllowedOrigins() {
   const configured = (Deno.env.get('ADMIN_ALLOWED_ORIGINS') || '')
@@ -100,6 +126,169 @@ function formatDateLabel(value: string | null | undefined) {
   } catch {
     return value;
   }
+}
+
+function normalizeSearchQuery(value: unknown) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+}
+
+function normalizeReviewLibraryFilter(value: unknown) {
+  return normalizeSearchQuery(value) || 'all';
+}
+
+function normalizeReviewJobCategory(value: unknown) {
+  return normalizeSearchQuery(value) || '';
+}
+
+function buildQueryReviewContextKey({
+  query,
+  libraryFilter,
+  jobCategory,
+}: {
+  query: unknown;
+  libraryFilter?: unknown;
+  jobCategory?: unknown;
+}) {
+  return [
+    normalizeSearchQuery(query),
+    normalizeReviewLibraryFilter(libraryFilter),
+    normalizeReviewJobCategory(jobCategory),
+  ].join('|');
+}
+
+function parseIntelligenceWindow(url: URL): IntelligenceWindow {
+  const raw = String(url.searchParams.get('window') || '30d').trim().toLowerCase() as IntelligenceWindowKey;
+  return INTELLIGENCE_WINDOWS[raw] || INTELLIGENCE_WINDOWS['30d'];
+}
+
+function getWindowSinceIso(window: IntelligenceWindow) {
+  if (window.days === null) return null;
+  return new Date(Date.now() - (window.days * 24 * 60 * 60 * 1000)).toISOString();
+}
+
+async function fetchAllRows<T extends Record<string, unknown>>(
+  queryFactory: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
+) {
+  const rows: T[] = [];
+  let from = 0;
+
+  while (true) {
+    const to = from + EVIDENCE_PAGE_SIZE - 1;
+    const { data, error } = await queryFactory(from, to);
+    if (error) throw error;
+
+    const batch = data || [];
+    rows.push(...batch);
+    if (batch.length < EVIDENCE_PAGE_SIZE) break;
+    from += EVIDENCE_PAGE_SIZE;
+  }
+
+  return rows;
+}
+
+async function fetchQueryReviews(
+  adminClient: SupabaseClient,
+  contexts: Array<{
+    query: string;
+    library_filter?: string | null;
+    job_category?: string | null;
+  }>,
+) {
+  const normalizedQueries = [...new Set(
+    contexts
+      .map((context) => normalizeSearchQuery(context.query))
+      .filter(Boolean),
+  )];
+  const reviews = new Map<string, QueryReviewRow>();
+
+  if (normalizedQueries.length === 0) {
+    return { available: true, reviews };
+  }
+
+  const { data, error } = await adminClient
+    .from('icon_query_reviews')
+    .select('normalized_query, library_filter, job_category, status, note, updated_at')
+    .in('normalized_query', normalizedQueries);
+
+  if (error) {
+    if (isMissingRelationError(error)) {
+      return { available: false, reviews };
+    }
+    throw error;
+  }
+
+  for (const row of (data || []) as QueryReviewRow[]) {
+    reviews.set(buildQueryReviewContextKey({
+      query: row.normalized_query,
+      libraryFilter: row.library_filter,
+      jobCategory: row.job_category,
+    }), row);
+  }
+
+  return { available: true, reviews };
+}
+
+function mergeQueryReview<T extends {
+  query: string;
+  library_filter?: string | null;
+  job_category?: string | null;
+}>(
+  entry: T,
+  reviews: Map<string, QueryReviewRow>,
+) {
+  const review = reviews.get(buildQueryReviewContextKey({
+    query: entry.query,
+    libraryFilter: entry.library_filter,
+    jobCategory: entry.job_category,
+  }));
+
+  return {
+    ...entry,
+    review_status: review?.status || null,
+    review_note: review?.note || null,
+    review_updated_at: review?.updated_at || null,
+  };
+}
+
+async function upsertQueryReview(
+  adminClient: SupabaseClient,
+  body: JsonRecord,
+) {
+  const normalizedQuery = normalizeSearchQuery(body.query);
+  if (!normalizedQuery) {
+    throw new Error('query is required');
+  }
+
+  const status = normalizeSearchQuery(body.status) as QueryReviewStatus;
+  if (!QUERY_REVIEW_STATUSES.has(status)) {
+    throw new Error('status must be one of: resolved, needs_alias, needs_icon, ignore');
+  }
+
+  const note = typeof body.note === 'string'
+    ? body.note.trim() || null
+    : null;
+  const payload = {
+    normalized_query: normalizedQuery,
+    library_filter: normalizeReviewLibraryFilter(body.library_filter),
+    job_category: normalizeReviewJobCategory(body.job_category),
+    status,
+    note,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { data, error } = await adminClient
+    .from('icon_query_reviews')
+    .upsert(payload, {
+      onConflict: 'normalized_query,library_filter,job_category',
+    })
+    .select('normalized_query, library_filter, job_category, status, note, updated_at')
+    .single();
+
+  if (error) throw error;
+  return data as QueryReviewRow;
 }
 
 function buildAccountDeletedEmail({
@@ -463,6 +652,543 @@ async function handleStats(req: Request, adminClient: SupabaseClient) {
       recent_audit: recentAuditResult.data || [],
     },
   });
+}
+
+async function handleIntelligenceOverview(req: Request, adminClient: SupabaseClient, url: URL) {
+  const window = parseIntelligenceWindow(url);
+  const since = getWindowSinceIso(window);
+
+  const [metadataCoverageResult, evidenceRows, recentEvidenceResult] = await Promise.all([
+    adminClient.from('icon_metadata').select('icon_id', { count: 'exact', head: true }),
+    fetchAllRows<Record<string, unknown>>((from, to) => {
+      let query = adminClient
+        .from('icon_evidence')
+        .select('signal_type, icon_id, batch_id, job_category, agent_converged, search_query, evidence_text, created_at')
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (since) {
+        query = query.gte('created_at', since);
+      }
+
+      return query;
+    }),
+    (() => {
+      let query = adminClient
+        .from('icon_evidence')
+        .select('signal_type, icon_id, search_query, job_category, evidence_text, created_at')
+        .order('created_at', { ascending: false })
+        .limit(12);
+
+      if (since) {
+        query = query.gte('created_at', since);
+      }
+
+      return query;
+    })(),
+  ]);
+
+  if (metadataCoverageResult.error) throw metadataCoverageResult.error;
+  if (recentEvidenceResult.error) throw recentEvidenceResult.error;
+
+  const copyCounts = new Map<string, number>();
+  const replaceCounts = new Map<string, number>();
+  const jobCategoryCounts = new Map<string, number>();
+  const mcpAcceptance = new Map<string, { total: number; converged: number }>();
+  const mcpBatchIds = new Set<string>();
+
+  let copyEvents = 0;
+  let favoriteEvents = 0;
+  let kitDownloads = 0;
+
+  for (const row of evidenceRows) {
+    const signalType = String(row.signal_type || '').toLowerCase();
+    const iconId = typeof row.icon_id === 'string' ? row.icon_id : null;
+    const jobCategory = typeof row.job_category === 'string' ? row.job_category : null;
+    const batchId = typeof row.batch_id === 'string' ? row.batch_id : null;
+
+    if (signalType === 'copy') {
+      copyEvents += 1;
+      if (iconId) {
+        copyCounts.set(iconId, (copyCounts.get(iconId) || 0) + 1);
+      }
+    }
+
+    if (signalType === 'favorite') {
+      favoriteEvents += 1;
+    }
+
+    if (signalType === 'kit_download') {
+      kitDownloads += 1;
+    }
+
+    if (signalType === 'replace' && iconId) {
+      replaceCounts.set(iconId, (replaceCounts.get(iconId) || 0) + 1);
+    }
+
+    if (signalType === 'mcp_call' && batchId) {
+      mcpBatchIds.add(batchId);
+    }
+
+    if (signalType === 'mcp_call' && iconId && typeof row.agent_converged === 'boolean') {
+      const current = mcpAcceptance.get(iconId) || { total: 0, converged: 0 };
+      current.total += 1;
+      if (row.agent_converged) current.converged += 1;
+      mcpAcceptance.set(iconId, current);
+    }
+
+    if (jobCategory) {
+      jobCategoryCounts.set(jobCategory, (jobCategoryCounts.get(jobCategory) || 0) + 1);
+    }
+  }
+
+  const topIcons = [...copyCounts.entries()]
+    .sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    })
+    .slice(0, 8)
+    .map(([iconId, copyCount]) => {
+      const replaceCount = replaceCounts.get(iconId) || 0;
+      const mcpStats = mcpAcceptance.get(iconId);
+      const retentionRate = copyCount > 0
+        ? Math.max(0, 1 - (replaceCount / copyCount))
+        : null;
+      const mcpAcceptanceRate = mcpStats && mcpStats.total > 0
+        ? mcpStats.converged / mcpStats.total
+        : null;
+
+      return {
+        icon_id: iconId,
+        copy_count: copyCount,
+        retention_rate: retentionRate,
+        mcp_acceptance_rate: mcpAcceptanceRate,
+      };
+    });
+
+  const topJobCategories = [...jobCategoryCounts.entries()]
+    .sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    })
+    .slice(0, 6)
+    .map(([jobCategory, count]) => ({
+      job_category: jobCategory,
+      count,
+    }));
+
+  const topReplacedIcons = [...replaceCounts.entries()]
+    .sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    })
+    .slice(0, 6)
+    .map(([iconId, replaceCount]) => ({
+      icon_id: iconId,
+      replace_count: replaceCount,
+    }));
+
+  return jsonResponse(req, {
+    overview: {
+      window: {
+        key: window.key,
+        short_label: window.shortLabel,
+        long_label: window.longLabel,
+      },
+      total_evidence_rows: evidenceRows.length,
+      copy_events: copyEvents,
+      copy_events_30d: copyEvents,
+      favorite_events: favoriteEvents,
+      favorite_events_30d: favoriteEvents,
+      kit_downloads: kitDownloads,
+      kit_downloads_30d: kitDownloads,
+      mcp_batches: mcpBatchIds.size,
+      mcp_batches_30d: mcpBatchIds.size,
+      top_job_categories: topJobCategories,
+      top_icons: topIcons.map((entry) => ({
+        ...entry,
+        copy_count_30d: entry.copy_count,
+      })),
+      top_replaced_icons: topReplacedIcons,
+      recent_evidence: recentEvidenceResult.data || [],
+    },
+    metadata_coverage: {
+      classified_icons: metadataCoverageResult.count || 0,
+    },
+  });
+}
+
+async function handleIntelligenceEvidence(req: Request, adminClient: SupabaseClient, url: URL) {
+  const window = parseIntelligenceWindow(url);
+  const since = getWindowSinceIso(window);
+  const q = (url.searchParams.get('q') || '').trim().toLowerCase();
+  const signalType = (url.searchParams.get('signal_type') || '').trim().toLowerCase();
+  const limit = Math.min(100, Math.max(10, Number.parseInt(url.searchParams.get('limit') || '50', 10) || 50));
+
+  let query = adminClient
+    .from('icon_evidence')
+    .select('id, signal_type, icon_id, search_query, job_category, ui_surface, evidence_text, result_count, library_filter, created_at')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (signalType) {
+    query = query.eq('signal_type', signalType);
+  }
+  if (since) {
+    query = query.gte('created_at', since);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+
+  const evidence = ((data || []) as Array<Record<string, unknown>>).filter((row) => {
+    if (!q) return true;
+    const haystack = [
+      row.icon_id,
+      row.search_query,
+      row.job_category,
+      row.library_filter,
+      row.result_count,
+      row.ui_surface,
+      row.evidence_text,
+    ].filter(Boolean).join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+
+  return jsonResponse(req, {
+    evidence,
+    window: {
+      key: window.key,
+      short_label: window.shortLabel,
+      long_label: window.longLabel,
+    },
+  });
+}
+
+async function handleIntelligenceSearch(req: Request, adminClient: SupabaseClient, url: URL) {
+  const window = parseIntelligenceWindow(url);
+  const since = getWindowSinceIso(window);
+  const data = await fetchAllRows<Record<string, unknown>>((from, to) => {
+    let query = adminClient
+      .from('icon_evidence')
+      .select('signal_type, search_query, icon_id, batch_id, agent_converged, replaced_with, result_count, library_filter, job_category, ui_surface, created_at')
+      .not('search_query', 'is', null)
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (since) {
+      query = query.gte('created_at', since);
+    }
+
+    return query;
+  });
+
+  const querySet = new Set<string>();
+  const attemptQuerySet = new Set<string>();
+  const zeroResultQuerySet = new Set<string>();
+  const lowResultQuerySet = new Set<string>();
+  const attemptContextMap = new Map<string, {
+    query: string;
+    library_filter: string | null;
+    job_category: string | null;
+    attempt_count: number;
+    zero_attempt_count: number;
+    low_attempt_count: number;
+    total_result_count: number;
+    result_samples: number;
+    minimum_result_count: number | null;
+    last_seen: string | null;
+  }>();
+  const topQueryMap = new Map<string, {
+    query: string;
+    total_signals: number;
+    copy_count: number;
+    favorite_count: number;
+    unique_icons: Set<string>;
+    last_seen: string | null;
+  }>();
+  const topMcpMap = new Map<string, {
+    query: string;
+    batch_ids: Set<string>;
+    converged_batches: Set<string>;
+    result_rows: number;
+    unique_icons: Set<string>;
+    last_seen: string | null;
+  }>();
+  const topReplaceMap = new Map<string, {
+    query: string;
+    replace_count: number;
+    unique_replacements: Set<string>;
+    last_seen: string | null;
+  }>();
+
+  let searchAttempts = 0;
+  let siteQuerySignals = 0;
+  let mcpQueryBatches = 0;
+  let replaceQuerySignals = 0;
+
+  for (const row of (data || []) as Array<Record<string, unknown>>) {
+    const normalizedQuery = normalizeSearchQuery(row.search_query);
+    if (!normalizedQuery) continue;
+    querySet.add(normalizedQuery);
+
+    const createdAt = typeof row.created_at === 'string' ? row.created_at : null;
+    const iconId = typeof row.icon_id === 'string' ? row.icon_id : null;
+    const batchId = typeof row.batch_id === 'string' ? row.batch_id : null;
+    const replacedWith = typeof row.replaced_with === 'string' ? row.replaced_with : null;
+    const libraryFilter = typeof row.library_filter === 'string' ? row.library_filter : null;
+    const jobCategory = typeof row.job_category === 'string' ? row.job_category : null;
+    const signalType = String(row.signal_type || '').toLowerCase();
+    const rawResultCount = Number(row.result_count);
+    const resultCount = Number.isFinite(rawResultCount) ? Math.max(0, Math.round(rawResultCount)) : null;
+
+    if (signalType === 'search_attempt') {
+      searchAttempts += 1;
+      attemptQuerySet.add(normalizedQuery);
+
+      const contextKey = [normalizedQuery, libraryFilter || 'all', jobCategory || 'all'].join('|');
+      const entry = attemptContextMap.get(contextKey) || {
+        query: normalizedQuery,
+        library_filter: libraryFilter,
+        job_category: jobCategory,
+        attempt_count: 0,
+        zero_attempt_count: 0,
+        low_attempt_count: 0,
+        total_result_count: 0,
+        result_samples: 0,
+        minimum_result_count: null,
+        last_seen: null,
+      };
+
+      entry.attempt_count += 1;
+      if (resultCount !== null) {
+        entry.total_result_count += resultCount;
+        entry.result_samples += 1;
+        if (entry.minimum_result_count === null || resultCount < entry.minimum_result_count) {
+          entry.minimum_result_count = resultCount;
+        }
+        if (resultCount === 0) {
+          entry.zero_attempt_count += 1;
+          zeroResultQuerySet.add(normalizedQuery);
+        } else if (resultCount <= LOW_RESULT_THRESHOLD) {
+          entry.low_attempt_count += 1;
+          lowResultQuerySet.add(normalizedQuery);
+        }
+      }
+      if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
+      attemptContextMap.set(contextKey, entry);
+    }
+
+    if (signalType === 'copy' || signalType === 'favorite') {
+      siteQuerySignals += 1;
+      const entry = topQueryMap.get(normalizedQuery) || {
+        query: normalizedQuery,
+        total_signals: 0,
+        copy_count: 0,
+        favorite_count: 0,
+        unique_icons: new Set<string>(),
+        last_seen: null,
+      };
+      entry.total_signals += 1;
+      if (signalType === 'copy') entry.copy_count += 1;
+      if (signalType === 'favorite') entry.favorite_count += 1;
+      if (iconId) entry.unique_icons.add(iconId);
+      if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
+      topQueryMap.set(normalizedQuery, entry);
+    }
+
+    if (signalType === 'mcp_call') {
+      const entry = topMcpMap.get(normalizedQuery) || {
+        query: normalizedQuery,
+        batch_ids: new Set<string>(),
+        converged_batches: new Set<string>(),
+        result_rows: 0,
+        unique_icons: new Set<string>(),
+        last_seen: null,
+      };
+      entry.result_rows += 1;
+      if (iconId) entry.unique_icons.add(iconId);
+      if (batchId) {
+        const beforeSize = entry.batch_ids.size;
+        entry.batch_ids.add(batchId);
+        if (entry.batch_ids.size > beforeSize) {
+          mcpQueryBatches += 1;
+        }
+        if (row.agent_converged === true) {
+          entry.converged_batches.add(batchId);
+        }
+      }
+      if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
+      topMcpMap.set(normalizedQuery, entry);
+    }
+
+    if (signalType === 'replace') {
+      replaceQuerySignals += 1;
+      const entry = topReplaceMap.get(normalizedQuery) || {
+        query: normalizedQuery,
+        replace_count: 0,
+        unique_replacements: new Set<string>(),
+        last_seen: null,
+      };
+      entry.replace_count += 1;
+      if (replacedWith) entry.unique_replacements.add(replacedWith);
+      if (!entry.last_seen || (createdAt && createdAt > entry.last_seen)) entry.last_seen = createdAt;
+      topReplaceMap.set(normalizedQuery, entry);
+    }
+  }
+
+  const topQueries = [...topQueryMap.values()]
+    .sort((a, b) => {
+      if (b.total_signals !== a.total_signals) return b.total_signals - a.total_signals;
+      if (b.favorite_count !== a.favorite_count) return b.favorite_count - a.favorite_count;
+      return a.query.localeCompare(b.query);
+    })
+    .slice(0, 8)
+    .map((entry) => ({
+      query: entry.query,
+      total_signals: entry.total_signals,
+      copy_count: entry.copy_count,
+      favorite_count: entry.favorite_count,
+      unique_icons: entry.unique_icons.size,
+      last_seen: entry.last_seen,
+    }));
+
+  const topMcpQueries = [...topMcpMap.values()]
+    .sort((a, b) => {
+      if (b.batch_ids.size !== a.batch_ids.size) return b.batch_ids.size - a.batch_ids.size;
+      if (b.result_rows !== a.result_rows) return b.result_rows - a.result_rows;
+      return a.query.localeCompare(b.query);
+    })
+    .slice(0, 8)
+    .map((entry) => ({
+      query: entry.query,
+      batch_count: entry.batch_ids.size,
+      converged_batches: entry.converged_batches.size,
+      result_rows: entry.result_rows,
+      unique_icons: entry.unique_icons.size,
+      last_seen: entry.last_seen,
+    }));
+
+  const topZeroResultQueries = [...attemptContextMap.values()]
+    .filter((entry) => entry.zero_attempt_count > 0)
+    .sort((a, b) => {
+      if (b.zero_attempt_count !== a.zero_attempt_count) return b.zero_attempt_count - a.zero_attempt_count;
+      if (b.attempt_count !== a.attempt_count) return b.attempt_count - a.attempt_count;
+      if ((a.library_filter || '') !== (b.library_filter || '')) return (a.library_filter || '').localeCompare(b.library_filter || '');
+      if ((a.job_category || '') !== (b.job_category || '')) return (a.job_category || '').localeCompare(b.job_category || '');
+      return a.query.localeCompare(b.query);
+    })
+    .slice(0, 8)
+    .map((entry) => ({
+      query: entry.query,
+      library_filter: entry.library_filter,
+      job_category: entry.job_category,
+      attempt_count: entry.attempt_count,
+      zero_attempt_count: entry.zero_attempt_count,
+      last_seen: entry.last_seen,
+    }));
+
+  const topLowResultQueries = [...attemptContextMap.values()]
+    .filter((entry) => entry.zero_attempt_count === 0 && entry.low_attempt_count > 0)
+    .sort((a, b) => {
+      if (b.low_attempt_count !== a.low_attempt_count) return b.low_attempt_count - a.low_attempt_count;
+      const aAverage = a.result_samples > 0 ? a.total_result_count / a.result_samples : Number.POSITIVE_INFINITY;
+      const bAverage = b.result_samples > 0 ? b.total_result_count / b.result_samples : Number.POSITIVE_INFINITY;
+      if (aAverage !== bAverage) return aAverage - bAverage;
+      if ((a.library_filter || '') !== (b.library_filter || '')) return (a.library_filter || '').localeCompare(b.library_filter || '');
+      if ((a.job_category || '') !== (b.job_category || '')) return (a.job_category || '').localeCompare(b.job_category || '');
+      return a.query.localeCompare(b.query);
+    })
+    .slice(0, 8)
+    .map((entry) => ({
+      query: entry.query,
+      library_filter: entry.library_filter,
+      job_category: entry.job_category,
+      low_attempt_count: entry.low_attempt_count,
+      average_result_count: entry.result_samples > 0
+        ? Number((entry.total_result_count / entry.result_samples).toFixed(2))
+        : null,
+      minimum_result_count: entry.minimum_result_count,
+      last_seen: entry.last_seen,
+    }));
+
+  const topReplacementQueries = [...topReplaceMap.values()]
+    .sort((a, b) => {
+      if (b.replace_count !== a.replace_count) return b.replace_count - a.replace_count;
+      return a.query.localeCompare(b.query);
+    })
+    .slice(0, 8)
+    .map((entry) => ({
+      query: entry.query,
+      library_filter: 'all',
+      job_category: null,
+      replace_count: entry.replace_count,
+      unique_replacements: entry.unique_replacements.size,
+      last_seen: entry.last_seen,
+    }));
+
+  const queryReviews = await fetchQueryReviews(adminClient, [
+    ...topZeroResultQueries,
+    ...topLowResultQueries,
+    ...topReplacementQueries,
+  ]);
+
+  return jsonResponse(req, {
+    search_intelligence: {
+      summary: {
+        window: {
+          key: window.key,
+          short_label: window.shortLabel,
+          long_label: window.longLabel,
+        },
+        unique_queries: attemptQuerySet.size || querySet.size,
+        unique_queries_30d: attemptQuerySet.size || querySet.size,
+        search_attempts: searchAttempts,
+        search_attempts_30d: searchAttempts,
+        site_query_signals: siteQuerySignals,
+        site_query_signals_30d: siteQuerySignals,
+        mcp_query_batches: mcpQueryBatches,
+        mcp_query_batches_30d: mcpQueryBatches,
+        zero_result_queries: zeroResultQuerySet.size,
+        zero_result_queries_30d: zeroResultQuerySet.size,
+        low_result_queries: [...lowResultQuerySet].filter((query) => !zeroResultQuerySet.has(query)).length,
+        low_result_queries_30d: [...lowResultQuerySet].filter((query) => !zeroResultQuerySet.has(query)).length,
+        replace_query_signals: replaceQuerySignals,
+        replace_query_signals_30d: replaceQuerySignals,
+        zero_result_tracking_available: searchAttempts > 0,
+        query_review_feature_available: queryReviews.available,
+      },
+      top_queries: topQueries,
+      top_mcp_queries: topMcpQueries,
+      top_zero_result_queries: topZeroResultQueries.map((entry) => mergeQueryReview(entry, queryReviews.reviews)),
+      top_low_result_queries: topLowResultQueries.map((entry) => mergeQueryReview(entry, queryReviews.reviews)),
+      top_replacement_queries: topReplacementQueries.map((entry) => mergeQueryReview(entry, queryReviews.reviews)),
+    },
+  });
+}
+
+async function handleIntelligenceSearchReview(req: Request, adminClient: SupabaseClient, body: JsonRecord) {
+  try {
+    const review = await upsertQueryReview(adminClient, body);
+    return jsonResponse(req, {
+      success: true,
+      review,
+    });
+  } catch (error) {
+    if (isMissingRelationError(error)) {
+      return jsonResponse(req, { error: 'icon_query_reviews table is not available in this environment' }, 409);
+    }
+
+    const message = error instanceof Error ? error.message : String(error);
+    const status = (
+      message === 'query is required'
+      || message === 'status must be one of: resolved, needs_alias, needs_icon, ignore'
+    )
+      ? 400
+      : 500;
+
+    return jsonResponse(req, { error: message }, status);
+  }
 }
 
 async function handleUsersIndex(req: Request, adminClient: SupabaseClient, url: URL) {
@@ -891,6 +1617,23 @@ serve(async (req) => {
 
     if (req.method === 'GET' && segments.length === 1 && segments[0] === 'audit-log') {
       return await handleAuditLog(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 2 && segments[0] === 'intelligence' && segments[1] === 'overview') {
+      return await handleIntelligenceOverview(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 2 && segments[0] === 'intelligence' && segments[1] === 'search') {
+      return await handleIntelligenceSearch(req, adminClient, url);
+    }
+
+    if (req.method === 'GET' && segments.length === 2 && segments[0] === 'intelligence' && segments[1] === 'evidence') {
+      return await handleIntelligenceEvidence(req, adminClient, url);
+    }
+
+    if (req.method === 'POST' && segments.length === 3 && segments[0] === 'intelligence' && segments[1] === 'search' && segments[2] === 'review') {
+      const body = await req.json().catch(() => ({})) as JsonRecord;
+      return await handleIntelligenceSearchReview(req, adminClient, body);
     }
 
     if (req.method === 'POST' && segments.length === 3 && segments[0] === 'users' && segments[2] === 'delete') {

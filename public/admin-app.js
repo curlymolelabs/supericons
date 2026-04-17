@@ -1,8 +1,36 @@
 const ADMIN_API_BASE = 'https://kcjmkakdhsqplvasgkjv.supabase.co/functions/v1/admin-api';
 const ADMIN_SECRET_STORAGE_KEY = 'si_admin_secret';
+const INTELLIGENCE_WINDOWS = [
+  { key: '7d', shortLabel: '7d', longLabel: 'Last 7 days' },
+  { key: '30d', shortLabel: '30d', longLabel: 'Last 30 days' },
+  { key: '90d', shortLabel: '90d', longLabel: 'Last 90 days' },
+  { key: '1y', shortLabel: '1y', longLabel: 'Last 12 months' },
+  { key: 'all', shortLabel: 'All time', longLabel: 'All recorded history' },
+];
+const PURPOSE_LABELS = {
+  'ai-agent-workflows': 'AI & Agents',
+  'navigation-wayfinding': 'Navigation & Wayfinding',
+  'status-feedback': 'Status & Feedback',
+};
+const QUERY_REVIEW_STATUS_LABELS = {
+  resolved: 'Resolved',
+  needs_alias: 'Needs Alias',
+  needs_icon: 'Needs Icon',
+  ignore: 'Ignore',
+};
+const ACTIVE_QUERY_REVIEW_STATUSES = new Set(['needs_alias', 'needs_icon']);
 
 const state = {
   stats: null,
+  intelligenceOverview: null,
+  intelligenceEvidence: [],
+  intelligenceMetadataCoverage: 0,
+  searchIntelligence: null,
+  selectedQueryReview: null,
+  queryReviewSaving: false,
+  showReviewedQueries: false,
+  intelligenceWindow: '30d',
+  intelligenceFilters: { q: '', signal_type: '' },
   users: [],
   usersPagination: { page: 1, page_count: 1, total: 0, page_size: 25 },
   usersFilters: { q: '', plan: '', status: '', provider: '' },
@@ -172,8 +200,15 @@ async function apiRequest(path, options = {}, retry = true) {
     throw new Error('Admin secret is required.');
   }
 
-  const response = await fetch(`${ADMIN_API_BASE}${path}`, {
+  const method = String(options.method || 'GET').toUpperCase();
+  const requestUrl = method === 'GET'
+    ? `${ADMIN_API_BASE}${path}${path.includes('?') ? '&' : '?'}_ts=${Date.now()}`
+    : `${ADMIN_API_BASE}${path}`;
+
+  const response = await fetch(requestUrl, {
     ...options,
+    method,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
       'x-admin-secret': secret,
@@ -316,6 +351,582 @@ async function loadStats() {
   const payload = await apiRequest('/stats');
   state.stats = payload.stats;
   renderStats();
+}
+
+function formatPercent(value) {
+  if (typeof value !== 'number' || Number.isNaN(value)) return '-';
+  return `${Math.round(value * 100)}%`;
+}
+
+function getCurrentIntelligenceWindow() {
+  return INTELLIGENCE_WINDOWS.find((window) => window.key === state.intelligenceWindow) || INTELLIGENCE_WINDOWS[1];
+}
+
+function formatMetricWindowLabel(baseLabel) {
+  return `${baseLabel} (${getCurrentIntelligenceWindow().shortLabel})`;
+}
+
+function formatPurposeLabel(value) {
+  const normalized = String(value || '').trim();
+  if (!normalized) return '-';
+  if (normalized === '-') return '-';
+  if (PURPOSE_LABELS[normalized]) return PURPOSE_LABELS[normalized];
+  return normalized
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function formatSearchContextLabel(query, libraryFilter, jobCategory) {
+  const parts = [String(query || '').trim()];
+  if (libraryFilter && libraryFilter !== 'all') parts.push(formatPurposeLabel(libraryFilter));
+  if (jobCategory) parts.push(formatPurposeLabel(jobCategory));
+  return parts.filter(Boolean).join(' - ');
+}
+
+function normalizeSearchContextValue(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+}
+
+function normalizeReviewLibraryFilter(value) {
+  return normalizeSearchContextValue(value) || 'all';
+}
+
+function normalizeReviewJobCategory(value) {
+  return normalizeSearchContextValue(value) || '';
+}
+
+function buildQueryReviewContextKey(query, libraryFilter, jobCategory) {
+  return [
+    normalizeSearchContextValue(query),
+    normalizeReviewLibraryFilter(libraryFilter),
+    normalizeReviewJobCategory(jobCategory),
+  ].join('|');
+}
+
+function formatLibraryFilterLabel(value) {
+  const normalized = normalizeReviewLibraryFilter(value);
+  return normalized === 'all' ? 'All libraries' : formatPurposeLabel(normalized);
+}
+
+function queryReviewStatusLabel(status) {
+  const normalized = normalizeSearchContextValue(status);
+  if (!normalized) return 'Untriaged';
+  return QUERY_REVIEW_STATUS_LABELS[normalized] || normalized;
+}
+
+function queryReviewBadgeClass(status) {
+  const normalized = normalizeSearchContextValue(status);
+  if (normalized === 'resolved') return 'badge-review-resolved';
+  if (normalized === 'needs_alias') return 'badge-review-needs-alias';
+  if (normalized === 'needs_icon') return 'badge-review-needs-icon';
+  if (normalized === 'ignore') return 'badge-review-ignore';
+  return 'badge-review-untriaged';
+}
+
+function queryReviewBadge(status) {
+  return `<span class="badge ${queryReviewBadgeClass(status)}">${escapeHtml(queryReviewStatusLabel(status))}</span>`;
+}
+
+function summarizeQueryReviewQueue(rows) {
+  return rows.reduce((acc, row) => {
+    const status = normalizeSearchContextValue(row.review_status);
+    if (status === 'resolved') acc.resolved += 1;
+    else if (status === 'needs_alias') acc.needs_alias += 1;
+    else if (status === 'needs_icon') acc.needs_icon += 1;
+    else if (status === 'ignore') acc.ignore += 1;
+    else acc.untriaged += 1;
+    return acc;
+  }, {
+    untriaged: 0,
+    needs_alias: 0,
+    needs_icon: 0,
+    resolved: 0,
+    ignore: 0,
+  });
+}
+
+function shouldShowReviewableQuery(row) {
+  if (state.showReviewedQueries) return true;
+  const status = normalizeSearchContextValue(row.review_status);
+  return !status || ACTIVE_QUERY_REVIEW_STATUSES.has(status);
+}
+
+function renderQueryReviewSummary(summary) {
+  const container = $('queryReviewSummary');
+  if (!container) return;
+  container.innerHTML = `
+    <span class="query-review-summary__item">${queryReviewBadge('')}<span>${escapeHtml(String(summary.untriaged || 0))}</span></span>
+    <span class="query-review-summary__item">${queryReviewBadge('needs_alias')}<span>${escapeHtml(String(summary.needs_alias || 0))}</span></span>
+    <span class="query-review-summary__item">${queryReviewBadge('needs_icon')}<span>${escapeHtml(String(summary.needs_icon || 0))}</span></span>
+    <span class="query-review-summary__item">${queryReviewBadge('resolved')}<span>${escapeHtml(String(summary.resolved || 0))}</span></span>
+    <span class="query-review-summary__item">${queryReviewBadge('ignore')}<span>${escapeHtml(String(summary.ignore || 0))}</span></span>
+  `;
+}
+
+function getReviewableQueryEntries() {
+  return [
+    ...(state.searchIntelligence?.top_zero_result_queries || []),
+    ...(state.searchIntelligence?.top_low_result_queries || []),
+    ...(state.searchIntelligence?.top_replacement_queries || []),
+  ];
+}
+
+function findQueryReviewEntry(query, libraryFilter, jobCategory) {
+  const targetKey = buildQueryReviewContextKey(query, libraryFilter, jobCategory);
+  return getReviewableQueryEntries().find((entry) => (
+    buildQueryReviewContextKey(entry.query, entry.library_filter, entry.job_category) === targetKey
+  )) || null;
+}
+
+function openQueryReview(query, libraryFilter = 'all', jobCategory = '') {
+  const entry = findQueryReviewEntry(query, libraryFilter, jobCategory);
+  if (!entry) return;
+  state.selectedQueryReview = {
+    query: entry.query,
+    library_filter: normalizeReviewLibraryFilter(entry.library_filter),
+    job_category: normalizeReviewJobCategory(entry.job_category),
+    status: normalizeSearchContextValue(entry.review_status),
+    note: entry.review_note || '',
+  };
+  renderQueryReviewPanel();
+}
+
+function clearQueryReviewSelection() {
+  state.selectedQueryReview = null;
+  state.queryReviewSaving = false;
+  renderQueryReviewPanel();
+}
+
+function applySavedQueryReviewToState(review) {
+  if (!review || !state.searchIntelligence) return;
+
+  const normalizedReview = {
+    query: normalizeSearchContextValue(review.normalized_query),
+    library_filter: normalizeReviewLibraryFilter(review.library_filter),
+    job_category: normalizeReviewJobCategory(review.job_category),
+    review_status: normalizeSearchContextValue(review.status),
+    review_note: review.note || '',
+    review_updated_at: review.updated_at || null,
+  };
+
+  ['top_zero_result_queries', 'top_low_result_queries', 'top_replacement_queries'].forEach((key) => {
+    const rows = state.searchIntelligence?.[key];
+    if (!Array.isArray(rows)) return;
+    rows.forEach((entry) => {
+      if (buildQueryReviewContextKey(entry.query, entry.library_filter, entry.job_category)
+        !== buildQueryReviewContextKey(
+          normalizedReview.query,
+          normalizedReview.library_filter,
+          normalizedReview.job_category,
+        )) {
+        return;
+      }
+
+      entry.review_status = normalizedReview.review_status;
+      entry.review_note = normalizedReview.review_note;
+      entry.review_updated_at = normalizedReview.review_updated_at;
+    });
+  });
+}
+
+function formatAverageResultCount(value) {
+  if (typeof value !== 'number' || Number.isNaN(value)) return '-';
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function formatEvidenceNote(entry) {
+  const signalType = String(entry?.signal_type || '').toLowerCase();
+  if (signalType === 'search_attempt') {
+    const parts = [];
+    if (entry.evidence_text) parts.push(entry.evidence_text);
+    if (typeof entry.result_count === 'number') {
+      parts.push(`${entry.result_count} results`);
+    }
+    if (entry.library_filter) {
+      parts.push(entry.library_filter === 'all' ? 'all libraries' : entry.library_filter);
+    }
+    return parts.join(' - ') || '-';
+  }
+  return entry?.evidence_text || '-';
+}
+
+function setIntelligenceWindowCopy() {
+  const window = getCurrentIntelligenceWindow();
+  $('intelligenceTotalEvidenceLabel').textContent = formatMetricWindowLabel('Evidence Rows');
+  $('intelligenceCopyEventsLabel').textContent = formatMetricWindowLabel('Copy Events');
+  $('intelligenceMcpBatchesLabel').textContent = formatMetricWindowLabel('MCP Batches');
+  $('intelligenceKitDownloadsLabel').textContent = formatMetricWindowLabel('Kit Downloads');
+  $('searchIntelUniqueQueriesLabel').textContent = formatMetricWindowLabel('Unique Queries');
+  $('searchIntelSearchAttemptsLabel').textContent = formatMetricWindowLabel('Search Attempts');
+  $('searchIntelZeroResultQueriesLabel').textContent = formatMetricWindowLabel('Zero-Result Queries');
+  $('searchIntelLowResultQueriesLabel').textContent = formatMetricWindowLabel('Low-Result Queries');
+
+  $('intelligenceTotalEvidenceDelta').textContent = `Raw signals captured in ${window.longLabel.toLowerCase()}`;
+  $('intelligenceCopyEventsDelta').textContent = `Selection pressure in ${window.longLabel.toLowerCase()}`;
+  $('intelligenceMcpBatchesDelta').textContent = `Agent search sessions logged in ${window.longLabel.toLowerCase()}`;
+  $('intelligenceKitDownloadsDelta').textContent = `Collection pulls routed through Supericons in ${window.longLabel.toLowerCase()}`;
+  $('searchIntelUniqueQueriesDelta').textContent = `Distinct search queries with captured evidence in ${window.longLabel.toLowerCase()}`;
+  $('searchIntelSearchAttemptsDelta').textContent = `Settled searches captured in ${window.longLabel.toLowerCase()}`;
+  $('searchIntelZeroResultQueriesDelta').textContent = `Distinct queries that returned no results in ${window.longLabel.toLowerCase()}`;
+  $('searchIntelLowResultQueriesDelta').textContent = `Distinct queries with 1-3 results in ${window.longLabel.toLowerCase()}`;
+}
+
+function renderIntelligenceRows(containerId, rows, renderValue) {
+  const container = $(containerId);
+  if (!container) return;
+  container.innerHTML = rows.length
+    ? rows.map((row) => `
+        <div class="stats-row">
+          <span>${escapeHtml(row.label)}</span>
+          <span class="stats-row__val">${renderValue(row)}</span>
+        </div>
+      `).join('')
+    : emptyState('bubble_chart', 'No evidence yet');
+}
+
+function renderReviewableQueryRows(containerId, rows, renderValue, emptyLabel = 'No evidence yet') {
+  const container = $(containerId);
+  if (!container) return;
+  const visibleRows = rows.filter(shouldShowReviewableQuery);
+  container.innerHTML = visibleRows.length
+    ? visibleRows.map((row) => `
+        <button
+          class="stats-row stats-row--reviewable"
+          type="button"
+          data-review-query="${escapeHtml(row.query || '')}"
+          data-review-library-filter="${escapeHtml(row.library_filter || '')}"
+          data-review-job-category="${escapeHtml(row.job_category || '')}"
+        >
+          <span class="stats-row__label-group">
+            <span>${escapeHtml(row.label)}</span>
+            ${queryReviewBadge(row.review_status)}
+          </span>
+          <span class="stats-row__val">${renderValue(row)}</span>
+        </button>
+      `).join('')
+    : emptyState('bubble_chart', emptyLabel);
+}
+
+function renderQueryReviewPanel() {
+  const available = state.searchIntelligence?.summary?.query_review_feature_available === true;
+  const selected = state.selectedQueryReview;
+  const isSaving = state.queryReviewSaving === true;
+  const lead = $('queryReviewLead');
+  const queryEl = $('queryReviewQuery');
+  const libraryEl = $('queryReviewLibrary');
+  const purposeEl = $('queryReviewPurpose');
+  const statusBadgeEl = $('queryReviewCurrentStatus');
+  const statusInput = $('queryReviewStatus');
+  const noteInput = $('queryReviewNote');
+  const saveBtn = $('queryReviewSaveBtn');
+  const clearBtn = $('queryReviewClearBtn');
+
+  if (!lead || !queryEl || !libraryEl || !purposeEl || !statusBadgeEl || !statusInput || !noteInput || !saveBtn || !clearBtn) {
+    return;
+  }
+
+  if (!available) {
+    lead.textContent = 'Saved query statuses are disabled until the icon_query_reviews migration is applied.';
+  } else if (isSaving) {
+    lead.textContent = 'Saving review now. The badge should update here immediately and the lists will re-sync in the background.';
+  } else if (!selected) {
+    lead.textContent = 'Select a zero-result, low-result, or replacement-heavy query above to classify it for future triage.';
+  } else {
+    lead.textContent = 'Save one simple decision so this query does not need to be re-triaged from scratch next week.';
+  }
+
+  queryEl.textContent = selected?.query || '-';
+  libraryEl.textContent = selected ? formatLibraryFilterLabel(selected.library_filter) : '-';
+  purposeEl.textContent = selected?.job_category
+    ? formatPurposeLabel(selected.job_category)
+    : 'No purpose filter';
+  statusBadgeEl.innerHTML = queryReviewBadge(selected?.status || '');
+
+  statusInput.value = selected?.status || '';
+  noteInput.value = selected?.note || '';
+
+  const formDisabled = !available || !selected || isSaving;
+  statusInput.disabled = formDisabled;
+  noteInput.disabled = formDisabled;
+  clearBtn.disabled = !selected || isSaving;
+  saveBtn.disabled = formDisabled || !selected?.status;
+  saveBtn.textContent = isSaving ? 'Saving...' : 'Save Review';
+}
+
+async function saveQueryReview() {
+  const selected = state.selectedQueryReview;
+  if (!selected) {
+    showToast('Select a query to review first', 'error');
+    return;
+  }
+
+  if (!selected.status) {
+    showToast('Choose a review status before saving', 'error');
+    return;
+  }
+
+  if (state.queryReviewSaving) return;
+  state.queryReviewSaving = true;
+  renderQueryReviewPanel();
+
+  try {
+    const payload = await apiRequest('/intelligence/search/review', {
+      method: 'POST',
+      body: JSON.stringify({
+        query: selected.query,
+        library_filter: selected.library_filter,
+        job_category: selected.job_category || null,
+        status: selected.status,
+        note: selected.note || null,
+      }),
+    });
+
+    const review = payload.review || {};
+    state.selectedQueryReview = {
+      query: selected.query,
+      library_filter: normalizeReviewLibraryFilter(review.library_filter || selected.library_filter),
+      job_category: normalizeReviewJobCategory(review.job_category || selected.job_category),
+      status: normalizeSearchContextValue(review.status || selected.status),
+      note: review.note || '',
+    };
+
+    applySavedQueryReviewToState(review);
+    state.queryReviewSaving = false;
+    renderSearchIntelligence();
+    showToast('Query review saved');
+
+    loadSearchIntelligence().catch((error) => {
+      showToast(error.message, 'error');
+    });
+  } catch (error) {
+    state.queryReviewSaving = false;
+    renderQueryReviewPanel();
+    throw error;
+  }
+}
+
+function renderSearchIntelligence() {
+  const summary = state.searchIntelligence?.summary || {};
+  const window = getCurrentIntelligenceWindow();
+  const queueSummary = summarizeQueryReviewQueue(getReviewableQueryEntries());
+  const showReviewedToggle = $('queryReviewShowReviewed');
+
+  $('searchIntelUniqueQueriesValue').textContent = summary.unique_queries || 0;
+  $('searchIntelSearchAttemptsValue').textContent = summary.search_attempts || 0;
+  $('searchIntelZeroResultQueriesValue').textContent = summary.zero_result_queries || 0;
+  $('searchIntelLowResultQueriesValue').textContent = summary.low_result_queries || 0;
+  renderQueryReviewSummary(queueSummary);
+  if (showReviewedToggle) {
+    showReviewedToggle.checked = state.showReviewedQueries;
+  }
+
+  renderIntelligenceRows(
+    'searchIntelTopQueries',
+    (state.searchIntelligence?.top_queries || []).map((entry) => ({
+      label: entry.query,
+      total_signals: entry.total_signals,
+      copy_count: entry.copy_count,
+      favorite_count: entry.favorite_count,
+    })),
+    (row) => `${escapeHtml(String(row.total_signals || 0))} signals - ${escapeHtml(String(row.copy_count || 0))} copy - ${escapeHtml(String(row.favorite_count || 0))} save`
+  );
+
+  renderIntelligenceRows(
+    'searchIntelTopMcpQueries',
+    (state.searchIntelligence?.top_mcp_queries || []).map((entry) => ({
+      label: entry.query,
+      batch_count: entry.batch_count,
+      result_rows: entry.result_rows,
+      converged_batches: entry.converged_batches,
+    })),
+    (row) => `${escapeHtml(String(row.batch_count || 0))} batches - ${escapeHtml(String(row.result_rows || 0))} results - ${escapeHtml(String(row.converged_batches || 0))} converged`
+  );
+
+  renderReviewableQueryRows(
+    'searchIntelZeroResultQueries',
+    (state.searchIntelligence?.top_zero_result_queries || []).map((entry) => ({
+      query: entry.query,
+      label: formatSearchContextLabel(entry.query, entry.library_filter, entry.job_category),
+      library_filter: entry.library_filter,
+      job_category: entry.job_category,
+      review_status: entry.review_status,
+      attempt_count: entry.attempt_count,
+      zero_attempt_count: entry.zero_attempt_count,
+    })),
+    (row) => `${escapeHtml(String(row.zero_attempt_count || 0))} zero-result attempts - ${escapeHtml(String(row.attempt_count || 0))} total attempts`,
+    state.showReviewedQueries ? 'No zero-result evidence yet' : 'No active zero-result queries'
+  );
+
+  renderReviewableQueryRows(
+    'searchIntelLowResultQueries',
+    (state.searchIntelligence?.top_low_result_queries || []).map((entry) => ({
+      query: entry.query,
+      label: formatSearchContextLabel(entry.query, entry.library_filter, entry.job_category),
+      library_filter: entry.library_filter,
+      job_category: entry.job_category,
+      review_status: entry.review_status,
+      low_attempt_count: entry.low_attempt_count,
+      average_result_count: entry.average_result_count,
+      minimum_result_count: entry.minimum_result_count,
+    })),
+    (row) => `${escapeHtml(String(row.low_attempt_count || 0))} low-result attempts - avg ${escapeHtml(formatAverageResultCount(row.average_result_count))} results - min ${escapeHtml(String(row.minimum_result_count ?? '-'))}`,
+    state.showReviewedQueries ? 'No low-result evidence yet' : 'No active low-result queries'
+  );
+
+  renderReviewableQueryRows(
+    'searchIntelReplacementQueries',
+    (state.searchIntelligence?.top_replacement_queries || []).map((entry) => ({
+      query: entry.query,
+      label: entry.query,
+      library_filter: entry.library_filter,
+      job_category: entry.job_category,
+      review_status: entry.review_status,
+      replace_count: entry.replace_count,
+      unique_replacements: entry.unique_replacements,
+    })),
+    (row) => `${escapeHtml(String(row.replace_count || 0))} replacements - ${escapeHtml(String(row.unique_replacements || 0))} alternate picks`,
+    state.showReviewedQueries ? 'No replacement-heavy evidence yet' : 'No active replacement-heavy queries'
+  );
+
+  $('searchIntelNotes').innerHTML = `
+    <div class="stats-row">
+      <span>Current window</span>
+      <span class="stats-row__val">${escapeHtml(window.shortLabel)}</span>
+    </div>
+    <div class="stats-row">
+      <span>Current coverage</span>
+      <span class="stats-row__val">${summary.search_attempts > 0 ? 'Search attempts + outcomes' : 'Search outcomes only'}</span>
+    </div>
+    <div class="stats-row">
+      <span>Zero-result tracking</span>
+      <span class="stats-row__val">${summary.zero_result_tracking_available ? 'Active' : 'Requires explicit search-attempt logging'}</span>
+    </div>
+    <div class="stats-row">
+      <span>Blank purpose</span>
+      <span class="stats-row__val">Unclassified icon or no purpose filter active</span>
+    </div>
+    <div class="stats-row">
+      <span>Query signals</span>
+      <span class="stats-row__val">${escapeHtml(String(summary.site_query_signals || 0))}</span>
+    </div>
+    <div class="stats-row">
+      <span>MCP query batches</span>
+      <span class="stats-row__val">${escapeHtml(String(summary.mcp_query_batches || 0))}</span>
+    </div>
+    <div class="stats-row">
+      <span>Best current use</span>
+      <span class="stats-row__val">${summary.search_attempts > 0 ? 'Find zero-result gaps, weak-result queries, and replacement pressure' : 'Find high-value queries and replacement pressure'}</span>
+    </div>
+    <div class="stats-row">
+      <span>Query reviews</span>
+      <span class="stats-row__val">${summary.query_review_feature_available ? 'Saved statuses active' : 'Apply icon_query_reviews migration'}</span>
+    </div>
+    <div class="stats-row">
+      <span>Queue mode</span>
+      <span class="stats-row__val">${state.showReviewedQueries ? 'All queries including reviewed' : 'Active queue only'}</span>
+    </div>
+  `;
+
+  renderQueryReviewPanel();
+}
+
+function renderIntelligence() {
+  const overview = state.intelligenceOverview || {};
+  setIntelligenceWindowCopy();
+  $('intelligenceTotalEvidenceValue').textContent = overview.total_evidence_rows || 0;
+  $('intelligenceCopyEventsValue').textContent = overview.copy_events || 0;
+  $('intelligenceMcpBatchesValue').textContent = overview.mcp_batches || 0;
+  $('intelligenceKitDownloadsValue').textContent = overview.kit_downloads || 0;
+
+  $('intelligenceKeySignals').innerHTML = `
+    <div class="stats-row">
+      <span>Explicit saves</span>
+      <span class="stats-row__val">${escapeHtml(String(overview.favorite_events || 0))}</span>
+    </div>
+    <div class="stats-row">
+      <span>Metadata coverage</span>
+      <span class="stats-row__val">${escapeHtml(String(state.intelligenceMetadataCoverage || 0))}</span>
+    </div>
+  `;
+
+  renderIntelligenceRows(
+    'intelligenceTopIcons',
+    (overview.top_icons || []).map((icon) => ({
+      label: icon.icon_id,
+      copy_count: icon.copy_count,
+      retention_rate: icon.retention_rate,
+      mcp_acceptance_rate: icon.mcp_acceptance_rate,
+    })),
+    (row) => `${escapeHtml(String(row.copy_count || 0))} copies - ${escapeHtml(formatPercent(row.retention_rate))}`
+  );
+
+  renderIntelligenceRows(
+    'intelligenceTopCategories',
+    (overview.top_job_categories || []).map((entry) => ({
+      label: formatPurposeLabel(entry.job_category),
+      count: entry.count,
+    })),
+    (row) => escapeHtml(String(row.count || 0))
+  );
+
+  renderIntelligenceRows(
+    'intelligenceTopReplaced',
+    (overview.top_replaced_icons || []).map((entry) => ({
+      label: entry.icon_id,
+      replace_count: entry.replace_count,
+    })),
+    (row) => escapeHtml(String(row.replace_count || 0))
+  );
+
+  renderSearchIntelligence();
+
+  const tbody = $('intelligenceEvidenceBody');
+  if (!tbody) return;
+  if (!state.intelligenceEvidence.length) {
+    tbody.innerHTML = `<tr><td colspan="7">${emptyState('hub', 'No evidence events matched these filters')}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = state.intelligenceEvidence.map((entry) => `
+    <tr>
+      <td style="color:var(--si-text-dim);font-size:0.72rem;white-space:nowrap">${escapeHtml(formatDateTime(entry.created_at))}</td>
+      <td><span class="action-chip ${actionChipClass(entry.signal_type || 'copy')}">${escapeHtml(entry.signal_type || '-')}</span></td>
+      <td><span class="truncate-mono">${escapeHtml(entry.icon_id || '-')}</span></td>
+      <td>${escapeHtml(entry.search_query || '-')}</td>
+      <td>${escapeHtml(formatPurposeLabel(entry.job_category))}</td>
+      <td>${escapeHtml(entry.ui_surface || '-')}</td>
+      <td style="font-family:var(--si-font-label);font-size:0.75rem;color:var(--si-text-dim)">${escapeHtml(formatEvidenceNote(entry))}</td>
+    </tr>
+  `).join('');
+}
+
+async function loadIntelligenceOverview() {
+  const payload = await apiRequest(`/intelligence/overview?window=${encodeURIComponent(state.intelligenceWindow)}`);
+  state.intelligenceOverview = payload.overview || {};
+  state.intelligenceMetadataCoverage = payload.metadata_coverage?.classified_icons || 0;
+  renderIntelligence();
+}
+
+async function loadSearchIntelligence() {
+  const payload = await apiRequest(`/intelligence/search?window=${encodeURIComponent(state.intelligenceWindow)}`);
+  state.searchIntelligence = payload.search_intelligence || null;
+  renderIntelligence();
+}
+
+async function loadIntelligenceEvidence() {
+  const params = new URLSearchParams();
+  params.set('window', state.intelligenceWindow);
+  if (state.intelligenceFilters.q) params.set('q', state.intelligenceFilters.q);
+  if (state.intelligenceFilters.signal_type) params.set('signal_type', state.intelligenceFilters.signal_type);
+  params.set('limit', '50');
+  const payload = await apiRequest(`/intelligence/evidence?${params.toString()}`);
+  state.intelligenceEvidence = payload.evidence || [];
+  renderIntelligence();
 }
 
 function renderUsers() {
@@ -668,15 +1279,87 @@ function bindSearchInputs() {
     state.auditPagination.page = 1;
     loadAudit().catch((error) => showToast(error.message, 'error'));
   });
+
+  let intelligenceSearchTimer = null;
+  $('intelligenceSearch').addEventListener('input', (event) => {
+    clearTimeout(intelligenceSearchTimer);
+    intelligenceSearchTimer = window.setTimeout(() => {
+      state.intelligenceFilters.q = event.target.value.trim();
+      loadIntelligenceEvidence().catch((error) => showToast(error.message, 'error'));
+    }, 200);
+  });
+
+  $('intelligenceSignalFilter').addEventListener('change', (event) => {
+    state.intelligenceFilters.signal_type = event.target.value;
+    loadIntelligenceEvidence().catch((error) => showToast(error.message, 'error'));
+  });
+
+  $('intelligenceWindowFilter').addEventListener('change', (event) => {
+    state.intelligenceWindow = event.target.value;
+    Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadIntelligenceEvidence()])
+      .catch((error) => showToast(error.message, 'error'));
+  });
 }
 
 async function refreshAll() {
-  await Promise.all([loadStats(), loadUsers(), loadAudit()]);
+  await Promise.all([
+    loadStats(),
+    loadIntelligenceOverview(),
+    loadSearchIntelligence(),
+    loadIntelligenceEvidence(),
+    loadUsers(),
+    loadAudit(),
+  ]);
 }
 
 function bindGlobalEvents() {
+  ['searchIntelZeroResultQueries', 'searchIntelLowResultQueries', 'searchIntelReplacementQueries'].forEach((containerId) => {
+    $(containerId)?.addEventListener('click', (event) => {
+      const trigger = event.target instanceof Element
+        ? event.target.closest('[data-review-query]')
+        : null;
+      if (!trigger) return;
+      openQueryReview(
+        trigger.dataset.reviewQuery || '',
+        trigger.dataset.reviewLibraryFilter || 'all',
+        trigger.dataset.reviewJobCategory || '',
+      );
+    });
+  });
+
+  $('queryReviewStatus')?.addEventListener('change', (event) => {
+    if (!state.selectedQueryReview) return;
+    state.selectedQueryReview.status = normalizeSearchContextValue(event.target.value);
+    renderQueryReviewPanel();
+  });
+
+  $('queryReviewNote')?.addEventListener('input', (event) => {
+    if (!state.selectedQueryReview) return;
+    state.selectedQueryReview.note = event.target.value;
+  });
+
+  $('queryReviewForm')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveQueryReview().catch((error) => showToast(error.message, 'error'));
+  });
+
+  $('queryReviewClearBtn')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    clearQueryReviewSelection();
+  });
+
+  $('queryReviewShowReviewed')?.addEventListener('change', (event) => {
+    state.showReviewedQueries = event.target.checked;
+    renderSearchIntelligence();
+  });
+
   $('statsRefreshBtn').addEventListener('click', () => {
     refreshAll().then(() => showToast('Admin data refreshed')).catch((error) => showToast(error.message, 'error'));
+  });
+  $('intelligenceRefreshBtn').addEventListener('click', () => {
+    Promise.all([loadIntelligenceOverview(), loadSearchIntelligence(), loadIntelligenceEvidence()])
+      .then(() => showToast('Icon intelligence refreshed'))
+      .catch((error) => showToast(error.message, 'error'));
   });
   $('adminReconnectBtn').addEventListener('click', async () => {
     try {

@@ -1669,6 +1669,66 @@ body.landing-active .compare-drawer {
   color: var(--si-error);
 }
 
+.grid-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--si-space-3);
+  margin: 0 0 var(--si-space-3);
+  padding-bottom: var(--si-space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.grid-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+.grid-filter-bar__label {
+  flex-shrink: 0;
+  font-family: var(--si-font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--si-text-dim);
+  text-transform: uppercase;
+}
+.grid-filter-bar__chips {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.grid-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--si-border);
+  border-radius: 999px;
+  background: var(--si-surface-container);
+  color: var(--si-text-dim);
+  font-family: var(--si-font-label);
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--si-transition-fast);
+}
+.grid-filter-chip:hover {
+  border-color: color-mix(in srgb, var(--si-primary) 52%, var(--si-border));
+  color: var(--si-text-muted);
+}
+.grid-filter-chip.active {
+  background: color-mix(in srgb, var(--si-primary) 12%, var(--si-surface-container));
+  border-color: color-mix(in srgb, var(--si-primary) 62%, var(--si-border));
+  color: var(--si-primary);
+}
+.grid-filter-chip__count {
+  margin-left: 0.45rem;
+  color: inherit;
+  opacity: 0.74;
+  font-size: 0.68rem;
+}
+
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
@@ -3786,6 +3846,18 @@ body.theme-light .customize-color-add:hover {
   }
   .grid-header__title {
     font-size: 1.125rem;
+  }
+  .grid-filter-bar {
+    gap: var(--si-space-2);
+    margin-bottom: var(--si-space-2);
+  }
+  .grid-filter-bar__label {
+    font-size: 0.68rem;
+  }
+  .grid-filter-chip {
+    min-height: 30px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.72rem;
   }
 }
 

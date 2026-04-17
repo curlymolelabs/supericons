@@ -40,6 +40,7 @@ import {
   hasPremiumLibraryAccess,
   hasProWorkflowAccess,
 } from './workflow-access.js';
+import { logMcpSearchAttempt, logMcpSearchBatch } from './telemetry.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -511,14 +512,33 @@ server.tool(
 
     const results = searchIcons(query, accessibleIcons, synonyms, { library, limit });
     if (results.length === 0) {
+      void logMcpSearchAttempt({
+        query,
+        resultCount: 0,
+        libraryFilter: library || 'all',
+      });
       return {
         content: [{ type: 'text', text: `No icons found for "${query}"${library ? ` in ${library}` : ''}.` }],
       };
     }
     const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon)))).filter(Boolean);
     if (formatted.length === 0) {
+      void logMcpSearchAttempt({
+        query,
+        resultCount: 0,
+        libraryFilter: library || 'all',
+      });
       return buildTextResponse(`Icons were found for "${query}"${library ? ` in ${library}` : ''}, but their SVG payloads could not be resolved right now.`);
     }
+    void logMcpSearchAttempt({
+      query,
+      resultCount: formatted.length,
+      libraryFilter: library || 'all',
+    });
+    void logMcpSearchBatch({
+      query,
+      results: formatted,
+    });
     return buildTextResponse({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' });
   }
 );

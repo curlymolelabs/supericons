@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P0.02 Browse Taxonomy: Socratic Design Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050810;--bg-s:#090d18;--bg-r:#0f1522;--bg-h:#161e2e;
+      --bd:#1a2236;--bd2:#111827;
+      --t:#e6edf6;--td:#8492a6;--tf:#374151;
+      --bl:#60a5fa;--pu:#a78bfa;--gr:#34d399;--am:#fbbf24;
+      --re:#f87171;--te:#2dd4bf;--or:#fb923c;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--t);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+
+    /* Progress bar */
+    #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--bl),var(--pu),var(--gr),var(--am));z-index:999;transition:width .1s}
+
+    /* Sidebar */
+    .sidebar{position:fixed;top:0;left:0;width:250px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);overflow-y:auto;padding:1.25rem .75rem;display:flex;flex-direction:column;gap:.05rem;z-index:100}
+    .sb-logo{font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:800;color:var(--t);padding:.3rem .5rem;margin-bottom:.25rem;line-height:1.3}
+    .sb-sub{font-size:.65rem;color:var(--td);padding:0 .5rem;margin-bottom:.75rem}
+    .sb-section{font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.6rem .5rem .15rem;color:var(--tf);margin-top:.5rem}
+    .sb-link{display:flex;align-items:center;gap:.4rem;padding:.3rem .6rem;border-radius:5px;color:var(--td);text-decoration:none;font-size:.74rem;font-weight:500;transition:all .15s;cursor:pointer}
+    .sb-link:hover{background:var(--bg-h);color:var(--t)}
+    .sb-link.active{color:var(--t);background:var(--bg-h)}
+    .sb-num{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--tf)}
+
+    /* Main */
+    .main{margin-left:250px}
+
+    /* Hero */
+    .hero{padding:3rem 3.5rem 2.5rem;border-bottom:1px solid var(--bd);
+      background:radial-gradient(ellipse at 60% 0%,rgba(96,165,250,.06),transparent 50%),
+                 radial-gradient(ellipse at 5% 100%,rgba(52,211,153,.04),transparent 50%)}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--re);background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:99px;padding:.2rem .8rem;margin-bottom:1rem}
+    .hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:.5rem;background:linear-gradient(135deg,var(--bl),var(--pu),var(--gr));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:.88rem;color:var(--td);max-width:700px;line-height:1.7;margin-bottom:.75rem}
+    .hero-date{font-size:.72rem;color:var(--tf)}
+
+    /* Section */
+    .sec{padding:2.5rem 3.5rem;border-bottom:1px solid var(--bd)}
+    .sec-hdr{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+    .sec-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:800;color:var(--tf);background:var(--bg-r);border:1px solid var(--bd);border-radius:5px;padding:.2rem .5rem}
+    .sec-title{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
+
+    /* Text */
+    p{font-size:.88rem;color:var(--td);line-height:1.75;margin-bottom:1rem;max-width:780px}
+    p strong{color:var(--t)}
+    p code{font-family:'JetBrains Mono',monospace;font-size:.78rem;background:var(--bg-s);border:1px solid var(--bd2);border-radius:3px;padding:.05rem .3rem;color:var(--te)}
+
+    /* Blockquote */
+    blockquote{margin:1rem 0 1.5rem;padding:.75rem 1.25rem;border-left:3px solid var(--pu);background:rgba(167,139,250,.04);border-radius:0 8px 8px 0;font-size:.86rem;color:var(--td);line-height:1.7;max-width:780px}
+    blockquote strong{color:var(--pu)}
+
+    /* Alert boxes */
+    .alert{margin:1rem 0 1.5rem;padding:.75rem 1.1rem;border-radius:8px;font-size:.84rem;line-height:1.65;max-width:780px;display:flex;gap:.6rem}
+    .alert-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+    .a-red{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);color:#fca5a5}
+    .a-red strong{color:var(--re)}
+    .a-green{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);color:#86efac}
+    .a-green strong{color:var(--gr)}
+    .a-amber{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.18);color:#fde68a}
+    .a-amber strong{color:var(--am)}
+    .a-blue{background:rgba(96,165,250,.05);border:1px solid rgba(96,165,250,.18);color:#bfdbfe}
+    .a-blue strong{color:var(--bl)}
+
+    /* Tables */
+    table{border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.82rem;width:100%;max-width:780px}
+    th{text-align:left;padding:.45rem .7rem;font-weight:700;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tf);border-bottom:2px solid var(--bd)}
+    td{padding:.45rem .7rem;border-bottom:1px solid var(--bd2);color:var(--td)}
+    td strong{color:var(--t)}
+    tr:hover td{background:rgba(255,255,255,.01)}
+
+    /* Socratic Q */
+    .sq{margin:1rem 0 1.5rem;max-width:780px}
+    .sq-q{font-family:'Space Grotesk',sans-serif;font-size:.92rem;font-weight:700;color:var(--bl);margin-bottom:.4rem;padding-left:.5rem;border-left:2px solid var(--bl)}
+    .sq-a{font-size:.86rem;color:var(--td);line-height:1.75;padding-left:.5rem}
+    .sq-a strong{color:var(--t)}
+
+    /* Mock UI illustrations */
+    .mock{margin:1.5rem 0 2rem;border:1px solid var(--bd);border-radius:12px;overflow:hidden;max-width:860px;background:var(--bg-s)}
+    .mock-label{font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);padding:.5rem .75rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.5rem}
+    .mock-badge{font-size:.55rem;padding:.1rem .4rem;border-radius:3px;font-weight:700}
+    .mock-bad .mock-label{border-left:3px solid var(--re)}
+    .mock-good .mock-label{border-left:3px solid var(--gr)}
+    .mock-proposed .mock-label{border-left:3px solid var(--bl)}
+    .mock-content{display:flex;min-height:320px}
+    .mock-sidebar{width:200px;border-right:1px solid var(--bd);padding:.5rem;flex-shrink:0;display:flex;flex-direction:column;gap:.1rem}
+    .mock-main{flex:1;padding:.75rem;display:flex;flex-direction:column;gap:.5rem}
+    .ms-section{font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tf);padding:.3rem .4rem}
+    .ms-item{display:flex;align-items:center;justify-content:space-between;padding:.25rem .5rem;border-radius:4px;font-size:.72rem;color:var(--td);cursor:default;transition:all .15s}
+    .ms-item:hover{background:var(--bg-h)}
+    .ms-item.active{background:var(--bg-h);color:var(--t)}
+    .ms-count{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--tf)}
+    .ms-icon{font-size:.72rem;margin-right:.3rem}
+    .mm-search{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;background:var(--bg-r);border:1px solid var(--bd2);border-radius:6px;font-size:.75rem;color:var(--tf)}
+    .mm-chips{display:flex;gap:.3rem;flex-wrap:wrap}
+    .mm-chip{font-size:.65rem;padding:.2rem .55rem;border-radius:99px;cursor:default;transition:all .15s;border:1px solid}
+    .mm-chip-inactive{background:transparent;color:var(--td);border-color:var(--bd)}
+    .mm-chip-active{background:rgba(96,165,250,.12);color:var(--bl);border-color:rgba(96,165,250,.3)}
+    .mm-grid-header{display:flex;align-items:center;justify-content:space-between}
+    .mm-title{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:800}
+    .mm-meta{font-size:.68rem;color:var(--tf)}
+    .mm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:.35rem;flex:1}
+    .mm-cell{aspect-ratio:1;background:var(--bg-r);border:1px solid var(--bd2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--tf);text-align:center;padding:.15rem;word-break:break-all}
+
+    /* Comparison layout */
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1.5rem 0 2rem;max-width:860px}
+    @media(max-width:900px){.compare{grid-template-columns:1fr}}
+
+    /* Search demo */
+    .search-demo{margin:1rem 0 1.5rem;max-width:780px;border:1px solid var(--bd);border-radius:10px;overflow:hidden;background:var(--bg-s)}
+    .sd-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;border-bottom:1px solid var(--bd);background:var(--bg-r)}
+    .sd-input{flex:1;background:transparent;border:none;color:var(--t);font-size:.82rem;font-family:'Inter',sans-serif;outline:none}
+    .sd-results{padding:.5rem .75rem}
+    .sd-tier{font-size:.56rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.25rem 0;margin-top:.25rem}
+    .sd-tier-1{color:var(--gr)}
+    .sd-tier-2{color:var(--td);border-top:1px dashed var(--bd2);margin-top:.5rem;padding-top:.5rem}
+    .sd-result{display:flex;align-items:center;gap:.5rem;padding:.25rem .3rem;font-size:.78rem;color:var(--td);border-radius:4px}
+    .sd-result:hover{background:var(--bg-h)}
+    .sd-icon-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--te)}
+    .sd-match{font-size:.62rem;color:var(--tf);font-style:italic}
+    .sd-zero{padding:.75rem .5rem;font-size:.82rem;color:var(--tf);text-align:center}
+
+    /* Priority list */
+    .priority-list{margin:1rem 0 1.5rem;max-width:780px;display:flex;flex-direction:column;gap:.5rem}
+    .priority-item{display:flex;gap:.75rem;padding:.6rem .75rem;border:1px solid var(--bd);border-radius:8px;background:var(--bg-r);align-items:flex-start}
+    .pi-num{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:800;flex-shrink:0;width:1.5rem;text-align:center}
+    .pi-body{flex:1}
+    .pi-title{font-size:.84rem;font-weight:700;color:var(--t);margin-bottom:.15rem}
+    .pi-desc{font-size:.78rem;color:var(--td);line-height:1.55}
+    .pi-effort{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.1rem .4rem;border-radius:3px;margin-top:.25rem;display:inline-block}
+    .pi-low{background:rgba(52,211,153,.1);color:var(--gr)}
+    .pi-med{background:rgba(251,191,36,.1);color:var(--am)}
+
+    /* Footer */
+    .footer{padding:2rem 3.5rem;background:var(--bg-s);border-top:1px solid var(--bd);text-align:center;font-size:.72rem;color:var(--tf)}
+
+    @media(max-width:768px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      .sec,.hero{padding-left:1.25rem;padding-right:1.25rem}
+      .mock-sidebar{width:140px}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="sidebar">
+  <div class="sb-logo">P0.02 Design<br>Analysis</div>
+  <div class="sb-sub">Socratic method + IDEO design thinking</div>
+  <div class="sb-section">Sections</div>
+  <a class="sb-link" href="#trigger"><span>01</span> The Trigger</a>
+  <a class="sb-link" href="#spec"><span>02</span> What the Spec Says</a>
+  <a class="sb-link" href="#socratic"><span>03</span> Socratic Analysis</a>
+  <a class="sb-link" href="#ideo"><span>04</span> IDEO Three Lenses</a>
+  <a class="sb-link" href="#ecommerce"><span>05</span> E-Commerce Analogy</a>
+  <a class="sb-link" href="#illustrations"><span>06</span> UI Illustrations</a>
+  <a class="sb-link" href="#search-gap"><span>07</span> Search Gap Analysis</a>
+  <a class="sb-link" href="#search-demo"><span>08</span> Search Demo</a>
+  <a class="sb-link" href="#priority"><span>09</span> Priority Order</a>
+  <a class="sb-link" href="#decisions"><span>10</span> Decision Points</a>
+  <a class="sb-link" href="#dont"><span>11</span> What Not to Do</a>
+  <a class="sb-link" href="#verdict"><span>12</span> Verdict (Browse UI)</a>
+  <a class="sb-link" href="#tagging"><span>13</span> Tag 20K vs Synonyms</a>
+  <a class="sb-link" href="#action-list"><span>14</span> Final Action List</a>
+</nav>
+
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Strategic Decision Document</div>
+  <h1 class="hero-h1">P0.02 Browse Taxonomy:<br>Socratic Design Analysis</h1>
+  <p class="hero-sub">The database layer is live. The taxonomy seed is applied. The evidence pipeline is collecting data. The only question is: <strong>what is the correct UI expression of the job-shaped taxonomy?</strong> This document synthesizes the full discussion using Socratic prompting and IDEO design thinking to arrive at the optimal decision.</p>
+  <div class="hero-date">April 16, 2026 -- Post P0.01/P0.02 Implementation Audit</div>
+</div>
+
+<!-- 01: TRIGGER -->
+<div class="sec" id="trigger">
+  <div class="sec-hdr">
+    <div class="sec-num">01</div>
+    <div class="sec-title">The Triggering Question</div>
+  </div>
+  <blockquote>
+    <strong>"Did we want to add the Jobs menu to the sidebar?"</strong>
+  </blockquote>
+  <p>The builder added a <strong>"Jobs" section</strong> to the sidebar with three categories: AI & Agents (50), Navigation & Wayfinding (50), Status & Feedback (50). This surfaced a fundamental product question: what is the correct UI expression of the P0.02 taxonomy?</p>
+  <p>The builder's own assessment, after discussion: <strong>"The Jobs sidebar is not the right final UI."</strong> Two concerns were conflated: GitHub distribution packs (external repos) and taxonomy as an internal classification layer (search, ranking, filtering, telemetry). These are related but not the same UI surface.</p>
+</div>
+
+<!-- 02: SPEC -->
+<div class="sec" id="spec">
+  <div class="sec-hdr">
+    <div class="sec-num">02</div>
+    <div class="sec-title">What the Master Plan Actually Says</div>
+  </div>
+  <p>From <code>supericons-master-action-plan.html</code>, Section P0.02:</p>
+  <blockquote>
+    <strong>"Replace the current library-centric browse categories (Buildings, Arrows, Technology...) with a product-job taxonomy."</strong>
+  </blockquote>
+  <p>Done criteria:</p>
+  <blockquote>
+    "Browse page shows 14 job categories. AI & Agents category is fully populated. At least the 150 most common icons have primary categories assigned."
+  </blockquote>
+  <div class="alert a-amber">
+    <span class="alert-icon">&#9888;</span>
+    <div><strong>Critical observation:</strong> The phrase "Buildings, Arrows, Technology..." refers to category patterns used by other icon libraries (Heroicons, Phosphor, Iconify). Supericons has never had these subcategories. The current sidebar shows only library names with counts. The taxonomy is a net addition, not a replacement of something that existed.</div>
+  </div>
+</div>
+
+<!-- 03: SOCRATIC -->
+<div class="sec" id="socratic">
+  <div class="sec-hdr">
+    <div class="sec-num">03</div>
+    <div class="sec-title">Socratic Analysis: Five Questions</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q1: "What is best practice for this?"</div>
+    <div class="sq-a"><strong>Faceted search.</strong> Every major product catalogue (Amazon, Shopify, Figma Community, Iconify) uses multi-dimensional faceted filtering. None of them put categories as sidebar navigation items parallel to brands/libraries. Categories are always a filtering axis, not a navigation axis.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q2: "What would a senior engineer do?"</div>
+    <div class="sq-a"><strong>Separate data layer from UI layer.</strong> The taxonomy (<code>icon_metadata</code>, <code>JOB_CATEGORY_DEFINITIONS</code>, telemetry tagging) is correctly built and should not change. Only the presentation needs to change. The existing search engine already has 5-layer expansion logic. The path of least resistance is extending <code>synonyms.json</code>, not building new UI.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q3: "What is the safest reversible option?"</div>
+    <div class="sq-a"><strong>Enhance synonyms first.</strong> Add AI-domain terms to <code>synonyms.json</code> (zero UI change, zero risk, immediately valuable). Then decide on filter UI after testing the improved search results.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q4: "Does the codebase already have a pattern for this?"</div>
+    <div class="sq-a"><strong>Yes.</strong> <code>synonyms.json</code> (285 groups, 1500+ terms) powers a proven 5-layer search: direct match, synonym expansion, reverse lookup, prefix match, fuzzy typo tolerance. The search results are already tiered (direct first, "Related" below). Extending it requires no architecture change.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q5: "What would break if I am wrong?"</div>
+    <div class="sq-a"><strong>Low risk either way.</strong> If we ship the Jobs sidebar: users see confused IA where "AI & Agents" sits alongside "Lucide" as equivalent choices, creating the wrong mental model. If we ship enhanced search only: worst case is users find more relevant results. Low risk.</div>
+  </div>
+</div>
+
+<!-- 04: IDEO -->
+<div class="sec" id="ideo">
+  <div class="sec-hdr">
+    <div class="sec-num">04</div>
+    <div class="sec-title">IDEO Design Thinking: Three Lenses</div>
+  </div>
+
+  <table>
+    <tr><th style="width:18%">Lens</th><th style="width:35%">Question</th><th>Answer</th></tr>
+    <tr>
+      <td><strong style="color:var(--re)">Desirability</strong></td>
+      <td>What do users want?</td>
+      <td>Two intents: <strong>"quota"</strong> (known need, semantic search) and <strong>"show me AI icons"</strong> (exploration, browse filter). Jobs sidebar partially serves exploration but totally fails known-need search.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--bl)">Feasibility</strong></td>
+      <td>What is technically possible?</td>
+      <td>Search engine already has multi-layer expansion. Adding terms to <code>synonyms.json</code> is editorial work, not engineering. <code>JOB_CATEGORY_DEFINITIONS</code> can power filter chips with minimal code.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--gr)">Viability</strong></td>
+      <td>What makes business sense?</td>
+      <td>The competitive moat is: "When you type 'quota' on Supericons, you find the right icon. On Iconify, you find nothing." The differentiation must be expressed as smarter search, not sidebar clutter.</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 05: E-COMMERCE -->
+<div class="sec" id="ecommerce">
+  <div class="sec-hdr">
+    <div class="sec-num">05</div>
+    <div class="sec-title">The E-Commerce Analogy</div>
+  </div>
+
+  <table>
+    <tr><th>E-Commerce</th><th>Icon Library</th><th>UI Surface</th></tr>
+    <tr><td><strong>Brand</strong> (Nike, Adidas)</td><td><strong>Library</strong> (Lucide, Tabler)</td><td>Sidebar</td></tr>
+    <tr><td><strong>Product Type</strong> (Shoes, Clothing)</td><td><strong>Use Case</strong> (AI, Navigation, Status)</td><td>Filter chips above grid</td></tr>
+    <tr><td><strong>Attributes</strong> (Size, Color, Price)</td><td><strong>Style</strong> (Outline, Filled)</td><td>Toggle / filter bar</td></tr>
+    <tr><td colspan="3" style="color:var(--tf);font-style:italic;text-align:center">These are separate, combinable dimensions. "Nike + Shoes" = Nike shoes. "Lucide + AI & Agents" = Lucide AI icons.</td></tr>
+  </table>
+
+  <div class="alert a-red">
+    <span class="alert-icon">&#10060;</span>
+    <div>The Jobs sidebar makes compound queries impossible because selecting a Job category <strong>replaces</strong> the library selection instead of <strong>combining</strong> with it. You can browse "AI & Agents" OR "Lucide" but not "Lucide AND AI & Agents".</div>
+  </div>
+</div>
+
+<!-- 06: ILLUSTRATIONS -->
+<div class="sec" id="illustrations">
+  <div class="sec-hdr">
+    <div class="sec-num">06</div>
+    <div class="sec-title">UI Illustrations: Current vs. Proposed</div>
+  </div>
+
+  <p>Three layouts compared: what was built (wrong), what was envisioned (right), and what the discussion concluded (optimal).</p>
+
+  <!-- BAD: Current Jobs Sidebar -->
+  <div class="mock mock-bad">
+    <div class="mock-label">
+      <span class="mock-badge" style="background:rgba(248,113,113,.15);color:var(--re)">CURRENT</span>
+      Jobs sidebar (wrong mental model: categories compete with libraries)
+    </div>
+    <div class="mock-content">
+      <div class="mock-sidebar">
+        <div class="ms-section">Browse</div>
+        <div class="ms-item active"><span>All Icons</span><span class="ms-count">21,264</span></div>
+        <div class="ms-item"><span>Favorites</span><span class="ms-count">0</span></div>
+        <div class="ms-item"><span>Recent</span><span class="ms-count">50</span></div>
+        <div class="ms-section" style="color:var(--re)">Jobs</div>
+        <div class="ms-item" style="color:var(--re)"><span>AI & Agents</span><span class="ms-count" style="color:var(--re)">50</span></div>
+        <div class="ms-item" style="color:var(--re)"><span>Navigation</span><span class="ms-count" style="color:var(--re)">50</span></div>
+        <div class="ms-item" style="color:var(--re)"><span>Status</span><span class="ms-count" style="color:var(--re)">50</span></div>
+        <div class="ms-section">Libraries</div>
+        <div class="ms-item"><span>MingCute</span><span class="ms-count">1,662</span></div>
+        <div class="ms-item"><span>Lucide</span><span class="ms-count">1,951</span></div>
+        <div class="ms-item"><span>Tabler</span><span class="ms-count">5,021</span></div>
+        <div class="ms-item"><span>Material</span><span class="ms-count">4,205</span></div>
+      </div>
+      <div class="mock-main">
+        <div class="mm-search">&#128269; Search 20,000+ icons...</div>
+        <div class="mm-grid-header">
+          <div class="mm-title">All Icons</div>
+          <div class="mm-meta">21,264 icons</div>
+        </div>
+        <div class="mm-grid">
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+          <div class="mm-cell">icon</div><div class="mm-cell">icon</div><div class="mm-cell">icon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOOD: Filter Chips -->
+  <div class="mock mock-good">
+    <div class="mock-label">
+      <span class="mock-badge" style="background:rgba(52,211,153,.15);color:var(--gr)">PROPOSED</span>
+      Filter chips above grid (correct faceted model: library + use case are combinable)
+    </div>
+    <div class="mock-content">
+      <div class="mock-sidebar">
+        <div class="ms-section">Browse</div>
+        <div class="ms-item active"><span>All Icons</span><span class="ms-count">21,264</span></div>
+        <div class="ms-item"><span>Favorites</span><span class="ms-count">0</span></div>
+        <div class="ms-item"><span>Recent</span><span class="ms-count">50</span></div>
+        <div class="ms-section">Libraries</div>
+        <div class="ms-item" style="color:var(--bl)"><span>Lucide</span><span class="ms-count">1,951</span></div>
+        <div class="ms-item"><span>Tabler</span><span class="ms-count">5,021</span></div>
+        <div class="ms-item"><span>Material</span><span class="ms-count">4,205</span></div>
+        <div class="ms-item"><span>MingCute</span><span class="ms-count">1,662</span></div>
+        <div class="ms-item"><span>Phosphor</span><span class="ms-count">1,512</span></div>
+        <div class="ms-section">Premium</div>
+        <div class="ms-item"><span>Collections</span><span class="ms-count">8</span></div>
+        <div class="ms-section">Tools</div>
+        <div class="ms-item"><span>Motion Lab</span></div>
+      </div>
+      <div class="mock-main">
+        <div class="mm-search">&#128269; Search 20,000+ icons...</div>
+        <div class="mm-chips">
+          <div class="mm-chip mm-chip-inactive">All</div>
+          <div class="mm-chip mm-chip-active">AI & Agents</div>
+          <div class="mm-chip mm-chip-inactive">Navigation</div>
+          <div class="mm-chip mm-chip-inactive">Status</div>
+          <div class="mm-chip mm-chip-inactive">Actions</div>
+          <div class="mm-chip mm-chip-inactive">Data</div>
+          <div class="mm-chip mm-chip-inactive">+ 8 more</div>
+        </div>
+        <div class="mm-grid-header">
+          <div class="mm-title" style="color:var(--bl)">Lucide + AI & Agents</div>
+          <div class="mm-meta">25 curated icons</div>
+        </div>
+        <div class="mm-grid">
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">brain</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">cpu</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">bot</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">network</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">workflow</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">sparkles</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">wand-2</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">eye</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">shuffle</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">layers</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">binary</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">blocks</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">zap</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">circuit</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">server</div>
+          <div class="mm-cell" style="border-color:rgba(96,165,250,.3)">router</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07: SEARCH GAP -->
+<div class="sec" id="search-gap">
+  <div class="sec-hdr">
+    <div class="sec-num">07</div>
+    <div class="sec-title">Search Gap Analysis</div>
+  </div>
+  <p>The existing <code>synonyms.json</code> has 285 groups covering 1500+ terms. It already includes some AI vocabulary, but critical AI-domain terms are missing:</p>
+
+  <table>
+    <tr><th>User searches</th><th>Results today</th><th>Should return</th><th>Status</th></tr>
+    <tr><td><strong>quota</strong></td><td style="color:var(--re)">0 results</td><td>lucide:cpu, heroicons:cpu-chip</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>rag</strong></td><td style="color:var(--re)">0 results</td><td>lucide:shuffle, lucide:workflow</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>observability</strong></td><td style="color:var(--re)">0 results</td><td>lucide:eye</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>tool-call</strong></td><td style="color:var(--re)">0 results</td><td>tabler:api</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>guardrail</strong></td><td style="color:var(--re)">0 results</td><td>shield-check</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>langchain</strong></td><td style="color:var(--re)">0 results</td><td>lucide:workflow</td><td style="color:var(--re)">Missing</td></tr>
+    <tr><td><strong>inference</strong></td><td style="color:var(--am)">wrong results</td><td>lucide:cpu</td><td style="color:var(--am)">Partial</td></tr>
+    <tr><td><strong>agent</strong></td><td style="color:var(--gr)">some results</td><td>lucide:bot + more</td><td style="color:var(--gr)">Exists (line 276)</td></tr>
+    <tr><td><strong>brain</strong></td><td style="color:var(--gr)">direct match</td><td>lucide:brain (Tier 1)</td><td style="color:var(--gr)">Works</td></tr>
+  </table>
+
+  <div class="alert a-green">
+    <span class="alert-icon">&#9989;</span>
+    <div><strong>The fix is editorial, not engineering.</strong> Every missing term above is already documented as an amber alias in <code>kit01-icon-reference-guide.html</code>. Adding them to <code>synonyms.json</code> is a one-session task. The existing search engine automatically surfaces them as Tier 2 "Related" results.</div>
+  </div>
+</div>
+
+<!-- 08: SEARCH DEMO -->
+<div class="sec" id="search-demo">
+  <div class="sec-hdr">
+    <div class="sec-num">08</div>
+    <div class="sec-title">Search Before vs. After (Simulated)</div>
+  </div>
+
+  <div class="compare">
+    <div class="search-demo">
+      <div class="sd-bar" style="border-left:3px solid var(--re)">
+        <span style="color:var(--tf)">&#128269;</span>
+        <div class="sd-input" style="color:var(--td)">quota</div>
+        <span style="font-size:.58rem;color:var(--re);font-weight:700">BEFORE</span>
+      </div>
+      <div class="sd-results">
+        <div class="sd-zero">No icons found for "quota"</div>
+      </div>
+    </div>
+
+    <div class="search-demo">
+      <div class="sd-bar" style="border-left:3px solid var(--gr)">
+        <span style="color:var(--tf)">&#128269;</span>
+        <div class="sd-input" style="color:var(--t)">quota</div>
+        <span style="font-size:.58rem;color:var(--gr);font-weight:700">AFTER</span>
+      </div>
+      <div class="sd-results">
+        <div class="sd-tier sd-tier-2">Related (via synonyms)</div>
+        <div class="sd-result"><span class="sd-icon-name">lucide:cpu</span><span class="sd-match">quota -> cpu (synonym group)</span></div>
+        <div class="sd-result"><span class="sd-icon-name">heroicons:cpu-chip</span><span class="sd-match">quota -> chip (synonym group)</span></div>
+        <div class="sd-result"><span class="sd-icon-name">material:memory</span><span class="sd-match">quota -> hardware (synonym group)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="search-demo">
+      <div class="sd-bar" style="border-left:3px solid var(--re)">
+        <span style="color:var(--tf)">&#128269;</span>
+        <div class="sd-input" style="color:var(--td)">observability</div>
+        <span style="font-size:.58rem;color:var(--re);font-weight:700">BEFORE</span>
+      </div>
+      <div class="sd-results">
+        <div class="sd-zero">No icons found for "observability"</div>
+      </div>
+    </div>
+
+    <div class="search-demo">
+      <div class="sd-bar" style="border-left:3px solid var(--gr)">
+        <span style="color:var(--tf)">&#128269;</span>
+        <div class="sd-input" style="color:var(--t)">observability</div>
+        <span style="font-size:.58rem;color:var(--gr);font-weight:700">AFTER</span>
+      </div>
+      <div class="sd-results">
+        <div class="sd-tier sd-tier-1">Direct match (observe group)</div>
+        <div class="sd-result"><span class="sd-icon-name">lucide:eye</span><span class="sd-match">observability -> observe (existing synonym)</span></div>
+        <div class="sd-tier sd-tier-2">Related</div>
+        <div class="sd-result"><span class="sd-icon-name">lucide:activity</span><span class="sd-match">observability -> metrics (synonym group)</span></div>
+        <div class="sd-result"><span class="sd-icon-name">tabler:eye</span><span class="sd-match">observability -> monitor (synonym group)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert a-blue">
+    <span class="alert-icon">&#128161;</span>
+    <div><strong>Key insight:</strong> "observability" already partially works because <code>synonyms.json</code> has an "observe" group (line 158). Adding "observability" as a value in that group closes the gap immediately. Most amber aliases require similarly small additions to existing groups, not new groups.</div>
+  </div>
+</div>
+
+<!-- 09: PRIORITY -->
+<div class="sec" id="priority">
+  <div class="sec-hdr">
+    <div class="sec-num">09</div>
+    <div class="sec-title">Recommended Priority Order</div>
+  </div>
+
+  <div class="priority-list">
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--gr)">1</div>
+      <div class="pi-body">
+        <div class="pi-title">Enhance synonyms.json with AI-domain terms</div>
+        <div class="pi-desc">Add amber aliases from <code>kit01-icon-reference-guide.html</code> into existing synonym groups. Fixes "quota = 0 results" immediately. Zero UI change. Zero risk.</div>
+        <span class="pi-effort pi-low">Low effort (editorial)</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--am)">2</div>
+      <div class="pi-body">
+        <div class="pi-title">Remove Jobs sidebar section</div>
+        <div class="pi-desc">Remove the "Jobs" section from the sidebar. Keep all taxonomy data layers (icon_metadata, JOB_CATEGORY_DEFINITIONS, telemetry tagging). Clean up confused IA.</div>
+        <span class="pi-effort pi-low">Low effort (code removal)</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--bl)">3</div>
+      <div class="pi-body">
+        <div class="pi-title">Add Use Case filter chips above grid</div>
+        <div class="pi-desc">Render <code>JOB_CATEGORY_DEFINITIONS</code> as horizontal chips between search bar and icon grid. Combinable with library sidebar selection. The correct P0.02 UI expression.</div>
+        <span class="pi-effort pi-med">Medium effort (new component)</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--tf)">4</div>
+      <div class="pi-body">
+        <div class="pi-title">Library list "show more" toggle</div>
+        <div class="pi-desc">Optional UX polish. Collapse the library list to show top 5, with a "show more" toggle below. Reduces sidebar height.</div>
+        <span class="pi-effort pi-low">Low effort (optional)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10: DECISIONS -->
+<div class="sec" id="decisions">
+  <div class="sec-hdr">
+    <div class="sec-num">10</div>
+    <div class="sec-title">Decision Points for Builder</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">D1: Synonym Enhancement Scope</div>
+    <div class="sq-a"><strong>Start with Kit 01 amber aliases only</strong> (31 icons worth of terms). All documented explicitly in the reference guide. The remaining 100 icons in the taxonomy seed do not have editorial semantic aliases yet.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">D2: Filter Chip Data Source</div>
+    <div class="sq-a"><strong>Use <code>JOB_CATEGORY_DEFINITIONS</code> (client-side).</strong> Already loaded at startup, already counted in <code>rebuildJobCategoryCounts()</code>, requires zero API calls. The database is for telemetry and MCP, not for the browse UI.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">D3: Filter Chip Behavior</div>
+    <div class="sq-a"><strong>Intersection (AND).</strong> "Lucide + AI & Agents" = only Lucide icons tagged AI. This is the e-commerce standard. "Nike + Shoes" shows Nike shoes, not all Nike products plus all shoes.</div>
+  </div>
+</div>
+
+<!-- 11: DON'T -->
+<div class="sec" id="dont">
+  <div class="sec-hdr">
+    <div class="sec-num">11</div>
+    <div class="sec-title">What NOT to Do</div>
+  </div>
+
+  <div class="alert a-red">
+    <span class="alert-icon">1</span>
+    <div><strong>Do not tag all 20K icons manually first.</strong> The 150 seeded icons and the existing synonym corpus cover the highest-traffic cases. Expand editorially over time, driven by search analytics showing zero-result queries.</div>
+  </div>
+  <div class="alert a-red">
+    <span class="alert-icon">2</span>
+    <div><strong>Do not put filters inside the search bar as a dropdown.</strong> Search-bar filter dropdowns have poor mobile UX and add interaction complexity. Keep the search bar as a text input. Keep filters as a separate visual row.</div>
+  </div>
+  <div class="alert a-red">
+    <span class="alert-icon">3</span>
+    <div><strong>Do not add more sidebar sections.</strong> The sidebar serves library navigation. Adding another dimension there creates parallel-axis confusion. The filter chip row is the correct surface for the second dimension.</div>
+  </div>
+  <div class="alert a-red">
+    <span class="alert-icon">4</span>
+    <div><strong>Do not build a faceted search backend.</strong> The current client-side filter+search architecture works at 20K icons. Server-side faceted search is overengineering for this scale.</div>
+  </div>
+</div>
+
+<!-- 12: VERDICT -->
+<div class="sec" id="verdict">
+  <div class="sec-hdr">
+    <div class="sec-num">12</div>
+    <div class="sec-title">Verdict: Browse UI</div>
+  </div>
+  <div class="alert a-green">
+    <span class="alert-icon">&#9989;</span>
+    <div>
+      <strong>The P0.02 data layer is correct and complete.</strong> The evidence pipeline is live. The taxonomy seed is applied. The only error is the UI surface. The Jobs sidebar should be replaced with a filter chip row above the grid.<br><br>
+      <strong>The highest-impact immediate action is not UI work.</strong> It is adding AI-domain synonym terms to the existing <code>synonyms.json</code> so that search queries like "quota", "rag", and "observability" return results today. Zero UI change, immediate improvement.
+    </div>
+  </div>
+</div>
+
+<!-- 13: TAGGING VS SYNONYMS -->
+<div class="sec" id="tagging">
+  <div class="sec-hdr">
+    <div class="sec-num">13</div>
+    <div class="sec-title">Tag All 20K Icons vs. Enhance Synonyms: Socratic Conclusion</div>
+  </div>
+
+  <p>Searching "compute" returns 4 results: <code>lucide:cpu</code> (correct) plus <code>computer_line</code>, <code>computer_camera_line</code>, <code>computer_camera_off_line</code> (all wrong -- physical device icons, not computing concepts). This exposes a precision limitation of synonyms-only search. Does the solution require tagging every icon?</p>
+
+  <div class="sq">
+    <div class="sq-q">Q1: "What is the actual problem being solved?"</div>
+    <div class="sq-a">Two distinct problems exist, often conflated. They need different solutions.</div>
+  </div>
+
+  <table>
+    <tr><th>Problem</th><th>Symptom</th><th>Root Cause</th><th>Solution</th></tr>
+    <tr><td><strong style="color:var(--re)">Gap problem</strong></td><td>"quota" = 0 results</td><td>Term missing from synonyms entirely</td><td>Enhance synonyms.json</td></tr>
+    <tr><td><strong style="color:var(--am)">Noise problem</strong></td><td>"compute" = camera icons</td><td>"computer" contains substring "compute"</td><td>Per-icon tags for curated 150</td></tr>
+  </table>
+
+  <div class="sq">
+    <div class="sq-q">Q2: "What is the cost of tagging all 20K icons?"</div>
+    <div class="sq-a">Manual editorial tagging at 30 seconds per icon, 5 tags each = <strong>167 hours of human time</strong>. This is a multi-month sustained operation, not a sprint task. More importantly: before traffic exists, you are guessing what users need instead of learning it from data.</div>
+  </div>
+
+  <div class="sq">
+    <div class="sq-q">Q3: "What does 'tagging' actually mean architecturally?"</div>
+    <div class="sq-a">Adding a <code>tags[]</code> array to icon data is <strong>one line of code</strong> in the search engine. The architecture question is not whether to have tags -- it is how to populate them efficiently:</div>
+  </div>
+
+  <table>
+    <tr><th>Method</th><th>Coverage</th><th>Effort</th><th>Precision</th></tr>
+    <tr><td><strong>Manual (all 20K)</strong></td><td>Complete</td><td style="color:var(--re)">167+ hours</td><td>High</td></tr>
+    <tr><td><strong style="color:var(--gr)">Editorial (150 curated)</strong></td><td>Known gaps only</td><td style="color:var(--gr)">~8 hours</td><td>High</td></tr>
+    <tr><td><strong style="color:var(--bl)">Behavioral (P0.01 pipeline)</strong></td><td>Grows with traffic</td><td style="color:var(--gr)">Zero</td><td>Emerges from real usage</td></tr>
+    <tr><td>LLM tagging pipeline</td><td>Near-complete</td><td>1 day + compute</td><td>Medium (needs QA)</td></tr>
+  </table>
+
+  <div class="sq">
+    <div class="sq-q">Q4: "What is the right sequence?"</div>
+    <div class="sq-a">The <code>icon_evidence</code> pipeline (P0.01, already live) is the engine that discovers which icons need tags next. Traffic tells you where gaps are. You do not need to front-load all tagging before the first user arrives.</div>
+  </div>
+
+  <p style="font-size:.82rem;font-weight:700;color:var(--t);margin-top:1rem">Phase sequence:</p>
+  <div style="display:flex;flex-direction:column;gap:.5rem;max-width:780px;margin:0 0 1.5rem">
+    <div style="display:flex;gap:.75rem;align-items:center;padding:.5rem .75rem;background:var(--bg-r);border:1px solid rgba(52,211,153,.25);border-radius:8px;border-left:3px solid var(--gr)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gr);width:4.5rem;flex-shrink:0">P0 (now)</div>
+      <div style="font-size:.82rem;color:var(--td)">Synonyms enhanced + 150 curated icons tagged = closes all known gaps immediately</div>
+    </div>
+    <div style="display:flex;gap:.75rem;align-items:center;padding:.5rem .75rem;background:var(--bg-r);border:1px solid rgba(251,191,36,.2);border-radius:8px;border-left:3px solid var(--am)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--am);width:4.5rem;flex-shrink:0">P1-P2</div>
+      <div style="font-size:.82rem;color:var(--td)">Traffic flows. Evidence pipeline collects real search behaviors. Zero-result queries surface automatically.</div>
+    </div>
+    <div style="display:flex;gap:.75rem;align-items:center;padding:.5rem .75rem;background:var(--bg-r);border:1px solid rgba(96,165,250,.2);border-radius:8px;border-left:3px solid var(--bl)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--bl);width:4.5rem;flex-shrink:0">P3+</div>
+      <div style="font-size:.82rem;color:var(--td)">icon_evidence surfaces the next 500+ icons needing tags, in priority order by actual user impact. LLM pipeline if scale warrants it.</div>
+    </div>
+  </div>
+
+  <div class="alert a-amber">
+    <span class="alert-icon">&#9888;</span>
+    <div><strong>The noise fix for "compute" returning camera icons:</strong> Add precise tags to the 150 curated icons. <code>lucide:cpu</code> gets <code>tags:["inference","compute","quota"]</code>. <code>computer_line</code> gets <code>tags:["device","desktop","laptop"]</code>. The search engine ranks tag matches above substring matches, so <code>lucide:cpu</code> rises to Tier 1 for "compute" and the camera icons disappear. ~8 hours editorial work. Zero new architecture.</div>
+  </div>
+
+  <div class="alert a-green">
+    <span class="alert-icon">&#9989;</span>
+    <div><strong>Final answer:</strong> The tag-all-20K question is not "yes or no" -- it is "not yet, and maybe never manually." The behavioral pipeline discovers which icons need tags next, in priority order. <strong>Ship synonyms + 150 icon tags now. Let traffic teach you the rest.</strong></div>
+  </div>
+</div>
+
+<!-- 14: FINAL ACTION LIST -->
+<div class="sec" id="action-list">
+  <div class="sec-hdr">
+    <div class="sec-num">14</div>
+    <div class="sec-title">Final Action List (Consolidated)</div>
+  </div>
+
+  <div class="priority-list">
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--gr)">1</div>
+      <div class="pi-body">
+        <div class="pi-title">Enhance synonyms.json with AI-domain terms (amber aliases from Kit 01)</div>
+        <div class="pi-desc">Solves the gap problem. "quota", "rag", "observability" return results. Zero UI change, zero architecture change.</div>
+        <span class="pi-effort pi-low">~2 hours editorial</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--gr)">2</div>
+      <div class="pi-body">
+        <div class="pi-title">Add tags[] to icon data for 150 curated icons</div>
+        <div class="pi-desc">Solves the noise problem. "compute" returns <code>lucide:cpu</code> in Tier 1, not camera icons. One line of code in main.js + icon-tags.json file.</div>
+        <span class="pi-effort pi-med">~8 hours editorial + 1 line code</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--am)">3</div>
+      <div class="pi-body">
+        <div class="pi-title">Remove Jobs sidebar section</div>
+        <div class="pi-desc">Clean up wrong UI expression. Keep all data layers (icon_metadata, JOB_CATEGORY_DEFINITIONS, telemetry). Only remove the sidebar rendering.</div>
+        <span class="pi-effort pi-low">Low (code removal)</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--bl)">4</div>
+      <div class="pi-body">
+        <div class="pi-title">Add Use Case filter chips above grid</div>
+        <div class="pi-desc">Correct P0.02 browse UI. Powered by JOB_CATEGORY_DEFINITIONS (client-side, no API). Combinable with library sidebar (intersection AND logic).</div>
+        <span class="pi-effort pi-med">Medium (new UI component)</span>
+      </div>
+    </div>
+    <div class="priority-item">
+      <div class="pi-num" style="color:var(--tf)">5</div>
+      <div class="pi-body">
+        <div class="pi-title">Monitor icon_evidence for zero-result search queries</div>
+        <div class="pi-desc">Ongoing. The P0.01 pipeline already logs all searches. Surface a dashboard view of searches with 0 results -- those become the editorial queue for the next round of synonym/tag expansion.</div>
+        <span class="pi-effort pi-low">Continuous (data-driven)</span>
+      </div>
+    </div>
+    <div class="priority-item" style="opacity:.6">
+      <div class="pi-num" style="color:var(--tf)">Later</div>
+      <div class="pi-body">
+        <div class="pi-title">LLM-assisted tagging pipeline for full 20K coverage</div>
+        <div class="pi-desc">Only if/when behavioral data shows coverage gaps that editorial tagging cannot keep up with. Build after P1-P2 traffic exists and the gap pattern is clear.</div>
+        <span class="pi-effort pi-low">When traffic justifies it</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="footer">
+  P0.02 Browse Taxonomy Design Analysis -- Supericons -- April 16, 2026
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+});
+// Active sidebar link
+const sections = document.querySelectorAll('.sec');
+const links = document.querySelectorAll('.sb-link');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const target = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+      if (target) target.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

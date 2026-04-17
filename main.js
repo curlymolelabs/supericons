@@ -26,27 +26,20 @@ import {
 } from './material-export.js';
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
+import {
+  fetchPopularityMap,
+  logCopyEvent,
+  logFavoriteEvent,
+  logSearchAttempt,
+} from './lib/icon-intelligence.js';
+import {
+  JOB_CATEGORY_DEFINITIONS,
+  createIconTaxonomyMap,
+  createJobCategoryMap,
+} from './lib/icon-taxonomy-seed.js';
+import { createIconSemanticAliasMap } from './lib/icon-semantic-aliases.js';
 
 // ============================================================
-
-// ============================================================
-// Icon Stats Tracking (Supabase REST, fire-and-forget)
-// ============================================================
-const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
-
-function trackIconStat(iconId, lib, action, format) {
-  fetch(`${SUPABASE_URL}/rest/v1/icon_stats`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON,
-      'Authorization': `Bearer ${SUPABASE_ANON}`,
-      'Prefer': 'return=minimal',
-    },
-    body: JSON.stringify({ icon_id: iconId, lib, action, format: format || null }),
-  }).catch(() => { }); // silent, never block UI
-}
 
 // ============================================================
 // State
@@ -80,6 +73,7 @@ const state = {
   sidebarOpen: false,
   panelOpen: !MOBILE_PANEL_MEDIA.matches,
   activeLibrary: 'all',
+  activeJobCategoryFilter: 'all',
   selectedIcon: null,
   searchQuery: '',
   icons: [],
@@ -100,7 +94,17 @@ const state = {
   activePalette: 'default',
   compareIcons: [],
   popularityMap: {},
+  jobCategoryCounts: {},
+  searchContextStartedAt: typeof performance !== 'undefined' ? performance.now() : 0,
 };
+
+const SEARCH_ATTEMPT_IDLE_MS = 2500;
+let pendingSearchAttemptPayload = null;
+let pendingSearchAttemptTimer = null;
+
+const iconTaxonomyMap = createIconTaxonomyMap();
+const jobCategoryMap = createJobCategoryMap();
+const iconSemanticAliasMap = createIconSemanticAliasMap();
 
 const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
   version: 2,
@@ -339,6 +343,82 @@ function iconKey(icon) {
   return `${icon.lib}:${icon.id}`;
 }
 
+function getCurrentSearchQuery() {
+  return state.searchQuery?.trim() || null;
+}
+
+function getResultPositionForIcon(icon) {
+  if (!icon) return null;
+  const index = state.filteredIcons.findIndex((candidate) => iconKey(candidate) === iconKey(icon));
+  return index >= 0 ? index + 1 : null;
+}
+
+function getTimeToCopyMs() {
+  const startedAt = Number(state.searchContextStartedAt || 0);
+  if (!Number.isFinite(startedAt) || startedAt <= 0 || typeof performance === 'undefined') {
+    return null;
+  }
+  return Math.max(0, Math.round(performance.now() - startedAt));
+}
+
+function buildCurrentSearchAttemptPayload() {
+  const searchQuery = getCurrentSearchQuery();
+  if (!searchQuery || searchQuery.length < 3) return null;
+
+  return {
+    searchQuery,
+    resultCount: state.filteredIcons.length,
+    libraryFilter: state.activeLibrary,
+    jobCategory: getActiveJobCategoryId(),
+    uiSurface: 'grid',
+    evidenceText: 'search:grid',
+  };
+}
+
+function clearPendingSearchAttempt() {
+  pendingSearchAttemptPayload = null;
+  if (pendingSearchAttemptTimer) {
+    clearTimeout(pendingSearchAttemptTimer);
+    pendingSearchAttemptTimer = null;
+  }
+}
+
+function flushPendingSearchAttempt({ useCurrentState = false } = {}) {
+  const payload = useCurrentState
+    ? buildCurrentSearchAttemptPayload()
+    : (pendingSearchAttemptPayload || buildCurrentSearchAttemptPayload());
+
+  clearPendingSearchAttempt();
+  if (!payload) return;
+  void logSearchAttempt(payload);
+}
+
+function queueCurrentSearchAttempt() {
+  const payload = buildCurrentSearchAttemptPayload();
+  if (!payload) {
+    clearPendingSearchAttempt();
+    return;
+  }
+
+  pendingSearchAttemptPayload = payload;
+  if (pendingSearchAttemptTimer) {
+    clearTimeout(pendingSearchAttemptTimer);
+  }
+  pendingSearchAttemptTimer = setTimeout(() => {
+    flushPendingSearchAttempt();
+  }, SEARCH_ATTEMPT_IDLE_MS);
+}
+
+function syncSearchStateFromInput({ resetSearchContext = false } = {}) {
+  const nextQuery = els.searchInput?.value?.trim() || '';
+  const queryChanged = nextQuery !== state.searchQuery;
+  state.searchQuery = nextQuery;
+  if (resetSearchContext || queryChanged) {
+    state.searchContextStartedAt = typeof performance !== 'undefined' ? performance.now() : 0;
+  }
+  applyFilters();
+}
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -418,6 +498,7 @@ const els = {
 
   toast: $('#toast'),
   libraryList: $('#libraryList'),
+  useCaseFilters: $('#useCaseFilters'),
   gridArea: $('#gridArea'),
   panelPreview: $('#panelPreview'),
 
@@ -495,7 +576,7 @@ async function loadIcons() {
   try {
     const [iconResp, synResp] = await Promise.all([
       fetch('/icon-index.json'),
-      fetch('/synonyms.json'),
+      fetch('/synonyms.json', { cache: 'no-store' }),
     ]);
 
     if (!iconResp.ok) throw new Error(`Icons: HTTP ${iconResp.status}`);
@@ -510,6 +591,8 @@ async function loadIcons() {
       console.log(`Loaded ${Object.keys(state.synonyms).length} synonym groups`);
     }
 
+    rebuildJobCategoryCounts();
+    renderUseCaseFilters();
     renderLibraries();
     updateCounts();
     renderGrid();
@@ -573,6 +656,88 @@ const librarySidebarOrder = [
 const librarySidebarPriority = new Map(
   librarySidebarOrder.map((id, index) => [id, index]),
 );
+
+function getIconTaxonomyEntry(iconOrIconId) {
+  const resolvedIconId = typeof iconOrIconId === 'string'
+    ? iconOrIconId
+    : iconOrIconId
+      ? iconKey(iconOrIconId)
+      : null;
+  if (!resolvedIconId) return null;
+  return iconTaxonomyMap.get(resolvedIconId) || null;
+}
+
+function getIconJobCategory(iconOrIconId) {
+  return getIconTaxonomyEntry(iconOrIconId)?.jobCategory || null;
+}
+
+function getIconJobRank(iconOrIconId) {
+  return getIconTaxonomyEntry(iconOrIconId)?.rank ?? Number.MAX_SAFE_INTEGER;
+}
+
+function getTelemetryJobCategory(icon) {
+  return getIconJobCategory(icon) || getActiveJobCategoryId();
+}
+
+function getJobCategoryMeta(jobCategoryId) {
+  if (!jobCategoryId) return null;
+  return jobCategoryMap.get(jobCategoryId) || null;
+}
+
+function getActiveJobCategoryId() {
+  return state.activeJobCategoryFilter === 'all' ? null : state.activeJobCategoryFilter;
+}
+
+function getJobCategoryCount(jobCategoryId) {
+  return state.jobCategoryCounts?.[jobCategoryId] || 0;
+}
+
+function rebuildJobCategoryCounts() {
+  const counts = Object.fromEntries(JOB_CATEGORY_DEFINITIONS.map((category) => [category.id, 0]));
+  for (const icon of state.icons) {
+    const jobCategory = getIconJobCategory(icon);
+    if (jobCategory && counts[jobCategory] !== undefined) {
+      counts[jobCategory] += 1;
+    }
+  }
+  state.jobCategoryCounts = counts;
+}
+
+function renderUseCaseFilters() {
+  if (!els.useCaseFilters) return;
+
+  const activeFilter = getActiveJobCategoryId() || 'all';
+  const chips = [
+    `
+      <button
+        type="button"
+        class="grid-filter-chip${activeFilter === 'all' ? ' active' : ''}"
+        data-job-category="all"
+        aria-pressed="${activeFilter === 'all'}"
+      >
+        All
+      </button>
+    `,
+    ...JOB_CATEGORY_DEFINITIONS
+      .filter((category) => getJobCategoryCount(category.id) > 0)
+      .map((category) => {
+        const isActive = activeFilter === category.id;
+        return `
+          <button
+            type="button"
+            class="grid-filter-chip${isActive ? ' active' : ''}"
+            data-job-category="${category.id}"
+            aria-pressed="${isActive}"
+          >
+            <span>${category.label}</span>
+            <span class="grid-filter-chip__count">${getJobCategoryCount(category.id).toLocaleString()}</span>
+          </button>
+        `;
+      }),
+  ];
+
+  els.useCaseFilters.innerHTML = chips.join('');
+}
 
 function renderLibraries() {
   const orderedLibraries = [...state.libraries].sort((a, b) => {
@@ -679,6 +844,7 @@ function renderGrid() {
     const emptyText = $('.grid-empty__text');
     const isFavoritesView = state.activeLibrary === 'favorites' && !state.searchQuery;
     const isRecentView = state.activeLibrary === 'recent' && !state.searchQuery;
+    const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
     if (emptyTitle) {
       emptyTitle.textContent = state.searchQuery
         ? 'No icons found'
@@ -686,15 +852,21 @@ function renderGrid() {
           ? 'No favorites yet'
           : isRecentView
             ? 'No recent icons yet'
-          : 'Welcome to SuperIcons';
+            : activeJobCategoryMeta
+              ? `No ${activeJobCategoryMeta.label.toLowerCase()} icons yet`
+            : 'Welcome to SuperIcons';
     }
     if (emptyText) {
       emptyText.textContent = state.searchQuery
-        ? `No icons match "${state.searchQuery}". Try a different search term.`
+        ? activeJobCategoryMeta
+          ? `No icons in ${activeJobCategoryMeta.label} match "${state.searchQuery}". Try a different search term.`
+          : `No icons match "${state.searchQuery}". Try a different search term.`
         : isFavoritesView
           ? 'Select an icon and use Save in Customize to keep it here. Favorites stay on this device.'
           : isRecentView
             ? 'Icons you open appear here on this device. Clear them anytime from the header.'
+            : activeJobCategoryMeta
+              ? activeJobCategoryMeta.description
           : '20,000+ icons across 10 libraries including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
     }
   } else {
@@ -747,6 +919,107 @@ function editDistance(a, b) {
     prev.splice(0, n + 1, ...curr);
   }
   return prev[n];
+}
+
+function normalizeSemanticText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[_:]+/g, ' ')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function tokenizeSemanticText(value) {
+  const normalized = normalizeSemanticText(value);
+  return normalized ? normalized.split(' ') : [];
+}
+
+function getIconSemanticAliases(iconOrIconId) {
+  const resolvedIconId = typeof iconOrIconId === 'string'
+    ? iconOrIconId
+    : iconKey(iconOrIconId);
+  return iconSemanticAliasMap.get(resolvedIconId) || null;
+}
+
+function getDirectSearchScore(icon, normalizedQuery, queryWords) {
+  if (!normalizedQuery) return 0;
+
+  const name = normalizeSemanticText(icon.name);
+  const id = normalizeSemanticText(icon.id);
+  const fullId = normalizeSemanticText(iconKey(icon));
+  const tokens = new Set([
+    ...tokenizeSemanticText(icon.name),
+    ...tokenizeSemanticText(icon.id),
+    ...tokenizeSemanticText(iconKey(icon)),
+  ]);
+
+  if (name === normalizedQuery || id === normalizedQuery || fullId === normalizedQuery) {
+    return 320;
+  }
+
+  if (normalizedQuery.length > 2 && (
+    name.includes(normalizedQuery)
+    || id.includes(normalizedQuery)
+    || fullId.includes(normalizedQuery)
+  )) {
+    return 250;
+  }
+
+  if (queryWords.length > 0 && queryWords.every((word) => tokens.has(word))) {
+    return 190;
+  }
+
+  if (queryWords.length > 0 && queryWords.every((word) => (
+    name.includes(word) || id.includes(word) || fullId.includes(word)
+  ))) {
+    return 150;
+  }
+
+  return 0;
+}
+
+function getCuratedAliasScore(icon, normalizedQuery, queryWords) {
+  if (!normalizedQuery) return 0;
+
+  const aliases = getIconSemanticAliases(icon);
+  if (!aliases?.length) return 0;
+
+  let bestScore = 0;
+
+  for (const alias of aliases) {
+    const normalizedAlias = normalizeSemanticText(alias);
+    if (!normalizedAlias) continue;
+
+    const aliasTokens = new Set(tokenizeSemanticText(normalizedAlias));
+
+    if (normalizedAlias === normalizedQuery) {
+      bestScore = Math.max(bestScore, 420);
+      continue;
+    }
+
+    if (normalizedQuery.length > 3 && normalizedAlias.includes(normalizedQuery)) {
+      bestScore = Math.max(bestScore, 360);
+      continue;
+    }
+
+    if (queryWords.length > 1 && queryWords.every((word) => aliasTokens.has(word))) {
+      bestScore = Math.max(bestScore, 320);
+      continue;
+    }
+
+    if (queryWords.length === 1 && aliasTokens.has(queryWords[0])) {
+      bestScore = Math.max(bestScore, 260);
+      continue;
+    }
+
+    if (queryWords.length > 0 && queryWords.every((word) => normalizedAlias.includes(word))) {
+      bestScore = Math.max(bestScore, 220);
+    }
+  }
+
+  return bestScore;
 }
 
 /** Expand a single search word into a set of matching terms */
@@ -816,6 +1089,7 @@ function expandSearchTerms(query) {
 function applyFilters() {
   // Choose icon set based on active style
   const isSolid = state.iconStyle === 'solid';
+  const activeJobCategoryId = getActiveJobCategoryId();
   let icons;
 
   if (isSolid && state.solidLoaded) {
@@ -852,11 +1126,21 @@ function applyFilters() {
     icons = icons.filter((icon) => icon.lib === state.activeLibrary);
   }
 
+  if (activeJobCategoryId) {
+    icons = icons
+      .filter((icon) => getIconJobCategory(icon) === activeJobCategoryId)
+      .sort((a, b) => {
+        const rankDiff = getIconJobRank(a) - getIconJobRank(b);
+        if (rankDiff !== 0) return rankDiff;
+        return a.name.localeCompare(b.name);
+      });
+  }
+
   // Search filter: tiered results (direct matches first, then synonym matches)
   if (state.searchQuery) {
-    const q = state.searchQuery.toLowerCase();
-    const queryWords = q.trim().split(/\s+/).filter(Boolean);
-    const termSets = expandSearchTerms(q); // array of term-sets, one per word
+    const normalizedQuery = normalizeSemanticText(state.searchQuery);
+    const queryWords = tokenizeSemanticText(state.searchQuery);
+    const termSets = expandSearchTerms(normalizedQuery); // array of term-sets, one per word
 
     // Helper: check if icon matches a set of term-sets
     const iconMatchesTermSets = (icon, sets) => {
@@ -871,9 +1155,25 @@ function applyFilters() {
       );
     };
 
-    // Tier 1: direct query words match icon name/id (no synonym expansion)
-    const directSets = queryWords.map(w => [w]);
-    const tier1 = icons.filter(icon => iconMatchesTermSets(icon, directSets));
+    // Tier 1: direct query and curated-alias matches
+    const tier1 = icons
+      .map((icon) => ({
+        icon,
+        aliasScore: getCuratedAliasScore(icon, normalizedQuery, queryWords),
+        directScore: getDirectSearchScore(icon, normalizedQuery, queryWords),
+      }))
+      .filter(({ aliasScore, directScore }) => aliasScore > 0 || directScore > 0)
+      .sort((a, b) => {
+        if (b.aliasScore !== a.aliasScore) return b.aliasScore - a.aliasScore;
+        if (b.directScore !== a.directScore) return b.directScore - a.directScore;
+
+        const rankDiff = getIconJobRank(a.icon) - getIconJobRank(b.icon);
+        if (rankDiff !== 0) return rankDiff;
+
+        return a.icon.name.localeCompare(b.icon.name);
+      })
+      .map(({ icon }) => icon);
+
     const tier1Keys = new Set(tier1.map(i => iconKey(i)));
 
     // Tier 2: matched by synonym expansion but NOT by direct query
@@ -888,7 +1188,7 @@ function applyFilters() {
   }
 
   // Popularity sort: in default 'All Icons' view with no search, sort popular icons first
-  if (state.activeLibrary === 'all' && !state.searchQuery && Object.keys(state.popularityMap).length > 0) {
+  if (!activeJobCategoryId && state.activeLibrary === 'all' && !state.searchQuery && Object.keys(state.popularityMap).length > 0) {
     const pop = state.popularityMap;
     icons.sort((a, b) => {
       const aCount = pop[`${a.lib}:${a.id}`] || 0;
@@ -908,11 +1208,13 @@ function updateCounts() {
   const total = state.icons.length;
   const showing = state.filteredIcons.length;
   const styleSuffix = state.iconStyle === 'solid' ? ' (solid)' : '';
-
+  const activeJobCategoryId = getActiveJobCategoryId();
+  const activeJobCategoryMeta = getJobCategoryMeta(activeJobCategoryId);
 
   $('#countAll').textContent = total.toLocaleString();
   syncHeaderSearchChrome();
   syncCollectionClearButton();
+  updateGridHeading();
 
   if (isStoreView()) return;
 
@@ -924,6 +1226,11 @@ function updateCounts() {
 
   if (noSolid) {
     els.gridMeta.textContent = `Showing outline (no solid variant available)`;
+  } else if (activeJobCategoryMeta) {
+    const scopeLabel = state.activeLibrary === 'all' ? activeJobCategoryMeta.label : els.gridTitle.textContent;
+    els.gridMeta.textContent = state.searchQuery
+      ? `Showing ${showing.toLocaleString()} results in ${scopeLabel}${styleSuffix}`
+      : `Showing ${showing.toLocaleString()} curated icons in ${scopeLabel}${styleSuffix}`;
   } else if (showing === total && !state.searchQuery) {
     els.gridMeta.textContent = `Showing ${total.toLocaleString()} icons${styleSuffix}`;
   } else {
@@ -1040,6 +1347,24 @@ function togglePanel() {
   setPanelOpen(!state.panelOpen);
 }
 
+function updateGridHeading() {
+  const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
+  const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
+  const libraryTitle = titleMap[state.activeLibrary] || (libraryMeta[state.activeLibrary]?.name || state.activeLibrary);
+
+  if (state.activeLibrary === 'all' && activeJobCategoryMeta) {
+    els.gridTitle.textContent = activeJobCategoryMeta.label;
+    return;
+  }
+
+  if (activeJobCategoryMeta) {
+    els.gridTitle.textContent = `${libraryTitle} + ${activeJobCategoryMeta.label}`;
+    return;
+  }
+
+  els.gridTitle.textContent = libraryTitle;
+}
+
 function setActiveLibrary(libraryId) {
   // Store views are handled by store.js, not the icon grid
   if (libraryId === 'animated-packs' || libraryId === 'my-downloads') {
@@ -1057,20 +1382,25 @@ function setActiveLibrary(libraryId) {
     item.classList.toggle('active', item.dataset.library === libraryId);
   });
 
-  const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
-  if (titleMap[libraryId]) {
-    els.gridTitle.textContent = titleMap[libraryId];
-  } else {
-    const meta = libraryMeta[libraryId];
-    els.gridTitle.textContent = meta ? meta.name : libraryId;
-  }
-
+  updateGridHeading();
   applyFilters();
+  flushPendingSearchAttempt({ useCurrentState: true });
+}
+
+function setActiveJobCategoryFilter(jobCategoryId) {
+  const nextFilter = jobCategoryId && jobCategoryMap.has(jobCategoryId) ? jobCategoryId : 'all';
+  state.activeJobCategoryFilter = nextFilter;
+  renderUseCaseFilters();
+  updateGridHeading();
+  applyFilters();
+  flushPendingSearchAttempt({ useCurrentState: true });
 }
 
 function selectIcon(iconId, iconLib) {
   const icon = state.icons.find((i) => i.id === iconId && i.lib === iconLib);
   if (!icon) return;
+
+  flushPendingSearchAttempt();
 
   // Multi-select mode
   if (state.multiSelect) {
@@ -1824,6 +2154,17 @@ function attachCustomizeListeners(icon) {
       const isFav = toggleFavorite(iconKey(icon));
       updatePanelFavoriteButton(panelFavoriteBtn, icon, isFav);
 
+      if (isFav) {
+        flushPendingSearchAttempt();
+        void logFavoriteEvent({
+          icon,
+          searchQuery: getCurrentSearchQuery(),
+          resultPosition: getResultPositionForIcon(icon),
+          jobCategory: getTelemetryJobCategory(icon),
+          uiSurface: 'panel',
+        });
+      }
+
       if (!isFav && state.activeLibrary === 'favorites') {
         state.selectedIcon = null;
         applyFilters();
@@ -2033,9 +2374,18 @@ function attachCustomizeListeners(icon) {
       const resolved = await resolveExportSvg(icon);
       if (resolved?.svg) {
         navigator.clipboard.writeText(resolved.svg).then(() => {
+          flushPendingSearchAttempt();
           showToast(resolved.snapped ? 'SVG copied using nearest Material snapshot' : 'SVG copied to clipboard');
           window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: 'svg' });
-          trackIconStat(icon.id, icon.lib, 'copy', 'svg');
+          void logCopyEvent({
+            icon,
+            searchQuery: getCurrentSearchQuery(),
+            resultPosition: getResultPositionForIcon(icon),
+            timeToCopyMs: getTimeToCopyMs(),
+            jobCategory: getTelemetryJobCategory(icon),
+            uiSurface: 'panel',
+            evidenceText: 'copy:svg',
+          });
         });
       } else {
         showToast('This icon could not be resolved for SVG export');
@@ -2064,9 +2414,18 @@ function attachCustomizeListeners(icon) {
       const resolved = await resolveExportSvg(icon);
       if (resolved?.svg) {
         downloadBlob(new Blob([resolved.svg], { type: 'image/svg+xml' }), `${icon.id}.svg`);
+        flushPendingSearchAttempt();
         showToast(resolved.snapped ? 'SVG downloaded using nearest Material snapshot' : 'SVG downloaded');
         window.umami?.track('icon-download', { lib: icon.lib, id: icon.id, format: 'svg' });
-        trackIconStat(icon.id, icon.lib, 'download', 'svg');
+        void logCopyEvent({
+          icon,
+          searchQuery: getCurrentSearchQuery(),
+          resultPosition: getResultPositionForIcon(icon),
+          timeToCopyMs: getTimeToCopyMs(),
+          jobCategory: getTelemetryJobCategory(icon),
+          uiSurface: 'panel',
+          evidenceText: 'download:svg',
+        });
       } else {
         showToast('This icon could not be resolved for SVG export');
       }
@@ -2415,9 +2774,18 @@ async function copyComponent(icon, framework) {
     return;
   }
   await navigator.clipboard.writeText(code);
+  flushPendingSearchAttempt();
   showToast(`${framework.charAt(0).toUpperCase() + framework.slice(1)} component copied`);
   window.umami?.track('icon-copy', { lib: icon.lib, id: icon.id, format: framework });
-  trackIconStat(icon.id, icon.lib, 'copy', framework);
+  void logCopyEvent({
+    icon,
+    searchQuery: getCurrentSearchQuery(),
+    resultPosition: getResultPositionForIcon(icon),
+    timeToCopyMs: getTimeToCopyMs(),
+    jobCategory: getTelemetryJobCategory(icon),
+    uiSurface: 'component-export',
+    evidenceText: `copy:${framework}`,
+  });
 }
 
 async function generateComponentCode(icon, framework) {
@@ -2685,6 +3053,14 @@ els.sidebar.addEventListener('click', (e) => {
   }
 });
 
+if (els.useCaseFilters) {
+  els.useCaseFilters.addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-job-category]');
+    if (!chip) return;
+    setActiveJobCategoryFilter(chip.dataset.jobCategory);
+  });
+}
+
 // Icon grid click (delegated)
 els.iconGrid.addEventListener('click', (e) => {
   // Compare button
@@ -2720,15 +3096,32 @@ els.searchInput.addEventListener('input', (e) => {
   els.searchClear.style.display = hasValue ? 'flex' : 'none';
   clearTimeout(searchDebounce);
   searchDebounce = setTimeout(() => {
-    state.searchQuery = e.target.value.trim();
-    applyFilters();
+    syncSearchStateFromInput({ resetSearchContext: true });
+    queueCurrentSearchAttempt();
     if (state.searchQuery.length > 1) {
       window.umami?.track('search', { query: state.searchQuery, results: state.filteredIcons.length });
     }
   }, 150);
 });
+els.searchInput.addEventListener('keydown', (e) => {
+  if (isDocsHeaderSearchMode()) return;
+  if (e.key === 'Enter') {
+    clearTimeout(searchDebounce);
+    searchDebounce = null;
+    syncSearchStateFromInput();
+    flushPendingSearchAttempt({ useCurrentState: true });
+  }
+});
+els.searchInput.addEventListener('blur', () => {
+  if (isDocsHeaderSearchMode()) return;
+  clearTimeout(searchDebounce);
+  searchDebounce = null;
+  syncSearchStateFromInput();
+  flushPendingSearchAttempt({ useCurrentState: true });
+});
 els.searchClear.addEventListener('click', () => {
   if (isDocsHeaderSearchMode()) return;
+  clearPendingSearchAttempt();
   els.searchInput.value = '';
   els.searchInput.dispatchEvent(new Event('input'));
   els.searchInput.focus();
@@ -2934,29 +3327,10 @@ async function init() {
   fetchPopularity(); // non-blocking, re-sorts grid when data arrives
 }
 
-// Fetch popularity counts from Supabase icon_stats (fire-and-forget)
+// Fetch popularity counts from the icon_scores aggregate table (fire-and-forget)
 async function fetchPopularity() {
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/icon_stats?select=icon_id,lib&order=created_at.desc&limit=2000`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON,
-          'Authorization': `Bearer ${SUPABASE_ANON}`,
-        },
-      }
-    );
-    if (!res.ok) return;
-    const rows = await res.json();
-
-    // Aggregate counts per icon
-    const counts = {};
-    for (const row of rows) {
-      const key = `${row.lib}:${row.icon_id}`;
-      counts[key] = (counts[key] || 0) + 1;
-    }
-
-    state.popularityMap = counts;
+    state.popularityMap = await fetchPopularityMap();
     applyFilters(); // re-sort with popularity data
   } catch (e) {
     // Silent fail: popularity is a nice-to-have, not critical
