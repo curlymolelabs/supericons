@@ -223,12 +223,12 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
     <thead><tr><th>Asset</th><th>Status</th></tr></thead>
     <tbody>
       <tr><td>Free icon library</td><td><span class="dot"></span> 20,000+ icons across 10 libraries</td></tr>
-      <tr><td>MCP server</td><td><span class="dot"></span> v0.3.1, 10 tools (search, get, Motion Lab, Converter)</td></tr>
-      <tr><td>Premium collections</td><td><span class="dot"></span> 2 packs in production (Agentic AI Kit, Status Feedback)</td></tr>
-      <tr><td>Motion Lab</td><td><span class="dot"></span> Hosted animation engine, 10+ presets, CSS/SVG export via MCP</td></tr>
+      <tr><td>MCP server</td><td><span class="dot"></span> v0.3.1, 12 tools (search, get, Motion Lab, Converter)</td></tr>
+      <tr><td>Premium collections</td><td><span class="dot"></span> 8 packs in production (including Agentic AI Kit, Status Feedback)</td></tr>
+      <tr><td>Motion Lab</td><td><span class="dot"></span> Hosted animation engine, 80 presets, CSS/SVG export via MCP</td></tr>
       <tr><td>Converter</td><td><span class="dot"></span> PNG-to-SVG tracing via MCP, Pro workflow tool</td></tr>
       <tr><td>Auth / Billing</td><td><span class="dot"></span> Supabase + Stripe + API key tiers</td></tr>
-      <tr><td>Telemetry</td><td><span class="dot"></span> MCP search attempts logged to Supabase</td></tr>
+      <tr><td>Telemetry</td><td><span class="dot"></span> Search, copy, favorite, download, and MCP evidence logged to Supabase</td></tr>
     </tbody>
   </table>
 
@@ -236,7 +236,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="reveal">
     <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>No semantic metadata on icons (purpose, state, trust-level)</p></div>
     <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>Motion Lab is preset-based, not state-machine-based</p></div>
-    <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>No governance-specific collections (risk, trust, authority)</p></div>
+    <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>No governance-specific collections beyond the starter kits</p></div>
     <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>MCP returns raw SVG, not semantic tokens with context</p></div>
     <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>No icon composition (base + state ring + badge) system</p></div>
     <div class="step-row"><div class="step-n" style="background:var(--bg3);color:var(--text3);border:1px solid rgba(255,255,255,.08)">!</div><p>No multimodal signal specification (LED, haptic, spatial)</p></div>
@@ -256,7 +256,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
       <div class="pillar-icon pi1"><span class="mat" style="font-variation-settings:'FILL' 1">shield</span></div>
       <h3>1. Governance Icon Collections</h3>
       <p>4 purpose-built packs (170+ icons) for agentic UX: Agent Lifecycle, Trust/Authority, Risk/Consequences, Disclosure. The visual vocabulary of AI that does not exist yet.</p>
-      <div class="pillar-tags"><span class="tag">50 Agentic states</span><span class="tag">Trust badges</span><span class="tag">Risk indicators</span><span class="tag">$12-29/pack</span></div>
+      <div class="pillar-tags"><span class="tag">50-icon lifecycle pack</span><span class="tag">Trust badges</span><span class="tag">Risk indicators</span><span class="tag">$12-29/pack</span></div>
     </div>
     <div class="pillar p2 reveal">
       <div class="pillar-icon pi2"><span class="mat">animation</span></div>
@@ -318,7 +318,7 @@ footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
       <div class="prd-box">
         <h4>How to get there</h4>
         <ul>
-          <li>Extend existing Agentic AI Kit (10 icons) as the foundation</li>
+          <li>Extend existing Agentic AI Kit (50 icons) as the foundation</li>
           <li>Use existing premium collection workflow (start-premium-collection -> animated-icon-design -> finalize)</li>
           <li>Run 5-second recognition tests on each icon</li>
           <li>Validate with agent usability tests: can a coding agent pick the right icon from metadata alone?</li>
@@ -580,7 +580,7 @@ request_semantic_icon({
       <ul>
         <li>MCP is the distribution channel. Free tier must be generous enough every coding agent installs it</li>
         <li>Semantic resolution is the hook: once an agent discovers intent-based requests it never goes back</li>
-        <li>List on Claude MCP directory, OpenAI plugin store, Cursor marketplace</li>
+        <li>List on Claude MCP directory, MCP registries, Cursor marketplace</li>
         <li>Zero-result telemetry drives the build backlog: agents tell us what to build next</li>
       </ul>
     </div>
@@ -639,7 +639,7 @@ request_semantic_icon({
     <div class="metric"><div class="metric-val" style="color:var(--accent2)">5,000+</div><div class="metric-label">MCP weekly installs</div></div>
     <div class="metric"><div class="metric-val" style="color:var(--green)">170+</div><div class="metric-label">governance icons shipped</div></div>
     <div class="metric"><div class="metric-val" style="color:var(--amber)">4</div><div class="metric-label">collections published</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--cyan)">14+</div><div class="metric-label">MCP tools (10 now + 4 new)</div></div>
+    <div class="metric"><div class="metric-val" style="color:var(--cyan)">16+</div><div class="metric-label">MCP tools (12 now + 4 new)</div></div>
     <div class="metric"><div class="metric-val" style="color:var(--accent2)">200+</div><div class="metric-label">Pro subscribers</div></div>
     <div class="metric"><div class="metric-val" style="color:var(--green)">$2k+</div><div class="metric-label">monthly recurring revenue</div></div>
     <div class="metric"><div class="metric-val" style="color:var(--amber)">80%</div><div class="metric-label">top 500 free icons tagged</div></div>

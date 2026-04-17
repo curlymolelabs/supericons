@@ -15,13 +15,13 @@
 | Asset | Status |
 |---|---|
 | Free icon library | 20,000+ icons across 10 libraries |
-| MCP server | v0.3.1, 10 tools (search, get, list, motion lab, converter) |
+| MCP server | v0.3.1, 12 tools (search, get, list, motion lab, converter) |
 | Premium collections | 8 packs (including Agentic AI Kit, Status Feedback) |
-| Motion Lab | Hosted animation engine, 10+ presets, CSS/SVG export |
+| Motion Lab | Hosted animation engine, 80 presets, CSS/SVG export |
 | Converter | PNG-to-SVG tracing via MCP |
 | Auth / Billing | Supabase + Stripe + API keys |
 | Web app | Vite SPA, Netlify, admin dashboard |
-| Telemetry | MCP search attempts logged to Supabase |
+| Telemetry | Search, copy, favorite, download, and MCP evidence logged to Supabase |
 
 **Strengths to build on:**
 - MCP server already adopted by coding agents
@@ -96,7 +96,7 @@ Explanation available, trace available, audit log, source cited, hallucination r
 
 ### How we get there from current state
 
-1. **Existing assets to extend**: Agentic AI Kit (10 icons) and Status Feedback collection already cover partial ground. Expand these into the 4 collections above.
+1. **Existing assets to extend**: Agentic AI Kit (50 icons) and Status Feedback collection already cover partial ground. Expand these into the 4 collections above.
 2. **Production pipeline**: Use the existing premium collection workflow (`/start-premium-collection` -> `/animated-icon-design` -> `/premium-collection-finalize`). Each pack goes through curation, SVG design, CSS animation, obfuscation, bundling.
 3. **Validation**: Test each icon with 5-second recognition test. Run agent usability tests: can a coding agent correctly select the right icon for a given UI context using only the semantic metadata?
 
@@ -421,7 +421,7 @@ Open specification drives ecosystem adoption. Revenue comes from certified icon 
 
 1. **MCP is the distribution channel.** Every `npx -y supericons-mcp` install is a new user. The free tier must be generous enough that every coding agent installs it.
 2. **Semantic resolution is the hook.** Once an agent discovers it can say "I need a trust icon for a payment flow" instead of guessing icon names, it will never go back.
-3. **Agent Marketplace presence.** List the MCP server on Claude MCP directory, OpenAI plugin store, and Cursor marketplace.
+3. **Agent Marketplace presence.** List the MCP server on Claude MCP directory, MCP registries, and Cursor marketplace.
 
 ### For Humans (Human Surface)
 
@@ -473,7 +473,7 @@ Open specification drives ecosystem adoption. Revenue comes from certified icon 
 | Governance icon packs shipped | 4 collections, 170+ icons |
 | Semantic tags per icon (governance) | 100% coverage |
 | Semantic tags per icon (free top 500) | 80% coverage |
-| MCP tools | 14+ (current 10 + 4 new) |
+| MCP tools | 16+ (current 12 + 4 new) |
 | Pro subscribers | 200+ |
 | Monthly recurring revenue | $2,000+ |
 | "State of Icons" report published | 1 |
