@@ -17,6 +17,7 @@ import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { searchIcons } from './search.js';
+import { searchIconsHostedMcp } from './hosted-search-client.js';
 import { validateApiKey } from './auth.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
@@ -510,7 +511,20 @@ server.tool(
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
 
-    const results = searchIcons(query, accessibleIcons, synonyms, { library, limit });
+    let results;
+    try {
+      const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
+      const byKey = new Map(accessibleIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
+      results = (hostedPayload.results || [])
+        .map((row) => byKey.get(row.icon_id))
+        .filter(Boolean);
+    } catch (error) {
+      if (process.env.SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK !== '1') {
+        return buildStructuredToolErrorResponse(error, 'Hosted SuperIcons search is unavailable.');
+      }
+      results = searchIcons(query, accessibleIcons, synonyms, { library, limit });
+    }
+
     if (results.length === 0) {
       void logMcpSearchAttempt({
         query,

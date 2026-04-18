@@ -322,11 +322,22 @@ function renderPagination(containerId, infoId, pagination, onClickName, itemLabe
 function renderStats() {
   const stats = state.stats;
   if (!stats) return;
+  const hostedSearch = stats.hosted_search || {};
   $('statsTotalUsersValue').textContent = stats.total_users;
   $('statsActiveProValue').textContent = stats.active_pro;
   $('statsTotalPurchasesValue').textContent = stats.total_purchases;
   $('statsNewUsersValue').textContent = stats.new_users_30d;
+  $('statsHostedSearchValue').textContent = hostedSearch.total_requests_24h || 0;
+  $('statsHostedSearchP95Value').textContent = `${hostedSearch.p95_latency_ms || 0}ms`;
+  $('statsHostedSearchTrapValue').textContent = hostedSearch.trap_hits_30d || 0;
   $('navUsersCount').textContent = stats.total_users;
+
+  const hostedSourceSummary = Array.isArray(hostedSearch.top_sources) && hostedSearch.top_sources.length > 0
+    ? hostedSearch.top_sources.map((entry) => `${entry.source}: ${entry.count}`).join(' - ')
+    : 'No recent hosted search traffic';
+  $('statsHostedSearchDelta').textContent = hostedSearch.available === false
+    ? 'search_request_audit is not available in this environment'
+    : hostedSourceSummary;
 
   $('statsRecentSignups').innerHTML = stats.recent_signups.length
     ? stats.recent_signups.map((user) => `

@@ -5,7 +5,8 @@
  */
 
 export const SUPABASE_URL = process.env.SUPERICONS_SUPABASE_URL || 'https://kcjmkakdhsqplvasgkjv.supabase.co';
-export const SUPABASE_ANON = process.env.SUPERICONS_SUPABASE_ANON || 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_slbcWcnrQ45rkJPONFD7pw_hW0WpvBi';
+export const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || process.env.SUPERICONS_SUPABASE_ANON || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
 
 export function getConfiguredApiKey() {
   const apiKey = process.env.SUPERICONS_API_KEY;

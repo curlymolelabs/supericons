@@ -25,6 +25,7 @@ import {
   normalizeMaterialSnapshotSvg,
 } from './material-export.js';
 import { initLandingEffects, destroyLandingEffects } from './landing-effects.js';
+import { searchIconsHosted } from './lib/search-engine-client.js';
 import { sanitizeSvgExportMarkup } from './lib/public-metadata-sanitizer.js';
 import {
   fetchPopularityMap,
@@ -114,6 +115,7 @@ let pendingSearchAttemptPayload = null;
 let pendingSearchAttemptTimer = null;
 let pendingBlurSearchCommitTimer = null;
 let pendingRecentSearchHideTimer = null;
+let hostedSearchRequestSeq = 0;
 
 const iconTaxonomyMap = createIconTaxonomyMap();
 const jobCategoryMap = createJobCategoryMap();
@@ -1230,6 +1232,57 @@ function expandSearchTerms(query) {
   return words.map(w => expandSingleTerm(w));
 }
 
+function getHostedSearchLibraryFilter() {
+  if (
+    state.activeLibrary === 'all'
+    || state.activeLibrary === 'favorites'
+    || state.activeLibrary === 'recent'
+  ) {
+    return null;
+  }
+  return state.activeLibrary;
+}
+
+async function refreshHostedSearchResults({
+  requestId,
+  query,
+  baseIcons,
+  fallbackIcons,
+}) {
+  if (!query || query.trim().length < 2 || !Array.isArray(baseIcons) || baseIcons.length === 0) {
+    return;
+  }
+
+  try {
+    const payload = await searchIconsHosted({
+      query,
+      library: getHostedSearchLibraryFilter(),
+      limit: Math.max(state.batchSize, 60),
+      source: 'web',
+    });
+
+    if (requestId !== hostedSearchRequestSeq) return;
+
+    const byKey = new Map(baseIcons.map((icon) => [iconKey(icon), icon]));
+    const hostedIcons = (payload.results || [])
+      .map((row) => byKey.get(row.icon_id))
+      .filter(Boolean);
+
+    if (hostedIcons.length === 0) return;
+
+    const hostedKeys = new Set(hostedIcons.map((icon) => iconKey(icon)));
+    const remainder = fallbackIcons.filter((icon) => !hostedKeys.has(iconKey(icon)));
+
+    state.filteredIcons = [...hostedIcons, ...remainder];
+    state.tierDividerIndex = remainder.length > 0 ? hostedIcons.length : -1;
+    state.visibleRange.end = state.batchSize;
+    updateCounts();
+    renderGrid();
+  } catch (error) {
+    console.warn('[Hosted Search] Falling back to local ranking:', error?.message || error);
+  }
+}
+
 function applyFilters() {
   // Choose icon set based on active style
   const isSolid = state.iconStyle === 'solid';
@@ -1280,6 +1333,9 @@ function applyFilters() {
       });
   }
 
+  const searchPool = icons.slice();
+  const searchRequestId = ++hostedSearchRequestSeq;
+
   // Search filter: tiered results (direct matches first, then synonym matches)
   if (state.searchQuery) {
     const normalizedQuery = normalizeSemanticText(state.searchQuery);
@@ -1319,6 +1375,12 @@ function applyFilters() {
 
     state.tierDividerIndex = tier1.length;
     icons = [...tier1, ...tier2];
+    void refreshHostedSearchResults({
+      requestId: searchRequestId,
+      query: state.searchQuery,
+      baseIcons: searchPool,
+      fallbackIcons: icons,
+    });
   } else {
     state.tierDividerIndex = -1;
   }

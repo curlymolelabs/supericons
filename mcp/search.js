@@ -1,7 +1,6 @@
 /**
- * SuperIcons Search Engine (Node.js port)
- * Ported from main.js browser search logic.
- * 5-layer synonym expansion + tiered results.
+ * Local fallback search only.
+ * Do not treat this file as the production ranking engine.
  */
 import { createIconSemanticAliasMap } from '../lib/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from '../lib/icon-taxonomy-seed.js';

@@ -169,6 +169,13 @@ function getWindowSinceIso(window: IntelligenceWindow) {
   return new Date(Date.now() - (window.days * 24 * 60 * 60 * 1000)).toISOString();
 }
 
+function percentile(values: number[], p: number) {
+  if (!Array.isArray(values) || values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const rank = Math.min(sorted.length - 1, Math.max(0, Math.ceil(p * sorted.length) - 1));
+  return sorted[rank];
+}
+
 async function fetchAllRows<T extends Record<string, unknown>>(
   queryFactory: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
 ) {
@@ -614,16 +621,37 @@ async function deleteStripeCustomer(stripe: Stripe, customerId: string) {
 }
 
 async function handleStats(req: Request, adminClient: SupabaseClient) {
-  const [{ users }, activeProResult, purchasesResult, recentAuditResult] = await Promise.all([
+  const hostedSearch24hSince = new Date(Date.now() - (24 * 60 * 60 * 1000)).toISOString();
+  const hostedSearch30dSince = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000)).toISOString();
+
+  const [{ users }, activeProResult, purchasesResult, recentAuditResult, hostedSearch24hResult, hostedSearch30dResult] = await Promise.all([
     listAllAuthUsers(adminClient),
     adminClient.from('si_subscriptions').select('id', { count: 'exact', head: true }).eq('status', 'active'),
     adminClient.from('si_purchases').select('id', { count: 'exact', head: true }),
     adminClient.from('si_admin_audit_log').select('id, action, outcome, target_id, target_email, created_at').order('created_at', { ascending: false }).limit(5),
+    adminClient
+      .from('search_request_audit')
+      .select('source, status, latency_ms, created_at')
+      .gte('created_at', hostedSearch24hSince),
+    adminClient
+      .from('search_request_audit')
+      .select('source, status, created_at')
+      .gte('created_at', hostedSearch30dSince)
+      .eq('status', 'trap_hit'),
   ]);
 
   if (activeProResult.error) throw activeProResult.error;
   if (purchasesResult.error) throw purchasesResult.error;
   if (recentAuditResult.error) throw recentAuditResult.error;
+
+  let hostedSearchAvailable = true;
+  if (hostedSearch24hResult.error || hostedSearch30dResult.error) {
+    if (isMissingRelationError(hostedSearch24hResult.error) || isMissingRelationError(hostedSearch30dResult.error)) {
+      hostedSearchAvailable = false;
+    } else {
+      throw hostedSearch24hResult.error || hostedSearch30dResult.error;
+    }
+  }
 
   const cutoff = Date.now() - (30 * 24 * 60 * 60 * 1000);
   const sortedUsers = [...users].sort((a, b) => {
@@ -636,6 +664,26 @@ async function handleStats(req: Request, adminClient: SupabaseClient) {
     const createdAt = new Date(user.created_at || 0).getTime();
     return Number.isFinite(createdAt) && createdAt >= cutoff;
   }).length;
+
+  const hostedSearchRows = hostedSearchAvailable
+    ? ((hostedSearch24hResult.data || []) as Array<Record<string, unknown>>)
+    : [];
+  const hostedLatencyValues = hostedSearchRows
+    .map((row) => Number(row.latency_ms))
+    .filter((value) => Number.isFinite(value) && value >= 0);
+  const hostedSourceCounts = hostedSearchRows.reduce((acc, row) => {
+    const source = String(row.source || '').trim().toLowerCase();
+    if (!source || source === 'trap') return acc;
+    acc.set(source, (acc.get(source) || 0) + 1);
+    return acc;
+  }, new Map<string, number>());
+  const hostedTopSources = [...hostedSourceCounts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 4)
+    .map(([source, count]) => ({ source, count }));
+  const trapHits30d = hostedSearchAvailable
+    ? (((hostedSearch30dResult.data || []) as Array<Record<string, unknown>>).length)
+    : 0;
 
   return jsonResponse(req, {
     stats: {
@@ -650,6 +698,13 @@ async function handleStats(req: Request, adminClient: SupabaseClient) {
         provider: formatProviderLabel(user),
       })),
       recent_audit: recentAuditResult.data || [],
+      hosted_search: {
+        available: hostedSearchAvailable,
+        total_requests_24h: hostedSearchRows.length,
+        p95_latency_ms: Math.round(percentile(hostedLatencyValues, 0.95)),
+        trap_hits_30d: trapHits30d,
+        top_sources: hostedTopSources,
+      },
     },
   });
 }
