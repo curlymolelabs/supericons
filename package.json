@@ -24,6 +24,7 @@
     "verify:search-query-fixtures": "node scripts/verify-search-query-fixtures.mjs",
     "verify:search-catalog-sync": "node scripts/verify-search-catalog-sync.mjs",
     "verify:hosted-search-engine": "node scripts/verify-hosted-search-engine.mjs",
+    "verify:mcp-docs-setup": "node scripts/verify-mcp-docs-setup.mjs",
     "backfill:subscription-period-ends": "node scripts/backfill-subscription-current-period-ends.mjs",
     "sync:search-catalog": "node scripts/sync-search-catalog-to-supabase.mjs",
     "seed:private-search-manifests": "node scripts/seed-private-search-manifests.mjs",

@@ -90,13 +90,17 @@ assert.ok(
 
 const rpcPath = path.join(repoRoot, 'supabase', 'migrations', '20260418_hosted_search_engine_rpcs.sql');
 const functionPath = path.join(repoRoot, 'supabase', 'functions', 'search-icons', 'index.ts');
+const sharedHandlerPath = path.join(repoRoot, 'supabase', 'functions', '_shared', 'search-engine', 'handle-search-request.ts');
 
 const rpcSql = await fs.readFile(rpcPath, 'utf8');
 assert.match(rpcSql, /si_search_icon_candidates/i, 'RPC migration should define si_search_icon_candidates');
 
 const functionSource = await fs.readFile(functionPath, 'utf8');
-assert.match(functionSource, /search_request_audit/i, 'hosted search function should record request audits');
-assert.match(functionSource, /engine_version/i, 'hosted search function should return an engine version');
+assert.match(functionSource, /handleSearchRequest/i, 'hosted search function should delegate to the shared handler');
+
+const sharedHandlerSource = await fs.readFile(sharedHandlerPath, 'utf8');
+assert.match(sharedHandlerSource, /search_request_audit/i, 'shared hosted search handler should record request audits');
+assert.match(sharedHandlerSource, /engine_version/i, 'shared hosted search handler should return an engine version');
 
 if (process.env.SUPERICONS_RUN_LIVE_HOSTED_SEARCH === '1') {
   const baseUrl = process.env.SUPERICONS_SEARCH_ENGINE_URL
