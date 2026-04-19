@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SI Registry PRD and Blueprint</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 42px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--text);
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 28px 0;
+      }
+      code {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.95em;
+        color: #ffd7c0;
+      }
+      pre {
+        margin: 0 0 18px;
+        padding: 16px;
+        overflow: auto;
+        background: #101014;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      pre code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: #f6f6f8;
+      }
+      blockquote {
+        margin: 0 0 18px;
+        padding: 12px 16px;
+        border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03);
+        border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Supericons Plans</span>
+        <h1>SI Registry PRD and Blueprint</h1>
+        <p class="meta">Generated from the matching Markdown source in <code>docs/superpowers/plans/</code>.</p>
+      </div>
+      <article>
+        <h1 id="si-registry-prd-and-blueprint">SI Registry PRD and Blueprint</h1>
+        <p>Status: Draft for alignment Date: April 19, 2026 Owner: Supericons</p>
+        <h2 id="one-sentence-product">One-Sentence Product</h2>
+        <p>The SI Registry is the main, versioned system that defines what every Supericons icon is, what it means, how it should be used, and how that meaning flows into search, MCP, UI, export, and future programmable icon behavior.</p>
+        <hr>
+        <h2 id="product-questions-we-must-keep-asking">Product Questions We Must Keep Asking</h2>
+        <p>This document uses a Socratic and design-thinking posture on purpose. Before we build the registry, we should keep pressure-testing it with questions like:</p>
+        <ul>
+        <li>What problem does the registry solve that the current search index does not?</li>
+        <li>What becomes easier, safer, or more differentiated if the registry exists?</li>
+        <li>What should be public because openness increases adoption?</li>
+        <li>What should stay private because that is where operating leverage lives?</li>
+        <li>What should be true for every icon record before we call the system real?</li>
+        <li>What part of this needs to exist before launch, and what part can grow after launch?</li>
+        </ul>
+        <hr>
+        <h2 id="problem-statement">Problem Statement</h2>
+        <p>Supericons currently has useful pieces of semantic intelligence, but they are split across disconnected layers:</p>
+        <ul>
+        <li>public free icon indexes</li>
+        <li>curated alias maps</li>
+        <li>taxonomy seed files</li>
+        <li>premium pack manifests</li>
+        <li>hosted search private tables</li>
+        <li>strategy docs and editorial intent</li>
+        </ul>
+        <p>That creates five problems:</p>
+        <ol>
+        <li>There is no single semantic source of truth.</li>
+        <li>Search, MCP, UI, docs, and exports cannot all rely on the same meaning system.</li>
+        <li>Counts, labels, and semantic claims drift across surfaces.</li>
+        <li>The current search engine can retrieve related icons, but it cannot yet guarantee a stable semantic contract.</li>
+        <li>Future ideas like self-describing exports, intent-based selection, motion-aware icons, and programmable icon behavior have no clear home yet.</li>
+        </ol>
+        <p>The SI Registry exists to solve those problems.</p>
+        <hr>
+        <h2 id="why-now">Why Now</h2>
+        <p>Why build this now instead of later?</p>
+        <ul>
+        <li>The search improvements already proved that semantic retrieval creates real value.</li>
+        <li>The strategy has outgrown the current data model.</li>
+        <li>The purpose chip experiment and premium metadata both need one shared semantic backbone.</li>
+        <li>Launch readiness depends on narrowing the product story, but long-term differentiation depends on a stronger semantic system.</li>
+        </ul>
+        <p>So the registry is both:</p>
+        <ul>
+        <li>a launch-discipline tool</li>
+        <li>a long-term strategic foundation</li>
+        </ul>
+        <hr>
+        <h2 id="users">Users</h2>
+        <h3 id="1-builders-and-designers">1. Builders and designers</h3>
+        <p>They need:</p>
+        <ul>
+        <li>the right icon faster</li>
+        <li>confidence that the icon means what they think it means</li>
+        <li>usage guidance, not just a glyph</li>
+        </ul>
+        <h3 id="2-coding-agents">2. Coding agents</h3>
+        <p>They need:</p>
+        <ul>
+        <li>machine-readable meaning</li>
+        <li>a stable retrieval contract</li>
+        <li>explanations for why an icon matched</li>
+        </ul>
+        <h3 id="3-supericons-itself">3. Supericons itself</h3>
+        <p>The product needs:</p>
+        <ul>
+        <li>one shared meaning layer</li>
+        <li>one shared count/version source</li>
+        <li>one system to drive search, MCP, UI, docs, and future exports</li>
+        </ul>
+        <h3 id="4-future-external-adopters">4. Future external adopters</h3>
+        <p>If SI grows into a broader standard, external systems may want:</p>
+        <ul>
+        <li>public registry lookups</li>
+        <li>self-describing export support</li>
+        <li>validation against the SI schema</li>
+        </ul>
+        <hr>
+        <h2 id="goals">Goals</h2>
+        <h3 id="primary-goals">Primary goals</h3>
+        <ul>
+        <li>establish one main semantic source of truth for icons</li>
+        <li>support every current product surface from that source</li>
+        <li>make semantic metadata progressive, auditable, and reviewable</li>
+        <li>allow self-describing exports to be generated from the main icon records</li>
+        <li>create a platform for future intent-based icon retrieval</li>
+        </ul>
+        <h3 id="secondary-goals">Secondary goals</h3>
+        <ul>
+        <li>centralize product facts like counts and semantic coverage</li>
+        <li>support progressive automation of metadata generation</li>
+        <li>create a durable bridge toward motion, state, and programmable icon behavior</li>
+        </ul>
+        <hr>
+        <h2 id="non-goals">Non-Goals</h2>
+        <p>The SI Registry is not, at least in its initial phases:</p>
+        <ul>
+        <li>a replacement for SVG rendering itself</li>
+        <li>a promise that every icon meaning is objectively true</li>
+        <li>a fully decentralized or multi-vendor standard on day one</li>
+        <li>a launch blocker for 100 percent manually reviewed coverage</li>
+        <li>a reason to rewrite the app before launch</li>
+        </ul>
+        <hr>
+        <h2 id="what-the-si-registry-is">What the SI Registry Is</h2>
+        <p>At its core, the registry is the main shared record for every icon.</p>
+        <p>Each record answers:</p>
+        <ul>
+        <li>identity</li>
+        <li>visual depiction</li>
+        <li>SI recommended purpose</li>
+        <li>usage guidance</li>
+        <li>accessibility defaults</li>
+        <li>dynamic capability</li>
+        <li>evidence and review state</li>
+        </ul>
+        <p>Everything else should be generated or synced from these records.</p>
+        <hr>
+        <h2 id="similar-patterns-and-useful-analogies">Similar Patterns and Useful Analogies</h2>
+        <p>The SI Registry is not identical to any single existing system, but these analogies are useful:</p>
+        <h3 id="simple-icons">Simple Icons</h3>
+        <p>Useful analogy:</p>
+        <ul>
+        <li>a public corpus of icon data with disciplined naming and structured records</li>
+        </ul>
+        <p>What SI adds:</p>
+        <ul>
+        <li>semantic purpose</li>
+        <li>usage guidance</li>
+        <li>confidence</li>
+        <li>motion and future programmability</li>
+        </ul>
+        <h3 id="material-symbols">Material Symbols</h3>
+        <p>Useful analogy:</p>
+        <ul>
+        <li>a structured icon system with variant axes and a cohesive family model</li>
+        </ul>
+        <p>What SI adds:</p>
+        <ul>
+        <li>registry semantics beyond rendering variants</li>
+        </ul>
+        <h3 id="openapi">OpenAPI</h3>
+        <p>Useful analogy:</p>
+        <ul>
+        <li>a shared spec that many tools, clients, and workflows can generate from</li>
+        </ul>
+        <p>What SI adds:</p>
+        <ul>
+        <li>visual and semantic meaning rather than API endpoint meaning</li>
+        </ul>
+        <h3 id="design-tokens">Design Tokens</h3>
+        <p>Useful analogy:</p>
+        <ul>
+        <li>a vendor-neutral schema that many downstream tools can consume</li>
+        </ul>
+        <p>What SI adds:</p>
+        <ul>
+        <li>visual semantics, retrieval logic, and export behavior</li>
+        </ul>
+        <p>The important product insight is this:</p>
+        <p>The registry matters not because nobody else could ever copy the idea, but because it creates consistency, speed, and a stronger product surface to build on.</p>
+        <h2 id="competitive-reality-check">Competitive reality check</h2>
+        <p>This only matters if Supericons is clearly better at something real.</p>
+        <h3 id="competitive-simple-icons">Simple Icons</h3>
+        <p>Already good at:</p>
+        <ul>
+        <li>clean naming</li>
+        <li>public JSON records</li>
+        <li>license and source details</li>
+        </ul>
+        <p>Still missing for Supericons-style meaning:</p>
+        <ul>
+        <li><code>use_when</code></li>
+        <li><code>avoid_when</code></li>
+        <li>confidence and review state</li>
+        <li>motion-aware meaning</li>
+        </ul>
+        <h3 id="competitive-material-symbols">Material Symbols</h3>
+        <p>Already good at:</p>
+        <ul>
+        <li>family consistency</li>
+        <li>variant axes</li>
+        </ul>
+        <p>Still missing for this direction:</p>
+        <ul>
+        <li>plain guidance for when to use an icon</li>
+        <li>a clear split between what the icon shows and what SI recommends it for</li>
+        <li>confidence-aware review</li>
+        </ul>
+        <h3 id="competitive-iconify">Iconify</h3>
+        <p>Already good at:</p>
+        <ul>
+        <li>aggregation</li>
+        <li>unified access</li>
+        <li>very broad coverage</li>
+        </ul>
+        <p>Still missing for this direction:</p>
+        <ul>
+        <li>SI-style usage guidance</li>
+        <li><code>anti_pairs</code></li>
+        <li>review state</li>
+        <li>a bridge between meaning and motion</li>
+        </ul>
+        <p>The fields that should stay clearly special for Supericons are:</p>
+        <ul>
+        <li><code>use_when</code></li>
+        <li><code>avoid_when</code></li>
+        <li><code>anti_pairs</code></li>
+        <li><code>depicts</code></li>
+        <li><code>confidence_score</code></li>
+        <li><code>review_state</code></li>
+        <li><code>motion_family</code></li>
+        </ul>
+        <hr>
+        <h2 id="public-vs-private-posture">Public vs Private Posture</h2>
+        <h2 id="recommended-approach">Recommended approach</h2>
+        <p>Adopt a hybrid model.</p>
+        <h3 id="public">Public</h3>
+        <p>These should be open or publicly readable:</p>
+        <ul>
+        <li>the SI metadata schema</li>
+        <li>controlled vocabulary definitions</li>
+        <li>free/open icon registry records</li>
+        <li>the public registry API for free/open records</li>
+        <li>self-describing export format documentation</li>
+        </ul>
+        <p>Why:</p>
+        <ul>
+        <li>openness increases adoption</li>
+        <li>public schema encourages ecosystem tooling</li>
+        <li>free registry transparency improves trust</li>
+        </ul>
+        <h3 id="private">Private</h3>
+        <p>These should stay private:</p>
+        <ul>
+        <li>telemetry</li>
+        <li>ranking features</li>
+        <li>behavioral scores</li>
+        <li>manual boosts and penalties</li>
+        <li>premium entitlements</li>
+        <li>premium asset delivery</li>
+        <li>commercially sensitive editorial heuristics</li>
+        </ul>
+        <p>Why:</p>
+        <ul>
+        <li>this is where operating leverage and monetization discipline live</li>
+        </ul>
+        <h3 id="strategic-position">Strategic position</h3>
+        <p>The schema should be open. The intelligence and commercial layer should remain private.</p>
+        <p>That balances adoption and defensibility.</p>
+        <hr>
+        <h2 id="architecture-blueprint">Architecture Blueprint</h2>
+        <h2 id="canonical-layer">Main record layer</h2>
+        <p>Repo-native SI Registry records.</p>
+        <p>Recommended source-of-truth format:</p>
+        <ul>
+        <li>structured JSON or JSONL</li>
+        <li>versioned in-repo</li>
+        <li>validated at build time</li>
+        </ul>
+        <h2 id="projections">Projections</h2>
+        <p>The registry should project into:</p>
+        <ol>
+        <li><code>public/icon-index.json</code></li>
+        <li><code>mcp/public/icon-index.json</code></li>
+        <li>Supabase <code>icon_catalog</code></li>
+        <li>Supabase <code>icon_metadata</code></li>
+        <li>Supabase private hosted search manifest tables</li>
+        <li>SVG embedded <code>si:icon</code> passport metadata</li>
+        <li>compact <code>si://</code> payload</li>
+        <li>product facts and counters</li>
+        <li>browse facets and docs surfaces</li>
+        </ol>
+        <h2 id="registry-id-rule">Registry ID rule</h2>
+        <p>The ID rule needs to be locked early so every part of the product points to the same icon in the same way.</p>
+        <p>Rule:</p>
+        <ul>
+        <li>icons from outside libraries use <code>{source_library}:{source_name}</code></li>
+        <li>icons made by Supericons use <code>si:{name}</code></li>
+        </ul>
+        <p>Compatibility notes:</p>
+        <ul>
+        <li>MCP can still return <code>id</code> and <code>library</code> separately, but they should map back to the same full ID</li>
+        <li>the current taxonomy seed already matches the same <code>library:name</code> pattern</li>
+        </ul>
+        <h2 id="build-pipeline-transition">Build pipeline transition</h2>
+        <p>The registry should not create a second truth source for <code>icon-index.json</code>.</p>
+        <h3 id="build-pipeline-today">Today</h3>
+        <ul>
+        <li><code>scripts/build-icons.js</code> reads installed icon packages</li>
+        <li>it writes <code>public/icon-index.json</code> and related free-icon files directly</li>
+        <li><code>mcp/public/icon-index.json</code> follows as a copied or packaged output</li>
+        </ul>
+        <h3 id="build-pipeline-bridge-phase">Bridge phase</h3>
+        <ul>
+        <li>keep <code>build-icons.js</code> as the raw ingest and validation step</li>
+        <li>add registry projection scripts that read the main icon records and checked raw inputs</li>
+        <li>compare old and new outputs before cutover</li>
+        </ul>
+        <h3 id="build-pipeline-cutover-rule">Cutover rule</h3>
+        <ul>
+        <li><code>public/icon-index.json</code> and <code>mcp/public/icon-index.json</code> should come from one path only</li>
+        <li>after cutover, <code>build-icons.js</code> should stop writing the final public file directly</li>
+        <li>if needed, <code>build-icons.js</code> becomes a raw importer or checker instead</li>
+        </ul>
+        <h3 id="build-pipeline-checks">Checks before cutover</h3>
+        <ul>
+        <li>same counts where they should match</li>
+        <li>same ID mapping for existing free icons</li>
+        <li>same library coverage</li>
+        <li>a clear diff for any intentional change</li>
+        </ul>
+        <h2 id="mcp-integration-map">MCP integration map</h2>
+        <p>MCP should be planned tool by tool, not as one vague integration task.</p>
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>Needs registry?</th><th>Main use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>search_icons</code></td><td>High</td><td>Search meaning fields like label, purpose, tags, synonyms, and confidence</td></tr>
+            <tr><td><code>get_icon</code></td><td>High</td><td>Return identity, depiction, use guidance, and review details</td></tr>
+            <tr><td><code>list_libraries</code></td><td>Medium</td><td>Show library facts, counts, and provenance labels</td></tr>
+            <tr><td><code>list_motion_presets</code></td><td>Low</td><td>Mostly independent for now</td></tr>
+            <tr><td><code>get_motion_recipe</code></td><td>Low</td><td>Optional future link to motion-family meaning</td></tr>
+            <tr><td><code>export_motion_css</code></td><td>Medium</td><td>Optional future consistency checks for motion-ready icons</td></tr>
+            <tr><td><code>export_animated_svg</code></td><td>Medium</td><td>Optional future consistency checks for motion-ready icons</td></tr>
+            <tr><td><code>animate_icon</code></td><td>Medium</td><td>Optional future consistency checks for motion-ready icons</td></tr>
+            <tr><td><code>inspect_converter_options</code></td><td>None</td><td>Independent utility tool</td></tr>
+            <tr><td><code>inspect_converter_input</code></td><td>None</td><td>Independent utility tool</td></tr>
+            <tr><td><code>convert_svg_to_png</code></td><td>None</td><td>Independent utility tool</td></tr>
+            <tr><td><code>convert_png_to_svg</code></td><td>None</td><td>Independent utility tool</td></tr>
+          </tbody>
+        </table>
+        <p>Order to tackle first:</p>
+        <ol>
+        <li><code>search_icons</code></li>
+        <li><code>get_icon</code></li>
+        <li><code>list_libraries</code></li>
+        <li>motion tools only where the added meaning really helps</li>
+        </ol>
+        <h2 id="ingestion-and-enrichment-pipeline">Ingestion and enrichment pipeline</h2>
+        <p>For aggregated icons:</p>
+        <ol>
+        <li>source ingest</li>
+        <li>lexical suggestion</li>
+        <li>visual inspection</li>
+        <li>contextual enrichment</li>
+        <li>confidence scoring</li>
+        <li>review routing</li>
+        <li>publish registry record</li>
+        </ol>
+        <p>For SI-native icons:</p>
+        <ol>
+        <li>intentional design brief</li>
+        <li>authored semantic record</li>
+        <li>visual review</li>
+        <li>optional motion/state enrichment</li>
+        <li>publish</li>
+        </ol>
+        <hr>
+        <h2 id="why-registry-first-beats-db-first">Why Registry-First Beats DB-First</h2>
+        <p>A database-first live counter or live metadata system is useful for dashboards and operations, but weak as the main product source.</p>
+        <h3 id="why-db-first-is-tempting">Why DB-first is tempting</h3>
+        <ul>
+        <li>live counts</li>
+        <li>easy admin views</li>
+        <li>centralized updates</li>
+        </ul>
+        <h3 id="why-db-first-is-weak-as-the-main-source">Why DB-first is weak as the main source</h3>
+        <ul>
+        <li>harder to reproduce locally</li>
+        <li>npm package and static site can drift from runtime truth</li>
+        <li>product copy and docs become dependent on live services</li>
+        <li>repo history stops being the clearest source of truth</li>
+        </ul>
+        <h3 id="better-model">Better model</h3>
+        <ul>
+        <li>registry records live in repo</li>
+        <li>build scripts generate facts and projections</li>
+        <li>database is synced from registry outputs</li>
+        <li>dashboards may still read DB live, but product truth starts in the registry</li>
+        </ul>
+        <p>That gives us reproducibility without losing runtime power.</p>
+        <hr>
+        <h2 id="governance-model">Governance Model</h2>
+        <h3 id="who-owns-the-truth">Who owns the truth?</h3>
+        <p>Supericons owns the final editorial recommendation for SI fields.</p>
+        <h3 id="who-proposes">Who proposes?</h3>
+        <ul>
+        <li>source ingest</li>
+        <li>lexical taggers</li>
+        <li>visual inspection models</li>
+        <li>telemetry-informed suggestion systems</li>
+        </ul>
+        <h3 id="who-approves">Who approves?</h3>
+        <ul>
+        <li>human review for high-value or low-confidence icons</li>
+        <li>editorial approval for final controlled-vocabulary changes and sensitive semantic records</li>
+        </ul>
+        <h3 id="what-must-be-reviewable">What must be reviewable?</h3>
+        <ul>
+        <li>why the record exists</li>
+        <li>why a field was assigned</li>
+        <li>what model or process proposed it</li>
+        <li>how confident the system is</li>
+        </ul>
+        <h2 id="minimum-review-tooling">Minimum review setup</h2>
+        <p>The review system is not real until there is at least one place to review records.</p>
+        <p>The first version only needs:</p>
+        <ul>
+        <li>a list of pending records</li>
+        <li>a simple current-versus-proposed comparison</li>
+        <li>approve, reject, and edit actions</li>
+        <li>a basic change history</li>
+        <li>filters for confidence, collection, and category</li>
+        </ul>
+        <p>A CLI is enough at first. A fuller admin page can come later.</p>
+        <hr>
+        <h2 id="progressive-rollout-philosophy">Progressive Rollout Philosophy</h2>
+        <p>The registry should not require perfect coverage before it becomes useful.</p>
+        <p>Recommended progression:</p>
+        <ol>
+        <li>schema finalization</li>
+        <li>premium metadata normalization</li>
+        <li>top free-icon slice coverage</li>
+        <li>search projection integration</li>
+        <li>public registry API for free records</li>
+        <li>self-describing export embedding</li>
+        <li>intent-based MCP retrieval</li>
+        </ol>
+        <p>This is the product-builder version of “start small, but do not give up early.”</p>
+        <hr>
+        <h2 id="taxonomy-seed-transition-decision">Taxonomy seed transition decision</h2>
+        <p>The current taxonomy seed should stay a short-term helper, not become a second long-term ownership system.</p>
+        <p>Decision:</p>
+        <ul>
+        <li>keep the current 3-chip seed only for the narrow <code>All Icons</code> experiment</li>
+        <li>allow it to help with early tagging and QA</li>
+        <li>do not keep expanding it as a second full metadata system</li>
+        <li>when registry-backed facets are ready, switch in one clear cutover</li>
+        </ul>
+        <h2 id="business-hypotheses-to-validate">Business hypotheses to validate</h2>
+        <p>The registry needs a business reason, not just a technical one.</p>
+        <ul>
+        <li>better semantic search should improve successful sessions and premium conversion on high-intent searches</li>
+        <li>better MCP explanations should improve API key activation and retained usage</li>
+        <li>richer premium meaning should make collections easier to sell and easier to trust</li>
+        <li>better semantic quality should reduce confusion and support burden</li>
+        </ul>
+        <h2 id="success-metrics">Success Metrics</h2>
+        <h3 id="launch-adjacent-success">Launch-adjacent success</h3>
+        <ul>
+        <li>one main product-facts layer exists</li>
+        <li>premium metadata normalized into the registry shape</li>
+        <li>top free icons receive reviewed semantic records</li>
+        <li>packs heading and shell-title drift are fixed</li>
+        <li>the build cutover plan is documented and agreed</li>
+        </ul>
+        <h3 id="foundation-success">Foundation success</h3>
+        <ul>
+        <li>one record shape drives all major projections</li>
+        <li>count/version drift drops toward zero</li>
+        <li>semantic record coverage grows continuously</li>
+        <li>confidence-aware review workflow exists</li>
+        <li>MCP work is clearly scoped tool by tool</li>
+        </ul>
+        <h3 id="strategic-success">Strategic success</h3>
+        <ul>
+        <li><code>request_semantic_icon</code> becomes feasible and trustworthy</li>
+        <li>SVG passport metadata can be generated directly from registry records</li>
+        <li>native SI icons become the highest-quality semantic tier</li>
+        <li>semantic quality shows real lift in conversion, activation, or retention</li>
+        </ul>
+        <hr>
+        <h2 id="risks">Risks</h2>
+        <h3 id="risk-1-over-design-before-shipping">Risk 1: Over-design before shipping</h3>
+        <p>Mitigation:</p>
+        <ul>
+        <li>ship the schema and first projections before full ecosystem ambitions</li>
+        </ul>
+        <h3 id="risk-2-semantic-overclaiming">Risk 2: Semantic overclaiming</h3>
+        <p>Mitigation:</p>
+        <ul>
+        <li>separate depiction from recommendation</li>
+        <li>require evidence and confidence</li>
+        </ul>
+        <h3 id="risk-3-coverage-stalls">Risk 3: Coverage stalls</h3>
+        <p>Mitigation:</p>
+        <ul>
+        <li>use progressive automation and cadence-based review</li>
+        </ul>
+        <h3 id="risk-4-refactor-drift-while-integrating-projections">Risk 4: Refactor drift while integrating projections</h3>
+        <p>Mitigation:</p>
+        <ul>
+        <li>dependency audits before extractions</li>
+        <li>one boundary at a time</li>
+        <li>strong regression verification</li>
+        </ul>
+        <hr>
+        <h2 id="key-product-decisions-locked-by-this-blueprint">Key Product Decisions Locked By This Blueprint</h2>
+        <ol>
+        <li>The SI Registry is registry-first, not SVG-first and not DB-first.</li>
+        <li>SVG self-describing metadata is a projection from the registry, not the source of truth.</li>
+        <li>The public schema should be open.</li>
+        <li>The free/open registry records should be public.</li>
+        <li>Telemetry, ranking, and commercial layers stay private.</li>
+        <li>Semantic records express SI editorial recommendation, not objective universal truth.</li>
+        <li>Evidence, confidence, and review state are first-class.</li>
+        </ol>
+        <hr>
+        <h2 id="final-recommendation">Final Recommendation</h2>
+        <p>Build the SI Registry as the semantic operating system of Supericons.</p>
+        <p>Do not position it as “just more metadata.” Position it internally as the system that makes these things possible:</p>
+        <ul>
+        <li>trustworthy semantic search</li>
+        <li>intent-based MCP retrieval</li>
+        <li>stable browse facets</li>
+        <li>self-describing exports</li>
+        <li>motion-aware semantic icons</li>
+        <li>a future public registry standard if adoption earns it</li>
+        </ul>
+        <p>The short technopreneur version is:</p>
+        <p>The registry is not merely a database. It is the leverage layer that turns Supericons from a useful icon search product into a durable semantic icon platform.</p>
+      </article>
+    </div>
+  </body>
+</html>

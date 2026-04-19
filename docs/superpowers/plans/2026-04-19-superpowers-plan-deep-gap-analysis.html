@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Superpowers Plan Deep Gap Analysis</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+        --green: #34d399;
+        --green-soft: rgba(52, 211, 153, 0.12);
+        --yellow: #fbbf24;
+        --yellow-soft: rgba(251, 191, 36, 0.12);
+        --red: #f87171;
+        --red-soft: rgba(248, 113, 113, 0.12);
+        --blue: #60a5fa;
+        --blue-soft: rgba(96, 165, 250, 0.12);
+        --purple: #a78bfa;
+        --purple-soft: rgba(167, 139, 250, 0.10);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: 42px 24px 72px; }
+      .hero { display: grid; gap: 16px; margin-bottom: 26px; }
+      .eyebrow {
+        display: inline-block; width: fit-content; padding: 8px 12px;
+        border-radius: 999px; background: var(--brand-soft); color: var(--brand);
+        font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72); border: 1px solid var(--line);
+        border-radius: 24px; padding: 28px; backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4 { color: var(--text); line-height: 1.15; margin: 0 0 12px; }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+      code {
+        background: var(--code-bg); border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px; padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace; font-size: 0.95em; color: #ffd7c0;
+      }
+      blockquote {
+        margin: 0 0 18px; padding: 12px 16px; border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03); border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+      table { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 14px; }
+      th { text-align: left; padding: 10px 12px; background: var(--panel-2); color: var(--text); border-bottom: 1px solid var(--line); font-weight: 600; }
+      td { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--muted); }
+      tr:last-child td { border-bottom: 0; }
+      .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+      .pill-high { background: var(--red-soft); color: var(--red); }
+      .pill-med { background: var(--yellow-soft); color: var(--yellow); }
+      .pill-low { background: var(--green-soft); color: var(--green); }
+
+      .lens-badge {
+        display: inline-block; padding: 4px 10px; border-radius: 8px;
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.04em; margin-bottom: 8px;
+      }
+      .lens-systems { background: var(--blue-soft); color: var(--blue); }
+      .lens-arch { background: var(--purple-soft); color: var(--purple); }
+      .lens-strategy { background: var(--brand-soft); color: var(--brand); }
+      .lens-ops { background: var(--yellow-soft); color: var(--yellow); }
+      .lens-biz { background: var(--green-soft); color: var(--green); }
+
+      .gap-card {
+        background: var(--panel-2); border: 1px solid var(--line);
+        border-radius: 16px; padding: 20px; margin: 18px 0;
+      }
+      .gap-card h4 { margin-top: 0; }
+      .gap-card .evidence { font-size: 13px; color: var(--muted); border-left: 2px solid rgba(255,255,255,0.12); padding-left: 12px; margin: 8px 0 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Deep Audit</span>
+        <h1>Superpowers Plan Deep Gap Analysis</h1>
+        <p class="meta">Multi-lens analysis: Systems Thinking, Technical Architecture, Competitive Strategy, Operational Reality, Business Model. April 19, 2026.</p>
+      </div>
+      <article>
+
+        <h2 id="purpose">Purpose</h2>
+        <p>Second-pass audit using different analytical lenses from the first feasibility audit. Every finding is backed by codebase evidence gathered in this session. Only genuine gaps are reported.</p>
+        <p><strong>Update note:</strong> the companion plan docs were updated after this audit to add the verified fixes. Keep this file as the record of what was missing before those updates.</p>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="lens-1">Lens 1: Systems Thinking</h2>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-systems">Systems</span>
+          <h4>Gap 1: Premium Manifest Already Has 60% of v1 Fields</h4>
+          <div class="evidence"><code>public/packs/manifest.json</code> (4,927 lines) is a top-level object keyed by 8 collection slugs and already contains per-icon <code>purpose</code>, <code>tags</code>, and <code>category</code> for all 400 premium icons. The existing data satisfies about 60% of the minimum v1 work right away.</div>
+          <p><strong>Impact:</strong> The premium normalization is likely a 2-4 hour scripted transform, not a multi-day effort. This means Phase 1 can deliver faster than the plans suggest.</p>
+        </div>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-systems">Systems</span>
+          <h4>Gap 2: Taxonomy Seed vs. Registry Reconciliation Is Unplanned</h4>
+          <div class="evidence"><code>lib/icon-taxonomy-seed.js</code> has 150 hardcoded icon IDs across 3 categories. This is a manually curated list with no connection to any semantic pipeline. The registry also assigns categories through metadata fields.</div>
+          <p>When the registry exists, what happens to the seed? Three possibilities exist (legacy input, replaced by projections, or co-existing indefinitely), but <strong>none are discussed</strong> in any document.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-med">Medium-High</span>. The purpose-chip experiment and the registry will compete for category ownership.</p>
+        </div>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-systems">Systems</span>
+          <h4>Gap 3: 12-Tool MCP Has No Per-Tool Registry Integration Map</h4>
+          <div class="evidence">MCP registers exactly 12 tools: <code>search_icons</code>, <code>get_icon</code>, <code>list_libraries</code>, <code>list_motion_presets</code>, <code>get_motion_recipe</code>, <code>export_motion_css</code>, <code>export_animated_svg</code>, <code>animate_icon</code>, <code>inspect_converter_options</code>, <code>inspect_converter_input</code>, <code>convert_svg_to_png</code>, <code>convert_png_to_svg</code>.</div>
+          <p>The plans treat MCP as a monolithic consumer. But each tool has different data needs. No per-tool integration mapping exists.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-med">Medium</span>. "Integrate registry with MCP" is an unbounded task without this.</p>
+        </div>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="lens-2">Lens 2: Technical Architecture</h2>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-arch">Architecture</span>
+          <h4>Gap 4: Three Conflicting ID Formats With No Resolution Rule</h4>
+          <div class="evidence">
+            Registry spec example: <code>si:agent-planning</code> (prefix:name).<br>
+            MCP tools: <code>{id: "heart", library: "lucide"}</code> (two fields).<br>
+            Taxonomy seed: <code>material:smart_toy</code> (library:name composite).
+          </div>
+          <p>The spec defines <code>icon_id</code> as "globally unique" but does not specify the generation rule or collision resolution.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-high">High</span>. Every downstream consumer that indexes by ID will need migration if the format changes.</p>
+          <p><strong>Fix:</strong> Define one shared ID format: <code>{source_library}:{source_name}</code> for aggregated, <code>si:{name}</code> for native. Document the rule, not just examples.</p>
+        </div>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-arch">Architecture</span>
+          <h4>Gap 5: No Transition Plan from build-icons.js to Registry Projections</h4>
+          <div class="evidence"><code>scripts/build-icons.js</code> currently reads from npm-installed icon packages to produce <code>icon-index.json</code>. Registry projections would produce the same artifact from different source data.</div>
+          <p>Two different data sources producing the same output artifact with no cutover plan. If both run, the product ships contradictory data.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-high">High</span>. This is a dependency inversion that needs a concrete transition plan.</p>
+        </div>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-arch">Architecture</span>
+          <h4>Gap 6: Hardcoded "20,000" Appears 133+ Times; Blast Radius Not Inventoried</h4>
+          <div class="evidence">
+            Found in: <code>index.html</code> (8 instances in title, meta, hero, search, stats), <code>store.js</code> (6+ instances in pricing/docs HTML), <code>docs-pages.js</code> (5+ instances), <code>main.js</code> (2 instances), <code>mcp/index.js</code> (1 instance), <code>mcp/SKILL.md</code> (1 instance), plus 25+ instances across strategy docs.<br>
+            Meanwhile, root <code>package.json</code> says <code>"60K+"</code> and MCP comment says <code>"3 tools"</code> (actually 12).
+          </div>
+          <p>A naive search-and-replace is unsafe because some instances are deliberate marketing copy while others should show exact counts.</p>
+          <p><strong>Fix:</strong> Create a complete inventory classifying each as "marketing" / "product truth" / "technical" before applying fixes.</p>
+        </div>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="lens-3">Lens 3: Competitive Strategy</h2>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-strategy">Strategy</span>
+          <h4>Gap 7: No Competitive Benchmarking of SI Metadata vs. Existing Systems</h4>
+          <p>Simple Icons ships structured JSON with <code>title</code>, <code>slug</code>, <code>hex</code>, <code>source</code>, <code>guidelines</code>, <code>license</code>. Iconify.design ships a unified JSON API across 150+ sets with category filters. The plans claim differentiation through "semantic purpose and confidence" but never benchmark against these.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-low">Low</span>. Unique SI fields (<code>avoid_when</code>, <code>anti_pairs</code>, <code>confidence_score</code>, <code>motion_family</code>) are genuinely novel. But the differentiation case would be stronger if stated explicitly.</p>
+        </div>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="lens-4">Lens 4: Operational Reality</h2>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-ops">Operations</span>
+          <h4>Gap 8: Review Infrastructure Is Fully Missing</h4>
+          <p>The rollout roadmap defines confidence routing (auto-accept, batch review, deeper review) and cadence (nightly, weekly, monthly). The spec defines <code>review_state</code> values. But there is <strong>no review UI, no review queue, no review CLI, and no review workflow</strong> in the codebase.</p>
+          <p>Building a review queue requires: a list view of pending records, side-by-side comparison, approve/reject actions, and confidence filtering. This is a product feature, not a script.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-high">High</span>. Without review tooling, the "confidence-aware review workflow" is unreachable. Hidden dependency that blocks the continuous factory model.</p>
+          <p><strong>Fix:</strong> Add a task: "Build a minimal review interface (CLI or admin page) for viewing, approving, and rejecting batched semantic records."</p>
+        </div>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-ops">Operations</span>
+          <h4>Gap 9: Visual Inspection Pilot Has No Tool Selection or Cost Estimate</h4>
+          <p>The pilot is likely cheap enough that cost should not block it, and a local open-source lane may be close to zero extra cost if the hardware already exists. But the plans never state even a simple budget guardrail or execution lane.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-low">Low</span>. Stating the cost removes ambiguity.</p>
+        </div>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="lens-5">Lens 5: Business Model</h2>
+
+        <div class="gap-card">
+          <span class="lens-badge lens-biz">Business</span>
+          <h4>Gap 10: No Revenue Hypothesis Connecting Registry Quality to Business Metrics</h4>
+          <p>None of the four documents draw a line from registry improvements to conversion, retention, or pricing. If better metadata increases free-to-paid conversion or reduces churn, that should be stated as a hypothesis to validate.</p>
+          <p><strong>Impact:</strong> <span class="pill pill-low">Low</span> for a solo founder. Higher if seeking investment.</p>
+        </div>
+
+        <hr>
+
+        <!-- ============================================================ -->
+        <h2 id="summary">Summary of All Gaps</h2>
+        <table>
+          <thead>
+            <tr><th>#</th><th>Gap</th><th>Lens</th><th>Severity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Premium manifest effort is overstated (60% of fields already exist)</td><td>Systems</td><td><span class="pill pill-med">Medium</span></td></tr>
+            <tr><td>2</td><td>Taxonomy seed vs. registry reconciliation unplanned</td><td>Systems</td><td><span class="pill pill-med">Medium-High</span></td></tr>
+            <tr><td>3</td><td>12-tool MCP has no per-tool registry integration map</td><td>Systems</td><td><span class="pill pill-med">Medium</span></td></tr>
+            <tr><td>4</td><td>Three conflicting ID formats with no resolution rule</td><td>Architecture</td><td><span class="pill pill-high">High</span></td></tr>
+            <tr><td>5</td><td>No transition plan from build-icons.js to registry projections</td><td>Architecture</td><td><span class="pill pill-high">High</span></td></tr>
+            <tr><td>6</td><td>Hardcoded "20,000" appears 133+ times; blast radius not inventoried</td><td>Architecture</td><td><span class="pill pill-med">Medium</span></td></tr>
+            <tr><td>7</td><td>No competitive benchmarking against existing icon metadata systems</td><td>Strategy</td><td><span class="pill pill-low">Low</span></td></tr>
+            <tr><td>8</td><td>Review infrastructure (queue, UI, workflow) is fully missing</td><td>Operations</td><td><span class="pill pill-high">High</span></td></tr>
+            <tr><td>9</td><td>Visual inspection pilot has no tool selection or cost estimate</td><td>Operations</td><td><span class="pill pill-low">Low</span></td></tr>
+            <tr><td>10</td><td>No revenue hypothesis connecting registry to business metrics</td><td>Business</td><td><span class="pill pill-low">Low</span></td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2 id="recs">Actionable Recommendations</h2>
+
+        <h3>Must-fix before building (3 items)</h3>
+        <ol>
+          <li><strong>Lock the ID format.</strong> Define <code>{source_library}:{source_name}</code> for aggregated, <code>si:{name}</code> for native. Add as a normative rule.</li>
+          <li><strong>Map the build pipeline transition.</strong> Document how <code>build-icons.js</code> will yield to registry projections. Define the cutover.</li>
+          <li><strong>Reconcile taxonomy seed with registry.</strong> Decide: seed is deprecated when registry categories exist, or seed is a legacy layer. Do not leave both alive without a plan.</li>
+        </ol>
+
+        <h3>Should-fix before Phase 2 (2 items)</h3>
+        <ol start="4">
+          <li><strong>Build a minimal review interface.</strong> Even a CLI is sufficient. Without it, confidence routing is unexecutable.</li>
+          <li><strong>Inventory all hardcoded count strings.</strong> Classify each as marketing / product truth / technical with intended source.</li>
+        </ol>
+
+        <h3>Nice-to-have (2 items)</h3>
+        <ol start="6">
+          <li>Acknowledge premium manifest richness in the implementation plan.</li>
+          <li>State a simple visual pilot budget and the planned hosted and local lanes.</li>
+        </ol>
+
+        <hr>
+
+        <h2 id="not-found">What Was NOT Found</h2>
+        <p>These areas were examined and found to be <strong>adequately covered</strong>: security model, progressive delivery phasing, schema field design, guardrail philosophy, governance model, accessibility fields, and motion/dynamics fields.</p>
+
+      </article>
+    </div>
+  </body>
+</html>

@@ -5,7 +5,11 @@ import {
   compareBrowseIconsByPopularity,
   compareSearchMatches,
   createEmptyPopularityRecord,
+  getNextJobCategoryFilterForLibrarySelect,
   getPopularityRecord,
+  getScopedJobCategoryFilter,
+  resolveGridHeadingText,
+  shouldShowPurposeFilterBar,
   shouldSyncSearchOnBlur,
 } from '../lib/icon-grid-behavior.js';
 
@@ -79,6 +83,118 @@ assert.equal(
   shouldSyncSearchOnBlur('self hosted', 'self-hosted'),
   true,
   'blur should still commit meaningful input changes'
+);
+
+assert.equal(
+  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'all' }),
+  true,
+  'purpose chips should be visible in the All Icons browse scope'
+);
+
+assert.equal(
+  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'material' }),
+  false,
+  'purpose chips should be hidden in specific free-library browse scopes until taxonomy coverage is mature'
+);
+
+assert.equal(
+  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'favorites' }),
+  false,
+  'purpose chips should be hidden in Favorites'
+);
+
+assert.equal(
+  shouldShowPurposeFilterBar({ currentView: 'icons', activeLibrary: 'recent' }),
+  false,
+  'purpose chips should be hidden in Recent'
+);
+
+assert.equal(
+  shouldShowPurposeFilterBar({ currentView: 'dashboard', activeLibrary: 'all' }),
+  false,
+  'purpose chips should be hidden on non-icon shell views'
+);
+
+assert.equal(
+  getScopedJobCategoryFilter({
+    currentView: 'icons',
+    activeLibrary: 'all',
+    activeJobCategoryFilter: 'ai-agent-workflows',
+  }),
+  'ai-agent-workflows',
+  'All Icons should keep the selected purpose filter'
+);
+
+assert.equal(
+  getScopedJobCategoryFilter({
+    currentView: 'icons',
+    activeLibrary: 'material',
+    activeJobCategoryFilter: 'navigation-wayfinding',
+  }),
+  null,
+  'specific free-library browse views should not keep an effective hidden purpose filter'
+);
+
+assert.equal(
+  getScopedJobCategoryFilter({
+    currentView: 'icons',
+    activeLibrary: 'favorites',
+    activeJobCategoryFilter: 'ai-agent-workflows',
+  }),
+  null,
+  'Favorites should not keep an effective hidden purpose filter'
+);
+
+assert.equal(
+  getScopedJobCategoryFilter({
+    currentView: 'api-keys',
+    activeLibrary: 'all',
+    activeJobCategoryFilter: 'status-feedback',
+  }),
+  null,
+  'store and account routes should not inherit an effective purpose filter'
+);
+
+assert.equal(
+  getNextJobCategoryFilterForLibrarySelect({
+    nextLibraryId: 'all',
+    activeJobCategoryFilter: 'ai-agent-workflows',
+  }),
+  'all',
+  'clicking All Icons should reset the stored purpose filter to the default state'
+);
+
+assert.equal(
+  getNextJobCategoryFilterForLibrarySelect({
+    nextLibraryId: 'favorites',
+    activeJobCategoryFilter: 'status-feedback',
+  }),
+  'status-feedback',
+  'non-root library navigation should preserve the stored purpose filter until All Icons is selected'
+);
+
+assert.equal(
+  resolveGridHeadingText({
+    currentView: 'store-shell',
+    activeLibrary: 'all',
+    activeJobCategoryLabel: 'AI Agent Workflows',
+    currentTitle: 'Premium Collections',
+    libraryTitle: 'All Icons',
+  }),
+  'Premium Collections',
+  'store-owned routes should keep their own heading instead of being overwritten by icon-grid state'
+);
+
+assert.equal(
+  resolveGridHeadingText({
+    currentView: 'icons',
+    activeLibrary: 'all',
+    activeJobCategoryLabel: 'AI Agent Workflows',
+    currentTitle: 'Premium Collections',
+    libraryTitle: 'All Icons',
+  }),
+  'AI Agent Workflows',
+  'All Icons should still promote the active purpose label when the icon grid owns the heading'
 );
 
 const recentSearches = ['server', 'home'];

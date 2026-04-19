@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SI Semantic Rollout Roadmap</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 42px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--text);
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 28px 0;
+      }
+      code {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.95em;
+        color: #ffd7c0;
+      }
+      pre {
+        margin: 0 0 18px;
+        padding: 16px;
+        overflow: auto;
+        background: #101014;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      pre code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: #f6f6f8;
+      }
+      blockquote {
+        margin: 0 0 18px;
+        padding: 12px 16px;
+        border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03);
+        border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Supericons Plans</span>
+        <h1>SI Semantic Rollout Roadmap</h1>
+        <p class="meta">Generated from the matching Markdown source in <code>docs/superpowers/plans/</code>.</p>
+      </div>
+      <article>
+        <h1 id="si-semantic-rollout-roadmap">SI Semantic Rollout Roadmap</h1>
+        <p>Status: Living roadmap Date: April 19, 2026 Owner: Supericons</p>
+        <h2 id="purpose">Purpose</h2>
+        <p>Define the long-term rollout path for turning the SI Semantic Metadata v1 framework into a real operational system across free icons, premium icons, MCP, search, UI, export, and future native Supericons assets.</p>
+        <p>This roadmap is intentionally progressive. It assumes:</p>
+        <ul>
+        <li>we start with a narrow but durable foundation</li>
+        <li>we automate aggressively where repetition exists</li>
+        <li>we escalate only where ambiguity or quality demands it</li>
+        <li>we keep compounding rather than waiting for “perfect”</li>
+        </ul>
+        <hr>
+        <h2 id="north-star">North Star</h2>
+        <p>Create a semantic system where every Supericons-powered icon can eventually answer:</p>
+        <ul>
+        <li>what am I</li>
+        <li>what do I depict</li>
+        <li>what do I mean</li>
+        <li>when should I be used</li>
+        <li>when should I be avoided</li>
+        <li>how trustworthy is this recommendation</li>
+        <li>can I express motion, state, or interaction</li>
+        </ul>
+        <hr>
+        <h2 id="strategic-truth">Strategic Truth</h2>
+        <p>The rollout has two different quality lanes.</p>
+        <h3 id="lane-a-aggregated-icon-corpus">Lane A: Aggregated icon corpus</h3>
+        <p>Goal:</p>
+        <ul>
+        <li>broad useful semantic coverage across the <code>21,264</code> free icons and premium icon records</li>
+        </ul>
+        <p>Reality:</p>
+        <ul>
+        <li>coverage will begin as mixed-confidence</li>
+        <li>automation and sampling are essential</li>
+        </ul>
+        <h3 id="lane-b-native-si-icon-system">Lane B: Native SI icon system</h3>
+        <p>Goal:</p>
+        <ul>
+        <li>full qualitative assessment</li>
+        <li>deeper semantics</li>
+        <li>stronger usage guidance</li>
+        <li>motion/state/programmable semantics first</li>
+        </ul>
+        <p>Reality:</p>
+        <ul>
+        <li>this becomes the highest-quality semantic tier</li>
+        <li>this is where long-term differentiation is strongest</li>
+        </ul>
+        <p>This two-lane strategy lets Supericons stay practical now and differentiated over time.</p>
+        <hr>
+        <h2 id="product-principles">Product Principles</h2>
+        <h3 id="1-do-not-wait-for-total-manual-review">1. Do not wait for total manual review</h3>
+        <p>Manual review of all <code>21,264</code> icons before launch is too slow and too expensive.</p>
+        <h3 id="2-do-not-trust-pure-lexical-inference-alone">2. Do not trust pure lexical inference alone</h3>
+        <p>Search improvements prove retrieval value, but retrieval is not final semantic truth.</p>
+        <h3 id="3-add-visual-inspection-where-it-compounds-quality">3. Add visual inspection where it compounds quality</h3>
+        <p>Visual review matters most for:</p>
+        <ul>
+        <li>ambiguous icons</li>
+        <li>high-traffic icons</li>
+        <li>native SI icons</li>
+        <li>sampled QA audits</li>
+        </ul>
+        <h3 id="4-use-automation-as-a-permanent-system-not-a-one-time-batch">4. Use automation as a permanent system, not a one-time batch</h3>
+        <p>The goal is not one giant tagging sprint. The goal is a continuous semantic factory.</p>
+        <h3 id="5-use-stronger-review-only-where-the-economics-justify-it">5. Use stronger review only where the economics justify it</h3>
+        <p>Cheap automation should do the bulk work. Higher-cost review should handle exceptions, novel cases, and quality gates.</p>
+        <hr>
+        <h2 id="workstreams">Workstreams</h2>
+        <h2 id="workstream-a-schema-and-controlled-vocabularies">Workstream A: Schema and Controlled Vocabularies</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>finalize SI Semantic Metadata v1</li>
+        <li>define controlled vocabularies for category, intent, domain, state, and review state</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>no stable schema means every other workstream drifts</li>
+        </ul>
+        <h2 id="workstream-b-registry-foundation">Workstream B: Registry Foundation</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>create the repo-native main registry record layer</li>
+        <li>generate projections from one source</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>this is the backbone for search, MCP, UI, docs, and export</li>
+        </ul>
+        <h2 id="workstream-c-premium-metadata-normalization">Workstream C: Premium Metadata Normalization</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>convert all <code>400</code> premium icons into the main SI Registry shape</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>volume is small</li>
+        <li>semantic value is high</li>
+        <li>premium records are the fastest place to establish quality</li>
+        </ul>
+        <h2 id="workstream-d-free-corpus-progressive-coverage">Workstream D: Free Corpus Progressive Coverage</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>progressively tag all free icons with minimum viable SI semantic metadata</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>this closes the biggest gap between current search power and future semantic truth</li>
+        </ul>
+        <h2 id="workstream-e-visual-inspection-pipeline">Workstream E: Visual Inspection Pipeline</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>add a multimodal visual-inspection step to the semantic-tagging workflow</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>names and ids are not enough for final semantic quality</li>
+        </ul>
+        <h2 id="workstream-f-editorial-review-and-confidence-routing">Workstream F: Editorial Review and Confidence Routing</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>route records by confidence and importance</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>not every record deserves the same review budget</li>
+        </ul>
+        <p>Minimum setup needed:</p>
+        <ul>
+        <li>a pending queue</li>
+        <li>a current-versus-proposed comparison</li>
+        <li>approve, reject, and edit actions</li>
+        <li>a basic audit trail</li>
+        <li>filters for confidence and category</li>
+        </ul>
+        <p>A CLI is enough for the first version. A fuller admin screen can come later.</p>
+        <h2 id="workstream-g-product-surface-adoption">Workstream G: Product Surface Adoption</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>use registry projections in:</li>
+        <li>search</li>
+        <li>MCP</li>
+        <li>browse facets</li>
+        <li>docs</li>
+        <li>exports</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>the registry only matters if the product actually reads from it</li>
+        </ul>
+        <p>Suggested order:</p>
+        <ol>
+        <li><code>search_icons</code></li>
+        <li><code>get_icon</code></li>
+        <li>library facts and counts</li>
+        <li>browse facets</li>
+        <li>docs and exports</li>
+        <li>motion-tool alignment only where it really helps</li>
+        </ol>
+        <h2 id="workstream-h-native-si-library">Workstream H: Native SI Library</h2>
+        <p>Objective:</p>
+        <ul>
+        <li>build SI-native icons as the most semantically complete and highest-trust tier</li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>this is where full qualitative assessment and deeper differentiation live</li>
+        </ul>
+        <hr>
+        <h2 id="visual-inspection-strategy">Visual Inspection Strategy</h2>
+        <p>The user’s suggestion is directionally right: icon images are relatively simple compared with natural images, so visual inspection should be cheaper and more automatable than general image understanding.</p>
+        <p>The key is to use visual models in the right role.</p>
+        <h3 id="recommended-role-for-visual-inspection">Recommended role for visual inspection</h3>
+        <p>Visual inspection should answer:</p>
+        <ul>
+        <li>what does this icon visually depict</li>
+        <li>what motifs are present</li>
+        <li>how ambiguous is it</li>
+        <li>what could it be confused with</li>
+        </ul>
+        <p>Visual inspection should not be the sole authority for:</p>
+        <ul>
+        <li>final recommended purpose</li>
+        <li>final <code>use_when</code></li>
+        <li>final <code>avoid_when</code></li>
+        </ul>
+        <h3 id="recommended-pilot">Recommended pilot</h3>
+        <p>Run a small pilot first.</p>
+        <p>Pilot slice:</p>
+        <ul>
+        <li>100 premium icons</li>
+        <li>100 top free icons</li>
+        <li>50 deliberately ambiguous icons</li>
+        </ul>
+        <p>For each icon, compare:</p>
+        <ul>
+        <li>lexical inference</li>
+        <li>visual inference</li>
+        <li>current pack/context signals</li>
+        <li>final reviewed recommendation</li>
+        </ul>
+        <p>Success criteria:</p>
+        <ul>
+        <li>useful depiction summaries</li>
+        <li>useful ambiguity ratings</li>
+        <li>acceptable agreement with human review</li>
+        <li>low enough cost to run continuously</li>
+        </ul>
+        <h3 id="long-term-operating-model">Long-term operating model</h3>
+        <ol>
+        <li>Cheap lexical pass</li>
+        <li>Cheap visual pass</li>
+        <li>Merge pass</li>
+        <li>Confidence score</li>
+        <li>Human review only when needed</li>
+        </ol>
+        <p>This is where a continuous workflow or cron job becomes valuable.</p>
+        <hr>
+        <h2 id="autonomous-semantic-tagging-workflow">Autonomous Semantic Tagging Workflow</h2>
+        <p>The semantic rollout should become a continuous system.</p>
+        <h2 id="inputs">Inputs</h2>
+        <ul>
+        <li>source icon identity</li>
+        <li>source name and id</li>
+        <li>source library</li>
+        <li>premium pack metadata</li>
+        <li>current alias maps</li>
+        <li>taxonomy seed as a short-term bootstrap input only</li>
+        <li>search telemetry</li>
+        <li>visual inspection output</li>
+        </ul>
+        <h2 id="pipeline">Pipeline</h2>
+        <ol>
+        <li>Ingest icon</li>
+        <li>Generate lexical suggestions</li>
+        <li>Generate visual depiction suggestions</li>
+        <li>Merge contextual signals</li>
+        <li>Produce draft SI semantic record</li>
+        <li>Validate schema and controlled vocab</li>
+        <li>Assign confidence</li>
+        <li>Route to:</li>
+        </ol>
+        <ul>
+        <li>auto-accept</li>
+        <li>queued review</li>
+        <li>escalation</li>
+        </ul>
+        <ol>
+        <li>Publish registry record</li>
+        <li>Regenerate projections</li>
+        </ol>
+        <h2 id="cadence">Cadence</h2>
+        <ul>
+        <li>nightly or scheduled local/CI batch for new or unreviewed icons</li>
+        <li>weekly editorial triage for low-confidence/high-value records</li>
+        <li>monthly vocabulary cleanup and quality audit</li>
+        </ul>
+        <h2 id="pilot-lanes-and-budget-guardrails">Pilot lanes and budget guardrails</h2>
+        <p>The visual pilot should test two lanes if possible:</p>
+        <ol>
+        <li>a low-cost hosted visual model</li>
+        <li>a local or open-source visual model if setup is reasonable</li>
+        </ol>
+        <p>Budget guidance:</p>
+        <ul>
+        <li>the 250-icon pilot should stay in a low single-digit dollar budget on hosted low-resolution calls</li>
+        <li>a local open-source lane can be close to zero extra cost if the hardware already exists</li>
+        <li>check live vendor pricing when the pilot starts because pricing changes</li>
+        </ul>
+        <p>What success looks like:</p>
+        <ul>
+        <li>better depiction summaries than lexical-only tagging</li>
+        <li>better ambiguity detection than lexical-only tagging</li>
+        <li>low enough setup friction to keep running later</li>
+        </ul>
+        <h2 id="efficiency-model">Efficiency model</h2>
+        <p>Recommended principle:</p>
+        <ul>
+        <li>cheapest model or heuristic that produces acceptable first-pass quality</li>
+        <li>stronger models only for disagreement, ambiguity, or sensitive icons</li>
+        </ul>
+        <p>This keeps costs low and throughput high.</p>
+        <hr>
+        <h2 id="confidence-routing-model">Confidence Routing Model</h2>
+        <h3 id="high-confidence">High confidence</h3>
+        <p>Traits:</p>
+        <ul>
+        <li>clear lexical signal</li>
+        <li>clear visual depiction</li>
+        <li>strong pack or domain context</li>
+        <li>low ambiguity</li>
+        </ul>
+        <p>Action:</p>
+        <ul>
+        <li>auto-accept into draft active state or light-touch review</li>
+        </ul>
+        <h3 id="medium-confidence">Medium confidence</h3>
+        <p>Traits:</p>
+        <ul>
+        <li>decent lexical or visual evidence</li>
+        <li>some ambiguity</li>
+        <li>acceptable but not strong context</li>
+        </ul>
+        <p>Action:</p>
+        <ul>
+        <li>queue for batch review</li>
+        </ul>
+        <h3 id="low-confidence">Low confidence</h3>
+        <p>Traits:</p>
+        <ul>
+        <li>weak or conflicting evidence</li>
+        <li>high ambiguity</li>
+        <li>risky semantic assignment</li>
+        </ul>
+        <p>Action:</p>
+        <ul>
+        <li>require deeper review or defer stronger claims</li>
+        </ul>
+        <h2 id="taxonomy-seed-transition-rule">Taxonomy seed transition rule</h2>
+        <p>The current 3-chip seed is a temporary browse helper, not the long-term owner of category meaning.</p>
+        <ul>
+        <li>keep it for the current <code>All Icons</code> experiment</li>
+        <li>do not grow it into a second full metadata system</li>
+        <li>when registry-backed facets are ready, switch in one clear cutover</li>
+        </ul>
+        <hr>
+        <h2 id="phased-rollout">Phased Rollout</h2>
+        <h2 id="phase-0-lock-the-meaning-system">Phase 0: Lock the Meaning System</h2>
+        <p>Target:</p>
+        <ul>
+        <li>immediate</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li>SI Semantic Metadata v1 is finalized</li>
+        <li>SI Registry product posture is finalized</li>
+        <li>one living roadmap exists</li>
+        </ul>
+        <h2 id="phase-1-build-the-foundation">Phase 1: Build the Foundation</h2>
+        <p>Target:</p>
+        <ul>
+        <li>next 2 to 4 weeks</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li>repo-native registry foundation exists</li>
+        <li>product facts generator exists</li>
+        <li>premium records are normalized into the main shared shape</li>
+        <li>count/version drift is reduced</li>
+        </ul>
+        <h2 id="phase-2-prove-the-semantic-factory">Phase 2: Prove the Semantic Factory</h2>
+        <p>Target:</p>
+        <ul>
+        <li>next 4 to 8 weeks</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li>tagging pipeline runs continuously</li>
+        <li>200 to 500 top free icons receive high-value semantic records</li>
+        <li>visual inspection pilot is measured</li>
+        <li>confidence routing works</li>
+        </ul>
+        <h2 id="phase-3-expand-coverage-without-losing-quality">Phase 3: Expand Coverage Without Losing Quality</h2>
+        <p>Target:</p>
+        <ul>
+        <li>post-launch</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li>thousands of free icons receive minimum viable semantic coverage</li>
+        <li>ambiguous sets are sampled and audited</li>
+        <li>review backlog is manageable</li>
+        </ul>
+        <h2 id="phase-4-productize-the-registry">Phase 4: Productize the Registry</h2>
+        <p>Target:</p>
+        <ul>
+        <li>after the semantic record model is stable</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li>public registry API for free/open records</li>
+        <li>self-describing SVG passport export</li>
+        <li>compact <code>si://</code> format support</li>
+        <li>browse facets pull from registry projections</li>
+        </ul>
+        <h2 id="phase-5-unlock-the-higher-level-product">Phase 5: Unlock the Higher-Level Product</h2>
+        <p>Target:</p>
+        <ul>
+        <li>once registry quality is strong enough</li>
+        </ul>
+        <p>Outcomes:</p>
+        <ul>
+        <li><code>request_semantic_icon</code></li>
+        <li>richer MCP explanations</li>
+        <li>motion-aware semantic records</li>
+        <li>native SI icon grammar and programmable icon behavior</li>
+        </ul>
+        <hr>
+        <h2 id="native-si-library-strategy">Native SI Library Strategy</h2>
+        <p>The native SI library should be treated as the gold semantic tier.</p>
+        <p>For SI-native icons:</p>
+        <ul>
+        <li>write records intentionally, not just infer them</li>
+        <li>require visual review</li>
+        <li>require richer <code>use_when</code> and <code>avoid_when</code></li>
+        <li>add motion/state semantics earlier</li>
+        <li>use them as exemplars for the broader registry</li>
+        </ul>
+        <p>This is the part of the roadmap that should carry the strongest qualitative standard.</p>
+        <hr>
+        <h2 id="metrics">Metrics</h2>
+        <h3 id="coverage-metrics">Coverage metrics</h3>
+        <ul>
+        <li>percent of icons with minimum viable semantic records</li>
+        <li>percent of icons with reviewed records</li>
+        <li>percent of premium icons normalized</li>
+        </ul>
+        <h3 id="quality-metrics">Quality metrics</h3>
+        <ul>
+        <li>human agreement rate on sampled records</li>
+        <li>ambiguity rate</li>
+        <li>revision rate after review</li>
+        <li>false-positive semantic assignment rate</li>
+        </ul>
+        <h3 id="product-metrics">Product metrics</h3>
+        <ul>
+        <li>search satisfaction on semantically enriched queries</li>
+        <li>MCP usefulness for technical or intent-driven searches</li>
+        <li>browse engagement with future registry-backed facets</li>
+        <li>free-to-paid conversion on premium-intent searches</li>
+        <li>API key activation after MCP setup exposure</li>
+        <li>premium collection attach rate where richer meaning is shown</li>
+        </ul>
+        <h3 id="operational-metrics">Operational metrics</h3>
+        <ul>
+        <li>pipeline throughput</li>
+        <li>average review backlog</li>
+        <li>cost per 1,000 records processed</li>
+        </ul>
+        <h3 id="business-hypotheses-to-watch">Business hypotheses to watch</h3>
+        <ul>
+        <li>better search meaning should improve conversion on high-intent searches</li>
+        <li>better MCP explanations should improve retained technical usage</li>
+        <li>better premium semantics should improve merchandising and perceived value</li>
+        </ul>
+        <hr>
+        <h2 id="risks-and-responses">Risks and Responses</h2>
+        <h3 id="risk-automation-floods-the-registry-with-shallow-semantics">Risk: automation floods the registry with shallow semantics</h3>
+        <p>Response:</p>
+        <ul>
+        <li>require evidence and confidence</li>
+        <li>keep review state explicit</li>
+        </ul>
+        <h3 id="risk-visual-models-over-interpret-icons">Risk: visual models over-interpret icons</h3>
+        <p>Response:</p>
+        <ul>
+        <li>use visual models for depiction and ambiguity, not final purpose alone</li>
+        </ul>
+        <h3 id="risk-the-long-tail-never-gets-finished">Risk: the long tail never gets finished</h3>
+        <p>Response:</p>
+        <ul>
+        <li>run the workflow continuously</li>
+        <li>tie improvement to weekly cadence</li>
+        <li>keep quality tiering explicit</li>
+        </ul>
+        <h3 id="risk-the-roadmap-becomes-too-visionary-again">Risk: the roadmap becomes too visionary again</h3>
+        <p>Response:</p>
+        <ul>
+        <li>keep the registry tied to current product surfaces</li>
+        <li>let each phase earn the next one</li>
+        </ul>
+        <hr>
+        <h2 id="final-recommendation">Final Recommendation</h2>
+        <p>Treat semantic rollout as an operating system, not a project.</p>
+        <p>The right long-term move is not:</p>
+        <ul>
+        <li>manually tag everything once</li>
+        </ul>
+        <p>The right long-term move is:</p>
+        <ul>
+        <li>finalize the schema</li>
+        <li>build the registry</li>
+        <li>automate the pipeline</li>
+        <li>use visual inspection where it genuinely improves quality</li>
+        <li>review the important and ambiguous slices</li>
+        <li>progressively cover the corpus</li>
+        <li>let product surfaces compound the value</li>
+        </ul>
+        <p>That is how Supericons can move from “good semantic search” to “a real semantic icon system” without stalling launch momentum.</p>
+      </article>
+    </div>
+  </body>
+</html>

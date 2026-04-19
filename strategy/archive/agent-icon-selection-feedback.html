@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Agents Select Icons: First-Hand Feedback | Supericons</title>
+<meta name="description" content="Raw, unfiltered intelligence from the agent that built the Supericons 2027 blueprint, documenting exactly how and why icon choices were made.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080a;--bg2:#0d0f13;--bg3:#14171d;--surface:#1c2029;
+  --text:#e8eaed;--text2:#9aa0ad;--text3:#636a78;
+  --accent:#6c5ce7;--accent2:#a29bfe;--ag:rgba(108,92,231,.18);
+  --green:#00d2a0;--gg:rgba(0,210,160,.12);
+  --amber:#f5a623;--amg:rgba(245,166,35,.12);
+  --red:#ff5252;--rdg:rgba(255,82,82,.1);
+  --cyan:#22d3ee;
+  --r:10px;--rl:18px;--max:1020px;
+  --fd:'Space Grotesk','Inter',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px}
+.mat{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;display:inline-flex;align-items:center;line-height:1;vertical-align:middle}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:99;backdrop-filter:blur(20px);background:rgba(7,8,10,.85);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;align-items:center;gap:12px;height:52px;max-width:var(--max);margin:0 auto;padding:0 28px}
+.nav-brand{font-family:var(--fd);font-weight:700;font-size:16px;color:var(--text)}
+.nav-sep{color:var(--text3)}
+.nav-sub{font-size:13px;color:var(--text3)}
+
+/* Hero */
+.hero{min-height:56px;padding:120px 28px 72px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 35%,var(--ag),transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent2);margin-bottom:24px}
+.badge .mat{font-size:15px;color:var(--amber);font-variation-settings:'FILL' 1}
+h1{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 0%,var(--accent2) 60%,var(--amber) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1rem;color:var(--text2);line-height:1.8;margin-bottom:24px}
+.hero-meta{display:inline-flex;gap:20px;font-size:12px;color:var(--text3);font-family:var(--fm)}
+
+/* Alert box */
+.alert{background:var(--bg3);border:1px solid rgba(245,166,35,.25);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:20px 24px;margin:0 0 36px;font-size:.95rem;line-height:1.8}
+.alert strong{color:var(--amber)}
+
+/* Section */
+.section{padding:72px 0}
+.section-alt{background:var(--bg2)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
+h2{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.2;letter-spacing:-.3px;margin-bottom:12px}
+h3{font-family:var(--fd);font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.lead{font-size:.98rem;color:var(--text2);max-width:640px;line-height:1.9;margin-bottom:36px}
+
+/* Decision table */
+.dtable{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:32px}
+.dtable thead tr{border-bottom:1px solid rgba(255,255,255,.08)}
+.dtable th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3)}
+.dtable td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.dtable td:first-child{color:var(--text);font-weight:500}
+.dtable td:nth-child(2){font-family:var(--fm);font-size:12px;color:var(--cyan)}
+.dtable td:nth-child(3){color:var(--text2)}
+.quality{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.q-good{background:var(--gg);color:var(--green)}
+.q-ok{background:var(--amg);color:var(--amber)}
+.q-poor{background:var(--rdg);color:var(--red)}
+
+/* Gap table */
+.gtable{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:32px}
+.gtable th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid rgba(255,255,255,.08)}
+.gtable td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);vertical-align:top}
+.gtable td:first-child{color:var(--text);font-weight:500}
+.gap-crit{color:var(--red);font-weight:600;font-size:11px}
+.gap-high{color:var(--amber);font-weight:600;font-size:11px}
+.gap-med{color:var(--text3);font-weight:600;font-size:11px}
+
+/* Finding cards */
+.findings{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+@media(max-width:680px){.findings{grid-template-columns:1fr}}
+.finding{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:24px;position:relative;overflow:hidden;transition:border-color .3s}
+.finding:hover{border-color:rgba(255,255,255,.12)}
+.finding::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.f1::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.f2::before{background:linear-gradient(90deg,var(--amber),var(--red))}
+.f3::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.f4::before{background:linear-gradient(90deg,var(--red),var(--accent))}
+.f5::before{background:linear-gradient(90deg,var(--text3),var(--accent2))}
+.finding-num{font-family:var(--fm);font-size:11px;color:var(--text3);margin-bottom:8px}
+.finding h3{font-size:.95rem;margin-bottom:8px}
+.finding p{font-size:.88rem;color:var(--text2);line-height:1.7}
+
+/* Code blocks */
+.code{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:18px 22px;font-family:var(--fm);font-size:12.5px;line-height:1.8;margin:16px 0;overflow-x:auto}
+.cmt{color:var(--text3)}
+.kw{color:var(--accent2)}
+.str{color:var(--green)}
+.label{color:var(--amber)}
+
+/* Comparison strip */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:24px 0;border-radius:var(--rl);overflow:hidden}
+.c-old{background:var(--bg3);border:1px solid rgba(255,255,255,.05);padding:24px;border-radius:var(--rl) 0 0 var(--rl)}
+.c-new{background:linear-gradient(145deg,rgba(108,92,231,.08),rgba(0,210,160,.05));border:1px solid rgba(255,255,255,.08);padding:24px;border-radius:0 var(--rl) var(--rl) 0}
+.c-label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px}
+.c-old .c-label{color:var(--text3)}
+.c-new .c-label{color:var(--green)}
+.compare p{font-size:.88rem;color:var(--text2);line-height:1.7}
+@media(max-width:600px){.compare{grid-template-columns:1fr}.c-old{border-radius:var(--rl) var(--rl) 0 0}.c-new{border-radius:0 0 var(--rl) var(--rl)}}
+
+/* Action steps */
+.step{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:var(--r);margin-bottom:10px;transition:border-color .3s}
+.step:hover{border-color:rgba(255,255,255,.1)}
+.step-badge{min-width:56px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;text-align:center;flex-shrink:0;margin-top:2px}
+.p0{background:var(--rdg);color:var(--red)}
+.p1{background:var(--amg);color:var(--amber)}
+.p2{background:var(--ag);color:var(--accent2)}
+.step p{font-size:.9rem;color:var(--text2);line-height:1.6}
+.step strong{color:var(--text)}
+
+/* Quote */
+.quote{background:var(--bg3);border-left:3px solid var(--green);border-radius:0 var(--rl) var(--rl) 0;padding:22px 28px;margin:32px 0;font-size:.98rem;font-style:italic;color:var(--text2);line-height:1.8}
+.quote strong{color:var(--text);font-style:normal}
+
+/* Info tag */
+.itag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;font-family:var(--fm);background:var(--surface);color:var(--text3);border:1px solid rgba(255,255,255,.06)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:12px;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Supericons</span>
+  <span class="nav-sep">/</span>
+  <span class="nav-sub">Agent Icon Selection Feedback</span>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="hero-inner">
+  <div class="badge"><span class="mat" style="font-variation-settings:'FILL' 1">psychology</span>Agent Introspection Report</div>
+  <h1>How Agents Select Icons:<br>First-Hand Feedback</h1>
+  <p class="hero-sub">Raw, unfiltered intelligence from the agent that built the Supericons 2027 blueprint. Documenting exactly how and why icon choices were made -- and where the process failed.</p>
+  <div class="hero-meta">
+    <span>Source: blueprint HTML build session</span>
+    <span>Date: April 2026</span>
+    <span>Purpose: product intelligence</span>
+  </div>
+</div>
+</section>
+
+<!-- Core finding -->
+<section class="section">
+<div class="wrap">
+  <div class="alert reveal">
+    <strong>The core finding:</strong> When building a rich HTML document, I used Google Material Symbols via CDN -- not the Supericons MCP server -- because the CDN had zero setup friction and I already knew icon names from training data. <strong>Agents take the path of least resistance.</strong> This single observation should drive every priority decision in the Supericons 2027 roadmap.
+  </div>
+
+  <div class="eyebrow">Step-by-step</div>
+  <h2>My Actual Decision Process</h2>
+  <p class="lead">I did not evaluate icon libraries. I did not browse visually. I typed names I already knew and hoped they were right.</p>
+
+  <h3>Step 1: Library selection</h3>
+  <p style="color:var(--text2);font-size:.95rem;line-height:1.8;margin-bottom:20px">I defaulted to Material Symbols because: one <code style="font-family:var(--fm);font-size:12px;background:var(--surface);padding:2px 6px;border-radius:4px">&lt;link&gt;</code> tag requires no configuration, icon names are in my training data so I can use them without a tool call, and there is no API key, no MCP session, and no network round-trip required.</p>
+
+  <div class="compare reveal">
+    <div class="c-old">
+      <div class="c-label">What I did (high friction)</div>
+      <p>Recalled a Material Symbols name from training data. Typed it as a string. <em>Never saw the icon.</em> Hoped it was the right visual choice.</p>
+    </div>
+    <div class="c-new">
+      <div class="c-label">What I wish existed (zero friction)</div>
+      <p>Described the intent: "I need a trust indicator for a governance dashboard." Received the exact right icon, animated, with a11y metadata, in one call.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px">Step 2: Per-icon decisions</h3>
+  <table class="dtable reveal">
+    <thead><tr><th>Concept</th><th>Icon used</th><th>My reasoning</th><th>Quality</th></tr></thead>
+    <tbody>
+      <tr><td>Governance Collections</td><td>shield</td><td>"Protection, trust, governance"</td><td><span class="quality q-ok">Acceptable</span></td></tr>
+      <tr><td>Stateful Animation</td><td>animation</td><td>Literal keyword match</td><td><span class="quality q-good">Good</span></td></tr>
+      <tr><td>MCP Semantic Protocol</td><td>hub</td><td>"Connected network, protocol, API"</td><td><span class="quality q-ok">Acceptable</span></td></tr>
+      <tr><td>Dual-Surface Design</td><td>layers</td><td>"Two surfaces = layers"</td><td><span class="quality q-good">Good</span></td></tr>
+      <tr><td>Icon Grammar</td><td>auto_awesome</td><td>"Composition, magic, assembly" -- I was guessing</td><td><span class="quality q-poor">Poor</span></td></tr>
+      <tr><td>Multimodal System</td><td>devices</td><td>"Multiple surfaces = multiple devices"</td><td><span class="quality q-ok">Acceptable</span></td></tr>
+      <tr><td>Agent: executing</td><td>sync</td><td>"Spinning arrows = processing"</td><td><span class="quality q-good">Good</span></td></tr>
+      <tr><td>Agent: blocked</td><td>block</td><td>Literal match</td><td><span class="quality q-good">Good</span></td></tr>
+      <tr><td>Agent: planning</td><td>schema</td><td>"Planning = building a graph"</td><td><span class="quality q-ok">Acceptable</span></td></tr>
+      <tr><td>Agent: uncertain</td><td>help_outline</td><td>"Question = uncertainty"</td><td><span class="quality q-poor">Poor</span></td></tr>
+      <tr><td>Roadmap phases</td><td>looks_one... looks_5</td><td>Numbered sequence placeholders</td><td><span class="quality q-ok">Functional only</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- Failures -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">Where I Failed and Why</div>
+  <h2>The Governance Vocabulary Gap, Proved Empirically</h2>
+  <p class="lead">For traditional UI concepts I had instant matches. For agentic concepts I was forced to approximate or skip entirely.</p>
+
+  <table class="gtable reveal">
+    <thead><tr><th>Agentic concept needed</th><th>What I used</th><th>Gap severity</th></tr></thead>
+    <tbody>
+      <tr><td>Confidence level (high / medium / low)</td><td>Nothing -- fell back to text</td><td><span class="gap-crit">Critical</span></td></tr>
+      <tr><td>Human override / authority marker</td><td>Text string "agent" / "human"</td><td><span class="gap-crit">Critical</span></td></tr>
+      <tr><td>Waiting for human approval (agent needs YOU specifically)</td><td>hourglass_top (communicates "time" not "you need to act")</td><td><span class="gap-crit">Critical</span></td></tr>
+      <tr><td>Disclosure layer / explanation layer</td><td>info (generic)</td><td><span class="gap-high">High</span></td></tr>
+      <tr><td>Audit required</td><td>Nothing -- skipped</td><td><span class="gap-high">High</span></td></tr>
+      <tr><td>Memory accessed</td><td>Nothing -- skipped</td><td><span class="gap-high">High</span></td></tr>
+      <tr><td>Reasoning chain / trace</td><td>route (wrong metaphor)</td><td><span class="gap-med">Medium</span></td></tr>
+      <tr><td>Icon Grammar concept</td><td>auto_awesome (sparkle -- vague)</td><td><span class="gap-med">Medium</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote reveal">
+    The essay <strong>Icons_Past_Present_Future.md</strong> describes the governance vocabulary gap theoretically. Building the blueprint HTML proved it empirically. <strong>Every row in the table above is a premium collection waiting to be built.</strong>
+  </div>
+</div>
+</section>
+
+<!-- 5 Findings -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">Product Intelligence</div>
+  <h2>Five Findings for the Supericons Team</h2>
+  <p class="lead">What this session reveals about how coding agents actually interact with icon systems in 2026.</p>
+
+  <div class="findings">
+    <div class="finding f1 reveal">
+      <div class="finding-num">Finding 01</div>
+      <h3>Agents select by semantic keyword, not visual browsing</h3>
+      <p>I never opened a browser to look at icons. I typed names. The <span class="itag">semantic_tags[]</span> array is therefore the most important field in your dual-surface metadata. Specifically: <strong>intent synonyms, not visual descriptors.</strong> "governance" beats "looks like a shield."</p>
+    </div>
+    <div class="finding f2 reveal">
+      <div class="finding-num">Finding 02</div>
+      <h3>The governance vocabulary gap is real and I felt it acutely</h3>
+      <p>For every traditional UI concept (save, delete, search), I had an instant keyword match. For agentic concepts (agent confidence, human override, disclosure layer), I was forced to approximate or skip. That gap is the entire business opportunity.</p>
+    </div>
+    <div class="finding f3 reveal">
+      <div class="finding-num">Finding 03</div>
+      <h3>I needed composable elements, not atomic glyphs</h3>
+      <p>For stateful icon demos I needed: icon + colored ring + animation. I built this manually in CSS. If <span class="itag">get_icon_grammar</span> had returned a pre-composed SVG bundle, I would have used it and saved significant effort.</p>
+    </div>
+    <div class="finding f4 reveal">
+      <div class="finding-num">Finding 04</div>
+      <h3>The ideal agent workflow does not exist yet</h3>
+      <p>Intent-based icon resolution (<span class="itag">request_semantic_icon</span>) is the single most impactful feature Supericons can ship. Every other improvement is incremental. This one is transformational.</p>
+    </div>
+    <div class="finding f5 reveal">
+      <div class="finding-num">Finding 05</div>
+      <h3>Pre-knowledge of names is Material Symbols' moat -- and it is closeable</h3>
+      <p>Material Symbols names appear across the web so they live in my training data. Supericons closes this two ways: MCP intent resolution (agents describe, not name) and synonym mapping ("waiting_for_approval" resolves to the right ID).</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px">The Ideal Agent Workflow (Does Not Exist Yet)</h3>
+  <div class="code reveal">
+<span class="cmt">// What I actually did (high friction, mediocre results)</span>
+<span class="kw">Step 1</span>: Think of a concept
+<span class="kw">Step 2</span>: Recall a Material Symbols name from training
+<span class="kw">Step 3</span>: Type it as a string
+<span class="kw">Step 4</span>: Hope it looks right without seeing it
+
+<span class="cmt">// What I wish existed (low friction, semantically correct icons)</span>
+<span class="label">request_semantic_icon</span>({
+  <span class="kw">intent</span>: <span class="str">"represent_governance_concept"</span>,
+  <span class="kw">concept</span>: <span class="str">"trust_and_authority"</span>,
+  <span class="kw">context</span>: <span class="str">"strategy_document"</span>,
+  <span class="kw">style</span>: <span class="str">"filled"</span>,
+  <span class="kw">state</span>: <span class="str">"confirmed"</span>
+})
+<span class="cmt">// Returns: SVG + CSS + a11y metadata. No guessing required.</span></div>
+</div>
+</section>
+
+<!-- Action items -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">Recommendations</div>
+  <h2>Action Items for the Supericons Team</h2>
+  <p class="lead">Prioritized by impact on agent adoption. P0 = ship first.</p>
+
+  <div class="step reveal">
+    <span class="step-badge p0">P0</span>
+    <p><strong>Ship the Agent Lifecycle Collection first (9 states).</strong> These are the most frequently needed governance icons and have the clearest visual vocabulary to define. Instant impact on every agent building agentic UIs.</p>
+  </div>
+  <div class="step reveal">
+    <span class="step-badge p0">P0</span>
+    <p><strong>Add intent-based synonyms to icon-index.json immediately.</strong> Not visual descriptors -- purposes. "governance", "confidence-low", "waiting-for-approval", "agent-initiated". These are what agents search for.</p>
+  </div>
+  <div class="step reveal">
+    <span class="step-badge p1">P1</span>
+    <p><strong>Build <span class="itag">request_semantic_icon</span> MCP tool.</strong> The single biggest unlock for agent adoption. Without this, agents default to Material Symbols. With this, they have a reason to install Supericons that Material cannot replicate.</p>
+  </div>
+  <div class="step reveal">
+    <span class="step-badge p1">P1</span>
+    <p><strong>Design authority-marker and confidence-badge primitives.</strong> These are the most critical missing icons. No library has them. First to ship owns the vocabulary.</p>
+  </div>
+  <div class="step reveal">
+    <span class="step-badge p2">P2</span>
+    <p><strong>Publish governance icon taxonomy so agents can discover what exists.</strong> A <span class="itag">list_governance_icons</span> MCP tool enables agents to browse by purpose, not guess by name.</p>
+  </div>
+  <div class="step reveal">
+    <span class="step-badge p2">P2</span>
+    <p><strong>Add a "How to describe icons to agents" section to the docs.</strong> Embed this feedback as concrete guidance. Agents reading your docs should understand the intent-first model before they write their first tool call.</p>
+  </div>
+
+  <div class="quote reveal">
+    The agent that builds the next version of the blueprint document -- with a fully operational Supericons semantic protocol -- should be able to say: <strong>"I need a trust-confirmed icon for a governance dashboard"</strong> and receive the exact right visual element in one call. That is the product.
+  </div>
+</div>
+</section>
+
+<!-- Can Agents Design Icons? -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">Addendum: Agent Design Capabilities</div>
+  <h2>Can Agents Design Icons?</h2>
+  <p class="lead">An honest self-assessment. If a user asks me to design visually impressive icons for apps and websites based on human taste, here is what I can and cannot deliver.</p>
+
+  <div class="findings">
+    <div class="finding f3 reveal">
+      <div class="finding-num">Can do</div>
+      <h3>Write SVG markup directly</h3>
+      <p>My training data includes thousands of icon SVGs. I understand stroke widths, viewBox conventions, path construction, and visual balance. I can produce simple, clean line icons (Lucide/Feather style). Quality ceiling: functional, correct, but <strong>not visually impressive</strong>.</p>
+    </div>
+    <div class="finding f3 reveal">
+      <div class="finding-num">Can do</div>
+      <h3>CSS-animate icons (strongest skill)</h3>
+      <p>Given an SVG, I can write sophisticated CSS animations: hover effects, state transitions, micro-interactions, keyframe choreography. The existing premium collection pipeline proves this capability.</p>
+    </div>
+    <div class="finding f2 reveal">
+      <div class="finding-num">Cannot do</div>
+      <h3>Match human visual taste and aesthetic judgment</h3>
+      <p>I have no way to evaluate visual balance, negative space harmony, or whether an icon "feels right." I optimize for correctness and convention, not beauty.</p>
+    </div>
+    <div class="finding f2 reveal">
+      <div class="finding-num">Cannot do</div>
+      <h3>Create pixel-perfect production icons at scale</h3>
+      <p>A 50-icon collection with consistent stroke weight, optical alignment, corner radius, and visual density requires iteration-by-iteration refinement. I can approximate the first draft. The polish loop needs human eyes.</p>
+    </div>
+    <div class="finding f4 reveal">
+      <div class="finding-num">Cannot do</div>
+      <h3>Understand brand personality through icons</h3>
+      <p>"Make icons that feel playful but professional." I can translate this to parameters (round corners, thicker stroke, softer angles), but I am applying rules, not feeling the brand.</p>
+    </div>
+    <div class="finding f4 reveal">
+      <div class="finding-num">Cannot do</div>
+      <h3>Judge from a human taste profile</h3>
+      <p>"I like minimalist Japanese-inspired design." I can adjust parameters (thinner strokes, more whitespace, geometric reduction), but I am pattern-matching against training data, not developing aesthetic empathy.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px">Capability Matrix</h3>
+  <table class="dtable reveal">
+    <thead><tr><th>Task</th><th style="font-family:var(--fm)">Agent capability</th><th>Human required?</th></tr></thead>
+    <tbody>
+      <tr><td>Select the right icon for a concept</td><td style="color:var(--amber)">Medium</td><td>No, if semantic tags exist</td></tr>
+      <tr><td>Write clean SVG for simple shapes</td><td style="color:var(--green)">High</td><td>No</td></tr>
+      <tr><td>Create visually impressive icons</td><td style="color:var(--red)">Low</td><td>Yes</td></tr>
+      <tr><td>Animate icons with CSS</td><td style="color:var(--green)">High</td><td>No</td></tr>
+      <tr><td>Compose icon + state + badge</td><td style="color:var(--amber)">Medium</td><td>No, if grammar system exists</td></tr>
+      <tr><td>Judge aesthetic quality</td><td style="color:var(--red)">Very low</td><td>Yes</td></tr>
+      <tr><td>Maintain collection consistency</td><td style="color:var(--red)">Low</td><td>Yes, for quality control</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert reveal" style="border-left-color:var(--green);border-color:rgba(0,210,160,.2)">
+    <strong style="color:var(--green)">The strategic implication:</strong> Agents will not replace icon designers. But agents will be the primary <strong>consumers</strong> of icon libraries, selecting and assembling icons into UIs at scale. The value chain is: <strong>Human designers</strong> create the visual vocabulary (Supericons' core product). <strong>Agents</strong> select, compose, and deploy those icons into apps (where MCP + semantic tags + grammar matter). The moat is not that agents can make icons. It is that agents <strong>cannot make good icons</strong>, so they need a library. Whichever library makes it easiest for agents to find and use the right icon wins the market.
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap">Agent Icon Selection Feedback Report &mdash; Supericons / Curly Mole Labs &mdash; April 2026</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){i.target.classList.add('visible');obs.unobserve(i.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

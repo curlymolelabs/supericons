@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Visual Protocol Thesis | Supericons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060810;--bg2:#0b0e18;--bg3:#111625;--surface:#1a2038;
+  --text:#eaecf4;--text2:#99a3b8;--text3:#5c6678;
+  --v:#8b5cf6;--v2:#c4b5fd;--vg:rgba(139,92,246,.14);
+  --g:#10b981;--gg:rgba(16,185,129,.1);
+  --a:#f59e0b;--ag:rgba(245,158,11,.1);
+  --r:#ef4444;--rg:rgba(239,68,68,.07);
+  --c:#06b6d4;
+  --rd:10px;--rl:18px;--mx:1080px;
+  --fd:'Space Grotesk','Inter',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px}
+.m{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;display:inline-flex;align-items:center;line-height:1;vertical-align:middle}
+.w{max-width:var(--mx);margin:0 auto;padding:0 28px}
+nav{position:fixed;top:0;left:0;right:0;z-index:99;backdrop-filter:blur(20px);background:rgba(6,8,16,.82);border-bottom:1px solid rgba(255,255,255,.06)}
+.ni{display:flex;align-items:center;gap:10px;height:52px;max-width:var(--mx);margin:0 auto;padding:0 28px}
+.nb{font-family:var(--fd);font-weight:700;font-size:16px}
+
+/* Hero */
+.hero{min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:100px 28px 80px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 42%,rgba(139,92,246,.12),transparent 60%),radial-gradient(ellipse 35% 30% at 25% 75%,rgba(16,185,129,.06),transparent 50%),radial-gradient(ellipse 30% 25% at 80% 60%,rgba(245,158,11,.05),transparent 50%);pointer-events:none}
+.hi{position:relative;z-index:2;max-width:750px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--v2);margin-bottom:24px}
+h1{font-family:var(--fd);font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;line-height:1.06;letter-spacing:-1.5px;margin-bottom:18px;background:linear-gradient(135deg,var(--text) 0%,var(--v2) 40%,var(--g) 80%,var(--a) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:1.08rem;color:var(--text2);line-height:1.85;margin-bottom:32px;max-width:620px;margin-left:auto;margin-right:auto}
+.mission{display:inline-block;padding:12px 24px;border-radius:var(--rl);background:var(--surface);border:1px solid rgba(255,255,255,.06);font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--v2);letter-spacing:.2px}
+
+/* Section */
+.s{padding:72px 0;position:relative}
+.sa{background:var(--bg2)}
+.ey{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--v2);margin-bottom:10px}
+h2{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2.1rem);font-weight:700;line-height:1.2;letter-spacing:-.3px;margin-bottom:12px}
+h3{font-family:var(--fd);font-size:.98rem;font-weight:700;margin-bottom:8px}
+.ld{font-size:.95rem;color:var(--text2);max-width:660px;line-height:1.9;margin-bottom:32px}
+
+/* Layer stack */
+.layers{display:flex;flex-direction:column;gap:2px;margin-bottom:32px}
+.layer{display:flex;align-items:center;gap:16px;padding:14px 20px;border-radius:var(--rd);transition:transform .2s}
+.layer:hover{transform:translateX(4px)}
+.ln{font-family:var(--fd);font-size:1.6rem;font-weight:900;width:42px;flex-shrink:0;text-align:center}
+.lt{flex:1}
+.lt h4{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:2px}
+.lt p{font-size:.82rem;color:var(--text2);line-height:1.5}
+.ls{font-family:var(--fm);font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600;flex-shrink:0}
+.l1{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15)}.l1 .ln{color:var(--g)}.l1 .ls{background:var(--gg);color:var(--g)}
+.l2{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12)}.l2 .ln{color:var(--v)}.l2 .ls{background:var(--vg);color:var(--v2)}
+.l3{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12)}.l3 .ln{color:var(--v)}.l3 .ls{background:var(--vg);color:var(--v2)}
+.l4{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12)}.l4 .ln{color:var(--v)}.l4 .ls{background:var(--vg);color:var(--v2)}
+.l5{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.1)}.l5 .ln{color:var(--a)}.l5 .ls{background:var(--ag);color:var(--a)}
+
+/* Detail cards */
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+@media(max-width:660px){.dg{grid-template-columns:1fr}}
+.dc{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:22px;transition:border-color .3s}
+.dc:hover{border-color:rgba(255,255,255,.1)}
+.dc h4{font-family:var(--fd);font-size:.88rem;font-weight:700;margin-bottom:6px}
+.dc p{font-size:.84rem;color:var(--text2);line-height:1.7}
+.dc-full{grid-column:1/-1}
+
+/* Code */
+.cp{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);overflow:hidden;margin:16px 0 24px}
+.ct{padding:10px 20px;font-family:var(--fm);font-size:11px;color:var(--text3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.ct .d{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dr{background:var(--r)}.da{background:var(--a)}.dg2{background:var(--g)}
+.cb{padding:18px 22px;font-family:var(--fm);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre}
+.cmt{color:var(--text3)}.tag{color:var(--v2)}.attr{color:var(--c)}.val{color:var(--g)}.ns{color:var(--a)}
+
+/* Collections */
+.coll{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:22px;margin-bottom:14px}
+.coll h4{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.coll ul{list-style:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 14px}
+@media(max-width:600px){.coll ul{grid-template-columns:1fr 1fr}}
+.coll li{font-size:.82rem;color:var(--text2);padding:2px 0}
+.coll li::before{content:'-> ';color:var(--g);font-weight:700}
+
+/* Roadmap */
+.ph{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:24px;margin-bottom:14px;position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--g))}
+.phh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.pill{font-family:var(--fm);font-size:11px;padding:4px 10px;border-radius:999px;background:var(--surface);color:var(--v2);font-weight:600;flex-shrink:0}
+.ph ul{list-style:none}
+.ph li{font-size:.86rem;color:var(--text2);line-height:1.7;padding:2px 0}
+.ph li::before{content:'-> ';color:var(--g);font-weight:700}
+.ph-check{margin-top:12px;padding:12px 16px;border-radius:var(--rd);background:var(--gg);border:1px solid rgba(16,185,129,.15);font-size:.84rem;color:var(--text2)}
+.ph-check strong{color:var(--g)}
+
+/* Quote */
+.q{background:var(--bg3);border-left:3px solid var(--g);border-radius:0 var(--rl) var(--rl) 0;padding:22px 26px;margin:28px 0;font-size:.98rem;font-style:italic;color:var(--text2);line-height:1.85}
+.q strong{color:var(--text);font-style:normal}
+
+/* Moat */
+.moat-n{color:var(--r);font-size:.86rem;margin-bottom:4px}
+.moat-y{color:var(--g);font-size:.86rem;margin-bottom:4px}
+
+/* Tag */
+.itag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;font-family:var(--fm);background:var(--surface);color:var(--text3);border:1px solid rgba(255,255,255,.06)}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:12px;color:var(--text3)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.rv.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav><div class="ni"><span class="nb">Supericons <span style="color:var(--text3);font-weight:400">/ Visual Protocol Thesis</span></span></div></nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="hi">
+  <div class="badge"><span class="m" style="font-size:15px;color:var(--a);font-variation-settings:'FILL' 1">auto_awesome</span> Consolidated Vision</div>
+  <h1>The Visual Protocol for Human-AI Interaction</h1>
+  <p class="hs">Supericons is building a system where every icon is a meaningful, self-describing, composable object that AI agents can understand and humans can trust. Not a search engine. Not a static library. A visual language.</p>
+  <div class="mission">Mission: Define what AI looks like when it talks to humans.</div>
+</div>
+</section>
+
+<!-- The Dream -->
+<section class="s">
+<div class="w">
+  <div class="ey">The Dream</div>
+  <h2>Bigger Than a Library</h2>
+  <p class="ld">Ordinary icon libraries are like a box of road signs dumped in a warehouse. Supericons wants to become: the road signs, the rulebook for what each sign means, the grammar for combining signs, and the traffic system that tells everyone how to read them.</p>
+  <div class="dg rv">
+    <div class="dc">
+      <h4><span class="m" style="font-size:18px;color:var(--v2);margin-right:4px">mood</span> Emoji for the Agent Era</h4>
+      <p>Emojis gave humans a shared visual language for emotion. Supericons gives humans and AI agents a shared visual language for state, trust, and authority.</p>
+    </div>
+    <div class="dc">
+      <h4><span class="m" style="font-size:18px;color:var(--a);margin-right:4px">traffic</span> Traffic Signals for Human-AI Trust</h4>
+      <p>Traffic signals let strangers safely navigate shared roads without speaking. Supericons lets humans safely navigate agent behavior without reading logs.</p>
+    </div>
+    <div class="dc">
+      <h4><span class="m" style="font-size:18px;color:var(--g);margin-right:4px">translate</span> A Language, Not a Warehouse</h4>
+      <p>Languages have vocabulary (icons), grammar (composition rules), and intent (meaning). Supericons is building all three.</p>
+    </div>
+    <div class="dc">
+      <h4><span class="m" style="font-size:18px;color:var(--c);margin-right:4px">smart_toy</span> Each Icon is a Tiny Agent</h4>
+      <p>It carries its own identity, knows its own rules, can verify itself, introduces itself to any AI, and composes with other icons to say complex things.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 5 Layers -->
+<section class="s sa">
+<div class="w">
+  <div class="ey">Architecture</div>
+  <h2>Five Layers, Built Progressively</h2>
+  <p class="ld">Each layer is independently valuable. Together they form a complete visual protocol.</p>
+
+  <div class="layers rv">
+    <div class="layer l1"><div class="ln">1</div><div class="lt"><h4>Search</h4><p>Find icons fast by name or keyword</p></div><div class="ls">Exists</div></div>
+    <div class="layer l2"><div class="ln">2</div><div class="lt"><h4>Meaning</h4><p>Icons know what they mean (si:icon metadata passport)</p></div><div class="ls">To build</div></div>
+    <div class="layer l3"><div class="ln">3</div><div class="lt"><h4>Grammar</h4><p>Icons combine into richer messages (base + state + badge)</p></div><div class="ls">To build</div></div>
+    <div class="layer l4"><div class="ln">4</div><div class="lt"><h4>Protocol</h4><p>Agents request visuals by intent, not by name</p></div><div class="ls">To build</div></div>
+    <div class="layer l5"><div class="ln">5</div><div class="lt"><h4>Trust</h4><p>Authenticity, provenance, public registry, optional chain</p></div><div class="ls">Future</div></div>
+  </div>
+
+  <div class="q rv">
+    Layers 2, 3, and 4 are the <strong>heart</strong> of the vision. Layer 1 is the stepping stone. Layer 5 is the amplifier that comes after utility is proven.
+  </div>
+</div>
+</section>
+
+<!-- Layer 2: Meaning -->
+<section class="s">
+<div class="w">
+  <div class="ey">Layer 2: Meaning</div>
+  <h2>Icons That Describe Themselves</h2>
+  <p class="ld">Every Supericons SVG carries a "passport" of metadata inside the file. The icon IS the documentation. Copy it anywhere and the meaning goes with it.</p>
+
+  <div class="cp rv">
+    <div class="ct"><span class="d dr"></span><span class="d da"></span><span class="d dg2"></span> agent-planning.svg</div>
+    <div class="cb"><span class="tag">&lt;svg</span> <span class="attr">xmlns:si</span>=<span class="val">"https://supericons.dev/ns/v1"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- What humans see --&gt;</span>
+  <span class="tag">&lt;title&gt;</span>Planning<span class="tag">&lt;/title&gt;</span>
+
+  <span class="cmt">&lt;!-- What AI reads --&gt;</span>
+  <span class="ns">&lt;si:icon</span> <span class="attr">id</span>=<span class="val">"agent-planning"</span> <span class="attr">collection</span>=<span class="val">"agent-lifecycle"</span><span class="ns">&gt;</span>
+    <span class="ns">&lt;si:purpose&gt;</span><span class="val">Show that an AI is currently planning</span><span class="ns">&lt;/si:purpose&gt;</span>
+    <span class="ns">&lt;si:tags&gt;</span><span class="val">thinking, strategizing, preparing</span><span class="ns">&lt;/si:tags&gt;</span>
+    <span class="ns">&lt;si:use-when&gt;</span><span class="val">The agent is planning before executing</span><span class="ns">&lt;/si:use-when&gt;</span>
+    <span class="ns">&lt;si:dont-use-when&gt;</span><span class="val">The agent is idle or already done</span><span class="ns">&lt;/si:dont-use-when&gt;</span>
+    <span class="ns">&lt;si:pairs-with&gt;</span><span class="val">confidence-badge, authority-marker</span><span class="ns">&lt;/si:pairs-with&gt;</span>
+  <span class="ns">&lt;/si:icon&gt;</span>
+
+  <span class="tag">&lt;path</span> <span class="attr">d</span>=<span class="val">"M12 2C6.48..."</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/svg&gt;</span></div>
+  </div>
+</div>
+</section>
+
+<!-- Layer 3: Grammar -->
+<section class="s sa">
+<div class="w">
+  <div class="ey">Layer 3: Grammar</div>
+  <h2>Mix-and-Match Building Blocks</h2>
+  <p class="ld">Small visual primitives that combine to express compound states. No single icon can say "risky agent action with medium confidence." Grammar can.</p>
+
+  <div class="dg rv">
+    <div class="dc"><h4>Base glyph</h4><p>The core icon: shield, lock, gear, eye...</p></div>
+    <div class="dc"><h4>State ring</h4><p>Colored ring: green=active, amber=waiting, red=blocked</p></div>
+    <div class="dc"><h4>Confidence badge</h4><p>How sure is the agent? High, medium, low</p></div>
+    <div class="dc"><h4>Authority marker</h4><p>Who triggered this? Human or agent</p></div>
+  </div>
+
+  <div class="cp rv">
+    <div class="ct"><span class="d dr"></span><span class="d da"></span><span class="d dg2"></span> composed visual</div>
+    <div class="cb"><span class="cmt">// Agent requests a compound visual:</span>
+shield + executing state + high confidence + agent authority
+
+<span class="cmt">// Meaning:</span>
+<span class="val">"The AI is actively doing something security-related.
+ It is very sure. A human did not initiate this."</span></div>
+  </div>
+</div>
+</section>
+
+<!-- Layer 4: Protocol -->
+<section class="s">
+<div class="w">
+  <div class="ey">Layer 4: Protocol</div>
+  <h2>Describe What You Need, Get the Right Icon</h2>
+  <p class="ld">The single biggest unlock for agent adoption. Agents describe intent in plain language. Supericons returns the exact right visual.</p>
+
+  <div class="cp rv">
+    <div class="ct"><span class="d dr"></span><span class="d da"></span><span class="d dg2"></span> intent-based resolution</div>
+    <div class="cb"><span class="ns">request_semantic_icon</span>({
+  <span class="attr">intent</span>: <span class="val">"represent_governance_concept"</span>,
+  <span class="attr">concept</span>: <span class="val">"waiting_for_human_approval"</span>,
+  <span class="attr">context</span>: <span class="val">"payment_flow"</span>,
+  <span class="attr">state</span>: <span class="val">"blocked"</span>
+})
+
+<span class="cmt">// Returns: exact SVG + CSS animation + a11y metadata
+// No name-guessing. No keyword-matching. Just the right icon.</span></div>
+  </div>
+
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8">This eliminates Google Material Symbols' biggest advantage: agents no longer need to know icon names from training data. They describe the need and get the answer.</p>
+</div>
+</section>
+
+<!-- Collections -->
+<section class="s sa">
+<div class="w">
+  <div class="ey">The Icons Nobody Else Has</div>
+  <h2>Four Governance Collections</h2>
+  <p class="ld">These icons do not exist in any library. Every row is a premium product waiting to be built.</p>
+
+  <div class="coll rv">
+    <h4><span class="m" style="font-size:18px;color:var(--g);font-variation-settings:'FILL' 1">sync</span> Agent Lifecycle (ship first)</h4>
+    <ul><li>Agent idle</li><li>Agent planning</li><li>Agent executing</li><li>Waiting for approval</li><li>Agent blocked</li><li>Agent completed</li><li>Agent failed</li><li>Agent monitoring</li><li>Agent learning</li></ul>
+  </div>
+  <div class="coll rv">
+    <h4><span class="m" style="font-size:18px;color:var(--v2);font-variation-settings:'FILL' 1">shield</span> Trust and Authority</h4>
+    <ul><li>Human-initiated</li><li>Agent-initiated</li><li>Confidence: high</li><li>Confidence: medium</li><li>Confidence: low</li><li>Verified by human</li><li>Audit trail available</li><li>Override applied</li></ul>
+  </div>
+  <div class="coll rv">
+    <h4><span class="m" style="font-size:18px;color:var(--a);font-variation-settings:'FILL' 1">warning</span> Risk and Consequences</h4>
+    <ul><li>Irreversible action</li><li>High-risk operation</li><li>Cost implication</li><li>Data exposure</li><li>Rate limit near</li><li>Cascading effect</li></ul>
+  </div>
+  <div class="coll rv">
+    <h4><span class="m" style="font-size:18px;color:var(--c);font-variation-settings:'FILL' 1">info</span> Disclosure</h4>
+    <ul><li>Why recommended</li><li>Data sources used</li><li>Reasoning chain</li><li>Memory accessed</li><li>Limitations noted</li><li>Alternatives available</li></ul>
+  </div>
+</div>
+</section>
+
+<!-- Competitive -->
+<section class="s">
+<div class="w">
+  <div class="ey">Honest Assessment</div>
+  <h2>What Is and Is Not Defensible</h2>
+
+  <div class="dg rv">
+    <div class="dc" style="border-left:2px solid var(--r)"><p class="moat-n">Not a moat</p><h4>Embedding metadata in SVG</h4><p>Any developer can copy this in a day.</p></div>
+    <div class="dc" style="border-left:2px solid var(--r)"><p class="moat-n">Not a moat</p><h4>First-mover advantage alone</h4><p>Lasts months, not years.</p></div>
+    <div class="dc" style="border-left:2px solid var(--g)"><p class="moat-y">Defensible</p><h4>Niche ownership</h4><p>Too small for Google, too specific for open-source, too premium to replicate freely. Stripe vs PayPal.</p></div>
+    <div class="dc" style="border-left:2px solid var(--g)"><p class="moat-y">Defensible</p><h4>Telemetry feedback loop</h4><p>More agent usage = better icons = more agent usage. Data moats beat tech moats.</p></div>
+    <div class="dc" style="border-left:2px solid var(--g)"><p class="moat-y">Defensible</p><h4>Ecosystem tooling</h4><p>Reader, linter, VS Code extension, SDK. Each tool = switching cost.</p></div>
+    <div class="dc" style="border-left:2px solid var(--g)"><p class="moat-y">Defensible</p><h4>Speed</h4><p>Define the governance vocabulary first. Standards are hard to displace once adopted.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- Evolution Ladder -->
+<section class="s sa">
+<div class="w">
+  <div class="ey">The Evolution Ladder</div>
+  <h2>Beyond Static Images: Five Levels of Icon Intelligence</h2>
+  <p class="ld">With Supericons' building blocks, agents do not just get pictures. They get dynamic, interactive, programmable visual components. Each level up moves further from "image" and closer to "system."</p>
+  <p style="font-size:.88rem;color:var(--a);line-height:1.8;margin-bottom:24px;padding:12px 16px;border-radius:var(--rd);background:var(--ag);border:1px solid rgba(245,158,11,.15)"><strong>Honest note:</strong> AI coding assistants can technically build all 5 levels if given clear instructions. The code is not hard. The value is not "AI cannot write this code." The value is: who decides what to build, what the states are, how icons compose, and what the standard is. The product is the dictionary, not the pen.</p>
+
+  <div class="layers rv">
+    <div class="layer l1"><div class="ln">1</div><div class="lt"><h4>Static</h4><p>A picture. A fixed SVG. Every library is here.</p></div><div class="ls" style="background:var(--rg);color:var(--r)">Commoditized</div></div>
+    <div class="layer" style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.1)"><div class="ln" style="color:var(--a)">2</div><div class="lt"><h4>Animated</h4><p>A picture that moves. Hover effects. Motion Lab presets.</p></div><div class="ls" style="background:var(--ag);color:var(--a)">Mostly commoditized</div></div>
+    <div class="layer l2"><div class="ln">3</div><div class="lt"><h4>Dynamic</h4><p>Changes based on data. State-driven color, animation, badges, a11y.</p></div><div class="ls" style="background:var(--gg);color:var(--g)">Standard = value</div></div>
+    <div class="layer l3"><div class="ln">4</div><div class="lt"><h4>Interactive</h4><p>Responds to user action. Click to approve, hover for explanation.</p></div><div class="ls" style="background:var(--gg);color:var(--g)">Standard = value</div></div>
+    <div class="layer l4"><div class="ln">5</div><div class="lt"><h4>Programmable</h4><p>Full API. Accepts props, manages state, emits semantic events.</p></div><div class="ls" style="background:var(--gg);color:var(--g)">Standard = value</div></div>
+  </div>
+
+  <h3 style="margin-bottom:14px;margin-top:8px">Level 3: Dynamic (state-driven)</h3>
+  <p style="font-size:.9rem;color:var(--text2);line-height:1.8;margin-bottom:12px">One HTML tag, many appearances. The icon receives a semantic state and automatically updates everything: color, animation, badge, and accessibility label.</p>
+  <div class="cp rv">
+    <div class="ct"><span class="d dr"></span><span class="d da"></span><span class="d dg2"></span> state-driven icon</div>
+    <div class="cb"><span class="cmt">&lt;!-- One tag. State-driven. Everything updates automatically. --&gt;</span>
+<span class="tag">&lt;si-icon</span> <span class="attr">name</span>=<span class="val">"agent-status"</span> <span class="attr">state</span>=<span class="val">"executing"</span> <span class="attr">confidence</span>=<span class="val">"high"</span><span class="tag">&gt;&lt;/si-icon&gt;</span>
+
+<span class="cmt">// When state="executing":</span>
+<span class="val">  Animation -> spin, Ring -> green, Badge -> high, a11y -> "Agent executing"</span>
+
+<span class="cmt">// Change to state="blocked":</span>
+<span class="val">  Animation -> pulse, Ring -> red, a11y -> "Agent blocked", Risk stripe appears</span>
+
+<span class="cmt">// All from changing one attribute. The icon knows what to do.</span></div>
+  </div>
+
+  <h3 style="margin-bottom:14px">Level 4: Interactive (micro-UI)</h3>
+  <p style="font-size:.9rem;color:var(--text2);line-height:1.8;margin-bottom:12px">The icon is the entry point to a trust interface. A tiny dashboard in 24x24 pixels that expands on demand.</p>
+  <div class="dg rv">
+    <div class="dc"><h4>Hover</h4><p>Tooltip shows current state and confidence level</p></div>
+    <div class="dc"><h4>Click</h4><p>Expands into mini panel: what the agent is doing, why, confidence, and Approve/Override buttons</p></div>
+    <div class="dc"><h4>Long-press</h4><p>Opens the full audit trail</p></div>
+    <div class="dc"><h4>The icon IS the trust interface</h4><p>The smallest possible surface through which a human can understand and supervise an AI agent</p></div>
+  </div>
+
+  <h3 style="margin-bottom:14px">Level 5: Programmable (component with API)</h3>
+  <p style="font-size:.9rem;color:var(--text2);line-height:1.8;margin-bottom:12px">An icon with a full API. It accepts properties, manages internal state transitions, emits semantic events, and can be controlled by agents or frameworks.</p>
+  <div class="cp rv">
+    <div class="ct"><span class="d dr"></span><span class="d da"></span><span class="d dg2"></span> programmable trust widget</div>
+    <div class="cb"><span class="tag">const</span> icon = document.querySelector(<span class="val">'si-icon[name="payment-risk"]'</span>);
+
+<span class="cmt">// React to live data</span>
+icon.<span class="ns">setState</span>(<span class="val">'high-risk'</span>);
+icon.<span class="ns">setConfidence</span>(<span class="val">0.72</span>);
+icon.<span class="ns">setAuthority</span>(<span class="val">'agent'</span>);
+
+<span class="cmt">// Listen for user decisions</span>
+icon.addEventListener(<span class="val">'si:approve'</span>, () => processPayment());
+icon.addEventListener(<span class="val">'si:override'</span>, () => openManualReview());
+icon.addEventListener(<span class="val">'si:explain'</span>, () => showReasoningChain());
+
+<span class="cmt">// Query icon state</span>
+icon.<span class="ns">getState</span>();      <span class="cmt">// "high-risk"</span>
+icon.<span class="ns">getConfidence</span>(); <span class="cmt">// 0.72</span>
+icon.<span class="ns">getMeta</span>();       <span class="cmt">// { id, collection, purpose, tags, ... }</span></div>
+  </div>
+
+  <div class="dg rv">
+    <div class="dc"><h4>Renders the visual</h4><p>The glyph humans see</p></div>
+    <div class="dc"><h4>Manages state transitions</h4><p>9 states with valid transitions</p></div>
+    <div class="dc"><h4>Handles accessibility</h4><p>Aria-labels update with state automatically</p></div>
+    <div class="dc"><h4>Emits semantic events</h4><p>si:approve, si:override, si:explain</p></div>
+    <div class="dc"><h4>Exposes metadata via API</h4><p>The si:icon passport, queryable</p></div>
+    <div class="dc"><h4>Composes via grammar</h4><p>Combines with other icons into richer visuals</p></div>
+  </div>
+
+  <div class="q rv">
+    <strong>The strategic conclusion:</strong> AI can build anything you tell it to build. AI does not decide what to build. The standard is the product. The decisions are the moat. If the Supericons standard is well-defined, AI assistants become distribution channels: a developer prompts Cursor "follow the Supericons standard" and Supericons wins because the standard was adopted, not because the code was purchased.
+  </div>
+</div>
+</section>
+
+<!-- AI Generation Resilience -->
+<section class="s">
+<div class="w">
+  <div class="ey">AI Generation Resilience</div>
+  <h2>Why Advancing LLMs Make Supericons More Relevant, Not Less</h2>
+  <p class="ld">If LLMs advance to create visually stunning icons on demand, does Supericons become irrelevant? The short answer: if Supericons stays a library, AI kills it. If it becomes the protocol, AI amplifies it.</p>
+
+  <h3 style="color:var(--r);margin-bottom:14px">What AI generation threatens</h3>
+  <div class="dg rv">
+    <div class="dc" style="border-left:2px solid var(--r)"><h4>Drawing a single icon</h4><p>LLMs will draw shields, locks, and gears well within 1-2 years. Any static SVG becomes commoditized.</p></div>
+    <div class="dc" style="border-left:2px solid var(--r)"><h4>Generating on demand</h4><p>A pretty, unique icon generated in 200ms. Why download a pre-made one?</p></div>
+  </div>
+
+  <h3 style="color:var(--g);margin-bottom:14px">What AI generation CANNOT replace</h3>
+  <div class="dg rv">
+    <div class="dc" style="border-left:2px solid var(--g)">
+      <h4>Consistency across a system</h4>
+      <p>AI generates a unique icon every time. Great for art, terrible for a design system. 40 independently generated icons look like strangers, not a family. Supericons is a curated, consistent system.</p>
+    </div>
+    <div class="dc" style="border-left:2px solid var(--g)">
+      <h4>The protocol is not the pixels</h4>
+      <p>What does "agent-planning" mean? What grammar rules govern composition? What state machine drives transitions? What events does the icon emit? AI draws pictures. Supericons defines the brain.</p>
+    </div>
+    <div class="dc" style="border-left:2px solid var(--g)">
+      <h4>Vocabulary is product thinking</h4>
+      <p>No LLM will decide the AI ecosystem needs 9 agent lifecycle states, 8 trust indicators, 6 risk visuals. That is product design: the decision of WHAT should exist, not HOW to draw it.</p>
+    </div>
+    <div class="dc" style="border-left:2px solid var(--g)">
+      <h4>Standards outlast tools</h4>
+      <p>HTTP outlasted every browser. JSON outlasted every database. If si:// becomes how agents think about icons, who draws the pixels is irrelevant.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:14px;margin-top:8px">The twist: AI generation as an OPPORTUNITY</h3>
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:12px">AI generation does not kill Supericons. It could become the rendering engine UNDER Supericons:</p>
+  <div class="dg rv">
+    <div class="dc dc-full">
+      <h4>The future model</h4>
+      <p>1. Agent needs "waiting for human approval in a payment flow" &rarr; 2. Queries si:// protocol for the canonical concept, metadata, grammar, state machine &rarr; 3. Supericons returns the <strong>semantic definition</strong> &rarr; 4. AI generation renders it in the user's exact visual style (rounded, flat, 3D, whatever)</p>
+      <p style="margin-top:8px"><strong>Supericons = the brain</strong> (meaning, grammar, protocol, state machines, events). <strong>AI = the hand</strong> (renders in any visual style on demand).</p>
+    </div>
+  </div>
+
+  <div class="q rv">
+    Static icons: <strong>an image file.</strong> AI generation replaces this. Supericons at full vision: <strong>a programmable trust widget that speaks both human and machine.</strong> AI generation cannot replace this. At best, it becomes a rendering engine underneath it.
+  </div>
+</div>
+</section>
+
+<!-- Roadmap -->
+<section class="s sa">
+<div class="w">
+  <div class="ey">Progressive Roadmap</div>
+  <h2>Build in Order. Each Phase Generates Value.</h2>
+  <p class="ld">No timelines. Just the right sequence. Each phase is independently valuable and funds the next.</p>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 1</div><h3>Remove Friction, Build the Foundation</h3></div>
+    <ul><li>MCP installs perfectly with one command</li><li>Agent phrasebook: "how to describe icons to agents"</li><li>Meaning tags on the top 200 icons</li><li>Search telemetry driving the governance vocabulary backlog</li><li>Best free icon sets packaged as professional GitHub kits</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> MCP installs clean. Phrasebook exists. Search data drives priorities.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 2</div><h3>Ship the Icons Nobody Else Has</h3></div>
+    <ul><li>Agent Lifecycle Collection (first governance pack)</li><li>First grammar primitives: authority marker, confidence badge, state ring</li><li>Trust and Authority Collection</li><li>Every pack: README, preview, usage examples, framework snippets</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Governance collections are live, unique, and generating revenue.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 3</div><h3>Icons That Describe Themselves</h3></div>
+    <ul><li>Define si:icon namespace schema (the passport format)</li><li>Export pipeline: every icon ships with embedded metadata</li><li>Tiny reader library (@supericons/reader, under 2KB)</li><li>Compact si:// URI format for lightweight embedding</li><li>MCP server self-indexes from its own SVG files</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Copy any Supericons SVG into any project. The meaning goes with it.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 4</div><h3>Agents Describe What They Need</h3></div>
+    <ul><li>request_semantic_icon MCP tool (intent-based resolution)</li><li>Browsable governance taxonomy (list_governance_icons)</li><li>Meaning tags on all governance icons + top 500 free icons</li><li>"Why this icon was chosen" explanations in MCP responses</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Agent says "trust icon for payment flow." Gets the right icon in one call.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 5</div><h3>Icons That Move With Meaning</h3></div>
+    <ul><li>CSS custom property API: --si-state drives animation</li><li>Motion Lab presets mapped to semantic states</li><li>get_stateful_icon MCP tool: SVG + state CSS + a11y in one call</li><li>Risk and Consequences Collection</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Request "planning icon in blocked state." Get back a complete animated component.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 6</div><h3>Mix-and-Match Visual Grammar</h3></div>
+    <ul><li>Grammar specification: composition rules, positioning, sizing</li><li>SVG compositor engine</li><li>get_icon_grammar MCP tool</li><li>Disclosure Collection</li><li>Complete bundles: SVG + CSS + state + a11y, assembled</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> "Shield + executing + high confidence + agent initiated" returns a ready-to-use visual.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 7</div><h3>Verification and Trust</h3></div>
+    <ul><li>Content hashing (SHA-256) on all icon metadata</li><li>Digital signatures (Ed25519) for provenance</li><li>Public registry API at supericons.dev/registry</li><li>Open namespace schema published as industry standard</li><li>Evaluate blockchain for multi-vendor governance</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Any tool can verify a Supericons icon is authentic and unmodified.</div>
+  </div>
+
+  <div class="ph rv"><div class="phh"><div class="pill">Phase 8</div><h3>Ecosystem and Standard</h3></div>
+    <ul><li>Ecosystem tools: reader, CI linter, VS Code extension</li><li>"Powered by Supericons" badge program</li><li>Community governance icon proposals</li><li>Annual "State of Icons" telemetry report</li><li>Framework integrations: Vercel AI SDK, AG-UI, LangChain</li></ul>
+    <div class="ph-check"><strong>Signal:</strong> Other projects reference the si:icon standard. The vocabulary is expected, not novel.</div>
+  </div>
+</div>
+</section>
+
+<!-- Closing -->
+<section class="s">
+<div class="w">
+  <div class="ey">The Simplest Way to Explain It</div>
+  <h2>Today vs Tomorrow</h2>
+  <div class="dg rv" style="margin-bottom:0">
+    <div class="dc" style="border-left:2px solid var(--text3)">
+      <h4 style="color:var(--text3)">Today</h4>
+      <p>Icons are dumb files. You search, download, paste. They mean nothing to machines.</p>
+    </div>
+    <div class="dc" style="border-left:2px solid var(--g)">
+      <h4 style="color:var(--g)">Tomorrow</h4>
+      <p>Every Supericons icon is a tiny agent. It carries its own identity, knows its own purpose, introduces itself to any AI, and combines with other icons to express complex ideas.</p>
+    </div>
+  </div>
+  <div class="q rv">
+    <strong>Supericons should not be a warehouse of icons. It should be the living visual language and trust fabric of AI-native software.</strong> That is the protocol. That is the vision. That is what we are building.
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="w">Supericons Visual Protocol Thesis. Consolidates insights from agent feedback, self-describing icons exploration, and icons-as-agents analysis. April 2026.</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){i.target.classList.add('visible');obs.unobserve(i.target)}}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

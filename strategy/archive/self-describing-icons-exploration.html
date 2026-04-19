@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Self-Describing Icons: Embedding Meaning Into the File | Supericons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060a10;--bg2:#0c1018;--bg3:#131924;--surface:#1a2234;
+  --text:#e8ecf2;--text2:#98a4b6;--text3:#5d6b7e;
+  --accent:#7c6aef;--accent2:#b4a8ff;--ag:rgba(124,106,239,.16);
+  --green:#10b981;--gg:rgba(16,185,129,.12);
+  --amber:#f59e0b;--amg:rgba(245,158,11,.12);
+  --red:#ef4444;--rdg:rgba(239,68,68,.1);
+  --cyan:#06b6d4;--cg:rgba(6,182,212,.1);
+  --r:10px;--rl:18px;--max:1060px;
+  --fd:'Space Grotesk','Inter',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px}
+.mat{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;display:inline-flex;align-items:center;line-height:1;vertical-align:middle}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:99;backdrop-filter:blur(20px);background:rgba(6,10,16,.85);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;align-items:center;gap:10px;height:52px;max-width:var(--max);margin:0 auto;padding:0 28px}
+.nav-brand{font-family:var(--fd);font-weight:700;font-size:16px}
+
+.hero{min-height:80vh;display:flex;align-items:center;text-align:center;position:relative;overflow:hidden;padding:100px 28px 72px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 45% at 50% 38%,rgba(124,106,239,.15),transparent 65%),radial-gradient(ellipse 40% 35% at 30% 70%,rgba(16,185,129,.08),transparent 55%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent2);margin-bottom:24px}
+h1{font-family:var(--fd);font-size:clamp(2rem,5vw,3.4rem);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:18px;background:linear-gradient(135deg,var(--text) 0%,var(--accent2) 50%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:28px}
+.hero-sub strong{color:var(--text)}
+
+.section{padding:72px 0;position:relative}
+.section-alt{background:var(--bg2)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
+h2{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2.1rem);font-weight:700;line-height:1.2;letter-spacing:-.3px;margin-bottom:12px}
+h3{font-family:var(--fd);font-size:1rem;font-weight:700;margin-bottom:8px}
+.lead{font-size:.98rem;color:var(--text2);max-width:660px;line-height:1.9;margin-bottom:36px}
+
+/* Analogy cards */
+.analogies{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+@media(max-width:720px){.analogies{grid-template-columns:1fr}}
+.analogy{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:22px;text-align:center;transition:border-color .3s}
+.analogy:hover{border-color:rgba(255,255,255,.12)}
+.analogy-icon{font-size:28px;margin-bottom:10px}
+.analogy h4{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:6px}
+.analogy p{font-size:.82rem;color:var(--text3);line-height:1.6}
+
+/* Code panel */
+.code-panel{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);overflow:hidden;margin:20px 0 28px}
+.code-tab{padding:10px 20px;font-family:var(--fm);font-size:11px;color:var(--text3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.code-tab .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.code-tab .dot-r{background:var(--red)}.code-tab .dot-a{background:var(--amber)}.code-tab .dot-g{background:var(--green)}
+.code-body{padding:20px 22px;font-family:var(--fm);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre}
+.cmt{color:var(--text3)}.tag{color:var(--accent2)}.attr{color:var(--cyan)}.val{color:var(--green)}.ns{color:var(--amber)}
+
+/* Approach cards */
+.approaches{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:36px}
+.approach{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:28px;position:relative;overflow:hidden}
+.approach::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.a1::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.a2::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.a3::before{background:linear-gradient(90deg,var(--amber),var(--red))}
+.approach-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.approach-num{font-family:var(--fd);font-size:2rem;font-weight:900;color:var(--text3);line-height:1}
+.approach-title{font-family:var(--fd);font-size:1.15rem;font-weight:700}
+.approach-sub{font-size:.88rem;color:var(--accent2);font-weight:500}
+.approach p{font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:12px}
+.analogy-inline{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:8px;background:var(--surface);font-size:.82rem;color:var(--text3);border:1px solid rgba(255,255,255,.05);margin-top:8px}
+
+/* Enables grid */
+.enables{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px}
+@media(max-width:660px){.enables{grid-template-columns:1fr}}
+.enable{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:22px}
+.enable-num{font-family:var(--fm);font-size:11px;color:var(--text3);margin-bottom:8px}
+.enable h3{font-size:.92rem;margin-bottom:6px}
+.enable p{font-size:.86rem;color:var(--text2);line-height:1.7}
+
+/* Build steps */
+.build-step{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:var(--r);margin-bottom:10px}
+.step-n{min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.build-step p{font-size:.9rem;color:var(--text2);line-height:1.7}
+.build-step strong{color:var(--text)}
+
+/* Moat */
+.moat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px}
+@media(max-width:660px){.moat{grid-template-columns:1fr}}
+.moat-item{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:18px 20px}
+.moat-item h4{font-family:var(--fd);font-size:.88rem;font-weight:700;margin-bottom:6px}
+.moat-item p{font-size:.84rem;color:var(--text2);line-height:1.7}
+
+.quote{background:var(--bg3);border-left:3px solid var(--green);border-radius:0 var(--rl) var(--rl) 0;padding:22px 26px;margin:32px 0;font-size:1rem;font-style:italic;color:var(--text2);line-height:1.8}
+.quote strong{color:var(--text);font-style:normal}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:12px;color:var(--text3)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Supericons <span style="color:var(--text3);font-weight:400">/ Self-Describing Icons</span></span>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="hero-inner">
+  <div class="badge"><span class="mat" style="font-size:15px;color:var(--green);font-variation-settings:'FILL' 1">lightbulb</span> Concept Exploration</div>
+  <h1>Self-Describing Icons</h1>
+  <p class="hero-sub">For humans, a picture of a shield means "protection" at a glance. No words needed. <strong>What if icons could speak to AI agents the same way?</strong> Embed the meaning directly into the file, like a passport carries its owner's identity.</p>
+</div>
+</section>
+
+<!-- The Insight -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">The Core Idea</div>
+  <h2>What If Every Icon Carried Its Own Meaning Inside?</h2>
+  <p class="lead">Today, a shield icon is just a bunch of coordinates for AI. It needs a separate database to know what it means. But what if the meaning was baked into the file, like how photos carry their own camera settings?</p>
+
+  <div class="analogies reveal">
+    <div class="analogy">
+      <div class="analogy-icon"><span class="mat" style="font-size:32px;color:var(--accent2)">qr_code_2</span></div>
+      <h4>Like a QR Code</h4>
+      <p>A visual element that hides machine-readable data inside itself</p>
+    </div>
+    <div class="analogy">
+      <div class="analogy-icon"><span class="mat" style="font-size:32px;color:var(--green)">badge</span></div>
+      <h4>Like a Passport</h4>
+      <p>A document that carries its own identity and works at any border</p>
+    </div>
+    <div class="analogy">
+      <div class="analogy-icon"><span class="mat" style="font-size:32px;color:var(--amber)">photo_camera</span></div>
+      <h4>Like Photo EXIF Data</h4>
+      <p>Camera settings, GPS, and timestamps hidden inside every photo file</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Why SVG makes this possible -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">Why This Is Possible</div>
+  <h2>SVG Is Not Just an Image. It Is a Document.</h2>
+  <p class="lead">PNG and JPG are dumb binary blobs. SVG is a structured text document that happens to render as an image. It already supports titles, descriptions, metadata, and custom vocabularies. We just need to use them.</p>
+
+  <div class="code-panel reveal">
+    <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> what-svg-already-supports.xml</div>
+    <div class="code-body"><span class="tag">&lt;svg&gt;</span>
+  <span class="tag">&lt;title&gt;</span>Human-readable name<span class="tag">&lt;/title&gt;</span>            <span class="cmt">&lt;!-- already built in --&gt;</span>
+  <span class="tag">&lt;desc&gt;</span>Human-readable description<span class="tag">&lt;/desc&gt;</span>    <span class="cmt">&lt;!-- already built in --&gt;</span>
+  <span class="tag">&lt;metadata&gt;</span>Structured data<span class="tag">&lt;/metadata&gt;</span>        <span class="cmt">&lt;!-- already built in --&gt;</span>
+  <span class="tag">&lt;custom:anything&gt;</span>Your own vocabulary<span class="tag">&lt;/custom:anything&gt;</span> <span class="cmt">&lt;!-- supported! --&gt;</span>
+  <span class="tag">&lt;path</span> <span class="attr">d</span>=<span class="val">"..."</span><span class="tag">/&gt;</span>                              <span class="cmt">&lt;!-- the visual --&gt;</span>
+<span class="tag">&lt;/svg&gt;</span></div>
+  </div>
+
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8">No other image format gives us this. SVG is the only format where we can embed rich, structured metadata right next to the visual content, all in one file. This is the foundation for self-describing icons.</p>
+</div>
+</section>
+
+<!-- Three Approaches -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">Three Approaches</div>
+  <h2>How To Embed Meaning Into an Icon</h2>
+  <p class="lead">From practical to revolutionary. Each approach builds on the last.</p>
+
+  <div class="approaches">
+    <!-- Approach 1 -->
+    <div class="approach a1 reveal">
+      <div class="approach-head">
+        <div class="approach-num">01</div>
+        <div><div class="approach-sub">The Passport</div><div class="approach-title">Full Metadata Block Inside the SVG</div></div>
+      </div>
+      <p>Every Supericons SVG gets a structured "passport" section using a custom vocabulary. When any tool reads the file, it finds everything it needs to know: what the icon means, when to use it, what it pairs with, and how to label it for accessibility.</p>
+      <div class="code-panel">
+        <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> agent-planning.svg</div>
+        <div class="code-body"><span class="tag">&lt;svg</span> <span class="attr">xmlns:si</span>=<span class="val">"https://supericons.dev/ns/v1"</span><span class="tag">&gt;</span>
+
+  <span class="cmt">&lt;!-- What humans see --&gt;</span>
+  <span class="tag">&lt;title&gt;</span>Planning<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;desc&gt;</span>An agent is planning its next steps<span class="tag">&lt;/desc&gt;</span>
+
+  <span class="cmt">&lt;!-- What AI reads --&gt;</span>
+  <span class="ns">&lt;si:icon</span> <span class="attr">id</span>=<span class="val">"agent-planning"</span> <span class="attr">collection</span>=<span class="val">"agent-lifecycle"</span><span class="ns">&gt;</span>
+    <span class="ns">&lt;si:purpose&gt;</span><span class="val">Show that an AI is currently planning</span><span class="ns">&lt;/si:purpose&gt;</span>
+    <span class="ns">&lt;si:tags&gt;</span><span class="val">thinking, strategizing, preparing</span><span class="ns">&lt;/si:tags&gt;</span>
+    <span class="ns">&lt;si:use-when&gt;</span><span class="val">The agent is planning before executing</span><span class="ns">&lt;/si:use-when&gt;</span>
+    <span class="ns">&lt;si:dont-use-when&gt;</span><span class="val">The agent is idle or already done</span><span class="ns">&lt;/si:dont-use-when&gt;</span>
+    <span class="ns">&lt;si:pairs-with&gt;</span><span class="val">confidence-badge, authority-marker</span><span class="ns">&lt;/si:pairs-with&gt;</span>
+    <span class="ns">&lt;si:a11y</span> <span class="attr">label</span>=<span class="val">"Agent is planning"</span> <span class="attr">live</span>=<span class="val">"polite"</span><span class="ns">/&gt;</span>
+  <span class="ns">&lt;/si:icon&gt;</span>
+
+  <span class="cmt">&lt;!-- The visual (what renders on screen) --&gt;</span>
+  <span class="tag">&lt;path</span> <span class="attr">d</span>=<span class="val">"M12 2C6.48 2 2 6.48 ..."</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/svg&gt;</span></div>
+      </div>
+      <div class="analogy-inline"><span class="mat" style="font-size:16px;color:var(--accent2)">badge</span> Like a passport: the icon carries its full identity everywhere it goes</div>
+    </div>
+
+    <!-- Approach 2 -->
+    <div class="approach a2 reveal">
+      <div class="approach-head">
+        <div class="approach-num">02</div>
+        <div><div class="approach-sub">The DNA Strand</div><div class="approach-title">Compact URI Encoded in One Line</div></div>
+      </div>
+      <p>A lighter version. Instead of verbose metadata, embed a single compact line, like a barcode, that encodes the icon's identity. Any tool that knows the format can decode it instantly.</p>
+      <div class="code-panel">
+        <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> agent-planning.svg (compact)</div>
+        <div class="code-body"><span class="tag">&lt;svg</span> <span class="attr">viewBox</span>=<span class="val">"0 0 24 24"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- si://v1/agent-planning/agent-lifecycle/planning/
+       tags=thinking+strategizing+preparing/
+       a11y=status:Agent+is+planning:polite --&gt;</span>
+  <span class="tag">&lt;path</span> <span class="attr">d</span>=<span class="val">"M12 2C6.48..."</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/svg&gt;</span></div>
+      </div>
+      <p>This URI format is designed to be <strong>greppable</strong> (search your whole project with one command), <strong>parseable</strong> (simple URL format), <strong>compact</strong> (one line), and <strong>human-readable</strong> (a developer can glance at it and get the idea).</p>
+      <div class="analogy-inline"><span class="mat" style="font-size:16px;color:var(--green)">barcode_reader</span> Like a product barcode: tiny, but carries everything about the product</div>
+    </div>
+
+    <!-- Approach 3 -->
+    <div class="approach a3 reveal">
+      <div class="approach-head">
+        <div class="approach-num">03</div>
+        <div><div class="approach-sub">The Living Icon</div><div class="approach-title">Offline Snapshot + Live Registry Link</div></div>
+      </div>
+      <p>The most ambitious version. The icon carries a frozen snapshot of its metadata (works without internet) PLUS a live URL that tools can check for updates (new tags, new pairing rules, new animations).</p>
+      <div class="code-panel">
+        <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> agent-planning.svg (living)</div>
+        <div class="code-body"><span class="ns">&lt;si:icon</span> <span class="attr">id</span>=<span class="val">"agent-planning"</span> <span class="attr">version</span>=<span class="val">"1.2"</span><span class="ns">&gt;</span>
+  <span class="cmt">&lt;!-- Works offline (always valid) --&gt;</span>
+  <span class="ns">&lt;si:snapshot&gt;</span>
+    <span class="ns">&lt;si:purpose&gt;</span><span class="val">agent-lifecycle</span><span class="ns">&lt;/si:purpose&gt;</span>
+    <span class="ns">&lt;si:tags&gt;</span><span class="val">thinking, strategizing</span><span class="ns">&lt;/si:tags&gt;</span>
+  <span class="ns">&lt;/si:snapshot&gt;</span>
+  <span class="cmt">&lt;!-- Check for updates when online --&gt;</span>
+  <span class="ns">&lt;si:live</span> <span class="attr">check</span>=<span class="val">"https://supericons.dev/api/icons/agent-planning"</span><span class="ns">/&gt;</span>
+<span class="ns">&lt;/si:icon&gt;</span></div>
+      </div>
+      <div class="analogy-inline"><span class="mat" style="font-size:16px;color:var(--amber)">travel_explore</span> Like a passport with a chip: works at any border, but the chip can be scanned for live updates</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- What This Enables -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">What This Makes Possible</div>
+  <h2>Five Things Self-Describing Icons Enable</h2>
+  <p class="lead">Once icons carry their own meaning, entirely new capabilities become possible.</p>
+
+  <div class="enables reveal">
+    <div class="enable">
+      <div class="enable-num">01</div>
+      <h3>Icons that introduce themselves</h3>
+      <p>When an agent reads a codebase and finds a Supericons SVG, it does not guess. It reads the icon's own metadata: "I am a planning indicator. I pair with a confidence badge. My accessibility label is 'Agent is planning.'"</p>
+    </div>
+    <div class="enable">
+      <div class="enable-num">02</div>
+      <h3>Meaning travels with the file</h3>
+      <p>Copy a Supericons SVG into any project: its meaning comes along. No account, no server, no API key. The file IS the documentation. Every pasted icon is zero-cost distribution of the Supericons standard.</p>
+    </div>
+    <div class="enable">
+      <div class="enable-num">03</div>
+      <h3>Agents auto-generate accessibility</h3>
+      <p>An agent building a dashboard reads the icon's a11y field and automatically applies the right labels, roles, and aria-live attributes. No hardcoding needed.</p>
+    </div>
+    <div class="enable">
+      <div class="enable-num">04</div>
+      <h3>Automatic icon auditing</h3>
+      <p>A build pipeline scans SVGs in the project: Is this icon used in the wrong context? Are accessibility labels applied? Are versions current? Is the visual language consistent? All answered by reading the files.</p>
+    </div>
+    <div class="enable">
+      <div class="enable-num">05</div>
+      <h3>Each icon becomes a tiny agent</h3>
+      <p>Philosophically, each icon is a tiny autonomous agent. It carries its own context, rules, and identity. It can travel anywhere, be read by any system, and always be understood. The icon does not depend on a server. It IS the knowledge.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- How to Build It -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">How to Build It</div>
+  <h2>Five Steps From Concept to Product</h2>
+  <p class="lead">Each step is independently valuable and builds toward the full vision.</p>
+
+  <div class="build-step reveal">
+    <div class="step-n">1</div>
+    <p><strong>Define the "passport format."</strong> Create the Supericons XML namespace at supericons.dev/ns/v1. Specify the allowed fields: id, collection, purpose, tags, use-when, dont-use-when, pairs-with, a11y. Publish it as an open standard.</p>
+  </div>
+  <div class="build-step reveal">
+    <div class="step-n">2</div>
+    <p><strong>Build the export pipeline.</strong> When a Supericons icon is downloaded, exported via MCP, or shipped in an npm package, the metadata is automatically embedded. The icon never ships "naked." Modify the existing get_icon MCP tool to return SVGs with metadata baked in.</p>
+  </div>
+  <div class="build-step reveal">
+    <div class="step-n">3</div>
+    <p><strong>Build a tiny reader library.</strong> A JavaScript package (under 2KB, no dependencies) that parses metadata from any SVG file. Works as an npm package, a CLI tool for auditing, or inside the MCP server itself.</p>
+  </div>
+  <div class="build-step reveal">
+    <div class="step-n">4</div>
+    <p><strong>Make the MCP server self-indexing.</strong> Instead of a separate icon-index.json, the server reads metadata from its own SVG files at startup. The icons ARE the database. Add a new icon? Just add the metadata inside the SVG. No separate file to keep in sync.</p>
+  </div>
+  <div class="build-step reveal">
+    <div class="step-n">5</div>
+    <p><strong>Define the compact URI format.</strong> The si:// protocol for lightweight embedding: <code style="font-family:var(--fm);font-size:11px;background:var(--surface);padding:2px 6px;border-radius:4px">si://v1/agent-planning/agent-lifecycle/planning?tags=thinking+strategizing</code>. Goes into SVG comments for maximum compatibility.</p>
+  </div>
+</div>
+</section>
+
+<!-- Honest Competitive Analysis -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">Honest Competitive Analysis</div>
+  <h2>Is This Actually a Moat?</h2>
+  <p class="lead">Let's be honest about what competitors could copy and what they cannot.</p>
+
+  <h3 style="color:var(--red);margin-bottom:14px">What is NOT defensible</h3>
+  <div class="moat reveal">
+    <div class="moat-item" style="border-left:2px solid var(--red)">
+      <h4>Embedding metadata in SVG</h4>
+      <p>Any developer can do this in an afternoon. The technical act is trivial.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--red)">
+      <h4>The namespace schema itself</h4>
+      <p>Open standards are copyable by design. That is the whole point of open standards.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--red)">
+      <h4>"First to do it"</h4>
+      <p>First-mover advantage lasts months, not years. If the idea is good, others will follow fast.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--red)">
+      <h4>The tagged icon corpus</h4>
+      <p>If Google decided tomorrow to tag Material Symbols' 3,000+ icons, they could finish in a week with AI. They have more engineers, icons, and distribution.</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--green);margin-bottom:14px;margin-top:28px">What COULD be defensible (with the right conditions)</h3>
+  <div class="moat reveal">
+    <div class="moat-item" style="border-left:2px solid var(--green)">
+      <h4>Network effects (agents expect si://)</h4>
+      <p><strong>Strong, if</strong> adoption reaches critical mass. Standards are hard to displace once adopted (JSON, Markdown). But you have to get there first.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--green)">
+      <h4>Telemetry feedback loop</h4>
+      <p><strong>Strong, if</strong> MCP usage is high enough. If Supericons is the only system that knows what agents are searching for, it is the only system that can build the right icons proactively. Data moats beat tech moats.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--green)">
+      <h4>Ecosystem tooling</h4>
+      <p><strong>Medium-strong.</strong> Reader library, CI linter, VS Code extension, agent SDK. Switching icon libraries means losing all these tools. Each tool adopted increases switching cost.</p>
+    </div>
+    <div class="moat-item" style="border-left:2px solid var(--green)">
+      <h4>Niche ownership</h4>
+      <p><strong>Medium.</strong> Too small for Google to care, too specific for Lucide to prioritize, too premium for open-source to replicate profitably. The niche IS the moat.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:14px;margin-top:28px">The real strategy: Own the niche Google will never bother with</h3>
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:16px">Google builds for billions of general users. They will never build a premium pack of 50 "AI governance" icons priced at $29. They will never build a mix-and-match grammar system for compound state indicators. They will never build an MCP tool that returns icons based on intent.</p>
+
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:16px">Think of it like <strong>Stripe vs PayPal.</strong> PayPal is bigger. But Stripe owns the developer payments niche because it is purpose-built for that audience. Supericons can own the "icons for agentic UI" niche the same way.</p>
+
+  <div class="quote reveal">
+    Self-describing icons is a <strong>great product feature</strong>, not a moat by itself. The real moat is <strong>niche ownership</strong>: being the purpose-built, premium, AI-governance icon system. Self-describing metadata, stateful animation, intent-based MCP tools, and composable grammar are all features that reinforce the niche position. The honest formula: <strong>niche focus + ecosystem tooling + telemetry feedback loop + speed = defensibility.</strong>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap">Self-Describing Icons Exploration, Supericons / Curly Mole Labs, April 2026</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){i.target.classList.add('visible');obs.unobserve(i.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

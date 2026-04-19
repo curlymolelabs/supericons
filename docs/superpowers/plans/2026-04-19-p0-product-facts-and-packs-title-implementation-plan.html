@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P0 Product Facts and Packs Title Plan</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #0f1115;
+        color: #f3f5f7;
+        line-height: 1.6;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 40px 24px 64px;
+      }
+      h1, h2, h3 {
+        line-height: 1.2;
+      }
+      h1 {
+        font-size: 2.1rem;
+        margin-bottom: 8px;
+      }
+      h2 {
+        margin-top: 36px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255,255,255,0.12);
+      }
+      .meta {
+        color: #b7c0cb;
+      }
+      .panel {
+        background: #171a21;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-top: 20px;
+      }
+      code {
+        font-family: Consolas, monospace;
+        background: rgba(255,255,255,0.08);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      .goal-list li {
+        margin-bottom: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>P0 Product Facts and Packs Title Plan</h1>
+      <p class="meta">Goal: stop visible count/version drift, create one shared facts source, and fix the packs page heading bug safely.</p>
+
+      <div class="panel">
+        <p><strong>Main idea:</strong> do the smallest high-value foundation work first.</p>
+        <ul class="goal-list">
+          <li>make one shared facts file from the real data</li>
+          <li>use that facts file in the first top-surface places that currently drift</li>
+          <li>fix the packs heading bug with a testable helper instead of a risky rewrite</li>
+        </ul>
+      </div>
+
+      <h2>Files We Will Add</h2>
+      <ul>
+        <li><code>data/product-facts.json</code> for shared counts and labels</li>
+        <li><code>scripts/build-product-facts.mjs</code> to generate it</li>
+        <li><code>scripts/verify-product-facts.mjs</code> to check it</li>
+        <li><code>lib/product-facts.js</code> so the app can read the shared facts cleanly</li>
+        <li><code>docs/superpowers/plans/2026-04-19-product-facts-drift-inventory.md</code> for the drift snapshot</li>
+      </ul>
+
+      <h2>Files We Will Change</h2>
+      <ul>
+        <li><code>package.json</code></li>
+        <li><code>main.js</code></li>
+        <li><code>store.js</code></li>
+        <li><code>docs-pages.js</code></li>
+        <li><code>lib/icon-grid-behavior.js</code></li>
+        <li><code>scripts/verify-icon-grid-behavior.mjs</code></li>
+        <li><code>mcp/index.js</code></li>
+      </ul>
+
+      <h2>Task 1: Inventory The Drift</h2>
+      <ul>
+        <li>make one doc that lists the important drifted strings first</li>
+        <li>mark each item as marketing copy, product truth, or technical metadata</li>
+        <li>mark where each item should read from in the future</li>
+      </ul>
+
+      <h2>Task 2: Build Shared Product Facts</h2>
+      <ul>
+        <li>write the verification script first so it fails when the facts file is missing or stale</li>
+        <li>build the facts file from the real free icon index, premium manifest, and MCP metadata</li>
+        <li>add build and verify scripts to <code>package.json</code></li>
+        <li>run the build before the main app build</li>
+      </ul>
+
+      <h2>Task 3: Wire The First Consumers</h2>
+      <ul>
+        <li>use shared facts in the app’s top-surface count strings</li>
+        <li>use shared facts in MCP free-icon labels</li>
+        <li>stop MCP version drift by reading the package version directly</li>
+      </ul>
+
+      <h2>Task 4: Fix The Packs Title Bug</h2>
+      <ul>
+        <li>add a failing check first</li>
+        <li>move title resolution into a small helper</li>
+        <li>keep store views in charge of their own heading text</li>
+        <li>avoid a broad shell refactor in this step</li>
+      </ul>
+
+      <h2>Task 5: Verify Everything</h2>
+      <ul>
+        <li><code>node scripts/verify-product-facts.mjs</code></li>
+        <li><code>npm run verify:icon-grid-behavior</code></li>
+        <li><code>npm run verify:search-query-fixtures</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+
+      <h2>Why This Order</h2>
+      <p>This order fixes what users can already see, gives the project one shared source for counts and tool numbers, and avoids jumping into the larger registry work before the app stops contradicting itself.</p>
+    </div>
+  </body>
+</html>

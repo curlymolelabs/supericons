@@ -38,7 +38,11 @@ import {
   applyPopularityDelta,
   compareBrowseIconsByPopularity,
   compareSearchMatches,
+  getNextJobCategoryFilterForLibrarySelect,
   getPopularityRecord,
+  getScopedJobCategoryFilter,
+  resolveGridHeadingText,
+  shouldShowPurposeFilterBar,
   shouldSyncSearchOnBlur,
 } from './lib/icon-grid-behavior.js';
 import {
@@ -47,6 +51,8 @@ import {
   createJobCategoryMap,
 } from './lib/icon-taxonomy-seed.js';
 import { createIconSemanticAliasMap } from './lib/icon-semantic-aliases.js';
+import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
+import { createStoreShellContract } from './lib/store-shell-contract.js';
 
 // ============================================================
 
@@ -638,6 +644,8 @@ const els = {
   gridEmpty: $('#gridEmpty'),
   gridTitle: $('#gridTitle'),
   gridMeta: $('#gridMeta'),
+  gridActions: $('.grid-header__actions'),
+  gridFilterBar: $('.grid-filter-bar'),
   gridClearCollectionBtn: $('#gridClearCollectionBtn'),
 
   toast: $('#toast'),
@@ -659,7 +667,7 @@ function syncHeaderSearchChrome({
   if (!els.searchInput || !els.searchShortcut || !els.searchClear) return;
 
   const isDocsMode = mode === 'docs';
-  els.searchInput.placeholder = isDocsMode ? 'Search docs' : 'Search 20,000+ icons...';
+  els.searchInput.placeholder = isDocsMode ? 'Search docs' : PRODUCT_FACT_LABELS.searchPlaceholderLabel;
   els.searchInput.setAttribute('aria-label', isDocsMode ? 'Search docs' : 'Search icons');
   if (isDocsMode) {
     els.searchInput.setAttribute('aria-controls', 'docsSearchResults');
@@ -710,6 +718,22 @@ function syncCollectionClearButton() {
   button.setAttribute('aria-label', actionLabel);
   button.setAttribute('data-tip', actionLabel);
   button.removeAttribute('title');
+}
+
+function getCurrentShellView() {
+  return isStoreView() ? 'store-shell' : 'icons';
+}
+
+function syncPurposeFilterBar() {
+  if (!els.gridFilterBar) return;
+
+  const isVisible = shouldShowPurposeFilterBar({
+    currentView: getCurrentShellView(),
+    activeLibrary: state.activeLibrary,
+  });
+
+  els.gridFilterBar.hidden = !isVisible;
+  els.gridFilterBar.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
 }
 
 // ============================================================
@@ -830,7 +854,11 @@ function getJobCategoryMeta(jobCategoryId) {
 }
 
 function getActiveJobCategoryId() {
-  return state.activeJobCategoryFilter === 'all' ? null : state.activeJobCategoryFilter;
+  return getScopedJobCategoryFilter({
+    currentView: getCurrentShellView(),
+    activeLibrary: state.activeLibrary,
+    activeJobCategoryFilter: state.activeJobCategoryFilter,
+  });
 }
 
 function getJobCategoryCount(jobCategoryId) {
@@ -839,7 +867,22 @@ function getJobCategoryCount(jobCategoryId) {
 
 function rebuildJobCategoryCounts() {
   const counts = Object.fromEntries(JOB_CATEGORY_DEFINITIONS.map((category) => [category.id, 0]));
-  for (const icon of state.icons) {
+  let scopedIcons = state.icons;
+
+  if (state.activeLibrary === 'favorites') {
+    scopedIcons = state.icons.filter((icon) => state.favorites.has(iconKey(icon)));
+  } else if (state.activeLibrary === 'recent') {
+    const recentIcons = [];
+    for (const key of state.recent) {
+      const found = state.icons.find((icon) => iconKey(icon) === key);
+      if (found) recentIcons.push(found);
+    }
+    scopedIcons = recentIcons;
+  } else if (state.activeLibrary !== 'all') {
+    scopedIcons = state.icons.filter((icon) => icon.lib === state.activeLibrary);
+  }
+
+  for (const icon of scopedIcons) {
     const jobCategory = getIconJobCategory(icon);
     if (jobCategory && counts[jobCategory] !== undefined) {
       counts[jobCategory] += 1;
@@ -850,6 +893,10 @@ function rebuildJobCategoryCounts() {
 
 function renderUseCaseFilters() {
   if (!els.useCaseFilters) return;
+  rebuildJobCategoryCounts();
+  syncPurposeFilterBar();
+
+  if (els.gridFilterBar?.hidden) return;
 
   const activeFilter = getActiveJobCategoryId() || 'all';
   const chips = [
@@ -1013,7 +1060,7 @@ function renderGrid() {
             ? 'Icons you open appear here on this device. Clear them anytime from the header.'
             : activeJobCategoryMeta
               ? activeJobCategoryMeta.description
-          : '20,000+ icons across 10 libraries including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.';
+          : `${PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel} including Material Symbols, Lucide, Tabler, and 3,400+ brand logos via Simple Icons. Search, customize, and export in seconds.`;
     }
   } else {
     els.iconGrid.style.display = '';
@@ -1406,6 +1453,7 @@ function updateCounts() {
   $('#countAll').textContent = total.toLocaleString();
   syncHeaderSearchChrome();
   syncCollectionClearButton();
+  syncPurposeFilterBar();
   updateGridHeading();
 
   if (isStoreView()) return;
@@ -1543,18 +1591,13 @@ function updateGridHeading() {
   const titleMap = { all: 'All Icons', favorites: 'Favorites', recent: 'Recent' };
   const activeJobCategoryMeta = getJobCategoryMeta(getActiveJobCategoryId());
   const libraryTitle = titleMap[state.activeLibrary] || (libraryMeta[state.activeLibrary]?.name || state.activeLibrary);
-
-  if (state.activeLibrary === 'all' && activeJobCategoryMeta) {
-    els.gridTitle.textContent = activeJobCategoryMeta.label;
-    return;
-  }
-
-  if (activeJobCategoryMeta) {
-    els.gridTitle.textContent = `${libraryTitle} + ${activeJobCategoryMeta.label}`;
-    return;
-  }
-
-  els.gridTitle.textContent = libraryTitle;
+  els.gridTitle.textContent = resolveGridHeadingText({
+    currentView: getCurrentShellView(),
+    activeLibrary: state.activeLibrary,
+    activeJobCategoryLabel: activeJobCategoryMeta?.label,
+    currentTitle: els.gridTitle.textContent,
+    libraryTitle,
+  });
 }
 
 function setActiveLibrary(libraryId) {
@@ -1568,12 +1611,17 @@ function setActiveLibrary(libraryId) {
     switchView('icons');
   }
 
+  state.activeJobCategoryFilter = getNextJobCategoryFilterForLibrarySelect({
+    nextLibraryId: libraryId,
+    activeJobCategoryFilter: state.activeJobCategoryFilter,
+  });
   state.activeLibrary = libraryId;
 
   $$('.sidebar__item').forEach((item) => {
     item.classList.toggle('active', item.dataset.library === libraryId);
   });
 
+  renderUseCaseFilters();
   updateGridHeading();
   applyFilters();
   flushPendingSearchAttempt({ useCurrentState: true });
@@ -1942,6 +1990,9 @@ function resetPanelToPlaceholder() {
       <p class="panel__placeholder-text">Select an icon from the grid to customize it</p>
     `;
   }
+  const panelControls = els.panel.querySelector('.panel__controls');
+  if (panelControls) panelControls.style.display = '';
+  els.panel.querySelector('.locked-panel')?.remove();
 }
 
 function renderBatchPanel() {
@@ -3604,6 +3655,20 @@ async function fetchPopularity() {
 
 init();
 
+const storeShell = createStoreShellContract({
+  elements: {
+    gridArea: els.gridArea,
+    gridTitle: els.gridTitle,
+    gridMeta: els.gridMeta,
+    gridActions: els.gridActions,
+  },
+  callbacks: {
+    resetPanelToPlaceholder,
+    setHeaderSearchMode,
+    setPanelSuppressed,
+  },
+});
+
 window.__supericons = {
   state,
   showToast,
@@ -3619,7 +3684,9 @@ window.__supericons = {
   ANIM_CSS,
   setHeaderSearchMode,
   syncHeaderSearchChrome,
+  syncPurposeFilterBar,
   syncSidebarToggleButton,
+  shell: storeShell,
 };
 
 // MCP links

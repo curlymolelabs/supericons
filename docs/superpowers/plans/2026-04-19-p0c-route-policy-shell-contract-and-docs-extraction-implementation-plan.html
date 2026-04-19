@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P0-C Plan: Routes, Shell, and Docs</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f3eb;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d7cfc0;
+      --accent: #0f766e;
+      --accent-soft: #dff5f1;
+      --code: #f3efe6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 22px;
+    }
+    p, li { font-size: 1.02rem; }
+    .hero, .card, .callout {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    ul, ol { padding-left: 22px; }
+    code, pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+    }
+    pre {
+      background: var(--code);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .callout {
+      margin-top: 22px;
+      background: #fff8ea;
+    }
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">P0-C Implementation Plan</span>
+      <h1>Routes, shell ownership, and docs cleanup</h1>
+      <p>This is the next build step after the product-facts work and the first browser QA pass. The goal is to make route behavior intentional, reduce risky cross-file coupling, and move the docs view into cleaner modules without changing how the product feels to the user.</p>
+      <p class="meta">Goal: keep launch work stable now, then prepare the app for the bigger SI Registry and semantic rollout later.</p>
+    </section>
+
+    <section class="card">
+      <h2>Main Roadmap We Are Following</h2>
+      <div class="grid">
+        <div>
+          <h3>P0-A</h3>
+          <p>Done. Product facts were centralized and the packs heading bug was fixed.</p>
+        </div>
+        <div>
+          <h3>P0-B</h3>
+          <p>Done. Real browser QA was run and the biggest refactor risks were identified.</p>
+        </div>
+        <div>
+          <h3>P0-C</h3>
+          <p>This plan. Clean up route behavior, add a shared shell contract, and pull docs code out of <code>store.js</code> in a safe first slice.</p>
+        </div>
+        <div>
+          <h3>P1 and after</h3>
+          <p>Only after P0-C is green do we start SI Registry scaffolding and then the longer semantic rollout.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Decides</h2>
+      <ul>
+        <li>Store routes that already support direct links should keep their <code>?view=</code> URL after the page loads.</li>
+        <li><code>collection-detail</code> stays non-shareable for now because it still depends on internal state instead of a public route model.</li>
+        <li><code>main.js</code> stays the owner of shared shell DOM and shell layout rules.</li>
+        <li><code>store.js</code> should ask for shell changes through a shared contract instead of editing shell elements directly.</li>
+        <li>Docs is the first safe cleanup slice because it already behaves like a separate route family.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Files This Plan Adds</h2>
+      <ul>
+        <li><code>lib/view-route-policy.js</code> for all route rules in one place</li>
+        <li><code>lib/store-shell-contract.js</code> for the shared shell API used by store views</li>
+        <li><code>lib/docs-guide-config.js</code> for docs guide data now trapped inside <code>store.js</code></li>
+        <li><code>lib/docs-site-render.js</code> for docs page markup builders</li>
+        <li><code>scripts/verify-view-route-policy.mjs</code> for route checks</li>
+        <li><code>scripts/verify-store-shell-contract.mjs</code> for shell checks</li>
+        <li><code>scripts/verify-docs-site-render.mjs</code> for docs rendering checks</li>
+      </ul>
+
+      <h3>Files this plan changes</h3>
+      <ul>
+        <li><code>package.json</code></li>
+        <li><code>main.js</code></li>
+        <li><code>store.js</code></li>
+        <li><code>docs-pages.js</code></li>
+        <li><code>scripts/verify-icon-grid-behavior.mjs</code> if extra route ownership checks are needed</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Implementation Steps</h2>
+
+      <h3>1. Put all route rules in one place</h3>
+      <p>Create one route policy file that answers simple questions:</p>
+      <ul>
+        <li>Should this view stay in the URL?</li>
+        <li>Does this view use the store shell?</li>
+        <li>Should this view suppress the side panel?</li>
+        <li>Should the header search be in icon mode or docs mode?</li>
+      </ul>
+      <p>Verification script:</p>
+      <pre><code>node scripts/verify-view-route-policy.mjs</code></pre>
+
+      <h3>2. Add a shared shell contract</h3>
+      <p>Make <code>main.js</code> expose a small shared API for store views, such as:</p>
+      <ul>
+        <li>set page title and small subtitle text</li>
+        <li>switch header search mode</li>
+        <li>hide or restore the side panel</li>
+        <li>reset the premium panel placeholder</li>
+        <li>scroll the main grid back to the top</li>
+      </ul>
+      <p>This means <code>store.js</code> stops doing raw shell DOM setup during route switches.</p>
+      <p>Verification script:</p>
+      <pre><code>node scripts/verify-store-shell-contract.mjs</code></pre>
+
+      <h3>3. Wire the route logic and shell contract together</h3>
+      <p>Update <code>switchView()</code> and route restore logic in <code>store.js</code> to use the new route policy and the new shell contract. Keep the heading-protection checks green while doing this.</p>
+      <p>Main checks:</p>
+      <pre><code>node scripts/verify-view-route-policy.mjs
+node scripts/verify-store-shell-contract.mjs
+npm run verify:icon-grid-behavior</code></pre>
+
+      <h3>4. Move docs guide data out of <code>store.js</code></h3>
+      <p>Extract the large docs guide configuration into <code>lib/docs-guide-config.js</code>. This is safe because it is mostly content and structure, not shared app state.</p>
+
+      <h3>5. Move pure docs page rendering out of <code>store.js</code></h3>
+      <p>Create a docs rendering helper that builds sidebar, pagination, and page markup. Keep event wiring in <code>store.js</code> for now. This reduces risk because we are only moving pure rendering first.</p>
+      <p>Verification script:</p>
+      <pre><code>node scripts/verify-docs-site-render.mjs</code></pre>
+
+      <h3>6. Run full checks and do a user QA checkpoint</h3>
+      <pre><code>node scripts/verify-view-route-policy.mjs
+node scripts/verify-store-shell-contract.mjs
+node scripts/verify-docs-site-render.mjs
+npm run verify:icon-grid-behavior
+npm run verify:search-query-fixtures
+npm run build</code></pre>
+    </section>
+
+    <section class="callout">
+      <h2>User Test Checkpoint</h2>
+      <p>When execution reaches the QA step, stop and ask the user to test these one by one:</p>
+      <ol>
+        <li>Open <code>/?view=packs</code> and confirm the heading is <code>Premium Collections</code> and the URL still shows <code>?view=packs</code>.</li>
+        <li>Open <code>/?view=pricing</code> and confirm the heading is <code>Pricing</code> and the URL still shows <code>?view=pricing</code>.</li>
+        <li>Open <code>/?view=docs-mcp-tools#icon-tools-search</code> and confirm both the page and the scroll target work.</li>
+        <li>Use the docs search in the header and confirm a result opens the right docs page.</li>
+        <li>Go back to All Icons and confirm the search box returns to icon mode.</li>
+      </ol>
+      <p class="small">The next big registry and semantic work should not begin until this checkpoint is green.</p>
+    </section>
+
+    <section class="card">
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>Shareable store routes keep their URL after load.</li>
+        <li>Route rules live in one clear place.</li>
+        <li><code>main.js</code> clearly owns the shell.</li>
+        <li><code>store.js</code> stops grabbing shell DOM during route switching.</li>
+        <li>Docs content and pure docs page rendering move out of <code>store.js</code>.</li>
+        <li>The next cleanup and registry steps become safer and easier.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

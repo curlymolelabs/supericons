@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
  * SuperIcons MCP Server
- * Provides 3 tools: search_icons, get_icon, list_libraries
+ * Provides free icon search plus premium Motion Lab and Converter workflows.
  * Transport: stdio (for local IDE integration)
  * Auth: SUPERICONS_API_KEY env var for premium icon access
  *
  * Premium access tiers:
  *   - Pro subscribers: all premium collections
  *   - Pack/Bundle buyers: purchased collections only
- *   - Anonymous: free icons only (20,000+)
+ *   - Anonymous: free icon access only
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -53,6 +53,8 @@ const packsDir = join(dataDir, 'packs');
 const manifestPath = join(packsDir, 'manifest.json');
 const materialExportManifestPath = join(dataDir, 'material-export-manifest.json');
 const materialExportDir = join(dataDir, 'material-export');
+const productFactsPath = join(dataDir, 'product-facts.json');
+const mcpPackagePath = join(__dirname, 'package.json');
 
 const MATERIAL_EXPORT_MANIFEST_FALLBACK = {
   version: 2,
@@ -206,6 +208,22 @@ function extractIconCss(fullCss, iconClass) {
   }
 
   return relevantLines.join('\n');
+}
+
+function loadProductFacts() {
+  try {
+    return JSON.parse(readFileSync(productFactsPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function loadPackageMetadata() {
+  try {
+    return JSON.parse(readFileSync(mcpPackagePath, 'utf8'));
+  } catch {
+    return { version: '0.0.0' };
+  }
 }
 
 function loadMaterialExportManifest() {
@@ -483,14 +501,17 @@ for (const icon of allIcons) {
   libCounts[icon.lib] = (libCounts[icon.lib] || 0) + 1;
 }
 const freeLibraryCount = Object.values(libraryMeta).filter(meta => !meta.premium).length;
-const freeIconCountLabel = `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
+const productFacts = loadProductFacts();
+const mcpPackage = loadPackageMetadata();
+const freeIconCountLabel = productFacts?.display?.freeIconsAcrossLibrariesFreeLabel
+  || `${freeIcons.length.toLocaleString()} free icons across ${freeLibraryCount} libraries`;
 
 // ============================================================
 // MCP Server
 // ============================================================
 const server = new McpServer({
   name: 'supericons',
-  version: '0.3.0',
+  version: mcpPackage.version,
 });
 
 // --- Tool: search_icons ---

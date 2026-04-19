@@ -25,13 +25,25 @@ import {
 } from './lib/motion-lab-presets.js';
 import {
   DOCS_PAGE_GROUPS,
-  DOCS_PAGE_ORDER,
   DOCS_PAGE_VIEWS,
   getDocsPageConfig,
 } from './docs-pages.js';
 import {
   searchDocs,
 } from './lib/docs-search-index.js';
+import { getDocsGuideConfig } from './lib/docs-guide-config.js';
+import { PRODUCT_FACT_LABELS } from './lib/product-facts.js';
+import {
+  renderDocsArticleMarkup,
+  renderDocsSiteShellMarkup,
+} from './lib/docs-site-render.js';
+import {
+  buildRouteUrl,
+  getRouteMeta,
+  hasDirectRouteView,
+  normalizeRouteView,
+  shouldPersistRouteView,
+} from './lib/view-route-policy.js';
 
 // ── Constants ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://kcjmkakdhsqplvasgkjv.supabase.co';
@@ -61,6 +73,11 @@ const PRO_PLANS = {
   },
 };
 const PRO_WORKFLOW_BULLET = 'Workflow tools: Motion Lab, Converter (PNG <-> SVG)';
+const freeIconsRounded = PRODUCT_FACT_LABELS.freeIconsRounded;
+const freeIconsLabel = PRODUCT_FACT_LABELS.freeIconsLabel;
+const freeIconsAcrossLibrariesLabel = PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesLabel;
+const mcpServerFreeIconsLabel = PRODUCT_FACT_LABELS.mcpServerFreeIconsLabel;
+const mcpToolsLabel = PRODUCT_FACT_LABELS.mcpToolsLabel;
 const PRO_BANNER_COPY = {
   monthly: {
     description: 'MCP access, workflow tools, and 1 premium collection every month.',
@@ -182,11 +199,6 @@ let toastTimeout = null;
 let removeUpgradePrompt = null;
 let premiumSelectionRequestId = 0;
 let packCatalogNotice = null;
-const DOCS_GUIDE_VIEWS = new Set(['docs-claude-code', 'docs-codex', 'docs-cursor']);
-const PERSISTENT_ROUTE_VIEWS = new Set([...DOCS_PAGE_VIEWS]);
-const PANEL_SUPPRESSED_VIEWS = new Set([...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
-const STORE_SHELL_VIEWS = new Set(['packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'collection-detail', 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
-const DIRECT_ROUTE_VIEWS = new Set(['icons', 'packs', 'downloads', 'dashboard', 'api-keys', ...DOCS_PAGE_VIEWS, 'pricing', 'privacy', 'terms', 'motion-lab', 'converter', 'converter-lab']);
 const DOCS_SIDEBAR_DRAWER_MEDIA = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
   ? window.matchMedia('(max-width: 960px)')
   : null;
@@ -515,22 +527,15 @@ function syncViewFromLocation({ historyMode = 'replace' } = {}) {
   const params = new URLSearchParams(window.location.search);
   const requestedView = params.get('view');
 
-  if (requestedView === 'mcp') {
-    switchView('docs', { historyMode });
-    return true;
-  }
-
-  if (PERSISTENT_ROUTE_VIEWS.has(requestedView || '')) {
-    switchView(requestedView, { historyMode });
-    return true;
-  }
-
-  if (DIRECT_ROUTE_VIEWS.has(requestedView || '')) {
-    switchView(requestedView, { historyMode });
-    if (historyMode !== 'silent') {
-      const nextUrl = window.location.hash
-        ? `${window.location.pathname}${window.location.hash}`
-        : window.location.pathname;
+  if (hasDirectRouteView(requestedView || '')) {
+    const nextView = normalizeRouteView(requestedView || '');
+    switchView(nextView, { historyMode });
+    if (historyMode !== 'silent' && !shouldPersistRouteView(nextView)) {
+      const nextUrl = buildRouteUrl({
+        pathname: window.location.pathname,
+        view: nextView,
+        hash: window.location.hash,
+      });
       window.history.replaceState({}, '', nextUrl);
     }
     return true;
@@ -616,29 +621,61 @@ function updatePackCount() {
   }
 }
 
+function getStoreViewHeading(view) {
+  if (DOCS_PAGE_VIEWS.has(view)) return 'Docs';
+
+  switch (view) {
+    case 'packs':
+      return 'Premium Collections';
+    case 'downloads':
+      return 'My Collection';
+    case 'dashboard':
+      return 'My Purchases';
+    case 'api-keys':
+      return 'API Keys';
+    case 'pricing':
+      return 'Pricing';
+    case 'privacy':
+      return 'Privacy Policy';
+    case 'terms':
+      return 'Terms of Service';
+    case 'motion-lab':
+      return 'Motion Lab';
+    case 'converter':
+      return 'Icon Converter';
+    case 'converter-lab':
+      return 'Converter Lab';
+    default:
+      return 'My Purchases';
+  }
+}
+
 // ── View Switching ────────────────────────────────────────────
 export function switchView(view, { historyMode = 'replace' } = {}) {
   const si = window.__supericons;
-
-  if (view === 'mcp') {
-    view = 'docs';
-  }
+  view = normalizeRouteView(view);
+  const nextRouteMeta = getRouteMeta(view);
 
   if (currentView !== view) {
     closeDocsSidebarDrawer();
   }
 
   const activeRouteView = new URLSearchParams(window.location.search).get('view');
+  const activeRouteMeta = getRouteMeta(activeRouteView || 'icons');
   const shouldMutateHistory = historyMode !== 'silent';
   const historyMethod = historyMode === 'push' ? 'pushState' : 'replaceState';
-  if (shouldMutateHistory && PERSISTENT_ROUTE_VIEWS.has(view)) {
+  if (shouldMutateHistory && nextRouteMeta.persistUrl) {
     const routeHash = activeRouteView === view ? window.location.hash : '';
-    const docsUrl = `${window.location.pathname}?view=${view}${routeHash}`;
+    const docsUrl = buildRouteUrl({
+      pathname: window.location.pathname,
+      view,
+      hash: routeHash,
+    });
     const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     if (currentUrl !== docsUrl) {
       window.history[historyMethod]({}, '', docsUrl);
     }
-  } else if (shouldMutateHistory && PERSISTENT_ROUTE_VIEWS.has(activeRouteView || '')) {
+  } else if (shouldMutateHistory && activeRouteMeta.persistUrl) {
     window.history[historyMethod]({}, '', window.location.pathname);
   }
 
@@ -661,7 +698,8 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   }
 
   // Restore the Customize panel if we're leaving a view that suppresses it
-  if (PANEL_SUPPRESSED_VIEWS.has(currentView) && !PANEL_SUPPRESSED_VIEWS.has(view)) {
+  const currentRouteMeta = getRouteMeta(currentView);
+  if (currentRouteMeta.panelSuppressed && !nextRouteMeta.panelSuppressed) {
     if (si?.setPanelSuppressed) {
       si.setPanelSuppressed(false);
     } else {
@@ -701,6 +739,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   const gridTitle = document.getElementById('gridTitle');
   const gridMeta = document.getElementById('gridMeta');
   const gridActions = document.querySelector('.grid-header__actions');
+  const shell = si?.shell;
 
   if (!gridArea) return;
 
@@ -710,115 +749,97 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     window.scrollTo(0, 0);
   };
 
-  if (STORE_SHELL_VIEWS.has(view)) {
-    // Add class to hide all existing grid content (icon cells, empty state, actions)
-    gridArea.classList.add('store-active');
-    if (gridActions) gridActions.style.display = 'none';
+  const setStoreHeading = (title, meta = '') => {
+    if (shell?.setHeading) {
+      shell.setHeading(title, meta);
+      return;
+    }
+    if (gridTitle) gridTitle.textContent = title;
+    if (gridMeta) gridMeta.textContent = meta;
+  };
 
-    // Reset customize panel to placeholder state (clear stale free icon controls)
-    const panel = document.getElementById('panel');
-    if (panel) {
-      clearPremiumPreviewTimer();
-      currentPremiumSelection = null;
-      premiumPanelState = createPremiumPanelState();
-      const panelPreview = document.getElementById('panelPreview');
-      if (panelPreview) {
-        panelPreview.innerHTML = `<span class="material-symbols-outlined panel__preview-icon"
-          style="font-size:64px; color: var(--si-text-dim);">widgets</span>`;
-      }
-      const panelBody = panel.querySelector('.panel__body');
-      if (panelBody) {
-        panelBody.className = 'panel__placeholder';
-        panelBody.innerHTML = '<span class="material-symbols-outlined panel__placeholder-icon">touch_app</span><p class="panel__placeholder-text">Select an icon from the grid to customize it</p>';
-      }
-      const panelControls = panel.querySelector('.panel__controls');
-      if (panelControls) panelControls.style.display = '';
-      const lockedPanel = panel.querySelector('.locked-panel');
-      if (lockedPanel) lockedPanel.remove();
+  const enterStoreChrome = ({
+    title,
+    meta = '',
+    searchMode = 'icons',
+    searchValue = '',
+    panelSuppressed = false,
+  }) => {
+    if (shell?.enterStoreView) {
+      shell.enterStoreView({ title, meta, searchMode, searchValue, panelSuppressed });
+      return;
     }
 
+    gridArea.classList.add('store-active');
+    if (gridActions) gridActions.style.display = 'none';
+    if (gridTitle) gridTitle.textContent = title;
+    if (gridMeta) gridMeta.textContent = meta;
+    si?.setPanelSuppressed?.(Boolean(panelSuppressed));
+    si?.setHeaderSearchMode?.(searchMode, { value: searchValue });
+  };
+
+  const leaveStoreChrome = () => {
+    if (shell?.leaveStoreView) {
+      shell.leaveStoreView();
+      return;
+    }
+    gridArea.classList.remove('store-active');
+    if (gridActions) gridActions.style.display = '';
+    if (gridTitle) gridTitle.textContent = 'All Icons';
+    if (gridMeta) gridMeta.textContent = '';
+    si?.setPanelSuppressed?.(false);
+  };
+
+  if (nextRouteMeta.storeShell) {
+    clearPremiumPreviewTimer();
+    currentPremiumSelection = null;
+    premiumPanelState = createPremiumPanelState();
+    enterStoreChrome({
+      title: view === 'collection-detail' ? '' : getStoreViewHeading(view),
+      meta: '',
+      searchMode: nextRouteMeta.searchMode,
+      searchValue: nextRouteMeta.searchMode === 'docs' ? docsSearchQuery : (si?.state?.searchQuery || ''),
+      panelSuppressed: nextRouteMeta.panelSuppressed,
+    });
+
     if (view === 'packs') {
-      if (gridTitle) gridTitle.textContent = 'Premium Collections';
-      if (gridMeta) gridMeta.textContent = '';
       ensureClaimStatusLoaded();
       renderPackCatalog();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'collection-detail') {
       // Title/meta set by renderCollectionDetail
     } else if (view === 'downloads') {
-      if (gridTitle) gridTitle.textContent = 'My Collection';
-      if (gridMeta) gridMeta.textContent = '';
       renderDownloads();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'dashboard') {
-      if (gridTitle) gridTitle.textContent = 'My Purchases';
-      if (gridMeta) gridMeta.textContent = '';
       renderDashboard();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (view === 'api-keys') {
-      if (gridTitle) gridTitle.textContent = 'API Keys';
-      if (gridMeta) gridMeta.textContent = '';
       renderApiKeysPage();
       void ensureUserPurchasesLoaded({ rerender: true });
     } else if (DOCS_PAGE_VIEWS.has(view)) {
-      if (gridTitle) gridTitle.textContent = 'Docs';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'docs');
       renderDocsSitePage(view);
     } else if (view === 'pricing') {
-      if (gridTitle) gridTitle.textContent = 'Pricing';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'pricing');
       renderPricingPage();
     } else if (view === 'privacy') {
-      if (gridTitle) gridTitle.textContent = 'Privacy Policy';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'privacy');
       renderPrivacyPage();
     } else if (view === 'terms') {
-      if (gridTitle) gridTitle.textContent = 'Terms of Service';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'terms');
       renderTermsPage();
     } else if (view === 'motion-lab') {
-      if (gridTitle) gridTitle.textContent = 'Motion Lab';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'motion-lab');
       renderMotionLab();
     } else if (view === 'converter') {
-      if (gridTitle) gridTitle.textContent = 'Icon Converter';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'converter');
       renderConverter();
     } else if (view === 'converter-lab') {
-      if (gridTitle) gridTitle.textContent = 'Converter Lab';
-      if (gridMeta) gridMeta.textContent = '';
-      if (si?.setPanelSuppressed) {
-        si.setPanelSuppressed(true);
-      }
       document.body.setAttribute('data-view', 'converter-lab');
       renderConverterLab();
     } else {
-      if (gridTitle) gridTitle.textContent = 'My Purchases';
-      if (gridMeta) gridMeta.textContent = '';
+      setStoreHeading('My Purchases', '');
       renderDashboard();
     }
 
@@ -835,11 +856,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
     }
 
   } else {
-    // Restore icon grid
-    gridArea.classList.remove('store-active');
-    if (gridActions) gridActions.style.display = '';
-    if (gridTitle) gridTitle.textContent = 'All Icons';
-    if (gridMeta) gridMeta.textContent = '';
+    leaveStoreChrome();
     removePackCatalog();
     // Clean up any tool/store views lingering in the DOM
     document.getElementById('motionLabView')?.remove();
@@ -852,6 +869,7 @@ export function switchView(view, { historyMode = 'replace' } = {}) {
   }
 
   // Update sidebar active state
+  si?.syncPurposeFilterBar?.();
   updateSidebarActive(view);
   resetShellScroll();
   window.requestAnimationFrame(resetShellScroll);
@@ -1225,9 +1243,14 @@ async function renderCollectionDetail(product) {
   const gridArea = document.getElementById('gridArea');
   const gridTitle = document.getElementById('gridTitle');
   const gridMeta = document.getElementById('gridMeta');
+  const shell = window.__supericons?.shell;
   if (!gridArea) return;
 
-  if (gridTitle) gridTitle.textContent = getProductName(product);
+  if (shell?.setHeading) {
+    shell.setHeading(getProductName(product), '');
+  } else if (gridTitle) {
+    gridTitle.textContent = getProductName(product);
+  }
   if (gridMeta) {
     gridMeta.textContent = '';
     const backBtn = document.createElement('button');
@@ -4242,17 +4265,17 @@ function renderPricingPage() {
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">redeem</span>
           </div>
           <h3 class="pricing-card__name">Free</h3>
-          <p class="pricing-card__desc">20,000+ icons, 10 libraries, AI search, SVG export. No account needed.</p>
+          <p class="pricing-card__desc">${freeIconsAcrossLibrariesLabel}, AI search, SVG export. No account needed.</p>
         </div>
         <div class="pricing-card__price">
           <span class="pricing-card__amount">$0</span>
         </div>
         <ul class="pricing-card__features">
-          <li><span class="material-symbols-outlined">check</span> 20,000+ icons across 10 libraries</li>
+          <li><span class="material-symbols-outlined">check</span> ${freeIconsAcrossLibrariesLabel}</li>
           <li><span class="material-symbols-outlined">check</span> Material, Lucide, Tabler, Phosphor + more</li>
           <li><span class="material-symbols-outlined">check</span> AI semantic search</li>
           <li><span class="material-symbols-outlined">check</span> SVG, PNG, CSS export</li>
-          <li><span class="material-symbols-outlined">check</span> MCP server (20,000+ free icons)</li>
+          <li><span class="material-symbols-outlined">check</span> ${mcpServerFreeIconsLabel}</li>
           <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> Animated premium packs</li>
           <li class="pricing-card__feature--dim"><span class="material-symbols-outlined">close</span> Premium icons via MCP</li>
         </ul>
@@ -4360,7 +4383,7 @@ function renderPricingPage() {
             <span class="material-symbols-outlined pricing-faq__chevron">expand_more</span>
           </button>
           <div class="pricing-faq__answer">
-            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access 20,000+ icons. Pro subscribers and pack owners can connect a Supericons API key to access the premium collections tied to their account.
+            The MCP (Model Context Protocol) server lets AI coding agents search and retrieve icons programmatically. Free users can access ${freeIconsRounded} icons. Pro subscribers and pack owners can connect a Supericons API key to access the premium collections tied to their account.
           </div>
         </div>
         <div class="pricing-faq__item">
@@ -5283,243 +5306,6 @@ function scrollDocsHashIntoView() {
   });
 }
 
-function getDocsGuideConfig(view) {
-  const guideConfigs = {
-    'docs-claude-code': {
-      eyebrow: 'Claude Code',
-      title: 'Set up Supericons MCP in Claude Code',
-      heroCopy: 'Add icon search and SVG retrieval to Claude Code without leaving the command line. Search, pick, and insert icons in the same session as your code edits.',
-      snippets: [
-        {
-          id: 'claude-config',
-          label: 'Copy',
-          code: `# macOS / Linux
-claude mcp add supericons -- npx -y supericons-mcp
-
-# Windows
-claude mcp add supericons -- cmd /c npx -y supericons-mcp`,
-        },
-      ],
-      heroNote: 'Prefer JSON config over CLI? Use the same <code>command</code> and <code>args</code> values. Claude Code stores your own MCP servers in <code>~/.claude.json</code>, and shared project MCP servers in <code>.mcp.json</code> at the project root.',
-      flowCards: [
-        {
-          title: '1. Add the server',
-          copy: 'Run the Claude CLI command above to register the local <code>supericons</code> MCP server.',
-        },
-        {
-          title: '2. Confirm Claude can see it',
-          copy: 'Run <code>claude mcp list</code> to verify the server registered, or restart the session if it is not listed.',
-        },
-        {
-          title: '3. Verify with a search',
-          copy: 'Ask Claude Code to find an icon (e.g., a settings or navigation icon) and verify that the results include Lucide or Tabler options.',
-        },
-        {
-          title: '4. Pull SVG into code',
-          copy: 'Once the search result looks right, ask Claude Code to insert the SVG directly into your component or markup.',
-        },
-      ],
-      exampleCode: `Find a settings icon from Lucide for a dashboard header.
-Return two alternatives from Tabler as well.
-Then insert the chosen SVG into my React component.`,
-      premiumCards: [
-        {
-          title: 'How premium access works',
-          copy: 'Premium icons are not unlocked simply by adding a key. They unlock when your Supericons account has an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a>, and <code>SUPERICONS_API_KEY</code> is present in the MCP server config Claude Code uses at startup.',
-        },
-        {
-          title: 'What to do',
-          copy: 'Sign in to Supericons, generate an API key from the <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a> page, then add that key in the env or secrets field Claude Code uses for MCP server configuration.',
-        },
-      ],
-      troubleshootingCards: [
-        {
-          title: 'Server does not appear',
-          copy: 'Run <code>claude mcp list</code> after adding the server. If it still does not appear, restart the Claude Code session.',
-        },
-        {
-          title: 'Windows cannot launch <code>npx</code>',
-          copy: 'On native Windows, use <code>cmd /c npx -y supericons-mcp</code> instead of calling <code>npx</code> directly.',
-        },
-        {
-          title: 'Premium icons are missing',
-          copy: 'Free icons work without a Pro subscription. Premium collections require an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your MCP server config.',
-        },
-      ],
-      relatedGuides: [
-        { href: '/?view=docs', view: 'docs', label: 'Docs' },
-        { href: '/?view=docs-codex', view: 'docs-codex', label: 'Codex setup' },
-        { href: '/?view=docs-cursor', view: 'docs-cursor', label: 'Cursor setup' },
-      ],
-    },
-    'docs-codex': {
-      eyebrow: 'Codex',
-      title: 'Set up Supericons MCP in Codex',
-      heroCopy: 'Add icon search to your Codex session. Find and insert icons without switching to a browser - search, pick, and drop SVGs in the same coding flow as your edits.',
-      snippets: [
-        {
-          id: 'codex-config',
-          label: 'Copy',
-          code: 'codex mcp add supericons -- npx -y supericons-mcp',
-        },
-        {
-          id: 'codex-config-toml',
-          label: 'Copy',
-          code: `[mcp_servers.supericons]
-command = "npx"
-args = ["-y", "supericons-mcp"]`,
-        },
-      ],
-      heroNote: 'MCP is supported in the Codex CLI and IDE extension. The CLI command is the quickest path. Prefer a config file? Add the same values to <code>~/.codex/config.toml</code> under <code>[mcp_servers.supericons]</code>.',
-      flowCards: [
-        {
-          title: '1. Register the MCP server',
-          copy: 'Run <code>codex mcp add supericons -- npx -y supericons-mcp</code> or add the same values to <code>config.toml</code>.',
-        },
-        {
-          title: '2. Confirm Codex can see it',
-          copy: 'Open Codex and use <code>/mcp</code> to confirm the server is active before you rely on icon tool calls.',
-        },
-        {
-          title: '3. Try a narrow prompt',
-          copy: 'Start with a concrete request like a navigation, auth, or dashboard icon so you can verify the flow quickly.',
-        },
-        {
-          title: '4. Insert the SVG',
-          copy: 'After selecting an icon, ask Codex to place the SVG inside your component or template file directly.',
-        },
-      ],
-      exampleCode: `Search Supericons for a secure login icon.
-Show me a Lucide option and a Tabler option.
-Insert the Lucide SVG into the sign-in button component.`,
-      premiumCards: [
-        {
-          title: 'Your account comes first',
-          copy: 'Your API key authenticates to your Supericons account. The collections and tools you can access depend on what your account owns - either a <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection packs</a>. The key alone does not grant access.',
-        },
-        {
-          title: 'How to add your API key in Codex',
-          copy: 'Generate the key in <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>, then add <code>SUPERICONS_API_KEY</code> to the env or secrets field your Codex MCP config uses for the <code>supericons-mcp</code> server.',
-        },
-      ],
-      troubleshootingCards: [
-        {
-          title: 'Server saved but not visible in Codex',
-          copy: 'Use <code>/mcp</code> in Codex to inspect active servers and restart the session after changing MCP config.',
-        },
-        {
-          title: 'The <code>npx</code> command does not run',
-          copy: 'Ensure <code>npx</code> is available in the shell environment that Codex uses for local MCP processes.',
-        },
-        {
-          title: 'Premium icons do not appear',
-          copy: 'Free icons still return 20,000+ results without a Pro subscription. Premium icon access requires an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.',
-        },
-      ],
-      relatedGuides: [
-        { href: '/?view=docs', view: 'docs', label: 'Docs' },
-        { href: '/?view=docs-claude-code', view: 'docs-claude-code', label: 'Claude Code setup' },
-        { href: '/?view=docs-cursor', view: 'docs-cursor', label: 'Cursor setup' },
-      ],
-    },
-    'docs-cursor': {
-      eyebrow: 'Cursor',
-      title: 'Set up Supericons MCP in Cursor',
-      heroCopy: 'Add icon search and SVG retrieval to Cursor. Find and insert icons without leaving the editor - in the same session as your code edits and component builds.',
-      snippets: [
-        {
-          id: 'cursor-config',
-          label: 'Copy',
-          code: `{
-  "mcpServers": {
-    "supericons": {
-      "command": "npx",
-      "args": ["-y", "supericons-mcp"]
-    }
-  }
-}`,
-        },
-      ],
-      flowCards: [
-        {
-          title: '1. Add the MCP entry',
-          copy: 'Open Cursor settings, navigate to MCP, and paste the server config. For a global setup, add it to <code>~/.cursor/mcp.json</code>. For a project-specific setup, use <code>.cursor/mcp.json</code> in the project root.',
-        },
-        {
-          title: '2. Reload MCP servers',
-          copy: 'Save and reload. Verify the <code>supericons</code> server appears in Cursor\'s MCP tool list before continuing.',
-        },
-        {
-          title: '3. Test with a UI prompt',
-          copy: 'Ask Cursor to search for a concrete icon use case like auth, charts, or navigation to validate the setup.',
-        },
-        {
-          title: '4. Apply the result in code',
-          copy: 'Once the icon is selected, have Cursor insert the SVG directly into the file it is already editing.',
-        },
-      ],
-      exampleCode: `Find an icon for a dashboard analytics tab.
-Return one Lucide option and one Phosphor option.
-Then replace the placeholder SVG in my sidebar component.`,
-      premiumCards: [
-        {
-          title: 'What you need for premium access',
-          copy: 'Premium MCP access requires an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code> in your Cursor MCP server config.',
-        },
-        {
-          title: 'What to do first',
-          copy: 'Generate the key in <a href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>, add it to the env or secrets field Cursor uses for the <code>supericons</code> server, then reload MCP servers.',
-        },
-      ],
-      troubleshootingCards: [
-        {
-          title: 'Cursor cannot see the server',
-          copy: 'Reload Cursor\'s MCP config after saving. Most issues here come from a stale server registry rather than a bad config block.',
-        },
-        {
-          title: '<code>npx</code> is not found or fails to start',
-          copy: 'Make sure Node.js and <code>npx</code> are available to the shell environment Cursor launches for MCP tools.',
-        },
-        {
-          title: 'Premium collections are missing',
-          copy: 'Cursor can still use the free 20,000+ icons without a Pro subscription. Premium results require an active <a href="/?view=pricing" data-docs-view="pricing">Pro subscription or purchased collection</a> on your Supericons account, plus a valid <code>SUPERICONS_API_KEY</code>.',
-        },
-      ],
-      relatedGuides: [
-        { href: '/?view=docs', view: 'docs', label: 'Docs' },
-        { href: '/?view=docs-claude-code', view: 'docs-claude-code', label: 'Claude Code setup' },
-        { href: '/?view=docs-codex', view: 'docs-codex', label: 'Codex setup' },
-      ],
-    },
-  };
-
-  return guideConfigs[view] || null;
-}
-
-function renderDocsSidebar(view) {
-  return DOCS_PAGE_GROUPS.map((group) => {
-    const groupKey = getDocsGroupKey(group);
-    const links = group.pages
-      .map((pageView) => {
-        const config = getDocsPageConfig(pageView);
-        const isActive = pageView === view;
-        return `<a class="docs-shell__nav-link${isActive ? ' is-active' : ''}" href="/?view=${pageView}" data-docs-view="${pageView}"${isActive ? ' aria-current="page"' : ''}>${config.navLabel}</a>`;
-      })
-      .join('');
-
-    return `
-      <section class="docs-shell__nav-group" data-docs-group="${groupKey}">
-        <button class="docs-shell__nav-trigger" type="button" data-docs-group-toggle="${groupKey}" aria-expanded="true">
-          <span class="docs-shell__nav-title">${group.label}</span>
-          <span class="material-symbols-outlined docs-shell__nav-chevron" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="docs-shell__nav-list">
-          ${links}
-        </div>
-      </section>`;
-  }).join('');
-}
-
 function updateDocsSidebarState(view, scope = document) {
   ensureDocsGroupOpenForView(view);
   scope.querySelectorAll('.docs-shell__nav-link[data-docs-view]').forEach((link) => {
@@ -5534,96 +5320,21 @@ function updateDocsSidebarState(view, scope = document) {
   applyDocsSidebarGroupState(scope);
 }
 
-function renderDocsPagination(view) {
-  const index = DOCS_PAGE_ORDER.indexOf(view);
-  if (index === -1) return '';
-
-  const prevView = DOCS_PAGE_ORDER[index - 1] || null;
-  const nextView = DOCS_PAGE_ORDER[index + 1] || null;
-  const prevConfig = prevView ? getDocsPageConfig(prevView) : null;
-  const nextConfig = nextView ? getDocsPageConfig(nextView) : null;
-
-  if (!prevConfig && !nextConfig) return '';
-
-  return `
-    <nav class="docs-shell__pager" aria-label="Docs page navigation">
-      ${prevConfig ? `<a class="docs-shell__pager-link" href="/?view=${prevView}" data-docs-view="${prevView}">
-        <span class="docs-shell__pager-label">Previous</span>
-        <strong>${prevConfig.navLabel}</strong>
-      </a>` : '<span></span>'}
-      ${nextConfig ? `<a class="docs-shell__pager-link docs-shell__pager-link--next" href="/?view=${nextView}" data-docs-view="${nextView}">
-        <span class="docs-shell__pager-label">Next</span>
-        <strong>${nextConfig.navLabel}</strong>
-      </a>` : ''}
-    </nav>`;
-}
-
 function renderDocsSitePage(view = 'docs') {
   removePackCatalog({ keepDocs: true });
 
   const gridArea = document.getElementById('gridArea');
   if (!gridArea) return;
 
-  const config = getDocsPageConfig(view);
   let page = document.getElementById('docsView');
-  const isNewShell = !page;
 
   if (!page) {
     page = document.createElement('div');
     page.id = 'docsView';
     page.className = 'docs-view docs-view--site';
-    page.innerHTML = `
-      <div class="docs-shell">
-        <div class="docs-shell__backdrop" aria-hidden="true" hidden></div>
-
-        <aside class="docs-shell__sidebar" id="docsSidebarNav" aria-label="Docs navigation" tabindex="-1">
-          <div class="docs-shell__sidebar-head">
-            <h2 class="docs-shell__sidebar-brand">
-              <a class="docs-shell__sidebar-home" href="/?view=docs" data-docs-view="docs" aria-label="Go to Documentation home">
-                <span class="docs-shell__sidebar-home-icon" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z" fill="none"/>
-                    <path class="docs-shell__sidebar-home-frame" d="M13.228 2.688a2 2 0 0 0-2.456 0l-8.384 6.52C1.636 9.795 2.05 11 3.003 11h1.092l.82 8.199A2 2 0 0 0 6.905 21h10.19a2 2 0 0 0 1.99-1.801l.82-8.199h1.092c.952 0 1.368-1.205.615-1.791l-8.384-6.52ZM5.996 9.91a1.008 1.008 0 0 0-.37-.684L12 4.267l6.374 4.958a1.008 1.008 0 0 0-.37.684L17.095 19H6.905z"/>
-                    <g class="docs-shell__sidebar-home-core">
-                      <circle class="docs-shell__sidebar-home-core-ring" cx="12" cy="13" r="3.5"/>
-                    </g>
-                  </svg>
-                </span>
-                <span>Documentation</span>
-              </a>
-            </h2>
-          </div>
-          <div class="docs-shell__sidebar-nav">
-            ${renderDocsSidebar(view)}
-          </div>
-        </aside>
-
-        <div class="docs-shell__content">
-          <article class="docs-shell__page"></article>
-        </div>
-
-        <div class="docs-scroll-actions" aria-label="Page navigation">
-          <button class="docs-scroll-btn" id="docsScrollDown" aria-label="Go to next section" hidden>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <button class="docs-scroll-btn" id="docsScrollTop" aria-label="Back to top" hidden>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="18 15 12 9 6 15"></polyline>
-            </svg>
-          </button>
-        </div>
-      </div>`;
+    page.innerHTML = renderDocsSiteShellMarkup(view);
     gridArea.appendChild(page);
   }
-
-  const pillsMarkup = Array.isArray(config.pills) && config.pills.length
-    ? `<div class="docs-pill-list docs-pill-list--hero">${config.pills.map((pill) => `<span class="docs-pill docs-pill--static">${pill}</span>`).join('')}</div>`
-    : '';
-  const verifiedMarkup = config.verifiedNote
-    ? `<p class="docs-shell__verified">${config.verifiedNote}</p>`
-    : '';
 
   cleanupDocsPage();
   ensureDocsSidebarToggleDelegation();
@@ -5632,17 +5343,7 @@ function renderDocsSitePage(view = 'docs') {
 
   const article = page.querySelector('.docs-shell__page');
   if (!article) return;
-  article.innerHTML = `
-    <header class="docs-hero docs-hero--page${config.summary ? '' : ' docs-hero--compact'}">
-      <span class="docs-shell__kicker">${config.kicker}</span>
-      <h1 class="docs-hero__title">${config.pageTitle}</h1>
-      ${config.summary ? `<p class="docs-hero__copy">${config.summary}</p>` : ''}
-      ${verifiedMarkup}
-      ${pillsMarkup}
-    </header>
-
-    ${config.bodyHtml}
-    ${renderDocsPagination(view)}`;
+  article.innerHTML = renderDocsArticleMarkup(view);
 
   wireDocsPage(page);
   syncDocsSidebarDrawerUi();
@@ -5802,8 +5503,8 @@ function renderDocsPage() {
           <a class="docs-btn docs-btn--secondary" href="/?view=api-keys" data-docs-view="api-keys">API Keys</a>
         </div>
         <div class="docs-pill-list">
-          <a class="docs-pill" href="/" data-docs-view="icons">20,000+ free icons</a>
-          <a class="docs-pill" href="#docs-tools">8 MCP tools</a>
+          <a class="docs-pill" href="/" data-docs-view="icons">${freeIconsLabel}</a>
+          <a class="docs-pill" href="#docs-tools">${mcpToolsLabel}</a>
           <a class="docs-pill" href="/?view=pricing" data-docs-view="pricing">Premium collection access</a>
           <a class="docs-pill" href="/?view=motion-lab" data-docs-view="motion-lab">Motion Lab MCP for Pro</a>
           <a class="docs-pill" href="/?view=converter" data-docs-view="converter">Converter MCP for Pro</a>

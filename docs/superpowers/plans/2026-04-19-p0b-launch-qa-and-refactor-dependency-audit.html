@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supericons P0-B QA and Refactor Audit</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ee;
+      --panel: #fffdf9;
+      --ink: #1f1a14;
+      --muted: #685f55;
+      --line: #ddd2c3;
+      --accent: #c55d1e;
+      --accent-soft: #f3d8c4;
+      --ok: #1f7a4f;
+      --warn: #9a5a00;
+      --shadow: 0 18px 45px rgba(64, 38, 10, 0.08);
+      --radius: 18px;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff6eb, transparent 30%),
+        linear-gradient(180deg, #fcfaf6 0%, var(--bg) 100%);
+    }
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    .hero, section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+    section {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: -0.03em;
+    }
+    h2 {
+      font-size: 1.35rem;
+    }
+    h3 {
+      font-size: 1.05rem;
+    }
+    p, li {
+      color: var(--muted);
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .summary-card {
+      padding: 14px;
+      border-radius: 14px;
+      background: #fff8f0;
+      border: 1px solid #ecd9c7;
+    }
+    .summary-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.15rem;
+    }
+    .status-ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+    .status-warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+    ul, ol {
+      margin: 10px 0 0 20px;
+      padding: 0;
+    }
+    li + li {
+      margin-top: 8px;
+    }
+    .callout {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fff7ed;
+      border: 1px solid #f0d1ae;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffefa;
+    }
+    code {
+      padding: 0.15em 0.4em;
+      border-radius: 8px;
+      background: #f3eee6;
+      color: #3f3325;
+      font-size: 0.94em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="hero">
+      <div class="eyebrow">P0-B Audit</div>
+      <h1>Launch QA passed. The next risk is refactor safety.</h1>
+      <p>
+        This review checked the launch-facing flows after the P0 facts and title fixes,
+        then mapped where the frontend is most tightly connected so we can refactor
+        without breaking the app.
+      </p>
+      <div class="summary">
+        <div class="summary-card">
+          <strong>Checked</strong>
+          packs, collection detail, pricing, MCP docs, search placeholder, empty state
+        </div>
+        <div class="summary-card">
+          <strong class="status-ok">Good news</strong>
+          No new blocking browser regressions showed up in the tested flows.
+        </div>
+        <div class="summary-card">
+          <strong class="status-warn">Main risk</strong>
+          The shell, store routes, and CSS are still tightly tied together.
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>What was tested</h2>
+      <ul>
+        <li>The premium collections page</li>
+        <li>A premium collection preview and detail page</li>
+        <li>The pricing page</li>
+        <li>The main docs page and the MCP tools docs page</li>
+        <li>The search box placeholder in icons mode and docs mode</li>
+        <li>A no-results search state</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What passed</h2>
+      <ul>
+        <li>The premium collections page kept the correct heading. The old overwrite bug is gone.</li>
+        <li>Opening a collection preview switched the heading to the correct collection title.</li>
+        <li>The pricing page showed the shared fact labels we moved to the new facts layer.</li>
+        <li>The MCP tools docs showed the real tool count: <code>12 tools</code>, with <code>3</code> free tools.</li>
+        <li>The search box still changes correctly between <code>Search docs</code> and <code>Search 20,000+ icons...</code>.</li>
+        <li>A nonsense search showed a clean no-results message instead of a broken screen.</li>
+        <li>No browser console errors appeared during the checked flows.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What still needs attention</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Route links are not fully consistent</h3>
+          <p>
+            Some store pages like packs and pricing open correctly from a <code>?view=</code> link,
+            but the browser address later gets cleaned back to <code>/</code>.
+            Docs pages keep their <code>?view=</code> address.
+          </p>
+          <p>
+            That means deep links work on entry, but copy-and-share behavior is less clear after the page loads.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Static landing copy still lives outside the facts layer</h3>
+          <p>
+            The app shell and docs now read shared product facts in the areas we changed,
+            but the landing page title, meta tags, and some hero copy in <code>index.html</code>
+            are still hand-written.
+          </p>
+        </div>
+        <div class="card">
+          <h3>The build still warns about bundle size</h3>
+          <p>
+            The app builds successfully, but the JavaScript bundle is still large.
+            That is not a launch blocker for this slice, but it is a sign that the code
+            needs cleaner boundaries.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Where the code is tightly connected</h2>
+      <div class="grid">
+        <div class="card">
+          <h3><code>main.js</code></h3>
+          <p>
+            This file owns the shared app shell: the icon grid, panel, compare drawer,
+            header search, and many event listeners.
+          </p>
+          <p>
+            The main risk is that other parts of the app reuse the same shell pieces,
+            so changes here can ripple across many screens.
+          </p>
+        </div>
+        <div class="card">
+          <h3><code>store.js</code></h3>
+          <p>
+            This file is both the route controller and the host for many features:
+            packs, pricing, docs, dashboard, API keys, Motion Lab, Converter, and more.
+          </p>
+          <p>
+            It reaches directly into shell-owned parts like the main grid, panel, and title areas.
+            That is the highest refactor risk in the app right now.
+          </p>
+        </div>
+        <div class="card">
+          <h3><code>style.css</code></h3>
+          <p>
+            This stylesheet covers almost every product surface in one file.
+            It also contains repeated selector groups, especially around pricing and docs.
+          </p>
+          <p>
+            That makes visual changes slower and raises the chance of accidental overrides.
+          </p>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Plain-English takeaway:</strong>
+        the problem is not just that the files are big. The problem is that the app shell,
+        the store screens, and the CSS all depend on each other in quiet ways.
+      </div>
+    </section>
+
+    <section>
+      <h2>Safe order for the next refactor</h2>
+      <ol>
+        <li>Create one shared shell contract for the title, grid, panel, preview, and search box.</li>
+        <li>Move route rules into one route registry so URL behavior is easier to reason about.</li>
+        <li>Extract the docs rendering first because it is lower risk than billing or premium access.</li>
+        <li>Extract pricing next because it is visible, valuable, and already has repeated CSS blocks.</li>
+        <li>Extract the premium collections surface only after the shell contract is stable.</li>
+        <li>Leave Motion Lab and Converter for later because they carry more tool-specific state.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Best next step</h2>
+      <p>
+        The next implementation slice should be a small shell-and-routing cleanup, not a full registry build yet.
+      </p>
+      <ul>
+        <li>Decide whether packs, pricing, dashboard, and downloads should keep their <code>?view=</code> URL.</li>
+        <li>Add a shared shell adapter so store code stops touching raw shell DOM directly.</li>
+        <li>Use that cleaner boundary to extract the docs feature first.</li>
+      </ul>
+      <p>
+        No user-only manual test is required before that work starts.
+        If we choose to change route persistence next, that is the first place where a quick manual check in your app browser will be useful.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

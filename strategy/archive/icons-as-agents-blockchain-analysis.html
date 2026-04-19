@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Icons as Tiny Agents: Blockchain, NFTs, and What Actually Matters | Supericons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070910;--bg2:#0c0f18;--bg3:#131824;--surface:#1b2036;
+  --text:#e8ecf2;--text2:#98a4b8;--text3:#5c6878;
+  --accent:#8b5cf6;--accent2:#c4b5fd;--ag:rgba(139,92,246,.14);
+  --green:#10b981;--gg:rgba(16,185,129,.1);
+  --amber:#f59e0b;--amg:rgba(245,158,11,.1);
+  --red:#ef4444;--rdg:rgba(239,68,68,.08);
+  --cyan:#06b6d4;--cg:rgba(6,182,212,.08);
+  --r:10px;--rl:18px;--max:1060px;
+  --fd:'Space Grotesk','Inter',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--surface);border-radius:3px}
+.mat{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;display:inline-flex;align-items:center;line-height:1;vertical-align:middle}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:99;backdrop-filter:blur(20px);background:rgba(7,9,16,.85);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;align-items:center;gap:10px;height:52px;max-width:var(--max);margin:0 auto;padding:0 28px}
+.nav-brand{font-family:var(--fd);font-weight:700;font-size:16px}
+
+.hero{min-height:70vh;display:flex;align-items:center;text-align:center;position:relative;overflow:hidden;padding:100px 28px 72px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 40% at 50% 40%,rgba(139,92,246,.12),transparent 60%),radial-gradient(ellipse 35% 30% at 70% 60%,rgba(245,158,11,.06),transparent 50%);pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent2);margin-bottom:24px}
+h1{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:800;line-height:1.12;letter-spacing:-1px;margin-bottom:18px;background:linear-gradient(135deg,var(--text) 0%,var(--accent2) 45%,var(--amber) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1rem;color:var(--text2);line-height:1.8;margin-bottom:24px}
+
+.section{padding:68px 0}
+.section-alt{background:var(--bg2)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
+h2{font-family:var(--fd);font-size:clamp(1.35rem,3vw,2rem);font-weight:700;line-height:1.2;letter-spacing:-.3px;margin-bottom:12px}
+h3{font-family:var(--fd);font-size:.98rem;font-weight:700;margin-bottom:8px}
+.lead{font-size:.95rem;color:var(--text2);max-width:660px;line-height:1.9;margin-bottom:32px}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:28px}
+.tbl thead tr{border-bottom:1px solid rgba(255,255,255,.08)}
+.tbl th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3)}
+.tbl td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);vertical-align:top}
+.tbl td:first-child{color:var(--text);font-weight:500}
+.yes{color:var(--green);font-weight:600;font-size:12px}
+.no{color:var(--red);font-weight:600;font-size:12px}
+.maybe{color:var(--amber);font-weight:600;font-size:12px}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+@media(max-width:660px){.grid{grid-template-columns:1fr}}
+.card{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:22px;transition:border-color .3s}
+.card:hover{border-color:rgba(255,255,255,.1)}
+.card h4{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:6px}
+.card p{font-size:.86rem;color:var(--text2);line-height:1.7}
+.card-red{border-left:2px solid var(--red)}
+.card-green{border-left:2px solid var(--green)}
+.card-amber{border-left:2px solid var(--amber)}
+
+/* Alert */
+.alert{padding:20px 24px;border-radius:var(--r);margin:20px 0 28px;font-size:.92rem;line-height:1.8}
+.alert-red{background:var(--rdg);border:1px solid rgba(239,68,68,.2);border-left:3px solid var(--red)}
+.alert-red strong{color:var(--red)}
+.alert-green{background:var(--gg);border:1px solid rgba(16,185,129,.2);border-left:3px solid var(--green)}
+.alert-green strong{color:var(--green)}
+.alert-amber{background:var(--amg);border:1px solid rgba(245,158,11,.2);border-left:3px solid var(--amber)}
+.alert-amber strong{color:var(--amber)}
+
+/* Code */
+.code-panel{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);overflow:hidden;margin:16px 0 24px}
+.code-tab{padding:10px 20px;font-family:var(--fm);font-size:11px;color:var(--text3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.code-tab .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dot-r{background:var(--red)}.dot-a{background:var(--amber)}.dot-g{background:var(--green)}
+.code-body{padding:18px 22px;font-family:var(--fm);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre}
+.cmt{color:var(--text3)}.tag{color:var(--accent2)}.attr{color:var(--cyan)}.val{color:var(--green)}.ns{color:var(--amber)}
+
+/* Phase cards */
+.phase{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:24px;margin-bottom:16px;position:relative;overflow:hidden}
+.phase::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.ph1::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.ph2::before{background:linear-gradient(90deg,var(--amber),var(--accent))}
+.ph3::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.phase-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.pill{font-family:var(--fm);font-size:11px;padding:4px 10px;border-radius:999px;background:var(--surface);color:var(--accent2);font-weight:600}
+.phase ul{list-style:none;margin:0}
+.phase li{font-size:.88rem;color:var(--text2);line-height:1.7;padding:3px 0}
+.phase li::before{content:'-> ';color:var(--green);font-weight:700}
+
+/* Quote */
+.quote{background:var(--bg3);border-left:3px solid var(--green);border-radius:0 var(--rl) var(--rl) 0;padding:22px 26px;margin:28px 0;font-size:.95rem;font-style:italic;color:var(--text2);line-height:1.8}
+.quote strong{color:var(--text);font-style:normal}
+
+/* Summary table */
+.summary{width:100%;border-collapse:collapse;font-size:13px}
+.summary td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.summary td:first-child{color:var(--text);font-weight:600;width:40%}
+.summary td:last-child{color:var(--text2)}
+
+footer{padding:36px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:12px;color:var(--text3)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Supericons <span style="color:var(--text3);font-weight:400">/ Icons as Tiny Agents</span></span>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="hero-inner">
+  <div class="badge"><span class="mat" style="font-size:15px;color:var(--amber);font-variation-settings:'FILL' 1">bolt</span> Strategic Analysis</div>
+  <h1>Icons as Tiny Agents:<br>Blockchain, NFTs, and What Actually Matters</h1>
+  <p class="hero-sub">Self-describing icons carry their own identity, like NFTs. Could blockchain create a new standard for AI agents? This document explores the idea honestly: what is genuinely interesting, what is overhyped, and what to build.</p>
+</div>
+</section>
+
+<!-- NFT Parallel -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">The Spark</div>
+  <h2>Where the NFT Comparison Works</h2>
+  <p class="lead">Self-describing icons and NFTs share real structural parallels. The composability angle is especially strong.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th>NFT concept</th><th>Icon equivalent</th><th>Useful?</th></tr></thead>
+    <tbody>
+      <tr><td>Unique asset with provenance</td><td>Icon with verified origin and metadata</td><td><span class="yes">Yes</span></td></tr>
+      <tr><td>On-chain ownership record</td><td>Registry of who created which icons</td><td><span class="maybe">Potentially</span></td></tr>
+      <tr><td>Composability (traits)</td><td>Icon grammar (base + ring + badge + marker)</td><td><span class="yes">Strong</span></td></tr>
+      <tr><td>Royalties on secondary use</td><td>Usage-based licensing for premium icons</td><td><span class="maybe">Interesting</span></td></tr>
+      <tr><td>Scarcity and speculation</td><td>Not applicable to utility icons</td><td><span class="no">No</span></td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:.92rem;color:var(--text2);line-height:1.8">The strongest parallel: <strong>composability.</strong> CryptoPunks popularized "traits" (hats, glasses, backgrounds) that combine into unique items. Icon grammar does the same: base glyph + state ring + confidence badge + authority marker = a unique, composed visual indicator.</p>
+</div>
+</section>
+
+<!-- What blockchain could provide -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">The Case For</div>
+  <h2>What Blockchain Could Provide</h2>
+  <p class="lead">Four capabilities where blockchain has a genuine technical advantage.</p>
+
+  <div class="grid reveal">
+    <div class="card card-green">
+      <h4><span class="mat" style="font-size:18px;color:var(--green);vertical-align:text-bottom;margin-right:4px">verified</span> Provenance</h4>
+      <p>A blockchain record proves this icon was created by Supericons. Nobody can create a fake "agent-planning" icon and claim it is official.</p>
+    </div>
+    <div class="card card-green">
+      <h4><span class="mat" style="font-size:18px;color:var(--green);vertical-align:text-bottom;margin-right:4px">storage</span> Immutable registry</h4>
+      <p>A smart contract holds the canonical list of all icon IDs, their metadata hashes, and versions. Anyone can query it. Nobody can tamper with it.</p>
+    </div>
+    <div class="card card-green">
+      <h4><span class="mat" style="font-size:18px;color:var(--green);vertical-align:text-bottom;margin-right:4px">key</span> Decentralized licensing</h4>
+      <p>Track which projects use which premium icons. Buy a license token, and the icon's metadata verifies your access on-chain.</p>
+    </div>
+    <div class="card card-green">
+      <h4><span class="mat" style="font-size:18px;color:var(--green);vertical-align:text-bottom;margin-right:4px">hub</span> Multi-vendor ecosystem</h4>
+      <p>If other icon creators adopt the same standard, a shared chain becomes the universal registry. Like ENS for icons.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Where it breaks down -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">The Case Against (Honest)</div>
+  <h2>Where It Breaks Down</h2>
+  <p class="lead">Four serious problems that must be weighed honestly.</p>
+
+  <div class="grid reveal">
+    <div class="card card-red">
+      <h4>Developer reputation risk</h4>
+      <p>"Blockchain" and "NFT" carry heavy negative weight with the developer audience that buys icon packs. Many will actively avoid anything labeled crypto, regardless of the underlying technology.</p>
+    </div>
+    <div class="card card-red">
+      <h4>Tight runway, expensive infrastructure</h4>
+      <p>Smart contract audits, chain selection, gas optimization, wallet integration. Months of engineering that generates zero revenue during the build phase.</p>
+    </div>
+    <div class="card card-red">
+      <h4>Standards succeed through simplicity</h4>
+      <p>JSON, OpenAPI, MCP, Markdown, semver. None use blockchain. They won because they were simple, useful, and frictionless. Adding blockchain raises the learning curve.</p>
+    </div>
+    <div class="card card-red">
+      <h4>Simpler alternatives achieve 95% of the same result</h4>
+      <p>Content hashing, digital signatures, and a public API cover provenance, tamper-proofing, and registry. No chain required.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:14px">The 95% Question: Do You Actually Need a Blockchain?</h3>
+  <table class="tbl reveal">
+    <thead><tr><th>Goal</th><th>Blockchain approach</th><th>Simple approach</th></tr></thead>
+    <tbody>
+      <tr><td>Prove icon origin</td><td>On-chain mint record</td><td>Digitally signed SVG (like SSL certs)</td></tr>
+      <tr><td>Public icon registry</td><td>Smart contract</td><td>Public API + JSON on GitHub</td></tr>
+      <tr><td>Usage tracking</td><td>On-chain events</td><td>MCP telemetry (already exists)</td></tr>
+      <tr><td>Tamper-proof metadata</td><td>Immutable chain storage</td><td>SHA-256 content hash in SVG</td></tr>
+      <tr><td>Licensing</td><td>Token-gated access</td><td>Stripe + API key (already exists)</td></tr>
+      <tr><td>Version history</td><td>On-chain state</td><td>Git history + registry API</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-amber reveal">
+    <strong>The honest verdict:</strong> For every use case except truly decentralized, trustless, multi-vendor verification, the simple approach is faster, cheaper, and does not alienate the developer audience.
+  </div>
+</div>
+</section>
+
+<!-- Icons as tiny agents -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">The Real Insight</div>
+  <h2>What Is Actually Powerful: Icons as Tiny Agents</h2>
+  <p class="lead">The interesting idea here is not blockchain. It is the agent metaphor itself. An icon that behaves like a tiny autonomous agent.</p>
+
+  <div class="grid reveal">
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">badge</span> Carries its own identity</h4>
+      <p>It knows what it is, what it means, and who made it. Self-describing metadata embedded in the file.</p>
+    </div>
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">rule</span> Has its own rules</h4>
+      <p>It knows when it should and should not be used. "Use me for agent planning. Do not use me for idle state."</p>
+    </div>
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">verified_user</span> Can verify itself</h4>
+      <p>A content hash and digital signature prove it has not been tampered with and was created by Supericons.</p>
+    </div>
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">record_voice_over</span> Introduces itself</h4>
+      <p>Any AI agent that reads the file gets the full context. No API call, no database, no server needed.</p>
+    </div>
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">monitoring</span> Can report</h4>
+      <p>Via MCP telemetry, it reports where it is used and how. The feedback loop that makes everything smarter.</p>
+    </div>
+    <div class="card">
+      <h4><span class="mat" style="font-size:18px;color:var(--accent2);vertical-align:text-bottom;margin-right:4px">join</span> Can compose</h4>
+      <p>It knows what other icons it pairs with, forming larger visual statements through the grammar system.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:14px">How to Build This Without Blockchain</h3>
+
+  <div class="code-panel reveal">
+    <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> Content hashing + Digital signatures</div>
+    <div class="code-body"><span class="ns">&lt;si:icon</span> <span class="attr">id</span>=<span class="val">"agent-planning"</span> <span class="attr">version</span>=<span class="val">"1.0"</span>
+        <span class="attr">hash</span>=<span class="val">"sha256:a3f7c2e..."</span><span class="ns">&gt;</span>
+
+  <span class="cmt">&lt;!-- If anyone modifies this icon, the hash breaks --&gt;</span>
+  <span class="cmt">&lt;!-- Like a tamper-evident seal on a medicine bottle --&gt;</span>
+
+  <span class="ns">&lt;si:signature</span>
+    <span class="attr">signer</span>=<span class="val">"supericons.dev"</span>
+    <span class="attr">algorithm</span>=<span class="val">"ed25519"</span>
+    <span class="attr">value</span>=<span class="val">"base64:Mk3gF7..."</span><span class="ns">/&gt;</span>
+
+  <span class="cmt">&lt;!-- Verify against Supericons' public key --&gt;</span>
+  <span class="cmt">&lt;!-- Same system as SSL certs and npm package signing --&gt;</span>
+<span class="ns">&lt;/si:icon&gt;</span></div>
+  </div>
+
+  <div class="code-panel reveal">
+    <div class="code-tab"><span class="dot dot-r"></span><span class="dot dot-a"></span><span class="dot dot-g"></span> Public registry API (no blockchain needed)</div>
+    <div class="code-body"><span class="cmt">// Any agent can verify any icon with a simple HTTP call</span>
+<span class="tag">GET</span> <span class="val">https://supericons.dev/registry/icons/agent-planning</span>
+
+<span class="cmt">// Returns:</span>
+{
+  <span class="attr">"id"</span>: <span class="val">"agent-planning"</span>,
+  <span class="attr">"collection"</span>: <span class="val">"agent-lifecycle"</span>,
+  <span class="attr">"version"</span>: <span class="val">"1.0"</span>,
+  <span class="attr">"hash"</span>: <span class="val">"sha256:a3f7c2e..."</span>,
+  <span class="attr">"signature_valid"</span>: <span class="val">true</span>,
+  <span class="attr">"metadata"</span>: { ... },
+  <span class="attr">"composable_with"</span>: [<span class="val">"confidence-badge"</span>, <span class="val">"authority-marker"</span>]
+}</div>
+  </div>
+</div>
+</section>
+
+<!-- Phased recommendation -->
+<section class="section">
+<div class="wrap">
+  <div class="eyebrow">The Recommended Path</div>
+  <h2>Build in Three Phases</h2>
+  <p class="lead">Start with what works now. Add blockchain only if the ecosystem grows to need it.</p>
+
+  <div class="phase ph1 reveal">
+    <div class="phase-head">
+      <div class="pill">Now</div>
+      <h3>Build the "tiny agent" without blockchain</h3>
+    </div>
+    <ul>
+      <li>Self-describing metadata (si:// namespace) in every SVG</li>
+      <li>Content hashing (SHA-256) for tamper-proofing</li>
+      <li>Digital signatures (Ed25519) for provenance</li>
+      <li>Public registry API at supericons.dev</li>
+      <li>MCP telemetry for the feedback loop</li>
+    </ul>
+    <div class="alert alert-green" style="margin-top:14px;margin-bottom:0"><strong>Result:</strong> 95% of blockchain's benefits at 5% of the cost. Ships in weeks, not months.</div>
+  </div>
+
+  <div class="phase ph2 reveal">
+    <div class="phase-head">
+      <div class="pill">6-12 Months</div>
+      <h3>Monitor for blockchain signals</h3>
+    </div>
+    <ul>
+      <li>Other icon vendors wanting to join a shared registry</li>
+      <li>Enterprise customers asking for decentralized verification</li>
+      <li>Developer community sentiment toward blockchain recovering</li>
+      <li>Token-gated licensing becoming normalized in dev tools</li>
+    </ul>
+    <div class="alert alert-amber" style="margin-top:14px;margin-bottom:0"><strong>Decision point:</strong> If these signals emerge, blockchain is worth building. If not, you saved months of engineering.</div>
+  </div>
+
+  <div class="phase ph3 reveal">
+    <div class="phase-head">
+      <div class="pill">12+ Months</div>
+      <h3>If blockchain is justified, add a thin layer</h3>
+    </div>
+    <ul>
+      <li>Mint icon identity records on a low-cost chain (Base, Solana)</li>
+      <li>Keep the UX blockchain-invisible (no wallets, no tokens in the UI)</li>
+      <li>Make it optional verification, not a requirement</li>
+      <li>Developers should never know or care that blockchain is involved</li>
+    </ul>
+    <div class="alert alert-red" style="margin-top:14px;margin-bottom:0"><strong>Golden rule:</strong> If you add blockchain, it must be invisible infrastructure. The moment a developer sees a wallet prompt, you have lost them.</div>
+  </div>
+</div>
+</section>
+
+<!-- Summary table -->
+<section class="section section-alt">
+<div class="wrap">
+  <div class="eyebrow">Bottom Line</div>
+  <h2>Quick Reference</h2>
+
+  <table class="summary reveal">
+    <tbody>
+      <tr><td>Is the NFT parallel valid?</td><td>Partially. Composability and provenance are strong parallels. Speculation and scarcity are not relevant.</td></tr>
+      <tr><td>Should Supericons use blockchain now?</td><td>No. The runway is tight, the dev audience is skeptical, and simple alternatives achieve 95% of the same goals.</td></tr>
+      <tr><td>Is "icons as tiny agents" powerful?</td><td>Yes. This is the right vision regardless of blockchain.</td></tr>
+      <tr><td>How do we build it?</td><td>Content hashing + digital signatures + public registry + MCP telemetry.</td></tr>
+      <tr><td>When would blockchain make sense?</td><td>When multiple vendors share a registry, or when decentralized licensing is needed at scale.</td></tr>
+      <tr><td>What is the golden rule?</td><td>If you add blockchain, it must be invisible. Developers should never see a wallet, token, or chain.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote reveal">
+    <strong>The vision is not about what technology sits underneath.</strong> It is about icons that know who they are, can introduce themselves to any AI agent, and carry their meaning wherever they go. That vision is buildable today, without a single smart contract.
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap">Icons as Tiny Agents Analysis, Supericons / Curly Mole Labs, April 2026</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){i.target.classList.add('visible');obs.unobserve(i.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Superpowers Plan Feasibility Audit</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+        --green: #34d399;
+        --green-soft: rgba(52, 211, 153, 0.12);
+        --yellow: #fbbf24;
+        --yellow-soft: rgba(251, 191, 36, 0.12);
+        --red: #f87171;
+        --red-soft: rgba(248, 113, 113, 0.12);
+        --blue: #60a5fa;
+        --blue-soft: rgba(96, 165, 250, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 42px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--text);
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 28px 0;
+      }
+      code {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.95em;
+        color: #ffd7c0;
+      }
+      blockquote {
+        margin: 0 0 18px;
+        padding: 12px 16px;
+        border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03);
+        border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+
+      /* Summary table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 0 18px;
+        font-size: 14px;
+      }
+      th {
+        text-align: left;
+        padding: 10px 12px;
+        background: var(--panel-2);
+        color: var(--text);
+        border-bottom: 1px solid var(--line);
+        font-weight: 600;
+      }
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+      }
+      tr:last-child td { border-bottom: 0; }
+
+      /* Alert callouts */
+      .callout {
+        margin: 18px 0;
+        padding: 14px 18px;
+        border-radius: 12px;
+        border-left: 4px solid;
+        font-size: 14px;
+      }
+      .callout p { margin: 0 0 8px; }
+      .callout p:last-child { margin: 0; }
+      .callout-warning {
+        border-color: var(--yellow);
+        background: var(--yellow-soft);
+      }
+      .callout-warning .callout-title { color: var(--yellow); }
+      .callout-important {
+        border-color: var(--blue);
+        background: var(--blue-soft);
+      }
+      .callout-important .callout-title { color: var(--blue); }
+      .callout-note {
+        border-color: #a78bfa;
+        background: rgba(167, 139, 250, 0.10);
+      }
+      .callout-note .callout-title { color: #a78bfa; }
+      .callout-title {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        margin-bottom: 6px;
+      }
+
+      /* Rating badge */
+      .rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 12px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        font-size: 20px;
+        margin: 12px 0 18px;
+      }
+      .rating span { font-size: 14px; color: var(--muted); font-weight: 400; }
+
+      /* Feasibility pill for table */
+      .pill {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .pill-high { background: var(--green-soft); color: var(--green); }
+      .pill-med-high { background: var(--yellow-soft); color: var(--yellow); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Supericons Audit</span>
+        <h1>Superpowers Plan Feasibility Audit</h1>
+        <p class="meta">IDEO Design Thinking and Product Developer Lens. April 19, 2026. Generated from the matching Markdown source in <code>docs/superpowers/plans/</code>.</p>
+      </div>
+      <article>
+
+        <h2 id="executive-summary">Executive Summary</h2>
+        <p>The four Superpowers plan documents represent a <strong>coherent, well-structured strategic stack</strong> for transforming Supericons from a useful icon search product into a durable semantic icon platform. The documents layer cleanly: a metadata specification (the "what"), a registry blueprint (the "system"), a rollout roadmap (the "how"), and an implementation plan (the "now").</p>
+
+        <div class="rating">4 / 5 <span>Overall feasibility rating</span></div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Feasibility</th>
+              <th>Biggest Strength</th>
+              <th>Biggest Risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SI Semantic Metadata v1 Spec</td>
+              <td><span class="pill pill-high">High</span></td>
+              <td>Honest evidence model; clear field rationale</td>
+              <td>Schema bloat before validation</td>
+            </tr>
+            <tr>
+              <td>SI Registry PRD and Blueprint</td>
+              <td><span class="pill pill-high">High</span></td>
+              <td>Registry-first architecture; public/private split</td>
+              <td>Over-design before shipping</td>
+            </tr>
+            <tr>
+              <td>SI Semantic Rollout Roadmap</td>
+              <td><span class="pill pill-med-high">Medium-High</span></td>
+              <td>Two-lane strategy; continuous factory model</td>
+              <td>Automation cost assumptions</td>
+            </tr>
+            <tr>
+              <td>Foundation Implementation Plan</td>
+              <td><span class="pill pill-high">High</span></td>
+              <td>Phased guardrails; dependency audit discipline</td>
+              <td>Long tail of extraction tasks</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2 id="methodology">Methodology: IDEO Design Thinking Lens</h2>
+        <p>This audit applies the five IDEO design thinking phases as evaluation criteria:</p>
+        <ol>
+          <li><strong>Empathize</strong>: Do the plans correctly identify who the users are and what they need?</li>
+          <li><strong>Define</strong>: Is the problem framed clearly and narrowly enough to act on?</li>
+          <li><strong>Ideate</strong>: Are the proposed solutions creative, differentiated, and well-justified?</li>
+          <li><strong>Prototype</strong>: Is there a viable path to ship something small and learn?</li>
+          <li><strong>Test</strong>: Are verification, feedback loops, and success criteria baked in?</li>
+        </ol>
+
+        <hr>
+
+        <h2 id="doc1">Document 1: SI Semantic Metadata v1 Spec</h2>
+        <p>A 1,006-line specification defining 40+ metadata fields organized across 7 groups (Identity, Visual Depiction, Semantics Core, Usage Guidance, Accessibility, Dynamics, Evidence and Governance).</p>
+
+        <h3>Strengths</h3>
+        <ul>
+          <li><strong>Empathize: Excellent user insight.</strong> The spec correctly identifies that source icons give developers only a name, an ID, and a visual shape, which is insufficient for confident selection.</li>
+          <li><strong>Define: Honest truth model.</strong> The four-layer truth model (source identity, visual depiction, SI recommendation, evidence and trust) avoids the trap of pretending objective semantic truth. This is both epistemically honest and commercially strategic.</li>
+          <li><strong>Ideate: The <code>avoid_when</code> and <code>anti_pairs</code> fields.</strong> Most icon systems only describe what an icon IS. This spec also describes what it is NOT. The <code>avoid_when</code> field alone could become a major differentiator for agent-driven UIs.</li>
+          <li><strong>Prototype: Minimum viable coverage is well-scoped.</strong> The required vs. optional field split (17 required, 18 optional) makes it possible to ship useful records without full field coverage.</li>
+        </ul>
+
+        <h3>Risks and Suggestions</h3>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">Warning</div>
+          <p><strong>Risk 1: Schema breadth before validation.</strong> 40+ fields is a large surface for a v1 that has not yet been populated at scale. Every field that does not survive contact with real data creates tech debt.</p>
+          <p><strong>Suggestion:</strong> Run a 50-icon "schema stress test" before locking. Test with edge cases (abstract shapes, culturally loaded symbols, near-identical variants). Any field that cannot be meaningfully populated for 80%+ of the test set should move to "optional" or "v2."</p>
+        </div>
+
+        <div class="callout callout-important">
+          <div class="callout-title">Important</div>
+          <p><strong>Risk 2: No versioning strategy for the schema itself.</strong> The spec defines <code>version</code> for individual records but does not describe how the schema evolves. What happens when v2 adds fields?</p>
+          <p><strong>Suggestion:</strong> Add a <code>schema_version</code> field to every record and define a basic evolution policy (additive changes only in minor versions; breaking changes require major version bump).</p>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="callout-title">Note</div>
+          <p><strong>Risk 3: Controlled vocabularies are specified as "recommended values" but not enforced.</strong> If automation generates the bulk of records, unconstrained vocabularies will drift quickly.</p>
+          <p><strong>Suggestion:</strong> Ship v1 with a strict allowed-value list for all controlled-vocabulary fields.</p>
+        </div>
+
+        <p><strong>Risk 4: Accessibility fields lack testing grounding.</strong> The a11y fields are smart inclusions, but the spec does not describe validation against actual screen reader behavior. Add a note that a11y recommendations should be validated with at least one screen reader on a representative sample.</p>
+
+        <hr>
+
+        <h2 id="doc2">Document 2: SI Registry PRD and Blueprint</h2>
+        <p>A 452-line product requirements document framing the registry as the canonical semantic operating system for Supericons.</p>
+
+        <h3>Strengths</h3>
+        <ul>
+          <li><strong>Empathize: Four clear user archetypes.</strong> Builders/designers, coding agents, Supericons itself, and future external adopters. Correct hierarchy: real users first, internal product second.</li>
+          <li><strong>Define: Non-goals are sharp.</strong> Explicitly stating what the registry is NOT prevents scope creep. These non-goals are more valuable than the goals.</li>
+          <li><strong>Ideate: Registry-first beats DB-first argument.</strong> Repo-native records with build projections prevent reproducibility and drift bugs. Compelling and well-argued.</li>
+          <li><strong>Ideate: Public/private hybrid model.</strong> Open schema + open free records + private telemetry/ranking/entitlements is strategically sound.</li>
+          <li><strong>Test: Success metrics are layered.</strong> Three tiers (launch-adjacent, foundation, strategic) with concrete outcomes.</li>
+        </ul>
+
+        <h3>Risks and Suggestions</h3>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">Warning</div>
+          <p><strong>Risk 1: Missing user validation loop.</strong> The PRD identifies users but does not describe how user needs were or will be validated.</p>
+          <p><strong>Suggestion:</strong> Run lightweight validation: interview 5 to 10 active users, A/B test MCP responses with vs. without semantic metadata, track purpose-chip engagement.</p>
+        </div>
+
+        <div class="callout callout-important">
+          <div class="callout-title">Important</div>
+          <p><strong>Risk 2: Nine projection targets is a large integration surface.</strong> Each projection is a maintenance contract.</p>
+          <p><strong>Suggestion:</strong> Rank projections by value-at-launch. Ship only 2 to 3 projections in v1 (public icon index, MCP JSON, product facts). Add others when consumers are ready.</p>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="callout-title">Note</div>
+          <p><strong>Risk 3: Ingestion pipeline described but not costed.</strong> The 7-step pipeline assumes visual AI models, telemetry data, and editorial review capacity.</p>
+          <p><strong>Suggestion:</strong> Cost the pipeline before building it. Estimate API calls per icon, editorial hours per batch, CI/compute costs.</p>
+        </div>
+
+        <hr>
+
+        <h2 id="doc3">Document 3: SI Semantic Rollout Roadmap</h2>
+        <p>A 511-line phased roadmap defining how the metadata spec and registry become an operational system across 6 phases and 8 workstreams.</p>
+
+        <h3>Strengths</h3>
+        <ul>
+          <li><strong>Define: Two-lane strategy is honest and practical.</strong> Separating "broad but mixed-confidence" aggregated corpus from "deep and gold-standard" native SI library prevents the perfectionist trap.</li>
+          <li><strong>Ideate: Continuous semantic factory model.</strong> Positioning the pipeline as a permanent system (not a one-time batch) is the difference between a stalling data cleanup project and a compounding system.</li>
+          <li><strong>Prototype: Deliberate visual inspection pilot.</strong> 250 icons with concrete success criteria (useful depictions, acceptable human agreement, sustainable cost) is textbook lean methodology.</li>
+          <li><strong>Test: Confidence routing model.</strong> Three-band routing (auto-accept, batch review, deeper review) is a well-known ML ops pattern correctly applied to editorial content.</li>
+        </ul>
+
+        <h3>Risks and Suggestions</h3>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">Warning</div>
+          <p><strong>Risk 1: Phase timelines are vague.</strong> Anything past Phase 1 has no concrete timeline or trigger condition.</p>
+          <p><strong>Suggestion:</strong> Replace calendar timing with exit criteria. Phase 1 exits when registry scaffolding exists and 400 premium icons are normalized. Phase 2 exits when visual pilot is complete and 300+ top free icons have records.</p>
+        </div>
+
+        <div class="callout callout-important">
+          <div class="callout-title">Important</div>
+          <p><strong>Risk 2: Eight workstreams for what appears to be a small team.</strong> Without a capacity model, this looks like parallel ambition.</p>
+          <p><strong>Suggestion:</strong> Sequence workstreams into a critical path: A+B (parallel prereqs), then C, then D+E (parallel), then F after E pilot, then G after stable projections, then H as rolling.</p>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="callout-title">Note</div>
+          <p><strong>Risk 3: Operational cost model is absent.</strong> At 21,264 icons, even a cheap multimodal model at $0.01/image adds up to $212/run.</p>
+          <p><strong>Suggestion:</strong> Add a lightweight cost model estimating lexical pass (free), visual pass ($X/icon), human review (Z hours/batch), and CI/CD per month.</p>
+        </div>
+
+        <p><strong>Risk 4: Metrics are comprehensive but untriaged.</strong> 16 metrics across 4 categories with no north-star metric identified. Identify one metric per phase.</p>
+
+        <hr>
+
+        <h2 id="doc4">Document 4: Foundation Implementation Plan</h2>
+        <p>A 534-line execution plan covering immediate bug fixes (P0), safe refactoring (P1), and registry groundwork (P2) across 6 phases and 17 tasks.</p>
+
+        <h3>Strengths</h3>
+        <ul>
+          <li><strong>Define: Problem framing is concrete.</strong> P0/P1 priority with specific observed behaviors and URLs. The most executable of the four documents.</li>
+          <li><strong>Ideate: Guardrails before refactors.</strong> No broad rewrite, dependency maps first, one boundary at a time, verification before confidence. Senior engineering discipline.</li>
+          <li><strong>Prototype: Execution order is well-sequenced.</strong> 10-step recommended order is a correct dependency chain with early wins front-loaded.</li>
+          <li><strong>Test: Verification matrix is thorough.</strong> Covers real user journeys (homepage, packs, auth return, purchase success), not just code paths.</li>
+        </ul>
+
+        <h3>Risks and Suggestions</h3>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">Warning</div>
+          <p><strong>Risk 1: 17 tasks with no time estimates.</strong> Without sizing, it is impossible to scope a sprint or know when foundation work is "done."</p>
+          <p><strong>Suggestion:</strong> Add T-shirt sizing (S/M/L/XL) to each task. Example: Task 1 (land docs) = S (1hr), Task 2 (product facts) = M (4-8hr), Task 12 (store extraction) = XL (multi-day).</p>
+        </div>
+
+        <div class="callout callout-important">
+          <div class="callout-title">Important</div>
+          <p><strong>Risk 2: Task 12 (store route extraction) is the highest-risk phase but has the least detail.</strong> It lists 5 extraction targets, each requiring dependency maps, route verification, and re-audits, described in only 15 lines.</p>
+          <p><strong>Suggestion:</strong> Give Task 12 its own sub-plan with pre-extraction inventory, expected output files, specific verification steps, and rollback strategy per extraction.</p>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="callout-title">Note</div>
+          <p><strong>Risk 3: No ownership or accountability model.</strong> The plan does not specify which tasks are human-driven vs. agent-driven vs. automated.</p>
+          <p><strong>Suggestion:</strong> Tag each task with an execution mode: <code>[auto]</code> (fully automatable), <code>[guided]</code> (requires human decisions), <code>[manual]</code> (human-only).</p>
+        </div>
+
+        <hr>
+
+        <h2 id="cross-doc">Cross-Document Assessment</h2>
+
+        <h3>Coherence</h3>
+        <p>The four documents tell a single coherent story: the spec defines the data model, the PRD defines the system, the roadmap defines the rollout, and the implementation plan defines the immediate work. Minimal contradiction, which is impressive for a strategy-to-execution stack.</p>
+        <p><strong>One gap:</strong> The roadmap's 8 workstreams do not map 1:1 to the implementation plan's phases. Workstreams F, G, and H are not addressed in the implementation plan (presumably deferred). This should be stated explicitly.</p>
+
+        <h3>IDEO Desirability, Viability, Feasibility</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Rating</th>
+              <th>Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Desirability</strong> (Do users want this?)</td>
+              <td><span class="pill pill-med-high">Medium-High</span></td>
+              <td>Builders want better icon selection. Agent-driven UIs are growing. But no user validation data is cited.</td>
+            </tr>
+            <tr>
+              <td><strong>Viability</strong> (Can the business sustain this?)</td>
+              <td><span class="pill pill-med-high">Medium</span></td>
+              <td>Public/private split is commercially sound. But operational cost model is absent and team size is unclear.</td>
+            </tr>
+            <tr>
+              <td><strong>Feasibility</strong> (Can this be built?)</td>
+              <td><span class="pill pill-high">High</span></td>
+              <td>Known tech stack (Vite, JS, Supabase, JSON). Conservative phasing. Strong guardrails. Main risk is scope, not capability.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>The One Thing to Change</h3>
+        <blockquote>
+          <p><strong>Add a "Definition of Done" for v1.</strong> None of the four documents clearly state when v1 is DONE. Without this, there is a risk of perpetual refinement.</p>
+        </blockquote>
+        <p>Recommended Definition of Done for v1:</p>
+        <ol>
+          <li>SI Semantic Metadata v1 schema is locked (no new required fields without major version bump).</li>
+          <li>400 premium icons have full registry records with confidence scores.</li>
+          <li>500+ top free icons have minimum viable registry records.</li>
+          <li>Product-facts generator passes CI and drives at least 2 product surfaces.</li>
+          <li>At least one projection (public icon index or MCP JSON) is generated from registry records.</li>
+        </ol>
+
+        <hr>
+
+        <h2 id="recommendations">Summary of All Recommendations</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Category</th>
+              <th>Recommendation</th>
+              <th>Urgency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Spec</td><td>Run a 50-icon "schema stress test" before locking the spec</td><td><strong>High</strong></td></tr>
+            <tr><td>2</td><td>Spec</td><td>Add <code>schema_version</code> field and evolution policy</td><td><strong>High</strong></td></tr>
+            <tr><td>3</td><td>Spec</td><td>Ship controlled vocabularies as strict allowed-value lists</td><td>Medium</td></tr>
+            <tr><td>4</td><td>Spec</td><td>Validate a11y recommendations with screen reader testing</td><td>Low</td></tr>
+            <tr><td>5</td><td>PRD</td><td>Run lightweight user validation (5 to 10 interviews or A/B test)</td><td><strong>High</strong></td></tr>
+            <tr><td>6</td><td>PRD</td><td>Rank the 9 projection targets; ship only 2 to 3 in v1</td><td>Medium</td></tr>
+            <tr><td>7</td><td>PRD</td><td>Cost the ingestion pipeline before building it</td><td>Medium</td></tr>
+            <tr><td>8</td><td>Roadmap</td><td>Replace vague phase timelines with exit criteria</td><td><strong>High</strong></td></tr>
+            <tr><td>9</td><td>Roadmap</td><td>Sequence the 8 workstreams into a critical path</td><td><strong>High</strong></td></tr>
+            <tr><td>10</td><td>Roadmap</td><td>Add a lightweight cost model for the semantic factory</td><td>Medium</td></tr>
+            <tr><td>11</td><td>Roadmap</td><td>Identify one north-star metric per phase</td><td>Medium</td></tr>
+            <tr><td>12</td><td>Impl Plan</td><td>Add T-shirt sizing estimates to all 17 tasks</td><td>Medium</td></tr>
+            <tr><td>13</td><td>Impl Plan</td><td>Give Task 12 (store extraction) its own sub-plan</td><td><strong>High</strong></td></tr>
+            <tr><td>14</td><td>Impl Plan</td><td>Tag tasks with execution modes (auto/guided/manual)</td><td>Medium</td></tr>
+            <tr><td>15</td><td>Cross-doc</td><td>Define a clear "Definition of Done" for v1</td><td><strong>High</strong></td></tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2 id="final-verdict">Final Verdict</h2>
+        <p>This is a <strong>strong, intellectually honest strategy-to-execution stack</strong>. The documents demonstrate real product thinking: they separate truth from inference, prioritize launch discipline over perfection, and build guardrails against the most common failure modes.</p>
+        <p>The primary risks are not in the ideas but in the <strong>operationalization</strong>: undefined team capacity, absent cost models, vague phase transitions, and a large integration surface (9 projections, 8 workstreams) that could overwhelm a small team.</p>
+        <p>The single most impactful action: <strong>define exit criteria for each phase and a hard Definition of Done for v1.</strong> This converts the strategy from "a direction we believe in" to "a milestone we can ship."</p>
+
+        <div class="rating">4 / 5 <span>Would be 5/5 with exit criteria, cost model, and user validation added.</span></div>
+
+      </article>
+    </div>
+  </body>
+</html>

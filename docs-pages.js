@@ -2,6 +2,7 @@ import {
   MOTION_LAB_PRESET_GROUPS,
   listMotionLabPresetMeta,
 } from './lib/motion-lab-presets.js';
+import { PRODUCT_FACTS, PRODUCT_FACT_LABELS } from './lib/product-facts.js';
 
 const docsHref = (view) => `/?view=${view}`;
 const docsLink = (view, label) => `<a href="${docsHref(view)}" data-docs-view="${view}">${label}</a>`;
@@ -38,6 +39,10 @@ const motionLabGroupRows = MOTION_LAB_PRESET_GROUPS
     return `<tr><td>${guide.title}</td><td>${group.items.length}</td><td>${guide.description}</td></tr>`;
   })
   .join('');
+const freeIconsAcrossLibrariesFreeLabel = PRODUCT_FACT_LABELS.freeIconsAcrossLibrariesFreeLabel;
+const openSourceSvgIconsAcrossLibrariesLabel = PRODUCT_FACT_LABELS.openSourceSvgIconsAcrossLibrariesLabel;
+const mcpToolCount = PRODUCT_FACTS.mcpToolCount;
+const mcpFreeToolCount = PRODUCT_FACTS.mcpFreeToolCount;
 
 function renderPlaceholderBody({ title, summary, todayLinks = [] }) {
   const linksMarkup = todayLinks.length
@@ -208,7 +213,7 @@ const docsPages = {
     pageTitle: 'What Is Supericons',
     bodyHtml: `
       <section class="docs-section" id="what-is-intro">
-        <p class="docs-section__copy">Supericons gives you 20,000+ open-source SVG icons from 10 libraries in one searchable interface. Search by name, concept, or style. Customize color, size, stroke, and fill in real time. Export as SVG, PNG, or React, Vue, or Svelte components with one click.</p>
+        <p class="docs-section__copy">Supericons gives you ${openSourceSvgIconsAcrossLibrariesLabel} in one searchable interface. Search by name, concept, or style. Customize color, size, stroke, and fill in real time. Export as SVG, PNG, or React, Vue, or Svelte components with one click.</p>
         <p class="docs-section__copy">For AI-assisted development, Supericons ships a dedicated MCP server. Your coding agent can search and retrieve icons without switching to a browser. In the browser, you can open Motion Lab and Converter, use the controls, and preview the result without a paid plan. Exporting, downloading, or copying the final output requires the ${appLink('pricing', 'Supericons Pro plan')}. Through MCP, Motion Lab and Converter tools are also part of the ${appLink('pricing', 'Supericons Pro plan')}. Buying packs gives you the premium icons you bought, but it does not unlock Motion Lab or Converter.</p>
       </section>
       <section class="docs-section" id="what-is-free-pro">
@@ -223,7 +228,7 @@ const docsPages = {
               </tr>
             </thead>
             <tbody>
-              <tr><td>20,000+ SVG icons from 10 libraries</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>${PRODUCT_FACT_LABELS.freeSvgIconsAcrossLibrariesLabel}</td><td>Yes</td><td>Yes</td></tr>
               <tr><td>AI semantic search</td><td>Yes</td><td>Yes</td></tr>
               <tr><td>Real-time customization (color, size, stroke, fill)</td><td>Yes</td><td>Yes</td></tr>
               <tr><td>Export as SVG, PNG, React, Vue, Svelte</td><td>Yes</td><td>Yes</td></tr>
@@ -628,7 +633,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'MCP Tools Overview',
     bodyHtml: `
       <section class="docs-section" id="mcp-overview-intro">
-        <p class="docs-section__copy">The Supericons MCP server exposes 12 tools your coding agent can call directly. Three tools are free and work without an account. Premium icon access depends on what your account already has: the packs you bought, the ${appLink('pricing', 'Supericons Pro plan')}, or both. Motion Lab and Converter tools require the ${appLink('pricing', 'Supericons Pro plan')} and a valid <code>SUPERICONS_API_KEY</code>.</p>
+        <p class="docs-section__copy">The Supericons MCP server exposes ${mcpToolCount} tools your coding agent can call directly. ${mcpFreeToolCount} tools are free and work without an account. Premium icon access depends on what your account already has: the packs you bought, the ${appLink('pricing', 'Supericons Pro plan')}, or both. Motion Lab and Converter tools require the ${appLink('pricing', 'Supericons Pro plan')} and a valid <code>SUPERICONS_API_KEY</code>.</p>
         <p class="docs-section__copy">Your agent can discover what tools are available when it first connects to the server. You can also call tools explicitly by name.</p>
       </section>
       <section class="docs-section" id="mcp-overview-tools">
@@ -643,7 +648,7 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>search_icons</code></td><td>Search 20,000+ free icons across 10 libraries</td><td>Free</td></tr>
+              <tr><td><code>search_icons</code></td><td>Search ${freeIconsAcrossLibrariesFreeLabel}</td><td>Free</td></tr>
               <tr><td><code>get_icon</code></td><td>Retrieve a specific icon by ID and library</td><td>Free</td></tr>
               <tr><td><code>list_libraries</code></td><td>List all available icon libraries</td><td>Free</td></tr>
               <tr><td><code>list_motion_presets</code></td><td>List all Motion Lab animation presets</td><td>Supericons Pro plan</td></tr>
@@ -679,11 +684,11 @@ env = { SUPERICONS_API_KEY = "your-key-here" }</code></pre>
     pageTitle: 'Icon Tools Reference',
     bodyHtml: `
       <section class="docs-section" id="icon-tools-intro">
-        <p class="docs-section__copy">These three tools are free and do not require an API key for the standard 20,000+ icon library. Premium animated icon collections from these tools require either the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
+        <p class="docs-section__copy">These ${mcpFreeToolCount} tools are free and do not require an API key for the standard ${PRODUCT_FACT_LABELS.freeIconLibraryLabel}. Premium animated icon collections from these tools require either the ${appLink('pricing', 'Supericons Pro plan')} or an account that already owns those packs.</p>
       </section>
       <section class="docs-section" id="icon-tools-search">
         <h2 class="docs-section__title"><code>search_icons</code></h2>
-        <p class="docs-section__copy">Search 20,000+ free icons across 10 libraries using AI-powered synonym expansion. Returns matching icons with SVG code. Premium packs are available when you use an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
+        <p class="docs-section__copy">Search ${freeIconsAcrossLibrariesFreeLabel} using AI-powered synonym expansion. Returns matching icons with SVG code. Premium packs are available when you use an API key from an account that already owns those packs, or from an account with the ${appLink('pricing', 'Supericons Pro plan')}.</p>
         <div class="docs-table-wrap">
           <table class="docs-table">
             <thead>

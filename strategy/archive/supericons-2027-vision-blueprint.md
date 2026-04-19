@@ -449,19 +449,20 @@ Open specification drives ecosystem adoption. Revenue comes from certified icon 
 | MCP Pro tier | Included in Pro | Agents needing semantic resolution |
 | Enterprise API | Custom pricing | Companies standardizing on Supericons |
 
-### Moat Protection
+### Moat Protection (Honest Assessment)
 
-1. **First-mover on governance iconography.** No competitor has governance packs. Ship fast, establish the standard before anyone else.
-2. **MCP network effect.** Every agent that installs supericons-mcp increases the value of the ecosystem. Agents search, we learn what is needed, we build it, agents get better results.
-3. **Semantic metadata is the lock-in.** Once an agent's codebase uses `request_semantic_icon` with intent-based queries, switching to a dumb SVG library is a downgrade.
-4. **Open spec, closed implementation.** The schema is open (builds trust), the tagged icon corpus and animation engine are the product (builds revenue).
+**What is NOT a moat:**
+- The technical act of embedding semantic metadata in SVG (anyone can copy this in a day)
+- First-mover advantage alone (lasts months, not years)
+- Open-sourcing the schema (copyable by design)
 
-### Scalability
+**What IS defensible:**
+1. **Niche ownership.** Google will never build a premium pack of 50 "AI governance" icons at $29. Lucide will never prioritize MCP tools. The niche is too small for big players, too specific for general open-source. Think Stripe vs PayPal: purpose-built for the niche wins.
+2. **Telemetry feedback loop.** Every agent that uses `request_semantic_icon` generates search data. That search data tells us what to build next. This is a data moat: the more agents use Supericons, the better our icons match what agents need, the more agents use Supericons.
+3. **Ecosystem tooling.** Reader library, CI linter, VS Code extension, agent SDK. Each tool adopted increases switching cost.
+4. **Speed.** If we define the governance vocabulary before anyone else, we set the standard. Standards are hard to displace once adopted (JSON, Markdown, semver).
 
-- **Icon corpus grows via community + telemetry.** Zero-result searches tell us what to build next.
-- **MCP server is stateless.** Scales horizontally.
-- **Premium packs are one-time production cost, infinite distribution.** Margins improve with scale.
-- **Semantic metadata compounds.** Each tagged icon makes the intent resolver smarter.
+**The honest formula:** niche focus + ecosystem tooling + telemetry feedback loop + speed = defensibility.
 
 ---
 

@@ -1766,6 +1766,9 @@ body.landing-active .compare-drawer {
   overflow-x: auto;
   scrollbar-width: none;
 }
+.grid-filter-bar[hidden] {
+  display: none !important;
+}
 .grid-filter-bar::-webkit-scrollbar {
   display: none;
 }
@@ -8528,6 +8531,10 @@ body.theme-light .docs-view--site .docs-shell__pager-link {
 
 .grid-area.store-active > .icon-grid,
 .grid-area.store-active > .grid-empty {
+  display: none !important;
+}
+
+.grid-area.store-active > .grid-filter-bar {
   display: none !important;
 }
 

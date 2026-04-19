@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supericons Foundation Main Implementation Plan</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 42px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--text);
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 28px 0;
+      }
+      code {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.95em;
+        color: #ffd7c0;
+      }
+      pre {
+        margin: 0 0 18px;
+        padding: 16px;
+        overflow: auto;
+        background: #101014;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      pre code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: #f6f6f8;
+      }
+      blockquote {
+        margin: 0 0 18px;
+        padding: 12px 16px;
+        border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03);
+        border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Supericons Plans</span>
+        <h1>Supericons Foundation Main Implementation Plan</h1>
+        <p class="meta">Generated from the matching Markdown source in <code>docs/superpowers/plans/</code>.</p>
+      </div>
+      <article>
+        <h1 id="supericons-foundation-main-implementation-plan">Supericons Foundation Main Implementation Plan</h1>
+        <blockquote><p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p></blockquote>
+        <p><strong>Goal:</strong> Deliver the launch-critical semantic and product-foundation work in one coordinated plan: fix current shell drift, centralize product facts, preserve the intentionally narrow purpose-chip experiment, and prepare the codebase for the SI Registry without unsafe refactors.</p>
+        <p><strong>Architecture:</strong> Keep the current app shell and current product surfaces, but reduce drift by introducing one shared product-facts layer and clearer ownership boundaries. Fix shell-title conflicts immediately. Treat large-file and app-shell refactors as dependency-sensitive extraction work with audits before every split. Establish the SI Registry documents and scaffolding first, then migrate consumers gradually rather than rewriting the app.</p>
+        <p><strong>Tech Stack:</strong> Vite SPA, vanilla JavaScript modules, CSS, Supabase, MCP Node package, structured JSON data artifacts, verification scripts, targeted browser checks.</p>
+        <hr>
+        <h2 id="scope">Scope</h2>
+        <p>This is the single collated implementation plan for the current agreed work.</p>
+        <p>It intentionally includes:</p>
+        <ul>
+        <li>the packs-route heading bug</li>
+        <li>count and version consistency</li>
+        <li>the current purpose-chip scope decision</li>
+        <li>safe large-file refactor planning</li>
+        <li>safe app-shell concern separation</li>
+        <li>SI Registry groundwork</li>
+        </ul>
+        <p>It supersedes using the earlier purpose-filter plan as the only source of truth. That earlier plan is still useful context, but the work now belongs inside this broader foundation plan.</p>
+        <hr>
+        <h2 id="guardrails">Guardrails</h2>
+        <h3 id="1-no-broad-rewrite-before-launch">1. No broad rewrite before launch</h3>
+        <p>Keep the current app shell. Extract only what lowers current risk and drift.</p>
+        <h3 id="2-refactor-only-with-dependency-maps-first">2. Refactor only with dependency maps first</h3>
+        <p>For <code>main.js</code>, <code>store.js</code>, and <code>style.css</code>, do not extract blindly.</p>
+        <p>Before every boundary change:</p>
+        <ul>
+        <li>inventory imports and exports</li>
+        <li>inventory DOM dependencies</li>
+        <li>inventory route dependencies</li>
+        <li>inventory state mutation side effects</li>
+        <li>audit startup and route-restoration flows</li>
+        </ul>
+        <h3 id="3-one-ownership-boundary-at-a-time">3. One ownership boundary at a time</h3>
+        <p>Do not split multiple high-risk modules in one pass.</p>
+        <h3 id="4-verification-before-confidence">4. Verification before confidence</h3>
+        <p>For every extracted boundary:</p>
+        <ul>
+        <li>run script verification</li>
+        <li>run targeted browser-route verification</li>
+        <li>re-audit for hidden gaps</li>
+        </ul>
+        <hr>
+        <h2 id="current-problems-to-solve">Current Problems To Solve</h2>
+        <h2 id="p0-problems">P0 problems</h2>
+        <h3 id="1-packs-route-heading-overwrite">1. Packs route heading overwrite</h3>
+        <p>Observed behavior:</p>
+        <ul>
+        <li>direct <code>/?view=packs</code> still shows <code>All Icons</code> in the main heading</li>
+        <li>collection detail previews show the correct collection titles</li>
+        </ul>
+        <p>Root cause:</p>
+        <ul>
+        <li><code>store.js</code> correctly sets <code>Premium Collections</code></li>
+        <li><code>main.js</code> later reasserts icon-grid heading ownership during startup</li>
+        </ul>
+        <h3 id="2-product-facts-drift">2. Product facts drift</h3>
+        <p>Observed drift:</p>
+        <ul>
+        <li><code>20,000+</code> across many UI and docs surfaces</li>
+        <li>actual free outline corpus is <code>21,264</code></li>
+        <li>root <code>package.json</code> still says <code>60K+</code></li>
+        <li>MCP package and server version strings disagree</li>
+        <li>MCP top comment says <code>3 tools</code> while docs say <code>12</code></li>
+        </ul>
+        <h3 id="3-purpose-chip-scope-must-stay-intentionally-narrow">3. Purpose-chip scope must stay intentionally narrow</h3>
+        <p>Decision:</p>
+        <ul>
+        <li>purpose chips remain an <code>All Icons</code> experiment only</li>
+        <li>current 3-category setup is intentional</li>
+        </ul>
+        <p>Need:</p>
+        <ul>
+        <li>protect this scope cleanly</li>
+        <li>stop other product work from re-expanding it accidentally</li>
+        </ul>
+        <h2 id="p1-problems">P1 problems</h2>
+        <h3 id="4-large-frontend-files-create-risk">4. Large frontend files create risk</h3>
+        <p>Files:</p>
+        <ul>
+        <li><code>store.js</code></li>
+        <li><code>main.js</code></li>
+        <li><code>style.css</code></li>
+        </ul>
+        <p>Why it matters:</p>
+        <ul>
+        <li>hard to reason about safely</li>
+        <li>route and state dependencies are implicit</li>
+        <li>regressions become more likely</li>
+        </ul>
+        <h3 id="5-app-shell-mixes-too-many-concerns-in-code">5. App shell mixes too many concerns in code</h3>
+        <p>Current reality:</p>
+        <ul>
+        <li>packs</li>
+        <li>detail views</li>
+        <li>docs</li>
+        <li>pricing</li>
+        <li>dashboard</li>
+        <li>tools</li>
+        <li>legal pages</li>
+        </ul>
+        <p>all live through the same shell and much of the same module logic</p>
+        <p>This is acceptable as a UX model but risky as an implementation model.</p>
+        <h3 id="6-registry-groundwork-does-not-yet-exist-in-code">6. Registry groundwork does not yet exist in code</h3>
+        <p>Need:</p>
+        <ul>
+        <li>shared product facts source</li>
+        <li>shared semantic registry scaffolding</li>
+        <li>clear projection strategy</li>
+        </ul>
+        <hr>
+        <h2 id="file-inventory-and-intended-ownership">File Inventory and Intended Ownership</h2>
+        <h3 id="current-files-with-high-strategic-importance">Current files with high strategic importance</h3>
+        <ul>
+        <li><code>main.js</code></li>
+        <p>Icon-grid state, search, heading logic, shell updates, purpose-chip behavior</p>
+        </ul>
+        <ul>
+        <li><code>store.js</code></li>
+        <p>Store routes, packs, collection detail, docs, pricing, dashboard, tools, route syncing</p>
+        </ul>
+        <ul>
+        <li><code>style.css</code></li>
+        <p>Cross-surface shell styling and visibility rules</p>
+        </ul>
+        <ul>
+        <li><code>lib/icon-grid-behavior.js</code></li>
+        <p>Shared browse behavior and current purpose-chip scope helpers</p>
+        </ul>
+        <ul>
+        <li><code>lib/icon-taxonomy-seed.js</code></li>
+        <p>Current curated purpose buckets</p>
+        </ul>
+        <ul>
+        <li><code>public/icon-index.json</code></li>
+        <p>Current free-corpus projection</p>
+        </ul>
+        <ul>
+        <li><code>public/packs/manifest.json</code></li>
+        <p>Current premium metadata projection</p>
+        </ul>
+        <ul>
+        <li><code>scripts/build-icons.js</code></li>
+        <p>Current icon count generator for free indexes</p>
+        </ul>
+        <ul>
+        <li><code>mcp/index.js</code></li>
+        <p>MCP server metadata and tool registration</p>
+        </ul>
+        <ul>
+        <li><code>mcp/package.json</code></li>
+        <p>MCP package version source</p>
+        </ul>
+        <ul>
+        <li><code>package.json</code></li>
+        <p>Root package description currently drifting from actual product counts</p>
+        </ul>
+        <h3 id="new-files-this-plan-should-introduce">New files this plan should introduce</h3>
+        <ul>
+        <li><code>data/product-facts.json</code> or equivalent generated artifact</li>
+        <li><code>scripts/build-product-facts.mjs</code></li>
+        <li><code>scripts/verify-product-facts.mjs</code></li>
+        <li><code>data/si-registry/</code> or equivalent registry source directory</li>
+        <li><code>lib/shell-title-sync.js</code> or equivalent extracted ownership helper</li>
+        </ul>
+        <h3 id="future-boundary-extraction-candidates">Future boundary extraction candidates</h3>
+        <ul>
+        <li><code>store/routes/</code></li>
+        <li><code>store/packs/</code></li>
+        <li><code>store/docs/</code></li>
+        <li><code>store/tools/</code></li>
+        <li><code>lib/product-facts.js</code></li>
+        </ul>
+        <p>These should only be introduced after dependency audits.</p>
+        <hr>
+        <h2 id="phase-0-foundation-documents-and-source-of-truth">Phase 0: Foundation Documents And Source Of Truth</h2>
+        <h3 id="task-1-land-the-canonical-docs-and-treat-them-as-active-source-material">Task 1: Land the main docs and treat them as active source material</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li><code>docs/superpowers/plans/2026-04-19-si-semantic-metadata-v1-spec.md</code></li>
+        <li><code>docs/superpowers/plans/2026-04-19-si-registry-prd-and-blueprint.md</code></li>
+        <li><code>docs/superpowers/plans/2026-04-19-si-semantic-rollout-roadmap.md</code></li>
+        <li><code>docs/superpowers/plans/2026-04-19-supericons-foundation-main-implementation-plan.md</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Confirm these docs are the working source for semantic and implementation decisions.</li>
+        <li>[ ] Mark older strategy docs as context rather than active truth where needed.</li>
+        </ul>
+        <h3 id="task-2-create-a-product-facts-source">Task 2: Create a product-facts source</h3>
+        <p><strong>Goal:</strong> Stop count and version strings from drifting.</p>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Create: <code>data/product-facts.json</code></li>
+        <li>Create: <code>scripts/build-product-facts.mjs</code></li>
+        <li>Create: <code>scripts/verify-product-facts.mjs</code></li>
+        <li>Modify: <code>scripts/build-icons.js</code></li>
+        <li>Modify: <code>package.json</code></li>
+        <li>Modify: <code>mcp/index.js</code></li>
+        <li>Modify: <code>mcp/package.json</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Define product facts keys:</li>
+        <li>free icon count</li>
+        <li>free library count</li>
+        <li>premium collection count</li>
+        <li>premium icon count</li>
+        <li>MCP tool count</li>
+        <li>MCP package version</li>
+        <li>marketing-safe display strings</li>
+        <li>[ ] Build the facts artifact from actual source generators and manifests.</li>
+        <li>[ ] Add verification that fails when public copy or package metadata drifts from the shared facts.</li>
+        </ul>
+        <hr>
+        <h2 id="phase-1-fix-launch-critical-ui-truth">Phase 1: Fix Launch-Critical UI Truth</h2>
+        <h3 id="task-3-fix-shell-title-ownership-for-the-packs-route">Task 3: Fix shell-title ownership for the packs route</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify: <code>main.js</code></li>
+        <li>Modify: <code>store.js</code></li>
+        <li>Optional create: <code>lib/shell-title-sync.js</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Audit who currently owns <code>gridTitle</code> and <code>gridMeta</code>.</li>
+        <li>[ ] Prevent icon-grid heading updates from running while store-shell views are active.</li>
+        <li>[ ] Make store-route title ownership explicit.</li>
+        <li>[ ] Verify:</li>
+        <li><code>/</code></li>
+        <li><code>/?view=packs</code></li>
+        <li>preview into a collection detail</li>
+        <li>back to collections</li>
+        <li>docs and pricing route transitions</li>
+        </ul>
+        <h3 id="task-4-replace-top-surface-drifted-product-facts">Task 4: Replace top-surface drifted product facts</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Create: <code>docs/superpowers/plans/2026-04-19-product-facts-drift-inventory.md</code></li>
+        <li>Modify: <code>index.html</code></li>
+        <li>Modify: <code>store.js</code></li>
+        <li>Modify: <code>docs-pages.js</code></li>
+        <li>Modify: <code>package.json</code></li>
+        <li>Modify: <code>mcp/index.js</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Make a full list of every hardcoded count or version string before changing copy.</li>
+        <li>[ ] Mark each one as marketing copy, product truth, or technical metadata.</li>
+        <li>[ ] Replace hardcoded counts where possible with generated values or synchronized constants.</li>
+        <li>[ ] Align MCP version and tool count declarations.</li>
+        <li>[ ] Decide which public copy should stay rounded like <code>20,000+</code> and which should display exact values like <code>21,264</code>.</li>
+        <li>[ ] Make rounded copy deliberate and exact values consistent.</li>
+        </ul>
+        <h3 id="task-5-keep-the-purpose-chip-experiment-intentionally-narrow">Task 5: Keep the purpose-chip experiment intentionally narrow</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify: <code>lib/icon-grid-behavior.js</code></li>
+        <li>Modify: <code>main.js</code></li>
+        <li>Verify: <code>scripts/verify-icon-grid-behavior.mjs</code></li>
+        <li>Reference: <code>docs/superpowers/plans/2026-04-18-purpose-filter-scope-fix.md</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Preserve the current <code>All Icons</code> only rule.</li>
+        <li>[ ] Keep 3 seeded categories for now.</li>
+        <li>[ ] Treat the current taxonomy seed as a short-term browse experiment, not a second permanent metadata system.</li>
+        <li>[ ] Write down that registry-backed browse facets will replace the seed in one clear cutover when ready.</li>
+        <li>[ ] Ensure future refactors do not accidentally re-expand scope.</li>
+        <li>[ ] Add or keep verification that store/docs/pricing routes cannot inherit chip state.</li>
+        </ul>
+        <hr>
+        <h2 id="phase-2-safe-refactor-preparation">Phase 2: Safe Refactor Preparation</h2>
+        <h3 id="task-6-audit-main-js-before-any-extraction">Task 6: Audit <code>main.js</code> before any extraction</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify or create audit note under <code>docs/superpowers/plans/</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Inventory heading-sync responsibilities.</li>
+        <li>[ ] Inventory search, browse, and shell coupling.</li>
+        <li>[ ] Inventory which functions mutate DOM outside icon-grid ownership.</li>
+        <li>[ ] Identify extraction candidates that do not require broad state rewrites.</li>
+        </ul>
+        <h3 id="task-7-audit-store-js-before-any-extraction">Task 7: Audit <code>store.js</code> before any extraction</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify or create audit note under <code>docs/superpowers/plans/</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Inventory route families:</li>
+        <li>packs</li>
+        <li>collection detail</li>
+        <li>downloads</li>
+        <li>dashboard</li>
+        <li>api keys</li>
+        <li>docs</li>
+        <li>pricing</li>
+        <li>privacy and terms</li>
+        <li>tools</li>
+        <li>[ ] Map shared helpers used across those route families.</li>
+        <li>[ ] Map startup path and <code>syncViewFromLocation</code> interactions.</li>
+        <li>[ ] Identify low-risk first extraction boundaries.</li>
+        </ul>
+        <h3 id="task-8-audit-style-css-before-any-extraction">Task 8: Audit <code>style.css</code> before any extraction</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify or create audit note under <code>docs/superpowers/plans/</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Identify shell visibility rules.</li>
+        <li>[ ] Identify store-active state rules.</li>
+        <li>[ ] Identify chip and header rules with cross-route side effects.</li>
+        <li>[ ] Identify candidate CSS groupings that can move safely.</li>
+        </ul>
+        <h3 id="task-9-define-the-regression-matrix-for-refactor-work">Task 9: Define the regression matrix for refactor work</h3>
+        <p><strong>Verification areas:</strong></p>
+        <ul>
+        <li>initial homepage load</li>
+        <li>direct route to packs</li>
+        <li>direct route to docs</li>
+        <li>collection detail preview</li>
+        <li>pricing route</li>
+        <li>auth return flow</li>
+        <li>purchase success route handling</li>
+        <li>MCP docs route navigation</li>
+        <li>purpose-chip visibility and state preservation</li>
+        </ul>
+        <ul>
+        <li>[ ] Write the matrix into the plan or linked audit doc.</li>
+        <li>[ ] Require re-audit after each extraction.</li>
+        </ul>
+        <hr>
+        <h2 id="phase-3-first-safe-extractions">Phase 3: First Safe Extractions</h2>
+        <p>This phase should not begin until Phase 2 audits are complete.</p>
+        <h3 id="task-10-extract-shell-title-synchronization">Task 10: Extract shell-title synchronization</h3>
+        <p><strong>Goal:</strong> One place owns title/meta behavior across icon-grid and store-shell views.</p>
+        <p>Potential files:</p>
+        <ul>
+        <li>Create: <code>lib/shell-title-sync.js</code></li>
+        <li>Modify: <code>main.js</code></li>
+        <li>Modify: <code>store.js</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Move title-setting rules into a focused helper.</li>
+        <li>[ ] Keep surface behavior unchanged except for the packs-route fix.</li>
+        <li>[ ] Re-run route verification matrix.</li>
+        </ul>
+        <h3 id="task-11-extract-product-facts-consumer-helpers">Task 11: Extract product facts consumer helpers</h3>
+        <p><strong>Goal:</strong> One small helper reads the shared generated facts instead of duplicating strings.</p>
+        <p>Potential files:</p>
+        <ul>
+        <li>Create: <code>lib/product-facts.js</code></li>
+        <li>Modify: <code>store.js</code></li>
+        <li>Modify: <code>docs-pages.js</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Centralize the facts read layer.</li>
+        <li>[ ] Keep display-format decisions explicit.</li>
+        </ul>
+        <h3 id="task-12-extract-store-route-modules-gradually">Task 12: Extract store route modules gradually</h3>
+        <p>This should happen in small, independently verifiable slices.</p>
+        <p>Recommended order:</p>
+        <ol>
+        <li>packs and collection detail</li>
+        <li>docs</li>
+        <li>pricing and legal</li>
+        <li>dashboard and api keys</li>
+        <li>tools</li>
+        </ol>
+        <p>For each extraction:</p>
+        <ul>
+        <li>[ ] dependency map first</li>
+        <li>[ ] route-surface verification</li>
+        <li>[ ] startup and back-button verification</li>
+        <li>[ ] re-audit for hidden coupling</li>
+        </ul>
+        <hr>
+        <h2 id="phase-4-registry-foundation-in-code">Phase 4: Registry Foundation In Code</h2>
+        <h3 id="task-13-create-registry-scaffolding">Task 13: Create registry scaffolding</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Create: <code>data/si-registry/</code></li>
+        <li>Create: <code>scripts/build-si-registry-projections.mjs</code></li>
+        <li>Create: <code>scripts/verify-si-registry-projections.mjs</code></li>
+        </ul>
+        <ul>
+        <li>[ ] Define the main record storage format.</li>
+        <li>[ ] Lock the registry ID rule: outside-library icons use <code>{source_library}:{source_name}</code>, Supericons-made icons use <code>si:{name}</code>.</li>
+        <li>[ ] Keep a 12-tool MCP registry map as part of the registry foundation docs.</li>
+        <li>[ ] Seed premium records first.</li>
+        <li>[ ] Define how free corpus records will be staged and enriched.</li>
+        </ul>
+        <h3 id="task-14-normalize-premium-metadata-into-the-registry-shape">Task 14: Normalize premium metadata into the registry shape</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify: premium data source files</li>
+        <li>Modify: <code>public/packs/manifest.json</code> generation path</li>
+        </ul>
+        <ul>
+        <li>[ ] Convert existing premium <code>purpose</code>, <code>tags</code>, and <code>category</code> into full registry records.</li>
+        <li>[ ] Treat this as a field-mapping and enrichment job first, not a full rewrite of premium meaning from scratch.</li>
+        <li>[ ] Add depiction, evidence, confidence, and review-state fields.</li>
+        </ul>
+        <h3 id="task-15-prepare-free-corpus-registry-rollout">Task 15: Prepare free-corpus registry rollout</h3>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Modify: build and sync scripts</li>
+        <li>Possibly create batch-tagging pipeline files</li>
+        </ul>
+        <ul>
+        <li>[ ] Start with top free icons and high-value slices.</li>
+        <li>[ ] Keep minimum viable required fields.</li>
+        <li>[ ] Do not block launch on full long-tail coverage.</li>
+        <li>[ ] Document how <code>scripts/build-icons.js</code> moves from final file builder to raw ingest and verification support during registry cutover.</li>
+        <li>[ ] Define the cutover checks for <code>public/icon-index.json</code> and <code>mcp/public/icon-index.json</code>.</li>
+        </ul>
+        <hr>
+        <h2 id="phase-5-visual-inspection-and-continuous-semantic-operations">Phase 5: Visual Inspection And Continuous Semantic Operations</h2>
+        <h3 id="task-16-run-a-visual-inspection-pilot">Task 16: Run a visual-inspection pilot</h3>
+        <p><strong>Goal:</strong> Validate whether cheap multimodal review materially improves semantic quality.</p>
+        <p>Pilot slice:</p>
+        <ul>
+        <li>100 premium icons</li>
+        <li>100 high-traffic free icons</li>
+        <li>50 ambiguous icons</li>
+        </ul>
+        <ul>
+        <li>[ ] Test one low-cost hosted visual lane.</li>
+        <li>[ ] Test one local or open-source visual lane if setup is reasonable.</li>
+        <li>[ ] Keep the hosted pilot inside a low single-digit dollar budget.</li>
+        <li>[ ] Compare lexical-only vs lexical-plus-visual outcomes.</li>
+        <li>[ ] Measure agreement with reviewed recommendations.</li>
+        <li>[ ] Decide whether the visual step should be continuous.</li>
+        </ul>
+        <h3 id="task-17-design-the-autonomous-semantic-workflow">Task 17: Design the autonomous semantic workflow</h3>
+        <p><strong>Goal:</strong> Make semantic rollout a continuous low-cost system.</p>
+        <ul>
+        <li>[ ] Define the batch inputs and outputs.</li>
+        <li>[ ] Define confidence routing.</li>
+        <li>[ ] Define review queue triggers.</li>
+        <li>[ ] Define cadence:</li>
+        <li>nightly batch</li>
+        <li>weekly review</li>
+        <li>monthly cleanup</li>
+        </ul>
+        <h3 id="task-18-build-a-minimal-review-tool">Task 18: Build a minimal review tool</h3>
+        <p><strong>Goal:</strong> Make confidence routing usable in real work, not just in theory.</p>
+        <p><strong>Files:</strong></p>
+        <ul>
+        <li>Create: review CLI or lightweight admin tooling</li>
+        <li>Create or modify: batch output files used for pending review</li>
+        </ul>
+        <ul>
+        <li>[ ] Show pending semantic records sorted by confidence and importance.</li>
+        <li>[ ] Compare current versus proposed record values.</li>
+        <li>[ ] Support approve, reject, and edit actions.</li>
+        <li>[ ] Record who changed what and why.</li>
+        <li>[ ] Filter by collection, category, and confidence band.</li>
+        </ul>
+        <hr>
+        <h2 id="verification-requirements">Verification Requirements</h2>
+        <h3 id="script-verification">Script verification</h3>
+        <ul>
+        <li><code>npm run verify:icon-grid-behavior</code></li>
+        <li><code>npm run verify:search-query-fixtures</code></li>
+        <li><code>npm run build</code></li>
+        <li>new <code>verify-product-facts</code></li>
+        <li>future <code>verify-si-registry-projections</code></li>
+        </ul>
+        <h3 id="browser-verification">Browser verification</h3>
+        <ul>
+        <li>home</li>
+        <li>packs</li>
+        <li>collection detail</li>
+        <li>docs</li>
+        <li>pricing</li>
+        <li>motion lab</li>
+        <li>converter</li>
+        </ul>
+        <h3 id="re-audit-requirement">Re-audit requirement</h3>
+        <p>After every non-trivial refactor:</p>
+        <ul>
+        <li>[ ] compare behavior against the regression matrix</li>
+        <li>[ ] inspect the affected route family again</li>
+        <li>[ ] look for hidden shared state or shell conflicts</li>
+        <li>[ ] only then continue</li>
+        </ul>
+        <hr>
+        <h2 id="execution-order-recommendation">Execution Order Recommendation</h2>
+        <ol>
+        <li>Keep the new docs as active decision sources.</li>
+        <li>Build shared product facts.</li>
+        <li>Fix packs-route title ownership.</li>
+        <li>Stabilize purpose-chip scope rules.</li>
+        <li>Replace top-surface drifted facts.</li>
+        <li>Complete dependency audits for large-file and shell refactors.</li>
+        <li>Extract shell-title sync and product-facts consumers.</li>
+        <li>Lock registry IDs, MCP scope, and cutover rules.</li>
+        <li>Normalize premium metadata into registry scaffolding.</li>
+        <li>Pilot visual inspection.</li>
+        <li>Build the first review tool.</li>
+        <li>Expand semantic rollout gradually.</li>
+        </ol>
+        <hr>
+        <h2 id="final-recommendation">Final Recommendation</h2>
+        <p>Treat this plan as the bridge between launch discipline and long-term semantic ambition.</p>
+        <p>In plain language:</p>
+        <ul>
+        <li>fix what is visibly wrong now</li>
+        <li>stop drift from continuing</li>
+        <li>do not refactor blindly</li>
+        <li>audit before every extraction</li>
+        <li>make the registry real in small, durable steps</li>
+        <li>let automation handle repetition</li>
+        <li>reserve deeper review for ambiguity and differentiation</li>
+        </ul>
+        <p>That is the safest and highest-leverage path forward from the current Supericons state.</p>
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supericons Launch Audit and Roadmap - April 19, 2026</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #a7a7b3;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --good: #7bd88f;
+        --warn: #ffd166;
+        --bad: #ff7a7a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.55;
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 40px 24px 72px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+
+      h1, h2, h3 {
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 28px;
+        margin-bottom: 14px;
+      }
+
+      h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      p, li {
+        color: var(--muted);
+      }
+
+      .lead {
+        max-width: 820px;
+        font-size: 18px;
+      }
+
+      .verdict {
+        display: grid;
+        gap: 16px;
+        padding: 22px;
+        background: linear-gradient(180deg, rgba(255, 100, 23, 0.08), rgba(255, 100, 23, 0.03));
+        border: 1px solid rgba(255, 100, 23, 0.28);
+        border-radius: 22px;
+        margin-bottom: 28px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 22px;
+      }
+
+      .card strong {
+        color: var(--text);
+      }
+
+      .mindmap {
+        display: grid;
+        gap: 16px;
+        margin: 18px 0 30px;
+      }
+
+      .mindmap-core {
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: var(--brand-soft);
+        border: 1px solid rgba(255, 100, 23, 0.28);
+      }
+
+      .mindmap-branches {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .branch {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .branch h3 {
+        color: var(--text);
+        margin-bottom: 10px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      section {
+        margin-top: 36px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      th, td {
+        padding: 14px 16px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+      }
+
+      th {
+        color: var(--text);
+        background: var(--panel-2);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .metric {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 18px;
+        border-radius: 18px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+      }
+
+      .metric-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text);
+      }
+
+      .metric-label {
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .p0 { background: rgba(255, 122, 122, 0.14); color: var(--bad); }
+      .p1 { background: rgba(255, 209, 102, 0.14); color: var(--warn); }
+      .p2 { background: rgba(123, 216, 143, 0.14); color: var(--good); }
+
+      .quote {
+        padding: 18px 20px;
+        border-left: 4px solid var(--brand);
+        background: var(--panel);
+        border-radius: 0 16px 16px 0;
+        color: var(--text);
+      }
+
+      .footer-note {
+        margin-top: 28px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+      }
+
+      @media (max-width: 900px) {
+        .grid.two,
+        .grid.three,
+        .mindmap-branches {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 34px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <span class="eyebrow">Strategy Audit</span>
+        <h1>Supericons Launch Audit and Roadmap</h1>
+        <p class="lead">
+          This is a repo-backed audit of what Supericons actually is today, what is still unfinished,
+          where the story drifted, and what the launch-focused roadmap should be now.
+        </p>
+      </header>
+
+      <div class="verdict">
+        <h2>Plain-English Verdict</h2>
+        <p>
+          Supericons is already a real launchable product. The problem is not missing product. The
+          problem is that the story drifted far ahead of the shipped reality.
+        </p>
+        <div class="quote">
+          Launch the thing that already exists: a strong icon search and workflow toolkit for modern
+          builders and coding agents. Keep the bigger semantic vision as the internal north star until
+          one real post-launch wedge proves it.
+        </div>
+      </div>
+
+      <section>
+        <h2>Mind Map</h2>
+        <div class="mindmap">
+          <div class="mindmap-core">
+            <h3>Supericons now</h3>
+            <p>
+              Best understood today as a developer-first icon search and workflow product with a
+              credible agent-facing MCP wedge.
+            </p>
+          </div>
+          <div class="mindmap-branches">
+            <div class="branch">
+              <h3>Core Product</h3>
+              <ul>
+                <li>21,264 free icons</li>
+                <li>10 icon libraries</li>
+                <li>Search, customize, export</li>
+                <li>Docs and docs search</li>
+              </ul>
+            </div>
+            <div class="branch">
+              <h3>Agent Surface</h3>
+              <ul>
+                <li>12 MCP tools</li>
+                <li>Hosted search engine</li>
+                <li>Motion Lab</li>
+                <li>Converter</li>
+              </ul>
+            </div>
+            <div class="branch">
+              <h3>Revenue</h3>
+              <ul>
+                <li>8 premium collections</li>
+                <li>400 premium icons</li>
+                <li>Pro subscription</li>
+                <li>Bundle offer</li>
+              </ul>
+            </div>
+            <div class="branch">
+              <h3>Strengths</h3>
+              <ul>
+                <li>Real product surface</li>
+                <li>Real MCP value</li>
+                <li>Real billing and auth</li>
+                <li>Build and verify scripts pass</li>
+              </ul>
+            </div>
+            <div class="branch">
+              <h3>Current Drift</h3>
+              <ul>
+                <li>Public story says icon library</li>
+                <li>Strategy says visual protocol</li>
+                <li>Reality sits in the middle</li>
+              </ul>
+            </div>
+            <div class="branch">
+              <h3>Main Gaps</h3>
+              <ul>
+                <li>No public semantic metadata on free corpus</li>
+                <li>Browse taxonomy is partial</li>
+                <li>Messaging and version drift</li>
+                <li>Frontend files are very large</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Repo-Backed Snapshot</h2>
+        <div class="grid three">
+          <div class="metric">
+            <span class="metric-value">21,264</span>
+            <span class="metric-label">Free icons</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">10</span>
+            <span class="metric-label">Free libraries</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">8</span>
+            <span class="metric-label">Premium collections</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">400</span>
+            <span class="metric-label">Premium icons</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">12</span>
+            <span class="metric-label">MCP tools</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">18</span>
+            <span class="metric-label">Edge functions</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">26</span>
+            <span class="metric-label">Docs pages</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">36</span>
+            <span class="metric-label">Alias-backed semantic icons</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">0 / 21,264</span>
+            <span class="metric-label">Public free-icon semantic coverage</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What Supericons Actually Is Today</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Current state</th>
+              <th>Launch value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Free icon engine</td>
+              <td>Real and usable. Large free corpus with browser search and export.</td>
+              <td>Strong</td>
+            </tr>
+            <tr>
+              <td>MCP</td>
+              <td>Real developer product, not a mock. Search, retrieval, motion, and conversion tools exist.</td>
+              <td>Strong</td>
+            </tr>
+            <tr>
+              <td>Motion Lab</td>
+              <td>80 presets, recipe preview, CSS export, animated SVG export.</td>
+              <td>Strong</td>
+            </tr>
+            <tr>
+              <td>Converter</td>
+              <td>SVG to PNG and PNG to SVG workflow with inspection support.</td>
+              <td>Good</td>
+            </tr>
+            <tr>
+              <td>Premium packs</td>
+              <td>8 public collections and paid flows are already in the product.</td>
+              <td>Good</td>
+            </tr>
+            <tr>
+              <td>Auth and billing</td>
+              <td>Supabase auth, Google OAuth, Stripe checkout, Stripe portal, claims, API keys.</td>
+              <td>Strong</td>
+            </tr>
+            <tr>
+              <td>Search intelligence</td>
+              <td>Hosted search schema, private manifests, private features, audit tables, admin review plans.</td>
+              <td>Good</td>
+            </tr>
+            <tr>
+              <td>Docs</td>
+              <td>Clear docs for MCP, Motion Lab, Converter, and access setup.</td>
+              <td>Good</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Frontend Audit</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>What is good</h3>
+            <ul>
+              <li>The home page is visually clear and immediately useful.</li>
+              <li>The docs surface feels mature and trustworthy.</li>
+              <li>The app shell already covers search, docs, tools, pricing, and account flows.</li>
+              <li>The packs shelf is already monetizable.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>What is weak</h3>
+            <ul>
+              <li>`store.js`, `main.js`, and `style.css` are very large and carry too much responsibility.</li>
+              <li>The app shell mixes too many product surfaces in one place.</li>
+              <li>The collections screen still shows an `All Icons` heading during a packs view browser check.</li>
+              <li>The purpose-pill taxonomy is useful, but still only a partial browse experiment.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Backend and Provider Audit</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Provider / tool</th>
+              <th>What it is doing now</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hosting</td>
+              <td>Netlify</td>
+              <td>Production frontend hosting and routing.</td>
+            </tr>
+            <tr>
+              <td>Frontend build</td>
+              <td>Vite</td>
+              <td>Development server and production build.</td>
+            </tr>
+            <tr>
+              <td>Database / auth / storage</td>
+              <td>Supabase</td>
+              <td>Postgres, Auth, Storage, and Edge Functions.</td>
+            </tr>
+            <tr>
+              <td>Billing</td>
+              <td>Stripe</td>
+              <td>Subscriptions, pack checkout, bundle checkout, portal, webhooks.</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>Resend</td>
+              <td>Purchase and billing-related emails in the current flow.</td>
+            </tr>
+            <tr>
+              <td>Analytics</td>
+              <td>Umami</td>
+              <td>Site-level analytics and event tracking.</td>
+            </tr>
+            <tr>
+              <td>Distribution</td>
+              <td>npm</td>
+              <td>Publishes `supericons-mcp`.</td>
+            </tr>
+            <tr>
+              <td>Converter proof runtime</td>
+              <td>Railway</td>
+              <td>Called out in launch docs as a live dependency for converter proof service.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Value Proposition Audit</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>What is true now</h3>
+            <ul>
+              <li>Find icons quickly across many libraries.</li>
+              <li>Export them in builder-friendly ways.</li>
+              <li>Use them from MCP, not just from a browser.</li>
+              <li>Pay for motion workflows and animated packs when static assets are not enough.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>What is not true yet</h3>
+            <ul>
+              <li>A full semantic icon system across the corpus.</li>
+              <li>A universal governance vocabulary for AI interfaces.</li>
+              <li>A stateful icon grammar platform.</li>
+              <li>A public standard that the market already recognizes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Mission and Vision Reset</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>Mission now</h3>
+            <p>
+              Help builders and coding agents find, customize, and ship the right icons faster.
+            </p>
+            <h3 style="margin-top:18px;">Public one-liner now</h3>
+            <p>
+              Supericons is a developer-first icon search and workflow toolkit: free icons, MCP access,
+              animated exports, and premium motion packs.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Vision later</h3>
+            <p>
+              Become the semantic icon layer that agent-built interfaces use to express state, intent,
+              trust, and action more clearly.
+            </p>
+            <h3 style="margin-top:18px;">Important caution</h3>
+            <p>
+              Keep the semantic-governance thesis as the internal north star until one real shipped
+              wedge proves it.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Incomplete Items and Gaps</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Current state</th>
+              <th>Why it matters</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Public positioning reset</td>
+              <td>Product reality and future thesis are mixed together.</td>
+              <td>Users need to understand what they can use today.</td>
+              <td><span class="tag p0">P0</span></td>
+            </tr>
+            <tr>
+              <td>Count and version consistency</td>
+              <td>`20,000+`, `21,264`, and `60K+` all appear in the repo. MCP package and server versions also disagree.</td>
+              <td>Small inconsistencies add up and make the product feel less grounded.</td>
+              <td><span class="tag p0">P0</span></td>
+            </tr>
+            <tr>
+              <td>Collections page heading bug</td>
+              <td>Browser check showed collections content under an `All Icons` heading.</td>
+              <td>Visible confusion in a paid surface.</td>
+              <td><span class="tag p0">P0</span></td>
+            </tr>
+            <tr>
+              <td>Purpose pill chip scope</td>
+              <td>Current code and plan correctly limit it to `All Icons`, but the feature is still partial.</td>
+              <td>Useful shortcut, not a full taxonomy yet.</td>
+              <td><span class="tag p0">P0</span></td>
+            </tr>
+            <tr>
+              <td>Semantic metadata for all 10 free libraries</td>
+              <td>Not done. Public free corpus coverage is still `0 / 21,264`.</td>
+              <td>This is the biggest gap between the current product and the semantic vision.</td>
+              <td><span class="tag p1">P1</span></td>
+            </tr>
+            <tr>
+              <td>Semantic metadata normalization for premium collections</td>
+              <td>All 400 premium icons have pack-level `purpose`, `tags`, and `category`, but not one unified system model.</td>
+              <td>Premium metadata is the easiest near-term win.</td>
+              <td><span class="tag p1">P1</span></td>
+            </tr>
+            <tr>
+              <td>Hosted search manifest depth</td>
+              <td>Semantic seeding exists, but the alias-backed manifest is still narrow compared with the whole corpus.</td>
+              <td>Search intelligence will improve faster with deeper coverage.</td>
+              <td><span class="tag p1">P1</span></td>
+            </tr>
+            <tr>
+              <td>Pack source-of-truth cleanup</td>
+              <td>Two source roots are obvious under `premium/`, while eight public packs are shipped.</td>
+              <td>Future pack work will stay messy until this is clarified.</td>
+              <td><span class="tag p1">P1</span></td>
+            </tr>
+            <tr>
+              <td>Intent-based MCP request tool</td>
+              <td>Not shipped yet.</td>
+              <td>This is the cleanest bridge to the future semantic story.</td>
+              <td><span class="tag p2">P2</span></td>
+            </tr>
+            <tr>
+              <td>Large frontend refactor</td>
+              <td>Needed eventually, but not launch work.</td>
+              <td>Do not let refactor ambition delay launch.</td>
+              <td><span class="tag p2">P2</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Launch-Focused Roadmap</h2>
+        <div class="grid three">
+          <div class="card">
+            <h3>Phase 0: Cut The Drift</h3>
+            <ul>
+              <li>Lock one public story: free icon search, MCP, Motion Lab, Converter, premium packs.</li>
+              <li>Fix obvious count, version, and copy inconsistencies.</li>
+              <li>Fix the collections page heading bug.</li>
+              <li>Finish purpose-pill scope cleanup.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Phase 1: Strengthen What Works</h3>
+            <ul>
+              <li>Normalize metadata for all premium icons.</li>
+              <li>Add semantic metadata v0 to the top 200-500 free icons.</li>
+              <li>Publish an agent phrasebook docs page.</li>
+              <li>Use weekly search-intelligence triage to choose the next metadata work.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Phase 2: One Real Proof</h3>
+            <ul>
+              <li>Ship one clearly agent-native collection after launch.</li>
+              <li>Add one intent-based MCP tool.</li>
+              <li>Let real usage prove whether the larger semantic vision deserves expansion.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What Not To Build Now</h2>
+        <div class="card">
+          <ul>
+            <li>Full visual protocol standard</li>
+            <li>Multimodal signal system</li>
+            <li>Enterprise governance dashboards</li>
+            <li>Broad ecosystem tooling spree</li>
+            <li>Large-scale frontend rewrite</li>
+            <li>Public messaging that implies the future system is already here</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Final Recommendation</h2>
+        <div class="quote">
+          Launch Supericons as a sharper icon search and workflow toolkit for modern builders and coding
+          agents. Let the bigger semantic-governance vision earn its way into the public story through
+          one shipped slice at a time.
+        </div>
+      </section>
+
+      <div class="footer-note">
+        Evidence used for this audit included current repo structure, current working tree, key strategy
+        and launch documents, local browser checks, and passing verification for icon-grid behavior,
+        search-query fixtures, and full production build.
+      </div>
+    </div>
+  </body>
+</html>

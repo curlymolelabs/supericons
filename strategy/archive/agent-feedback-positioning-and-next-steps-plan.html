@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What We Learned and What To Do Next | Supericons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071019;--bg2:#0d1723;--bg3:#132131;--surface:#1a2a3c;
+  --text:#e8eef5;--text2:#9db0c3;--text3:#6d8093;
+  --accent:#4ecdc4;--accent2:#8ff0e9;--ag:rgba(78,205,196,.16);
+  --amber:#f5b851;--amg:rgba(245,184,81,.14);
+  --green:#22c55e;--gg:rgba(34,197,94,.14);
+  --red:#ff6b6b;--rdg:rgba(255,107,107,.12);
+  --r:12px;--rl:20px;--max:1100px;
+  --fd:'Space Grotesk','Inter',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+nav{position:sticky;top:0;z-index:10;background:rgba(7,16,25,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--fd);font-weight:700}
+.sub{font-size:12px;color:var(--text3)}
+.hero{padding:92px 0 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 58% 52% at 50% 24%,var(--ag),transparent 72%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:840px}
+.badge{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--accent2);margin-bottom:22px}
+h1{font-family:var(--fd);font-size:clamp(2rem,4.8vw,3.4rem);line-height:1.08;letter-spacing:-1px;margin-bottom:16px;background:linear-gradient(135deg,var(--text),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.03rem;color:var(--text2);max-width:720px}
+.section{padding:62px 0}
+.section.alt{background:var(--bg2)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px}
+h2{font-family:var(--fd);font-size:clamp(1.45rem,3vw,2.2rem);line-height:1.2;margin-bottom:14px}
+h3{font-family:var(--fd);font-size:1.02rem;margin-bottom:10px}
+.lead{max-width:740px;color:var(--text2);margin-bottom:28px}
+.callout{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--amber);border-radius:0 var(--rl) var(--rl) 0;padding:22px 24px;margin:20px 0 28px}
+.callout strong{color:var(--amber)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:24px}
+.card p,.card li,.list p{color:var(--text2)}
+.card ul,.list ul{list-style:none}
+.card li::before,.list li::before{content:'-> ';color:var(--accent2);font-weight:700}
+.phase{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid rgba(255,255,255,.06);border-radius:var(--rl);padding:24px;margin-bottom:18px}
+.phase-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pill{font-family:var(--fm);font-size:11px;padding:4px 8px;border-radius:999px;background:var(--surface);color:var(--accent2)}
+.success{margin-top:14px;padding:14px 16px;border-radius:var(--r);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.16)}
+.success strong{color:var(--green)}
+.warn{margin-top:14px;padding:14px 16px;border-radius:var(--r);background:rgba(245,184,81,.08);border:1px solid rgba(245,184,81,.16)}
+.warn strong{color:var(--amber)}
+.quote{margin:28px 0;padding:22px 24px;border-left:3px solid var(--accent);background:var(--bg3);border-radius:0 var(--rl) var(--rl) 0;color:var(--text2);font-style:italic}
+.quote strong{color:var(--text);font-style:normal}
+footer{padding:34px 0;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:12px;color:var(--text3)}
+@media(max-width:720px){.wrap{padding:0 16px}.nav-inner{padding:0 16px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">Supericons</div>
+    <div class="sub">What We Learned and What To Do Next</div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="badge">Strategy Companion Document</div>
+      <h1>What We Learned From Agent Feedback (and What To Do About It)</h1>
+      <p>An AI agent built our blueprint page and told us exactly how it chose icons. This document turns those lessons into clearer messaging, smarter design choices, and a sharper build order for the Supericons 2027 vision.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">The Big Takeaway</div>
+    <h2>Our Vision Is Right. Our Build Order Needs To Change.</h2>
+    <div class="callout">
+      <strong>The key insight:</strong> AI agents do not browse icons the way people do. They pick whichever icon library is easiest to use. They type icon names they already know from memory. They never actually "see" the icons they choose.
+    </div>
+    <p class="lead">This means Supericons should not try to win by being a "prettier icon library." Instead, we should win by being the icon system that <strong>understands what you need</strong>. When an agent says "I need a trust icon for a payment screen," Supericons should be the only library that can answer that correctly. The big picture stays the same. The order we build things in is what changes.</p>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="eyebrow">What Changes</div>
+    <h2>Four Things We Now Know</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>1. "Describe what you need" beats "guess the icon name"</h3>
+        <p>Google Material Icons wins today because AI agents already have its icon names memorized. Supericons wins when the agent can simply describe what it needs ("a warning icon for a risky action") and get the right answer, no name-guessing required.</p>
+      </div>
+      <div class="card">
+        <h3>2. The icons that do not exist yet are our biggest opportunity</h3>
+        <p>The agent struggled most with: confidence levels, who started an action (human or AI?), "waiting for your approval," audit trails, and memory access. These icons do not exist in any library. That is our premium product opportunity.</p>
+      </div>
+      <div class="card">
+        <h3>3. Agents need icon building blocks, not just single icons</h3>
+        <p>The agent did not just need one icon at a time. It needed to combine pieces: an icon + a colored status ring + a confidence indicator + a label showing who triggered it. We need to build mix-and-match building blocks, not just standalone icons.</p>
+      </div>
+      <div class="card">
+        <h3>4. If we are harder to use than a simple link tag, agents will use something else</h3>
+        <p>A Google font link takes one line. If Supericons takes more setup than that, AI agents will skip us. Making it effortless to start using Supericons is not just a nice-to-have. It is a requirement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">How We Should Talk About Supericons</div>
+    <h2>Two Messages for Two Audiences</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>For people (designers and developers)</h3>
+        <p><strong>Supericons is the fastest way for modern builders to ship sharper interfaces with curated icons, animated packs, and ready-to-use exports.</strong></p>
+      </div>
+      <div class="card">
+        <h3>For AI agents (coding assistants)</h3>
+        <p><strong>Supericons is the icon system that understands context. Describe what you are building, and get back the right icon with animation, accessibility info, and usage instructions.</strong></p>
+      </div>
+      <div class="card">
+        <h3>What makes us different</h3>
+        <p>Not "more icons." We offer: icons for AI concepts that nobody else has, the ability to describe what you need instead of guessing names, mix-and-match building blocks, animated state indicators, and delivery designed for both humans and AI.</p>
+      </div>
+    </div>
+    <div class="quote">
+      <strong>The winner will not be the library with the prettiest static icons.</strong> It will be the system that makes it easiest for both people and AI agents to pick the right visual for the right situation.
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="eyebrow">Design Rules</div>
+    <h2>How We Should Design Every New Icon Going Forward</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Make icons easy to find by meaning, not just name</h3>
+        <ul>
+          <li>Tag every icon with its purpose (what is it for?)</li>
+          <li>Add keywords an agent might search for</li>
+          <li>Note where the icon works best (dashboard, sidebar, notification)</li>
+          <li>Note where the icon should not be used</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Build the icons nobody else has</h3>
+        <ul>
+          <li>Who did this: human or AI? (authority)</li>
+          <li>How sure is the AI? (confidence)</li>
+          <li>"Your approval is needed" (human approval)</li>
+          <li>"This action is logged" (audit trail)</li>
+          <li>"The AI accessed its memory" (trace)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Build small pieces first, not a giant system</h3>
+        <ul>
+          <li>A small "confidence level" badge</li>
+          <li>A small "who triggered this" marker</li>
+          <li>A colored ring showing current state</li>
+          <li>A left-edge stripe showing risk level</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Write docs that AI agents can use</h3>
+        <ul>
+          <li>Show: "How to ask for this icon"</li>
+          <li>List: "What search terms will find it"</li>
+          <li>Explain: "When NOT to use this icon"</li>
+          <li>Suggest: "Better alternatives for X"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">What To Build and When</div>
+    <h2>The Build Plan (In Order)</h2>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="pill">Step A</div>
+        <h3>Remove friction and tag our best icons</h3>
+      </div>
+      <div class="list">
+        <ul>
+          <li>Make sure our MCP package installs perfectly with one command, no errors</li>
+          <li>Write a guide: "How to ask for icons" (a phrasebook for AI agents)</li>
+          <li>Add meaning tags (purpose, use case, related keywords) to our top 100-200 most popular icons</li>
+          <li>Use our search data to figure out which "missing" icons people and agents are looking for most</li>
+        </ul>
+      </div>
+      <div class="success"><strong>We know it is working when:</strong> the MCP installs cleanly from the docs, the phrasebook exists, our best icons have meaning tags, and we have a prioritized list of which new icons to create next based on real search data.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="pill">Step B</div>
+        <h3>Build the first set of "AI era" icons</h3>
+      </div>
+      <div class="list">
+        <ul>
+          <li>Ship the Agent Lifecycle collection first (the 9 core AI states: idle, planning, executing, waiting, blocked, etc.)</li>
+          <li>Design the first building blocks: "who triggered this" marker, "confidence level" badge, "current state" ring, "waiting for you" indicator</li>
+          <li>Package our best free icon sets as proper, ready-to-install kits on GitHub</li>
+          <li>Every kit gets: a clear README, preview images, usage examples, and framework snippets</li>
+        </ul>
+      </div>
+      <div class="success"><strong>We know it is working when:</strong> the first AI-specific icon collection is live and clearly unique (no other library has these), and our GitHub kits look professional and are easy to install.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="pill">Step C</div>
+        <h3>Let agents describe what they need (instead of guessing names)</h3>
+      </div>
+      <div class="list">
+        <ul>
+          <li>Build the "describe what you need" tool: agents say "I need a trust icon for a payment flow" and get the right one back</li>
+          <li>Publish a browsable catalog of all our AI-era icons, organized by purpose</li>
+          <li>Expand meaning tags to cover all AI-era icons and our top free icons</li>
+          <li>When returning an icon, include a note explaining "why this icon was chosen" so agents (and developers) can learn</li>
+        </ul>
+      </div>
+      <div class="success"><strong>We know it is working when:</strong> an agent can describe a need in plain English and get a usable icon back in one call, and the results are better than guessing a keyword on Google Material Icons.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="pill">Step D</div>
+        <h3>Icons that move with meaning and mix-and-match parts</h3>
+      </div>
+      <div class="list">
+        <ul>
+          <li>Build a tool that returns icons with built-in animations: "planning" icons gently pulse, "executing" icons spin, "blocked" icons shake</li>
+          <li>Build a tool that assembles building blocks: agents request "shield icon + executing state + high confidence + agent initiated" and get a complete, ready-to-use visual</li>
+          <li>Connect our Motion Lab animation presets to icon states (so "pulse" automatically means "thinking")</li>
+          <li>Deliver complete bundles: the icon SVG + the CSS animation + the state rules + accessibility labels, all in one response</li>
+        </ul>
+      </div>
+      <div class="success"><strong>We know it is working when:</strong> Supericons starts behaving like a visual language system (mix and match parts to say anything), not just a catalog of static pictures.</div>
+    </div>
+
+    <div class="warn"><strong>Important messaging rule:</strong> Do not market the 2027 vision as if it already exists today. Be honest about what is live now, while clearly signaling where we are heading. Promise a direction, not a finished product.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Supericons strategy companion document, refined for clarity from agent feedback and roadmap artifacts.</div>
+</footer>
+
+</body>
+</html>

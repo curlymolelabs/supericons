@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SI Semantic Metadata v1</title>
+    <style>
+      :root {
+        --bg: #0b0b0d;
+        --panel: #141416;
+        --panel-2: #1b1b1f;
+        --text: #f4f4f6;
+        --muted: #b1b1bc;
+        --brand: #ff6417;
+        --brand-soft: rgba(255, 100, 23, 0.12);
+        --line: rgba(255, 255, 255, 0.09);
+        --code-bg: rgba(255,255,255,0.05);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #17171c 0%, var(--bg) 42%);
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 42px 24px 72px;
+      }
+      .hero {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      article {
+        background: rgba(20,20,22,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        backdrop-filter: blur(10px);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--text);
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+      h1 { font-size: 42px; }
+      h2 { font-size: 28px; margin-top: 34px; }
+      h3 { font-size: 22px; margin-top: 24px; }
+      h4 { font-size: 18px; margin-top: 18px; }
+      p, li, blockquote { color: var(--muted); }
+      p { margin: 0 0 14px; }
+      ul, ol { margin: 0 0 16px 22px; padding: 0; }
+      li { margin: 0 0 6px; }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 28px 0;
+      }
+      code {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 0.1em 0.35em;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.95em;
+        color: #ffd7c0;
+      }
+      pre {
+        margin: 0 0 18px;
+        padding: 16px;
+        overflow: auto;
+        background: #101014;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      pre code {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: #f6f6f8;
+      }
+      blockquote {
+        margin: 0 0 18px;
+        padding: 12px 16px;
+        border-left: 3px solid var(--brand);
+        background: rgba(255,255,255,0.03);
+        border-radius: 0 12px 12px 0;
+      }
+      a { color: #ffb085; }
+      .meta { color: var(--muted); font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hero">
+        <span class="eyebrow">Supericons Plans</span>
+        <h1>SI Semantic Metadata v1</h1>
+        <p class="meta">Generated from the matching Markdown source in <code>docs/superpowers/plans/</code>.</p>
+      </div>
+      <article>
+        <h1 id="si-semantic-metadata-v1">SI Semantic Metadata v1</h1>
+        <p>Status: Draft for alignment Date: April 19, 2026 Owner: Supericons</p>
+        <h2 id="purpose">Purpose</h2>
+        <p>Define the main semantic metadata framework for every icon in the SI Registry.</p>
+        <p>This document answers one core question:</p>
+        <p><strong>How do we decide what an icon is meant for when the source icon usually gives us only a name, an id, and a visual shape?</strong></p>
+        <p>The answer is:</p>
+        <ul>
+        <li>the source library gives us identity and hints</li>
+        <li>the icon image gives us visual evidence</li>
+        <li>search behavior gives us retrieval evidence</li>
+        <li>SI publishes an editorial recommendation</li>
+        <li>every recommendation carries evidence, confidence, and review state</li>
+        </ul>
+        <p>This is an intentionally honest model. We are not claiming objective truth for every icon. We are creating a durable, reviewable SI judgment system that humans and agents can trust.</p>
+        <hr>
+        <h2 id="foundational-position">Foundational Position</h2>
+        <h3 id="what-an-open-source-icon-actually-gives-us">What an open-source icon actually gives us</h3>
+        <p>Most open-source icons do not come with a full semantic contract. They usually give us:</p>
+        <ul>
+        <li>a source name</li>
+        <li>a source id</li>
+        <li>a source library</li>
+        <li>a rendered visual form</li>
+        </ul>
+        <p>That is enough to render the icon, but not enough to fully answer:</p>
+        <ul>
+        <li>what this icon most responsibly means</li>
+        <li>when it should be used</li>
+        <li>when it should not be used</li>
+        <li>whether it is ambiguous</li>
+        <li>what other icons it pairs with</li>
+        <li>whether it can later become motion-capable or stateful</li>
+        </ul>
+        <h3 id="what-si-adds">What SI adds</h3>
+        <p>SI adds an editorial semantic layer on top of the source asset.</p>
+        <p>That semantic layer must distinguish between four kinds of truth:</p>
+        <ol>
+        <li><strong>Source identity</strong></li>
+        <p>What the source library calls the icon and where it came from.</p>
+        </ol>
+        <ol>
+        <li><strong>Visual depiction</strong></li>
+        <p>What the icon appears to depict when we look at it.</p>
+        </ol>
+        <ol>
+        <li><strong>SI recommended purpose</strong></li>
+        <p>What SI recommends using the icon for in product and agent-built interfaces.</p>
+        </ol>
+        <ol>
+        <li><strong>Evidence and trust</strong></li>
+        <p>Why SI believes that recommendation and how confident we are.</p>
+        </ol>
+        <p>This distinction is the foundation of the framework.</p>
+        <hr>
+        <h2 id="design-principles">Design Principles</h2>
+        <h3 id="1-registry-first">1. Registry first</h3>
+        <p>The SI Registry record is the main source of truth. Everything else is a projection:</p>
+        <ul>
+        <li>public icon index</li>
+        <li>MCP responses</li>
+        <li>hosted search tables</li>
+        <li>SVG embedded passport metadata</li>
+        <li>compact <code>si://</code> payload</li>
+        <li>browse filters</li>
+        <li>docs copy</li>
+        </ul>
+        <h3 id="2-honest-semantics">2. Honest semantics</h3>
+        <p>The framework should never pretend that source names alone equal final truth.</p>
+        <p>Instead, every semantic record should make clear:</p>
+        <ul>
+        <li>what was inherited</li>
+        <li>what was inferred</li>
+        <li>what was recommended</li>
+        <li>what was reviewed</li>
+        </ul>
+        <h3 id="3-stable-schema-progressive-coverage">3. Stable schema, progressive coverage</h3>
+        <p>The field model should stabilize early. Coverage can grow over time.</p>
+        <h3 id="4-human-readable-and-machine-readable">4. Human-readable and machine-readable</h3>
+        <p>A builder should be able to read a record and understand it. An agent should be able to parse it without guessing.</p>
+        <h3 id="5-designed-for-future-motion-and-programmability">5. Designed for future motion and programmability</h3>
+        <p>The framework must support static icons today and richer motion, state, and programmable behavior later.</p>
+        <hr>
+        <h2 id="what-an-si-registry-record-must-answer">What an SI Registry Record Must Answer</h2>
+        <p>Every icon record should answer these questions:</p>
+        <ol>
+        <li>What icon is this?</li>
+        <li>What does it visually depict?</li>
+        <li>What does SI recommend using it for?</li>
+        <li>When should it be used?</li>
+        <li>When should it be avoided?</li>
+        <li>How strong is the supporting evidence?</li>
+        <li>How reviewed and trustworthy is the record?</li>
+        <li>Can it support motion, state, or programmable behavior?</li>
+        </ol>
+        <hr>
+        <h2 id="metadata-groups">Metadata Groups</h2>
+        <h2 id="1-identity">1. Identity</h2>
+        <p>Identity fields define the asset itself and its origin.</p>
+        <h3 id="icon-id"><code>icon_id</code></h3>
+        <p>Definition: The globally unique SI identifier for the icon record.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>gives every icon a stable handle</li>
+        <li>allows all projections to point to the same object</li>
+        <li>supports linking, versioning, and deduplication</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>lucide:shield-check</code></li>
+        <li><code>material:account_tree</code></li>
+        <li><code>si:agent-planning</code></li>
+        </ul>
+        <p>Rule for making the ID:</p>
+        <ul>
+        <li>for icons from other libraries, use <code>{source_library}:{source_name}</code></li>
+        <li>for icons made by Supericons, use <code>si:{name}</code></li>
+        <li>if MCP returns <code>id</code> and <code>library</code> as separate fields, they still need to map back to the same full ID</li>
+        <li>the current taxonomy seed already follows this same <code>library:name</code> pattern</li>
+        </ul>
+        <h3 id="source-library"><code>source_library</code></h3>
+        <p>Definition: The original library or family this icon comes from.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>preserves provenance</li>
+        <li>supports grouping and trust decisions</li>
+        <li>separates aggregated icons from SI-native icons</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>lucide</code></li>
+        <li><code>material</code></li>
+        <li><code>tabler</code></li>
+        <li><code>supericons-premium</code></li>
+        </ul>
+        <h3 id="source-name"><code>source_name</code></h3>
+        <p>Definition: The original human-facing name from the source library, if one exists.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>useful for fallback search</li>
+        <li>useful for audits and migration</li>
+        <li>useful when SI label differs from source naming</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>shield-check</code></li>
+        </ul>
+        <h3 id="style"><code>style</code></h3>
+        <p>Definition: The visual style variant of the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>many icons have outline and solid variants</li>
+        <li>future motion-capable variants will need style distinction</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>outline</code></li>
+        <li><code>solid</code></li>
+        <li><code>filled</code></li>
+        <li><code>duotone</code></li>
+        <li><code>animated</code></li>
+        </ul>
+        <h3 id="asset-kind"><code>asset_kind</code></h3>
+        <p>Definition: The technical form of the icon asset.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>rendering and export behavior differ by asset type</li>
+        <li>helps downstream systems know what transformations are valid</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>svg</code></li>
+        <li><code>font-glyph</code></li>
+        <li><code>animated-svg</code></li>
+        <li><code>composite</code></li>
+        </ul>
+        <h3 id="collection-id"><code>collection_id</code></h3>
+        <p>Definition: The SI collection, pack, or family this icon belongs to.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports merchandising</li>
+        <li>supports browse groupings</li>
+        <li>supports quality tiers and ownership logic</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>free.core.navigation</code></li>
+        <li><code>premium.ai-agentic</code></li>
+        <li><code>premium.status-feedback</code></li>
+        </ul>
+        <h3 id="is-premium"><code>is_premium</code></h3>
+        <p>Definition: Whether the icon belongs to a premium or entitlement-gated surface.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>required for pricing and entitlement logic</li>
+        <li>useful for roadmap segmentation</li>
+        </ul>
+        <p>Values:</p>
+        <ul>
+        <li><code>true</code></li>
+        <li><code>false</code></li>
+        </ul>
+        <h2 id="2-visual-depiction">2. Visual Depiction</h2>
+        <p>Visual depiction fields describe what the icon appears to show, before we assign final SI usage guidance.</p>
+        <h3 id="depicts"><code>depicts</code></h3>
+        <p>Definition: A short plain-language description of what the icon visually depicts.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>separates raw depiction from editorial recommendation</li>
+        <li>reduces over-claiming</li>
+        <li>useful for visual QA and multimodal review</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>shield with checkmark</code></li>
+        <li><code>robot head</code></li>
+        <li><code>branching node tree</code></li>
+        </ul>
+        <h3 id="visual-motifs"><code>visual_motifs</code></h3>
+        <p>Definition: Key visual elements or motifs that appear in the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>helps explain why an icon matched</li>
+        <li>helps similarity search and qualitative review</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>shield</code></li>
+        <li><code>checkmark</code></li>
+        <li><code>node graph</code></li>
+        <li><code>sparkle</code></li>
+        </ul>
+        <h3 id="visual-ambiguity"><code>visual_ambiguity</code></h3>
+        <p>Definition: A qualitative rating of how visually ambiguous the icon is without surrounding text.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>some icons are semantically obvious</li>
+        <li>others are highly context-dependent</li>
+        </ul>
+        <p>Recommended values:</p>
+        <ul>
+        <li><code>low</code></li>
+        <li><code>medium</code></li>
+        <li><code>high</code></li>
+        </ul>
+        <h3 id="visual-confusion-notes"><code>visual_confusion_notes</code></h3>
+        <p>Definition: Notes about what this icon may be confused with.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>guides <code>avoid_when</code></li>
+        <li>useful for human review and future linting</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>May be confused with generic AI branding rather than planning state.</code></li>
+        </ul>
+        <h2 id="3-semantics-core">3. Semantics Core</h2>
+        <p>These fields define SI's recommended semantic interpretation.</p>
+        <h3 id="label"><code>label</code></h3>
+        <p>Definition: The plain-language label SI wants humans and agents to use for the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>source labels are often inconsistent</li>
+        <li>SI needs a stable human-facing term</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>Agent Planning</code></li>
+        <li><code>Verified Shield</code></li>
+        <li><code>Branching Workflow</code></li>
+        </ul>
+        <h3 id="purpose"><code>purpose</code></h3>
+        <p>Definition: A one-line description of what this icon is intended to communicate.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>this is the most important semantic field</li>
+        <li>it is the anchor used by UI, search, docs, and MCP</li>
+        </ul>
+        <p>Good example:</p>
+        <ul>
+        <li><code>Show that an AI agent is currently planning its next step.</code></li>
+        </ul>
+        <p>Bad example:</p>
+        <ul>
+        <li><code>Brain icon</code></li>
+        </ul>
+        <h3 id="category"><code>category</code></h3>
+        <p>Definition: The primary semantic bucket for the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports browse, grouping, and consistency</li>
+        <li>gives a stable high-level taxonomy</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>navigation</code></li>
+        <li><code>status</code></li>
+        <li><code>security</code></li>
+        <li><code>commerce</code></li>
+        <li><code>agent-lifecycle</code></li>
+        </ul>
+        <h3 id="semantic-tags"><code>semantic_tags</code></h3>
+        <p>Definition: Main concept tags associated with the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>improves retrieval</li>
+        <li>supports future intent-based selection</li>
+        <li>helps normalize search language</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>planning</code></li>
+        <li><code>trust</code></li>
+        <li><code>warning</code></li>
+        <li><code>approval</code></li>
+        <li><code>retrieval</code></li>
+        </ul>
+        <h3 id="synonyms"><code>synonyms</code></h3>
+        <p>Definition: Alternate user or agent phrases that may be used when searching for the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>many correct queries do not match the icon label</li>
+        <li>useful for search and ranking</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>hallucination</code></li>
+        <li><code>ai drift</code></li>
+        <li><code>self hosted</code></li>
+        <li><code>vector db</code></li>
+        </ul>
+        <h3 id="state"><code>state</code></h3>
+        <p>Definition: The specific state represented by the icon, if the icon is stateful.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>many icons do not just show an object; they show a condition</li>
+        <li>future motion/state systems need this distinction</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>idle</code></li>
+        <li><code>planning</code></li>
+        <li><code>running</code></li>
+        <li><code>blocked</code></li>
+        <li><code>warning</code></li>
+        </ul>
+        <h3 id="intent"><code>intent</code></h3>
+        <p>Definition: The communication job the icon performs in a UI.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>two icons can share a category but serve different UI intentions</li>
+        <li>supports agent-driven icon selection</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>inform</code></li>
+        <li><code>warn</code></li>
+        <li><code>confirm</code></li>
+        <li><code>navigate</code></li>
+        <li><code>authorize</code></li>
+        </ul>
+        <h3 id="domain"><code>domain</code></h3>
+        <p>Definition: The product or workflow domain where the icon most naturally belongs.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>distinguishes general meaning from contextual meaning</li>
+        <li>helps avoid over-generalizing niche icons</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>ai-agents</code></li>
+        <li><code>saas</code></li>
+        <li><code>security</code></li>
+        <li><code>media</code></li>
+        <li><code>commerce</code></li>
+        </ul>
+        <h2 id="4-usage-guidance">4. Usage Guidance</h2>
+        <p>These fields express editorial judgment.</p>
+        <h3 id="use-when"><code>use_when</code></h3>
+        <p>Definition: A concise description of the situations where this icon is a good choice.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>meaning without usage guidance still leads to bad icon selection</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>Use when the system is reasoning before taking an action.</code></li>
+        </ul>
+        <h3 id="avoid-when"><code>avoid_when</code></h3>
+        <p>Definition: A concise description of when this icon should not be used.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>helps prevent misleading or noisy UI</li>
+        <li>forces SI to be explicit about ambiguity</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>Do not use for generic AI branding, settings, or completed work.</code></li>
+        </ul>
+        <h3 id="pairs-with"><code>pairs_with</code></h3>
+        <p>Definition: Icons or UI primitives that commonly work well with this icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>many real systems use icon composition</li>
+        <li>useful for future grammar and motion systems</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>progress-ring</code></li>
+        <li><code>confidence-badge</code></li>
+        <li><code>authority-marker</code></li>
+        </ul>
+        <h3 id="anti-pairs"><code>anti_pairs</code></h3>
+        <p>Definition: Pairings that usually create semantic conflict or confusion.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>prevents contradictory icon systems</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>success-check</code></li>
+        </ul>
+        <h3 id="recommended-context"><code>recommended_context</code></h3>
+        <p>Definition: The UI surfaces where this icon is especially effective.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>some icons work in a status row but not in top-level navigation</li>
+        <li>helps contextual recommendation</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>agent dashboard</code></li>
+        <li><code>activity timeline</code></li>
+        <li><code>status chip</code></li>
+        <li><code>empty state</code></li>
+        </ul>
+        <h3 id="confidence-notes"><code>confidence_notes</code></h3>
+        <p>Definition: Notes about nuance, ambiguity, or constraints in the recommendation.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>semantics are not always binary</li>
+        <li>helps future reviewers understand why a record is not fully certain</li>
+        </ul>
+        <h2 id="5-accessibility">5. Accessibility</h2>
+        <p>Accessibility fields make semantics usable beyond visuals.</p>
+        <h3 id="a11y-role"><code>a11y_role</code></h3>
+        <p>Definition: The recommended accessibility role for the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports consistent downstream rendering</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>img</code></li>
+        <li><code>status</code></li>
+        <li><code>presentation</code></li>
+        </ul>
+        <h3 id="a11y-label"><code>a11y_label</code></h3>
+        <p>Definition: The recommended accessible label.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>gives agents and UIs a safe default</li>
+        </ul>
+        <p>Example:</p>
+        <ul>
+        <li><code>Agent is planning</code></li>
+        </ul>
+        <h3 id="aria-live"><code>aria_live</code></h3>
+        <p>Definition: The recommended live-region behavior if the icon reflects changing state.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>important for dynamic status indicators</li>
+        </ul>
+        <p>Values:</p>
+        <ul>
+        <li><code>off</code></li>
+        <li><code>polite</code></li>
+        <li><code>assertive</code></li>
+        </ul>
+        <h3 id="decorative-default"><code>decorative_default</code></h3>
+        <p>Definition: Whether the icon should default to decorative treatment when used without explicit semantic meaning.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>prevents over-announcing repeated or purely decorative icons</li>
+        </ul>
+        <p>Values:</p>
+        <ul>
+        <li><code>true</code></li>
+        <li><code>false</code></li>
+        </ul>
+        <h2 id="6-dynamics">6. Dynamics</h2>
+        <p>These fields prepare SI for motion, interaction, and programmable icon behavior.</p>
+        <h3 id="supports-motion"><code>supports_motion</code></h3>
+        <p>Definition: Whether the icon has a meaningful motion-capable form.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>not every icon should animate</li>
+        <li>helps bridge static search and Motion Lab futures</li>
+        </ul>
+        <p>Values:</p>
+        <ul>
+        <li><code>true</code></li>
+        <li><code>false</code></li>
+        </ul>
+        <h3 id="motion-family"><code>motion_family</code></h3>
+        <p>Definition: The motion behavior family that best fits the icon.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>motion should communicate meaning, not just decorate</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>pulse</code></li>
+        <li><code>rotate</code></li>
+        <li><code>draw</code></li>
+        <li><code>shake</code></li>
+        <li><code>flow</code></li>
+        </ul>
+        <h3 id="interactive-capabilities"><code>interactive_capabilities</code></h3>
+        <p>Definition: Interaction modes the icon can meaningfully support.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>some icons are better as toggles, progress indicators, or state transitions</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>hover</code></li>
+        <li><code>toggle</code></li>
+        <li><code>progress</code></li>
+        <li><code>state-transition</code></li>
+        </ul>
+        <h3 id="programmable-props"><code>programmable_props</code></h3>
+        <p>Definition: Named properties that can be driven by code.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>this is the bridge toward icons as programmable UI objects</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>progressValue</code></li>
+        <li><code>confidenceLevel</code></li>
+        <li><code>statusLevel</code></li>
+        <li><code>activeState</code></li>
+        </ul>
+        <h2 id="7-evidence-and-governance">7. Evidence and Governance</h2>
+        <p>These fields express trust, maturity, and provenance.</p>
+        <h3 id="evidence-sources"><code>evidence_sources</code></h3>
+        <p>Definition: The sources used to support the semantic recommendation.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>semantics should be explainable</li>
+        <li>supports automated and human review</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+        <li><code>source-name</code></li>
+        <li><code>source-library-context</code></li>
+        <li><code>visual-inspection</code></li>
+        <li><code>search-telemetry</code></li>
+        <li><code>premium-pack-manifest</code></li>
+        <li><code>editorial-review</code></li>
+        </ul>
+        <h3 id="evidence-summary"><code>evidence_summary</code></h3>
+        <p>Definition: A short explanation of why SI recommends this purpose.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>useful for review and debugging</li>
+        <li>useful for future <code>request_semantic_icon</code> explanations</li>
+        </ul>
+        <h3 id="confidence-score"><code>confidence_score</code></h3>
+        <p>Definition: Numeric confidence in the SI recommendation.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>lets us scale coverage without pretending all records are equally strong</li>
+        <li>helps route records into auto-accept, human-review, or escalation lanes</li>
+        </ul>
+        <p>Format:</p>
+        <ul>
+        <li>decimal from <code>0.00</code> to <code>1.00</code></li>
+        </ul>
+        <h3 id="confidence-band"><code>confidence_band</code></h3>
+        <p>Definition: Human-friendly confidence grouping.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>easier for ops and editorial triage</li>
+        </ul>
+        <p>Recommended values:</p>
+        <ul>
+        <li><code>low</code></li>
+        <li><code>medium</code></li>
+        <li><code>high</code></li>
+        </ul>
+        <h3 id="review-state"><code>review_state</code></h3>
+        <p>Definition: The current quality-control state of the record.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>separates machine suggestion from approved truth</li>
+        </ul>
+        <p>Recommended values:</p>
+        <ul>
+        <li><code>ai-suggested</code></li>
+        <li><code>human-reviewed</code></li>
+        <li><code>editor-approved</code></li>
+        <li><code>deprecated</code></li>
+        </ul>
+        <h3 id="status"><code>status</code></h3>
+        <p>Definition: Lifecycle state of the registry record.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports maintenance, deprecation, and rollout</li>
+        </ul>
+        <p>Recommended values:</p>
+        <ul>
+        <li><code>draft</code></li>
+        <li><code>active</code></li>
+        <li><code>deprecated</code></li>
+        </ul>
+        <h3 id="generated-by"><code>generated_by</code></h3>
+        <p>Definition: The tool, workflow, or model that created the current draft metadata.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>useful for auditability</li>
+        <li>useful for improving the automation pipeline</li>
+        </ul>
+        <h3 id="reviewed-by"><code>reviewed_by</code></h3>
+        <p>Definition: The person or process that reviewed the record.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>needed for trust and accountability</li>
+        </ul>
+        <h3 id="version"><code>version</code></h3>
+        <p>Definition: The record version for this icon metadata entry.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports evolution and change tracking</li>
+        </ul>
+        <h3 id="registry-url"><code>registry_url</code></h3>
+        <p>Definition: The main URL of the live registry entry.</p>
+        <p>Why it exists:</p>
+        <ul>
+        <li>supports future self-describing exports</li>
+        <li>enables public verification and sync</li>
+        </ul>
+        <hr>
+        <h2 id="minimum-viable-coverage-rules">Minimum Viable Coverage Rules</h2>
+        <h2 id="required-for-every-icon-in-v1-minimum-coverage">Required for every icon in v1 minimum coverage</h2>
+        <ul>
+        <li><code>icon_id</code></li>
+        <li><code>source_library</code></li>
+        <li><code>source_name</code></li>
+        <li><code>style</code></li>
+        <li><code>asset_kind</code></li>
+        <li><code>label</code></li>
+        <li><code>depicts</code></li>
+        <li><code>purpose</code></li>
+        <li><code>category</code></li>
+        <li><code>semantic_tags</code></li>
+        <li><code>use_when</code></li>
+        <li><code>avoid_when</code></li>
+        <li><code>evidence_sources</code></li>
+        <li><code>confidence_score</code></li>
+        <li><code>review_state</code></li>
+        <li><code>status</code></li>
+        <li><code>version</code></li>
+        </ul>
+        <h2 id="optional-for-enriched-coverage">Optional for enriched coverage</h2>
+        <ul>
+        <li><code>visual_motifs</code></li>
+        <li><code>visual_ambiguity</code></li>
+        <li><code>visual_confusion_notes</code></li>
+        <li><code>synonyms</code></li>
+        <li><code>state</code></li>
+        <li><code>intent</code></li>
+        <li><code>domain</code></li>
+        <li><code>pairs_with</code></li>
+        <li><code>anti_pairs</code></li>
+        <li><code>recommended_context</code></li>
+        <li><code>confidence_notes</code></li>
+        <li><code>a11y_*</code></li>
+        <li><code>supports_motion</code></li>
+        <li><code>motion_family</code></li>
+        <li><code>interactive_capabilities</code></li>
+        <li><code>programmable_props</code></li>
+        <li><code>evidence_summary</code></li>
+        <li><code>generated_by</code></li>
+        <li><code>reviewed_by</code></li>
+        <li><code>registry_url</code></li>
+        </ul>
+        <hr>
+        <h2 id="controlled-vocabularies">Controlled Vocabularies</h2>
+        <p>Wherever possible, these fields should use controlled vocabularies:</p>
+        <ul>
+        <li><code>category</code></li>
+        <li><code>intent</code></li>
+        <li><code>domain</code></li>
+        <li><code>state</code></li>
+        <li><code>motion_family</code></li>
+        <li><code>review_state</code></li>
+        <li><code>status</code></li>
+        </ul>
+        <p>Why this matters:</p>
+        <ul>
+        <li>freeform fields become noisy quickly</li>
+        <li>controlled vocabularies create consistency across search, UI, MCP, and docs</li>
+        <li>they let us scale automation without uncontrolled drift</li>
+        </ul>
+        <p>Rule:</p>
+        <ul>
+        <li>the SI Registry spec owns the allowed values</li>
+        <li>records may only introduce new controlled values through explicit review</li>
+        </ul>
+        <hr>
+        <h2 id="how-we-decide-purpose">How We Decide Purpose</h2>
+        <h3 id="who-decides">Who decides?</h3>
+        <p>SI decides.</p>
+        <p>More precisely:</p>
+        <ul>
+        <li>source libraries provide raw material</li>
+        <li>automation proposes</li>
+        <li>visual inspection reviews depiction</li>
+        <li>telemetry improves retrieval confidence</li>
+        <li>SI editorial logic publishes the recommendation</li>
+        </ul>
+        <h3 id="what-is-enough-evidence">What is enough evidence?</h3>
+        <p>No single signal is enough on its own.</p>
+        <h4 id="name-and-id">Name and id</h4>
+        <p>Good for:</p>
+        <ul>
+        <li>first-pass inference</li>
+        <li>lexical retrieval</li>
+        <li>provenance</li>
+        </ul>
+        <p>Not enough for:</p>
+        <ul>
+        <li>final recommended purpose</li>
+        <li><code>avoid_when</code></li>
+        <li>ambiguity assessment</li>
+        </ul>
+        <h4 id="synonyms-and-search-hits">Synonyms and search hits</h4>
+        <p>Good for:</p>
+        <ul>
+        <li>proving retrieval relevance</li>
+        <li>identifying user language</li>
+        <li>ranking improvements</li>
+        </ul>
+        <p>Not enough for:</p>
+        <ul>
+        <li>final semantic truth</li>
+        </ul>
+        <h4 id="visual-inspection">Visual inspection</h4>
+        <p>Good for:</p>
+        <ul>
+        <li>understanding depiction</li>
+        <li>finding ambiguity</li>
+        <li>catching misleading names</li>
+        </ul>
+        <p>Not enough for:</p>
+        <ul>
+        <li>final UI recommendation without context</li>
+        </ul>
+        <h4 id="editorial-recommendation">Editorial recommendation</h4>
+        <p>Needed for:</p>
+        <ul>
+        <li>final <code>purpose</code></li>
+        <li>final <code>use_when</code></li>
+        <li>final <code>avoid_when</code></li>
+        </ul>
+        <p>This is why the framework carries evidence and confidence instead of pretending certainty.</p>
+        <hr>
+        <h2 id="recommended-tagging-workflow">Recommended Tagging Workflow</h2>
+        <ol>
+        <li>Ingest source identity.</li>
+        <li>Generate lexical semantic suggestions from names, ids, and aliases.</li>
+        <li>Run visual inspection to describe depiction and ambiguity.</li>
+        <li>Merge contextual hints from pack membership, telemetry, and sibling icons.</li>
+        <li>Produce a draft SI recommendation.</li>
+        <li>Assign confidence.</li>
+        <li>Route low-confidence or high-value records to review.</li>
+        <li>Publish a registry record.</li>
+        </ol>
+        <hr>
+        <h2 id="example-record">Example Record</h2>
+        <pre><code class="language-json">
+        {
+        
+          "icon_id": "si:agent-planning",
+        
+          "source_library": "supericons-premium",
+        
+          "source_name": "agent-planning",
+        
+          "style": "animated",
+        
+          "asset_kind": "animated-svg",
+        
+          "collection_id": "premium.ai-agentic",
+        
+          "is_premium": true,
+        
+        
+        
+          "depicts": "robot head with a focused planning motif",
+        
+          "visual_motifs": ["robot", "spark", "focus"],
+        
+          "visual_ambiguity": "medium",
+        
+          "visual_confusion_notes": "Could be read as generic AI without nearby text.",
+        
+        
+        
+          "label": "Agent Planning",
+        
+          "purpose": "Show that an AI agent is currently planning its next step.",
+        
+          "category": "agent-lifecycle",
+        
+          "semantic_tags": ["planning", "reasoning", "deliberation", "pre-execution"],
+        
+          "synonyms": ["thinking agent", "agent reasoning", "planning state"],
+        
+          "state": "planning",
+        
+          "intent": "inform",
+        
+          "domain": "ai-agents",
+        
+        
+        
+          "use_when": "Use when the system is reasoning before taking action.",
+        
+          "avoid_when": "Do not use for generic AI branding, settings, or completed work.",
+        
+          "pairs_with": ["confidence-badge", "progress-ring"],
+        
+          "anti_pairs": ["success-check"],
+        
+          "recommended_context": ["agent dashboards", "activity timeline", "status chip"],
+        
+          "confidence_notes": "Best when paired with nearby text in high-stakes workflows.",
+        
+        
+        
+          "a11y_role": "status",
+        
+          "a11y_label": "Agent is planning",
+        
+          "aria_live": "polite",
+        
+          "decorative_default": false,
+        
+        
+        
+          "supports_motion": true,
+        
+          "motion_family": "pulse",
+        
+          "interactive_capabilities": ["hover", "state-transition"],
+        
+          "programmable_props": ["confidenceLevel"],
+        
+        
+        
+          "evidence_sources": ["source-name", "visual-inspection", "premium-pack-manifest", "editorial-review"],
+        
+          "evidence_summary": "Name, pack context, and visual reading all support a planning-state recommendation.",
+        
+          "confidence_score": 0.89,
+        
+          "confidence_band": "high",
+        
+          "review_state": "editor-approved",
+        
+          "status": "active",
+        
+          "generated_by": "si-bulk-tagger-v1",
+        
+          "reviewed_by": "curlymolelabs-editorial",
+        
+          "version": "1.0.0",
+        
+          "registry_url": "https://supericons.dev/registry/icons/si:agent-planning"
+        
+        }
+        
+        </code></pre>
+        <hr>
+        <h2 id="projections">Projections</h2>
+        <p>The main registry record should drive:</p>
+        <ul>
+        <li>public icon indexes</li>
+        <li>MCP tool responses</li>
+        <li>hosted search manifest rows</li>
+        <li>hosted search feature inputs</li>
+        <li>SVG passport embedding</li>
+        <li>compact <code>si://</code> transport</li>
+        <li>browse chips and future semantic filters</li>
+        <li>docs explanations and usage notes</li>
+        </ul>
+        <p>The record should not be duplicated manually across these surfaces.</p>
+        <p>Compatibility rule:</p>
+        <ul>
+        <li>if two parts of the product point to the same icon, they should resolve to the same <code>icon_id</code></li>
+        <li>different output shapes are okay, but the shared ID rule is not optional</li>
+        </ul>
+        <hr>
+        <h2 id="final-recommendation">Final Recommendation</h2>
+        <p>Adopt SI Semantic Metadata v1 as the permanent semantic contract for Supericons.</p>
+        <p>The most important product decision in this spec is not the tag list. It is the truth model:</p>
+        <ul>
+        <li>source identity is not the same thing as semantic purpose</li>
+        <li>visual depiction is not the same thing as editorial recommendation</li>
+        <li>search success is evidence, not ground truth</li>
+        <li>confidence and review state are first-class fields, not afterthoughts</li>
+        </ul>
+        <p>That gives SI a framework strong enough to scale across aggregated icons, premium packs, native Supericons assets, search, MCP, and future motion systems without pretending certainty where certainty does not exist.</p>
+      </article>
+    </div>
+  </body>
+</html>

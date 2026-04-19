@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "SuperIcons: 60K+ free icons, AI search, variable font axes, component export, container preview.",
+  "description": "SuperIcons: 20,000+ free icons, AI search, variable font axes, component export, container preview.",
   "scripts": {
     "dev": "vite",
     "build:material-export-manifest": "node scripts/build-material-export-manifest.js",
     "build:icon-taxonomy-seed": "node scripts/export-icon-taxonomy-seed.mjs",
+    "build:product-facts": "node scripts/build-product-facts.mjs",
     "build:admin-html": "node scripts/build-admin-html.mjs",
     "build:sanitize-public-pack-metadata": "node scripts/sanitize-public-pack-metadata.js",
     "build:motion-lab-mcp-artifacts": "node scripts/build-motion-lab-mcp-artifacts.mjs",
@@ -20,6 +21,10 @@
     "verify:motion-lab-rate-limits": "node scripts/verify-motion-lab-rate-limits.mjs",
     "verify:motion-lab-presets": "node scripts/verify-motion-lab-preset-parity.mjs",
     "verify:motion-lab-agent-metadata": "node scripts/verify-motion-lab-agent-metadata.mjs",
+    "verify:docs-site-render": "node scripts/verify-docs-site-render.mjs",
+    "verify:product-facts": "node scripts/verify-product-facts.mjs",
+    "verify:store-shell-contract": "node scripts/verify-store-shell-contract.mjs",
+    "verify:view-route-policy": "node scripts/verify-view-route-policy.mjs",
     "verify:icon-grid-behavior": "node scripts/verify-icon-grid-behavior.mjs",
     "verify:search-query-fixtures": "node scripts/verify-search-query-fixtures.mjs",
     "verify:search-catalog-sync": "node scripts/verify-search-catalog-sync.mjs",
@@ -32,7 +37,7 @@
     "build:bundles": "node scripts/build-collection-bundles.js",
     "converter:proof-service": "node tools/converter-proof-service/server.mjs",
     "converter:proof-smoke": "node tools/converter-proof-service/smoke-client.mjs",
-    "build": "npm run build:admin-html && npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:motion-lab-mcp-artifacts && npm run build:bundles && npm run verify:motion-lab-presets && npm run verify:motion-lab-agent-metadata && vite build && node scripts/cleanup-dist-admin-artifacts.mjs",
+    "build": "npm run build:product-facts && npm run verify:product-facts && npm run build:admin-html && npm run build:material-export-manifest && npm run build:sanitize-public-pack-metadata && npm run build:motion-lab-mcp-artifacts && npm run build:bundles && npm run verify:motion-lab-presets && npm run verify:motion-lab-agent-metadata && vite build && node scripts/cleanup-dist-admin-artifacts.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {
