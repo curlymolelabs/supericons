@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-C Plan: Purpose-Chip Semantic Pilot</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f3eb;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d7cfc0;
+      --accent: #0f766e;
+      --accent-soft: #dff5f1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+    h1 { font-size: 2.4rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 22px;
+    }
+    p, li { font-size: 1.02rem; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+    }
+    ul { padding-left: 22px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">P1-C Implementation Plan</span>
+      <h1>Run the first semantic pilot on the 3 purpose-chip sets</h1>
+      <p>This phase uses the three icon groups already behind the purpose pill chip filter as the first semantic operations pilot. That gives us a clean test set of 150 icons: 50 for AI &amp; Agents, 50 for Navigation &amp; Wayfinding, and 50 for Status &amp; Feedback.</p>
+      <p>The plan allows a lighter first-pass reviewer only for simple visual confirmation, while stronger review is reserved for difficult cases.</p>
+    </section>
+
+    <section class="card">
+      <h2>Why This Is a Good Pilot</h2>
+      <ul>
+        <li>the icons are already curated</li>
+        <li>the sets already matter to product thinking</li>
+        <li>the total size is manageable at 150 icons</li>
+        <li>we can test automation without opening the whole free icon catalog</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Main Rule</h2>
+      <p>This pilot should create draft candidates, visual-review inputs, and review queues. It should not automatically publish all generated results into the live public registry.</p>
+    </section>
+
+    <section class="card">
+      <h2>Model Choice For This Pilot</h2>
+      <ul>
+        <li>Use deterministic rules first to create a draft.</li>
+        <li>Use a lighter first-pass reviewer only when it adds value.</li>
+        <li>Only send hard or conflicting cases to stronger review later.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Pilot Scope</h2>
+      <div class="grid">
+        <div>
+          <h3>AI &amp; Agents</h3>
+          <p>50 icons</p>
+        </div>
+        <div>
+          <h3>Navigation &amp; Wayfinding</h3>
+          <p>50 icons</p>
+        </div>
+        <div>
+          <h3>Status &amp; Feedback</h3>
+          <p>50 icons</p>
+        </div>
+      </div>
+      <p>Total: 150 icons.</p>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Builds</h2>
+      <ul>
+        <li>a generated worklist for the 150 pilot icons</li>
+        <li>draft semantic records for each icon</li>
+        <li>visual-review inputs for each icon</li>
+        <li>a review queue based on confidence and ambiguity</li>
+        <li>an approved-record import file separate from raw candidates</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Implementation Steps</h2>
+      <h3>1. Freeze the pilot worklist</h3>
+      <p>Generate the list directly from the current purpose-chip seed so the pilot stays tied to the real product experiment.</p>
+
+      <h3>2. Add lane defaults</h3>
+      <p>Create one simple mapping file for the three lanes so each group has clear default category, domain, and intent rules.</p>
+
+      <h3>3. Generate draft semantic records</h3>
+      <p>Use names, ids, source libraries, and lane defaults to create a first semantic draft for each of the 150 icons.</p>
+
+      <h3>4. Prepare visual-review inputs</h3>
+      <p>Build a file that pairs each icon with its SVG and current draft meaning so visual review can happen in a structured way later.</p>
+
+      <h3>5. Route records into review queues</h3>
+      <p>Group draft records into lanes like high confidence, needs review, ambiguous, and stronger-review-needed, and make those queues explicit in a file.</p>
+
+      <h3>6. Separate approved records from draft candidates</h3>
+      <p>Approved records should have their own import file. Draft candidates should not be treated as live registry records.</p>
+
+      <h3>7. Add checks</h3>
+      <p>Verify the 150-icon count, the 50/50/50 split, and that approved imports are a clean subset of the pilot records.</p>
+    </section>
+
+    <section class="card">
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>all 150 pilot icons have draft semantic records</li>
+        <li>all 150 pilot icons have visual-review inputs</li>
+        <li>review queues exist and are easy to inspect</li>
+        <li>approved imports are cleanly separated from drafts</li>
+        <li>the full build still passes</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Semantic Usefulness Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --panel: #fffdf8;
+      --ink: #1f1a14;
+      --muted: #6d6257;
+      --line: #ddd2c3;
+      --accent: #8c5727;
+      --soft: #f3e4d2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf8f1 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    .hero, .query-card, .summary {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(31, 26, 20, 0.06);
+      margin-bottom: 20px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fffaf2;
+    }
+    .card strong {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin-top: 6px;
+    }
+    .query-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+    }
+    .status {
+      background: #f4efe6;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .candidate-list {
+      margin: 14px 0 0;
+      padding-left: 20px;
+    }
+    .candidate-list li {
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #efe2cf;
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+    .pill.muted {
+      background: #f0ece5;
+      color: var(--muted);
+    }
+    .subtle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+    p, li { color: var(--muted); }
+    strong, h1, h2 { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Checkpoint</p>
+      <h1>Does the new icon meaning data help agents?</h1>
+      <p>This report checks a small set of real icon-picking prompts. It compares the basic search result with a semantic-augmented result list, then checks whether the meaning data helps pick the best icon from that improved shortlist.</p>
+      <p><strong>What this means:</strong> the reviewed meaning records are now being used to pull better candidates into the result set, not just to explain icons after they appear.</p>
+    </section>
+
+    <section class="summary">
+      <h2>Headline Result</h2>
+      <p><strong>Baseline first-result accuracy:</strong> 1 of 12</p>
+      <p><strong>Semantic-augmented first-result accuracy:</strong> 11 of 12</p>
+      <p><strong>Semantic-assisted pick accuracy:</strong> 11 of 12</p>
+      <p><strong>Lift vs baseline:</strong> +10</p>
+      <div class="grid">
+        
+          <div class="card">
+            <div>Queries checked</div>
+            <strong>12</strong>
+          </div>
+        
+          <div class="card">
+            <div>Baseline first-result hits</div>
+            <strong>1 / 12</strong>
+          </div>
+        
+          <div class="card">
+            <div>Augmented first-result hits</div>
+            <strong>11 / 12</strong>
+          </div>
+        
+          <div class="card">
+            <div>Semantic-assisted hits</div>
+            <strong>11 / 12</strong>
+          </div>
+        
+          <div class="card">
+            <div>Queries with semantic coverage</div>
+            <strong>12 / 12</strong>
+          </div>
+        
+      </div>
+    </section>
+
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>assistant reply</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> lucide:bot-message-square</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> lucide:bot-message-square</p>
+        <p><strong>Semantic-assisted pick:</strong> lucide:bot-message-square</p>
+        <p><strong>Why this query matters:</strong> Agent chat messages need a message-specific AI icon, not a generic robot.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 2 of 2 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>lucide:bot-message-square</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Assistant Message</div>
+      </li>
+    
+      <li>
+        <strong>lucide:bot</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Bot</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>ai reasoning</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> lucide:brain-circuit</p>
+        <p><strong>Baseline first result:</strong> lucide:brain</p>
+        <p><strong>Semantic-augmented first result:</strong> lucide:brain-circuit</p>
+        <p><strong>Semantic-assisted pick:</strong> lucide:brain-circuit</p>
+        <p><strong>Why this query matters:</strong> This should favor intelligence or reasoning, not a generic settings or hardware symbol.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 6 of 8 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>lucide:brain-circuit</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">AI Reasoning</div>
+      </li>
+    
+      <li>
+        <strong>lucide:brain</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Brain</div>
+      </li>
+    
+      <li>
+        <strong>tabler:circle-x</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Failed Or Rejected</div>
+      </li>
+    
+      <li>
+        <strong>lucide:bot-message-square</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Assistant Message</div>
+      </li>
+    
+      <li>
+        <strong>lucide:bot</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Bot</div>
+      </li>
+    
+      <li>
+        <strong>material:home</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Go Home</div>
+      </li>
+    
+      <li>
+        <strong>iconoir:emoji-think-left</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">emoji think left</div>
+      </li>
+    
+      <li>
+        <strong>iconoir:emoji-think-right</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">emoji think right</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>workflow orchestration</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> lucide:workflow</p>
+        <p><strong>Baseline first result:</strong> material:automation</p>
+        <p><strong>Semantic-augmented first result:</strong> lucide:workflow</p>
+        <p><strong>Semantic-assisted pick:</strong> lucide:workflow</p>
+        <p><strong>Why this query matters:</strong> The icon should describe a linked automation flow.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 1 of 8 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>lucide:workflow</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Workflow</div>
+      </li>
+    
+      <li>
+        <strong>material:automation</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">automation</div>
+      </li>
+    
+      <li>
+        <strong>material:build</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">build</div>
+      </li>
+    
+      <li>
+        <strong>material:build_circle</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">build circle</div>
+      </li>
+    
+      <li>
+        <strong>material:directions_run</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">directions run</div>
+      </li>
+    
+      <li>
+        <strong>material:flowchart</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">flowchart</div>
+      </li>
+    
+      <li>
+        <strong>material:flowsheet</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">flowsheet</div>
+      </li>
+    
+      <li>
+        <strong>material:format_text_overflow</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">format text overflow</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>code search</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> lucide:search-code</p>
+        <p><strong>Baseline first result:</strong> lucide:search-code</p>
+        <p><strong>Semantic-augmented first result:</strong> lucide:search-code</p>
+        <p><strong>Semantic-assisted pick:</strong> lucide:search-code</p>
+        <p><strong>Why this query matters:</strong> The result should reflect source inspection rather than a generic search icon.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 4 of 5 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>lucide:search-code</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Search Code</div>
+      </li>
+    
+      <li>
+        <strong>lucide:code-xml</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Code</div>
+      </li>
+    
+      <li>
+        <strong>material:search</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Search</div>
+      </li>
+    
+      <li>
+        <strong>lucide:scan-search</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Scan And Search</div>
+      </li>
+    
+      <li>
+        <strong>tabler:map-pin-search</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">map pin search</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>trusted protection</h2>
+          </div>
+          <div class="status">Still unresolved</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:shield-check</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> lucide:shield-check</p>
+        <p><strong>Semantic-assisted pick:</strong> lucide:shield-check</p>
+        <p><strong>Why this query matters:</strong> Trust plus protection should resolve to a security verification icon.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 3 of 3 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>lucide:shield-check</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Shield Check</div>
+      </li>
+    
+      <li>
+        <strong>tabler:shield-check</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Trusted And Protected</div>
+      </li>
+    
+      <li>
+        <strong>heroicons:shield-check</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Shield Check</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>blocked action</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:ban</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> tabler:ban</p>
+        <p><strong>Semantic-assisted pick:</strong> tabler:ban</p>
+        <p><strong>Why this query matters:</strong> The icon should communicate prohibition, not generic failure.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 3 of 3 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>tabler:ban</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Blocked</div>
+      </li>
+    
+      <li>
+        <strong>tabler:send</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Send</div>
+      </li>
+    
+      <li>
+        <strong>tabler:trash</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Delete</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>delete item</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:trash</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> tabler:trash</p>
+        <p><strong>Semantic-assisted pick:</strong> tabler:trash</p>
+        <p><strong>Why this query matters:</strong> This is a destructive remove action, not a close or hide action.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 1 of 1 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>tabler:trash</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Delete</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>refresh results</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:refresh</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> tabler:refresh</p>
+        <p><strong>Semantic-assisted pick:</strong> tabler:refresh</p>
+        <p><strong>Why this query matters:</strong> Reloading current content is different from retrying after failure.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 2 of 2 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>tabler:refresh</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Refresh</div>
+      </li>
+    
+      <li>
+        <strong>tabler:filter</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Filter</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>enabled setting</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:toggle-right</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> tabler:toggle-right</p>
+        <p><strong>Semantic-assisted pick:</strong> tabler:toggle-right</p>
+        <p><strong>Why this query matters:</strong> This should show a setting in the on state.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 2 of 2 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>tabler:toggle-right</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Enabled Toggle</div>
+      </li>
+    
+      <li>
+        <strong>material:settings</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Settings</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>open menu</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> material:menu</p>
+        <p><strong>Baseline first result:</strong> material:menu_open</p>
+        <p><strong>Semantic-augmented first result:</strong> material:menu</p>
+        <p><strong>Semantic-assisted pick:</strong> material:menu</p>
+        <p><strong>Why this query matters:</strong> The icon should mean navigation menu or drawer, not a content list.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 1 of 8 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>material:menu</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Open Menu</div>
+      </li>
+    
+      <li>
+        <strong>material:menu_open</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">menu open</div>
+      </li>
+    
+      <li>
+        <strong>material:arrow_menu_open</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">arrow menu open</div>
+      </li>
+    
+      <li>
+        <strong>material:dropdown</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">dropdown</div>
+      </li>
+    
+      <li>
+        <strong>material:open_in_browser</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">open in browser</div>
+      </li>
+    
+      <li>
+        <strong>lucide:sidebar-open</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">sidebar open</div>
+      </li>
+    
+      <li>
+        <strong>tabler:layout-sidebar-left-expand</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">layout sidebar left expand</div>
+      </li>
+    
+      <li>
+        <strong>tabler:layout-sidebar-right-expand</strong>
+        <span class="pill muted">no meaning data</span>
+        <div class="subtle">layout sidebar right expand</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>back button</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> material:arrow_back</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> material:arrow_back</p>
+        <p><strong>Semantic-assisted pick:</strong> material:arrow_back</p>
+        <p><strong>Why this query matters:</strong> The icon should describe back navigation rather than reply or undo.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 1 of 1 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>material:arrow_back</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Back</div>
+      </li>
+    </ul>
+      </section>
+    
+      <section class="query-card">
+        <div class="query-head">
+          <div>
+            <p class="eyebrow">Query</p>
+            <h2>filter results</h2>
+          </div>
+          <div class="status">Semantic pick matched expected icon</div>
+        </div>
+        <p><strong>Expected icon:</strong> tabler:filter</p>
+        <p><strong>Baseline first result:</strong> none</p>
+        <p><strong>Semantic-augmented first result:</strong> tabler:filter</p>
+        <p><strong>Semantic-assisted pick:</strong> tabler:filter</p>
+        <p><strong>Why this query matters:</strong> The user needs refinement controls, not analytics funnel visuals.</p>
+      <p><strong>Semantic coverage in augmented top 8:</strong> 1 of 1 candidates</p>
+        <ul class="candidate-list">
+      <li>
+        <strong>tabler:filter</strong>
+        <span class="pill">meaning data available</span>
+        <div class="subtle">Filter</div>
+      </li>
+    </ul>
+      </section>
+    
+  </main>
+</body>
+</html>

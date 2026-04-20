@@ -1,0 +1,211 @@
+[
+  {
+    "icon_id": "lucide:shield-check",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "shield-check",
+    "label": "Shield Check",
+    "purpose": "Show verified protection, trusted status, or a confirmed security safeguard.",
+    "category": "security",
+    "semantic_tags": [
+      "security",
+      "verified",
+      "trusted",
+      "protection",
+      "safe"
+    ],
+    "use_when": "Use when something has passed a trust or security check.",
+    "avoid_when": "Do not use for generic success states unrelated to protection, trust, or verification.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shield outline containing a checkmark.",
+    "intent": "confirm",
+    "domain": "security",
+    "state": "verified",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.9,
+    "editorialNotes": "Public pilot record. Prefer this over a plain success icon when trust language matters.",
+    "internalSignals": {
+      "priority": "pilot",
+      "notes": [
+        "good public example",
+        "tests internal field stripping in public preview"
+      ]
+    }
+  },
+  {
+    "icon_id": "heroicons:shield-check",
+    "source_group": "free",
+    "source_library": "heroicons",
+    "source_name": "shield-check",
+    "label": "Shield Check",
+    "purpose": "Show a confirmed trust, protection, or verification state.",
+    "category": "security",
+    "semantic_tags": [
+      "security",
+      "verified",
+      "trust",
+      "protection",
+      "safe"
+    ],
+    "use_when": "Use when a trust or safety check has passed and a public-safe icon is needed.",
+    "avoid_when": "Do not use for generic success feedback that has nothing to do with security or trust.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shield outline with a checkmark.",
+    "intent": "confirm",
+    "domain": "security",
+    "state": "verified",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.88
+  },
+  {
+    "icon_id": "lucide:lock",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "lock",
+    "label": "Lock",
+    "purpose": "Show a locked, protected, or access-controlled state.",
+    "category": "security",
+    "semantic_tags": [
+      "lock",
+      "secure",
+      "protected",
+      "restricted",
+      "access"
+    ],
+    "use_when": "Use when content, actions, or settings are locked or require protection.",
+    "avoid_when": "Do not use for generic privacy copy unless the interface truly represents restricted access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A closed padlock.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.87
+  },
+  {
+    "icon_id": "material:lock",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "lock",
+    "label": "Lock",
+    "purpose": "Show locked access, protection, or a secured setting in a simpler system style.",
+    "category": "security",
+    "semantic_tags": [
+      "lock",
+      "secure",
+      "protected",
+      "restricted",
+      "access"
+    ],
+    "use_when": "Use when the UI needs a simple lock icon for restricted access or protection.",
+    "avoid_when": "Do not use when a stronger trust or verification meaning is required.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A minimal lock symbol.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.84
+  },
+  {
+    "icon_id": "lucide:bot",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "bot",
+    "label": "Bot",
+    "purpose": "Show an automated agent, assistant, or bot presence.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "bot",
+      "agent",
+      "assistant",
+      "automation",
+      "ai"
+    ],
+    "use_when": "Use when the interface needs to show an automated agent or assistant rather than a human actor.",
+    "avoid_when": "Do not use when the system represents a human support person or a generic app mascot.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A simple robot figure.",
+    "intent": "inform",
+    "domain": "ai_agents",
+    "state": "active",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.89
+  },
+  {
+    "icon_id": "lucide:brain",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "brain",
+    "label": "Brain",
+    "purpose": "Show reasoning, thinking, or model cognition in AI-related product flows.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "thinking",
+      "reasoning",
+      "cognition",
+      "ai",
+      "model"
+    ],
+    "use_when": "Use when the interface needs to suggest reasoning, thinking, or model cognition.",
+    "avoid_when": "Do not use as a generic AI logo if the flow needs a more specific agent or state icon.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A stylized brain shape.",
+    "intent": "inform",
+    "domain": "ai_agents",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "confidence": 0.83
+  }
+]

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-M Visual Review Batch 01 Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6470;
+      --accent: #9a3412;
+      --border: #e7dccb;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-M Visual Review Batch 01 Plan</h1>
+      <p class="muted">This step handles the 19 icons that already have real visual payloads and still need a proper visual judgment before approval.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Review the 19 icons in the current visual-review queue, approve the ones that clearly fit, and keep the rest in the right hold or draft bucket.</p>
+    </section>
+
+    <section>
+      <h2>Why this matters</h2>
+      <p>These icons are the next best batch because they already have renderable SVGs. That means they can be judged properly now, instead of waiting behind the larger text-only queue.</p>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Build one visual-review batch for the current 19 icons.</li>
+        <li>Create a contact sheet for visual checking.</li>
+        <li>Write reviewed records for the icons that hold up.</li>
+        <li>Update the promotion path with approvals, holds, or reviewed drafts.</li>
+        <li>Rebuild the approval and coverage summaries.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>What this step does not do</h2>
+      <ul>
+        <li>It does not solve the 68 text-review icons yet.</li>
+        <li>It does not reopen the older hold queue yet.</li>
+        <li>It does not force broad or unclear icons into approval.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <p>The approved set should grow again, the visual-review queue should get much smaller, and the remaining unresolved work should mostly be the text-only slice.</p>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run build:purpose-chip-visual-review-batch</code></li>
+        <li><code>npm run build:purpose-chip-contact-sheet -- visual-review-batch-01</code></li>
+        <li><code>npm run build:purpose-chip-approved-records</code></li>
+        <li><code>npm run verify:purpose-chip-approved-records</code></li>
+        <li><code>npm run build:purpose-chip-scale-up</code></li>
+        <li><code>npm run verify:purpose-chip-scale-up</code></li>
+        <li><code>npm run verify:si-registry</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

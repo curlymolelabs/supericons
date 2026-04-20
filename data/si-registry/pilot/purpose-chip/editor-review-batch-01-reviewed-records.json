@@ -1,0 +1,897 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "editor-review-batch-01",
+  "reviewed_records": [
+    {
+      "icon_id": "lucide:file-search",
+      "source_library": "lucide",
+      "source_name": "file-search",
+      "label": "File Search",
+      "depicts": "A search-focused symbol showing structured or scoped search.",
+      "purpose": "Show search across files or code assets.",
+      "category": "search_discovery",
+      "intent": "discover",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "file search",
+        "search code",
+        "lookup file",
+        "developer search",
+        "search"
+      ],
+      "synonyms": [
+        "find file",
+        "search files",
+        "code search",
+        "developer lookup"
+      ],
+      "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+      "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:folder-search",
+      "source_library": "lucide",
+      "source_name": "folder-search",
+      "label": "Folder Search",
+      "depicts": "A search-focused symbol showing structured or scoped search.",
+      "purpose": "Show search across folders, directories, or grouped content.",
+      "category": "search_discovery",
+      "intent": "discover",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "folder search",
+        "directory search",
+        "find folder",
+        "browse lookup",
+        "search"
+      ],
+      "synonyms": [
+        "find folder",
+        "search directories",
+        "folder lookup",
+        "directory search"
+      ],
+      "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+      "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:scan-eye",
+      "source_library": "lucide",
+      "source_name": "scan-eye",
+      "label": "Visual Scan",
+      "depicts": "An eye and scan mark showing inspection or visual scanning.",
+      "purpose": "Show visual scanning, inspection, or a focused detection pass.",
+      "category": "search_discovery",
+      "intent": "discover",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "scan",
+        "inspect",
+        "detect",
+        "visual review",
+        "observation"
+      ],
+      "synonyms": [
+        "visual scan",
+        "inspect view",
+        "scan pass",
+        "observe"
+      ],
+      "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+      "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:server-cog",
+      "source_library": "lucide",
+      "source_name": "server-cog",
+      "label": "Server Control",
+      "depicts": "A server with a control gear.",
+      "purpose": "Show server-side control, configuration, or backend operation.",
+      "category": "systems_architecture",
+      "intent": "configure",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "server",
+        "backend control",
+        "server config",
+        "operations",
+        "backend"
+      ],
+      "synonyms": [
+        "server settings",
+        "backend control",
+        "server operation",
+        "server management"
+      ],
+      "use_when": "Use when the interface refers to technical structure, backend controls, or typed data definitions.",
+      "avoid_when": "Do not use for user-facing settings or simple forms when the meaning is specifically technical structure.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:cloud-check",
+      "source_library": "tabler",
+      "source_name": "cloud-check",
+      "label": "Cloud Synced",
+      "depicts": "A cloud with a check mark showing successful cloud state.",
+      "purpose": "Show that content is synced, backed up, or safely stored in the cloud.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "cloud synced",
+        "backed up",
+        "stored",
+        "sync success",
+        "cloud check"
+      ],
+      "synonyms": [
+        "cloud backup complete",
+        "synced to cloud",
+        "stored online",
+        "cloud saved"
+      ],
+      "use_when": "Use when the interface confirms successful cloud sync, backup, or safe storage.",
+      "avoid_when": "Do not use for generic internet connection when the meaning is specifically a good cloud state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:help-circle",
+      "source_library": "tabler",
+      "source_name": "help-circle",
+      "label": "Help",
+      "depicts": "A circled help symbol.",
+      "purpose": "Show help, guidance, or a place to get assistance.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "help",
+        "guidance",
+        "support",
+        "question",
+        "assistance"
+      ],
+      "synonyms": [
+        "help center",
+        "need help",
+        "guidance",
+        "assistance"
+      ],
+      "use_when": "Use when the interface points to help, assistance, or guidance.",
+      "avoid_when": "Do not use for generic information when the meaning is specifically help or support.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:info-circle",
+      "source_library": "tabler",
+      "source_name": "info-circle",
+      "label": "Information",
+      "depicts": "A circled information symbol.",
+      "purpose": "Show helpful information, extra context, or a neutral informational state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "information",
+        "info",
+        "context",
+        "details",
+        "neutral state"
+      ],
+      "synonyms": [
+        "info",
+        "more information",
+        "context",
+        "details"
+      ],
+      "use_when": "Use when the interface presents neutral information, extra context, or helper details.",
+      "avoid_when": "Do not use for warnings, errors, or required actions when the meaning is not neutral information.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:mail-check",
+      "source_library": "tabler",
+      "source_name": "mail-check",
+      "label": "Mail Complete",
+      "depicts": "Mail Complete shown with a completion check mark.",
+      "purpose": "Show a completed or confirmed mail state.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "complete",
+        "confirmed",
+        "checked",
+        "done",
+        "mail"
+      ],
+      "synonyms": [
+        "mail done",
+        "completed",
+        "confirmed",
+        "checked state"
+      ],
+      "use_when": "Use when the interface shows that a mail action or object is complete or confirmed.",
+      "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:message-check",
+      "source_library": "tabler",
+      "source_name": "message-check",
+      "label": "Message Complete",
+      "depicts": "Message Complete shown with a completion check mark.",
+      "purpose": "Show a completed or confirmed message state.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "complete",
+        "confirmed",
+        "checked",
+        "done",
+        "message"
+      ],
+      "synonyms": [
+        "message done",
+        "completed",
+        "confirmed",
+        "checked state"
+      ],
+      "use_when": "Use when the interface shows that a message action or object is complete or confirmed.",
+      "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:progress-check",
+      "source_library": "tabler",
+      "source_name": "progress-check",
+      "label": "Completed Progress",
+      "depicts": "A progress or task indicator with a completion check.",
+      "purpose": "Show progress that has completed or a task that finished successfully.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "completed",
+        "progress done",
+        "finished task",
+        "success",
+        "check"
+      ],
+      "synonyms": [
+        "completed progress",
+        "task complete",
+        "finished",
+        "done state"
+      ],
+      "use_when": "Use when the interface confirms that a progress step or task has completed.",
+      "avoid_when": "Do not use for simple success badges when the meaning is not tied to progress or completion.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:bell",
+      "source_library": "tabler",
+      "source_name": "bell",
+      "label": "Notifications",
+      "depicts": "A bell symbol used for alerts and notifications.",
+      "purpose": "Show notifications, alerts, or items needing attention.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "notifications",
+        "alerts",
+        "attention",
+        "updates",
+        "bell"
+      ],
+      "synonyms": [
+        "alerts",
+        "notification center",
+        "updates",
+        "attention needed"
+      ],
+      "use_when": "Use when the interface points to notifications, alert feeds, or items needing attention.",
+      "avoid_when": "Do not use for alarms or warnings when the meaning is specifically app notifications.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:clipboard-check",
+      "source_library": "tabler",
+      "source_name": "clipboard-check",
+      "label": "Clipboard Complete",
+      "depicts": "Clipboard Complete shown with a completion check mark.",
+      "purpose": "Show a completed or confirmed clipboard state.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "complete",
+        "confirmed",
+        "checked",
+        "done",
+        "clipboard"
+      ],
+      "synonyms": [
+        "clipboard done",
+        "completed",
+        "confirmed",
+        "checked state"
+      ],
+      "use_when": "Use when the interface shows that a clipboard action or object is complete or confirmed.",
+      "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:clock",
+      "source_library": "tabler",
+      "source_name": "clock",
+      "label": "Time Pending",
+      "depicts": "A clock face used for time or waiting.",
+      "purpose": "Show time-based waiting, scheduled status, or a pending state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "time",
+        "pending",
+        "scheduled",
+        "waiting",
+        "clock"
+      ],
+      "synonyms": [
+        "pending time",
+        "scheduled",
+        "wait",
+        "time state"
+      ],
+      "use_when": "Use when the interface shows a pending, scheduled, or time-based state.",
+      "avoid_when": "Do not use for alarms or duration settings when the meaning is specifically a waiting or time status.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:eye",
+      "source_library": "tabler",
+      "source_name": "eye",
+      "label": "Visible",
+      "depicts": "An eye symbol used for visibility or preview.",
+      "purpose": "Show visibility, preview, or content that is currently shown.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "visible",
+        "show",
+        "preview",
+        "see",
+        "displayed"
+      ],
+      "synonyms": [
+        "show content",
+        "visible state",
+        "preview",
+        "currently shown"
+      ],
+      "use_when": "Use when the interface indicates that content is visible or can be previewed.",
+      "avoid_when": "Do not use for search or surveillance when the meaning is specifically visibility.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:eye-off",
+      "source_library": "tabler",
+      "source_name": "eye-off",
+      "label": "Hidden",
+      "depicts": "An eye symbol crossed to show hidden visibility.",
+      "purpose": "Show hidden content, turned-off visibility, or a concealed state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "hidden",
+        "concealed",
+        "visibility off",
+        "not shown",
+        "private"
+      ],
+      "synonyms": [
+        "hide content",
+        "hidden state",
+        "visibility off",
+        "concealed"
+      ],
+      "use_when": "Use when the interface indicates that content is hidden or visibility is turned off.",
+      "avoid_when": "Do not use for delete or disabled actions when the meaning is specifically hidden visibility.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:hourglass",
+      "source_library": "tabler",
+      "source_name": "hourglass",
+      "label": "Waiting",
+      "depicts": "An hourglass used for waiting or process time.",
+      "purpose": "Show waiting, in-progress delay, or time passing before completion.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "waiting",
+        "delay",
+        "processing",
+        "pending",
+        "time passing"
+      ],
+      "synonyms": [
+        "in progress wait",
+        "pending delay",
+        "process waiting",
+        "hold on"
+      ],
+      "use_when": "Use when the interface communicates waiting, delay, or time still passing before completion.",
+      "avoid_when": "Do not use for scheduling or calendars when the meaning is specifically waiting.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:key",
+      "source_library": "tabler",
+      "source_name": "key",
+      "label": "Access Key",
+      "depicts": "A key symbol for access or credentials.",
+      "purpose": "Show credentials, access keys, or a key-based access concept.",
+      "category": "security_auth",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "key",
+        "credentials",
+        "access",
+        "auth",
+        "secret"
+      ],
+      "synonyms": [
+        "access key",
+        "credentials",
+        "auth key",
+        "secret"
+      ],
+      "use_when": "Use when the interface refers to keys, credentials, or key-based access.",
+      "avoid_when": "Do not use for generic security state when the meaning is specifically a key or credential.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:list-check",
+      "source_library": "tabler",
+      "source_name": "list-check",
+      "label": "Checklist Complete",
+      "depicts": "Checklist Complete shown with a completion check mark.",
+      "purpose": "Show a completed or confirmed checklist state.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "complete",
+        "confirmed",
+        "checked",
+        "done",
+        "checklist"
+      ],
+      "synonyms": [
+        "checklist done",
+        "completed",
+        "confirmed",
+        "checked state"
+      ],
+      "use_when": "Use when the interface shows that a checklist action or object is complete or confirmed.",
+      "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:loader-2",
+      "source_library": "tabler",
+      "source_name": "loader-2",
+      "label": "Loading",
+      "depicts": "A spinning or circular loader indicator.",
+      "purpose": "Show an active loading or in-progress system state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "loading",
+        "in progress",
+        "spinner",
+        "working",
+        "processing"
+      ],
+      "synonyms": [
+        "loading state",
+        "working",
+        "processing",
+        "spinner"
+      ],
+      "use_when": "Use when the interface is actively loading, processing, or waiting for work to finish.",
+      "avoid_when": "Do not use for refresh buttons or static status badges when the meaning is an active loading state.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:lock",
+      "source_library": "tabler",
+      "source_name": "lock",
+      "label": "Locked",
+      "depicts": "A closed lock showing protected access.",
+      "purpose": "Show locked access, protection, or content that requires permission.",
+      "category": "security",
+      "intent": "confirm",
+      "domain": "security",
+      "semantic_tags": [
+        "locked",
+        "protected",
+        "restricted",
+        "secure",
+        "permission needed"
+      ],
+      "synonyms": [
+        "secure lock",
+        "restricted",
+        "locked access",
+        "protected"
+      ],
+      "use_when": "Use when the interface indicates something is locked, protected, or restricted.",
+      "avoid_when": "Do not use for password fields or account sign-in when a more specific auth icon would be clearer.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:lock-open",
+      "source_library": "tabler",
+      "source_name": "lock-open",
+      "label": "Unlocked",
+      "depicts": "An open lock showing access is available.",
+      "purpose": "Show unlocked access, open permission, or content that is no longer locked.",
+      "category": "security",
+      "intent": "confirm",
+      "domain": "security",
+      "semantic_tags": [
+        "unlocked",
+        "open access",
+        "permission granted",
+        "available",
+        "security"
+      ],
+      "synonyms": [
+        "open lock",
+        "unlocked",
+        "access granted",
+        "available access"
+      ],
+      "use_when": "Use when the interface indicates something is unlocked or access has been opened.",
+      "avoid_when": "Do not use for password fields or account sign-in when a more specific auth icon would be clearer.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:rosette-discount-check",
+      "source_library": "tabler",
+      "source_name": "rosette-discount-check",
+      "label": "Verified Offer",
+      "depicts": "A rosette badge with a check mark for verified discount or offer status.",
+      "purpose": "Show a verified offer, confirmed discount, or trusted deal badge.",
+      "category": "commerce",
+      "intent": "confirm",
+      "domain": "commerce",
+      "semantic_tags": [
+        "verified offer",
+        "discount",
+        "deal badge",
+        "confirmed deal",
+        "commerce"
+      ],
+      "synonyms": [
+        "verified discount",
+        "trusted deal",
+        "offer badge",
+        "confirmed promotion"
+      ],
+      "use_when": "Use when the interface highlights a verified offer, trusted deal, or confirmed discount state.",
+      "avoid_when": "Do not use for general trust verification or loyalty rewards when the meaning is specifically an offer badge.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:thumb-down",
+      "source_library": "tabler",
+      "source_name": "thumb-down",
+      "label": "Disapproval",
+      "depicts": "A thumbs-down feedback symbol.",
+      "purpose": "Show negative feedback, disapproval, or a disliked state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "disapproval",
+        "dislike",
+        "negative feedback",
+        "rejected",
+        "thumbs down"
+      ],
+      "synonyms": [
+        "disliked",
+        "negative signal",
+        "bad feedback",
+        "downvote"
+      ],
+      "use_when": "Use when the interface signals negative feedback, disapproval, or a disliked state.",
+      "avoid_when": "Do not use for warnings or errors when the meaning is specifically negative feedback.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:thumb-up",
+      "source_library": "tabler",
+      "source_name": "thumb-up",
+      "label": "Approval",
+      "depicts": "A thumbs-up feedback symbol.",
+      "purpose": "Show positive feedback, approval, or a liked state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "approval",
+        "like",
+        "positive feedback",
+        "endorsed",
+        "thumbs up"
+      ],
+      "synonyms": [
+        "liked",
+        "approved",
+        "positive signal",
+        "good feedback"
+      ],
+      "use_when": "Use when the interface signals positive feedback, approval, or a liked state.",
+      "avoid_when": "Do not use for completion or trust verification when the meaning is specifically approval or liking.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:trending-down",
+      "source_library": "tabler",
+      "source_name": "trending-down",
+      "label": "Downward Trend",
+      "depicts": "A line or arrow showing decline over time.",
+      "purpose": "Show a downward trend, decrease, or negative movement in a metric.",
+      "category": "analytics_data",
+      "intent": "inform",
+      "domain": "analytics",
+      "semantic_tags": [
+        "downward trend",
+        "decrease",
+        "decline",
+        "lowering",
+        "metric down"
+      ],
+      "synonyms": [
+        "trend down",
+        "decline",
+        "decrease",
+        "metric drop"
+      ],
+      "use_when": "Use when the interface shows that a metric or measure is trending downward.",
+      "avoid_when": "Do not use for download or move-down actions when the meaning is specifically analytics decline.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:wifi",
+      "source_library": "tabler",
+      "source_name": "wifi",
+      "label": "Connection",
+      "depicts": "A wireless signal icon representing network connection.",
+      "purpose": "Show wireless connection status or network availability.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "wifi",
+        "network",
+        "connection",
+        "signal",
+        "online"
+      ],
+      "synonyms": [
+        "wireless",
+        "network signal",
+        "internet connection",
+        "online state"
+      ],
+      "use_when": "Use when the interface shows connection, signal, or wireless network state.",
+      "avoid_when": "Do not use for trust, security, or generic communication when the meaning is specifically connection status.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:sort-ascending",
+      "source_library": "tabler",
+      "source_name": "sort-ascending",
+      "label": "Sort Ascending",
+      "depicts": "An ordering control that arranges items from low to high or A to Z.",
+      "purpose": "Show ascending sort order for a list, results set, or ordered collection.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort ascending",
+        "order low to high",
+        "a to z",
+        "arrange",
+        "list order"
+      ],
+      "synonyms": [
+        "ascending order",
+        "sort low to high",
+        "sort a to z",
+        "ordered list"
+      ],
+      "use_when": "Use when the interface sorts items in ascending order such as low-to-high or A-to-Z.",
+      "avoid_when": "Do not use for filtering or ranking trends when the meaning is specifically sort order.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.89,
+      "confidence_band": "high"
+    }
+  ]
+}

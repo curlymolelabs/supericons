@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-H Editor Hold Resolution Pass Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8f5ed;
+      --card: #fffdf8;
+      --ink: #20262f;
+      --muted: #5b6470;
+      --accent: #8a3412;
+      --border: #eadfcd;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-H Editor Hold Resolution Pass Plan</h1>
+      <p class="muted">This step reviews the 4 hold records from batch 03 and promotes only the ones that now feel clear enough to approve.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Tighten the close cases, approve the ones that now meet the quality bar, and leave the truly context-sensitive ones on hold.</p>
+    </section>
+
+    <section>
+      <h2>Records in scope</h2>
+      <ul>
+        <li><code>tabler:link</code></li>
+        <li><code>tabler:refresh</code></li>
+        <li><code>lucide:brain-cog</code></li>
+        <li><code>lucide:circuit-board</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Working decision for this pass</h2>
+      <ul>
+        <li>Try to tighten <code>tabler:refresh</code> into approval.</li>
+        <li>Try to tighten <code>lucide:circuit-board</code> into approval.</li>
+        <li>Keep <code>tabler:link</code> on hold unless it becomes truly specific enough.</li>
+        <li>Keep <code>lucide:brain-cog</code> on hold unless the reasoning-versus-settings drift is fully solved.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Update the reviewed wording in the batch 03 review file.</li>
+        <li>Update the promotion decisions for the batch 03 hold items.</li>
+        <li>Regenerate the approved set, hold queue, and summary files.</li>
+        <li>Write a short note that explains what was approved and what stayed on hold.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run build:purpose-chip-approved-records</code></li>
+        <li><code>npm run verify:purpose-chip-approved-records</code></li>
+        <li><code>npm run build:purpose-chip-pilot</code></li>
+        <li><code>npm run verify:purpose-chip-pilot</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-F Plan: Semantic Minimum Standard and Batch 03</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f2ea;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d7cfc0;
+      --accent: #0f766e;
+      --accent-soft: #def5f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 14px; }
+    h1 { font-size: 2.4rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 { font-size: 1.1rem; margin-top: 22px; }
+    p, li { font-size: 1.02rem; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    ul { padding-left: 22px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">P1-F Implementation Plan</span>
+      <h1>Define the minimum quality bar, then test it on a harder batch</h1>
+      <p>This phase turns the quality bar into a real working rule. First we define what “good enough” means for a semantic icon record. Then we test that rule on a new batch of more ambiguous icons.</p>
+    </section>
+
+    <section class="card">
+      <h2>Why This Step Matters</h2>
+      <ul>
+        <li>we already have reviewed batches, but no firm approval rule</li>
+        <li>without a clear bar, approval decisions stay subjective</li>
+        <li>harder icons are a better test than obvious ones</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Will Do</h2>
+      <ul>
+        <li>write the semantic minimum standard</li>
+        <li>turn that standard into a simple rubric</li>
+        <li>choose a new batch of more borderline icons</li>
+        <li>review that batch against the rubric</li>
+        <li>record which icons would pass, hold, stay draft, or need rewrite</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Main Steps</h2>
+      <h3>1. Freeze the approval rubric</h3>
+      <p>Define the required gates for identity, visual read, purpose, use guidance, avoidance guidance, tags, lane fit, and confidence.</p>
+
+      <h3>2. Build a harder batch 03</h3>
+      <p>Choose 12 icons that are more ambiguous, more context-sensitive, or more likely to drift away from their seeded category.</p>
+
+      <h3>3. Review the batch using the rubric</h3>
+      <p>Render the icons into a contact sheet, review them one by one, and record both the semantic recommendation and the approval outcome.</p>
+
+      <h3>4. Measure and verify</h3>
+      <p>Record timing and visible token estimates, keep the files clean, and make sure the build still passes.</p>
+    </section>
+
+    <section class="card">
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>the minimum quality bar is written down clearly</li>
+        <li>batch 03 exists and focuses on harder icons</li>
+        <li>reviewed outputs and notes exist for the batch</li>
+        <li>approval outcomes are explicit instead of implied</li>
+        <li>the build stays green</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

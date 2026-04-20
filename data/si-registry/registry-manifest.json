@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordGroups": [
+    {
+      "id": "free-pilot",
+      "path": "records/free-pilot.json",
+      "sourceGroup": "free",
+      "description": "Pilot aggregated free records using source-library ids."
+    },
+    {
+      "id": "purpose-chip-approved",
+      "path": "pilot/purpose-chip/approved-records.json",
+      "sourceGroup": "free",
+      "description": "Approved purpose-chip semantic records promoted into the free SI registry path."
+    },
+    {
+      "id": "mingcute-approved",
+      "path": "automation/mingcute/approved-records.json",
+      "sourceGroup": "free",
+      "description": "Approved MingCute semantic records promoted from the first library-by-library automation slice."
+    }
+  ],
+  "importSources": [
+    {
+      "id": "premium-manifest",
+      "path": "public/packs/manifest.json",
+      "sourceGroup": "premium",
+      "normalizer": "premium-collection-map"
+    }
+  ],
+  "projectionTargets": [
+    "generated_internal_projection",
+    "generated_public_projection",
+    "public_registry_summary",
+    "mcp_registry_summary"
+  ],
+  "generatedFiles": [
+    "generated/registry-summary.json",
+    "generated/record-preview.json",
+    "generated/public-record-preview.json",
+    "generated/free-record-preview.json",
+    "public/registry/records.json",
+    "mcp/public/registry-records.json"
+  ]
+}

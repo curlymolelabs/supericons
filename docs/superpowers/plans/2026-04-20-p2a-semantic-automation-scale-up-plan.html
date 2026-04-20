@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Automation Scale-Up Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --paper: #fffdf9;
+      --ink: #1f2937;
+      --muted: #5f6b7a;
+      --line: #e4d7c2;
+      --accent: #9a3412;
+      --soft: #f6e7d8;
+      --ok: #166534;
+      --ok-soft: #dcf5e2;
+      --warn: #92400e;
+      --warn-soft: #fde7d2;
+      --shadow: 0 16px 38px rgba(35, 28, 20, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(244, 199, 161, 0.28), transparent 28%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 34px 20px 56px;
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      max-width: 820px;
+    }
+
+    h2 { font-size: 1.45rem; }
+    h3 {
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .muted { color: var(--muted); }
+
+    .grid,
+    .lane-grid,
+    .phase-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .lane-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .phase-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.82);
+    }
+
+    .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--muted);
+    }
+
+    .ok {
+      background: var(--ok-soft);
+      color: var(--ok);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .warn {
+      background: var(--warn-soft);
+      color: var(--warn);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+      background: #f6efe4;
+      border: 1px solid #eadfcd;
+      border-radius: 8px;
+      padding: 1px 6px;
+      font-size: 0.92em;
+    }
+
+    @media (max-width: 980px) {
+      .grid,
+      .lane-grid,
+      .phase-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      main { padding: 20px 14px 40px; }
+      section { padding: 18px; border-radius: 20px; }
+      .grid,
+      .lane-grid,
+      .phase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <div class="eyebrow">Next Step Plan</div>
+      <h1>How to automate the semantic process without losing quality</h1>
+      <p class="muted">This plan picks up after the completed first 150-icon rollout.</p>
+      <p>
+        The goal is not to tag every icon in one giant rush. The goal is to turn the process that already worked
+        into a repeatable system that can handle more icons faster while still keeping the same quality rules.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="number">150</div>
+          <div>First rollout already completed</div>
+        </div>
+        <div class="card">
+          <div class="number">129</div>
+          <div>Approved records from the first rollout</div>
+        </div>
+        <div class="card">
+          <div class="number">135</div>
+          <div>Public free semantic records now in the registry</div>
+        </div>
+        <div class="card">
+          <div class="number">300–500</div>
+          <div>Recommended size for the first automation batch</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why automate now</h2>
+      <p>
+        The hard part has already been proven. We now know the record shape, the review standard, and the search value.
+      </p>
+      <p class="callout">
+        That means the next move is not more basic proof. The next move is safe scale.
+      </p>
+    </section>
+
+    <section>
+      <h2>Work library by library</h2>
+      <p>This should now move one library at a time instead of mixing many libraries into one giant batch.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Start with MingCute</h3>
+          <p>This is the first full library to process with the new automation system.</p>
+        </div>
+        <div class="card">
+          <h3>Then Simple Icons</h3>
+          <p>This should come second, but it needs a different logo-and-brand template instead of the normal UI template.</p>
+        </div>
+        <div class="card">
+          <h3>Then continue downward</h3>
+          <p>After that, continue in the same order shown in the library list.</p>
+        </div>
+        <div class="card">
+          <h3>Why this helps</h3>
+          <p>It makes quality problems easier to see, keeps rollback small, and helps each library get a cleaner playbook.</p>
+        </div>
+      </div>
+      <ul>
+        <li>MingCute</li>
+        <li>Simple Icons</li>
+        <li>Lucide</li>
+        <li>Tabler</li>
+        <li>Phosphor</li>
+        <li>Heroicons</li>
+        <li>Bootstrap</li>
+        <li>Iconoir</li>
+        <li>Ionicons</li>
+        <li>Material Symbols</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What automation should do</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Create strong first drafts</h3>
+          <p>Make a useful starting record for each icon instead of making people write every field by hand.</p>
+        </div>
+        <div class="card">
+          <h3>Route the risky ones</h3>
+          <p>Send only the confusing or sensitive icons into deeper review instead of treating every icon the same.</p>
+        </div>
+        <div class="card">
+          <h3>Promote approved records</h3>
+          <p>Move approved records into the real registry path cleanly and consistently.</p>
+        </div>
+        <div class="card">
+          <h3>Measure the effect</h3>
+          <p>Check whether the larger batch still improves search and agent usefulness instead of assuming it does.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How the smaller model fits in</h2>
+      <p>Yes, a smaller model can be used, but only for the repetitive low-risk parts.</p>
+      <div class="lane-grid">
+        <div class="card">
+          <div class="ok">Lower-cost model</div>
+          <h3>Use for repetitive work</h3>
+          <ul>
+            <li>first draft creation</li>
+            <li>tag suggestions</li>
+            <li>synonym suggestions</li>
+            <li>queue preparation</li>
+            <li>batch formatting</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="warn">Main review model</div>
+          <h3>Keep quality here</h3>
+          <ul>
+            <li>set each library playbook</li>
+            <li>review samples and edge cases</li>
+            <li>handle ambiguity</li>
+            <li>make final approval choices</li>
+            <li>protect the quality bar</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="warn">Safety rule</div>
+          <h3>Do not auto-publish</h3>
+          <p>No low-cost draft should move into approved public records without the normal checks and final review.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The 3 automation lanes</h2>
+      <div class="lane-grid">
+        <div class="card">
+          <div class="ok">Lane 1</div>
+          <h3>Safe auto-stage</h3>
+          <p>Use this when the icon name is clear, the pattern is familiar, and the meaning is low-risk.</p>
+          <ul>
+            <li>make first draft</li>
+            <li>send to light review</li>
+            <li>do not skip the approval gates</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="warn">Lane 2</div>
+          <h3>Guided review</h3>
+          <p>Use this when the draft is decent but the icon still has some ambiguity or close semantic neighbors.</p>
+          <ul>
+            <li>make draft</li>
+            <li>send to visual or editor review</li>
+            <li>tighten wording before approval</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="warn">Lane 3</div>
+          <h3>Caution lane</h3>
+          <p>Use this when the icon is broad, metaphorical, or likely to cause wrong meaning if approved too quickly.</p>
+          <ul>
+            <li>do not auto-promote</li>
+            <li>hold for later or deeper review</li>
+            <li>accept that some icons should wait</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Automation flow</h2>
+      <div class="phase-grid">
+        <div class="card">
+          <h3>1. Intake</h3>
+          <p>Read the icon identity, library, source name, current helpers, and whether a visual file is available.</p>
+        </div>
+        <div class="card">
+          <h3>2. Draft</h3>
+          <p>Build the first SI semantic record with label, purpose, tags, usage rules, and confidence.</p>
+        </div>
+        <div class="card">
+          <h3>3. Checks</h3>
+          <p>Reject bad records early if the wording is too weak, the fields drift, or the vocabulary is wrong.</p>
+        </div>
+        <div class="card">
+          <h3>4. Route</h3>
+          <p>Send each record into the right queue: light review, visual review, editor review, or hold.</p>
+        </div>
+      </div>
+
+      <div class="phase-grid" style="margin-top:16px;">
+        <div class="card">
+          <h3>5. Promote</h3>
+          <p>Move approved records into the live registry path and the search-supporting outputs.</p>
+        </div>
+        <div class="card">
+          <h3>6. Report</h3>
+          <p>Write a summary that says how many records were staged, approved, held, or rejected.</p>
+        </div>
+        <div class="card">
+          <h3>7. Verify</h3>
+          <p>Run the same registry, rollout, and build checks so bad batches do not slip through.</p>
+        </div>
+        <div class="card">
+          <h3>8. Measure</h3>
+          <p>Check whether the wider batch still helps search and agent behavior in a real way.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>First automation target</h2>
+      <p>The first larger automated batch should not be all <code>21,264</code> free icons.</p>
+      <p class="callout">
+        A better first move is <strong>MingCute batch 01</strong> with about <strong>200 to 300</strong> icons.
+      </p>
+      <ul>
+        <li>prefer strong source names</li>
+        <li>prefer obvious UI actions and state icons first</li>
+        <li>prefer icons close to already-approved semantic patterns</li>
+        <li>avoid the most metaphorical shapes in the first MingCute pass</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Quality rules that must stay in place</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Meaning must be clear</h3>
+          <p>The wording should help a person or agent understand the icon, not just repeat the source name.</p>
+        </div>
+        <div class="card">
+          <h3>Tags must help</h3>
+          <p>The tags should make search and selection better, not just add extra words for decoration.</p>
+        </div>
+        <div class="card">
+          <h3>Usage rules must reject near-misses</h3>
+          <p><code>use_when</code> and <code>avoid_when</code> should stop the wrong icon from being chosen.</p>
+        </div>
+        <div class="card">
+          <h3>Public-safe output only</h3>
+          <p>The records should describe the icon itself, not internal process details about how the draft was made.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>When to pause or roll back</h2>
+      <ul>
+        <li>if spot checks show obvious quality drop</li>
+        <li>if wording becomes generic and repetitive</li>
+        <li>if categories start drifting in visible ways</li>
+        <li>if search usefulness stops improving</li>
+        <li>if too many records end up on hold because the first-pass draft is weak</li>
+      </ul>
+      <p class="callout">
+        Only approved records should move into the main public registry path. Staged records should stay easy to discard if the batch quality is not good enough.
+      </p>
+    </section>
+
+    <section>
+      <h2>What will be added</h2>
+      <ul>
+        <li><code>scripts/build-semantic-automation-batch.mjs</code></li>
+        <li><code>scripts/verify-semantic-automation-batch.mjs</code></li>
+        <li><code>data/si-registry/automation/</code></li>
+        <li><code>data/si-registry/generated/semantic-automation-summary.json</code></li>
+        <li>a library-order configuration file</li>
+        <li>a MingCute batch selector for the first automated slice</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Success means this</h2>
+      <ul>
+        <li>the next larger batch runs end to end</li>
+        <li>approved coverage grows without obvious quality drop</li>
+        <li>the hold queue stays manageable</li>
+        <li>search usefulness stays flat or improves</li>
+        <li>the workflow feels repeatable instead of handcrafted</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Bottom line</h2>
+      <p>
+        The next step is not “tag everything.” The next step is to automate the process that already proved itself,
+        then widen coverage in controlled batches.
+      </p>
+      <p>
+        That is the safest way to turn the first successful rollout into a real long-term semantic system for Supericons.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>P1-O Visual Review Batch 02 Plan</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #182033;
+        --muted: #526076;
+        --line: #d9e0ea;
+        --accent: #2456d3;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 20px 56px;
+      }
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 22px 24px;
+        margin-bottom: 18px;
+      }
+      h1, h2 { margin: 0 0 12px; }
+      p, li { color: var(--muted); }
+      ul { margin: 10px 0 0 20px; }
+      code {
+        font-family: Consolas, monospace;
+        background: #eef2f8;
+        padding: 1px 6px;
+        border-radius: 6px;
+        color: var(--text);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        background: #fbfcfe;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.4rem;
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>P1-O Visual Review Batch 02 Plan</h1>
+        <p>This step handles the next small group of icons that are ready for a real visual check. The goal is to approve the clear ones, park the fuzzy ones, and keep the rollout moving safely.</p>
+      </section>
+
+      <section>
+        <h2>Why This Step Matters</h2>
+        <p>The remaining work is no longer mostly blocked by missing icon files. Most of the unresolved icons can now be judged by their actual shape.</p>
+        <div class="stats">
+          <div class="stat"><strong>72</strong><span>Already approved</span></div>
+          <div class="stat"><strong>4</strong><span>Still on hold</span></div>
+          <div class="stat"><strong>6</strong><span>Reviewed drafts</span></div>
+          <div class="stat"><strong>18</strong><span>Ready for visual review now</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What This Step Will Do</h2>
+        <ul>
+          <li>Build a new review batch for the current <code>18</code> visual-review icons.</li>
+          <li>Create a contact sheet so the icons can be checked side by side.</li>
+          <li>Mark each icon as approved, hold, or reviewed draft.</li>
+          <li>Update the approval files and the progress summaries.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What This Step Will Not Do</h2>
+        <ul>
+          <li>It will not resolve the larger <code>48</code>-icon editor-review queue yet.</li>
+          <li>It will not solve the final <code>2</code> text-only icons yet.</li>
+          <li>It will not widen the rollout beyond the purpose-pill set.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Simple Review Rules</h2>
+        <ul>
+          <li>Approve icons whose shape clearly supports the current meaning.</li>
+          <li>Hold icons whose shape is clear, but still means too many different things.</li>
+          <li>Keep icons as drafts if they are promising but still too broad to approve safely.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Expected Result</h2>
+        <p>After this step, the visual-review queue should shrink sharply or disappear. The remaining open work should mostly move into editor review, with only the last text-only edge cases left behind.</p>
+      </section>
+
+      <section>
+        <h2>Checks To Run</h2>
+        <ul>
+          <li><code>npm run build:purpose-chip-visual-review-batch</code></li>
+          <li><code>npm run build:purpose-chip-contact-sheet -- visual-review-batch-02</code></li>
+          <li><code>npm run build:purpose-chip-approved-records</code></li>
+          <li><code>npm run verify:purpose-chip-approved-records</code></li>
+          <li><code>npm run build:purpose-chip-scale-up</code></li>
+          <li><code>npm run verify:purpose-chip-scale-up</code></li>
+          <li><code>npm run verify:si-registry</code></li>
+          <li><code>npm run build</code></li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-N Material Visual Coverage Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6470;
+      --accent: #9a3412;
+      --border: #e7dccb;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-N Material Visual Coverage Plan</h1>
+      <p class="muted">This step fixes the last big blocker by giving the remaining Material icons real SVG payloads for proper visual review.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Fetch local SVG copies for the 68 remaining Material purpose-chip icons so they can move out of text-only review.</p>
+    </section>
+
+    <section>
+      <h2>Why this matters</h2>
+      <p>The remaining queue is no longer blocked by semantic design. It is blocked because those icons only have names and metadata, not local SVG payloads. That makes visual review impossible.</p>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Create one repeatable seed step for the remaining Material icons.</li>
+        <li>Fetch local SVG snapshots for them.</li>
+        <li>Rebuild the Material export manifest.</li>
+        <li>Rebuild the purpose-chip summaries.</li>
+        <li>Measure how much of the text-only queue becomes visual-ready work.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>What this step does not do</h2>
+      <ul>
+        <li>It does not approve those icons yet.</li>
+        <li>It does not finish their semantic review yet.</li>
+        <li>It only solves the missing-visual problem first.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <p>The remaining queue should stop being a text-only problem and become a normal visual-review problem instead.</p>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run seed:purpose-chip-material-coverage</code></li>
+        <li><code>npm run build:material-export-manifest</code></li>
+        <li><code>npm run build:purpose-chip-scale-up</code></li>
+        <li><code>npm run verify:purpose-chip-scale-up</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

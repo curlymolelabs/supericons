@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "library_id": "mingcute",
+  "library_label": "MingCute",
+  "purpose": "Review the remaining high-confidence MingCute editor-review queue after batch 01 and the first MingCute visual-review pass.",
+  "selection_mode": "remaining_editor_review_queue",
+  "selection_notes": [
+    "Pull only the unresolved MingCute icons still routed to ready_for_editor_review.",
+    "Keep the batch reproducible by saving the generated batch records after the first run.",
+    "Hold or draft any icon that still mixes multiple product meanings."
+  ]
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Approved Semantic Import and Agent Test Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --panel: #fffdf8;
+      --ink: #1f1a14;
+      --muted: #6d6257;
+      --line: #ded4c7;
+      --accent: #9a5b2d;
+      --soft: #f3e6d7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf8f1 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    h1, h2 { line-height: 1.2; }
+    .hero, section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(31, 26, 20, 0.06);
+      margin-bottom: 20px;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .card {
+      background: #fffaf2;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    ul { margin: 10px 0 0; padding-left: 20px; }
+    code {
+      font-family: "Courier New", monospace;
+      background: #f2ece3;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.95em;
+    }
+    p, li { color: var(--muted); }
+    strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="eyebrow">Plan</span>
+      <h1>Approved Semantic Import and Agent Test Plan</h1>
+      <p><strong>Main goal:</strong> move the 30 approved icon meaning records into the real registry output, let agents read that meaning through MCP, and then measure whether that extra meaning helps them choose better icons.</p>
+      <p><strong>Main idea:</strong> keep the change small and safe. We are not rebuilding search from scratch. We are adding reviewed meaning data to the real output path, attaching it to tool results, and then testing if that extra meaning makes the answers better.</p>
+    </section>
+
+    <section>
+      <h2>What This Step Adds</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>1. Real Registry Import</h3>
+          <p>The 30 approved free icon records stop being pilot-only files and become part of the real public-safe registry output.</p>
+        </div>
+        <div class="card">
+          <h3>2. Agent-Readable Meaning</h3>
+          <p>MCP search and icon lookup responses will include useful meaning fields like purpose, when to use the icon, and when not to use it.</p>
+        </div>
+        <div class="card">
+          <h3>3. Proof That It Helps</h3>
+          <p>A small benchmark will compare search results before and after the semantic layer is available to see if agents can pick better icons.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Files That Will Change</h2>
+      <ul>
+        <li><code>data/si-registry/registry-manifest.json</code> to register the approved records as a real free record group.</li>
+        <li><code>lib/si-registry/projections.js</code> and <code>scripts/build-si-registry-projections.mjs</code> to publish a public-safe record file.</li>
+        <li><code>mcp/index.js</code> plus a new helper so MCP can attach semantic meaning to icon tool results.</li>
+        <li><code>data/si-registry/benchmarks/agent-usefulness-fixtures.json</code> and a new evaluation script to measure whether the extra meaning helps.</li>
+        <li>A new simple HTML report to show the outcome in plain language.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What Agents Will Be Able To Read</h2>
+      <p>When an icon has approved meaning data, the tool result will be able to include fields like:</p>
+      <ul>
+        <li><code>label</code></li>
+        <li><code>purpose</code></li>
+        <li><code>category</code></li>
+        <li><code>semantic_tags</code></li>
+        <li><code>synonyms</code></li>
+        <li><code>use_when</code></li>
+        <li><code>avoid_when</code></li>
+        <li><code>depicts</code></li>
+        <li><code>intent</code></li>
+        <li><code>domain</code></li>
+        <li><code>confidence</code></li>
+      </ul>
+      <p>This is the part that matters for agents. The goal is not to make a prettier page. The goal is to let the agent read meaning directly.</p>
+    </section>
+
+    <section>
+      <h2>How We Will Test It</h2>
+      <p>We will use a small set of real prompts such as <code>assistant reply</code>, <code>trusted protection</code>, <code>blocked action</code>, and <code>code search</code>.</p>
+      <p>For each prompt, we will check:</p>
+      <ul>
+        <li>what search returns first right now</li>
+        <li>whether the expected icon appears in the top results</li>
+        <li>how many of those top results now carry approved meaning data</li>
+        <li>whether the meaning data helps choose the right icon from the same candidate list</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>The real public-safe registry output contains the old 6 public records plus the new 30 approved ones.</li>
+        <li>MCP can return icon meaning for those reviewed records.</li>
+        <li>We can show, with a repeatable benchmark, that the meaning layer helps agents make better icon choices.</li>
+        <li>The whole step stays public-safe and avoids internal workflow details.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

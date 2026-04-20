@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MingCute Batch 02 Automation Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111318;
+      --panel: #181c24;
+      --line: #2a3040;
+      --text: #f3f5fb;
+      --muted: #b6bfd6;
+      --accent: #ff7a18;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    h1, h2 { margin-top: 0; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.1rem; color: var(--accent); }
+    p, li { color: var(--muted); }
+    ul { margin: 0; padding-left: 20px; }
+    code {
+      font-family: Consolas, monospace;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--text);
+    }
+    .stat {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,122,24,0.12);
+      color: #ffd1ad;
+      border: 1px solid rgba(255,122,24,0.24);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>MingCute Batch 02 Automation</h1>
+      <p>This step creates the next MingCute staging batch after the first MingCute batch has already been reviewed and sorted.</p>
+      <div class="stat">Goal: stage the next strong 180-plus MingCute icons</div>
+    </section>
+
+    <section>
+      <h2>What Changes In This Step</h2>
+      <ul>
+        <li>The new batch skips icons already used in MingCute batch 01.</li>
+        <li>The draft builder now learns from all approved free semantic records, not just the earlier pilot set.</li>
+        <li>The output becomes the next MingCute worklist for review.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Why This Matters</h2>
+      <ul>
+        <li>The first MingCute batch is already closed, so the queue is clean.</li>
+        <li>This is the first repeat test of the MingCute automation loop.</li>
+        <li>If this works cleanly, we can keep moving through MingCute in a steady way.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Main Outputs</h2>
+      <ul>
+        <li><code>worklist.json</code></li>
+        <li><code>candidate-records.json</code></li>
+        <li><code>review-queue.json</code></li>
+        <li><code>summary.json</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>The new MingCute batch does not overlap with the first batch.</li>
+        <li>The batch size stays inside the adjusted safe range.</li>
+        <li>The next MingCute review queue is ready without breaking the build.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

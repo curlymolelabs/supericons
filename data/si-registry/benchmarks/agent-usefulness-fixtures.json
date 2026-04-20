@@ -1,0 +1,74 @@
+[
+  {
+    "query": "assistant reply",
+    "expected_icon_id": "lucide:bot-message-square",
+    "top_n": 8,
+    "why": "Agent chat messages need a message-specific AI icon, not a generic robot."
+  },
+  {
+    "query": "ai reasoning",
+    "expected_icon_id": "lucide:brain-circuit",
+    "top_n": 8,
+    "why": "This should favor intelligence or reasoning, not a generic settings or hardware symbol."
+  },
+  {
+    "query": "workflow orchestration",
+    "expected_icon_id": "lucide:workflow",
+    "top_n": 8,
+    "why": "The icon should describe a linked automation flow."
+  },
+  {
+    "query": "code search",
+    "expected_icon_id": "lucide:search-code",
+    "top_n": 8,
+    "why": "The result should reflect source inspection rather than a generic search icon."
+  },
+  {
+    "query": "trusted protection",
+    "expected_icon_id": "tabler:shield-check",
+    "top_n": 8,
+    "why": "Trust plus protection should resolve to a security verification icon."
+  },
+  {
+    "query": "blocked action",
+    "expected_icon_id": "tabler:ban",
+    "top_n": 8,
+    "why": "The icon should communicate prohibition, not generic failure."
+  },
+  {
+    "query": "delete item",
+    "expected_icon_id": "tabler:trash",
+    "top_n": 8,
+    "why": "This is a destructive remove action, not a close or hide action."
+  },
+  {
+    "query": "refresh results",
+    "expected_icon_id": "tabler:refresh",
+    "top_n": 8,
+    "why": "Reloading current content is different from retrying after failure."
+  },
+  {
+    "query": "enabled setting",
+    "expected_icon_id": "tabler:toggle-right",
+    "top_n": 8,
+    "why": "This should show a setting in the on state."
+  },
+  {
+    "query": "open menu",
+    "expected_icon_id": "material:menu",
+    "top_n": 8,
+    "why": "The icon should mean navigation menu or drawer, not a content list."
+  },
+  {
+    "query": "back button",
+    "expected_icon_id": "material:arrow_back",
+    "top_n": 8,
+    "why": "The icon should describe back navigation rather than reply or undo."
+  },
+  {
+    "query": "filter results",
+    "expected_icon_id": "tabler:filter",
+    "top_n": 8,
+    "why": "The user needs refinement controls, not analytics funnel visuals."
+  }
+]

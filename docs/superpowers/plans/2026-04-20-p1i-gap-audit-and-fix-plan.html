@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-I Gap Audit and Fix Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f2ea;
+      --panel: #fffdf8;
+      --ink: #201b16;
+      --muted: #675d53;
+      --line: #ddd3c6;
+      --accent: #8d5a2b;
+      --soft: #f3e4d4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf7ef 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 45px rgba(32, 27, 22, 0.06);
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffaf2;
+      padding: 18px;
+    }
+    ul { margin: 10px 0 0; padding-left: 20px; }
+    p, li { color: var(--muted); }
+    strong { color: var(--ink); }
+    code {
+      font-family: "Courier New", monospace;
+      background: #f1ebe3;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.94em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <span class="eyebrow">Audit</span>
+      <h1>P1-I Gap Audit and Fix Plan</h1>
+      <p><strong>Bottom line:</strong> this step is <strong>not fully complete yet</strong>.</p>
+      <p>The good part is real: the approved icon meaning records are now in the real registry output, and the MCP layer now has the code to attach that meaning to icon results. The missing part is the proof layer. We still do not have the benchmark script and simple report that show whether this actually helps AI agents choose better icons.</p>
+    </section>
+
+    <section>
+      <h2>What Is Already Done</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Registry Import</h3>
+          <p>The approved 30 records are now included in the real registry build path, which brings the public-safe free record count to <strong>36</strong>.</p>
+        </div>
+        <div class="card">
+          <h3>MCP Wiring</h3>
+          <p>MCP now has a helper that can load public-safe semantic records and attach a trimmed meaning block to icon results.</p>
+        </div>
+        <div class="card">
+          <h3>Build Health</h3>
+          <p>The narrow checks and full build both passed after this wiring work.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What Is Still Missing</h2>
+      <ul>
+        <li>No benchmark script yet to measure whether agents actually choose better icons with the new meaning data.</li>
+        <li>No single npm command yet to run that benchmark again later.</li>
+        <li>No easy report page yet that explains the usefulness result in plain language.</li>
+        <li>No durable proof artifact yet that compares before-vs-after behavior for real prompt examples.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Why This Matters</h2>
+      <p>Right now we can honestly say:</p>
+      <ul>
+        <li>the data is wired in</li>
+        <li>the build still works</li>
+        <li>agents can be given better meaning fields for some icons</li>
+      </ul>
+      <p>But we cannot honestly say yet:</p>
+      <ul>
+        <li>this definitely helps agents pick the right icon better than before</li>
+      </ul>
+      <p>That last part needs measurement, not just confidence.</p>
+    </section>
+
+    <section>
+      <h2>Fix Plan</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>1. Build the Benchmark Script</h3>
+          <p>Create the missing evaluation script that runs real prompt examples and compares baseline search with semantic-assisted picking.</p>
+        </div>
+        <div class="card">
+          <h3>2. Add One Simple Command</h3>
+          <p>Add an npm script so the benchmark can be rerun whenever the semantic layer changes.</p>
+        </div>
+        <div class="card">
+          <h3>3. Publish a Clear Report</h3>
+          <p>Generate a JSON result file and a plain-language HTML page that explains what improved, what did not, and how strong the evidence is.</p>
+        </div>
+        <div class="card">
+          <h3>4. Recheck the Build</h3>
+          <p>Run the registry build, benchmark, search fixtures, and full build again before calling this step complete.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Recommended Next Move</h2>
+      <p>Do not widen the semantic rollout yet.</p>
+      <p>The next best move is to finish the missing usefulness-testing layer first. That gives us proof, not just wiring, and it will make the next scaling decisions much more grounded.</p>
+    </section>
+  </main>
+</body>
+</html>

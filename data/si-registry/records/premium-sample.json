@@ -1,0 +1,36 @@
+[
+  {
+    "icon_id": "si:agent",
+    "source_group": "premium",
+    "source_library": "si",
+    "source_name": "agent",
+    "label": "Agent Presence",
+    "purpose": "Show an active AI agent that is available and working.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "agent",
+      "ai",
+      "assistant",
+      "presence"
+    ],
+    "use_when": "Use when an AI agent is active, available, or visibly working on a task.",
+    "avoid_when": "Do not use for human operators, static automation rules, or finished work.",
+    "version": "1.0.0",
+    "status": "approved",
+    "access_tier": "protected_premium_record",
+    "projection_policy": "internal_only",
+    "collection_id": "ai-agentic",
+    "is_premium": true,
+    "depicts": "A simplified agent avatar used to represent active AI presence.",
+    "intent": "inform",
+    "domain": "ai_agents",
+    "state": "active",
+    "review_state": "editor_approved",
+    "evidence": [
+      "premium_pack_manifest",
+      "editorial_judgment"
+    ],
+    "confidence": 0.94,
+    "editorialNotes": "Premium pilot record. Keep this out of public record outputs until the premium access model is productized."
+  }
+]

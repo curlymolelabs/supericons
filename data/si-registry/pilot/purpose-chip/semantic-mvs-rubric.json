@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0.0",
+  "rubric_id": "si-semantic-mvs-approval-rubric",
+  "purpose": "Define the minimum viable quality standard for reviewed semantic icon records before approval.",
+  "approval_gates": [
+    {
+      "id": "identity_complete",
+      "label": "Identity is complete",
+      "required_fields": ["icon_id", "source_library", "source_name", "label"],
+      "pass_rule": "Identity clearly points to one icon and one source."
+    },
+    {
+      "id": "visual_depiction_grounded",
+      "label": "Visual depiction is grounded",
+      "required_fields": ["depicts", "visual_motifs", "visual_ambiguity", "visual_confusion_notes"],
+      "pass_rule": "The visual read matches what the icon actually shows and does not overclaim."
+    },
+    {
+      "id": "purpose_specific",
+      "label": "Purpose is specific and responsible",
+      "required_fields": ["purpose"],
+      "pass_rule": "Purpose explains the recommended use, not just the object or source name."
+    },
+    {
+      "id": "use_when_helpful",
+      "label": "Use guidance is decision-helpful",
+      "required_fields": ["use_when"],
+      "pass_rule": "Use guidance helps a builder know when the icon is a good choice."
+    },
+    {
+      "id": "avoid_when_helpful",
+      "label": "Avoid guidance prevents bad use",
+      "required_fields": ["avoid_when"],
+      "pass_rule": "Avoid guidance clearly rules out nearby wrong interpretations."
+    },
+    {
+      "id": "retrieval_honest",
+      "label": "Tags and synonyms support retrieval honestly",
+      "required_fields": ["semantic_tags", "synonyms"],
+      "pass_rule": "Tags and synonyms improve findability without inventing extra meaning."
+    },
+    {
+      "id": "lane_fit_checked",
+      "label": "Lane fit is confirmed or corrected",
+      "required_fields": [],
+      "pass_rule": "The review corrects seeded lane drift when the lane is too broad or wrong."
+    },
+    {
+      "id": "confidence_honest",
+      "label": "Confidence is honest",
+      "required_fields": ["evidence_sources", "confidence_score", "confidence_band"],
+      "pass_rule": "Confidence matches the real ambiguity level and evidence used."
+    }
+  ],
+  "approval_outcomes": [
+    {
+      "id": "approve_for_import",
+      "label": "Approve for import",
+      "rule": "All gates pass, confidence is at least medium, and the record is publishable without rewrite."
+    },
+    {
+      "id": "hold_for_editor_review",
+      "label": "Hold for editor review",
+      "rule": "The record is close but still needs tightening in one or two places."
+    },
+    {
+      "id": "keep_as_reviewed_draft",
+      "label": "Keep as reviewed draft",
+      "rule": "The review added value, but the icon remains too context-sensitive for approval."
+    },
+    {
+      "id": "rewrite_before_reconsidering",
+      "label": "Rewrite before reconsidering",
+      "rule": "The current semantic frame is still too broad or misleading."
+    }
+  ],
+  "confidence_policy": {
+    "minimum_for_approval": "medium",
+    "high": "Use when the icon is visually clear, the purpose is specific, and confusion risk is low.",
+    "medium": "Use when the icon is useful but still depends on product context or has bounded ambiguity.",
+    "low": "Use when the recommendation is still too fragile for approval."
+  }
+}

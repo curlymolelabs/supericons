@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-B Plan: Premium Normalization and Free Pilot Import</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f3eb;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d7cfc0;
+      --accent: #0f766e;
+      --accent-soft: #dff5f1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+    h1 { font-size: 2.4rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 22px;
+    }
+    p, li { font-size: 1.02rem; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+    }
+    ul { padding-left: 22px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">P1-B Implementation Plan</span>
+      <h1>Normalize all premium icons and grow the free pilot</h1>
+      <p>This phase takes the registry from a small proof into a more meaningful working system. The goal is to bring all premium pack icons into the registry shape, keep them protected by default, and grow the free public-safe pilot a little at the same time.</p>
+    </section>
+
+    <section class="card">
+      <h2>Main Constraint</h2>
+      <p>Premium icon names are not unique across all collections. So this phase cannot assume raw pack names can safely become final SI ids. It needs a stable naming rule that avoids collisions.</p>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Does</h2>
+      <ul>
+        <li>normalize all premium collection icons into the registry shape</li>
+        <li>keep premium records protected by default</li>
+        <li>expand the free pilot to a slightly larger curated public-safe set</li>
+        <li>update the registry build and checks to cover the larger data set</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Does Not Do</h2>
+      <ul>
+        <li>it does not make premium records public</li>
+        <li>it does not add runtime access control yet</li>
+        <li>it does not import the full free corpus yet</li>
+        <li>it does not start automation or visual review yet</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Implementation Steps</h2>
+      <h3>1. Update the verify step first</h3>
+      <p>Change the registry verification so it expects the larger premium and free record counts, then run it before the implementation so it fails for the right reason.</p>
+
+      <h3>2. Add premium mapping rules</h3>
+      <p>Create one mapping file that explains how each premium collection should become registry data.</p>
+
+      <h3>3. Normalize premium icons in code</h3>
+      <p>Read the current premium manifest and convert all icons into registry records with stable names and protected visibility.</p>
+
+      <h3>4. Expand the free pilot</h3>
+      <p>Add a few more carefully chosen free icons that are good public examples.</p>
+
+      <h3>5. Update preview outputs</h3>
+      <p>Write separate previews for all records, public-safe records, premium records, and free records.</p>
+
+      <h3>6. Re-run build and checks</h3>
+      <p>Finish by making sure the new registry layer still works inside the full project build.</p>
+    </section>
+
+    <section class="card">
+      <h2>Success Looks Like</h2>
+      <ul>
+        <li>all 400 premium icons are represented in the registry</li>
+        <li>premium ids are stable and do not collide</li>
+        <li>the free pilot is larger but still curated</li>
+        <li>public previews still show only public-safe records</li>
+        <li>full build still passes</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

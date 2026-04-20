@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SI Semantic Minimum Standard</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d8d0c2;
+      --accent: #155e75;
+      --accent-soft: #dff2f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 14px; }
+    h1 { font-size: 2.4rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 { font-size: 1.1rem; margin-top: 22px; }
+    p, li { font-size: 1.02rem; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    ul { padding-left: 22px; }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">Working Standard</span>
+      <h1>SI Semantic Minimum Standard</h1>
+      <p>This document defines the minimum quality bar a semantic icon record must meet before it can move out of draft review work and toward approved import.</p>
+      <p>The goal is not perfection. The goal is a clear floor for what counts as useful, honest, and safe enough to trust.</p>
+    </section>
+
+    <section class="card">
+      <h2>What This Standard Is For</h2>
+      <ul>
+        <li>stop vague approvals</li>
+        <li>stop overconfident tagging</li>
+        <li>make approval decisions more consistent</li>
+        <li>keep records useful for real builders, not just technically filled in</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>The Main Test</h2>
+      <p>A record passes the minimum standard if it is specific enough to help someone choose the icon, honest enough to admit ambiguity, and grounded enough in the actual visual shape and context.</p>
+    </section>
+
+    <section class="card">
+      <h2>The 8 Approval Gates</h2>
+
+      <h3>1. Identity is complete</h3>
+      <p>The record needs a stable icon id, source library, source name, and label.</p>
+
+      <h3>2. The visual read is grounded</h3>
+      <p>If a real icon image is available, the record should say what the icon appears to show, what visual motifs are present, and how ambiguous it is.</p>
+
+      <h3>3. The purpose is specific</h3>
+      <p>The purpose should explain the recommended use, not just repeat the icon name or describe the shape.</p>
+
+      <h3>4. <code>use_when</code> helps a real decision</h3>
+      <p>This should help someone know when the icon is a good choice in a real interface.</p>
+
+      <h3>5. <code>avoid_when</code> prevents bad use</h3>
+      <p>This should help someone avoid confusing or misleading use.</p>
+
+      <h3>6. Tags and synonyms are honest</h3>
+      <p>They should make the icon easier to find without stretching the meaning too far.</p>
+
+      <h3>7. Lane fit is confirmed or corrected</h3>
+      <p>If the icon was seeded in the wrong group, the review should correct that instead of preserving it by habit.</p>
+
+      <h3>8. Confidence is fair</h3>
+      <p>The confidence level should match how clear or ambiguous the icon really is.</p>
+    </section>
+
+    <section class="card">
+      <h2>Approval Outcomes</h2>
+      <div class="grid">
+        <div>
+          <h3>Approve for import</h3>
+          <p>The record is useful, honest, and clean enough to move forward.</p>
+        </div>
+        <div>
+          <h3>Hold for editor review</h3>
+          <p>The record is close, but still needs tightening in one or two places.</p>
+        </div>
+        <div>
+          <h3>Keep as reviewed draft</h3>
+          <p>The review added value, but the icon is still too context-sensitive to approve.</p>
+        </div>
+        <div>
+          <h3>Rewrite before reconsidering</h3>
+          <p>The current semantic frame is still too misleading or too broad.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Confidence Guidance</h2>
+      <ul>
+        <li><strong>High confidence:</strong> the icon is clear, the purpose is specific, and confusion risk is low.</li>
+        <li><strong>Medium confidence:</strong> the icon is still useful, but context matters a lot or two meanings remain plausible.</li>
+        <li><strong>Low confidence:</strong> the recommendation is still too fragile and should not move into approved import.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Simple Rule</h2>
+      <p>A record passes the minimum standard if it clears all 8 gates at an acceptable level, is at least medium-confidence, and openly acknowledges the ambiguity that still remains.</p>
+    </section>
+  </main>
+</body>
+</html>

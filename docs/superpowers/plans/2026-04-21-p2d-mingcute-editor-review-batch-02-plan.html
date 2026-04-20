@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MingCute Editor Review Batch 02 Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111318;
+      --panel: #181c24;
+      --line: #2a3040;
+      --text: #f3f5fb;
+      --muted: #b6bfd6;
+      --accent: #ff7a18;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    h1, h2 { margin-top: 0; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.15rem; color: var(--accent); }
+    p, li { color: var(--muted); }
+    ul { padding-left: 20px; margin: 0; }
+    code {
+      font-family: Consolas, monospace;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--text);
+    }
+    .stat {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,122,24,0.12);
+      color: #ffd1ad;
+      border: 1px solid rgba(255,122,24,0.24);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>MingCute Editor Review Batch 02</h1>
+      <p>This step reviews the next big MingCute group after the first approved MingCute batch and the first MingCute visual review batch.</p>
+      <div class="stat">Target size: 130 remaining MingCute editor-review icons</div>
+    </section>
+
+    <section>
+      <h2>What This Step Does</h2>
+      <ul>
+        <li>Pulls the remaining MingCute icons that already look strong enough for text review.</li>
+        <li>Approves the ones with clear meaning.</li>
+        <li>Puts uncertain ones on hold.</li>
+        <li>Keeps a small draft pile for icons that still need more context.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Why This Is The Right Next Step</h2>
+      <ul>
+        <li>The first MingCute visual review batch is already done.</li>
+        <li>The biggest unfinished MingCute work is now the editor-review queue.</li>
+        <li>Finishing this batch should move most of the remaining MingCute work into the approved registry path.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How Quality Is Protected</h2>
+      <ul>
+        <li>Only the unresolved MingCute editor-review icons are included.</li>
+        <li>Icons that still mix two meanings are not forced into approval.</li>
+        <li>The batch saves its own output so reruns stay stable.</li>
+        <li>Everything is rebuilt and checked before we call the step complete.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Main Outputs</h2>
+      <ul>
+        <li><code>mingcute-editor-review-batch-02.json</code></li>
+        <li><code>mingcute-editor-review-batch-02-reviewed-records.json</code></li>
+        <li><code>mingcute-editor-review-batch-02-notes.md</code></li>
+        <li><code>mingcute-editor-review-batch-02-summary.json</code></li>
+        <li>Updated approved, hold, and registry summary files</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

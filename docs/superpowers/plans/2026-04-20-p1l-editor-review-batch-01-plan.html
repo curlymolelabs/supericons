@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-L Editor Review Batch 01 Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6470;
+      --accent: #9a3412;
+      --border: #e7dccb;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-L Editor Review Batch 01 Plan</h1>
+      <p class="muted">This step moves the clearest staged icons forward first, instead of trying to solve every remaining icon at once.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Take the 27 staged icons that are already marked as ready for editor review and move them into the approved import path.</p>
+    </section>
+
+    <section>
+      <h2>Why this matters</h2>
+      <p>Not all of the remaining icons are equally hard. Right now, 27 are already strong enough for a short editor pass, while 19 still need visual review and 68 still need text-only review because their visual payloads are missing.</p>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Build one review batch for the 27 strongest staged icons.</li>
+        <li>Turn that batch into reviewed records that are clean and safe to share.</li>
+        <li>Add the batch to the promotion path.</li>
+        <li>Rebuild the approved set and the coverage summaries.</li>
+        <li>Create a visual contact sheet so the batch can be checked easily later.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>What this step does not do</h2>
+      <ul>
+        <li>It does not handle the 19 icons that still need visual review.</li>
+        <li>It does not handle the 68 icons that still rely on text-only review.</li>
+        <li>It does not reopen the older hold queue yet.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <p>The approved set should grow, the remaining staged queue should shrink, and the next unresolved work should be more concentrated and easier to plan.</p>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run build:purpose-chip-editor-review-batch</code></li>
+        <li><code>npm run build:purpose-chip-contact-sheet -- editor-review-batch-01</code></li>
+        <li><code>npm run build:purpose-chip-approved-records</code></li>
+        <li><code>npm run verify:purpose-chip-approved-records</code></li>
+        <li><code>npm run build:purpose-chip-scale-up</code></li>
+        <li><code>npm run verify:purpose-chip-scale-up</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

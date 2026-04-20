@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "total_approved_records": 129,
+  "total_editor_hold_records": 13,
+  "total_reviewed_drafts": 8,
+  "approved_by_category": {
+    "engineering_developer_tools": 4,
+    "systems_architecture": 13,
+    "agent_lifecycle": 10,
+    "search_discovery": 5,
+    "message_actions": 3,
+    "communication_social": 1,
+    "navigation_interface": 33,
+    "analytics_data": 5,
+    "data_controls": 4,
+    "system_control": 12,
+    "configuration": 1,
+    "status_feedback": 32,
+    "security_auth": 1,
+    "security": 3,
+    "commerce": 1,
+    "destructive_actions": 1
+  },
+  "approved_by_domain": {
+    "developer_tools": 25,
+    "ai_agents": 11,
+    "communication": 2,
+    "ui_shell": 17,
+    "navigation": 9,
+    "ui_controls": 25,
+    "media": 1,
+    "product_status": 32,
+    "security": 4,
+    "commerce": 1,
+    "analytics": 2
+  },
+  "batch_summaries": {
+    "single-model-batch-01": {
+      "approve_for_import": 12,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "single-model-batch-02": {
+      "approve_for_import": 12,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "single-model-batch-03": {
+      "approve_for_import": 6,
+      "hold_for_editor_review": 2,
+      "keep_as_reviewed_draft": 4
+    },
+    "editor-review-batch-01": {
+      "approve_for_import": 27,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "visual-review-batch-01": {
+      "approve_for_import": 15,
+      "hold_for_editor_review": 2,
+      "keep_as_reviewed_draft": 2
+    },
+    "visual-review-batch-02": {
+      "approve_for_import": 12,
+      "hold_for_editor_review": 5,
+      "keep_as_reviewed_draft": 1
+    },
+    "editor-review-batch-02": {
+      "approve_for_import": 43,
+      "hold_for_editor_review": 4,
+      "keep_as_reviewed_draft": 1
+    },
+    "text-review-batch-01": {
+      "approve_for_import": 2,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    }
+  },
+  "approved_record_path": "data/si-registry/pilot/purpose-chip/approved-records.json",
+  "editor_hold_queue_path": "data/si-registry/pilot/purpose-chip/editor-hold-queue.json"
+}

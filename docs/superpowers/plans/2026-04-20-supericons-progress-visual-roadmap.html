@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Supericons Progress Snapshot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5efe4;
+      --paper: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5f6b7a;
+      --line: #e6dac6;
+      --accent: #9a3412;
+      --accent-soft: #f4c7a1;
+      --done: #166534;
+      --done-soft: #d9f6dd;
+      --now: #92400e;
+      --now-soft: #fde7d2;
+      --later: #475569;
+      --later-soft: #e6ecf3;
+      --shadow: 0 18px 45px rgba(35, 28, 20, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(244, 199, 161, 0.35), transparent 30%),
+        linear-gradient(180deg, #f9f4ea 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 22px 72px;
+    }
+
+    .hero,
+    .section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 34px 34px 28px;
+      margin-bottom: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154, 52, 18, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--done-soft);
+      color: var(--done);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      max-width: 840px;
+    }
+
+    h2 { font-size: 1.65rem; }
+
+    h3 {
+      font-size: 1.08rem;
+      color: var(--ink);
+    }
+
+    p { margin: 0 0 14px; }
+    .muted { color: var(--muted); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 24px;
+      margin-top: 26px;
+    }
+
+    .callout {
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .callout strong { color: var(--accent); }
+
+    .metric-grid,
+    .build-grid,
+    .status-grid,
+    .file-grid,
+    .lane-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 22px 0;
+    }
+
+    .metric-card,
+    .build-card,
+    .status-card,
+    .file-card,
+    .funnel-card,
+    .next-card,
+    .lane-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .metric-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .metric-label {
+      font-size: 0.98rem;
+      color: var(--ink);
+    }
+
+    .section {
+      padding: 26px;
+      margin-top: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .build-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .lane-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .build-card ul,
+    .next-card ul,
+    .file-card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .status-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+    .status-card {
+      position: relative;
+      padding-top: 48px;
+    }
+
+    .status-pill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .done { background: var(--done-soft); color: var(--done); }
+    .now { background: var(--now-soft); color: var(--now); }
+    .later { background: var(--later-soft); color: var(--later); }
+
+    .funnel {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .funnel-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .funnel-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 8px;
+      background: linear-gradient(180deg, var(--accent), #d97706);
+    }
+
+    .funnel-number {
+      font-size: 1.9rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .bar-group { margin-top: 18px; }
+    .bar-row { margin-bottom: 14px; }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #efe6d6;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #b45309 0%, #f59e0b 100%);
+    }
+
+    .file-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.92em;
+      background: #f6efe4;
+      border: 1px solid #eadfcd;
+      border-radius: 8px;
+      padding: 1px 6px;
+    }
+
+    a { color: var(--accent); }
+    .small { font-size: 0.95rem; }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .metric-grid,
+      .build-grid,
+      .status-grid,
+      .funnel,
+      .file-grid,
+      .lane-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      main {
+        padding: 22px 14px 54px;
+      }
+
+      .hero,
+      .section {
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .hero-grid,
+      .metric-grid,
+      .build-grid,
+      .status-grid,
+      .funnel,
+      .file-grid,
+      .lane-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Milestone Reached</div>
+      <h1>The first 150-icon semantic rollout is now complete</h1>
+      <p class="muted">Last updated: 20 April 2026</p>
+      <p>
+        This page is the plain-language checkpoint for the work so far. It shows what was built,
+        what changed, and where Supericons now stands in the bigger roadmap.
+      </p>
+
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-number">150</div>
+          <div class="metric-label">Purpose-chip icons now fully processed in the first rollout</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">129</div>
+          <div class="metric-label">Approved semantic records from that first rollout</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">135</div>
+          <div class="metric-label">Public free semantic records now in the registry</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">+10</div>
+          <div class="metric-label">Lift in the agent usefulness benchmark after semantic search support</div>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="callout">
+          <h3>What this means in simple terms</h3>
+          <p>
+            Supericons now has one completed test set where icon meaning was drafted, reviewed, tightened,
+            approved, and moved into the real shared record system.
+          </p>
+          <p>
+            This is no longer just a prototype. It is the first finished proof that the SI semantic process can
+            go from idea to usable registry data.
+          </p>
+        </div>
+
+        <div class="callout">
+          <h3>What changed from the earlier checkpoint</h3>
+          <p>
+            The old page stopped at an early milestone with a small approved set. That is no longer the current state.
+          </p>
+          <p>
+            We now have a closed first rollout of <strong>150 icons</strong>, with <strong>129 approved</strong>,
+            <strong>13 hold</strong>, and <strong>8 reviewed drafts</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Roadmap Position</h2>
+          <p class="muted">This shows the bigger journey and where we are right now.</p>
+        </div>
+        <p class="small"><strong>Current position:</strong> first full purpose-chip rollout completed.</p>
+      </div>
+
+      <div class="status-grid">
+        <div class="status-card">
+          <span class="status-pill done">Done</span>
+          <h3>1. Launch Foundation</h3>
+          <p>Shared facts, route cleanup, and safer shell boundaries are in place.</p>
+        </div>
+        <div class="status-card">
+          <span class="status-pill done">Done</span>
+          <h3>2. Registry Foundation</h3>
+          <p>The main icon record system exists and already supports public and protected records.</p>
+        </div>
+        <div class="status-card">
+          <span class="status-pill done">Done</span>
+          <h3>3. Semantic Pilot</h3>
+          <p>The first 150-icon test set has been fully worked through end to end.</p>
+        </div>
+        <div class="status-card">
+          <span class="status-pill done">Done</span>
+          <h3>4. Agent Search Proof</h3>
+          <p>The search layer now uses the semantic records well enough to show clear usefulness lift.</p>
+        </div>
+        <div class="status-card">
+          <span class="status-pill now">Next</span>
+          <h3>5. Safe Expansion</h3>
+          <p>Use the same formula on a larger slice beyond the first purpose-chip set.</p>
+        </div>
+        <div class="status-card">
+          <span class="status-pill later">Later</span>
+          <h3>6. Continuous Scaling</h3>
+          <p>Turn the proven workflow into a broader repeatable system across more icons and categories.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>What Was Built</h2>
+          <p class="muted">These are real parts of the project now, not just plans.</p>
+        </div>
+      </div>
+
+      <div class="build-grid">
+        <div class="build-card">
+          <h3>Product foundation</h3>
+          <ul>
+            <li>Shared product-facts layer</li>
+            <li>Launch-facing count drift cleanup</li>
+            <li>Packs title fix</li>
+            <li>Route policy and shell cleanup</li>
+          </ul>
+        </div>
+
+        <div class="build-card">
+          <h3>Registry foundation</h3>
+          <ul>
+            <li>Public and protected record model</li>
+            <li>Free and premium records in one main system</li>
+            <li>Generated registry outputs for site and MCP</li>
+            <li>Verification scripts for registry integrity</li>
+          </ul>
+        </div>
+
+        <div class="build-card">
+          <h3>Semantic workflow</h3>
+          <ul>
+            <li>Draft generation pipeline</li>
+            <li>Visual review batches</li>
+            <li>Editor review batches</li>
+            <li>Approval rubric and promotion flow</li>
+          </ul>
+        </div>
+
+        <div class="build-card">
+          <h3>Agent usefulness layer</h3>
+          <ul>
+            <li>Semantic data exposed to the tool layer</li>
+            <li>Semantic-aware search support</li>
+            <li>Benchmark report for before and after comparison</li>
+            <li>Proof that semantic retrieval helps real agent tasks</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>The First 150-Icon Funnel</h2>
+          <p class="muted">This is the clearest picture of the first rollout from start to finish.</p>
+        </div>
+      </div>
+
+      <div class="funnel">
+        <div class="funnel-card">
+          <div class="funnel-number">150</div>
+          <h3>Started</h3>
+          <p>The first test set came from the 3 purpose-chip groups: AI &amp; Agents, Navigation &amp; Wayfinding, and Status &amp; Feedback.</p>
+        </div>
+
+        <div class="funnel-card">
+          <div class="funnel-number">129</div>
+          <h3>Approved</h3>
+          <p>These records passed the current quality standard and are now part of the approved set.</p>
+        </div>
+
+        <div class="funnel-card">
+          <div class="funnel-number">13</div>
+          <h3>Hold</h3>
+          <p>These icons still need tighter wording before they should be treated as trusted approved records.</p>
+        </div>
+
+        <div class="funnel-card">
+          <div class="funnel-number">8</div>
+          <h3>Reviewed drafts</h3>
+          <p>These were reviewed on purpose and kept out of approval because their meaning is still too broad or too context-heavy.</p>
+        </div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Approved share of the full 150-icon rollout</span>
+            <strong>129 of 150</strong>
+          </div>
+          <div class="bar"><span style="width: 86%;"></span></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Hold share of the full 150-icon rollout</span>
+            <strong>13 of 150</strong>
+          </div>
+          <div class="bar"><span style="width: 8.67%;"></span></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Reviewed-draft share of the full 150-icon rollout</span>
+            <strong>8 of 150</strong>
+          </div>
+          <div class="bar"><span style="width: 5.33%;"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Lane Breakdown</h2>
+          <p class="muted">This shows how the first 150 split across the 3 groups.</p>
+        </div>
+      </div>
+
+      <div class="lane-grid">
+        <div class="lane-card">
+          <h3>AI &amp; Agents</h3>
+          <p><strong>37 approved</strong></p>
+          <p><strong>8 hold</strong></p>
+          <p><strong>5 reviewed drafts</strong></p>
+        </div>
+
+        <div class="lane-card">
+          <h3>Navigation &amp; Wayfinding</h3>
+          <p><strong>47 approved</strong></p>
+          <p><strong>3 hold</strong></p>
+          <p><strong>0 reviewed drafts</strong></p>
+        </div>
+
+        <div class="lane-card">
+          <h3>Status &amp; Feedback</h3>
+          <p><strong>45 approved</strong></p>
+          <p><strong>2 hold</strong></p>
+          <p><strong>3 reviewed drafts</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Important Numbers Right Now</h2>
+          <p class="muted">These explain the current project scale in one glance.</p>
+        </div>
+      </div>
+
+      <div class="build-grid">
+        <div class="build-card">
+          <h3>Product scale</h3>
+          <p><strong>21,264</strong> free icons across the open libraries.</p>
+          <p><strong>400</strong> premium icons already mapped into the registry shape.</p>
+        </div>
+
+        <div class="build-card">
+          <h3>Registry scale</h3>
+          <p><strong>535</strong> total records now sit in the registry.</p>
+          <p><strong>135</strong> of those are public free semantic records.</p>
+        </div>
+
+        <div class="build-card">
+          <h3>Agent benchmark</h3>
+          <p>Baseline top result hits: <strong>1 of 12</strong>.</p>
+          <p>Semantic-assisted top result hits: <strong>11 of 12</strong>.</p>
+        </div>
+
+        <div class="build-card">
+          <h3>Net improvement</h3>
+          <p>The usefulness benchmark showed a <strong>+10</strong> lift once semantic search support was added.</p>
+          <p>This is the clearest proof so far that the work helps agents, not just internal organization.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Where To Look If You Want The Real Files</h2>
+          <p class="muted">These links point to the actual outputs behind this page.</p>
+        </div>
+      </div>
+
+      <div class="file-grid">
+        <div class="file-card">
+          <h3>Main roadmap</h3>
+          <ul>
+            <li><a href="./2026-04-19-supericons-foundation-main-implementation-plan.html">Main implementation roadmap</a></li>
+            <li><a href="./2026-04-19-si-registry-prd-and-blueprint.html">SI Registry blueprint</a></li>
+            <li><a href="./2026-04-19-si-semantic-rollout-roadmap.html">Semantic rollout roadmap</a></li>
+          </ul>
+        </div>
+
+        <div class="file-card">
+          <h3>Rollout summaries</h3>
+          <ul>
+            <li><a href="../../../data/si-registry/generated/purpose-chip-full-coverage-summary.json">Full 150-icon coverage summary</a></li>
+            <li><a href="../../../data/si-registry/generated/purpose-chip-approval-summary.json">Approval summary</a></li>
+            <li><a href="../../../data/si-registry/pilot/purpose-chip/approved-records.json">Approved records</a></li>
+            <li><a href="../../../data/si-registry/pilot/purpose-chip/editor-hold-queue.json">Hold queue</a></li>
+          </ul>
+        </div>
+
+        <div class="file-card">
+          <h3>Registry and benchmark</h3>
+          <ul>
+            <li><a href="../../../data/si-registry/generated/registry-summary.json">Registry summary</a></li>
+            <li><a href="../../../data/si-registry/generated/agent-semantic-usefulness-report.json">Agent usefulness report</a></li>
+            <li><a href="../../../public/registry/summary.json">Public registry summary</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>What Is Still Not Finished</h2>
+          <p class="muted">This keeps the story honest.</p>
+        </div>
+      </div>
+
+      <div class="build-grid">
+        <div class="next-card">
+          <h3>Not every icon is covered yet</h3>
+          <p>The first 150-icon set is done, but the full free library is much larger. This is the first proven slice, not the whole finish line.</p>
+        </div>
+
+        <div class="next-card">
+          <h3>13 hold records still exist</h3>
+          <p>Those are real edge cases where the wording still needs tightening before approval.</p>
+        </div>
+
+        <div class="next-card">
+          <h3>8 reviewed drafts are still intentionally unapproved</h3>
+          <p>These were not forgotten. They were left out on purpose because their meaning is still too broad.</p>
+        </div>
+
+        <div class="next-card">
+          <h3>Broader automation is still later</h3>
+          <p>The process is now proven enough to scale, but the large continuous rollout across the wider library is still the next chapter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Recommended Next Move</h2>
+          <p class="muted">This is the highest-value next step from here.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h3>Next recommended step: expand the proven formula to the next icon slice</h3>
+        <p>
+          The strongest next move is not to rethink the first rollout. That part is already proven.
+        </p>
+        <p>
+          The best next step is to take the same formula that worked here and apply it to the next controlled group of icons,
+          while keeping the hold and reviewed-draft records available for later tightening.
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

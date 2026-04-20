@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-Q Final Text Review Resolution Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6472;
+      --line: #dccfb8;
+      --accent: #8a5a24;
+      --soft: #f2e7d4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.06);
+    }
+    h1, h2 { margin-top: 0; }
+    h1 { font-size: 2.1rem; line-height: 1.15; }
+    h2 { font-size: 1.2rem; color: var(--accent); }
+    p, li { font-size: 1rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .chip {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--muted);
+    }
+    code {
+      font-family: "Courier New", monospace;
+      background: #f4efe4;
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Final Plan for the Last 2 Purpose-Chip Icons</h1>
+      <p>This step is about finishing the first full set of <code>150</code> purpose-chip icons. Only <code>2</code> icons are still waiting.</p>
+      <div class="chips">
+        <div class="chip">Remaining icons: 2</div>
+        <div class="chip">Current approved: 127</div>
+        <div class="chip">Current hold: 13</div>
+        <div class="chip">Current reviewed drafts: 8</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why These 2 Are Still Open</h2>
+      <p>These icons are not stuck because their meaning is weak. They are stuck because the local Material export does not currently give us a renderable icon file for them.</p>
+      <p class="callout">So this is a small text-based review, not a full visual review. We are only doing that because the usual picture-based step is blocked upstream.</p>
+    </section>
+
+    <section>
+      <h2>The 2 Icons</h2>
+      <ul>
+        <li><code>material:launch</code></li>
+        <li><code>material:workflow</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How We Decide Safely</h2>
+      <p>We only approve a text-only icon if all of these are true:</p>
+      <ul>
+        <li>The icon name is clear and low-risk.</li>
+        <li>The draft meaning already looks stable.</li>
+        <li>There is a matching approved icon we can compare it to.</li>
+        <li>We are not inventing a new meaning that was never tested before.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expected Result</h2>
+      <p>The likely outcome is that both icons can be approved:</p>
+      <ul>
+        <li><code>material:launch</code> should match the already-approved “open in new” meaning.</li>
+        <li><code>material:workflow</code> should match the already-approved workflow meaning.</li>
+      </ul>
+      <p>If that holds up, the first full purpose-chip rollout should end at:</p>
+      <ul>
+        <li><code>129</code> approved</li>
+        <li><code>13</code> hold</li>
+        <li><code>8</code> reviewed drafts</li>
+        <li><code>0</code> staged</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What Will Be Added</h2>
+      <ul>
+        <li>A small text-review batch file for the last 2 icons</li>
+        <li>A reviewed-record file for those 2 icons</li>
+        <li>A short notes file</li>
+        <li>A summary file with the outcome</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -42,6 +42,12 @@ import {
   hasProWorkflowAccess,
 } from './workflow-access.js';
 import { logMcpSearchAttempt, logMcpSearchBatch } from './telemetry.js';
+import {
+  attachSemanticPayload,
+  createSemanticRegistryMap,
+  loadSemanticRegistryRecords,
+  mergeSemanticMatchesIntoIcons,
+} from './semantic-registry.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -69,6 +75,7 @@ const materialExportState = {
   svgCache: new Map(),
   failedKeys: new Set(),
 };
+const semanticRegistryMap = createSemanticRegistryMap(loadSemanticRegistryRecords(dataDir));
 
 function loadData() {
   const raw = JSON.parse(readFileSync(join(dataDir, 'icon-index.json'), 'utf8'));
@@ -336,7 +343,7 @@ async function buildToolIconResult(icon) {
     result.usage = `<div class="si-anim si-anim--${icon.id}"><!-- paste SVG here --></div>`;
   }
 
-  return result;
+  return attachSemanticPayload(result, semanticRegistryMap, icon);
 }
 
 const { freeIcons, synonyms } = loadData();
@@ -517,7 +524,7 @@ const server = new McpServer({
 // --- Tool: search_icons ---
 server.tool(
   'search_icons',
-  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching icons with SVG code. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.`,
+  `Search ${freeIconCountLabel} using AI-powered synonym expansion. Returns matching icons with SVG code and SI semantic guidance when available. Premium collections are available when your API key is linked to a Pro subscription or purchased packs.`,
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
     library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, mingcute, or premium pack names'),
@@ -525,6 +532,9 @@ server.tool(
   },
   async ({ query, library, limit }) => {
     const accessibleIcons = getAccessibleIcons();
+    const searchableIcons = library
+      ? accessibleIcons.filter((icon) => icon.lib === library)
+      : accessibleIcons;
 
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
@@ -535,7 +545,7 @@ server.tool(
     let results;
     try {
       const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
-      const byKey = new Map(accessibleIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
+      const byKey = new Map(searchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
       results = (hostedPayload.results || [])
         .map((row) => byKey.get(row.icon_id))
         .filter(Boolean);
@@ -543,8 +553,10 @@ server.tool(
       if (process.env.SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK !== '1') {
         return buildStructuredToolErrorResponse(error, 'Hosted SuperIcons search is unavailable.');
       }
-      results = searchIcons(query, accessibleIcons, synonyms, { library, limit });
+      results = searchIcons(query, searchableIcons, synonyms, { library, limit });
     }
+
+    results = mergeSemanticMatchesIntoIcons(query, results, searchableIcons, semanticRegistryMap, { limit });
 
     if (results.length === 0) {
       void logMcpSearchAttempt({
@@ -581,7 +593,7 @@ server.tool(
 // --- Tool: get_icon ---
 server.tool(
   'get_icon',
-  'Retrieve a specific icon by its ID and library. Returns the full SVG code and metadata. Premium icons require an API key linked to a Pro subscription or purchased packs.',
+  'Retrieve a specific icon by its ID and library. Returns the full SVG code, metadata, and SI semantic guidance when available. Premium icons require an API key linked to a Pro subscription or purchased packs.',
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
     library: z.string().describe('Library name (e.g. "lucide", "tabler", "phosphor", or premium pack name)'),

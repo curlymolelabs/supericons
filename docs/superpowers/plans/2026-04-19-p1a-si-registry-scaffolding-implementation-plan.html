@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1-A Plan: SI Registry Foundation</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f3eb;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5b6670;
+      --line: #d7cfc0;
+      --accent: #0f766e;
+      --accent-soft: #dff5f1;
+      --code: #f3efe6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 14px;
+    }
+    h1 { font-size: 2.45rem; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 22px;
+    }
+    p, li { font-size: 1.02rem; }
+    .hero, .card, .callout {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.05);
+    }
+    .hero { margin-bottom: 22px; }
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    ul, ol { padding-left: 22px; }
+    code, pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+    }
+    pre {
+      background: var(--code);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .callout {
+      margin-top: 22px;
+      background: #fff8ea;
+    }
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">P1-A Implementation Plan</span>
+      <h1>Build the first real SI Registry foundation</h1>
+      <p>This phase creates the first real home for Supericons meaning. The goal is not to tag every icon yet. The goal is to create the main shared record system, lock the ID rules, add validation, and prove that Supericons can build useful registry outputs without breaking the live product.</p>
+      <p class="meta">Simple rule: make the registry real first, then scale tagging later.</p>
+    </section>
+
+    <section class="card">
+      <h2>Main Roadmap We Are Following</h2>
+      <div class="grid">
+        <div>
+          <h3>P0-A</h3>
+          <p>Done. Product facts were cleaned up and the packs heading issue was fixed.</p>
+        </div>
+        <div>
+          <h3>P0-B</h3>
+          <p>Done. Browser QA and dependency audit were completed.</p>
+        </div>
+        <div>
+          <h3>P0-C</h3>
+          <p>Done. Route rules, shell ownership, and the first docs cleanup slice were stabilized.</p>
+        </div>
+        <div>
+          <h3>P1-A</h3>
+          <p>This plan. Build the registry skeleton in code without cutting over the live app yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Must Achieve</h2>
+      <ul>
+        <li>Define the main shared record for one icon.</li>
+        <li>Lock one ID rule that every tool and file can follow.</li>
+        <li>Make the public, protected, and private data split explicit.</li>
+        <li>Create a small set of real sample records.</li>
+        <li>Build preview outputs from those records.</li>
+        <li>Fail fast if records are missing required fields or use bad values.</li>
+        <li>Keep the current live icon files untouched while this new system is being proven.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>What This Phase Does Not Do</h2>
+      <ul>
+        <li>It does not tag all <code>21,264</code> free icons yet.</li>
+        <li>It does not replace the live icon index yet.</li>
+        <li>It does not replace the browse taxonomy yet.</li>
+        <li>It does not add review UI yet.</li>
+        <li>It does not force search, MCP, or the website to read from the registry yet.</li>
+      </ul>
+      <p class="small">This is a build-the-foundation phase, not a full rollout phase.</p>
+    </section>
+
+    <section class="card">
+      <h2>Main Rules Locked By This Plan</h2>
+      <ul>
+        <li>The registry lives in the repo as the main official source for future icon meaning.</li>
+        <li>The registry is hybrid from the start. Some parts can become public, some must stay protected, and some stay private only.</li>
+        <li>Live product files stay as they are for now until a later cutover.</li>
+        <li>IDs are locked early:
+          <ul>
+            <li>aggregated icons use <code>{source_library}:{source_name}</code></li>
+            <li>SI-native icons use <code>si:{name}</code></li>
+          </ul>
+        </li>
+        <li>The first record set stays intentionally small.</li>
+        <li>The difference between source identity, visual depiction, SI recommendation, evidence, confidence, and review must remain visible.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Hybrid Visibility Model</h2>
+      <p>This phase should not leave the public/private split vague. It should define it in code and in the source files.</p>
+
+      <h3>1. Public open records</h3>
+      <p>These are safe to expose for free and open icons. They can feed future public lookup pages, public data files, and other trust-building surfaces.</p>
+
+      <h3>2. Protected premium records</h3>
+      <p>These use the same overall record shape, but they should not become public outputs by default. This protects premium value while still letting the registry stay consistent.</p>
+
+      <h3>3. Private operating data</h3>
+      <p>This includes things like telemetry, ranking logic, internal review notes, editorial scores, and model traces. This data should never leak into public outputs by default.</p>
+
+      <h3>4. Generated outputs</h3>
+      <p>The build step should be able to create different outputs for different audiences:</p>
+      <ul>
+        <li>a public-safe output</li>
+        <li>an internal preview output</li>
+        <li>later, other product-specific outputs if needed</li>
+      </ul>
+
+      <h3>5. Simple control fields</h3>
+      <p>The first registry records should include small control fields such as:</p>
+      <ul>
+        <li><code>access_tier</code> to say what level of visibility the record belongs to</li>
+        <li><code>projection_policy</code> to say which outputs it is allowed to flow into</li>
+      </ul>
+      <p class="small">The big idea is simple: one record system, but not one visibility level for everything.</p>
+    </section>
+
+    <section class="card">
+      <h2>Files This Phase Adds</h2>
+      <ul>
+        <li><code>data/si-registry/README.md</code></li>
+        <li><code>data/si-registry/registry-manifest.json</code></li>
+        <li><code>data/si-registry/visibility-model.json</code></li>
+        <li><code>data/si-registry/controlled-vocabularies.json</code></li>
+        <li><code>data/si-registry/records/premium-sample.json</code></li>
+        <li><code>data/si-registry/records/free-pilot.json</code></li>
+        <li><code>data/si-registry/private/README.md</code></li>
+        <li><code>lib/si-registry/id-rules.js</code></li>
+        <li><code>lib/si-registry/visibility-rules.js</code></li>
+        <li><code>lib/si-registry/record-shape.js</code></li>
+        <li><code>lib/si-registry/controlled-values.js</code></li>
+        <li><code>lib/si-registry/projections.js</code></li>
+        <li><code>scripts/build-si-registry-projections.mjs</code></li>
+        <li><code>scripts/verify-si-registry-projections.mjs</code></li>
+      </ul>
+      <p>It can also add generated preview outputs such as:</p>
+      <ul>
+        <li><code>data/si-registry/generated/registry-summary.json</code></li>
+        <li><code>data/si-registry/generated/record-preview.json</code></li>
+        <li><code>data/si-registry/generated/public-record-preview.json</code></li>
+        <li><code>public/registry/summary.json</code></li>
+        <li><code>mcp/public/registry-summary.json</code></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Implementation Steps</h2>
+
+      <h3>1. Create the registry folder and starter records</h3>
+      <p>Make one clean home for the new system inside <code>data/si-registry/</code>. Add a short README, a registry manifest, a visibility-rules file, a controlled-values file, and two tiny record sets: one premium sample and one free pilot sample.</p>
+
+      <h3>2. Lock the hybrid visibility model in code</h3>
+      <p>Add a small helper that loads the visibility rules and checks that every sample record says whether it is public, protected, or private-facing. Make sure the build can create a public-safe output without leaking protected or private data.</p>
+
+      <h3>3. Lock the ID rules in code</h3>
+      <p>Add a small helper that builds and validates registry IDs. This should be strict, because every future file and tool will rely on it.</p>
+
+      <h3>4. Lock the record shape in code</h3>
+      <p>Add a clear helper that checks which fields are required now, which ones are optional, which values must come from an approved list, and which control fields decide visibility.</p>
+
+      <h3>5. Build preview outputs</h3>
+      <p>Create a build script that reads the sample records, validates them, and writes preview files. These preview files should include an internal preview and a public-safe preview so we can inspect the split clearly without changing the live site.</p>
+
+      <h3>6. Add verification that fails fast</h3>
+      <p>The verification script should stop the build if there are duplicate IDs, missing required fields, bad controlled values, bad visibility settings, leaked protected data, or broken output files.</p>
+
+      <h3>7. Keep the no-cutover rule explicit</h3>
+      <p>Make it clear in the README and plan notes that this phase does not replace:</p>
+      <ul>
+        <li><code>public/icon-index.json</code></li>
+        <li><code>mcp/public/icon-index.json</code></li>
+        <li><code>public/icon-taxonomy.json</code></li>
+        <li><code>public/packs/manifest.json</code></li>
+      </ul>
+
+      <h3>8. Make the first examples teach the model clearly</h3>
+      <p>Use one free sample that is public-facing and one premium sample that is protected by default. If useful, add a note showing what kinds of internal operating data should stay private later.</p>
+    </section>
+
+    <section class="card">
+      <h2>Checks To Run</h2>
+      <pre><code>node scripts/build-si-registry-projections.mjs
+node scripts/verify-si-registry-projections.mjs
+npm run build</code></pre>
+      <p>Later, if package scripts are added:</p>
+      <pre><code>npm run build:si-registry
+npm run verify:si-registry</code></pre>
+    </section>
+
+    <section class="callout">
+      <h2>What Success Looks Like</h2>
+      <ul>
+        <li>The registry folder exists and is understandable.</li>
+        <li>The public, protected, and private split is defined clearly.</li>
+        <li>ID rules are locked in code.</li>
+        <li>The record shape is checked in code.</li>
+        <li>A small premium and free pilot record set exists.</li>
+        <li>Preview outputs build successfully.</li>
+        <li>The public-safe preview does not leak protected or private data.</li>
+        <li>Bad registry data causes verification to fail.</li>
+        <li>The live app still uses the current production files for now.</li>
+      </ul>
+      <p class="small">After that, the next phase is premium normalization and a small free import, not a giant full-corpus tagging jump.</p>
+    </section>
+  </main>
+</body>
+</html>

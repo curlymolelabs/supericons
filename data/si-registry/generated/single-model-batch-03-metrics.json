@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "single-model-batch-03",
+  "token_estimate_method": "visible_text_characters_divided_by_four_rounded_up",
+  "note": "This is a visible payload estimate only. It does not include hidden system prompts or reasoning tokens from the Codex runtime.",
+  "visible_input_tokens_estimate": 9901,
+  "visible_output_tokens_estimate": 5241,
+  "visible_total_tokens_estimate": 15142,
+  "started_at": "2026-04-20T16:56:26.5291288+08:00",
+  "finished_at": "2026-04-20T17:01:38.4949845+08:00",
+  "elapsed_seconds": 311.97,
+  "elapsed_human": "5m 12s"
+}

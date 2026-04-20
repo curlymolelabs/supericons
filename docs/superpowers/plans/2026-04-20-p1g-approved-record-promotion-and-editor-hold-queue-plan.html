@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-G Approved Record Promotion And Editor Hold Queue Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6470;
+      --accent: #9a3412;
+      --border: #e7dccb;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    p, li {
+      color: var(--ink);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-G Approved Record Promotion And Editor Hold Queue Plan</h1>
+      <p class="muted">This step turns the reviewed icon work into a real import-ready set, while keeping the harder icons in a smaller queue for later tightening.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Move the reviewed records that are good enough into the approved import file, keep the unresolved ones in a smaller editor queue, and make sure future pilot builds do not erase that progress.</p>
+    </section>
+
+    <section>
+      <h2>Why this matters</h2>
+      <p>The review work is now ahead of the import path. We already have reviewed records and a quality standard, but the approved file is still empty. This step closes that gap.</p>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Create a small decision file that says which reviewed records are ready for import and which still need editor tightening.</li>
+        <li>Generate a clean approved-record file that matches the registry rules.</li>
+        <li>Generate a smaller editor hold queue for the records that are not ready yet.</li>
+        <li>Change the pilot build so it keeps the approved file instead of resetting it to empty.</li>
+        <li>Run checks so the approved and hold sets stay consistent.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Promotion rule for this slice</h2>
+      <p>For this step, all reviewed records from batches 01 and 02 move into the approved path. Batch 03 keeps its current split between approved, hold, and draft records.</p>
+      <p>This keeps the clearer reviewed work moving without flattening the harder ambiguity cases.</p>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <ul>
+        <li>The purpose-chip pilot will have a real import-ready approved set.</li>
+        <li>The unresolved records will be isolated into a smaller editor queue.</li>
+        <li>Running the pilot build again will no longer wipe the approved set.</li>
+        <li>The next step will be a short editor pass on only the hold records.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run build:purpose-chip-approved-records</code></li>
+        <li><code>npm run verify:purpose-chip-approved-records</code></li>
+        <li><code>npm run build:purpose-chip-pilot</code></li>
+        <li><code>npm run verify:purpose-chip-pilot</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

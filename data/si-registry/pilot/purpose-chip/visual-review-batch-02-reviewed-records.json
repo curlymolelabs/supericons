@@ -1,0 +1,600 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "visual-review-batch-02",
+  "reviewed_records": [
+    {
+      "icon_id": "material:network_intelligence",
+      "source_library": "material",
+      "source_name": "network_intelligence",
+      "label": "Network Intelligence",
+      "depicts": "Network Intelligence shown as a connected system or branching structure.",
+      "purpose": "Show connected-system insight, graph intelligence, or analysis across linked parts of a system.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "network intelligence",
+        "system insight",
+        "graph signal",
+        "connected insight",
+        "network"
+      ],
+      "synonyms": [
+        "network intelligence",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the product shows network-level insight, graph-style intelligence, or relationships across connected system parts.",
+      "avoid_when": "Do not use for generic AI branding, simple sharing, or ordinary node diagrams when the meaning is not system insight or connected analysis.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:network_intelligence_history",
+      "source_library": "material",
+      "source_name": "network_intelligence_history",
+      "label": "Network History",
+      "depicts": "Network Intelligence shown as a connected system or branching structure.",
+      "purpose": "Show historical network insight, past graph activity, or connected-system analysis over time.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "network intelligence",
+        "system insight",
+        "graph signal",
+        "connected insight",
+        "network"
+      ],
+      "synonyms": [
+        "network intelligence",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the product shows earlier network patterns, historical connected-system activity, or past graph intelligence.",
+      "avoid_when": "Do not use for generic history, logging, or timeline screens when the meaning is not tied to connected-system insight.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:network_intelligence_update",
+      "source_library": "material",
+      "source_name": "network_intelligence_update",
+      "label": "Network Intelligence",
+      "depicts": "Network Intelligence shown as a connected system or branching structure.",
+      "purpose": "Show insight across a connected system, network activity, or graph-like intelligence.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "network intelligence",
+        "system insight",
+        "graph signal",
+        "connected insight",
+        "network"
+      ],
+      "synonyms": [
+        "network intelligence",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+      "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:prompt_suggestion",
+      "source_library": "material",
+      "source_name": "prompt_suggestion",
+      "label": "Prompt Suggestion",
+      "depicts": "An enhancement-focused symbol used for generated or improved output.",
+      "purpose": "Show inserting a suggested prompt, reusing suggested text, or applying a prompt suggestion into an input.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "prompt",
+        "suggestion",
+        "assistant help",
+        "ai assist",
+        "prompt writing"
+      ],
+      "synonyms": [
+        "prompt help",
+        "suggested prompt",
+        "assistant suggestion",
+        "prompt assist"
+      ],
+      "use_when": "Use when the interface inserts or applies a suggested prompt into a text field or composer.",
+      "avoid_when": "Do not use for generic send, reply, continue, or enter actions when the meaning is not specifically about applying a suggestion.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.8,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:account_tree",
+      "source_library": "material",
+      "source_name": "account_tree",
+      "label": "Hierarchy",
+      "depicts": "Hierarchy shown as a connected system or branching structure.",
+      "purpose": "Show nested hierarchy, branching structure, or parent-child relationships.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "hierarchy",
+        "tree",
+        "branching",
+        "parent child",
+        "structure"
+      ],
+      "synonyms": [
+        "hierarchy",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+      "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:arrow_downward",
+      "source_library": "material",
+      "source_name": "arrow_downward",
+      "label": "Move Down",
+      "depicts": "A downward arrow for movement or direction.",
+      "purpose": "Show downward movement, moving an item down, or navigating to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move down",
+        "navigate",
+        "reorder",
+        "direction"
+      ],
+      "synonyms": [
+        "move down",
+        "downward",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the user or system is moving downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or negative status when the meaning is not about actual movement downward.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:arrow_upward",
+      "source_library": "material",
+      "source_name": "arrow_upward",
+      "label": "Move Up",
+      "depicts": "An upward arrow for movement or direction.",
+      "purpose": "Show upward movement, moving an item up, or navigating to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move up",
+        "navigate",
+        "reorder",
+        "direction"
+      ],
+      "synonyms": [
+        "move up",
+        "upward",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the user or system is moving upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not about actual movement upward.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:auto_awesome",
+      "source_library": "material",
+      "source_name": "auto_awesome",
+      "label": "Smart Enhancement",
+      "depicts": "An enhancement-focused symbol used for generated or improved output.",
+      "purpose": "Show AI enhancement, generated improvement, or smart polishing of content.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "enhancement",
+        "ai improve",
+        "smart polish",
+        "generated upgrade",
+        "assist"
+      ],
+      "synonyms": [
+        "smart improve",
+        "ai enhancement",
+        "polish",
+        "generated upgrade"
+      ],
+      "use_when": "Use when the interface offers AI-assisted prompt help or smart enhancement of content.",
+      "avoid_when": "Do not use for hard status, success, or warning when the meaning is specifically suggestion or enhancement.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.8,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:dock_to_left",
+      "source_library": "material",
+      "source_name": "dock_to_left",
+      "label": "Dock To Left",
+      "depicts": "A layout control that snaps or docks content to the left side.",
+      "purpose": "Show docking or pinning content to the left side of the layout.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "dock",
+        "left",
+        "layout",
+        "pin panel",
+        "snap side"
+      ],
+      "synonyms": [
+        "dock left",
+        "pin to left",
+        "left panel",
+        "snap left"
+      ],
+      "use_when": "Use when the interface docks a panel, window, or content area to the left side.",
+      "avoid_when": "Do not use for simple back or forward navigation when the meaning is about layout docking.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:dock_to_right",
+      "source_library": "material",
+      "source_name": "dock_to_right",
+      "label": "Dock To Right",
+      "depicts": "A layout control that snaps or docks content to the right side.",
+      "purpose": "Show docking or pinning content to the right side of the layout.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "dock",
+        "right",
+        "layout",
+        "pin panel",
+        "snap side"
+      ],
+      "synonyms": [
+        "dock right",
+        "pin to right",
+        "right panel",
+        "snap right"
+      ],
+      "use_when": "Use when the interface docks a panel, window, or content area to the right side.",
+      "avoid_when": "Do not use for simple back or forward navigation when the meaning is about layout docking.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:double_arrow",
+      "source_library": "material",
+      "source_name": "double_arrow",
+      "label": "Jump Forward",
+      "depicts": "A doubled arrow suggesting a faster or larger forward step.",
+      "purpose": "Show a faster forward move, larger next step, or jump to a further destination.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "jump forward",
+        "fast move",
+        "double arrow",
+        "skip ahead",
+        "advance"
+      ],
+      "synonyms": [
+        "skip ahead",
+        "jump ahead",
+        "fast forward step",
+        "advance quickly"
+      ],
+      "use_when": "Use when the interface moves ahead faster than a normal single-step forward control.",
+      "avoid_when": "Do not use for send or open-in-new actions when the meaning is specifically a faster forward move.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.81,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:hub",
+      "source_library": "material",
+      "source_name": "hub",
+      "label": "Hub",
+      "depicts": "Hub shown as a connected system or branching structure.",
+      "purpose": "Show a central hub that connects multiple related system parts.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "hub",
+        "central node",
+        "connected center",
+        "shared point",
+        "system hub"
+      ],
+      "synonyms": [
+        "hub",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+      "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:psychology",
+      "source_library": "material",
+      "source_name": "psychology",
+      "label": "Reasoning",
+      "depicts": "A thinking-focused symbol used for cognition or mental processing.",
+      "purpose": "Show reasoning, analytical thought, or a deliberate thinking process.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "reasoning",
+        "thinking",
+        "analysis",
+        "cognition",
+        "deliberation"
+      ],
+      "synonyms": [
+        "thinking process",
+        "analysis",
+        "reasoning step",
+        "deliberation"
+      ],
+      "use_when": "Use when the interface highlights reasoning, analytical thought, or a deliberate decision-making stage.",
+      "avoid_when": "Do not use for mental health or human psychology content when the meaning is specifically system reasoning.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:psychology_alt",
+      "source_library": "material",
+      "source_name": "psychology_alt",
+      "label": "Questioning",
+      "depicts": "A thinking-focused symbol used for cognition or mental processing.",
+      "purpose": "Show questioning, uncertainty, or a thinking state centered on an open question.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "reasoning",
+        "thinking",
+        "analysis",
+        "cognition",
+        "deliberation"
+      ],
+      "synonyms": [
+        "thinking process",
+        "analysis",
+        "reasoning step",
+        "deliberation"
+      ],
+      "use_when": "Use when the interface highlights uncertainty, open questions, or a thinking step focused on what to ask next.",
+      "avoid_when": "Do not use for generic AI reasoning, settings, or knowledge icons when the meaning is not specifically about questioning or uncertainty.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.81,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:subdirectory_arrow_right",
+      "source_library": "material",
+      "source_name": "subdirectory_arrow_right",
+      "label": "Nested Destination",
+      "depicts": "An arrow entering a nested branch or sublevel.",
+      "purpose": "Show a move into a nested section, child route, or deeper branch in a hierarchy.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "nested route",
+        "subdirectory",
+        "drill in",
+        "child level",
+        "hierarchy"
+      ],
+      "synonyms": [
+        "go deeper",
+        "child route",
+        "nested destination",
+        "drill into branch"
+      ],
+      "use_when": "Use when the interface moves into a child item, nested route, or deeper hierarchy level.",
+      "avoid_when": "Do not use for simple forward navigation when the meaning is specifically hierarchical drill-in.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:swap_horiz",
+      "source_library": "material",
+      "source_name": "swap_horiz",
+      "label": "Swap",
+      "depicts": "Opposing arrows indicating exchange or order swap.",
+      "purpose": "Show swapping, reversing, or exchanging positions or directions.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "swap",
+        "switch",
+        "reverse",
+        "exchange",
+        "change order"
+      ],
+      "synonyms": [
+        "switch sides",
+        "reverse order",
+        "exchange positions",
+        "swap direction"
+      ],
+      "use_when": "Use when the interface swaps values, reverses direction, or exchanges positions.",
+      "avoid_when": "Do not use for sync, refresh, or undo when the meaning is not actual exchange.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.91,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:swap_vert",
+      "source_library": "material",
+      "source_name": "swap_vert",
+      "label": "Swap",
+      "depicts": "Opposing arrows indicating exchange or order swap.",
+      "purpose": "Show swapping, reversing, or exchanging positions or directions.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "swap",
+        "switch",
+        "reverse",
+        "exchange",
+        "change order"
+      ],
+      "synonyms": [
+        "switch sides",
+        "reverse order",
+        "exchange positions",
+        "swap direction"
+      ],
+      "use_when": "Use when the interface swaps values, reverses direction, or exchanges positions.",
+      "avoid_when": "Do not use for sync, refresh, or undo when the meaning is not actual exchange.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.91,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:density_medium",
+      "source_library": "material",
+      "source_name": "density_medium",
+      "label": "View Density",
+      "depicts": "A compact layout marker for list or content density.",
+      "purpose": "Show view density or compactness controls for how much content is shown.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "density",
+        "compact view",
+        "layout spacing",
+        "content density",
+        "view settings"
+      ],
+      "synonyms": [
+        "compact layout",
+        "view density",
+        "spacing control",
+        "content spacing"
+      ],
+      "use_when": "Use when the interface changes how compactly content is displayed.",
+      "avoid_when": "Do not use for general settings or font size when the control is specifically layout density.",
+      "evidence_sources": [
+        "source-name",
+        "visual-inspection",
+        "editorial-review"
+      ],
+      "confidence_score": 0.8,
+      "confidence_band": "medium"
+    }
+  ]
+}

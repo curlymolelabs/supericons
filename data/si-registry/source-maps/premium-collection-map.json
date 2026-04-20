@@ -1,0 +1,66 @@
+{
+  "status-feedback": {
+    "idPrefix": "status-feedback",
+    "category": "status_feedback",
+    "domain": "product_status",
+    "intent": "inform",
+    "useWhenContext": "the product needs feedback, response, or state-change communication",
+    "avoidWhenContext": "the meaning is unrelated to product state, response, or feedback"
+  },
+  "ai-agentic": {
+    "idPrefix": "ai-agentic",
+    "category": "agent_lifecycle",
+    "domain": "ai_agents",
+    "intent": "inform",
+    "useWhenContext": "the product is showing AI agents, orchestration, or model activity",
+    "avoidWhenContext": "the meaning is unrelated to AI agents or intelligent system activity"
+  },
+  "data-charts": {
+    "idPrefix": "data-charts",
+    "category": "analytics_data",
+    "domain": "analytics",
+    "intent": "inform",
+    "useWhenContext": "the product is showing analytics, metrics, dashboards, or reporting",
+    "avoidWhenContext": "the meaning is unrelated to analytics, metrics, or reporting"
+  },
+  "social-communication": {
+    "idPrefix": "social-communication",
+    "category": "communication_social",
+    "domain": "communication",
+    "intent": "inform",
+    "useWhenContext": "the product is showing messaging, social actions, or community activity",
+    "avoidWhenContext": "the meaning is unrelated to communication or social interaction"
+  },
+  "ecommerce": {
+    "idPrefix": "ecommerce",
+    "category": "commerce",
+    "domain": "commerce",
+    "intent": "inform",
+    "useWhenContext": "the product is showing buying, selling, ordering, payment, or storefront actions",
+    "avoidWhenContext": "the meaning is unrelated to commerce, ordering, or payment"
+  },
+  "navigation-menus": {
+    "idPrefix": "navigation-menus",
+    "category": "navigation_interface",
+    "domain": "navigation",
+    "intent": "inform",
+    "useWhenContext": "the product is showing movement, layout, menus, or interface structure",
+    "avoidWhenContext": "the meaning is unrelated to interface movement or navigation"
+  },
+  "media-playback": {
+    "idPrefix": "media-playback",
+    "category": "media_playback",
+    "domain": "media",
+    "intent": "inform",
+    "useWhenContext": "the product is showing media control, playback, capture, or output",
+    "avoidWhenContext": "the meaning is unrelated to media or playback behavior"
+  },
+  "security-auth": {
+    "idPrefix": "security-auth",
+    "category": "security_auth",
+    "domain": "security",
+    "intent": "inform",
+    "useWhenContext": "the product is showing authentication, access, protection, or account security",
+    "avoidWhenContext": "the meaning is unrelated to access, trust, or security"
+  }
+}

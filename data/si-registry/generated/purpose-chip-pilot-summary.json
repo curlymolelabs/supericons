@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-20T15:16:12.996Z",
+  "pilot_id": "purpose-chip-semantic-ops",
+  "total_worklist_count": 150,
+  "lane_counts": {
+    "ai-agent-workflows": 50,
+    "navigation-wayfinding": 50,
+    "status-feedback": 50
+  },
+  "candidate_count": 150,
+  "visual_review_input_count": 150,
+  "visual_payload_status_counts": {
+    "svg_available": 75,
+    "svg_available_local_material": 73,
+    "metadata_only": 2
+  },
+  "material_coverage": {
+    "total_material_icons": 75,
+    "by_visual_payload_status": {
+      "svg_available_local_material": 73,
+      "metadata_only": 2
+    },
+    "navigation_wayfinding_material_with_svg": 49
+  },
+  "confidence_bands": {
+    "high_confidence": 133,
+    "needs_review": 17,
+    "ambiguous": 0
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 133,
+    "needs_visual_review": 17,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "approved_record_count": 129,
+  "approved_import_path": "data/si-registry/pilot/purpose-chip/approved-records.json"
+}

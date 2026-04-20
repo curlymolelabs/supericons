@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-K Bulk Purpose-Chip Scale-Up Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --card: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5b6470;
+      --accent: #9a3412;
+      --border: #e7dccb;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>P1-K Bulk Purpose-Chip Scale-Up Plan</h1>
+      <p class="muted">This step grows the purpose-chip pilot from the small reviewed set to the full 150-icon set, while keeping the quality rules in place.</p>
+    </section>
+
+    <section>
+      <h2>Goal</h2>
+      <p>Cover all 150 icons in the three purpose-chip groups. The 30 approved icons stay approved. The remaining icons get a stronger first draft and a clear next step.</p>
+    </section>
+
+    <section>
+      <h2>Why this matters</h2>
+      <p>We already proved that the semantic format works and that approved records help search. The missing piece is scale. Right now, 114 of the 150 icons are still waiting in a rough first-pass state.</p>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ol>
+        <li>Keep the approved, hold, and reviewed-draft icons exactly as they are.</li>
+        <li>Create stronger automation-staged semantic records for the remaining 114 icons.</li>
+        <li>Give each staged icon a simple next step like editor review, visual review, text review, or manual tightening.</li>
+        <li>Create a clear summary showing the full 150-icon coverage picture.</li>
+        <li>Add checks so the new staged set stays consistent.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Important limit</h2>
+      <p>This step does not publish all 150 icons as approved. It only stages the remaining icons safely. The reviewed and approved work stays protected.</p>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <ul>
+        <li>Every icon in the 150-icon set will be accounted for.</li>
+        <li>The reviewed subset will remain trusted and unchanged.</li>
+        <li>The remaining icons will have better first drafts than the old generic lane filler.</li>
+        <li>We will be able to see which icons are closest to approval next.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Checks</h2>
+      <ul>
+        <li><code>npm run build:purpose-chip-scale-up</code></li>
+        <li><code>npm run verify:purpose-chip-scale-up</code></li>
+        <li><code>npm run build:purpose-chip-pilot</code></li>
+        <li><code>npm run verify:purpose-chip-pilot</code></li>
+        <li><code>npm run build</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

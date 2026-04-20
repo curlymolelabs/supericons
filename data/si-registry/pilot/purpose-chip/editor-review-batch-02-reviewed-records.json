@@ -1,0 +1,1590 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "editor-review-batch-02",
+  "reviewed_records": [
+    {
+      "icon_id": "material:apps",
+      "source_library": "material",
+      "source_name": "apps",
+      "label": "App Grid",
+      "depicts": "A grid of small squares representing app destinations.",
+      "purpose": "Show an app grid, app launcher, or collection of app destinations.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "apps",
+        "app grid",
+        "launcher",
+        "destinations",
+        "dashboard"
+      ],
+      "synonyms": [
+        "app launcher",
+        "all apps",
+        "grid menu",
+        "app destinations"
+      ],
+      "use_when": "Use when the interface opens an app launcher, app grid, or collection of primary destinations.",
+      "avoid_when": "Do not use for generic layout switching when the meaning is specifically a set of apps or destinations.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:chevron_left",
+      "source_library": "material",
+      "source_name": "chevron_left",
+      "label": "Back",
+      "depicts": "A left-facing navigation arrow.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "navigate",
+        "return",
+        "left"
+      ],
+      "synonyms": [
+        "go back",
+        "previous",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface needs to move backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo, close, or dismiss when the action is not actually backward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:chevron_right",
+      "source_library": "material",
+      "source_name": "chevron_right",
+      "label": "Forward",
+      "depicts": "A right-facing navigation arrow.",
+      "purpose": "Show a move forward to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "navigate",
+        "continue",
+        "right"
+      ],
+      "synonyms": [
+        "next",
+        "go forward",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface needs to move to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send, share, or submit when the action is not actually moving forward in navigation.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:dashboard",
+      "source_library": "material",
+      "source_name": "dashboard",
+      "label": "Dashboard",
+      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "purpose": "Show a dashboard destination or a dashboard-style overview surface.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "dashboard",
+        "overview",
+        "home panel",
+        "main surface",
+        "summary view"
+      ],
+      "synonyms": [
+        "overview page",
+        "main dashboard",
+        "summary surface",
+        "dashboard home"
+      ],
+      "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+      "avoid_when": "Do not use for charts or analytics details when the meaning is specifically the dashboard destination.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:data_object",
+      "source_library": "material",
+      "source_name": "data_object",
+      "label": "Data Object",
+      "depicts": "A structured data symbol for stored records or organized information.",
+      "purpose": "Show a structured data object or typed record.",
+      "category": "analytics_data",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "data object",
+        "structured record",
+        "typed data",
+        "schema object",
+        "entity"
+      ],
+      "synonyms": [
+        "structured record",
+        "typed object",
+        "data entity",
+        "schema object"
+      ],
+      "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+      "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:database",
+      "source_library": "material",
+      "source_name": "database",
+      "label": "Data Store",
+      "depicts": "A structured data symbol for stored records or organized information.",
+      "purpose": "Show a structured data store or database.",
+      "category": "analytics_data",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "database",
+        "data store",
+        "records",
+        "structured data",
+        "storage"
+      ],
+      "synonyms": [
+        "data store",
+        "structured storage",
+        "records database",
+        "data source"
+      ],
+      "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+      "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:database_search",
+      "source_library": "material",
+      "source_name": "database_search",
+      "label": "Data Search",
+      "depicts": "A search-focused symbol showing structured or scoped search.",
+      "purpose": "Show search across stored records or structured data.",
+      "category": "search_discovery",
+      "intent": "discover",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "search",
+        "database",
+        "records",
+        "lookup",
+        "structured query"
+      ],
+      "synonyms": [
+        "search records",
+        "query database",
+        "structured lookup",
+        "data search"
+      ],
+      "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+      "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:dataset",
+      "source_library": "material",
+      "source_name": "dataset",
+      "label": "Dataset",
+      "depicts": "A structured data symbol for stored records or organized information.",
+      "purpose": "Show a dataset or grouped training data.",
+      "category": "analytics_data",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "dataset",
+        "training data",
+        "data collection",
+        "examples",
+        "data set"
+      ],
+      "synonyms": [
+        "training dataset",
+        "data set",
+        "example collection",
+        "data collection"
+      ],
+      "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+      "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:dataset_linked",
+      "source_library": "material",
+      "source_name": "dataset_linked",
+      "label": "Linked Dataset",
+      "depicts": "A structured data symbol for stored records or organized information.",
+      "purpose": "Show linked datasets or connected data sets.",
+      "category": "analytics_data",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "linked dataset",
+        "connected data",
+        "joined dataset",
+        "data relation",
+        "dataset"
+      ],
+      "synonyms": [
+        "connected dataset",
+        "joined data",
+        "related datasets",
+        "linked data"
+      ],
+      "use_when": "Use when the interface refers to structured data, stored records, or organized data collections.",
+      "avoid_when": "Do not use for generic files or folders when the meaning is specifically structured data.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:drag_indicator",
+      "source_library": "material",
+      "source_name": "drag_indicator",
+      "label": "Drag Handle",
+      "depicts": "A grip pattern used for dragging or reordering.",
+      "purpose": "Show that an item can be dragged, moved, or reordered.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "drag",
+        "reorder",
+        "move",
+        "handle",
+        "grip"
+      ],
+      "synonyms": [
+        "drag handle",
+        "reorder item",
+        "move grip",
+        "grab handle"
+      ],
+      "use_when": "Use when the user can drag or reorder an item in the interface.",
+      "avoid_when": "Do not use for navigation arrows or menu buttons when the control is specifically for drag movement.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:expand_less",
+      "source_library": "material",
+      "source_name": "expand_less",
+      "label": "Collapse",
+      "depicts": "An upward control indicating content can close or fold away.",
+      "purpose": "Show that open content, options, or details can collapse closed.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "collapse",
+        "show less",
+        "close",
+        "hide details",
+        "fold"
+      ],
+      "synonyms": [
+        "show less",
+        "collapse section",
+        "close details",
+        "fold up"
+      ],
+      "use_when": "Use when the interface can collapse a section, hide details, or close expanded content.",
+      "avoid_when": "Do not use for upload or upward movement when the meaning is not collapse.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:expand_more",
+      "source_library": "material",
+      "source_name": "expand_more",
+      "label": "Expand",
+      "depicts": "A downward control indicating more content can open.",
+      "purpose": "Show that more content, options, or details can expand open.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "expand",
+        "show more",
+        "open",
+        "details",
+        "dropdown"
+      ],
+      "synonyms": [
+        "show more",
+        "expand section",
+        "open details",
+        "dropdown open"
+      ],
+      "use_when": "Use when the interface can expand a section, reveal more options, or open a dropdown-like control.",
+      "avoid_when": "Do not use for download, downward movement, or status decline when the meaning is not expansion.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:filter_list",
+      "source_library": "material",
+      "source_name": "filter_list",
+      "label": "Filter List",
+      "depicts": "A list or funnel control for narrowing visible results.",
+      "purpose": "Show filtering of a list, results, or visible data set.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "filter",
+        "list filter",
+        "refine",
+        "narrow",
+        "results"
+      ],
+      "synonyms": [
+        "filter results",
+        "narrow list",
+        "refine list",
+        "apply list filters"
+      ],
+      "use_when": "Use when the interface lets the user narrow, refine, or filter a list of results.",
+      "avoid_when": "Do not use for sort-only controls or analytics funnels when the UI is actually filtering results.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:first_page",
+      "source_library": "material",
+      "source_name": "first_page",
+      "label": "First Page",
+      "depicts": "A page-jump control that moves to the beginning of a list or pager.",
+      "purpose": "Show a jump to the first page or start of a paged result set.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "first page",
+        "start",
+        "jump to start",
+        "pagination",
+        "beginning"
+      ],
+      "synonyms": [
+        "go to first page",
+        "start of pages",
+        "first result page",
+        "jump to beginning"
+      ],
+      "use_when": "Use when pagination or result browsing needs a direct jump to the beginning.",
+      "avoid_when": "Do not use for rewind media or reset state when the control is specifically page navigation.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:fullscreen",
+      "source_library": "material",
+      "source_name": "fullscreen",
+      "label": "Full Screen",
+      "depicts": "A frame-expansion icon that fills the available screen.",
+      "purpose": "Show entering full screen or expanding content to take over the screen.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "full screen",
+        "expand view",
+        "maximize",
+        "immersive",
+        "view control"
+      ],
+      "synonyms": [
+        "maximize view",
+        "enter full screen",
+        "expand to screen",
+        "immersive mode"
+      ],
+      "use_when": "Use when the interface expands content into a full-screen or maximized view.",
+      "avoid_when": "Do not use for zoom or open in new window when the meaning is specifically full screen.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:fullscreen_exit",
+      "source_library": "material",
+      "source_name": "fullscreen_exit",
+      "label": "Exit Full Screen",
+      "depicts": "A frame-collapse icon returning from a full-screen view.",
+      "purpose": "Show leaving full screen or restoring a smaller view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "exit full screen",
+        "restore view",
+        "collapse",
+        "leave immersive",
+        "view control"
+      ],
+      "synonyms": [
+        "leave full screen",
+        "restore window",
+        "shrink view",
+        "exit immersive mode"
+      ],
+      "use_when": "Use when the interface leaves full screen and returns to the normal view.",
+      "avoid_when": "Do not use for close or dismiss when the meaning is specifically leaving full screen.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:generating_tokens",
+      "source_library": "material",
+      "source_name": "generating_tokens",
+      "label": "Token Generation",
+      "depicts": "Token Generation shown as an AI model or token-related symbol.",
+      "purpose": "Show token generation, token streaming, or incremental model output.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "token generation",
+        "streaming",
+        "model output",
+        "token stream",
+        "generation"
+      ],
+      "synonyms": [
+        "stream tokens",
+        "generate output tokens",
+        "token stream",
+        "incremental output"
+      ],
+      "use_when": "Use when the interface refers to training, token generation, or token-based model activity.",
+      "avoid_when": "Do not use for generic pricing, badges, or ordinary counters when the meaning is specifically model activity.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.81,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:grid_view",
+      "source_library": "material",
+      "source_name": "grid_view",
+      "label": "Grid View",
+      "depicts": "A tiled layout icon showing content in a grid.",
+      "purpose": "Show a grid or tiled view mode for browsing content.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "grid view",
+        "tiles",
+        "card view",
+        "browse grid",
+        "layout"
+      ],
+      "synonyms": [
+        "tile view",
+        "card grid",
+        "grid layout",
+        "browse in grid"
+      ],
+      "use_when": "Use when the interface switches content into a grid, tile, or card-based view.",
+      "avoid_when": "Do not use for app launchers or dashboards when the meaning is specifically a view mode.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:last_page",
+      "source_library": "material",
+      "source_name": "last_page",
+      "label": "Last Page",
+      "depicts": "A page-jump control that moves to the end of a list or pager.",
+      "purpose": "Show a jump to the last page or end of a paged result set.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "last page",
+        "end",
+        "jump to end",
+        "pagination",
+        "final page"
+      ],
+      "synonyms": [
+        "go to last page",
+        "end of pages",
+        "last result page",
+        "jump to end"
+      ],
+      "use_when": "Use when pagination or result browsing needs a direct jump to the end.",
+      "avoid_when": "Do not use for fast-forward media or completion state when the control is specifically page navigation.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:memory",
+      "source_library": "material",
+      "source_name": "memory",
+      "label": "Memory",
+      "depicts": "A memory-related symbol for saved context or retained state.",
+      "purpose": "Show retained memory, saved context, or remembered state inside a system.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "memory",
+        "saved context",
+        "retained state",
+        "recall",
+        "history"
+      ],
+      "synonyms": [
+        "agent memory",
+        "saved context",
+        "remembered state",
+        "recall"
+      ],
+      "use_when": "Use when the interface refers to stored context, memory recall, or retained state in an agent or model.",
+      "avoid_when": "Do not use for hardware memory or browser history when the meaning is specifically contextual memory.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:memory_alt",
+      "source_library": "material",
+      "source_name": "memory_alt",
+      "label": "Memory",
+      "depicts": "A memory-related symbol for saved context or retained state.",
+      "purpose": "Show retained memory, saved context, or remembered state inside a system.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "memory",
+        "saved context",
+        "retained state",
+        "recall",
+        "history"
+      ],
+      "synonyms": [
+        "agent memory",
+        "saved context",
+        "remembered state",
+        "recall"
+      ],
+      "use_when": "Use when the interface refers to stored context, memory recall, or retained state in an agent or model.",
+      "avoid_when": "Do not use for hardware memory or browser history when the meaning is specifically contextual memory.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:menu_open",
+      "source_library": "material",
+      "source_name": "menu_open",
+      "label": "Open Menu",
+      "depicts": "A menu icon shown in an opened or opening state.",
+      "purpose": "Show that the main menu or side menu can open or has been revealed.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "menu",
+        "open menu",
+        "sidebar",
+        "navigation drawer",
+        "panel"
+      ],
+      "synonyms": [
+        "open navigation",
+        "sidebar menu",
+        "open drawer",
+        "menu panel"
+      ],
+      "use_when": "Use when the interface opens, reveals, or toggles a main navigation menu.",
+      "avoid_when": "Do not use for generic settings or overflow actions when the control is specifically a main menu.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:model_training",
+      "source_library": "material",
+      "source_name": "model_training",
+      "label": "Model Training",
+      "depicts": "Model Training shown as an AI model or token-related symbol.",
+      "purpose": "Show model training, learning, or tuning of an AI system.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "model training",
+        "learning",
+        "tuning",
+        "fit model",
+        "ai training"
+      ],
+      "synonyms": [
+        "train model",
+        "model learning",
+        "tune model",
+        "ai training"
+      ],
+      "use_when": "Use when the interface refers to training, token generation, or token-based model activity.",
+      "avoid_when": "Do not use for generic pricing, badges, or ordinary counters when the meaning is specifically model activity.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.81,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:open_in_full",
+      "source_library": "material",
+      "source_name": "open_in_full",
+      "label": "Full Screen",
+      "depicts": "A frame-expansion icon that fills the available screen.",
+      "purpose": "Show entering full screen or expanding content to take over the screen.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "full screen",
+        "expand view",
+        "maximize",
+        "immersive",
+        "view control"
+      ],
+      "synonyms": [
+        "maximize view",
+        "enter full screen",
+        "expand to screen",
+        "immersive mode"
+      ],
+      "use_when": "Use when the interface expands content into a full-screen or maximized view.",
+      "avoid_when": "Do not use for zoom or open in new window when the meaning is specifically full screen.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:open_in_new",
+      "source_library": "material",
+      "source_name": "open_in_new",
+      "label": "Open In New",
+      "depicts": "An outward arrow showing content opening in a new destination.",
+      "purpose": "Show opening content in a new tab, new window, or external destination.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "open in new",
+        "external",
+        "new tab",
+        "launch",
+        "outbound"
+      ],
+      "synonyms": [
+        "open external",
+        "new tab",
+        "launch page",
+        "open separately"
+      ],
+      "use_when": "Use when the interface opens content in a new tab, new window, or external destination.",
+      "avoid_when": "Do not use for send or share when the meaning is specifically opening elsewhere.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:redo",
+      "source_library": "material",
+      "source_name": "redo",
+      "label": "Redo",
+      "depicts": "A curved arrow replaying a previous state change.",
+      "purpose": "Show redoing an action that was just undone.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "redo",
+        "repeat action",
+        "reapply",
+        "history",
+        "restore change"
+      ],
+      "synonyms": [
+        "redo last change",
+        "reapply action",
+        "restore undone change",
+        "repeat change"
+      ],
+      "use_when": "Use when the interface reapplies an action that was previously undone.",
+      "avoid_when": "Do not use for forward navigation or submit actions when the meaning is not action history.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:refresh",
+      "source_library": "material",
+      "source_name": "refresh",
+      "label": "Refresh",
+      "depicts": "A circular arrow loop used for reloading or refetching.",
+      "purpose": "Show refreshing or reloading the current view, results, or visible content state.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "refresh",
+        "reload",
+        "update view",
+        "refetch",
+        "reload results"
+      ],
+      "synonyms": [
+        "reload",
+        "refresh view",
+        "update results",
+        "refetch content"
+      ],
+      "use_when": "Use when the interface refreshes a page, refetches results, or reloads the current content state.",
+      "avoid_when": "Do not use for retry-after-error, sync status, or undo when the meaning is not a direct refresh action.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:robot",
+      "source_library": "material",
+      "source_name": "robot",
+      "label": "Agent",
+      "depicts": "A robot-like symbol for an assistant or automated agent.",
+      "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "agent",
+        "assistant",
+        "bot",
+        "automation",
+        "ai"
+      ],
+      "synonyms": [
+        "ai agent",
+        "assistant bot",
+        "automated assistant",
+        "agent actor"
+      ],
+      "use_when": "Use when the interface refers to an AI assistant, autonomous agent, or bot-driven actor.",
+      "avoid_when": "Do not use for general toys, mascots, or generic automation with no agent meaning.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:schema",
+      "source_library": "material",
+      "source_name": "schema",
+      "label": "Schema",
+      "depicts": "A structured schema symbol for typed data rules.",
+      "purpose": "Show structured schema, field rules, or typed data shape.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "schema",
+        "data shape",
+        "structure",
+        "typed fields",
+        "spec"
+      ],
+      "synonyms": [
+        "data schema",
+        "typed structure",
+        "field model",
+        "data rules"
+      ],
+      "use_when": "Use when the interface refers to technical structure, backend controls, or typed data definitions.",
+      "avoid_when": "Do not use for user-facing settings or simple forms when the meaning is specifically technical structure.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:segment",
+      "source_library": "material",
+      "source_name": "segment",
+      "label": "Segmented Control",
+      "depicts": "A segmented switch used for quick view or mode changes.",
+      "purpose": "Show segment layout, grouped bars, or a compact segmented interface when nearby UI context makes that meaning clear.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "segmented control",
+        "switch view",
+        "modes",
+        "toggle view",
+        "segments"
+      ],
+      "synonyms": [
+        "segmented switch",
+        "mode selector",
+        "view switcher",
+        "toggle segments"
+      ],
+      "use_when": "Use when the interface refers to segment-based layout or grouped sections with clear surrounding context.",
+      "avoid_when": "Do not use for generic list, density, or alignment controls when the meaning is not specifically about segments or grouped sections.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.8,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:smart_toy",
+      "source_library": "material",
+      "source_name": "smart_toy",
+      "label": "Agent",
+      "depicts": "A robot-like symbol for an assistant or automated agent.",
+      "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "agent",
+        "assistant",
+        "bot",
+        "automation",
+        "ai"
+      ],
+      "synonyms": [
+        "ai agent",
+        "assistant bot",
+        "automated assistant",
+        "agent actor"
+      ],
+      "use_when": "Use when the interface refers to an AI assistant, autonomous agent, or bot-driven actor.",
+      "avoid_when": "Do not use for general toys, mascots, or generic automation with no agent meaning.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:sort",
+      "source_library": "material",
+      "source_name": "sort",
+      "label": "Sort",
+      "depicts": "A control that changes ordering or ranking of items.",
+      "purpose": "Show sorting of a list, results, or ordered set of items.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort",
+        "order",
+        "arrange",
+        "rank",
+        "list control"
+      ],
+      "synonyms": [
+        "sort list",
+        "change order",
+        "arrange items",
+        "sort results"
+      ],
+      "use_when": "Use when the interface changes how items are ordered or ranked.",
+      "avoid_when": "Do not use for filtering, navigation, or progress states when the control is about ordering.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:tab",
+      "source_library": "material",
+      "source_name": "tab",
+      "label": "Tabs",
+      "depicts": "A tab-like layout marker for switching sections.",
+      "purpose": "Show tabbed navigation between sibling sections or views.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "tabs",
+        "tab navigation",
+        "sections",
+        "switch view",
+        "top nav"
+      ],
+      "synonyms": [
+        "tab bar",
+        "section tabs",
+        "switch tabs",
+        "tabbed view"
+      ],
+      "use_when": "Use when the interface switches between sibling sections through a tab pattern.",
+      "avoid_when": "Do not use for generic lists or cards when the control is specifically tab navigation.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:terminal",
+      "source_library": "material",
+      "source_name": "terminal",
+      "label": "Terminal",
+      "depicts": "A command-line terminal prompt.",
+      "purpose": "Show command-line tooling, terminal access, or developer shell work.",
+      "category": "engineering_developer_tools",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "terminal",
+        "command line",
+        "shell",
+        "developer tool",
+        "console"
+      ],
+      "synonyms": [
+        "shell",
+        "console",
+        "command line",
+        "terminal session"
+      ],
+      "use_when": "Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+      "avoid_when": "Do not use for chat or generic code views when the meaning is specifically terminal access.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:token",
+      "source_library": "material",
+      "source_name": "token",
+      "label": "Token",
+      "depicts": "Token shown as an AI model or token-related symbol.",
+      "purpose": "Show token units, model tokens, or token-based usage.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "token",
+        "usage unit",
+        "model token",
+        "token count",
+        "tokenized"
+      ],
+      "synonyms": [
+        "token count",
+        "model token",
+        "usage token",
+        "text token"
+      ],
+      "use_when": "Use when the interface refers to training, token generation, or token-based model activity.",
+      "avoid_when": "Do not use for generic pricing, badges, or ordinary counters when the meaning is specifically model activity.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.81,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "material:undo",
+      "source_library": "material",
+      "source_name": "undo",
+      "label": "Undo",
+      "depicts": "A curved arrow returning to a previous state.",
+      "purpose": "Show undoing the most recent action.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "undo",
+        "reverse action",
+        "go back",
+        "revert",
+        "history"
+      ],
+      "synonyms": [
+        "revert action",
+        "go back one step",
+        "undo last change",
+        "reverse change"
+      ],
+      "use_when": "Use when the interface reverses the most recent user action.",
+      "avoid_when": "Do not use for back navigation or refresh when the meaning is not action history.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:view_list",
+      "source_library": "material",
+      "source_name": "view_list",
+      "label": "List View",
+      "depicts": "A stacked-line layout icon for list presentation.",
+      "purpose": "Show a list view mode for browsing content in rows.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "list view",
+        "rows",
+        "stacked list",
+        "browse list",
+        "layout"
+      ],
+      "synonyms": [
+        "row view",
+        "list layout",
+        "browse in list",
+        "stacked items"
+      ],
+      "use_when": "Use when the interface switches content into a list or row-based view.",
+      "avoid_when": "Do not use for checklists or navigation menus when the meaning is specifically a view mode.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:view_module",
+      "source_library": "material",
+      "source_name": "view_module",
+      "label": "Grid View",
+      "depicts": "A tiled layout icon showing content in a grid.",
+      "purpose": "Show a grid or tiled view mode for browsing content.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "grid view",
+        "tiles",
+        "card view",
+        "browse grid",
+        "layout"
+      ],
+      "synonyms": [
+        "tile view",
+        "card grid",
+        "grid layout",
+        "browse in grid"
+      ],
+      "use_when": "Use when the interface switches content into a grid, tile, or card-based view.",
+      "avoid_when": "Do not use for app launchers or dashboards when the meaning is specifically a view mode.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:view_sidebar",
+      "source_library": "material",
+      "source_name": "view_sidebar",
+      "label": "Sidebar View",
+      "depicts": "A layout icon showing a main area beside a sidebar.",
+      "purpose": "Show a sidebar layout or a control that opens, closes, or focuses the sidebar.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "sidebar",
+        "layout",
+        "side panel",
+        "navigation panel",
+        "split layout"
+      ],
+      "synonyms": [
+        "sidebar layout",
+        "side panel",
+        "open sidebar",
+        "toggle sidebar"
+      ],
+      "use_when": "Use when the interface highlights or toggles a sidebar or side navigation panel.",
+      "avoid_when": "Do not use for generic settings or drawer menus when the meaning is not a sidebar layout.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:webhook",
+      "source_library": "material",
+      "source_name": "webhook",
+      "label": "Webhook",
+      "depicts": "A hook-like integration symbol for events or callbacks.",
+      "purpose": "Show a webhook, event callback, or trigger sent between systems.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "webhook",
+        "event callback",
+        "trigger",
+        "integration",
+        "system event"
+      ],
+      "synonyms": [
+        "event hook",
+        "callback",
+        "integration trigger",
+        "webhook event"
+      ],
+      "use_when": "Use when the interface refers to webhook setup, event callbacks, or system trigger flows.",
+      "avoid_when": "Do not use for generic links or external navigation when the meaning is specifically webhooks.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:zoom_in",
+      "source_library": "material",
+      "source_name": "zoom_in",
+      "label": "Zoom In",
+      "depicts": "A zoom control for scaling content in.",
+      "purpose": "Show zooming in on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "in",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom in",
+        "magnify view",
+        "scale in",
+        "in closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms in on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:zoom_out",
+      "source_library": "material",
+      "source_name": "zoom_out",
+      "label": "Zoom Out",
+      "depicts": "A zoom control for scaling content out.",
+      "purpose": "Show zooming out on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "out",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom out",
+        "shrink view",
+        "scale out",
+        "out closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms out on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.94,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:more_horiz",
+      "source_library": "material",
+      "source_name": "more_horiz",
+      "label": "More Options",
+      "depicts": "A grouped dot icon used for overflow actions.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "overflow",
+        "menu",
+        "actions",
+        "extra"
+      ],
+      "synonyms": [
+        "overflow menu",
+        "more actions",
+        "extra options",
+        "kebab menu"
+      ],
+      "use_when": "Use when the interface hides additional actions inside an overflow menu.",
+      "avoid_when": "Do not use for settings, grid navigation, or pagination when the intent is specifically overflow actions.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:more_vert",
+      "source_library": "material",
+      "source_name": "more_vert",
+      "label": "More Options",
+      "depicts": "A grouped dot icon used for overflow actions.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "overflow",
+        "menu",
+        "actions",
+        "extra"
+      ],
+      "synonyms": [
+        "overflow menu",
+        "more actions",
+        "extra options",
+        "kebab menu"
+      ],
+      "use_when": "Use when the interface hides additional actions inside an overflow menu.",
+      "avoid_when": "Do not use for settings, grid navigation, or pagination when the intent is specifically overflow actions.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:picture_in_picture_alt",
+      "source_library": "material",
+      "source_name": "picture_in_picture_alt",
+      "label": "Picture In Picture",
+      "depicts": "A small floating window inside a larger frame.",
+      "purpose": "Show picture-in-picture or a floating mini-player style layout.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "media",
+      "semantic_tags": [
+        "picture in picture",
+        "floating window",
+        "mini player",
+        "overlay",
+        "media layout"
+      ],
+      "synonyms": [
+        "pip mode",
+        "floating player",
+        "small overlay",
+        "mini window"
+      ],
+      "use_when": "Use when the interface switches media or content into a floating picture-in-picture layout.",
+      "avoid_when": "Do not use for generic popups or docking when the meaning is specifically a PiP layout.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:splitscreen",
+      "source_library": "material",
+      "source_name": "splitscreen",
+      "label": "Split View",
+      "depicts": "A layout icon showing the screen divided into sections.",
+      "purpose": "Show a split-screen or side-by-side layout mode.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "split view",
+        "side by side",
+        "multi pane",
+        "layout",
+        "dual panel"
+      ],
+      "synonyms": [
+        "split screen",
+        "dual pane",
+        "two panel view",
+        "side by side layout"
+      ],
+      "use_when": "Use when the interface switches into a split-screen or multi-pane layout.",
+      "avoid_when": "Do not use for resizing or generic window controls when the meaning is specifically split layout.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:unfold_less",
+      "source_library": "material",
+      "source_name": "unfold_less",
+      "label": "Collapse",
+      "depicts": "An upward control indicating content can close or fold away.",
+      "purpose": "Show that open content, options, or details can collapse closed.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "collapse",
+        "show less",
+        "close",
+        "hide details",
+        "fold"
+      ],
+      "synonyms": [
+        "show less",
+        "collapse section",
+        "close details",
+        "fold up"
+      ],
+      "use_when": "Use when the interface can collapse a section, hide details, or close expanded content.",
+      "avoid_when": "Do not use for upload or upward movement when the meaning is not collapse.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "material:unfold_more",
+      "source_library": "material",
+      "source_name": "unfold_more",
+      "label": "Expand",
+      "depicts": "A downward control indicating more content can open.",
+      "purpose": "Show that more content, options, or details can expand open.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "expand",
+        "show more",
+        "open",
+        "details",
+        "dropdown"
+      ],
+      "synonyms": [
+        "show more",
+        "expand section",
+        "open details",
+        "dropdown open"
+      ],
+      "use_when": "Use when the interface can expand a section, reveal more options, or open a dropdown-like control.",
+      "avoid_when": "Do not use for download, downward movement, or status decline when the meaning is not expansion.",
+      "evidence_sources": [
+        "source-name",
+        "taxonomy-seed",
+        "svg-payload"
+      ],
+      "confidence_score": 0.93,
+      "confidence_band": "high"
+    }
+  ]
+}

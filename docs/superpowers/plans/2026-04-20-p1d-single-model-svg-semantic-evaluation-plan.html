@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>P1-D Single-Model SVG Semantic Evaluation Plan</title>
+  <style>
+    body { font-family: Georgia, serif; line-height: 1.6; margin: 2rem auto; max-width: 900px; padding: 0 1rem; color: #1f2937; }
+    h1, h2, h3 { color: #111827; }
+    code { background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 4px; }
+    ul { padding-left: 1.25rem; }
+  </style>
+</head>
+<body>
+  <h1>P1-D Single-Model SVG Semantic Evaluation Plan</h1>
+  <p><strong>Goal:</strong> Test whether one strong model can handle the first real semantic review pass for the SVG-ready purpose-chip icons.</p>
+  <p><strong>Approach:</strong> Use the pilot files that already exist, make one balanced batch from the icons that already have SVG data, review that batch with one strong model, and record both timing and token estimates for the visible batch payload.</p>
+
+  <h2>What This Covers</h2>
+  <ul>
+    <li>choosing a balanced SVG-ready test batch</li>
+    <li>reviewing the batch with one strong model</li>
+    <li>saving improved semantic records and review notes</li>
+    <li>recording elapsed time</li>
+    <li>estimating visible prompt and output tokens</li>
+  </ul>
+
+  <h2>What This Does Not Cover</h2>
+  <ul>
+    <li>the Material icons that still do not have SVG payloads in the pilot</li>
+    <li>automatic publishing into the live registry</li>
+    <li>reviewing all 150 icons in one pass</li>
+  </ul>
+
+  <h2>Main Steps</h2>
+  <h3>1. Freeze one balanced SVG-ready batch</h3>
+  <ul>
+    <li>pull from the current pilot files</li>
+    <li>keep only icons with real SVG payloads</li>
+    <li>include a mix of clearer and less-clear cases</li>
+  </ul>
+
+  <h3>2. Review the batch with one strong model</h3>
+  <ul>
+    <li>check what each icon shows</li>
+    <li>check whether the draft meaning fits the image</li>
+    <li>improve purpose, use-when, avoid-when, tags, and synonyms where needed</li>
+    <li>save confidence and review notes</li>
+  </ul>
+
+  <h3>3. Record time and token estimates</h3>
+  <ul>
+    <li>record start and finish time</li>
+    <li>estimate visible input tokens for the batch and instructions</li>
+    <li>estimate visible output tokens for the reviewed results</li>
+    <li>clearly label these as estimates, not hidden reasoning-token counts</li>
+  </ul>
+
+  <h2>Success Standard</h2>
+  <p>This batch is successful if it gives us a fair answer to one question: is one strong model good enough right now to produce semantic tags that meet our current minimum quality bar without needing a split-model setup?</p>
+</body>
+</html>

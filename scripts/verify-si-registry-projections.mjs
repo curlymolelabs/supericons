@@ -1,0 +1,185 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import registryManifest from '../data/si-registry/registry-manifest.json' with { type: 'json' };
+import {
+  buildRegistryId,
+  isValidRegistryId,
+} from '../lib/si-registry/id-rules.js';
+import {
+  REQUIRED_RECORD_FIELDS,
+  validateRegistryRecord,
+} from '../lib/si-registry/record-shape.js';
+import {
+  INTERNAL_PROJECTION_TARGET,
+  PUBLIC_PROJECTION_TARGET,
+  isValidAccessTier,
+  isValidProjectionPolicy,
+} from '../lib/si-registry/visibility-rules.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.join(__dirname, '..');
+const generatedDir = path.join(repoRoot, 'data', 'si-registry', 'generated');
+const summaryPath = path.join(generatedDir, 'registry-summary.json');
+const previewPath = path.join(generatedDir, 'record-preview.json');
+const publicPreviewPath = path.join(generatedDir, 'public-record-preview.json');
+const premiumPreviewPath = path.join(generatedDir, 'premium-record-preview.json');
+const freePreviewPath = path.join(generatedDir, 'free-record-preview.json');
+const publicRegistryRecordsPath = path.join(repoRoot, 'public', 'registry', 'records.json');
+const mcpRegistryRecordsPath = path.join(repoRoot, 'mcp', 'public', 'registry-records.json');
+const premiumManifestPath = path.join(repoRoot, 'public', 'packs', 'manifest.json');
+
+async function readJson(filePath) {
+  return JSON.parse(await fs.readFile(filePath, 'utf8'));
+}
+
+let summary;
+let recordPreview;
+let publicRecordPreview;
+let premiumRecordPreview;
+let freeRecordPreview;
+let publicRegistryRecords;
+let mcpRegistryRecords;
+let premiumManifest;
+
+try {
+  summary = await readJson(summaryPath);
+  recordPreview = await readJson(previewPath);
+  publicRecordPreview = await readJson(publicPreviewPath);
+  premiumRecordPreview = await readJson(premiumPreviewPath);
+  freeRecordPreview = await readJson(freePreviewPath);
+  publicRegistryRecords = await readJson(publicRegistryRecordsPath);
+  mcpRegistryRecords = await readJson(mcpRegistryRecordsPath);
+  premiumManifest = await readJson(premiumManifestPath);
+} catch (error) {
+  console.error('verify-si-registry-projections: generated registry outputs are missing. Run: node scripts/build-si-registry-projections.mjs');
+  process.exit(1);
+}
+
+const freeRecordGroups = await Promise.all(
+  (registryManifest.recordGroups || [])
+    .filter((recordGroup) => recordGroup.sourceGroup === 'free')
+    .map(async (recordGroup) => {
+      const records = await readJson(path.join(repoRoot, 'data', 'si-registry', recordGroup.path));
+      return Array.isArray(records) ? records.length : 0;
+    })
+);
+const expectedFreeCount = freeRecordGroups.reduce((total, count) => total + count, 0);
+const expectedPremiumCount = Object.values(premiumManifest).reduce(
+  (total, collection) => total + (Array.isArray(collection?.icons) ? collection.icons.length : 0),
+  0
+);
+const expectedTotalCount = expectedFreeCount + expectedPremiumCount;
+
+assert.ok(Array.isArray(REQUIRED_RECORD_FIELDS), 'required field list should exist');
+assert.ok(REQUIRED_RECORD_FIELDS.includes('icon_id'), 'required field list should include icon_id');
+assert.equal(PUBLIC_PROJECTION_TARGET, 'generated_public_projection');
+assert.equal(INTERNAL_PROJECTION_TARGET, 'generated_internal_projection');
+
+assert.equal(summary.schemaVersion, '1.0.0');
+assert.equal(summary.totalRecordCount, expectedTotalCount);
+assert.deepEqual(summary.sourceGroups, { premium: expectedPremiumCount, free: expectedFreeCount });
+assert.deepEqual(summary.accessTiers, {
+  public_open_record: expectedFreeCount,
+  protected_premium_record: expectedPremiumCount,
+});
+assert.deepEqual(summary.reviewStates, {
+  source_mapped: expectedPremiumCount,
+  human_reviewed: expectedFreeCount,
+});
+assert.equal(summary.publicRecordCount, expectedFreeCount);
+assert.equal(summary.internalRecordCount, expectedTotalCount);
+
+assert.equal(recordPreview.length, expectedTotalCount, 'internal record preview should contain the premium normalization plus free semantic records');
+assert.equal(publicRecordPreview.length, expectedFreeCount, 'public record preview should contain only public-safe free records');
+assert.equal(premiumRecordPreview.length, expectedPremiumCount, 'premium preview should contain all normalized premium records');
+assert.equal(freeRecordPreview.length, expectedFreeCount, 'free preview should contain the curated free pilot plus approved semantic records');
+assert.equal(publicRegistryRecords.length, expectedFreeCount, 'site public registry records should contain the public-safe semantic records');
+assert.equal(mcpRegistryRecords.length, expectedFreeCount, 'MCP public registry records should contain the public-safe semantic records');
+
+const previewIds = new Set(recordPreview.map((record) => record.icon_id));
+assert.equal(previewIds.size, recordPreview.length, 'record preview should not contain duplicate ids');
+
+assert.equal(
+  previewIds.has('si:ai-agentic-agent'),
+  true,
+  'premium normalization should generate collision-safe SI ids'
+);
+assert.equal(
+  previewIds.has('si:status-feedback-circle-check'),
+  true,
+  'premium normalization should include prefixed SI ids for duplicate-prone pack names'
+);
+assert.equal(
+  previewIds.has('lucide:shield-check'),
+  true,
+  'free pilot should still include lucide:shield-check'
+);
+assert.equal(
+  previewIds.has('tabler:trash'),
+  true,
+  'approved semantic imports should include tabler:trash'
+);
+assert.equal(
+  previewIds.has('lucide:bot-message-square'),
+  true,
+  'approved semantic imports should include lucide:bot-message-square'
+);
+assert.equal(
+  previewIds.has('mingcute:file_search'),
+  true,
+  'approved MingCute imports should include mingcute:file_search'
+);
+
+for (const record of recordPreview) {
+  validateRegistryRecord(record);
+  assert.equal(buildRegistryId(record), record.icon_id, `derived icon_id should match for ${record.label}`);
+  assert.equal(isValidRegistryId(record.icon_id), true, `icon_id should be valid for ${record.label}`);
+  assert.equal(isValidAccessTier(record.access_tier), true, `access_tier should be valid for ${record.label}`);
+  assert.equal(
+    isValidProjectionPolicy(record.projection_policy),
+    true,
+    `projection_policy should be valid for ${record.label}`
+  );
+}
+
+for (const record of publicRecordPreview) {
+  assert.equal(record.access_tier, 'public_open_record', `public preview should only include public records (${record.icon_id})`);
+  assert.equal(record.projectionTargets.includes(PUBLIC_PROJECTION_TARGET), true, `public record should include ${PUBLIC_PROJECTION_TARGET}`);
+  assert.equal(record.projectionTargets.includes(INTERNAL_PROJECTION_TARGET), true, `public record should still be visible internally`);
+}
+
+for (const record of premiumRecordPreview) {
+  assert.equal(record.access_tier, 'protected_premium_record', `premium preview should stay protected (${record.icon_id})`);
+}
+
+for (const record of freeRecordPreview) {
+  assert.equal(record.access_tier, 'public_open_record', `free preview should stay public-safe (${record.icon_id})`);
+}
+
+assert.equal(
+  publicRecordPreview.some((record) => record.access_tier === 'protected_premium_record'),
+  false,
+  'protected premium records must not leak into the public preview'
+);
+
+assert.equal(
+  publicRecordPreview.some((record) => record.internalSignals || record.editorialNotes),
+  false,
+  'internal-only operational fields must not leak into the public preview'
+);
+
+assert.deepEqual(
+  publicRegistryRecords.map((record) => record.icon_id),
+  publicRecordPreview.map((record) => record.icon_id),
+  'site public registry records should mirror the generated public preview'
+);
+assert.deepEqual(
+  mcpRegistryRecords.map((record) => record.icon_id),
+  publicRecordPreview.map((record) => record.icon_id),
+  'MCP public registry records should mirror the generated public preview'
+);
+
+console.log('verify-si-registry-projections: ok');

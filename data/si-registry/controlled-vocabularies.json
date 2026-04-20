@@ -1,0 +1,62 @@
+{
+  "category": [
+    "agent_lifecycle",
+    "analytics_data",
+    "commerce",
+    "communication_social",
+    "configuration",
+    "data_controls",
+    "destructive_actions",
+    "engineering_developer_tools",
+    "message_actions",
+    "media_playback",
+    "navigation_interface",
+    "search_discovery",
+    "security"
+    ,
+    "security_auth",
+    "status_feedback",
+    "system_control",
+    "systems_architecture"
+  ],
+  "intent": [
+    "act",
+    "control",
+    "configure",
+    "inform",
+    "confirm",
+    "delete",
+    "discover",
+    "dismiss",
+    "navigate",
+    "refine",
+    "warn"
+  ],
+  "domain": [
+    "ai_agents",
+    "analytics",
+    "commerce",
+    "communication",
+    "developer_tools",
+    "media",
+    "navigation",
+    "product_status",
+    "security",
+    "ui_controls",
+    "ui_shell"
+  ],
+  "state": [
+    "active",
+    "verified"
+  ],
+  "status": [
+    "draft",
+    "reviewed",
+    "approved"
+  ],
+  "review_state": [
+    "human_reviewed",
+    "editor_approved",
+    "source_mapped"
+  ]
+}

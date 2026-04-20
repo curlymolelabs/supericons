@@ -1,0 +1,70 @@
+{
+  "accessTiers": {
+    "public_open_record": {
+      "description": "Safe for public-facing semantic outputs for free and open icons.",
+      "allowedProjectionTargets": [
+        "generated_internal_projection",
+        "generated_public_projection",
+        "public_registry_summary",
+        "mcp_registry_summary"
+      ]
+    },
+    "protected_premium_record": {
+      "description": "Uses the same record shape but stays out of public outputs by default.",
+      "allowedProjectionTargets": [
+        "generated_internal_projection"
+      ]
+    },
+    "private_operational_enrichment": {
+      "description": "Internal operational signals and editorial notes that never flow into public outputs by default.",
+      "allowedProjectionTargets": [
+        "generated_internal_projection"
+      ]
+    }
+  },
+  "projectionPolicies": {
+    "future_public_record": {
+      "description": "Keep internal visibility and allow future public-safe projections.",
+      "projectionTargets": [
+        "generated_internal_projection",
+        "generated_public_projection",
+        "public_registry_summary",
+        "mcp_registry_summary"
+      ]
+    },
+    "internal_only": {
+      "description": "Keep the record in internal previews only.",
+      "projectionTargets": [
+        "generated_internal_projection"
+      ]
+    },
+    "public_summary": {
+      "description": "Allow public-safe summaries without assuming full public record output yet.",
+      "projectionTargets": [
+        "generated_internal_projection",
+        "generated_public_projection",
+        "public_registry_summary"
+      ]
+    },
+    "mcp_preview": {
+      "description": "Allow an internal preview plus a future MCP-facing summary path.",
+      "projectionTargets": [
+        "generated_internal_projection",
+        "generated_public_projection",
+        "mcp_registry_summary"
+      ]
+    }
+  },
+  "publicProjectionTargets": [
+    "generated_public_projection",
+    "public_registry_summary",
+    "mcp_registry_summary"
+  ],
+  "internalProjectionTargets": [
+    "generated_internal_projection"
+  ],
+  "alwaysExcludeFromPublicOutputs": [
+    "protected_premium_record",
+    "private_operational_enrichment"
+  ]
+}

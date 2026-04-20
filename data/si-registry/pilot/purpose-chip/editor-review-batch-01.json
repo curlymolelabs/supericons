@@ -1,0 +1,1804 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "editor-review-batch-01",
+  "purpose": "Short editor-review pass for the strongest automation-staged purpose-chip icons.",
+  "selection_notes": [
+    "Take only the icons currently routed to editor_review.",
+    "Keep the batch business-safe and free of internal model details.",
+    "Approve the batch unless an obvious semantic mismatch appears."
+  ],
+  "total_icons": 27,
+  "counts": {
+    "by_lane": {
+      "ai-agent-workflows": 4,
+      "status-feedback": 23
+    },
+    "by_visual_payload_status": {
+      "svg_available": 27
+    }
+  },
+  "records": [
+    {
+      "icon_id": "lucide:file-search",
+      "purpose_chip_category_id": "ai-agent-workflows",
+      "purpose_chip_category_label": "AI & Agents",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "lucide:file-search",
+        "source_group": "pilot",
+        "source_library": "lucide",
+        "source_name": "file-search",
+        "label": "File Search",
+        "purpose": "Show search across files or code assets.",
+        "category": "search_discovery",
+        "semantic_tags": [
+          "file search",
+          "search code",
+          "lookup file",
+          "developer search",
+          "search"
+        ],
+        "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+        "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A search-focused symbol showing structured or scoped search.",
+        "intent": "discover",
+        "domain": "developer_tools",
+        "confidence": 0.94,
+        "synonyms": [
+          "find file",
+          "search files",
+          "code search",
+          "developer lookup"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "purpose_chip_category_label": "AI & Agents",
+        "rank": 36
+      },
+      "visual_review_input": {
+        "icon_id": "lucide:file-search",
+        "candidate_icon_id": "lucide:file-search",
+        "source_library": "lucide",
+        "source_name": "file search",
+        "candidate_source_name": "file-search",
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "current_candidate_purpose": "Show File Search to represent ai & agents in the interface.",
+        "current_candidate_category": "agent_lifecycle",
+        "current_candidate_confidence": 0.9,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg class=\"lucide lucide-file-search\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <circle cx=\"11.5\" cy=\"14.5\" r=\"2.5\" /> <path d=\"M13.3 16.3 15 18\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-search\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <circle cx=\"11.5\" cy=\"14.5\" r=\"2.5\" /> <path d=\"M13.3 16.3 15 18\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder-search",
+      "purpose_chip_category_id": "ai-agent-workflows",
+      "purpose_chip_category_label": "AI & Agents",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder-search",
+        "source_group": "pilot",
+        "source_library": "lucide",
+        "source_name": "folder-search",
+        "label": "Folder Search",
+        "purpose": "Show search across folders, directories, or grouped content.",
+        "category": "search_discovery",
+        "semantic_tags": [
+          "folder search",
+          "directory search",
+          "find folder",
+          "browse lookup",
+          "search"
+        ],
+        "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+        "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A search-focused symbol showing structured or scoped search.",
+        "intent": "discover",
+        "domain": "developer_tools",
+        "confidence": 0.94,
+        "synonyms": [
+          "find folder",
+          "search directories",
+          "folder lookup",
+          "directory search"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "purpose_chip_category_label": "AI & Agents",
+        "rank": 37
+      },
+      "visual_review_input": {
+        "icon_id": "lucide:folder-search",
+        "candidate_icon_id": "lucide:folder-search",
+        "source_library": "lucide",
+        "source_name": "folder search",
+        "candidate_source_name": "folder-search",
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "current_candidate_purpose": "Show Folder Search to represent ai & agents in the interface.",
+        "current_candidate_category": "agent_lifecycle",
+        "current_candidate_confidence": 0.9,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg class=\"lucide lucide-folder-search\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1\" /> <path d=\"m21 21-1.9-1.9\" /> <circle cx=\"17\" cy=\"17\" r=\"3\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-folder-search\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1\" /> <path d=\"m21 21-1.9-1.9\" /> <circle cx=\"17\" cy=\"17\" r=\"3\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:scan-eye",
+      "purpose_chip_category_id": "ai-agent-workflows",
+      "purpose_chip_category_label": "AI & Agents",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "lucide:scan-eye",
+        "source_group": "pilot",
+        "source_library": "lucide",
+        "source_name": "scan-eye",
+        "label": "Visual Scan",
+        "purpose": "Show visual scanning, inspection, or a focused detection pass.",
+        "category": "search_discovery",
+        "semantic_tags": [
+          "scan",
+          "inspect",
+          "detect",
+          "visual review",
+          "observation"
+        ],
+        "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+        "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An eye and scan mark showing inspection or visual scanning.",
+        "intent": "discover",
+        "domain": "ai_agents",
+        "confidence": 0.94,
+        "synonyms": [
+          "visual scan",
+          "inspect view",
+          "scan pass",
+          "observe"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "purpose_chip_category_label": "AI & Agents",
+        "rank": 34
+      },
+      "visual_review_input": {
+        "icon_id": "lucide:scan-eye",
+        "candidate_icon_id": "lucide:scan-eye",
+        "source_library": "lucide",
+        "source_name": "scan eye",
+        "candidate_source_name": "scan-eye",
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "current_candidate_purpose": "Show Scan Eye to represent ai & agents in the interface.",
+        "current_candidate_category": "agent_lifecycle",
+        "current_candidate_confidence": 0.9,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg class=\"lucide lucide-scan-eye\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /> <path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /> <path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /> <path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" /> <circle cx=\"12\" cy=\"12\" r=\"1\" /> <path d=\"M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-scan-eye\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /> <path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /> <path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /> <path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" /> <circle cx=\"12\" cy=\"12\" r=\"1\" /> <path d=\"M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:server-cog",
+      "purpose_chip_category_id": "ai-agent-workflows",
+      "purpose_chip_category_label": "AI & Agents",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "lucide:server-cog",
+        "source_group": "pilot",
+        "source_library": "lucide",
+        "source_name": "server-cog",
+        "label": "Server Control",
+        "purpose": "Show server-side control, configuration, or backend operation.",
+        "category": "systems_architecture",
+        "semantic_tags": [
+          "server",
+          "backend control",
+          "server config",
+          "operations",
+          "backend"
+        ],
+        "use_when": "Use when the interface refers to technical structure, backend controls, or typed data definitions.",
+        "avoid_when": "Do not use for user-facing settings or simple forms when the meaning is specifically technical structure.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A server with a control gear.",
+        "intent": "configure",
+        "domain": "developer_tools",
+        "confidence": 0.94,
+        "synonyms": [
+          "server settings",
+          "backend control",
+          "server operation",
+          "server management"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "purpose_chip_category_label": "AI & Agents",
+        "rank": 46
+      },
+      "visual_review_input": {
+        "icon_id": "lucide:server-cog",
+        "candidate_icon_id": "lucide:server-cog",
+        "source_library": "lucide",
+        "source_name": "server cog",
+        "candidate_source_name": "server-cog",
+        "purpose_chip_category_id": "ai-agent-workflows",
+        "current_candidate_purpose": "Show Server Cog to represent ai & agents in the interface.",
+        "current_candidate_category": "agent_lifecycle",
+        "current_candidate_confidence": 0.88,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg class=\"lucide lucide-server-cog\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m10.852 14.772-.383.923\" /> <path d=\"M13.148 14.772a3 3 0 1 0-2.296-5.544l-.383-.923\" /> <path d=\"m13.148 9.228.383-.923\" /> <path d=\"m13.53 15.696-.382-.924a3 3 0 1 1-2.296-5.544\" /> <path d=\"m14.772 10.852.923-.383\" /> <path d=\"m14.772 13.148.923.383\" /> <path d=\"M4.5 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-.5\" /> <path d=\"M4.5 14H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-.5\" /> <path d=\"M6 18h.01\" /> <path d=\"M6 6h.01\" /> <path d=\"m9.228 10.852-.923-.383\" /> <path d=\"m9.228 13.148-.923.383\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-server-cog\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m10.852 14.772-.383.923\" /> <path d=\"M13.148 14.772a3 3 0 1 0-2.296-5.544l-.383-.923\" /> <path d=\"m13.148 9.228.383-.923\" /> <path d=\"m13.53 15.696-.382-.924a3 3 0 1 1-2.296-5.544\" /> <path d=\"m14.772 10.852.923-.383\" /> <path d=\"m14.772 13.148.923.383\" /> <path d=\"M4.5 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-.5\" /> <path d=\"M4.5 14H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-.5\" /> <path d=\"M6 18h.01\" /> <path d=\"M6 6h.01\" /> <path d=\"m9.228 10.852-.923-.383\" /> <path d=\"m9.228 13.148-.923.383\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:cloud-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:cloud-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "cloud-check",
+        "label": "Cloud Synced",
+        "purpose": "Show that content is synced, backed up, or safely stored in the cloud.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "cloud synced",
+          "backed up",
+          "stored",
+          "sync success",
+          "cloud check"
+        ],
+        "use_when": "Use when the interface confirms successful cloud sync, backup, or safe storage.",
+        "avoid_when": "Do not use for generic internet connection when the meaning is specifically a good cloud state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A cloud with a check mark showing successful cloud state.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "cloud backup complete",
+          "synced to cloud",
+          "stored online",
+          "cloud saved"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 29
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:cloud-check",
+        "candidate_icon_id": "tabler:cloud-check",
+        "source_library": "tabler",
+        "source_name": "cloud check",
+        "candidate_source_name": "cloud-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Cloud Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.86,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-cloud-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 18.004h-4.343c-2.572 -.004 -4.657 -2.011 -4.657 -4.487c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.388 0 2.585 .82 3.138 2.007\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-cloud-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 18.004h-4.343c-2.572 -.004 -4.657 -2.011 -4.657 -4.487c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.388 0 2.585 .82 3.138 2.007\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:help-circle",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:help-circle",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "help-circle",
+        "label": "Help",
+        "purpose": "Show help, guidance, or a place to get assistance.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "help",
+          "guidance",
+          "support",
+          "question",
+          "assistance"
+        ],
+        "use_when": "Use when the interface points to help, assistance, or guidance.",
+        "avoid_when": "Do not use for generic information when the meaning is specifically help or support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A circled help symbol.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "help center",
+          "need help",
+          "guidance",
+          "assistance"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 5
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:help-circle",
+        "candidate_icon_id": "tabler:help-circle",
+        "source_library": "tabler",
+        "source_name": "help circle",
+        "candidate_source_name": "help-circle",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Help Circle to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.84,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-help-circle\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 16v.01\" /> <path d=\"M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-help-circle\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 16v.01\" /> <path d=\"M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:info-circle",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:info-circle",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "info-circle",
+        "label": "Information",
+        "purpose": "Show helpful information, extra context, or a neutral informational state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "information",
+          "info",
+          "context",
+          "details",
+          "neutral state"
+        ],
+        "use_when": "Use when the interface presents neutral information, extra context, or helper details.",
+        "avoid_when": "Do not use for warnings, errors, or required actions when the meaning is not neutral information.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A circled information symbol.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "info",
+          "more information",
+          "context",
+          "details"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 4
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:info-circle",
+        "candidate_icon_id": "tabler:info-circle",
+        "source_library": "tabler",
+        "source_name": "info circle",
+        "candidate_source_name": "info-circle",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Info Circle to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.84,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-info-circle\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 9h.01\" /> <path d=\"M11 12h1v4h1\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-info-circle\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 9h.01\" /> <path d=\"M11 12h1v4h1\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:mail-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:mail-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "mail-check",
+        "label": "Mail Complete",
+        "purpose": "Show a completed or confirmed mail state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "complete",
+          "confirmed",
+          "checked",
+          "done",
+          "mail"
+        ],
+        "use_when": "Use when the interface shows that a mail action or object is complete or confirmed.",
+        "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "Mail Complete shown with a completion check mark.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "mail done",
+          "completed",
+          "confirmed",
+          "checked state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 37
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:mail-check",
+        "candidate_icon_id": "tabler:mail-check",
+        "source_library": "tabler",
+        "source_name": "mail check",
+        "candidate_source_name": "mail-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Mail Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.86,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-mail-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6\" /> <path d=\"M3 7l9 6l9 -6\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-mail-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6\" /> <path d=\"M3 7l9 6l9 -6\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:message-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:message-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "message-check",
+        "label": "Message Complete",
+        "purpose": "Show a completed or confirmed message state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "complete",
+          "confirmed",
+          "checked",
+          "done",
+          "message"
+        ],
+        "use_when": "Use when the interface shows that a message action or object is complete or confirmed.",
+        "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "Message Complete shown with a completion check mark.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "message done",
+          "completed",
+          "confirmed",
+          "checked state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 38
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:message-check",
+        "candidate_icon_id": "tabler:message-check",
+        "source_library": "tabler",
+        "source_name": "message check",
+        "candidate_source_name": "message-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Message Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.86,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-message-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M8 9h8\" /> <path d=\"M8 13h6\" /> <path d=\"M10.99 19.206l-2.99 1.794v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-message-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M8 9h8\" /> <path d=\"M8 13h6\" /> <path d=\"M10.99 19.206l-2.99 1.794v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6\" /> <path d=\"M15 19l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:progress-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:progress-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "progress-check",
+        "label": "Completed Progress",
+        "purpose": "Show progress that has completed or a task that finished successfully.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "completed",
+          "progress done",
+          "finished task",
+          "success",
+          "check"
+        ],
+        "use_when": "Use when the interface confirms that a progress step or task has completed.",
+        "avoid_when": "Do not use for simple success badges when the meaning is not tied to progress or completion.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A progress or task indicator with a completion check.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.94,
+        "synonyms": [
+          "completed progress",
+          "task complete",
+          "finished",
+          "done state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 11
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:progress-check",
+        "candidate_icon_id": "tabler:progress-check",
+        "source_library": "tabler",
+        "source_name": "progress check",
+        "candidate_source_name": "progress-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Progress Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.86,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-progress-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 20.777a8.942 8.942 0 0 1 -2.48 -.969\" /> <path d=\"M14 3.223a9.003 9.003 0 0 1 0 17.554\" /> <path d=\"M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592\" /> <path d=\"M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305\" /> <path d=\"M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356\" /> <path d=\"M9 12l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-progress-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 20.777a8.942 8.942 0 0 1 -2.48 -.969\" /> <path d=\"M14 3.223a9.003 9.003 0 0 1 0 17.554\" /> <path d=\"M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592\" /> <path d=\"M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305\" /> <path d=\"M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356\" /> <path d=\"M9 12l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:bell",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:bell",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "bell",
+        "label": "Notifications",
+        "purpose": "Show notifications, alerts, or items needing attention.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "notifications",
+          "alerts",
+          "attention",
+          "updates",
+          "bell"
+        ],
+        "use_when": "Use when the interface points to notifications, alert feeds, or items needing attention.",
+        "avoid_when": "Do not use for alarms or warnings when the meaning is specifically app notifications.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A bell symbol used for alerts and notifications.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "alerts",
+          "notification center",
+          "updates",
+          "attention needed"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 12
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:bell",
+        "candidate_icon_id": "tabler:bell",
+        "source_library": "tabler",
+        "source_name": "bell",
+        "candidate_source_name": "bell",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Bell to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-bell\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6\" /> <path d=\"M9 17v1a3 3 0 0 0 6 0v-1\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-bell\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6\" /> <path d=\"M9 17v1a3 3 0 0 0 6 0v-1\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:clipboard-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:clipboard-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "clipboard-check",
+        "label": "Clipboard Complete",
+        "purpose": "Show a completed or confirmed clipboard state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "complete",
+          "confirmed",
+          "checked",
+          "done",
+          "clipboard"
+        ],
+        "use_when": "Use when the interface shows that a clipboard action or object is complete or confirmed.",
+        "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "Clipboard Complete shown with a completion check mark.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "clipboard done",
+          "completed",
+          "confirmed",
+          "checked state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 47
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:clipboard-check",
+        "candidate_icon_id": "tabler:clipboard-check",
+        "source_library": "tabler",
+        "source_name": "clipboard check",
+        "candidate_source_name": "clipboard-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Clipboard Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clipboard-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2\" /> <path d=\"M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2\" /> <path d=\"M9 14l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clipboard-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2\" /> <path d=\"M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2\" /> <path d=\"M9 14l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:clock",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:clock",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "clock",
+        "label": "Time Pending",
+        "purpose": "Show time-based waiting, scheduled status, or a pending state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "time",
+          "pending",
+          "scheduled",
+          "waiting",
+          "clock"
+        ],
+        "use_when": "Use when the interface shows a pending, scheduled, or time-based state.",
+        "avoid_when": "Do not use for alarms or duration settings when the meaning is specifically a waiting or time status.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A clock face used for time or waiting.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "pending time",
+          "scheduled",
+          "wait",
+          "time state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 7
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:clock",
+        "candidate_icon_id": "tabler:clock",
+        "source_library": "tabler",
+        "source_name": "clock",
+        "candidate_source_name": "clock",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Clock to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clock\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 7v5l3 3\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clock\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 7v5l3 3\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:eye",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:eye",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "eye",
+        "label": "Visible",
+        "purpose": "Show visibility, preview, or content that is currently shown.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "visible",
+          "show",
+          "preview",
+          "see",
+          "displayed"
+        ],
+        "use_when": "Use when the interface indicates that content is visible or can be previewed.",
+        "avoid_when": "Do not use for search or surveillance when the meaning is specifically visibility.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An eye symbol used for visibility or preview.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "show content",
+          "visible state",
+          "preview",
+          "currently shown"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 13
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:eye",
+        "candidate_icon_id": "tabler:eye",
+        "source_library": "tabler",
+        "source_name": "eye",
+        "candidate_source_name": "eye",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Eye to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-eye\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0\" /> <path d=\"M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-eye\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0\" /> <path d=\"M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:eye-off",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:eye-off",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "eye-off",
+        "label": "Hidden",
+        "purpose": "Show hidden content, turned-off visibility, or a concealed state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "hidden",
+          "concealed",
+          "visibility off",
+          "not shown",
+          "private"
+        ],
+        "use_when": "Use when the interface indicates that content is hidden or visibility is turned off.",
+        "avoid_when": "Do not use for delete or disabled actions when the meaning is specifically hidden visibility.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An eye symbol crossed to show hidden visibility.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "hide content",
+          "hidden state",
+          "visibility off",
+          "concealed"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 14
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:eye-off",
+        "candidate_icon_id": "tabler:eye-off",
+        "source_library": "tabler",
+        "source_name": "eye off",
+        "candidate_source_name": "eye-off",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Eye Off to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-eye-off\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-eye-off\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:hourglass",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:hourglass",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "hourglass",
+        "label": "Waiting",
+        "purpose": "Show waiting, in-progress delay, or time passing before completion.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "waiting",
+          "delay",
+          "processing",
+          "pending",
+          "time passing"
+        ],
+        "use_when": "Use when the interface communicates waiting, delay, or time still passing before completion.",
+        "avoid_when": "Do not use for scheduling or calendars when the meaning is specifically waiting.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An hourglass used for waiting or process time.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "in progress wait",
+          "pending delay",
+          "process waiting",
+          "hold on"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 8
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:hourglass",
+        "candidate_icon_id": "tabler:hourglass",
+        "source_library": "tabler",
+        "source_name": "hourglass",
+        "candidate_source_name": "hourglass",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Hourglass to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-hourglass\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M6.5 7h11\" /> <path d=\"M6.5 17h11\" /> <path d=\"M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1\" /> <path d=\"M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-hourglass\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M6.5 7h11\" /> <path d=\"M6.5 17h11\" /> <path d=\"M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1\" /> <path d=\"M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:key",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:key",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "key",
+        "label": "Access Key",
+        "purpose": "Show credentials, access keys, or a key-based access concept.",
+        "category": "security_auth",
+        "semantic_tags": [
+          "key",
+          "credentials",
+          "access",
+          "auth",
+          "secret"
+        ],
+        "use_when": "Use when the interface refers to keys, credentials, or key-based access.",
+        "avoid_when": "Do not use for generic security state when the meaning is specifically a key or credential.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A key symbol for access or credentials.",
+        "intent": "inform",
+        "domain": "security",
+        "confidence": 0.93,
+        "synonyms": [
+          "access key",
+          "credentials",
+          "auth key",
+          "secret"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 36
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:key",
+        "candidate_icon_id": "tabler:key",
+        "source_library": "tabler",
+        "source_name": "key",
+        "candidate_source_name": "key",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Key to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-key\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0\" /> <path d=\"M15 9h.01\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-key\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0\" /> <path d=\"M15 9h.01\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:list-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:list-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "list-check",
+        "label": "Checklist Complete",
+        "purpose": "Show a completed or confirmed checklist state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "complete",
+          "confirmed",
+          "checked",
+          "done",
+          "checklist"
+        ],
+        "use_when": "Use when the interface shows that a checklist action or object is complete or confirmed.",
+        "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "Checklist Complete shown with a completion check mark.",
+        "intent": "confirm",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "checklist done",
+          "completed",
+          "confirmed",
+          "checked state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 39
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:list-check",
+        "candidate_icon_id": "tabler:list-check",
+        "source_library": "tabler",
+        "source_name": "list check",
+        "candidate_source_name": "list-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show List Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-list-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3.5 5.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M3.5 11.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M3.5 17.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M11 6l9 0\" /> <path d=\"M11 12l9 0\" /> <path d=\"M11 18l9 0\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-list-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3.5 5.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M3.5 11.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M3.5 17.5l1.5 1.5l2.5 -2.5\" /> <path d=\"M11 6l9 0\" /> <path d=\"M11 12l9 0\" /> <path d=\"M11 18l9 0\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:loader-2",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:loader-2",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "loader-2",
+        "label": "Loading",
+        "purpose": "Show an active loading or in-progress system state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "loading",
+          "in progress",
+          "spinner",
+          "working",
+          "processing"
+        ],
+        "use_when": "Use when the interface is actively loading, processing, or waiting for work to finish.",
+        "avoid_when": "Do not use for refresh buttons or static status badges when the meaning is an active loading state.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A spinning or circular loader indicator.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "loading state",
+          "working",
+          "processing",
+          "spinner"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 9
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:loader-2",
+        "candidate_icon_id": "tabler:loader-2",
+        "source_library": "tabler",
+        "source_name": "loader 2",
+        "candidate_source_name": "loader-2",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Loader 2 to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-loader-2\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 3a9 9 0 1 0 9 9\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-loader-2\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 3a9 9 0 1 0 9 9\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:lock",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:lock",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "lock",
+        "label": "Locked",
+        "purpose": "Show locked access, protection, or content that requires permission.",
+        "category": "security",
+        "semantic_tags": [
+          "locked",
+          "protected",
+          "restricted",
+          "secure",
+          "permission needed"
+        ],
+        "use_when": "Use when the interface indicates something is locked, protected, or restricted.",
+        "avoid_when": "Do not use for password fields or account sign-in when a more specific auth icon would be clearer.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A closed lock showing protected access.",
+        "intent": "confirm",
+        "domain": "security",
+        "confidence": 0.93,
+        "synonyms": [
+          "secure lock",
+          "restricted",
+          "locked access",
+          "protected"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 34
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:lock",
+        "candidate_icon_id": "tabler:lock",
+        "source_library": "tabler",
+        "source_name": "lock",
+        "candidate_source_name": "lock",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Lock to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-lock\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6\" /> <path d=\"M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0\" /> <path d=\"M8 11v-4a4 4 0 1 1 8 0v4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-lock\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6\" /> <path d=\"M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0\" /> <path d=\"M8 11v-4a4 4 0 1 1 8 0v4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:lock-open",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:lock-open",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "lock-open",
+        "label": "Unlocked",
+        "purpose": "Show unlocked access, open permission, or content that is no longer locked.",
+        "category": "security",
+        "semantic_tags": [
+          "unlocked",
+          "open access",
+          "permission granted",
+          "available",
+          "security"
+        ],
+        "use_when": "Use when the interface indicates something is unlocked or access has been opened.",
+        "avoid_when": "Do not use for password fields or account sign-in when a more specific auth icon would be clearer.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An open lock showing access is available.",
+        "intent": "confirm",
+        "domain": "security",
+        "confidence": 0.93,
+        "synonyms": [
+          "open lock",
+          "unlocked",
+          "access granted",
+          "available access"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 35
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:lock-open",
+        "candidate_icon_id": "tabler:lock-open",
+        "source_library": "tabler",
+        "source_name": "lock open",
+        "candidate_source_name": "lock-open",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Lock Open to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-lock-open\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -6\" /> <path d=\"M11 16a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M8 11v-5a4 4 0 0 1 8 0\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-lock-open\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -6\" /> <path d=\"M11 16a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M8 11v-5a4 4 0 0 1 8 0\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:rosette-discount-check",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:rosette-discount-check",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "rosette-discount-check",
+        "label": "Verified Offer",
+        "purpose": "Show a verified offer, confirmed discount, or trusted deal badge.",
+        "category": "commerce",
+        "semantic_tags": [
+          "verified offer",
+          "discount",
+          "deal badge",
+          "confirmed deal",
+          "commerce"
+        ],
+        "use_when": "Use when the interface highlights a verified offer, trusted deal, or confirmed discount state.",
+        "avoid_when": "Do not use for general trust verification or loyalty rewards when the meaning is specifically an offer badge.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A rosette badge with a check mark for verified discount or offer status.",
+        "intent": "confirm",
+        "domain": "commerce",
+        "confidence": 0.93,
+        "synonyms": [
+          "verified discount",
+          "trusted deal",
+          "offer badge",
+          "confirmed promotion"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 48
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:rosette-discount-check",
+        "candidate_icon_id": "tabler:rosette-discount-check",
+        "source_library": "tabler",
+        "source_name": "rosette discount check",
+        "candidate_source_name": "rosette-discount-check",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Rosette Discount Check to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-rosette-discount-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 7.2a2.2 2.2 0 0 1 2.2 -2.2h1a2.2 2.2 0 0 0 1.55 -.64l.7 -.7a2.2 2.2 0 0 1 3.12 0l.7 .7c.412 .41 .97 .64 1.55 .64h1a2.2 2.2 0 0 1 2.2 2.2v1c0 .58 .23 1.138 .64 1.55l.7 .7a2.2 2.2 0 0 1 0 3.12l-.7 .7a2.2 2.2 0 0 0 -.64 1.55v1a2.2 2.2 0 0 1 -2.2 2.2h-1a2.2 2.2 0 0 0 -1.55 .64l-.7 .7a2.2 2.2 0 0 1 -3.12 0l-.7 -.7a2.2 2.2 0 0 0 -1.55 -.64h-1a2.2 2.2 0 0 1 -2.2 -2.2v-1a2.2 2.2 0 0 0 -.64 -1.55l-.7 -.7a2.2 2.2 0 0 1 0 -3.12l.7 -.7a2.2 2.2 0 0 0 .64 -1.55v-1\" /> <path d=\"M9 12l2 2l4 -4\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-rosette-discount-check\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 7.2a2.2 2.2 0 0 1 2.2 -2.2h1a2.2 2.2 0 0 0 1.55 -.64l.7 -.7a2.2 2.2 0 0 1 3.12 0l.7 .7c.412 .41 .97 .64 1.55 .64h1a2.2 2.2 0 0 1 2.2 2.2v1c0 .58 .23 1.138 .64 1.55l.7 .7a2.2 2.2 0 0 1 0 3.12l-.7 .7a2.2 2.2 0 0 0 -.64 1.55v1a2.2 2.2 0 0 1 -2.2 2.2h-1a2.2 2.2 0 0 0 -1.55 .64l-.7 .7a2.2 2.2 0 0 1 -3.12 0l-.7 -.7a2.2 2.2 0 0 0 -1.55 -.64h-1a2.2 2.2 0 0 1 -2.2 -2.2v-1a2.2 2.2 0 0 0 -.64 -1.55l-.7 -.7a2.2 2.2 0 0 1 0 -3.12l.7 -.7a2.2 2.2 0 0 0 .64 -1.55v-1\" /> <path d=\"M9 12l2 2l4 -4\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:thumb-down",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:thumb-down",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "thumb-down",
+        "label": "Disapproval",
+        "purpose": "Show negative feedback, disapproval, or a disliked state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "disapproval",
+          "dislike",
+          "negative feedback",
+          "rejected",
+          "thumbs down"
+        ],
+        "use_when": "Use when the interface signals negative feedback, disapproval, or a disliked state.",
+        "avoid_when": "Do not use for warnings or errors when the meaning is specifically negative feedback.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A thumbs-down feedback symbol.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "disliked",
+          "negative signal",
+          "bad feedback",
+          "downvote"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 16
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:thumb-down",
+        "candidate_icon_id": "tabler:thumb-down",
+        "source_library": "tabler",
+        "source_name": "thumb down",
+        "candidate_source_name": "thumb-down",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Thumb Down to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-thumb-down\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-thumb-down\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:thumb-up",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:thumb-up",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "thumb-up",
+        "label": "Approval",
+        "purpose": "Show positive feedback, approval, or a liked state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "approval",
+          "like",
+          "positive feedback",
+          "endorsed",
+          "thumbs up"
+        ],
+        "use_when": "Use when the interface signals positive feedback, approval, or a liked state.",
+        "avoid_when": "Do not use for completion or trust verification when the meaning is specifically approval or liking.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A thumbs-up feedback symbol.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "liked",
+          "approved",
+          "positive signal",
+          "good feedback"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 15
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:thumb-up",
+        "candidate_icon_id": "tabler:thumb-up",
+        "source_library": "tabler",
+        "source_name": "thumb up",
+        "candidate_source_name": "thumb-up",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Thumb Up to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-thumb-up\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-thumb-up\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:trending-down",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:trending-down",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "trending-down",
+        "label": "Downward Trend",
+        "purpose": "Show a downward trend, decrease, or negative movement in a metric.",
+        "category": "analytics_data",
+        "semantic_tags": [
+          "downward trend",
+          "decrease",
+          "decline",
+          "lowering",
+          "metric down"
+        ],
+        "use_when": "Use when the interface shows that a metric or measure is trending downward.",
+        "avoid_when": "Do not use for download or move-down actions when the meaning is specifically analytics decline.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A line or arrow showing decline over time.",
+        "intent": "inform",
+        "domain": "analytics",
+        "confidence": 0.93,
+        "synonyms": [
+          "trend down",
+          "decline",
+          "decrease",
+          "metric drop"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 43
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:trending-down",
+        "candidate_icon_id": "tabler:trending-down",
+        "source_library": "tabler",
+        "source_name": "trending down",
+        "candidate_source_name": "trending-down",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Trending Down to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-trending-down\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 7l6 6l4 -4l8 8\" /> <path d=\"M21 10l0 7l-7 0\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-trending-down\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 7l6 6l4 -4l8 8\" /> <path d=\"M21 10l0 7l-7 0\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:wifi",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:wifi",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "wifi",
+        "label": "Connection",
+        "purpose": "Show wireless connection status or network availability.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "wifi",
+          "network",
+          "connection",
+          "signal",
+          "online"
+        ],
+        "use_when": "Use when the interface shows connection, signal, or wireless network state.",
+        "avoid_when": "Do not use for trust, security, or generic communication when the meaning is specifically connection status.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A wireless signal icon representing network connection.",
+        "intent": "inform",
+        "domain": "product_status",
+        "confidence": 0.93,
+        "synonyms": [
+          "wireless",
+          "network signal",
+          "internet connection",
+          "online state"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 30
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:wifi",
+        "candidate_icon_id": "tabler:wifi",
+        "source_library": "tabler",
+        "source_name": "wifi",
+        "candidate_source_name": "wifi",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Wifi to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.82,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-wifi\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 18l.01 0\" /> <path d=\"M9.172 15.172a4 4 0 0 1 5.656 0\" /> <path d=\"M6.343 12.343a8 8 0 0 1 11.314 0\" /> <path d=\"M3.515 9.515c4.686 -4.687 12.284 -4.687 17 0\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-wifi\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 18l.01 0\" /> <path d=\"M9.172 15.172a4 4 0 0 1 5.656 0\" /> <path d=\"M6.343 12.343a8 8 0 0 1 11.314 0\" /> <path d=\"M3.515 9.515c4.686 -4.687 12.284 -4.687 17 0\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:sort-ascending",
+      "purpose_chip_category_id": "status-feedback",
+      "purpose_chip_category_label": "Status & Feedback",
+      "queue_outcome": "editor_review",
+      "confidence_band": "high",
+      "current_candidate_record": {
+        "icon_id": "tabler:sort-ascending",
+        "source_group": "pilot",
+        "source_library": "tabler",
+        "source_name": "sort-ascending",
+        "label": "Sort Ascending",
+        "purpose": "Show ascending sort order for a list, results set, or ordered collection.",
+        "category": "data_controls",
+        "semantic_tags": [
+          "sort ascending",
+          "order low to high",
+          "a to z",
+          "arrange",
+          "list order"
+        ],
+        "use_when": "Use when the interface sorts items in ascending order such as low-to-high or A-to-Z.",
+        "avoid_when": "Do not use for filtering or ranking trends when the meaning is specifically sort order.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "An ordering control that arranges items from low to high or A to Z.",
+        "intent": "refine",
+        "domain": "ui_controls",
+        "confidence": 0.89,
+        "synonyms": [
+          "ascending order",
+          "sort low to high",
+          "sort a to z",
+          "ordered list"
+        ],
+        "evidence": [
+          "source_name",
+          "taxonomy_seed",
+          "svg_payload"
+        ],
+        "purpose_chip_category_id": "status-feedback",
+        "purpose_chip_category_label": "Status & Feedback",
+        "rank": 41
+      },
+      "visual_review_input": {
+        "icon_id": "tabler:sort-ascending",
+        "candidate_icon_id": "tabler:sort-ascending",
+        "source_library": "tabler",
+        "source_name": "sort ascending",
+        "candidate_source_name": "sort-ascending",
+        "purpose_chip_category_id": "status-feedback",
+        "current_candidate_purpose": "Show Sort Ascending to represent status & feedback in the interface.",
+        "current_candidate_category": "status_feedback",
+        "current_candidate_confidence": 0.78,
+        "visual_payload_status": "svg_available",
+        "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-sort-ascending\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 6l7 0\" /> <path d=\"M4 12l7 0\" /> <path d=\"M4 18l9 0\" /> <path d=\"M15 9l3 -3l3 3\" /> <path d=\"M18 6l0 12\" /> </svg>",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-sort-ascending\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 6l7 0\" /> <path d=\"M4 12l7 0\" /> <path d=\"M4 18l9 0\" /> <path d=\"M15 9l3 -3l3 3\" /> <path d=\"M18 6l0 12\" /> </svg>",
+          "type": "svg",
+          "style": "outline"
+        }
+      }
+    }
+  ]
+}

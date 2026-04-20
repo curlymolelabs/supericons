@@ -1,0 +1,2404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Approved Semantic Records Visual Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5efe4;
+      --paper: #fffdf8;
+      --ink: #1f2937;
+      --muted: #5f6b7a;
+      --line: #e6dac6;
+      --accent: #9a3412;
+      --accent-soft: #fde7d2;
+      --shadow: 0 16px 45px rgba(35, 28, 20, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(253, 231, 210, 0.8), transparent 28%),
+        linear-gradient(180deg, #faf4ea 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 30px 20px 70px;
+    }
+
+    .hero,
+    .category-section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      max-width: 840px;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .summary-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 1.9rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .jump-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f8efe2;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.94rem;
+    }
+
+    .jump-nav span {
+      display: inline-block;
+      min-width: 24px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(154, 52, 18, 0.1);
+      text-align: center;
+    }
+
+    .category-section {
+      padding: 22px;
+      margin-top: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .count-chip,
+    .mini-pill {
+      display: inline-block;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #faf1e4;
+      color: var(--accent);
+      font-size: 0.88rem;
+    }
+
+    .record-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .record-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.86);
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+    }
+
+    .record-preview {
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff9f0 0%, #fffdf8 100%);
+    }
+
+    .icon-stage {
+      display: grid;
+      place-items: center;
+      min-height: 150px;
+      margin-bottom: 14px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at center, rgba(253, 231, 210, 0.55), transparent 60%),
+        linear-gradient(180deg, #fffdf8 0%, #f8f1e6 100%);
+    }
+
+    .icon-wrap {
+      width: 98px;
+      height: 98px;
+      display: grid;
+      place-items: center;
+      color: #8a3412;
+    }
+
+    .icon-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .record-id {
+      margin: 0 0 8px;
+    }
+
+    .mini-meta {
+      margin: 14px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-meta div {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border-top: 1px dashed #eadfcd;
+      padding-top: 8px;
+    }
+
+    .mini-meta dt {
+      color: var(--muted);
+    }
+
+    .mini-meta dd {
+      margin: 0;
+      text-align: right;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .record-code {
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .code-label {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid #eadfcd;
+      background: #fffaf2;
+      overflow: auto;
+      font-size: 12.8px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+    }
+
+    @media (max-width: 1100px) {
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .record-card {
+        grid-template-columns: 1fr;
+      }
+
+      .record-preview {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 720px) {
+      main {
+        padding: 20px 14px 50px;
+      }
+
+      .hero,
+      .category-section {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Manual Review Page</div>
+      <h1>Approved Supericons semantic records, shown beside the real icon and the exact current JSON</h1>
+      <p class="muted">This page is for manual checking. Every item below shows the icon on the left and the exact current approved semantic metadata on the right.</p>
+      <p>
+        This is the current approved set only. It does not include the hold queue or the reviewed drafts that were intentionally left out of approval.
+      </p>
+
+      <div class="summary">
+        <div class="summary-card">
+          <strong>30</strong>
+          <span>approved records shown on this page</span>
+        </div>
+        <div class="summary-card">
+          <strong>13</strong>
+          <span>categories represented in the current approved set</span>
+        </div>
+        <div class="summary-card">
+          <strong>2</strong>
+          <span>records still on hold outside this page</span>
+        </div>
+        <div class="summary-card">
+          <strong>4</strong>
+          <span>reviewed drafts still intentionally not approved</span>
+        </div>
+      </div>
+
+      <div class="jump-nav">
+        <a href="#agent-lifecycle">agent_lifecycle <span>4</span></a><a href="#analytics-data">analytics_data <span>1</span></a><a href="#configuration">configuration <span>1</span></a><a href="#data-controls">data_controls <span>1</span></a><a href="#destructive-actions">destructive_actions <span>1</span></a><a href="#engineering-developer-tools">engineering_developer_tools <span>3</span></a><a href="#message-actions">message_actions <span>1</span></a><a href="#navigation-interface">navigation_interface <span>5</span></a><a href="#search-discovery">search_discovery <span>1</span></a><a href="#security">security <span>1</span></a><a href="#status-feedback">status_feedback <span>7</span></a><a href="#system-control">system_control <span>2</span></a><a href="#systems-architecture">systems_architecture <span>2</span></a>
+      </div>
+    </section>
+
+    
+    <section class="category-section" id="agent-lifecycle">
+      <div class="section-head">
+        <h2>agent_lifecycle</h2>
+        <span class="count-chip">4 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="lucide:bot-message-square">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Assistant Message icon">
+              <svg class="lucide lucide-bot-message-square" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 6V2H8" /> <path d="M15 11v2" /> <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="M20 16a2 2 0 0 1-2 2H8.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 4 20.286V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" /> <path d="M9 11v2" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Assistant Message</h3>
+            <p class="record-id"><code>lucide:bot-message-square</code></p>
+            <p>Show that a message or reply came from an AI assistant or automated agent.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>93%</dd></div>
+              <div><dt>Category</dt><dd>agent_lifecycle</dd></div>
+              <div><dt>Domain</dt><dd>ai_agents</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:bot-message-square&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;bot-message-square&quot;,
+  &quot;label&quot;: &quot;Assistant Message&quot;,
+  &quot;purpose&quot;: &quot;Show that a message or reply came from an AI assistant or automated agent.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;assistant&quot;,
+    &quot;bot&quot;,
+    &quot;agent&quot;,
+    &quot;chat&quot;,
+    &quot;reply&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when labeling assistant-authored replies, agent chat threads, or bot conversation surfaces.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for human-to-human chat, generic messaging, or broad AI branding with no message context.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A robot-like chat bubble with a message panel.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;ai_agents&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.93,
+  &quot;synonyms&quot;: [
+    &quot;assistant reply&quot;,
+    &quot;bot message&quot;,
+    &quot;agent response&quot;,
+    &quot;ai chat&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:brain-circuit">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="AI Reasoning icon">
+              <svg class="lucide lucide-brain-circuit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /> <path d="M9 13a4.5 4.5 0 0 0 3-4" /> <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /> <path d="M3.477 10.896a4 4 0 0 1 .585-.396" /> <path d="M6 18a4 4 0 0 1-1.967-.516" /> <path d="M12 13h4" /> <path d="M12 18h6a2 2 0 0 1 2 2v1" /> <path d="M12 8h8" /> <path d="M16 8V5a2 2 0 0 1 2-2" /> <circle cx="16" cy="13" r=".5" /> <circle cx="18" cy="3" r=".5" /> <circle cx="20" cy="21" r=".5" /> <circle cx="20" cy="8" r=".5" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>AI Reasoning</h3>
+            <p class="record-id"><code>lucide:brain-circuit</code></p>
+            <p>Show AI reasoning, model cognition, or an intelligent processing step.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>90%</dd></div>
+              <div><dt>Category</dt><dd>agent_lifecycle</dd></div>
+              <div><dt>Domain</dt><dd>ai_agents</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:brain-circuit&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;brain-circuit&quot;,
+  &quot;label&quot;: &quot;AI Reasoning&quot;,
+  &quot;purpose&quot;: &quot;Show AI reasoning, model cognition, or an intelligent processing step.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;reasoning&quot;,
+    &quot;ai&quot;,
+    &quot;model&quot;,
+    &quot;cognition&quot;,
+    &quot;intelligence&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to communicate AI reasoning, inference, or an intelligence-heavy processing stage.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for human psychology, learning content, or generic settings with no AI meaning.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A brain shape with circuit-style nodes and branches.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;ai_agents&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.9,
+  &quot;synonyms&quot;: [
+    &quot;ai thinking&quot;,
+    &quot;model reasoning&quot;,
+    &quot;neural processing&quot;,
+    &quot;cognitive step&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:scan-search">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Scan And Search icon">
+              <svg class="lucide lucide-scan-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 7V5a2 2 0 0 1 2-2h2" /> <path d="M17 3h2a2 2 0 0 1 2 2v2" /> <path d="M21 17v2a2 2 0 0 1-2 2h-2" /> <path d="M7 21H5a2 2 0 0 1-2-2v-2" /> <circle cx="12" cy="12" r="3" /> <path d="m16 16-1.9-1.9" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Scan And Search</h3>
+            <p class="record-id"><code>lucide:scan-search</code></p>
+            <p>Show scanning, inspection, or retrieval-driven search over content or data.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>87%</dd></div>
+              <div><dt>Category</dt><dd>agent_lifecycle</dd></div>
+              <div><dt>Domain</dt><dd>ai_agents</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:scan-search&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;scan-search&quot;,
+  &quot;label&quot;: &quot;Scan And Search&quot;,
+  &quot;purpose&quot;: &quot;Show scanning, inspection, or retrieval-driven search over content or data.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;scan&quot;,
+    &quot;search&quot;,
+    &quot;inspect&quot;,
+    &quot;retrieval&quot;,
+    &quot;analyze&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when an agent or system is searching by first scanning, inspecting, or analyzing content.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for a plain site search field when no scan or analysis meaning is intended.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Focus brackets around a magnifying glass.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;ai_agents&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.87,
+  &quot;synonyms&quot;: [
+    &quot;content scan&quot;,
+    &quot;semantic search&quot;,
+    &quot;inspect results&quot;,
+    &quot;retrieval search&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:workflow">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Workflow icon">
+              <svg class="lucide lucide-workflow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Workflow</h3>
+            <p class="record-id"><code>lucide:workflow</code></p>
+            <p>Show a multi-step workflow, orchestration path, or linked automation sequence.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>92%</dd></div>
+              <div><dt>Category</dt><dd>agent_lifecycle</dd></div>
+              <div><dt>Domain</dt><dd>ai_agents</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:workflow&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;workflow&quot;,
+  &quot;label&quot;: &quot;Workflow&quot;,
+  &quot;purpose&quot;: &quot;Show a multi-step workflow, orchestration path, or linked automation sequence.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;workflow&quot;,
+    &quot;orchestration&quot;,
+    &quot;pipeline&quot;,
+    &quot;sequence&quot;,
+    &quot;automation&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to show a linked sequence of automated or agent-driven steps.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for a simple hierarchy, organization chart, or generic navigation pattern.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Connected boxes forming a simple process flow.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;ai_agents&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.92,
+  &quot;synonyms&quot;: [
+    &quot;agent flow&quot;,
+    &quot;automation flow&quot;,
+    &quot;process map&quot;,
+    &quot;pipeline&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="analytics-data">
+      <div class="section-head">
+        <h2>analytics_data</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:trending-up">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Trend Up icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M3 17l6 -6l4 4l8 -8" /> <path d="M14 7l7 0l0 7" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Trend Up</h3>
+            <p class="record-id"><code>tabler:trending-up</code></p>
+            <p>Show positive trend movement, growth, or improving performance over time.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>94%</dd></div>
+              <div><dt>Category</dt><dd>analytics_data</dd></div>
+              <div><dt>Domain</dt><dd>analytics</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:trending-up&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;trending-up&quot;,
+  &quot;label&quot;: &quot;Trend Up&quot;,
+  &quot;purpose&quot;: &quot;Show positive trend movement, growth, or improving performance over time.&quot;,
+  &quot;category&quot;: &quot;analytics_data&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;growth&quot;,
+    &quot;trend&quot;,
+    &quot;improving&quot;,
+    &quot;upward&quot;,
+    &quot;metrics&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to show positive metric movement or an improving trend.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use as a generic directional arrow or navigation control.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;An upward-trending line with an arrow.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;analytics&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.94,
+  &quot;synonyms&quot;: [
+    &quot;growth trend&quot;,
+    &quot;upward trend&quot;,
+    &quot;improving metrics&quot;,
+    &quot;performance up&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="configuration">
+      <div class="section-head">
+        <h2>configuration</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="material:settings">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Settings icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m387.69-100-15.23-121.85q-16.07-5.38-32.96-15.07-16.88-9.7-30.19-20.77L196.46-210l-92.3-160 97.61-73.77q-1.38-8.92-1.96-17.92-.58-9-.58-17.93 0-8.53.58-17.34t1.96-19.27L104.16-590l92.3-159.23 112.46 47.31q14.47-11.46 30.89-20.96t32.27-15.27L387.69-860h184.62l15.23 122.23q18 6.54 32.57 15.27 14.58 8.73 29.43 20.58l114-47.31L855.84-590l-99.15 74.92q2.15 9.69 2.35 18.12.19 8.42.19 16.96 0 8.15-.39 16.58-.38 8.42-2.76 19.27L854.46-370l-92.31 160-112.61-48.08q-14.85 11.85-30.31 20.96-15.46 9.12-31.69 14.89L572.31-100H387.69ZM440-160h78.62L533-267.15q30.62-8 55.96-22.73 25.35-14.74 48.89-37.89L737.23-286l39.39-68-86.77-65.38q5-15.54 6.8-30.47 1.81-14.92 1.81-30.15 0-15.62-1.81-30.15-1.8-14.54-6.8-29.7L777.38-606 738-674l-100.54 42.38q-20.08-21.46-48.11-37.92-28.04-16.46-56.73-23.31L520-800h-79.38l-13.24 106.77q-30.61 7.23-56.53 22.15-25.93 14.93-49.47 38.46L222-674l-39.38 68L269-541.62q-5 14.24-7 29.62t-2 32.38q0 15.62 2 30.62 2 15 6.62 29.62l-86 65.38L222-286l99-42q22.77 23.38 48.69 38.31 25.93 14.92 57.31 22.92L440-160Zm40.46-200q49.92 0 84.96-35.04 35.04-35.04 35.04-84.96 0-49.92-35.04-84.96Q530.38-600 480.46-600q-50.54 0-85.27 35.04T360.46-480q0 49.92 34.73 84.96Q429.92-360 480.46-360ZM480-480Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Settings</h3>
+            <p class="record-id"><code>material:settings</code></p>
+            <p>Show settings, preferences, configuration, or system options.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>95%</dd></div>
+              <div><dt>Category</dt><dd>configuration</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:settings&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;settings&quot;,
+  &quot;label&quot;: &quot;Settings&quot;,
+  &quot;purpose&quot;: &quot;Show settings, preferences, configuration, or system options.&quot;,
+  &quot;category&quot;: &quot;configuration&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;settings&quot;,
+    &quot;preferences&quot;,
+    &quot;configuration&quot;,
+    &quot;options&quot;,
+    &quot;controls&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can open settings, change preferences, or manage configuration.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for repair tools, automation workflows, or system architecture concepts where a gear would be too generic.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A gear with a center hub.&quot;,
+  &quot;intent&quot;: &quot;configure&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.95,
+  &quot;synonyms&quot;: [
+    &quot;preferences&quot;,
+    &quot;config&quot;,
+    &quot;settings panel&quot;,
+    &quot;options&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="data-controls">
+      <div class="section-head">
+        <h2>data_controls</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:filter">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Filter icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Filter</h3>
+            <p class="record-id"><code>tabler:filter</code></p>
+            <p>Show filtering or refinement of results, content, or data.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>95%</dd></div>
+              <div><dt>Category</dt><dd>data_controls</dd></div>
+              <div><dt>Domain</dt><dd>ui_controls</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:filter&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;filter&quot;,
+  &quot;label&quot;: &quot;Filter&quot;,
+  &quot;purpose&quot;: &quot;Show filtering or refinement of results, content, or data.&quot;,
+  &quot;category&quot;: &quot;data_controls&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;filter&quot;,
+    &quot;refine&quot;,
+    &quot;narrow&quot;,
+    &quot;results&quot;,
+    &quot;data control&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can narrow, refine, or filter a list, search result, or data view.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for funnel analytics, ingestion pipelines, or generic status meaning when the UI is not actually filtering results.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A funnel shape that narrows content into a smaller output.&quot;,
+  &quot;intent&quot;: &quot;refine&quot;,
+  &quot;domain&quot;: &quot;ui_controls&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.95,
+  &quot;synonyms&quot;: [
+    &quot;refine results&quot;,
+    &quot;filter data&quot;,
+    &quot;narrow list&quot;,
+    &quot;apply filters&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="destructive-actions">
+      <div class="section-head">
+        <h2>destructive_actions</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:trash">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Delete icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M4 7l16 0" /> <path d="M10 11l0 6" /> <path d="M14 11l0 6" /> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Delete</h3>
+            <p class="record-id"><code>tabler:trash</code></p>
+            <p>Show delete, discard, or remove actions for content or items.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>96%</dd></div>
+              <div><dt>Category</dt><dd>destructive_actions</dd></div>
+              <div><dt>Domain</dt><dd>ui_controls</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:trash&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;trash&quot;,
+  &quot;label&quot;: &quot;Delete&quot;,
+  &quot;purpose&quot;: &quot;Show delete, discard, or remove actions for content or items.&quot;,
+  &quot;category&quot;: &quot;destructive_actions&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;delete&quot;,
+    &quot;trash&quot;,
+    &quot;discard&quot;,
+    &quot;remove&quot;,
+    &quot;destructive&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can delete, discard, or remove an item from the current context.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for archive, close, or hide when the action is reversible or not truly destructive.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A trash bin used for discard or deletion.&quot;,
+  &quot;intent&quot;: &quot;delete&quot;,
+  &quot;domain&quot;: &quot;ui_controls&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.96,
+  &quot;synonyms&quot;: [
+    &quot;delete item&quot;,
+    &quot;remove&quot;,
+    &quot;discard&quot;,
+    &quot;trash&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="engineering-developer-tools">
+      <div class="section-head">
+        <h2>engineering_developer_tools</h2>
+        <span class="count-chip">3 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="lucide:binary">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Binary Data icon">
+              <svg class="lucide lucide-binary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect x="14" y="14" width="4" height="6" rx="2" /> <rect x="6" y="4" width="4" height="6" rx="2" /> <path d="M6 20h4" /> <path d="M14 10h4" /> <path d="M6 14h2v6" /> <path d="M14 4h2v6" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Binary Data</h3>
+            <p class="record-id"><code>lucide:binary</code></p>
+            <p>Show binary data, machine-level encoding, or low-level computational representation.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>74%</dd></div>
+              <div><dt>Category</dt><dd>engineering_developer_tools</dd></div>
+              <div><dt>Domain</dt><dd>developer_tools</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:binary&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;binary&quot;,
+  &quot;label&quot;: &quot;Binary Data&quot;,
+  &quot;purpose&quot;: &quot;Show binary data, machine-level encoding, or low-level computational representation.&quot;,
+  &quot;category&quot;: &quot;engineering_developer_tools&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;binary&quot;,
+    &quot;bits&quot;,
+    &quot;encoding&quot;,
+    &quot;machine data&quot;,
+    &quot;low-level compute&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to represent binary data, encoded output, or low-level machine-facing computation.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for general AI, agent behavior, or modular workflow concepts where the abstract bit pattern would be misleading.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Abstract bit-like shapes arranged as machine-level binary marks.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;developer_tools&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.74,
+  &quot;synonyms&quot;: [
+    &quot;binary code&quot;,
+    &quot;bit data&quot;,
+    &quot;machine encoding&quot;,
+    &quot;low-level data&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:code-xml">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Code icon">
+              <svg class="lucide lucide-code-xml" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m18 16 4-4-4-4" /> <path d="m6 8-4 4 4 4" /> <path d="m14.5 4-5 16" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Code</h3>
+            <p class="record-id"><code>lucide:code-xml</code></p>
+            <p>Show source code, markup, structured syntax, or developer-facing code views.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>95%</dd></div>
+              <div><dt>Category</dt><dd>engineering_developer_tools</dd></div>
+              <div><dt>Domain</dt><dd>developer_tools</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:code-xml&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;code-xml&quot;,
+  &quot;label&quot;: &quot;Code&quot;,
+  &quot;purpose&quot;: &quot;Show source code, markup, structured syntax, or developer-facing code views.&quot;,
+  &quot;category&quot;: &quot;engineering_developer_tools&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;code&quot;,
+    &quot;markup&quot;,
+    &quot;xml&quot;,
+    &quot;syntax&quot;,
+    &quot;developer&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to represent code, markup, developer tooling, or source-view functionality.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic integration, workflow, or AI behavior where the code-specific brackets would be too narrow.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Angle-bracket code marks with a slash in the middle.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;developer_tools&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.95,
+  &quot;synonyms&quot;: [
+    &quot;source code&quot;,
+    &quot;markup&quot;,
+    &quot;developer view&quot;,
+    &quot;code editor&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:search-code">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Search Code icon">
+              <svg class="lucide lucide-search-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m13 13.5 2-2.5-2-2.5" /> <path d="m21 21-4.3-4.3" /> <path d="M9 8.5 7 11l2 2.5" /> <circle cx="11" cy="11" r="8" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Search Code</h3>
+            <p class="record-id"><code>lucide:search-code</code></p>
+            <p>Show code search, source inspection, or developer lookup over code or markup.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>94%</dd></div>
+              <div><dt>Category</dt><dd>engineering_developer_tools</dd></div>
+              <div><dt>Domain</dt><dd>developer_tools</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:search-code&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;search-code&quot;,
+  &quot;label&quot;: &quot;Search Code&quot;,
+  &quot;purpose&quot;: &quot;Show code search, source inspection, or developer lookup over code or markup.&quot;,
+  &quot;category&quot;: &quot;engineering_developer_tools&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;search code&quot;,
+    &quot;code lookup&quot;,
+    &quot;inspect source&quot;,
+    &quot;developer search&quot;,
+    &quot;code search&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to search, inspect, or explore code, source, or markup.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic search, document lookup, or AI reasoning where the code-specific meaning would be too narrow.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A magnifying-glass circle with code brackets inside it.&quot;,
+  &quot;intent&quot;: &quot;discover&quot;,
+  &quot;domain&quot;: &quot;developer_tools&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.94,
+  &quot;synonyms&quot;: [
+    &quot;code search&quot;,
+    &quot;search source&quot;,
+    &quot;inspect code&quot;,
+    &quot;developer lookup&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="message-actions">
+      <div class="section-head">
+        <h2>message_actions</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:send">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Send icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-send" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M10 14l11 -11" /> <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Send</h3>
+            <p class="record-id"><code>tabler:send</code></p>
+            <p>Show an outbound send, submit, or dispatch action for messages, content, or requests.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>92%</dd></div>
+              <div><dt>Category</dt><dd>message_actions</dd></div>
+              <div><dt>Domain</dt><dd>communication</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:send&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;send&quot;,
+  &quot;label&quot;: &quot;Send&quot;,
+  &quot;purpose&quot;: &quot;Show an outbound send, submit, or dispatch action for messages, content, or requests.&quot;,
+  &quot;category&quot;: &quot;message_actions&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;send&quot;,
+    &quot;submit&quot;,
+    &quot;dispatch&quot;,
+    &quot;outbound&quot;,
+    &quot;message&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user is sending a message, submitting content, or dispatching something outward from the interface.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic navigation, status feedback, or file export when the action is not actually an outbound send.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A paper-plane style arrow used for outbound sending.&quot;,
+  &quot;intent&quot;: &quot;act&quot;,
+  &quot;domain&quot;: &quot;communication&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.92,
+  &quot;synonyms&quot;: [
+    &quot;send message&quot;,
+    &quot;submit&quot;,
+    &quot;dispatch&quot;,
+    &quot;outbound action&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="navigation-interface">
+      <div class="section-head">
+        <h2>navigation_interface</h2>
+        <span class="count-chip">5 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="material:arrow_back">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Back icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m294.92-450 227.85 227.85L480-180 180-480l300-300 42.77 42.15L294.92-510H780v60H294.92Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Back</h3>
+            <p class="record-id"><code>material:arrow_back</code></p>
+            <p>Show back navigation to the previous screen, view, or state.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>97%</dd></div>
+              <div><dt>Category</dt><dd>navigation_interface</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:arrow_back&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;arrow_back&quot;,
+  &quot;label&quot;: &quot;Back&quot;,
+  &quot;purpose&quot;: &quot;Show back navigation to the previous screen, view, or state.&quot;,
+  &quot;category&quot;: &quot;navigation_interface&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;back&quot;,
+    &quot;previous&quot;,
+    &quot;return&quot;,
+    &quot;navigation&quot;,
+    &quot;go back&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can return to the previous screen, previous step, or earlier navigation state.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A left-pointing arrow with a return-like stem.&quot;,
+  &quot;intent&quot;: &quot;navigate&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.97,
+  &quot;synonyms&quot;: [
+    &quot;back button&quot;,
+    &quot;previous screen&quot;,
+    &quot;return&quot;,
+    &quot;go back&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="material:arrow_forward">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Forward Or Next icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M665.08-450H180v-60h485.08L437.23-737.85 480-780l300 300-300 300-42.77-42.15L665.08-450Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Forward Or Next</h3>
+            <p class="record-id"><code>material:arrow_forward</code></p>
+            <p>Show forward navigation, continue flow, or move to the next screen or step.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>91%</dd></div>
+              <div><dt>Category</dt><dd>navigation_interface</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:arrow_forward&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;arrow_forward&quot;,
+  &quot;label&quot;: &quot;Forward Or Next&quot;,
+  &quot;purpose&quot;: &quot;Show forward navigation, continue flow, or move to the next screen or step.&quot;,
+  &quot;category&quot;: &quot;navigation_interface&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;forward&quot;,
+    &quot;next&quot;,
+    &quot;continue&quot;,
+    &quot;navigation&quot;,
+    &quot;advance&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user should move to the next step, continue forward, or navigate deeper into a flow.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A right-pointing arrow with a forward stem.&quot;,
+  &quot;intent&quot;: &quot;navigate&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.91,
+  &quot;synonyms&quot;: [
+    &quot;next&quot;,
+    &quot;continue&quot;,
+    &quot;go forward&quot;,
+    &quot;next step&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="material:close">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Close Surface icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Close Surface</h3>
+            <p class="record-id"><code>material:close</code></p>
+            <p>Close, dismiss, or collapse an open surface such as a modal, drawer, or panel.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>92%</dd></div>
+              <div><dt>Category</dt><dd>navigation_interface</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:close&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;close&quot;,
+  &quot;label&quot;: &quot;Close Surface&quot;,
+  &quot;purpose&quot;: &quot;Close, dismiss, or collapse an open surface such as a modal, drawer, or panel.&quot;,
+  &quot;category&quot;: &quot;navigation_interface&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;close&quot;,
+    &quot;dismiss&quot;,
+    &quot;cancel&quot;,
+    &quot;panel&quot;,
+    &quot;modal&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can close an open surface, overlay, drawer, or panel.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for error, rejection, or blocked states where the X is a status symbol rather than a surface control.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A large X mark used as a close control.&quot;,
+  &quot;intent&quot;: &quot;dismiss&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.92,
+  &quot;synonyms&quot;: [
+    &quot;close panel&quot;,
+    &quot;dismiss&quot;,
+    &quot;close modal&quot;,
+    &quot;close drawer&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="material:home">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Go Home icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M240-200h133.85v-237.69h212.3V-200H720v-360L480-740.77 240-560v360Zm-60 60v-450l300-225.77L780-590v450H526.15v-237.69h-92.3V-140H180Zm300-330.38Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Go Home</h3>
+            <p class="record-id"><code>material:home</code></p>
+            <p>Show the home destination, root view, or primary landing area of the product.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>96%</dd></div>
+              <div><dt>Category</dt><dd>navigation_interface</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:home&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;home&quot;,
+  &quot;label&quot;: &quot;Go Home&quot;,
+  &quot;purpose&quot;: &quot;Show the home destination, root view, or primary landing area of the product.&quot;,
+  &quot;category&quot;: &quot;navigation_interface&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;home&quot;,
+    &quot;root&quot;,
+    &quot;dashboard&quot;,
+    &quot;landing&quot;,
+    &quot;main destination&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user can return to the home screen, dashboard, or main landing area.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for literal housing, addresses, or storage locations unless the UI truly means home as a place.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A simple house silhouette with a doorway.&quot;,
+  &quot;intent&quot;: &quot;navigate&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.96,
+  &quot;synonyms&quot;: [
+    &quot;go home&quot;,
+    &quot;home page&quot;,
+    &quot;root screen&quot;,
+    &quot;main dashboard&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="material:menu">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Open Menu icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M140-254.62v-59.99h680v59.99H140ZM140-450v-60h680v60H140Zm0-195.39v-59.99h680v59.99H140Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Open Menu</h3>
+            <p class="record-id"><code>material:menu</code></p>
+            <p>Show the main menu, navigation drawer, or app-level menu entry point.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>94%</dd></div>
+              <div><dt>Category</dt><dd>navigation_interface</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:menu&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;menu&quot;,
+  &quot;label&quot;: &quot;Open Menu&quot;,
+  &quot;purpose&quot;: &quot;Show the main menu, navigation drawer, or app-level menu entry point.&quot;,
+  &quot;category&quot;: &quot;navigation_interface&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;menu&quot;,
+    &quot;navigation&quot;,
+    &quot;drawer&quot;,
+    &quot;app menu&quot;,
+    &quot;hamburger&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to open or indicate the main navigation menu, drawer, or app shell menu.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for sortable lists, drag handles, or generic content lists with no menu meaning.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Three horizontal bars stacked like a hamburger menu.&quot;,
+  &quot;intent&quot;: &quot;navigate&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.94,
+  &quot;synonyms&quot;: [
+    &quot;open menu&quot;,
+    &quot;navigation menu&quot;,
+    &quot;open drawer&quot;,
+    &quot;main menu&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="search-discovery">
+      <div class="section-head">
+        <h2>search_discovery</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="material:search">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Search icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z"/></svg>
+
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">material</div>
+            <h3>Search</h3>
+            <p class="record-id"><code>material:search</code></p>
+            <p>Show search, lookup, or find behavior over content, records, or interface surfaces.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>96%</dd></div>
+              <div><dt>Category</dt><dd>search_discovery</dd></div>
+              <div><dt>Domain</dt><dd>ui_shell</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;material:search&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;material&quot;,
+  &quot;source_name&quot;: &quot;search&quot;,
+  &quot;label&quot;: &quot;Search&quot;,
+  &quot;purpose&quot;: &quot;Show search, lookup, or find behavior over content, records, or interface surfaces.&quot;,
+  &quot;category&quot;: &quot;search_discovery&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;search&quot;,
+    &quot;find&quot;,
+    &quot;lookup&quot;,
+    &quot;query&quot;,
+    &quot;discovery&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface opens search, triggers lookup, or signals that users can find content.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for scanning, inspection, or analytics-specific search when a more specialized icon communicates the meaning better.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A magnifying glass.&quot;,
+  &quot;intent&quot;: &quot;discover&quot;,
+  &quot;domain&quot;: &quot;ui_shell&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.96,
+  &quot;synonyms&quot;: [
+    &quot;find&quot;,
+    &quot;search content&quot;,
+    &quot;lookup&quot;,
+    &quot;query&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="security">
+      <div class="section-head">
+        <h2>security</h2>
+        <span class="count-chip">1 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:shield-check">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Trusted And Protected icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-check" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Trusted And Protected</h3>
+            <p class="record-id"><code>tabler:shield-check</code></p>
+            <p>Show verified protection, trusted status, or a confirmed security safeguard.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>96%</dd></div>
+              <div><dt>Category</dt><dd>security</dd></div>
+              <div><dt>Domain</dt><dd>security</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:shield-check&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;shield-check&quot;,
+  &quot;label&quot;: &quot;Trusted And Protected&quot;,
+  &quot;purpose&quot;: &quot;Show verified protection, trusted status, or a confirmed security safeguard.&quot;,
+  &quot;category&quot;: &quot;security&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;security&quot;,
+    &quot;trust&quot;,
+    &quot;verified&quot;,
+    &quot;protected&quot;,
+    &quot;safe&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when something has passed a trust, safety, or protection check.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for plain success states unrelated to trust, protection, or verification.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A shield outline with a checkmark.&quot;,
+  &quot;intent&quot;: &quot;confirm&quot;,
+  &quot;domain&quot;: &quot;security&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.96,
+  &quot;synonyms&quot;: [
+    &quot;verified security&quot;,
+    &quot;trusted&quot;,
+    &quot;safe&quot;,
+    &quot;secure check&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="status-feedback">
+      <div class="section-head">
+        <h2>status_feedback</h2>
+        <span class="count-chip">7 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:alert-circle">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Alert icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 8v4" /> <path d="M12 16h.01" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Alert</h3>
+            <p class="record-id"><code>tabler:alert-circle</code></p>
+            <p>Show a warning, alert, or attention-needed state that is not full failure.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>91%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:alert-circle&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;alert-circle&quot;,
+  &quot;label&quot;: &quot;Alert&quot;,
+  &quot;purpose&quot;: &quot;Show a warning, alert, or attention-needed state that is not full failure.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;alert&quot;,
+    &quot;warning&quot;,
+    &quot;attention&quot;,
+    &quot;issue&quot;,
+    &quot;notice&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to surface a notable issue, warning, or attention-needed condition.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for success, prohibition, or explicit failure where a stronger symbol is clearer.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;An exclamation-style alert mark inside a circle.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.91,
+  &quot;synonyms&quot;: [
+    &quot;attention needed&quot;,
+    &quot;warning state&quot;,
+    &quot;issue alert&quot;,
+    &quot;caution&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:alert-triangle">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Warning icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M12 9v4" /> <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" /> <path d="M12 16h.01" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Warning</h3>
+            <p class="record-id"><code>tabler:alert-triangle</code></p>
+            <p>Show a warning, caution, or elevated-risk state that needs attention.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>97%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:alert-triangle&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;alert-triangle&quot;,
+  &quot;label&quot;: &quot;Warning&quot;,
+  &quot;purpose&quot;: &quot;Show a warning, caution, or elevated-risk state that needs attention.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;warning&quot;,
+    &quot;caution&quot;,
+    &quot;risk&quot;,
+    &quot;attention&quot;,
+    &quot;alert&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the system needs to surface a warning, caution, or elevated-risk condition.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for success, prohibition, or hard failure when another status icon would be more precise.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A triangle warning sign with a central attention mark.&quot;,
+  &quot;intent&quot;: &quot;warn&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.97,
+  &quot;synonyms&quot;: [
+    &quot;caution&quot;,
+    &quot;warning state&quot;,
+    &quot;risk alert&quot;,
+    &quot;attention needed&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:ban">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Blocked icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ban" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M5.7 5.7l12.6 12.6" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Blocked</h3>
+            <p class="record-id"><code>tabler:ban</code></p>
+            <p>Show that an action, object, or state is blocked, prohibited, or not allowed.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>94%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:ban&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;ban&quot;,
+  &quot;label&quot;: &quot;Blocked&quot;,
+  &quot;purpose&quot;: &quot;Show that an action, object, or state is blocked, prohibited, or not allowed.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;blocked&quot;,
+    &quot;prohibited&quot;,
+    &quot;forbidden&quot;,
+    &quot;disabled&quot;,
+    &quot;not allowed&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to communicate prohibition, restriction, or blocked availability.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for simple failure, dismissal, or closed-state meanings where an X icon is clearer.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A prohibition circle with a diagonal slash.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.94,
+  &quot;synonyms&quot;: [
+    &quot;forbidden&quot;,
+    &quot;not allowed&quot;,
+    &quot;blocked action&quot;,
+    &quot;restricted&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:circle-check">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Confirmed Success icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Confirmed Success</h3>
+            <p class="record-id"><code>tabler:circle-check</code></p>
+            <p>Show a successful, completed, or confirmed state.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>95%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:circle-check&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;circle-check&quot;,
+  &quot;label&quot;: &quot;Confirmed Success&quot;,
+  &quot;purpose&quot;: &quot;Show a successful, completed, or confirmed state.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;success&quot;,
+    &quot;complete&quot;,
+    &quot;confirmed&quot;,
+    &quot;passed&quot;,
+    &quot;done&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when a task, step, validation, or operation has completed successfully.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for blocked, warning, or security-specific verification states.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A checkmark inside a circle.&quot;,
+  &quot;intent&quot;: &quot;confirm&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.95,
+  &quot;synonyms&quot;: [
+    &quot;completed&quot;,
+    &quot;passed check&quot;,
+    &quot;success state&quot;,
+    &quot;confirmed&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:circle-x">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Failed Or Rejected icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-x" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M10 10l4 4m0 -4l-4 4" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Failed Or Rejected</h3>
+            <p class="record-id"><code>tabler:circle-x</code></p>
+            <p>Show a failed, rejected, cancelled, or negative-result state.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>93%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:circle-x&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;circle-x&quot;,
+  &quot;label&quot;: &quot;Failed Or Rejected&quot;,
+  &quot;purpose&quot;: &quot;Show a failed, rejected, cancelled, or negative-result state.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;error&quot;,
+    &quot;failed&quot;,
+    &quot;rejected&quot;,
+    &quot;cancelled&quot;,
+    &quot;negative&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when a process, validation, or outcome clearly failed or was rejected.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for prohibition or restriction where a slash icon communicates the meaning better.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;An X inside a circle.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.93,
+  &quot;synonyms&quot;: [
+    &quot;failure&quot;,
+    &quot;rejected&quot;,
+    &quot;not successful&quot;,
+    &quot;cancelled state&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:toggle-right">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Enabled Toggle icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-toggle-right" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M14 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M2 12a6 6 0 0 1 6 -6h8a6 6 0 0 1 6 6a6 6 0 0 1 -6 6h-8a6 6 0 0 1 -6 -6" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Enabled Toggle</h3>
+            <p class="record-id"><code>tabler:toggle-right</code></p>
+            <p>Show that a setting, control, or feature is switched on or enabled.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>95%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:toggle-right&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;toggle-right&quot;,
+  &quot;label&quot;: &quot;Enabled Toggle&quot;,
+  &quot;purpose&quot;: &quot;Show that a setting, control, or feature is switched on or enabled.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;toggle&quot;,
+    &quot;enabled&quot;,
+    &quot;on&quot;,
+    &quot;active&quot;,
+    &quot;switch&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to communicate an enabled setting or an active on-state.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use as a general success mark or power symbol with no toggle meaning.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A horizontal toggle switch in the on position.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.95,
+  &quot;synonyms&quot;: [
+    &quot;turned on&quot;,
+    &quot;enabled state&quot;,
+    &quot;active switch&quot;,
+    &quot;setting on&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:trophy">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Achievement icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trophy" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M8 21l8 0" /> <path d="M12 17l0 4" /> <path d="M7 4l10 0" /> <path d="M17 4v8a5 5 0 0 1 -10 0v-8" /> <path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Achievement</h3>
+            <p class="record-id"><code>tabler:trophy</code></p>
+            <p>Show an achievement, award, milestone, or winning outcome.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>88%</dd></div>
+              <div><dt>Category</dt><dd>status_feedback</dd></div>
+              <div><dt>Domain</dt><dd>product_status</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:trophy&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;trophy&quot;,
+  &quot;label&quot;: &quot;Achievement&quot;,
+  &quot;purpose&quot;: &quot;Show an achievement, award, milestone, or winning outcome.&quot;,
+  &quot;category&quot;: &quot;status_feedback&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;achievement&quot;,
+    &quot;award&quot;,
+    &quot;win&quot;,
+    &quot;milestone&quot;,
+    &quot;reward&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface needs to celebrate an achievement, reward, milestone, or top result.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for ordinary completion states where a simple success icon is enough.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A trophy cup with handles and a base.&quot;,
+  &quot;intent&quot;: &quot;confirm&quot;,
+  &quot;domain&quot;: &quot;product_status&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.88,
+  &quot;synonyms&quot;: [
+    &quot;milestone reached&quot;,
+    &quot;award&quot;,
+    &quot;winner&quot;,
+    &quot;achievement unlocked&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="system-control">
+      <div class="section-head">
+        <h2>system_control</h2>
+        <span class="count-chip">2 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="tabler:power">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Power icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-power" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M7 6a7.75 7.75 0 1 0 10 0" /> <path d="M12 4l0 8" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Power</h3>
+            <p class="record-id"><code>tabler:power</code></p>
+            <p>Show power control, system on-off state, or a start-stop control tied to availability.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>85%</dd></div>
+              <div><dt>Category</dt><dd>system_control</dd></div>
+              <div><dt>Domain</dt><dd>ui_controls</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:power&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;power&quot;,
+  &quot;label&quot;: &quot;Power&quot;,
+  &quot;purpose&quot;: &quot;Show power control, system on-off state, or a start-stop control tied to availability.&quot;,
+  &quot;category&quot;: &quot;system_control&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;power&quot;,
+    &quot;on&quot;,
+    &quot;off&quot;,
+    &quot;start&quot;,
+    &quot;shutdown&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface controls or indicates a power-related state such as start, shutdown, or availability.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic enabled settings, success states, or simple toggle behavior where the meaning is not truly power-related.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A circular power-button symbol with a vertical line at the top.&quot;,
+  &quot;intent&quot;: &quot;control&quot;,
+  &quot;domain&quot;: &quot;ui_controls&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.85,
+  &quot;synonyms&quot;: [
+    &quot;power button&quot;,
+    &quot;turn on&quot;,
+    &quot;turn off&quot;,
+    &quot;system power&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="tabler:refresh">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Refresh icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-refresh" > <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /> <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">tabler</div>
+            <h3>Refresh</h3>
+            <p class="record-id"><code>tabler:refresh</code></p>
+            <p>Show refreshing or reloading the current view, results, or content state.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>86%</dd></div>
+              <div><dt>Category</dt><dd>system_control</dd></div>
+              <div><dt>Domain</dt><dd>ui_controls</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;tabler:refresh&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;tabler&quot;,
+  &quot;source_name&quot;: &quot;refresh&quot;,
+  &quot;label&quot;: &quot;Refresh&quot;,
+  &quot;purpose&quot;: &quot;Show refreshing or reloading the current view, results, or content state.&quot;,
+  &quot;category&quot;: &quot;system_control&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;refresh&quot;,
+    &quot;reload&quot;,
+    &quot;update&quot;,
+    &quot;refetch&quot;,
+    &quot;reload view&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the user or system is refreshing a page, refetching results, or reloading the current content state.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for undo, long-running sync status, or retry-after-error flows when those meanings need a more specific icon.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Two curved arrows forming a circular refresh loop.&quot;,
+  &quot;intent&quot;: &quot;control&quot;,
+  &quot;domain&quot;: &quot;ui_controls&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.86,
+  &quot;synonyms&quot;: [
+    &quot;reload&quot;,
+    &quot;refresh view&quot;,
+    &quot;update results&quot;,
+    &quot;refetch content&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+
+    <section class="category-section" id="systems-architecture">
+      <div class="section-head">
+        <h2>systems_architecture</h2>
+        <span class="count-chip">2 approved</span>
+      </div>
+      <div class="record-list">
+        
+      <article class="record-card" id="lucide:blocks">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Modules icon">
+              <svg class="lucide lucide-blocks" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2" /> <rect x="14" y="2" width="8" height="8" rx="1" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Modules</h3>
+            <p class="record-id"><code>lucide:blocks</code></p>
+            <p>Show modular building blocks, composable components, or system pieces that fit together.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>77%</dd></div>
+              <div><dt>Category</dt><dd>systems_architecture</dd></div>
+              <div><dt>Domain</dt><dd>developer_tools</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:blocks&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;blocks&quot;,
+  &quot;label&quot;: &quot;Modules&quot;,
+  &quot;purpose&quot;: &quot;Show modular building blocks, composable components, or system pieces that fit together.&quot;,
+  &quot;category&quot;: &quot;systems_architecture&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;modules&quot;,
+    &quot;components&quot;,
+    &quot;blocks&quot;,
+    &quot;composable&quot;,
+    &quot;building blocks&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface refers to modular components, system blocks, or composable units that make up a larger whole.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for storage, files, or AI agent behavior where the block motif is too generic.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A large rounded block with a smaller detached block above it.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;developer_tools&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.77,
+  &quot;synonyms&quot;: [
+    &quot;components&quot;,
+    &quot;modules&quot;,
+    &quot;building blocks&quot;,
+    &quot;composable pieces&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+
+      <article class="record-card" id="lucide:circuit-board">
+        <div class="record-preview">
+          <div class="icon-stage">
+            <div class="icon-wrap" aria-label="Compute Architecture icon">
+              <svg class="lucide lucide-circuit-board" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="18" x="3" y="3" rx="2" /> <path d="M11 9h4a2 2 0 0 0 2-2V3" /> <circle cx="9" cy="9" r="2" /> <path d="M7 21v-4a2 2 0 0 1 2-2h4" /> <circle cx="15" cy="15" r="2" /> </svg>
+            </div>
+          </div>
+          <div class="record-quick">
+            <div class="mini-pill">lucide</div>
+            <h3>Compute Architecture</h3>
+            <p class="record-id"><code>lucide:circuit-board</code></p>
+            <p>Show compute architecture, system infrastructure, or low-level processing logic.</p>
+            <dl class="mini-meta">
+              <div><dt>Confidence</dt><dd>87%</dd></div>
+              <div><dt>Category</dt><dd>systems_architecture</dd></div>
+              <div><dt>Domain</dt><dd>developer_tools</dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="record-code">
+          <p class="code-label">Exact current semantic metadata</p>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:circuit-board&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;circuit-board&quot;,
+  &quot;label&quot;: &quot;Compute Architecture&quot;,
+  &quot;purpose&quot;: &quot;Show compute architecture, system infrastructure, or low-level processing logic.&quot;,
+  &quot;category&quot;: &quot;systems_architecture&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;circuit board&quot;,
+    &quot;compute&quot;,
+    &quot;infrastructure&quot;,
+    &quot;architecture&quot;,
+    &quot;system logic&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product refers to compute infrastructure, technical architecture, backend processing, or system-level logic.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic AI reasoning, workflow orchestration, or simple settings where the board metaphor would feel too infrastructure-heavy.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A rounded square board with circuit nodes and traces.&quot;,
+  &quot;intent&quot;: &quot;inform&quot;,
+  &quot;domain&quot;: &quot;developer_tools&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;confidence&quot;: 0.87,
+  &quot;synonyms&quot;: [
+    &quot;compute architecture&quot;,
+    &quot;system infrastructure&quot;,
+    &quot;technical architecture&quot;,
+    &quot;processing system&quot;
+  ]
+}</code></pre>
+        </div>
+      </article>
+    
+      </div>
+    </section>
+  
+  </main>
+</body>
+</html>
