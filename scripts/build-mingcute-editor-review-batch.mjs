@@ -7,7 +7,6 @@ import publicIconIndex from '../public/icon-index.json' with { type: 'json' };
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..');
 const automationRoot = path.join(repoRoot, 'data', 'si-registry', 'automation');
-const batchSourceDir = path.join(automationRoot, 'mingcute-batch-01');
 const libraryDir = path.join(automationRoot, 'mingcute');
 const generatedDir = path.join(repoRoot, 'data', 'si-registry', 'generated');
 
@@ -60,6 +59,38 @@ const REVIEW_DECISIONS = Object.freeze({
   'mingcute:search_none': {
     outcome: 'keep_as_reviewed_draft',
     note: 'The search-with-none state still needs stronger interface context before it can be treated as a stable public semantic record.',
+  },
+  'mingcute:lie_down': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The person posture reads more like a real-world body action than a stable UI semantic pattern.',
+  },
+  'mingcute:look_down': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The face-direction icon is still too context-sensitive to treat as a stable public UI meaning.',
+  },
+  'mingcute:look_left': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The face-direction icon is still too context-sensitive to treat as a stable public UI meaning.',
+  },
+  'mingcute:look_right': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The face-direction icon is still too context-sensitive to treat as a stable public UI meaning.',
+  },
+  'mingcute:look_up': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The face-direction icon is still too context-sensitive to treat as a stable public UI meaning.',
+  },
+  'mingcute:warm_up': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The exercise-style figure reads as a real-world warm-up action, not a stable product semantic.',
+  },
+  'mingcute:warm_up_2': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The exercise-style figure reads as a real-world warm-up action, not a stable product semantic.',
+  },
+  'mingcute:warm_up_3': {
+    outcome: 'keep_as_reviewed_draft',
+    note: 'The exercise-style figure reads as a real-world warm-up action, not a stable product semantic.',
   },
 });
 
@@ -289,6 +320,152 @@ function applyPatternOverrides(record) {
       use_when: 'Use when the interface switches to or labels a checklist or task-list view.',
       avoid_when: 'Do not use for a single completed item when the meaning is specifically a full list view.',
       confidence_score: 0.86,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:list_expansion') {
+    return withOverrides(reviewed, {
+      label: 'Expand List',
+      depicts: 'A list paired with expand controls.',
+      purpose: 'Show expanding a list, opening more list rows, or revealing additional items in a list view.',
+      category: 'navigation_interface',
+      intent: 'control',
+      domain: 'ui_shell',
+      semantic_tags: ['expand list', 'show more items', 'open list', 'list control', 'expand'],
+      synonyms: ['expand list', 'show more rows', 'open more items', 'list expansion'],
+      use_when: 'Use when the interface expands a visible list or reveals more list items.',
+      avoid_when: 'Do not use for generic list view when the meaning is specifically expansion or reveal.',
+      confidence_score: 0.86,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:list_ordered') {
+    return withOverrides(reviewed, {
+      label: 'Ordered List',
+      depicts: 'A numbered list layout.',
+      purpose: 'Show an ordered list, ranked list, or numbered sequence view.',
+      category: 'navigation_interface',
+      intent: 'inform',
+      domain: 'ui_shell',
+      semantic_tags: ['ordered list', 'numbered list', 'ranked list', 'sequence', 'list view'],
+      synonyms: ['numbered list', 'ranked list', 'ordered items', 'sequence list'],
+      use_when: 'Use when the interface shows or switches to a numbered list, ranked list, or ordered sequence.',
+      avoid_when: 'Do not use for plain list views when the numbered order itself is not important.',
+      confidence_score: 0.87,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:layout_left' || record.icon_id === 'mingcute:layout_right') {
+    const isLeft = record.icon_id.endsWith('left');
+    return withOverrides(reviewed, {
+      label: isLeft ? 'Left Panel Layout' : 'Right Panel Layout',
+      depicts: isLeft ? 'A layout with a strong left-side panel.' : 'A layout with a strong right-side panel.',
+      purpose: isLeft
+        ? 'Show a layout mode where the main side panel sits on the left.'
+        : 'Show a layout mode where the main side panel sits on the right.',
+      category: 'navigation_interface',
+      intent: 'control',
+      domain: 'ui_shell',
+      semantic_tags: isLeft
+        ? ['left panel', 'left sidebar', 'layout', 'panel layout', 'ui shell']
+        : ['right panel', 'right sidebar', 'layout', 'panel layout', 'ui shell'],
+      synonyms: isLeft
+        ? ['left sidebar layout', 'left panel view', 'left rail layout', 'left shell']
+        : ['right sidebar layout', 'right panel view', 'right rail layout', 'right shell'],
+      use_when: isLeft
+        ? 'Use when the interface switches to or labels a layout with a left-side panel or sidebar.'
+        : 'Use when the interface switches to or labels a layout with a right-side panel or sidebar.',
+      avoid_when: 'Do not use for back or forward navigation when the meaning is specifically a shell layout choice.',
+      confidence_score: 0.86,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:text_direction_left' || record.icon_id === 'mingcute:text_direction_right') {
+    const isLeft = record.icon_id.endsWith('left');
+    return withOverrides(reviewed, {
+      label: isLeft ? 'Left Text Direction' : 'Right Text Direction',
+      depicts: isLeft ? 'A text direction control pointing left.' : 'A text direction control pointing right.',
+      purpose: isLeft
+        ? 'Show switching text direction toward the left or applying a left-direction text flow.'
+        : 'Show switching text direction toward the right or applying a right-direction text flow.',
+      category: 'data_controls',
+      intent: 'control',
+      domain: 'ui_controls',
+      semantic_tags: isLeft
+        ? ['text direction', 'left text', 'writing direction', 'formatting', 'layout']
+        : ['text direction', 'right text', 'writing direction', 'formatting', 'layout'],
+      synonyms: isLeft
+        ? ['left text flow', 'text left direction', 'left writing direction', 'text direction left']
+        : ['right text flow', 'text right direction', 'right writing direction', 'text direction right'],
+      use_when: isLeft
+        ? 'Use when the interface changes writing direction, text flow, or formatting toward the left.'
+        : 'Use when the interface changes writing direction, text flow, or formatting toward the right.',
+      avoid_when: 'Do not use for navigation arrows when the meaning is specifically text formatting or writing direction.',
+      confidence_score: 0.85,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:thumb_up_2' || record.icon_id === 'mingcute:thumb_down_2') {
+    const isUp = record.icon_id.includes('thumb_up');
+    return withOverrides(reviewed, {
+      label: isUp ? 'Approval' : 'Disapproval',
+      depicts: isUp ? 'A thumbs-up approval gesture.' : 'A thumbs-down disapproval gesture.',
+      purpose: isUp
+        ? 'Show positive feedback, approval, or a liked state.'
+        : 'Show negative feedback, disapproval, or a disliked state.',
+      category: 'status_feedback',
+      intent: 'inform',
+      domain: 'product_status',
+      semantic_tags: isUp
+        ? ['approval', 'positive feedback', 'like', 'endorsed', 'thumbs up']
+        : ['disapproval', 'negative feedback', 'dislike', 'rejected', 'thumbs down'],
+      synonyms: isUp
+        ? ['liked', 'approved', 'positive response', 'endorsement']
+        : ['disliked', 'rejected', 'negative response', 'downvote'],
+      use_when: isUp
+        ? 'Use when the interface shows positive feedback, approval, or a liked state.'
+        : 'Use when the interface shows negative feedback, disapproval, or a disliked state.',
+      avoid_when: 'Do not use for spatial movement or navigation when the meaning is sentiment or feedback.',
+      confidence_score: 0.88,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:user_info') {
+    return withOverrides(reviewed, {
+      label: 'User Info',
+      depicts: 'A user profile paired with an information cue.',
+      purpose: 'Show profile details, account information, or user-specific help and metadata.',
+      category: 'status_feedback',
+      intent: 'inform',
+      domain: 'communication',
+      semantic_tags: ['user info', 'profile details', 'account information', 'user help', 'metadata'],
+      synonyms: ['profile info', 'account details', 'user details', 'member information'],
+      use_when: 'Use when the interface opens or labels profile details, account information, or user-specific metadata.',
+      avoid_when: 'Do not use for generic info badges when the meaning is specifically tied to a user or profile.',
+      confidence_score: 0.86,
+    });
+  }
+
+  if (record.icon_id === 'mingcute:quote_left' || record.icon_id === 'mingcute:quote_right') {
+    const isLeft = record.icon_id.endsWith('left');
+    return withOverrides(reviewed, {
+      label: isLeft ? 'Opening Quote' : 'Closing Quote',
+      depicts: isLeft ? 'An opening quotation mark.' : 'A closing quotation mark.',
+      purpose: isLeft
+        ? 'Show the start of a quoted statement, testimonial, or cited passage.'
+        : 'Show the end of a quoted statement, testimonial, or cited passage.',
+      category: 'communication_social',
+      intent: 'inform',
+      domain: 'communication',
+      semantic_tags: isLeft
+        ? ['opening quote', 'quoted text', 'testimonial', 'citation', 'quote mark']
+        : ['closing quote', 'quoted text', 'testimonial', 'citation', 'quote mark'],
+      synonyms: isLeft
+        ? ['quote start', 'start quote', 'testimonial quote', 'opening quotation']
+        : ['quote end', 'end quote', 'testimonial close', 'closing quotation'],
+      use_when: 'Use when the interface labels quoted text, testimonials, or cited passages.',
+      avoid_when: 'Do not use for back or forward navigation when the symbol is clearly a quotation mark.',
+      confidence_score: 0.84,
     });
   }
 
@@ -1273,6 +1450,8 @@ function getDecisionIconIds(batches, excludedBatchId) {
 }
 
 const selection = await readJson(selectionPath);
+const sourceBatchId = selection.source_batch_id || 'mingcute-batch-01';
+const batchSourceDir = path.join(automationRoot, sourceBatchId);
 const worklist = await readJson(path.join(batchSourceDir, 'worklist.json'));
 const candidateRecords = await readJson(path.join(batchSourceDir, 'candidate-records.json'));
 const reviewQueue = await readJson(path.join(batchSourceDir, 'review-queue.json'));
@@ -1379,6 +1558,7 @@ promotionDecisions.batches[BATCH_ID] = {
 const batch = {
   schema_version: '1.0.0',
   batch_id: BATCH_ID,
+  source_batch_id: sourceBatchId,
   library_id: selection.library_id,
   library_label: selection.library_label,
   purpose: selection.purpose,
@@ -1393,6 +1573,7 @@ const batch = {
 const summary = {
   schema_version: '1.0.0',
   batch_id: BATCH_ID,
+  source_batch_id: sourceBatchId,
   library_id: selection.library_id,
   total_icons: reviewedRecords.length,
   approved_for_import_count: approveForImport.length,

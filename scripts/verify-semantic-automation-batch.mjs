@@ -32,7 +32,7 @@ function assert(condition, message) {
 
 async function main() {
   const batchId = process.argv[2] || 'mingcute-batch-01';
-  const batchConfig = getSemanticAutomationBatchConfig(batchId);
+  const batchConfig = await getSemanticAutomationBatchConfig(batchId);
   if (!batchConfig) {
     throw new Error(`Unknown semantic automation batch: ${batchId}`);
   }

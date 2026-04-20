@@ -1,0 +1,2248 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "mingcute-editor-review-batch-03",
+  "reviewed_records": [
+    {
+      "icon_id": "mingcute:send",
+      "source_library": "mingcute",
+      "source_name": "send",
+      "label": "Send",
+      "depicts": "A paper-plane style arrow used for outbound sending.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "submit",
+        "dispatch",
+        "outbound",
+        "message"
+      ],
+      "synonyms": [
+        "send message",
+        "submit",
+        "dispatch",
+        "outbound action"
+      ],
+      "use_when": "Use when the user is sending a message, submitting content, or dispatching something outward from the interface.",
+      "avoid_when": "Do not use for generic navigation, status feedback, or file export when the action is not actually an outbound send.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:sort_ascending",
+      "source_library": "mingcute",
+      "source_name": "sort_ascending",
+      "label": "Sort Ascending",
+      "depicts": "An ordering control that arranges items from low to high or A to Z.",
+      "purpose": "Show ascending sort order for a list, results set, or ordered collection.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort ascending",
+        "order low to high",
+        "a to z",
+        "arrange",
+        "list order"
+      ],
+      "synonyms": [
+        "ascending order",
+        "sort low to high",
+        "sort a to z",
+        "ordered list"
+      ],
+      "use_when": "Use when the interface sorts items in ascending order such as low-to-high or A-to-Z.",
+      "avoid_when": "Do not use for filtering or ranking trends when the meaning is specifically sort order.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:sort_descending",
+      "source_library": "mingcute",
+      "source_name": "sort_descending",
+      "label": "Sort",
+      "depicts": "A control that changes ordering or ranking of items.",
+      "purpose": "Show sorting of a list, results, or ordered set of items.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort",
+        "order",
+        "arrange",
+        "rank",
+        "list control"
+      ],
+      "synonyms": [
+        "sort list",
+        "change order",
+        "arrange items",
+        "sort results"
+      ],
+      "use_when": "Use when the interface changes how items are ordered or ranked.",
+      "avoid_when": "Do not use for filtering, navigation, or progress states when the control is about ordering.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:za_sort_ascending_letters",
+      "source_library": "mingcute",
+      "source_name": "za_sort_ascending_letters",
+      "label": "Sort",
+      "depicts": "A control that changes ordering or ranking of items.",
+      "purpose": "Show sorting of a list, results, or ordered set of items.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort",
+        "order",
+        "arrange",
+        "rank",
+        "list control"
+      ],
+      "synonyms": [
+        "sort list",
+        "change order",
+        "arrange items",
+        "sort results"
+      ],
+      "use_when": "Use when the interface changes how items are ordered or ranked.",
+      "avoid_when": "Do not use for filtering, navigation, or progress states when the control is about ordering.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:za_sort_descending_letters",
+      "source_library": "mingcute",
+      "source_name": "za_sort_descending_letters",
+      "label": "Sort",
+      "depicts": "A control that changes ordering or ranking of items.",
+      "purpose": "Show sorting of a list, results, or ordered set of items.",
+      "category": "data_controls",
+      "intent": "refine",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sort",
+        "order",
+        "arrange",
+        "rank",
+        "list control"
+      ],
+      "synonyms": [
+        "sort list",
+        "change order",
+        "arrange items",
+        "sort results"
+      ],
+      "use_when": "Use when the interface changes how items are ordered or ranked.",
+      "avoid_when": "Do not use for filtering, navigation, or progress states when the control is about ordering.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:layout_left",
+      "source_library": "mingcute",
+      "source_name": "layout_left",
+      "label": "Left Panel Layout",
+      "depicts": "A layout with a strong left-side panel.",
+      "purpose": "Show a layout mode where the main side panel sits on the left.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "left panel",
+        "left sidebar",
+        "layout",
+        "panel layout",
+        "ui shell"
+      ],
+      "synonyms": [
+        "left sidebar layout",
+        "left panel view",
+        "left rail layout",
+        "left shell"
+      ],
+      "use_when": "Use when the interface switches to or labels a layout with a left-side panel or sidebar.",
+      "avoid_when": "Do not use for back or forward navigation when the meaning is specifically a shell layout choice.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:layout_right",
+      "source_library": "mingcute",
+      "source_name": "layout_right",
+      "label": "Right Panel Layout",
+      "depicts": "A layout with a strong right-side panel.",
+      "purpose": "Show a layout mode where the main side panel sits on the right.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "right panel",
+        "right sidebar",
+        "layout",
+        "panel layout",
+        "ui shell"
+      ],
+      "synonyms": [
+        "right sidebar layout",
+        "right panel view",
+        "right rail layout",
+        "right shell"
+      ],
+      "use_when": "Use when the interface switches to or labels a layout with a right-side panel or sidebar.",
+      "avoid_when": "Do not use for back or forward navigation when the meaning is specifically a shell layout choice.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:text_direction_left",
+      "source_library": "mingcute",
+      "source_name": "text_direction_left",
+      "label": "Left Text Direction",
+      "depicts": "A text direction control pointing left.",
+      "purpose": "Show switching text direction toward the left or applying a left-direction text flow.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "text direction",
+        "left text",
+        "writing direction",
+        "formatting",
+        "layout"
+      ],
+      "synonyms": [
+        "left text flow",
+        "text left direction",
+        "left writing direction",
+        "text direction left"
+      ],
+      "use_when": "Use when the interface changes writing direction, text flow, or formatting toward the left.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically text formatting or writing direction.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:text_direction_right",
+      "source_library": "mingcute",
+      "source_name": "text_direction_right",
+      "label": "Right Text Direction",
+      "depicts": "A text direction control pointing right.",
+      "purpose": "Show switching text direction toward the right or applying a right-direction text flow.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "text direction",
+        "right text",
+        "writing direction",
+        "formatting",
+        "layout"
+      ],
+      "synonyms": [
+        "right text flow",
+        "text right direction",
+        "right writing direction",
+        "text direction right"
+      ],
+      "use_when": "Use when the interface changes writing direction, text flow, or formatting toward the right.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically text formatting or writing direction.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:thumb_down_2",
+      "source_library": "mingcute",
+      "source_name": "thumb_down_2",
+      "label": "Disapproval",
+      "depicts": "A thumbs-down disapproval gesture.",
+      "purpose": "Show negative feedback, disapproval, or a disliked state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "disapproval",
+        "negative feedback",
+        "dislike",
+        "rejected",
+        "thumbs down"
+      ],
+      "synonyms": [
+        "disliked",
+        "rejected",
+        "negative response",
+        "downvote"
+      ],
+      "use_when": "Use when the interface shows negative feedback, disapproval, or a disliked state.",
+      "avoid_when": "Do not use for spatial movement or navigation when the meaning is sentiment or feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.88,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:thumb_up_2",
+      "source_library": "mingcute",
+      "source_name": "thumb_up_2",
+      "label": "Approval",
+      "depicts": "A thumbs-up approval gesture.",
+      "purpose": "Show positive feedback, approval, or a liked state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "approval",
+        "positive feedback",
+        "like",
+        "endorsed",
+        "thumbs up"
+      ],
+      "synonyms": [
+        "liked",
+        "approved",
+        "positive response",
+        "endorsement"
+      ],
+      "use_when": "Use when the interface shows positive feedback, approval, or a liked state.",
+      "avoid_when": "Do not use for spatial movement or navigation when the meaning is sentiment or feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.88,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:user_info",
+      "source_library": "mingcute",
+      "source_name": "user_info",
+      "label": "User Info",
+      "depicts": "A user profile paired with an information cue.",
+      "purpose": "Show profile details, account information, or user-specific help and metadata.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user info",
+        "profile details",
+        "account information",
+        "user help",
+        "metadata"
+      ],
+      "synonyms": [
+        "profile info",
+        "account details",
+        "user details",
+        "member information"
+      ],
+      "use_when": "Use when the interface opens or labels profile details, account information, or user-specific metadata.",
+      "avoid_when": "Do not use for generic info badges when the meaning is specifically tied to a user or profile.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:archive",
+      "source_library": "mingcute",
+      "source_name": "archive",
+      "label": "Archived",
+      "depicts": "Archived state shown as a compact interface mark.",
+      "purpose": "Show archived items that have been stored away from the main active view.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "archive",
+        "stored",
+        "past",
+        "saved away",
+        "inactive"
+      ],
+      "synonyms": [
+        "archived",
+        "archived item",
+        "marked state",
+        "saved state"
+      ],
+      "use_when": "Use when the interface shows that something is archived or marked in that specific way.",
+      "avoid_when": "Do not use for general favorites, likes, or completion when the meaning is a specific marked state.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:bookmark",
+      "source_library": "mingcute",
+      "source_name": "bookmark",
+      "label": "Saved",
+      "depicts": "Saved state shown as a compact interface mark.",
+      "purpose": "Show saved items or content bookmarked for later.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bookmark",
+        "saved",
+        "later",
+        "stored",
+        "marked"
+      ],
+      "synonyms": [
+        "saved",
+        "saved item",
+        "marked state",
+        "saved state"
+      ],
+      "use_when": "Use when the interface shows that something is saved or marked in that specific way.",
+      "avoid_when": "Do not use for general favorites, likes, or completion when the meaning is a specific marked state.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:brain",
+      "source_library": "mingcute",
+      "source_name": "brain",
+      "label": "Brain",
+      "depicts": "A stylized brain shape.",
+      "purpose": "Show reasoning, thinking, or model cognition in AI-related product flows.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "thinking",
+        "reasoning",
+        "cognition",
+        "ai",
+        "model"
+      ],
+      "synonyms": [
+        "Brain",
+        "thinking",
+        "reasoning",
+        "cognition",
+        "ai",
+        "model"
+      ],
+      "use_when": "Use when the interface needs to suggest reasoning, thinking, or model cognition.",
+      "avoid_when": "Do not use as a generic AI logo if the flow needs a more specific agent or state icon.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:terminal",
+      "source_library": "mingcute",
+      "source_name": "terminal",
+      "label": "Terminal",
+      "depicts": "A command-line terminal prompt.",
+      "purpose": "Show command-line tooling, terminal access, or developer shell work.",
+      "category": "engineering_developer_tools",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "terminal",
+        "command line",
+        "shell",
+        "developer tool",
+        "console"
+      ],
+      "synonyms": [
+        "shell",
+        "console",
+        "command line",
+        "terminal session"
+      ],
+      "use_when": "Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+      "avoid_when": "Do not use for chat or generic code views when the meaning is specifically terminal access.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:trophy",
+      "source_library": "mingcute",
+      "source_name": "trophy",
+      "label": "Achievement",
+      "depicts": "A trophy cup with handles and a base.",
+      "purpose": "Show an achievement, award, milestone, or winning outcome.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "achievement",
+        "award",
+        "win",
+        "milestone",
+        "reward"
+      ],
+      "synonyms": [
+        "milestone reached",
+        "award",
+        "winner",
+        "achievement unlocked"
+      ],
+      "use_when": "Use when the interface needs to celebrate an achievement, reward, milestone, or top result.",
+      "avoid_when": "Do not use for ordinary completion states where a simple success icon is enough.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:webhook",
+      "source_library": "mingcute",
+      "source_name": "webhook",
+      "label": "Webhook",
+      "depicts": "A hook-like integration symbol for events or callbacks.",
+      "purpose": "Show a webhook, event callback, or trigger sent between systems.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "webhook",
+        "event callback",
+        "trigger",
+        "integration",
+        "system event"
+      ],
+      "synonyms": [
+        "event hook",
+        "callback",
+        "integration trigger",
+        "webhook event"
+      ],
+      "use_when": "Use when the interface refers to webhook setup, event callbacks, or system trigger flows.",
+      "avoid_when": "Do not use for generic links or external navigation when the meaning is specifically webhooks.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:wifi",
+      "source_library": "mingcute",
+      "source_name": "wifi",
+      "label": "Connection",
+      "depicts": "A wireless signal icon representing network connection.",
+      "purpose": "Show wireless connection status or network availability.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "wifi",
+        "network",
+        "connection",
+        "signal",
+        "online"
+      ],
+      "synonyms": [
+        "wireless",
+        "network signal",
+        "internet connection",
+        "online state"
+      ],
+      "use_when": "Use when the interface shows connection, signal, or wireless network state.",
+      "avoid_when": "Do not use for trust, security, or generic communication when the meaning is specifically connection status.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:zoom_in",
+      "source_library": "mingcute",
+      "source_name": "zoom_in",
+      "label": "Zoom In",
+      "depicts": "A zoom control for scaling content in.",
+      "purpose": "Show zooming in on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "in",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom in",
+        "magnify view",
+        "scale in",
+        "in closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms in on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:zoom_out",
+      "source_library": "mingcute",
+      "source_name": "zoom_out",
+      "label": "Zoom Out",
+      "depicts": "A zoom control for scaling content out.",
+      "purpose": "Show zooming out on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "out",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom out",
+        "shrink view",
+        "scale out",
+        "out closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms out on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:left",
+      "source_library": "mingcute",
+      "source_name": "left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:lie_down",
+      "source_library": "mingcute",
+      "source_name": "lie_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "lie"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:list_expansion",
+      "source_library": "mingcute",
+      "source_name": "list_expansion",
+      "label": "Expand List",
+      "depicts": "A list paired with expand controls.",
+      "purpose": "Show expanding a list, opening more list rows, or revealing additional items in a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "expand list",
+        "show more items",
+        "open list",
+        "list control",
+        "expand"
+      ],
+      "synonyms": [
+        "expand list",
+        "show more rows",
+        "open more items",
+        "list expansion"
+      ],
+      "use_when": "Use when the interface expands a visible list or reveals more list items.",
+      "avoid_when": "Do not use for generic list view when the meaning is specifically expansion or reveal.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:list_ordered",
+      "source_library": "mingcute",
+      "source_name": "list_ordered",
+      "label": "Ordered List",
+      "depicts": "A numbered list layout.",
+      "purpose": "Show an ordered list, ranked list, or numbered sequence view.",
+      "category": "navigation_interface",
+      "intent": "inform",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "ordered list",
+        "numbered list",
+        "ranked list",
+        "sequence",
+        "list view"
+      ],
+      "synonyms": [
+        "numbered list",
+        "ranked list",
+        "ordered items",
+        "sequence list"
+      ],
+      "use_when": "Use when the interface shows or switches to a numbered list, ranked list, or ordered sequence.",
+      "avoid_when": "Do not use for plain list views when the numbered order itself is not important.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.87,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:look_down",
+      "source_library": "mingcute",
+      "source_name": "look_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "look"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:look_left",
+      "source_library": "mingcute",
+      "source_name": "look_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "look"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:look_right",
+      "source_library": "mingcute",
+      "source_name": "look_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "look"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:look_up",
+      "source_library": "mingcute",
+      "source_name": "look_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "look"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:more_1",
+      "source_library": "mingcute",
+      "source_name": "more_1",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "1"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "1 menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:more_2",
+      "source_library": "mingcute",
+      "source_name": "more_2",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "2"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "2 menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:more_3",
+      "source_library": "mingcute",
+      "source_name": "more_3",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "3"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "3 menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:more_4",
+      "source_library": "mingcute",
+      "source_name": "more_4",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "4"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "4 menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:quote_left",
+      "source_library": "mingcute",
+      "source_name": "quote_left",
+      "label": "Opening Quote",
+      "depicts": "An opening quotation mark.",
+      "purpose": "Show the start of a quoted statement, testimonial, or cited passage.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "opening quote",
+        "quoted text",
+        "testimonial",
+        "citation",
+        "quote mark"
+      ],
+      "synonyms": [
+        "quote start",
+        "start quote",
+        "testimonial quote",
+        "opening quotation"
+      ],
+      "use_when": "Use when the interface labels quoted text, testimonials, or cited passages.",
+      "avoid_when": "Do not use for back or forward navigation when the symbol is clearly a quotation mark.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:quote_right",
+      "source_library": "mingcute",
+      "source_name": "quote_right",
+      "label": "Closing Quote",
+      "depicts": "A closing quotation mark.",
+      "purpose": "Show the end of a quoted statement, testimonial, or cited passage.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "closing quote",
+        "quoted text",
+        "testimonial",
+        "citation",
+        "quote mark"
+      ],
+      "synonyms": [
+        "quote end",
+        "end quote",
+        "testimonial close",
+        "closing quotation"
+      ],
+      "use_when": "Use when the interface labels quoted text, testimonials, or cited passages.",
+      "avoid_when": "Do not use for back or forward navigation when the symbol is clearly a quotation mark.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:right",
+      "source_library": "mingcute",
+      "source_name": "right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:scrollable_list",
+      "source_library": "mingcute",
+      "source_name": "scrollable_list",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "scrollable",
+        "list"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "scrollable menu",
+        "list menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:send_plane",
+      "source_library": "mingcute",
+      "source_name": "send_plane",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "plane",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "send message",
+        "plane message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:up",
+      "source_library": "mingcute",
+      "source_name": "up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:warm_up_2",
+      "source_library": "mingcute",
+      "source_name": "warm_up_2",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "warm",
+        "2"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:warm_up_3",
+      "source_library": "mingcute",
+      "source_name": "warm_up_3",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "warm",
+        "3"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:warm_up",
+      "source_library": "mingcute",
+      "source_name": "warm_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "warm"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:ai",
+      "source_library": "mingcute",
+      "source_name": "ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:book_2_ai",
+      "source_library": "mingcute",
+      "source_name": "book_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "book",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "book tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:book_6_ai",
+      "source_library": "mingcute",
+      "source_name": "book_6_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "book",
+        "6",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "book tool",
+        "6 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:book_ai",
+      "source_library": "mingcute",
+      "source_name": "book_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "book",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "book tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:brush_2_ai",
+      "source_library": "mingcute",
+      "source_name": "brush_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "brush",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "brush tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:brush_3_ai",
+      "source_library": "mingcute",
+      "source_name": "brush_3_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "brush",
+        "3",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "brush tool",
+        "3 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:bulb_2_ai",
+      "source_library": "mingcute",
+      "source_name": "bulb_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "bulb",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "bulb tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:bulb_ai",
+      "source_library": "mingcute",
+      "source_name": "bulb_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "bulb",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "bulb tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camcorder_ai",
+      "source_library": "mingcute",
+      "source_name": "camcorder_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "camcorder",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "camcorder tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cellphone_2_ai",
+      "source_library": "mingcute",
+      "source_name": "cellphone_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "cellphone",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "cellphone tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_1_ai",
+      "source_library": "mingcute",
+      "source_name": "chat_1_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "chat",
+        "1",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "chat tool",
+        "1 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_2_ai",
+      "source_library": "mingcute",
+      "source_name": "chat_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "chat",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "chat tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_3_ai",
+      "source_library": "mingcute",
+      "source_name": "chat_3_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "chat",
+        "3",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "chat tool",
+        "3 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_4_ai",
+      "source_library": "mingcute",
+      "source_name": "chat_4_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "chat",
+        "4",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "chat tool",
+        "4 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_2_ai",
+      "source_library": "mingcute",
+      "source_name": "classify_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "classify",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "classify tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_3_ai",
+      "source_library": "mingcute",
+      "source_name": "classify_3_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "classify",
+        "3",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "classify tool",
+        "3 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_ai",
+      "source_library": "mingcute",
+      "source_name": "classify_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "classify",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "classify tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:content_ai",
+      "source_library": "mingcute",
+      "source_name": "content_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "content",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "content tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:down_small",
+      "source_library": "mingcute",
+      "source_name": "down_small",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "small"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:eraser_ai",
+      "source_library": "mingcute",
+      "source_name": "eraser_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "eraser",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "eraser tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:head_ai",
+      "source_library": "mingcute",
+      "source_name": "head_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "head",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "head tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:left_small",
+      "source_library": "mingcute",
+      "source_name": "left_small",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "small"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:mic_ai",
+      "source_library": "mingcute",
+      "source_name": "mic_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "mic",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "mic tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:paint_brush_ai",
+      "source_library": "mingcute",
+      "source_name": "paint_brush_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "paint",
+        "brush",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "paint tool",
+        "brush tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pen_2_ai",
+      "source_library": "mingcute",
+      "source_name": "pen_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pen",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pen tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pen_ai",
+      "source_library": "mingcute",
+      "source_name": "pen_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pen",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pen tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pencil_2_ai",
+      "source_library": "mingcute",
+      "source_name": "pencil_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pencil",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pencil tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pencil_3_ai",
+      "source_library": "mingcute",
+      "source_name": "pencil_3_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pencil",
+        "3",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pencil tool",
+        "3 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:right_small",
+      "source_library": "mingcute",
+      "source_name": "right_small",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "small"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:up_small",
+      "source_library": "mingcute",
+      "source_name": "up_small",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "small"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    }
+  ]
+}

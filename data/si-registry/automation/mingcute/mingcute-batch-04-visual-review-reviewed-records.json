@@ -1,0 +1,5284 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "mingcute-batch-04-visual-review",
+  "reviewed_records": [
+    {
+      "icon_id": "mingcute:camcorder_3",
+      "source_library": "mingcute",
+      "source_name": "camcorder_3",
+      "label": "Camcorder",
+      "depicts": "A symbol representing camcorder.",
+      "purpose": "Show camcorder as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "camcorder",
+        "3"
+      ],
+      "synonyms": [
+        "camcorder",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to camcorder as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camcorder",
+      "source_library": "mingcute",
+      "source_name": "camcorder",
+      "label": "Camcorder",
+      "depicts": "A symbol representing camcorder.",
+      "purpose": "Show camcorder as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "camcorder"
+      ],
+      "synonyms": [
+        "camcorder"
+      ],
+      "use_when": "Use when the interface refers directly to camcorder as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camcorder_off",
+      "source_library": "mingcute",
+      "source_name": "camcorder_off",
+      "label": "Camcorder Off",
+      "depicts": "A symbol representing camcorder off.",
+      "purpose": "Show camcorder off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "camcorder",
+        "off"
+      ],
+      "synonyms": [
+        "camcorder",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to camcorder off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camera_2",
+      "source_library": "mingcute",
+      "source_name": "camera_2",
+      "label": "Camera",
+      "depicts": "A symbol representing camera.",
+      "purpose": "Show camera as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "camera",
+        "2"
+      ],
+      "synonyms": [
+        "camera",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to camera as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camera_2_off",
+      "source_library": "mingcute",
+      "source_name": "camera_2_off",
+      "label": "Camera Off",
+      "depicts": "A symbol representing camera off.",
+      "purpose": "Show camera off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "camera",
+        "2",
+        "off"
+      ],
+      "synonyms": [
+        "camera",
+        "2",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to camera off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camera",
+      "source_library": "mingcute",
+      "source_name": "camera",
+      "label": "Camera",
+      "depicts": "A symbol representing camera.",
+      "purpose": "Show camera as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "camera"
+      ],
+      "synonyms": [
+        "camera"
+      ],
+      "use_when": "Use when the interface refers directly to camera as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:camera_rotate",
+      "source_library": "mingcute",
+      "source_name": "camera_rotate",
+      "label": "Camera Rotate",
+      "depicts": "A symbol representing camera rotate.",
+      "purpose": "Show camera rotate as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "camera",
+        "rotate"
+      ],
+      "synonyms": [
+        "camera",
+        "rotate"
+      ],
+      "use_when": "Use when the interface refers directly to camera rotate as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:campfire",
+      "source_library": "mingcute",
+      "source_name": "campfire",
+      "label": "Campfire",
+      "depicts": "A symbol representing campfire.",
+      "purpose": "Show campfire as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "campfire"
+      ],
+      "synonyms": [
+        "campfire"
+      ],
+      "use_when": "Use when the interface refers directly to campfire as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:campground",
+      "source_library": "mingcute",
+      "source_name": "campground",
+      "label": "Campground",
+      "depicts": "A symbol representing campground.",
+      "purpose": "Show campground as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "campground"
+      ],
+      "synonyms": [
+        "campground"
+      ],
+      "use_when": "Use when the interface refers directly to campground as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cancer",
+      "source_library": "mingcute",
+      "source_name": "cancer",
+      "label": "Cancer",
+      "depicts": "A symbol representing cancer.",
+      "purpose": "Show cancer as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cancer"
+      ],
+      "synonyms": [
+        "cancer"
+      ],
+      "use_when": "Use when the interface refers directly to cancer as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:candle",
+      "source_library": "mingcute",
+      "source_name": "candle",
+      "label": "Candle",
+      "depicts": "A symbol representing candle.",
+      "purpose": "Show candle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "candle"
+      ],
+      "synonyms": [
+        "candle"
+      ],
+      "use_when": "Use when the interface refers directly to candle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:candles",
+      "source_library": "mingcute",
+      "source_name": "candles",
+      "label": "Candles",
+      "depicts": "A symbol representing candles.",
+      "purpose": "Show candles as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "candles"
+      ],
+      "synonyms": [
+        "candles"
+      ],
+      "use_when": "Use when the interface refers directly to candles as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:candy_2",
+      "source_library": "mingcute",
+      "source_name": "candy_2",
+      "label": "Candy",
+      "depicts": "A symbol representing candy.",
+      "purpose": "Show candy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "candy",
+        "2"
+      ],
+      "synonyms": [
+        "candy",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to candy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:candy",
+      "source_library": "mingcute",
+      "source_name": "candy",
+      "label": "Candy",
+      "depicts": "A symbol representing candy.",
+      "purpose": "Show candy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "candy"
+      ],
+      "synonyms": [
+        "candy"
+      ],
+      "use_when": "Use when the interface refers directly to candy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:canton_tower",
+      "source_library": "mingcute",
+      "source_name": "canton_tower",
+      "label": "Canton Tower",
+      "depicts": "A symbol representing canton tower.",
+      "purpose": "Show canton tower as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "canton",
+        "tower"
+      ],
+      "synonyms": [
+        "canton",
+        "tower"
+      ],
+      "use_when": "Use when the interface refers directly to canton tower as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:capricorn",
+      "source_library": "mingcute",
+      "source_name": "capricorn",
+      "label": "Capricorn",
+      "depicts": "A symbol representing capricorn.",
+      "purpose": "Show capricorn as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "capricorn"
+      ],
+      "synonyms": [
+        "capricorn"
+      ],
+      "use_when": "Use when the interface refers directly to capricorn as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:capsule",
+      "source_library": "mingcute",
+      "source_name": "capsule",
+      "label": "Capsule",
+      "depicts": "A symbol representing capsule.",
+      "purpose": "Show capsule as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "capsule"
+      ],
+      "synonyms": [
+        "capsule"
+      ],
+      "use_when": "Use when the interface refers directly to capsule as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:car_2",
+      "source_library": "mingcute",
+      "source_name": "car_2",
+      "label": "Car",
+      "depicts": "A symbol representing car.",
+      "purpose": "Show car as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "car",
+        "2"
+      ],
+      "synonyms": [
+        "car",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to car as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:car_3",
+      "source_library": "mingcute",
+      "source_name": "car_3",
+      "label": "Car",
+      "depicts": "A symbol representing car.",
+      "purpose": "Show car as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "car",
+        "3"
+      ],
+      "synonyms": [
+        "car",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to car as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:car_door",
+      "source_library": "mingcute",
+      "source_name": "car_door",
+      "label": "Car Door",
+      "depicts": "A symbol representing car door.",
+      "purpose": "Show car door as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "car",
+        "door"
+      ],
+      "synonyms": [
+        "car",
+        "door"
+      ],
+      "use_when": "Use when the interface refers directly to car door as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:car",
+      "source_library": "mingcute",
+      "source_name": "car",
+      "label": "Car",
+      "depicts": "A symbol representing car.",
+      "purpose": "Show car as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "car"
+      ],
+      "synonyms": [
+        "car"
+      ],
+      "use_when": "Use when the interface refers directly to car as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:car_window",
+      "source_library": "mingcute",
+      "source_name": "car_window",
+      "label": "Car Window",
+      "depicts": "A symbol representing car window.",
+      "purpose": "Show car window as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "car",
+        "window"
+      ],
+      "synonyms": [
+        "car",
+        "window"
+      ],
+      "use_when": "Use when the interface refers directly to car window as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:card_pay",
+      "source_library": "mingcute",
+      "source_name": "card_pay",
+      "label": "Card Pay",
+      "depicts": "A symbol representing card pay.",
+      "purpose": "Show card pay as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "card",
+        "pay"
+      ],
+      "synonyms": [
+        "card",
+        "pay"
+      ],
+      "use_when": "Use when the interface refers directly to card pay as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:card_refund",
+      "source_library": "mingcute",
+      "source_name": "card_refund",
+      "label": "Card Refund",
+      "depicts": "A symbol representing card refund.",
+      "purpose": "Show card refund as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "card",
+        "refund"
+      ],
+      "synonyms": [
+        "card",
+        "refund"
+      ],
+      "use_when": "Use when the interface refers directly to card refund as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cardano_ada",
+      "source_library": "mingcute",
+      "source_name": "cardano_ada",
+      "label": "Cardano Ada",
+      "depicts": "A symbol representing cardano ada.",
+      "purpose": "Show cardano ada as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cardano",
+        "ada"
+      ],
+      "synonyms": [
+        "cardano",
+        "ada"
+      ],
+      "use_when": "Use when the interface refers directly to cardano ada as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cardboard_vr",
+      "source_library": "mingcute",
+      "source_name": "cardboard_vr",
+      "label": "Cardboard Vr",
+      "depicts": "A symbol representing cardboard vr.",
+      "purpose": "Show cardboard vr as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cardboard",
+        "vr"
+      ],
+      "synonyms": [
+        "cardboard",
+        "vr"
+      ],
+      "use_when": "Use when the interface refers directly to cardboard vr as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:carplay",
+      "source_library": "mingcute",
+      "source_name": "carplay",
+      "label": "Carplay",
+      "depicts": "A symbol representing carplay.",
+      "purpose": "Show carplay as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "carplay"
+      ],
+      "synonyms": [
+        "carplay"
+      ],
+      "use_when": "Use when the interface refers directly to carplay as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:carrot",
+      "source_library": "mingcute",
+      "source_name": "carrot",
+      "label": "Carrot",
+      "depicts": "A symbol representing carrot.",
+      "purpose": "Show carrot as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "carrot"
+      ],
+      "synonyms": [
+        "carrot"
+      ],
+      "use_when": "Use when the interface refers directly to carrot as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cash_2",
+      "source_library": "mingcute",
+      "source_name": "cash_2",
+      "label": "Cash",
+      "depicts": "A symbol representing cash.",
+      "purpose": "Show cash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cash",
+        "2"
+      ],
+      "synonyms": [
+        "cash",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cash",
+      "source_library": "mingcute",
+      "source_name": "cash",
+      "label": "Cash",
+      "depicts": "A symbol representing cash.",
+      "purpose": "Show cash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cash"
+      ],
+      "synonyms": [
+        "cash"
+      ],
+      "use_when": "Use when the interface refers directly to cash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cat",
+      "source_library": "mingcute",
+      "source_name": "cat",
+      "label": "Cat",
+      "depicts": "A symbol representing cat.",
+      "purpose": "Show cat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cat"
+      ],
+      "synonyms": [
+        "cat"
+      ],
+      "use_when": "Use when the interface refers directly to cat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:ceiling_lamp",
+      "source_library": "mingcute",
+      "source_name": "ceiling_lamp",
+      "label": "Ceiling Lamp",
+      "depicts": "A symbol representing ceiling lamp.",
+      "purpose": "Show ceiling lamp as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "ceiling",
+        "lamp"
+      ],
+      "synonyms": [
+        "ceiling",
+        "lamp"
+      ],
+      "use_when": "Use when the interface refers directly to ceiling lamp as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:celebrate",
+      "source_library": "mingcute",
+      "source_name": "celebrate",
+      "label": "Celebrate",
+      "depicts": "A symbol representing celebrate.",
+      "purpose": "Show celebrate as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "celebrate"
+      ],
+      "synonyms": [
+        "celebrate"
+      ],
+      "use_when": "Use when the interface refers directly to celebrate as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cellphone_2_horizontal",
+      "source_library": "mingcute",
+      "source_name": "cellphone_2_horizontal",
+      "label": "Cellphone Horizontal",
+      "depicts": "A symbol representing cellphone horizontal.",
+      "purpose": "Show cellphone horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cellphone",
+        "2",
+        "horizontal"
+      ],
+      "synonyms": [
+        "cellphone",
+        "2",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to cellphone horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cellphone_2",
+      "source_library": "mingcute",
+      "source_name": "cellphone_2",
+      "label": "Cellphone",
+      "depicts": "A symbol representing cellphone.",
+      "purpose": "Show cellphone as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cellphone",
+        "2"
+      ],
+      "synonyms": [
+        "cellphone",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cellphone as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cellphone",
+      "source_library": "mingcute",
+      "source_name": "cellphone",
+      "label": "Cellphone",
+      "depicts": "A symbol representing cellphone.",
+      "purpose": "Show cellphone as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cellphone"
+      ],
+      "synonyms": [
+        "cellphone"
+      ],
+      "use_when": "Use when the interface refers directly to cellphone as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cellphone_vibration",
+      "source_library": "mingcute",
+      "source_name": "cellphone_vibration",
+      "label": "Cellphone Vibration",
+      "depicts": "A symbol representing cellphone vibration.",
+      "purpose": "Show cellphone vibration as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cellphone",
+        "vibration"
+      ],
+      "synonyms": [
+        "cellphone",
+        "vibration"
+      ],
+      "use_when": "Use when the interface refers directly to cellphone vibration as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:celsius",
+      "source_library": "mingcute",
+      "source_name": "celsius",
+      "label": "Celsius",
+      "depicts": "A symbol representing celsius.",
+      "purpose": "Show celsius as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "celsius"
+      ],
+      "synonyms": [
+        "celsius"
+      ],
+      "use_when": "Use when the interface refers directly to celsius as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:certificate_2",
+      "source_library": "mingcute",
+      "source_name": "certificate_2",
+      "label": "Certificate",
+      "depicts": "A symbol representing certificate.",
+      "purpose": "Show certificate as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "certificate",
+        "2"
+      ],
+      "synonyms": [
+        "certificate",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to certificate as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:certificate",
+      "source_library": "mingcute",
+      "source_name": "certificate",
+      "label": "Certificate",
+      "depicts": "A symbol representing certificate.",
+      "purpose": "Show certificate as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "certificate"
+      ],
+      "synonyms": [
+        "certificate"
+      ],
+      "use_when": "Use when the interface refers directly to certificate as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:champagne",
+      "source_library": "mingcute",
+      "source_name": "champagne",
+      "label": "Champagne",
+      "depicts": "A symbol representing champagne.",
+      "purpose": "Show champagne as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "champagne"
+      ],
+      "synonyms": [
+        "champagne"
+      ],
+      "use_when": "Use when the interface refers directly to champagne as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:charging_pile",
+      "source_library": "mingcute",
+      "source_name": "charging_pile",
+      "label": "Charging Pile",
+      "depicts": "A symbol representing charging pile.",
+      "purpose": "Show charging pile as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "charging",
+        "pile"
+      ],
+      "synonyms": [
+        "charging",
+        "pile"
+      ],
+      "use_when": "Use when the interface refers directly to charging pile as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_bar_2",
+      "source_library": "mingcute",
+      "source_name": "chart_bar_2",
+      "label": "Chart Bar",
+      "depicts": "A symbol representing chart bar.",
+      "purpose": "Show chart bar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "bar",
+        "2"
+      ],
+      "synonyms": [
+        "chart",
+        "bar",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_bar",
+      "source_library": "mingcute",
+      "source_name": "chart_bar",
+      "label": "Chart Bar",
+      "depicts": "A symbol representing chart bar.",
+      "purpose": "Show chart bar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "bar"
+      ],
+      "synonyms": [
+        "chart",
+        "bar"
+      ],
+      "use_when": "Use when the interface refers directly to chart bar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_decrease",
+      "source_library": "mingcute",
+      "source_name": "chart_decrease",
+      "label": "Chart Decrease",
+      "depicts": "A symbol representing chart decrease.",
+      "purpose": "Show chart decrease as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "decrease"
+      ],
+      "synonyms": [
+        "chart",
+        "decrease"
+      ],
+      "use_when": "Use when the interface refers directly to chart decrease as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_horizontal_2",
+      "source_library": "mingcute",
+      "source_name": "chart_horizontal_2",
+      "label": "Chart Horizontal",
+      "depicts": "A symbol representing chart horizontal.",
+      "purpose": "Show chart horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "horizontal",
+        "2"
+      ],
+      "synonyms": [
+        "chart",
+        "horizontal",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chart horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_horizontal",
+      "source_library": "mingcute",
+      "source_name": "chart_horizontal",
+      "label": "Chart Horizontal",
+      "depicts": "A symbol representing chart horizontal.",
+      "purpose": "Show chart horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "horizontal"
+      ],
+      "synonyms": [
+        "chart",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to chart horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_line",
+      "source_library": "mingcute",
+      "source_name": "chart_line",
+      "label": "Chart Line",
+      "depicts": "A symbol representing chart line.",
+      "purpose": "Show chart line as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "line"
+      ],
+      "synonyms": [
+        "chart",
+        "line"
+      ],
+      "use_when": "Use when the interface refers directly to chart line as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_pie_2",
+      "source_library": "mingcute",
+      "source_name": "chart_pie_2",
+      "label": "Chart Pie",
+      "depicts": "A symbol representing chart pie.",
+      "purpose": "Show chart pie as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "pie",
+        "2"
+      ],
+      "synonyms": [
+        "chart",
+        "pie",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chart pie as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_pie_3",
+      "source_library": "mingcute",
+      "source_name": "chart_pie_3",
+      "label": "Chart Pie",
+      "depicts": "A symbol representing chart pie.",
+      "purpose": "Show chart pie as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "pie",
+        "3"
+      ],
+      "synonyms": [
+        "chart",
+        "pie",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to chart pie as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_pie",
+      "source_library": "mingcute",
+      "source_name": "chart_pie",
+      "label": "Chart Pie",
+      "depicts": "A symbol representing chart pie.",
+      "purpose": "Show chart pie as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "pie"
+      ],
+      "synonyms": [
+        "chart",
+        "pie"
+      ],
+      "use_when": "Use when the interface refers directly to chart pie as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_vertical_2",
+      "source_library": "mingcute",
+      "source_name": "chart_vertical_2",
+      "label": "Chart Vertical",
+      "depicts": "A symbol representing chart vertical.",
+      "purpose": "Show chart vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "vertical",
+        "2"
+      ],
+      "synonyms": [
+        "chart",
+        "vertical",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chart vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chart_vertical",
+      "source_library": "mingcute",
+      "source_name": "chart_vertical",
+      "label": "Chart Vertical",
+      "depicts": "A symbol representing chart vertical.",
+      "purpose": "Show chart vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chart",
+        "vertical"
+      ],
+      "synonyms": [
+        "chart",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to chart vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_1",
+      "source_library": "mingcute",
+      "source_name": "chat_1",
+      "label": "Chat",
+      "depicts": "A symbol representing chat.",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chat",
+        "1"
+      ],
+      "synonyms": [
+        "chat",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_2",
+      "source_library": "mingcute",
+      "source_name": "chat_2",
+      "label": "Chat",
+      "depicts": "A symbol representing chat.",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chat",
+        "2"
+      ],
+      "synonyms": [
+        "chat",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_3",
+      "source_library": "mingcute",
+      "source_name": "chat_3",
+      "label": "Chat",
+      "depicts": "A symbol representing chat.",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chat",
+        "3"
+      ],
+      "synonyms": [
+        "chat",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chat_4",
+      "source_library": "mingcute",
+      "source_name": "chat_4",
+      "label": "Chat",
+      "depicts": "A symbol representing chat.",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chat",
+        "4"
+      ],
+      "synonyms": [
+        "chat",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:checkbox",
+      "source_library": "mingcute",
+      "source_name": "checkbox",
+      "label": "Checkbox",
+      "depicts": "A symbol representing checkbox.",
+      "purpose": "Show checkbox as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "checkbox"
+      ],
+      "synonyms": [
+        "checkbox"
+      ],
+      "use_when": "Use when the interface refers directly to checkbox as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:checks",
+      "source_library": "mingcute",
+      "source_name": "checks",
+      "label": "Checks",
+      "depicts": "A symbol representing checks.",
+      "purpose": "Show checks as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "checks"
+      ],
+      "synonyms": [
+        "checks"
+      ],
+      "use_when": "Use when the interface refers directly to checks as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chef_hat",
+      "source_library": "mingcute",
+      "source_name": "chef_hat",
+      "label": "Chef Hat",
+      "depicts": "A symbol representing chef hat.",
+      "purpose": "Show chef hat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chef",
+        "hat"
+      ],
+      "synonyms": [
+        "chef",
+        "hat"
+      ],
+      "use_when": "Use when the interface refers directly to chef hat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chess",
+      "source_library": "mingcute",
+      "source_name": "chess",
+      "label": "Chess",
+      "depicts": "A symbol representing chess.",
+      "purpose": "Show chess as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chess"
+      ],
+      "synonyms": [
+        "chess"
+      ],
+      "use_when": "Use when the interface refers directly to chess as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chicken",
+      "source_library": "mingcute",
+      "source_name": "chicken",
+      "label": "Chicken",
+      "depicts": "A symbol representing chicken.",
+      "purpose": "Show chicken as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chicken"
+      ],
+      "synonyms": [
+        "chicken"
+      ],
+      "use_when": "Use when the interface refers directly to chicken as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chines_knot",
+      "source_library": "mingcute",
+      "source_name": "chines_knot",
+      "label": "Chines Knot",
+      "depicts": "A symbol representing chines knot.",
+      "purpose": "Show chines knot as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chines",
+        "knot"
+      ],
+      "synonyms": [
+        "chines",
+        "knot"
+      ],
+      "use_when": "Use when the interface refers directly to chines knot as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chip",
+      "source_library": "mingcute",
+      "source_name": "chip",
+      "label": "Chip",
+      "depicts": "A symbol representing chip.",
+      "purpose": "Show chip as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chip"
+      ],
+      "synonyms": [
+        "chip"
+      ],
+      "use_when": "Use when the interface refers directly to chip as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:choice",
+      "source_library": "mingcute",
+      "source_name": "choice",
+      "label": "Choice",
+      "depicts": "A symbol representing choice.",
+      "purpose": "Show choice as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "choice"
+      ],
+      "synonyms": [
+        "choice"
+      ],
+      "use_when": "Use when the interface refers directly to choice as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chopsticks",
+      "source_library": "mingcute",
+      "source_name": "chopsticks",
+      "label": "Chopsticks",
+      "depicts": "A symbol representing chopsticks.",
+      "purpose": "Show chopsticks as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chopsticks"
+      ],
+      "synonyms": [
+        "chopsticks"
+      ],
+      "use_when": "Use when the interface refers directly to chopsticks as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:christ_the_redeemer",
+      "source_library": "mingcute",
+      "source_name": "christ_the_redeemer",
+      "label": "Christ The Redeemer",
+      "depicts": "A symbol representing christ the redeemer.",
+      "purpose": "Show christ the redeemer as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "christ",
+        "the",
+        "redeemer"
+      ],
+      "synonyms": [
+        "christ",
+        "the",
+        "redeemer"
+      ],
+      "use_when": "Use when the interface refers directly to christ the redeemer as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:christmas_ball",
+      "source_library": "mingcute",
+      "source_name": "christmas_ball",
+      "label": "Christmas Ball",
+      "depicts": "A symbol representing christmas ball.",
+      "purpose": "Show christmas ball as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "christmas",
+        "ball"
+      ],
+      "synonyms": [
+        "christmas",
+        "ball"
+      ],
+      "use_when": "Use when the interface refers directly to christmas ball as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:christmas_hat",
+      "source_library": "mingcute",
+      "source_name": "christmas_hat",
+      "label": "Christmas Hat",
+      "depicts": "A symbol representing christmas hat.",
+      "purpose": "Show christmas hat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "christmas",
+        "hat"
+      ],
+      "synonyms": [
+        "christmas",
+        "hat"
+      ],
+      "use_when": "Use when the interface refers directly to christmas hat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:chrome",
+      "source_library": "mingcute",
+      "source_name": "chrome",
+      "label": "Chrome",
+      "depicts": "A symbol representing chrome.",
+      "purpose": "Show chrome as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chrome"
+      ],
+      "synonyms": [
+        "chrome"
+      ],
+      "use_when": "Use when the interface refers directly to chrome as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:church",
+      "source_library": "mingcute",
+      "source_name": "church",
+      "label": "Church",
+      "depicts": "A symbol representing church.",
+      "purpose": "Show church as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "church"
+      ],
+      "synonyms": [
+        "church"
+      ],
+      "use_when": "Use when the interface refers directly to church as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:circle_dash",
+      "source_library": "mingcute",
+      "source_name": "circle_dash",
+      "label": "Circle Dash",
+      "depicts": "A symbol representing circle dash.",
+      "purpose": "Show circle dash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "circle",
+        "dash"
+      ],
+      "synonyms": [
+        "circle",
+        "dash"
+      ],
+      "use_when": "Use when the interface refers directly to circle dash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clapperboard",
+      "source_library": "mingcute",
+      "source_name": "clapperboard",
+      "label": "Clapperboard",
+      "depicts": "A symbol representing clapperboard.",
+      "purpose": "Show clapperboard as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clapperboard"
+      ],
+      "synonyms": [
+        "clapperboard"
+      ],
+      "use_when": "Use when the interface refers directly to clapperboard as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_2",
+      "source_library": "mingcute",
+      "source_name": "classify_2",
+      "label": "Classify",
+      "depicts": "A symbol representing classify.",
+      "purpose": "Show classify as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "classify",
+        "2"
+      ],
+      "synonyms": [
+        "classify",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to classify as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_3",
+      "source_library": "mingcute",
+      "source_name": "classify_3",
+      "label": "Classify",
+      "depicts": "A symbol representing classify.",
+      "purpose": "Show classify as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "classify",
+        "3"
+      ],
+      "synonyms": [
+        "classify",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to classify as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_add_2",
+      "source_library": "mingcute",
+      "source_name": "classify_add_2",
+      "label": "Classify Add",
+      "depicts": "A symbol representing classify add.",
+      "purpose": "Show classify add as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "classify",
+        "add",
+        "2"
+      ],
+      "synonyms": [
+        "classify",
+        "add",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to classify add as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify_add",
+      "source_library": "mingcute",
+      "source_name": "classify_add",
+      "label": "Classify Add",
+      "depicts": "A symbol representing classify add.",
+      "purpose": "Show classify add as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "classify",
+        "add"
+      ],
+      "synonyms": [
+        "classify",
+        "add"
+      ],
+      "use_when": "Use when the interface refers directly to classify add as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:classify",
+      "source_library": "mingcute",
+      "source_name": "classify",
+      "label": "Classify",
+      "depicts": "A symbol representing classify.",
+      "purpose": "Show classify as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "classify"
+      ],
+      "synonyms": [
+        "classify"
+      ],
+      "use_when": "Use when the interface refers directly to classify as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:claude",
+      "source_library": "mingcute",
+      "source_name": "claude",
+      "label": "Claude",
+      "depicts": "A symbol representing claude.",
+      "purpose": "Show claude as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "claude"
+      ],
+      "synonyms": [
+        "claude"
+      ],
+      "use_when": "Use when the interface refers directly to claude as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clipboard",
+      "source_library": "mingcute",
+      "source_name": "clipboard",
+      "label": "Clipboard",
+      "depicts": "A symbol representing clipboard.",
+      "purpose": "Show clipboard as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard"
+      ],
+      "synonyms": [
+        "clipboard"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clockwise_alt",
+      "source_library": "mingcute",
+      "source_name": "clockwise_alt",
+      "label": "Clockwise Alt",
+      "depicts": "A symbol representing clockwise alt.",
+      "purpose": "Show clockwise alt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clockwise",
+        "alt"
+      ],
+      "synonyms": [
+        "clockwise",
+        "alt"
+      ],
+      "use_when": "Use when the interface refers directly to clockwise alt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clockwise",
+      "source_library": "mingcute",
+      "source_name": "clockwise",
+      "label": "Clockwise",
+      "depicts": "A symbol representing clockwise.",
+      "purpose": "Show clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clockwise"
+      ],
+      "synonyms": [
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cloud_2",
+      "source_library": "mingcute",
+      "source_name": "cloud_2",
+      "label": "Cloud",
+      "depicts": "A symbol representing cloud.",
+      "purpose": "Show cloud as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "2"
+      ],
+      "synonyms": [
+        "cloud",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cloud as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cloud_lightning",
+      "source_library": "mingcute",
+      "source_name": "cloud_lightning",
+      "label": "Cloud Lightning",
+      "depicts": "A symbol representing cloud lightning.",
+      "purpose": "Show cloud lightning as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "lightning"
+      ],
+      "synonyms": [
+        "cloud",
+        "lightning"
+      ],
+      "use_when": "Use when the interface refers directly to cloud lightning as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cloud",
+      "source_library": "mingcute",
+      "source_name": "cloud",
+      "label": "Cloud",
+      "depicts": "A symbol representing cloud.",
+      "purpose": "Show cloud as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud"
+      ],
+      "synonyms": [
+        "cloud"
+      ],
+      "use_when": "Use when the interface refers directly to cloud as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cloud_snow",
+      "source_library": "mingcute",
+      "source_name": "cloud_snow",
+      "label": "Cloud Snow",
+      "depicts": "A symbol representing cloud snow.",
+      "purpose": "Show cloud snow as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "snow"
+      ],
+      "synonyms": [
+        "cloud",
+        "snow"
+      ],
+      "use_when": "Use when the interface refers directly to cloud snow as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cloud_windy",
+      "source_library": "mingcute",
+      "source_name": "cloud_windy",
+      "label": "Cloud Windy",
+      "depicts": "A symbol representing cloud windy.",
+      "purpose": "Show cloud windy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "windy"
+      ],
+      "synonyms": [
+        "cloud",
+        "windy"
+      ],
+      "use_when": "Use when the interface refers directly to cloud windy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clouds",
+      "source_library": "mingcute",
+      "source_name": "clouds",
+      "label": "Clouds",
+      "depicts": "A symbol representing clouds.",
+      "purpose": "Show clouds as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clouds"
+      ],
+      "synonyms": [
+        "clouds"
+      ],
+      "use_when": "Use when the interface refers directly to clouds as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:clubs",
+      "source_library": "mingcute",
+      "source_name": "clubs",
+      "label": "Clubs",
+      "depicts": "A symbol representing clubs.",
+      "purpose": "Show clubs as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clubs"
+      ],
+      "synonyms": [
+        "clubs"
+      ],
+      "use_when": "Use when the interface refers directly to clubs as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coat",
+      "source_library": "mingcute",
+      "source_name": "coat",
+      "label": "Coat",
+      "depicts": "A symbol representing coat.",
+      "purpose": "Show coat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coat"
+      ],
+      "synonyms": [
+        "coat"
+      ],
+      "use_when": "Use when the interface refers directly to coat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coathanger",
+      "source_library": "mingcute",
+      "source_name": "coathanger",
+      "label": "Coathanger",
+      "depicts": "A symbol representing coathanger.",
+      "purpose": "Show coathanger as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coathanger"
+      ],
+      "synonyms": [
+        "coathanger"
+      ],
+      "use_when": "Use when the interface refers directly to coathanger as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:codepen",
+      "source_library": "mingcute",
+      "source_name": "codepen",
+      "label": "Codepen",
+      "depicts": "A symbol representing codepen.",
+      "purpose": "Show codepen as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "codepen"
+      ],
+      "synonyms": [
+        "codepen"
+      ],
+      "use_when": "Use when the interface refers directly to codepen as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coin_2",
+      "source_library": "mingcute",
+      "source_name": "coin_2",
+      "label": "Coin",
+      "depicts": "A symbol representing coin.",
+      "purpose": "Show coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coin",
+        "2"
+      ],
+      "synonyms": [
+        "coin",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coin_3",
+      "source_library": "mingcute",
+      "source_name": "coin_3",
+      "label": "Coin",
+      "depicts": "A symbol representing coin.",
+      "purpose": "Show coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coin",
+        "3"
+      ],
+      "synonyms": [
+        "coin",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coin",
+      "source_library": "mingcute",
+      "source_name": "coin",
+      "label": "Coin",
+      "depicts": "A symbol representing coin.",
+      "purpose": "Show coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coin"
+      ],
+      "synonyms": [
+        "coin"
+      ],
+      "use_when": "Use when the interface refers directly to coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:color_picker",
+      "source_library": "mingcute",
+      "source_name": "color_picker",
+      "label": "Color Picker",
+      "depicts": "A symbol representing color picker.",
+      "purpose": "Show color picker as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "color",
+        "picker"
+      ],
+      "synonyms": [
+        "color",
+        "picker"
+      ],
+      "use_when": "Use when the interface refers directly to color picker as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:column",
+      "source_library": "mingcute",
+      "source_name": "column",
+      "label": "Column",
+      "depicts": "A symbol representing column.",
+      "purpose": "Show column as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "column"
+      ],
+      "synonyms": [
+        "column"
+      ],
+      "use_when": "Use when the interface refers directly to column as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:columns_2",
+      "source_library": "mingcute",
+      "source_name": "columns_2",
+      "label": "Columns",
+      "depicts": "A symbol representing columns.",
+      "purpose": "Show columns as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "columns",
+        "2"
+      ],
+      "synonyms": [
+        "columns",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to columns as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:columns_3",
+      "source_library": "mingcute",
+      "source_name": "columns_3",
+      "label": "Columns",
+      "depicts": "A symbol representing columns.",
+      "purpose": "Show columns as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "columns",
+        "3"
+      ],
+      "synonyms": [
+        "columns",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to columns as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:combine",
+      "source_library": "mingcute",
+      "source_name": "combine",
+      "label": "Combine",
+      "depicts": "A symbol representing combine.",
+      "purpose": "Show combine as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "combine"
+      ],
+      "synonyms": [
+        "combine"
+      ],
+      "use_when": "Use when the interface refers directly to combine as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:command",
+      "source_library": "mingcute",
+      "source_name": "command",
+      "label": "Command",
+      "depicts": "A symbol representing command.",
+      "purpose": "Show command as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "command"
+      ],
+      "synonyms": [
+        "command"
+      ],
+      "use_when": "Use when the interface refers directly to command as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:comment_2",
+      "source_library": "mingcute",
+      "source_name": "comment_2",
+      "label": "Comment",
+      "depicts": "A symbol representing comment.",
+      "purpose": "Show comment as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "comment",
+        "2"
+      ],
+      "synonyms": [
+        "comment",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to comment as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:comment",
+      "source_library": "mingcute",
+      "source_name": "comment",
+      "label": "Comment",
+      "depicts": "A symbol representing comment.",
+      "purpose": "Show comment as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "comment"
+      ],
+      "synonyms": [
+        "comment"
+      ],
+      "use_when": "Use when the interface refers directly to comment as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:compass_2",
+      "source_library": "mingcute",
+      "source_name": "compass_2",
+      "label": "Compass",
+      "depicts": "A symbol representing compass.",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "compass",
+        "2"
+      ],
+      "synonyms": [
+        "compass",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:compass_3",
+      "source_library": "mingcute",
+      "source_name": "compass_3",
+      "label": "Compass",
+      "depicts": "A symbol representing compass.",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "compass",
+        "3"
+      ],
+      "synonyms": [
+        "compass",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:compass",
+      "source_library": "mingcute",
+      "source_name": "compass",
+      "label": "Compass",
+      "depicts": "A symbol representing compass.",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "compass"
+      ],
+      "synonyms": [
+        "compass"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:components",
+      "source_library": "mingcute",
+      "source_name": "components",
+      "label": "Components",
+      "depicts": "A symbol representing components.",
+      "purpose": "Show components as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "components"
+      ],
+      "synonyms": [
+        "components"
+      ],
+      "use_when": "Use when the interface refers directly to components as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:computer_camera",
+      "source_library": "mingcute",
+      "source_name": "computer_camera",
+      "label": "Computer Camera",
+      "depicts": "A symbol representing computer camera.",
+      "purpose": "Show computer camera as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "computer",
+        "camera"
+      ],
+      "synonyms": [
+        "computer",
+        "camera"
+      ],
+      "use_when": "Use when the interface refers directly to computer camera as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:computer_camera_off",
+      "source_library": "mingcute",
+      "source_name": "computer_camera_off",
+      "label": "Computer Camera Off",
+      "depicts": "A symbol representing computer camera off.",
+      "purpose": "Show computer camera off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "computer",
+        "camera",
+        "off"
+      ],
+      "synonyms": [
+        "computer",
+        "camera",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to computer camera off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:computer",
+      "source_library": "mingcute",
+      "source_name": "computer",
+      "label": "Computer",
+      "depicts": "A symbol representing computer.",
+      "purpose": "Show computer as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "computer"
+      ],
+      "synonyms": [
+        "computer"
+      ],
+      "use_when": "Use when the interface refers directly to computer as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:confused",
+      "source_library": "mingcute",
+      "source_name": "confused",
+      "label": "Confused",
+      "depicts": "A symbol representing confused.",
+      "purpose": "Show confused as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "confused"
+      ],
+      "synonyms": [
+        "confused"
+      ],
+      "use_when": "Use when the interface refers directly to confused as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:contacts_2",
+      "source_library": "mingcute",
+      "source_name": "contacts_2",
+      "label": "Contacts",
+      "depicts": "A symbol representing contacts.",
+      "purpose": "Show contacts as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "contacts",
+        "2"
+      ],
+      "synonyms": [
+        "contacts",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to contacts as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:contacts_3",
+      "source_library": "mingcute",
+      "source_name": "contacts_3",
+      "label": "Contacts",
+      "depicts": "A symbol representing contacts.",
+      "purpose": "Show contacts as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "contacts",
+        "3"
+      ],
+      "synonyms": [
+        "contacts",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to contacts as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:contacts_4",
+      "source_library": "mingcute",
+      "source_name": "contacts_4",
+      "label": "Contacts",
+      "depicts": "A symbol representing contacts.",
+      "purpose": "Show contacts as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "contacts",
+        "4"
+      ],
+      "synonyms": [
+        "contacts",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to contacts as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:contacts",
+      "source_library": "mingcute",
+      "source_name": "contacts",
+      "label": "Contacts",
+      "depicts": "A symbol representing contacts.",
+      "purpose": "Show contacts as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "contacts"
+      ],
+      "synonyms": [
+        "contacts"
+      ],
+      "use_when": "Use when the interface refers directly to contacts as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cookie",
+      "source_library": "mingcute",
+      "source_name": "cookie",
+      "label": "Cookie",
+      "depicts": "A symbol representing cookie.",
+      "purpose": "Show cookie as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cookie"
+      ],
+      "synonyms": [
+        "cookie"
+      ],
+      "use_when": "Use when the interface refers directly to cookie as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cookie_man",
+      "source_library": "mingcute",
+      "source_name": "cookie_man",
+      "label": "Cookie Man",
+      "depicts": "A symbol representing cookie man.",
+      "purpose": "Show cookie man as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cookie",
+        "man"
+      ],
+      "synonyms": [
+        "cookie",
+        "man"
+      ],
+      "use_when": "Use when the interface refers directly to cookie man as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cooldown",
+      "source_library": "mingcute",
+      "source_name": "cooldown",
+      "label": "Cooldown",
+      "depicts": "A symbol representing cooldown.",
+      "purpose": "Show cooldown as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cooldown"
+      ],
+      "synonyms": [
+        "cooldown"
+      ],
+      "use_when": "Use when the interface refers directly to cooldown as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copilot",
+      "source_library": "mingcute",
+      "source_name": "copilot",
+      "label": "Copilot",
+      "depicts": "A symbol representing copilot.",
+      "purpose": "Show copilot as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copilot"
+      ],
+      "synonyms": [
+        "copilot"
+      ],
+      "use_when": "Use when the interface refers directly to copilot as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copper_coin",
+      "source_library": "mingcute",
+      "source_name": "copper_coin",
+      "label": "Copper Coin",
+      "depicts": "A symbol representing copper coin.",
+      "purpose": "Show copper coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copper",
+        "coin"
+      ],
+      "synonyms": [
+        "copper",
+        "coin"
+      ],
+      "use_when": "Use when the interface refers directly to copper coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copy_2",
+      "source_library": "mingcute",
+      "source_name": "copy_2",
+      "label": "Copy",
+      "depicts": "A symbol representing copy.",
+      "purpose": "Show copy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy",
+        "2"
+      ],
+      "synonyms": [
+        "copy",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to copy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copy_3",
+      "source_library": "mingcute",
+      "source_name": "copy_3",
+      "label": "Copy",
+      "depicts": "A symbol representing copy.",
+      "purpose": "Show copy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy",
+        "3"
+      ],
+      "synonyms": [
+        "copy",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to copy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copy",
+      "source_library": "mingcute",
+      "source_name": "copy",
+      "label": "Copy",
+      "depicts": "A symbol representing copy.",
+      "purpose": "Show copy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy"
+      ],
+      "synonyms": [
+        "copy"
+      ],
+      "use_when": "Use when the interface refers directly to copy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:copyright",
+      "source_library": "mingcute",
+      "source_name": "copyright",
+      "label": "Copyright",
+      "depicts": "A symbol representing copyright.",
+      "purpose": "Show copyright as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copyright"
+      ],
+      "synonyms": [
+        "copyright"
+      ],
+      "use_when": "Use when the interface refers directly to copyright as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:counter_2",
+      "source_library": "mingcute",
+      "source_name": "counter_2",
+      "label": "Counter",
+      "depicts": "A symbol representing counter.",
+      "purpose": "Show counter as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "counter",
+        "2"
+      ],
+      "synonyms": [
+        "counter",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to counter as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:counter",
+      "source_library": "mingcute",
+      "source_name": "counter",
+      "label": "Counter",
+      "depicts": "A symbol representing counter.",
+      "purpose": "Show counter as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "counter"
+      ],
+      "synonyms": [
+        "counter"
+      ],
+      "use_when": "Use when the interface refers directly to counter as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:coupon",
+      "source_library": "mingcute",
+      "source_name": "coupon",
+      "label": "Coupon",
+      "depicts": "A symbol representing coupon.",
+      "purpose": "Show coupon as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "coupon"
+      ],
+      "synonyms": [
+        "coupon"
+      ],
+      "use_when": "Use when the interface refers directly to coupon as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cross_2",
+      "source_library": "mingcute",
+      "source_name": "cross_2",
+      "label": "Cross",
+      "depicts": "A symbol representing cross.",
+      "purpose": "Show cross as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cross",
+        "2"
+      ],
+      "synonyms": [
+        "cross",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cross as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cross",
+      "source_library": "mingcute",
+      "source_name": "cross",
+      "label": "Cross",
+      "depicts": "A symbol representing cross.",
+      "purpose": "Show cross as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cross"
+      ],
+      "synonyms": [
+        "cross"
+      ],
+      "use_when": "Use when the interface refers directly to cross as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:crutch",
+      "source_library": "mingcute",
+      "source_name": "crutch",
+      "label": "Crutch",
+      "depicts": "A symbol representing crutch.",
+      "purpose": "Show crutch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "crutch"
+      ],
+      "synonyms": [
+        "crutch"
+      ],
+      "use_when": "Use when the interface refers directly to crutch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:crystal_ball",
+      "source_library": "mingcute",
+      "source_name": "crystal_ball",
+      "label": "Crystal Ball",
+      "depicts": "A symbol representing crystal ball.",
+      "purpose": "Show crystal ball as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "crystal",
+        "ball"
+      ],
+      "synonyms": [
+        "crystal",
+        "ball"
+      ],
+      "use_when": "Use when the interface refers directly to crystal ball as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cube_3d",
+      "source_library": "mingcute",
+      "source_name": "cube_3d",
+      "label": "Cube 3d",
+      "depicts": "A symbol representing cube 3d.",
+      "purpose": "Show cube 3d as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cube",
+        "3d"
+      ],
+      "synonyms": [
+        "cube",
+        "3d"
+      ],
+      "use_when": "Use when the interface refers directly to cube 3d as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cube",
+      "source_library": "mingcute",
+      "source_name": "cube",
+      "label": "Cube",
+      "depicts": "A symbol representing cube.",
+      "purpose": "Show cube as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cube"
+      ],
+      "synonyms": [
+        "cube"
+      ],
+      "use_when": "Use when the interface refers directly to cube as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cupcake",
+      "source_library": "mingcute",
+      "source_name": "cupcake",
+      "label": "Cupcake",
+      "depicts": "A symbol representing cupcake.",
+      "purpose": "Show cupcake as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cupcake"
+      ],
+      "synonyms": [
+        "cupcake"
+      ],
+      "use_when": "Use when the interface refers directly to cupcake as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_baht_2",
+      "source_library": "mingcute",
+      "source_name": "currency_baht_2",
+      "label": "Currency Baht",
+      "depicts": "A symbol representing currency baht.",
+      "purpose": "Show currency baht as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "baht",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "baht",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency baht as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_baht",
+      "source_library": "mingcute",
+      "source_name": "currency_baht",
+      "label": "Currency Baht",
+      "depicts": "A symbol representing currency baht.",
+      "purpose": "Show currency baht as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "baht"
+      ],
+      "synonyms": [
+        "currency",
+        "baht"
+      ],
+      "use_when": "Use when the interface refers directly to currency baht as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_bitcoin_2",
+      "source_library": "mingcute",
+      "source_name": "currency_bitcoin_2",
+      "label": "Currency Bitcoin",
+      "depicts": "A symbol representing currency bitcoin.",
+      "purpose": "Show currency bitcoin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "bitcoin",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "bitcoin",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency bitcoin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_bitcoin",
+      "source_library": "mingcute",
+      "source_name": "currency_bitcoin",
+      "label": "Currency Bitcoin",
+      "depicts": "A symbol representing currency bitcoin.",
+      "purpose": "Show currency bitcoin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "bitcoin"
+      ],
+      "synonyms": [
+        "currency",
+        "bitcoin"
+      ],
+      "use_when": "Use when the interface refers directly to currency bitcoin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_cny_2",
+      "source_library": "mingcute",
+      "source_name": "currency_cny_2",
+      "label": "Currency Cny",
+      "depicts": "A symbol representing currency cny.",
+      "purpose": "Show currency cny as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "cny",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "cny",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency cny as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_cny",
+      "source_library": "mingcute",
+      "source_name": "currency_cny",
+      "label": "Currency Cny",
+      "depicts": "A symbol representing currency cny.",
+      "purpose": "Show currency cny as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "cny"
+      ],
+      "synonyms": [
+        "currency",
+        "cny"
+      ],
+      "use_when": "Use when the interface refers directly to currency cny as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_dollar_2",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar_2",
+      "label": "Currency Dollar",
+      "depicts": "A symbol representing currency dollar.",
+      "purpose": "Show currency dollar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "dollar",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "dollar",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency dollar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_dollar",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar",
+      "label": "Currency Dollar",
+      "depicts": "A symbol representing currency dollar.",
+      "purpose": "Show currency dollar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "dollar"
+      ],
+      "synonyms": [
+        "currency",
+        "dollar"
+      ],
+      "use_when": "Use when the interface refers directly to currency dollar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_euro_2",
+      "source_library": "mingcute",
+      "source_name": "currency_euro_2",
+      "label": "Currency Euro",
+      "depicts": "A symbol representing currency euro.",
+      "purpose": "Show currency euro as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "euro",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "euro",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency euro as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_euro",
+      "source_library": "mingcute",
+      "source_name": "currency_euro",
+      "label": "Currency Euro",
+      "depicts": "A symbol representing currency euro.",
+      "purpose": "Show currency euro as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "euro"
+      ],
+      "synonyms": [
+        "currency",
+        "euro"
+      ],
+      "use_when": "Use when the interface refers directly to currency euro as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_lira_2",
+      "source_library": "mingcute",
+      "source_name": "currency_lira_2",
+      "label": "Currency Lira",
+      "depicts": "A symbol representing currency lira.",
+      "purpose": "Show currency lira as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "lira",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "lira",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency lira as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_lira",
+      "source_library": "mingcute",
+      "source_name": "currency_lira",
+      "label": "Currency Lira",
+      "depicts": "A symbol representing currency lira.",
+      "purpose": "Show currency lira as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "lira"
+      ],
+      "synonyms": [
+        "currency",
+        "lira"
+      ],
+      "use_when": "Use when the interface refers directly to currency lira as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_nigeria_2",
+      "source_library": "mingcute",
+      "source_name": "currency_nigeria_2",
+      "label": "Currency Nigeria",
+      "depicts": "A symbol representing currency nigeria.",
+      "purpose": "Show currency nigeria as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "nigeria",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "nigeria",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency nigeria as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_nigeria",
+      "source_library": "mingcute",
+      "source_name": "currency_nigeria",
+      "label": "Currency Nigeria",
+      "depicts": "A symbol representing currency nigeria.",
+      "purpose": "Show currency nigeria as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "nigeria"
+      ],
+      "synonyms": [
+        "currency",
+        "nigeria"
+      ],
+      "use_when": "Use when the interface refers directly to currency nigeria as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_pound_2",
+      "source_library": "mingcute",
+      "source_name": "currency_pound_2",
+      "label": "Currency Pound",
+      "depicts": "A symbol representing currency pound.",
+      "purpose": "Show currency pound as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "pound",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "pound",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency pound as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_pound",
+      "source_library": "mingcute",
+      "source_name": "currency_pound",
+      "label": "Currency Pound",
+      "depicts": "A symbol representing currency pound.",
+      "purpose": "Show currency pound as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "pound"
+      ],
+      "synonyms": [
+        "currency",
+        "pound"
+      ],
+      "use_when": "Use when the interface refers directly to currency pound as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_rubel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel_2",
+      "label": "Currency Rubel",
+      "depicts": "A symbol representing currency rubel.",
+      "purpose": "Show currency rubel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "rubel",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "rubel",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency rubel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_rubel",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel",
+      "label": "Currency Rubel",
+      "depicts": "A symbol representing currency rubel.",
+      "purpose": "Show currency rubel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "rubel"
+      ],
+      "synonyms": [
+        "currency",
+        "rubel"
+      ],
+      "use_when": "Use when the interface refers directly to currency rubel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_rupee_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee_2",
+      "label": "Currency Rupee",
+      "depicts": "A symbol representing currency rupee.",
+      "purpose": "Show currency rupee as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "rupee",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "rupee",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency rupee as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_rupee",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee",
+      "label": "Currency Rupee",
+      "depicts": "A symbol representing currency rupee.",
+      "purpose": "Show currency rupee as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "rupee"
+      ],
+      "synonyms": [
+        "currency",
+        "rupee"
+      ],
+      "use_when": "Use when the interface refers directly to currency rupee as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_shekel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel_2",
+      "label": "Currency Shekel",
+      "depicts": "A symbol representing currency shekel.",
+      "purpose": "Show currency shekel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "shekel",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "shekel",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency shekel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_shekel",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel",
+      "label": "Currency Shekel",
+      "depicts": "A symbol representing currency shekel.",
+      "purpose": "Show currency shekel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "shekel"
+      ],
+      "synonyms": [
+        "currency",
+        "shekel"
+      ],
+      "use_when": "Use when the interface refers directly to currency shekel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_won_2",
+      "source_library": "mingcute",
+      "source_name": "currency_won_2",
+      "label": "Currency Won",
+      "depicts": "A symbol representing currency won.",
+      "purpose": "Show currency won as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "won",
+        "2"
+      ],
+      "synonyms": [
+        "currency",
+        "won",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency won as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:currency_won",
+      "source_library": "mingcute",
+      "source_name": "currency_won",
+      "label": "Currency Won",
+      "depicts": "A symbol representing currency won.",
+      "purpose": "Show currency won as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "currency",
+        "won"
+      ],
+      "synonyms": [
+        "currency",
+        "won"
+      ],
+      "use_when": "Use when the interface refers directly to currency won as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cursor_2",
+      "source_library": "mingcute",
+      "source_name": "cursor_2",
+      "label": "Cursor",
+      "depicts": "A symbol representing cursor.",
+      "purpose": "Show cursor as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cursor",
+        "2"
+      ],
+      "synonyms": [
+        "cursor",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cursor as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cursor_3",
+      "source_library": "mingcute",
+      "source_name": "cursor_3",
+      "label": "Cursor",
+      "depicts": "A symbol representing cursor.",
+      "purpose": "Show cursor as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cursor",
+        "3"
+      ],
+      "synonyms": [
+        "cursor",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to cursor as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cursor",
+      "source_library": "mingcute",
+      "source_name": "cursor",
+      "label": "Cursor",
+      "depicts": "A symbol representing cursor.",
+      "purpose": "Show cursor as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cursor"
+      ],
+      "synonyms": [
+        "cursor"
+      ],
+      "use_when": "Use when the interface refers directly to cursor as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cursor_text",
+      "source_library": "mingcute",
+      "source_name": "cursor_text",
+      "label": "Cursor Text",
+      "depicts": "A symbol representing cursor text.",
+      "purpose": "Show cursor text as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cursor",
+        "text"
+      ],
+      "synonyms": [
+        "cursor",
+        "text"
+      ],
+      "use_when": "Use when the interface refers directly to cursor text as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:curtain",
+      "source_library": "mingcute",
+      "source_name": "curtain",
+      "label": "Curtain",
+      "depicts": "A symbol representing curtain.",
+      "purpose": "Show curtain as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "curtain"
+      ],
+      "synonyms": [
+        "curtain"
+      ],
+      "use_when": "Use when the interface refers directly to curtain as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cylinder_2",
+      "source_library": "mingcute",
+      "source_name": "cylinder_2",
+      "label": "Cylinder",
+      "depicts": "A symbol representing cylinder.",
+      "purpose": "Show cylinder as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cylinder",
+        "2"
+      ],
+      "synonyms": [
+        "cylinder",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to cylinder as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:cylinder",
+      "source_library": "mingcute",
+      "source_name": "cylinder",
+      "label": "Cylinder",
+      "depicts": "A symbol representing cylinder.",
+      "purpose": "Show cylinder as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cylinder"
+      ],
+      "synonyms": [
+        "cylinder"
+      ],
+      "use_when": "Use when the interface refers directly to cylinder as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dandelion",
+      "source_library": "mingcute",
+      "source_name": "dandelion",
+      "label": "Dandelion",
+      "depicts": "A symbol representing dandelion.",
+      "purpose": "Show dandelion as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dandelion"
+      ],
+      "synonyms": [
+        "dandelion"
+      ],
+      "use_when": "Use when the interface refers directly to dandelion as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:danmaku",
+      "source_library": "mingcute",
+      "source_name": "danmaku",
+      "label": "Danmaku",
+      "depicts": "A symbol representing danmaku.",
+      "purpose": "Show danmaku as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "danmaku"
+      ],
+      "synonyms": [
+        "danmaku"
+      ],
+      "use_when": "Use when the interface refers directly to danmaku as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:danmaku_off",
+      "source_library": "mingcute",
+      "source_name": "danmaku_off",
+      "label": "Danmaku Off",
+      "depicts": "A symbol representing danmaku off.",
+      "purpose": "Show danmaku off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "danmaku",
+        "off"
+      ],
+      "synonyms": [
+        "danmaku",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to danmaku off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:danmaku_on",
+      "source_library": "mingcute",
+      "source_name": "danmaku_on",
+      "label": "Danmaku On",
+      "depicts": "A symbol representing danmaku on.",
+      "purpose": "Show danmaku on as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "danmaku",
+        "on"
+      ],
+      "synonyms": [
+        "danmaku",
+        "on"
+      ],
+      "use_when": "Use when the interface refers directly to danmaku on as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:deepseek",
+      "source_library": "mingcute",
+      "source_name": "deepseek",
+      "label": "Deepseek",
+      "depicts": "A symbol representing deepseek.",
+      "purpose": "Show deepseek as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "deepseek"
+      ],
+      "synonyms": [
+        "deepseek"
+      ],
+      "use_when": "Use when the interface refers directly to deepseek as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:deer",
+      "source_library": "mingcute",
+      "source_name": "deer",
+      "label": "Deer",
+      "depicts": "A symbol representing deer.",
+      "purpose": "Show deer as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "deer"
+      ],
+      "synonyms": [
+        "deer"
+      ],
+      "use_when": "Use when the interface refers directly to deer as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dental",
+      "source_library": "mingcute",
+      "source_name": "dental",
+      "label": "Dental",
+      "depicts": "A symbol representing dental.",
+      "purpose": "Show dental as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dental"
+      ],
+      "synonyms": [
+        "dental"
+      ],
+      "use_when": "Use when the interface refers directly to dental as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:department",
+      "source_library": "mingcute",
+      "source_name": "department",
+      "label": "Department",
+      "depicts": "A symbol representing department.",
+      "purpose": "Show department as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "department"
+      ],
+      "synonyms": [
+        "department"
+      ],
+      "use_when": "Use when the interface refers directly to department as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:desk_lamp_2",
+      "source_library": "mingcute",
+      "source_name": "desk_lamp_2",
+      "label": "Desk Lamp",
+      "depicts": "A symbol representing desk lamp.",
+      "purpose": "Show desk lamp as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "desk",
+        "lamp",
+        "2"
+      ],
+      "synonyms": [
+        "desk",
+        "lamp",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to desk lamp as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:desk_lamp",
+      "source_library": "mingcute",
+      "source_name": "desk_lamp",
+      "label": "Desk Lamp",
+      "depicts": "A symbol representing desk lamp.",
+      "purpose": "Show desk lamp as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "desk",
+        "lamp"
+      ],
+      "synonyms": [
+        "desk",
+        "lamp"
+      ],
+      "use_when": "Use when the interface refers directly to desk lamp as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:desk",
+      "source_library": "mingcute",
+      "source_name": "desk",
+      "label": "Desk",
+      "depicts": "A symbol representing desk.",
+      "purpose": "Show desk as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "desk"
+      ],
+      "synonyms": [
+        "desk"
+      ],
+      "use_when": "Use when the interface refers directly to desk as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:device",
+      "source_library": "mingcute",
+      "source_name": "device",
+      "label": "Device",
+      "depicts": "A symbol representing device.",
+      "purpose": "Show device as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "device"
+      ],
+      "synonyms": [
+        "device"
+      ],
+      "use_when": "Use when the interface refers directly to device as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:diamond_2",
+      "source_library": "mingcute",
+      "source_name": "diamond_2",
+      "label": "Diamond",
+      "depicts": "A symbol representing diamond.",
+      "purpose": "Show diamond as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "diamond",
+        "2"
+      ],
+      "synonyms": [
+        "diamond",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to diamond as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:diamond",
+      "source_library": "mingcute",
+      "source_name": "diamond",
+      "label": "Diamond",
+      "depicts": "A symbol representing diamond.",
+      "purpose": "Show diamond as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "diamond"
+      ],
+      "synonyms": [
+        "diamond"
+      ],
+      "use_when": "Use when the interface refers directly to diamond as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:diary",
+      "source_library": "mingcute",
+      "source_name": "diary",
+      "label": "Diary",
+      "depicts": "A symbol representing diary.",
+      "purpose": "Show diary as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "diary"
+      ],
+      "synonyms": [
+        "diary"
+      ],
+      "use_when": "Use when the interface refers directly to diary as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dingtalk",
+      "source_library": "mingcute",
+      "source_name": "dingtalk",
+      "label": "Dingtalk",
+      "depicts": "A symbol representing dingtalk.",
+      "purpose": "Show dingtalk as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dingtalk"
+      ],
+      "synonyms": [
+        "dingtalk"
+      ],
+      "use_when": "Use when the interface refers directly to dingtalk as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dinner",
+      "source_library": "mingcute",
+      "source_name": "dinner",
+      "label": "Dinner",
+      "depicts": "A symbol representing dinner.",
+      "purpose": "Show dinner as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dinner"
+      ],
+      "synonyms": [
+        "dinner"
+      ],
+      "use_when": "Use when the interface refers directly to dinner as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:directions_2",
+      "source_library": "mingcute",
+      "source_name": "directions_2",
+      "label": "Directions",
+      "depicts": "A symbol representing directions.",
+      "purpose": "Show directions as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "directions",
+        "2"
+      ],
+      "synonyms": [
+        "directions",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to directions as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:directions",
+      "source_library": "mingcute",
+      "source_name": "directions",
+      "label": "Directions",
+      "depicts": "A symbol representing directions.",
+      "purpose": "Show directions as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "directions"
+      ],
+      "synonyms": [
+        "directions"
+      ],
+      "use_when": "Use when the interface refers directly to directions as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:directory",
+      "source_library": "mingcute",
+      "source_name": "directory",
+      "label": "Directory",
+      "depicts": "A symbol representing directory.",
+      "purpose": "Show directory as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "directory"
+      ],
+      "synonyms": [
+        "directory"
+      ],
+      "use_when": "Use when the interface refers directly to directory as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:disabled_2",
+      "source_library": "mingcute",
+      "source_name": "disabled_2",
+      "label": "Disabled",
+      "depicts": "A symbol representing disabled.",
+      "purpose": "Show disabled as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "disabled",
+        "2"
+      ],
+      "synonyms": [
+        "disabled",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to disabled as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:disabled",
+      "source_library": "mingcute",
+      "source_name": "disabled",
+      "label": "Disabled",
+      "depicts": "A symbol representing disabled.",
+      "purpose": "Show disabled as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "disabled"
+      ],
+      "synonyms": [
+        "disabled"
+      ],
+      "use_when": "Use when the interface refers directly to disabled as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:disc",
+      "source_library": "mingcute",
+      "source_name": "disc",
+      "label": "Disc",
+      "depicts": "A symbol representing disc.",
+      "purpose": "Show disc as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "disc"
+      ],
+      "synonyms": [
+        "disc"
+      ],
+      "use_when": "Use when the interface refers directly to disc as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:discord",
+      "source_library": "mingcute",
+      "source_name": "discord",
+      "label": "Discord",
+      "depicts": "A symbol representing discord.",
+      "purpose": "Show discord as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "discord"
+      ],
+      "synonyms": [
+        "discord"
+      ],
+      "use_when": "Use when the interface refers directly to discord as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dish_cover",
+      "source_library": "mingcute",
+      "source_name": "dish_cover",
+      "label": "Dish Cover",
+      "depicts": "A symbol representing dish cover.",
+      "purpose": "Show dish cover as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dish",
+        "cover"
+      ],
+      "synonyms": [
+        "dish",
+        "cover"
+      ],
+      "use_when": "Use when the interface refers directly to dish cover as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:display",
+      "source_library": "mingcute",
+      "source_name": "display",
+      "label": "Display",
+      "depicts": "A symbol representing display.",
+      "purpose": "Show display as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "display"
+      ],
+      "synonyms": [
+        "display"
+      ],
+      "use_when": "Use when the interface refers directly to display as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:distribute_spacing_horizontal",
+      "source_library": "mingcute",
+      "source_name": "distribute_spacing_horizontal",
+      "label": "Distribute Spacing Horizontal",
+      "depicts": "A symbol representing distribute spacing horizontal.",
+      "purpose": "Show distribute spacing horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "distribute",
+        "spacing",
+        "horizontal"
+      ],
+      "synonyms": [
+        "distribute",
+        "spacing",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to distribute spacing horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:distribute_spacing_vertical",
+      "source_library": "mingcute",
+      "source_name": "distribute_spacing_vertical",
+      "label": "Distribute Spacing Vertical",
+      "depicts": "A symbol representing distribute spacing vertical.",
+      "purpose": "Show distribute spacing vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "distribute",
+        "spacing",
+        "vertical"
+      ],
+      "synonyms": [
+        "distribute",
+        "spacing",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to distribute spacing vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dividing_line",
+      "source_library": "mingcute",
+      "source_name": "dividing_line",
+      "label": "Dividing Line",
+      "depicts": "A symbol representing dividing line.",
+      "purpose": "Show dividing line as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dividing",
+        "line"
+      ],
+      "synonyms": [
+        "dividing",
+        "line"
+      ],
+      "use_when": "Use when the interface refers directly to dividing line as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:doc",
+      "source_library": "mingcute",
+      "source_name": "doc",
+      "label": "Doc",
+      "depicts": "A symbol representing doc.",
+      "purpose": "Show doc as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "doc"
+      ],
+      "synonyms": [
+        "doc"
+      ],
+      "use_when": "Use when the interface refers directly to doc as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:document_2",
+      "source_library": "mingcute",
+      "source_name": "document_2",
+      "label": "Document",
+      "depicts": "A symbol representing document.",
+      "purpose": "Show document as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "document",
+        "2"
+      ],
+      "synonyms": [
+        "document",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to document as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:document_3",
+      "source_library": "mingcute",
+      "source_name": "document_3",
+      "label": "Document",
+      "depicts": "A symbol representing document.",
+      "purpose": "Show document as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "document",
+        "3"
+      ],
+      "synonyms": [
+        "document",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to document as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:document",
+      "source_library": "mingcute",
+      "source_name": "document",
+      "label": "Document",
+      "depicts": "A symbol representing document.",
+      "purpose": "Show document as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "document"
+      ],
+      "synonyms": [
+        "document"
+      ],
+      "use_when": "Use when the interface refers directly to document as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:documents",
+      "source_library": "mingcute",
+      "source_name": "documents",
+      "label": "Documents",
+      "depicts": "A symbol representing documents.",
+      "purpose": "Show documents as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "documents"
+      ],
+      "synonyms": [
+        "documents"
+      ],
+      "use_when": "Use when the interface refers directly to documents as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:dog",
+      "source_library": "mingcute",
+      "source_name": "dog",
+      "label": "Dog",
+      "depicts": "A symbol representing dog.",
+      "purpose": "Show dog as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "dog"
+      ],
+      "synonyms": [
+        "dog"
+      ],
+      "use_when": "Use when the interface refers directly to dog as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.7,
+      "confidence_band": "medium"
+    }
+  ]
+}

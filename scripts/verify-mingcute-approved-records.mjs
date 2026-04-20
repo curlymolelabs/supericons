@@ -42,8 +42,12 @@ for (const holdRecord of editorHoldQueue) {
 
 const decisionApproveIds = Object.values(promotionDecisions.batches || {})
   .flatMap((batch) => Array.isArray(batch.approve_for_import) ? batch.approve_for_import : []);
+const uniqueDecisionApproveIds = new Set(decisionApproveIds);
 
-assert(decisionApproveIds.length === approvedRecords.length, 'Approved MingCute records must match promotion decisions');
+assert(uniqueDecisionApproveIds.size === approvedRecords.length, 'Approved MingCute records must match promotion decisions');
+for (const record of approvedRecords) {
+  assert(uniqueDecisionApproveIds.has(record.icon_id), `Approved MingCute record missing from promotion decisions: ${record.icon_id}`);
+}
 assert(approvalSummary.total_approved_records === approvedRecords.length, 'MingCute approval summary must match approved count');
 assert(approvalSummary.total_editor_hold_records === editorHoldQueue.length, 'MingCute approval summary must match hold count');
 

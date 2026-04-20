@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "mingcute-batch-05-visual-review",
+  "source_batch_id": "mingcute-batch-05",
+  "library_id": "mingcute",
+  "library_label": "MingCute",
+  "purpose": "Review the visual-confirmation MingCute queue from mingcute-batch-05 after the high-confidence editor pass is complete.",
+  "selection_mode": "remaining_visual_review_queue",
+  "selection_notes": [
+    "Pull only unresolved MingCute icons from the source batch that are still marked needs_visual_review.",
+    "Keep the batch reproducible by saving the generated batch records after the first run.",
+    "Hold or keep as draft any icon that still needs stronger product context after visual confirmation."
+  ]
+}

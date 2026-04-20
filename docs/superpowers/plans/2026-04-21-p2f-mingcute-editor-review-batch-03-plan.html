@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P2F MingCute Editor Review Batch 03 Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #182033;
+      --muted: #52607a;
+      --line: #d8deea;
+      --accent: #ff6a00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    h1, h2 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.2rem; }
+    p, li { color: var(--muted); }
+    ul { margin: 0; padding-left: 20px; }
+    .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 106, 0, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <div class="badge">Next MingCute Step</div>
+      <h1>MingCute Editor Review Batch 03</h1>
+      <p>This step reviews the 72 MingCute icons from batch 02 that already look strong enough for editor review. The goal is to clear this smaller queue before moving into the bigger visual-review set.</p>
+    </section>
+
+    <section>
+      <h2>Why this step makes sense now</h2>
+      <ul>
+        <li>It is the smallest strong-signal MingCute queue left from batch 02.</li>
+        <li>It can add more approved records quickly.</li>
+        <li>It keeps the rollout orderly by finishing the editor queue before the harder visual queue.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What will happen</h2>
+      <ul>
+        <li>Create a saved batch selection for editor review batch 03.</li>
+        <li>Update the batch builder so it can pull from MingCute batch 02 instead of only batch 01.</li>
+        <li>Build the reviewed records for the unresolved editor-review items.</li>
+        <li>Rebuild the approved MingCute records and the registry summaries.</li>
+        <li>Run the normal checks to make sure the results are safe to keep.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Main files this step should update</h2>
+      <ul>
+        <li>The new batch 03 files under the MingCute automation folder.</li>
+        <li>The approved MingCute records file.</li>
+        <li>The MingCute summary file.</li>
+        <li>The registry summary file.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

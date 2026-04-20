@@ -1,0 +1,403 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "mingcute-batch-03-editor-review",
+  "reviewed_records": [
+    {
+      "icon_id": "mingcute:heart",
+      "source_library": "mingcute",
+      "source_name": "heart",
+      "label": "Liked",
+      "depicts": "A heart symbol used for likes, favorites, or affection.",
+      "purpose": "Show a liked, loved, or favorited state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "liked",
+        "favorite",
+        "heart",
+        "loved",
+        "saved preference"
+      ],
+      "synonyms": [
+        "heart",
+        "liked item",
+        "favorite",
+        "loved"
+      ],
+      "use_when": "Use when the interface shows a liked or favorited state tied to affection or preference.",
+      "avoid_when": "Do not use for health, approval, or trust when the meaning is specifically liking or affection.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:star",
+      "source_library": "mingcute",
+      "source_name": "star",
+      "label": "Favorite",
+      "depicts": "A star symbol used for saved or favored items.",
+      "purpose": "Show a favorite, featured, or starred state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "favorite",
+        "starred",
+        "featured",
+        "saved",
+        "important"
+      ],
+      "synonyms": [
+        "starred item",
+        "favorite",
+        "featured",
+        "marked important"
+      ],
+      "use_when": "Use when the interface marks something as a favorite, featured item, or starred state.",
+      "avoid_when": "Do not use for ratings or success when the meaning is specifically saved or favored.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "mingcute:camera_2_ai",
+      "source_library": "mingcute",
+      "source_name": "camera_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "camera",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "camera tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:music_2_ai",
+      "source_library": "mingcute",
+      "source_name": "music_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "music",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "music tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pencil_ai",
+      "source_library": "mingcute",
+      "source_name": "pencil_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pencil",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pencil tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:pic_ai",
+      "source_library": "mingcute",
+      "source_name": "pic_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "pic",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "pic tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:quill_pen_ai",
+      "source_library": "mingcute",
+      "source_name": "quill_pen_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "quill",
+        "pen",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "quill tool",
+        "pen tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:signature_2_ai",
+      "source_library": "mingcute",
+      "source_name": "signature_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "signature",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "signature tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:terminal_ai",
+      "source_library": "mingcute",
+      "source_name": "terminal_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "terminal",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "terminal tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:terminal_box_ai",
+      "source_library": "mingcute",
+      "source_name": "terminal_box_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "terminal",
+        "box",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "terminal tool",
+        "box tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:textbox_ai",
+      "source_library": "mingcute",
+      "source_name": "textbox_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "textbox",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "textbox tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:translate_2_ai",
+      "source_library": "mingcute",
+      "source_name": "translate_2_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "translate",
+        "2",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "translate tool",
+        "2 tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "mingcute:video_ai",
+      "source_library": "mingcute",
+      "source_name": "video_ai",
+      "label": "AI Assist",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+      "category": "agent_lifecycle",
+      "intent": "inform",
+      "domain": "ai_agents",
+      "semantic_tags": [
+        "video",
+        "ai",
+        "agent lifecycle"
+      ],
+      "synonyms": [
+        "ai assist",
+        "video tool",
+        "ai tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    }
+  ]
+}

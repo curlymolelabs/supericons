@@ -1,0 +1,677 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "mingcute-batch-03-editor-review",
+  "source_batch_id": "mingcute-batch-03",
+  "library_id": "mingcute",
+  "library_label": "MingCute",
+  "purpose": "Review the high-confidence MingCute queue from mingcute-batch-03 before moving deeper into visual-only cases.",
+  "total_icons": 13,
+  "counts": {
+    "by_family": {
+      "generic_controls": 2,
+      "systems_ai": 11
+    },
+    "by_queue": {
+      "ready_for_editor_review": 13
+    }
+  },
+  "records": [
+    {
+      "icon_id": "mingcute:heart",
+      "family_key": "generic_controls",
+      "selection_score": 5,
+      "approved_reference_icon_id": "tabler:heart",
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:heart",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "heart",
+        "source_asset_name": "heart_line",
+        "label": "Liked",
+        "purpose": "Show a liked, loved, or favorited state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "liked",
+          "favorite",
+          "heart",
+          "loved",
+          "saved preference"
+        ],
+        "use_when": "Use when the interface shows a liked or favorited state tied to affection or preference.",
+        "avoid_when": "Do not use for health, approval, or trust when the meaning is specifically liking or affection.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A heart symbol used for likes, favorites, or affection.",
+        "intent": "inform",
+        "domain": "product_status",
+        "synonyms": [
+          "heart",
+          "liked item",
+          "favorite",
+          "loved"
+        ],
+        "evidence": [
+          "source_name",
+          "approved_reference",
+          "svg_payload"
+        ],
+        "confidence": 0.9
+      },
+      "visual_review_input": {
+        "source_asset_name": "heart_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M18.494 3.801c2.095 1.221 3.569 3.7 3.504 6.592-.081 3.61-2.89 6.794-7.679 9.638-.71.422-1.458.969-2.319.969-.845 0-1.625-.557-2.32-.97-4.787-2.843-7.597-6.028-7.678-9.637-.065-2.892 1.409-5.37 3.504-6.592C7.466 2.66 9.928 2.653 12 4.338c2.072-1.685 4.534-1.679 6.494-.537M17.487 5.53c-1.394-.812-3.136-.783-4.644.743a1.188 1.188 0 0 1-1.686 0c-1.508-1.526-3.25-1.555-4.644-.743-1.444.842-2.56 2.628-2.511 4.82.056 2.511 2.04 5.194 6.7 7.962.408.243.834.554 1.298.683.464-.129.89-.44 1.298-.683 4.66-2.768 6.644-5.45 6.7-7.963.05-2.19-1.067-3.977-2.511-4.819\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:star",
+      "family_key": "generic_controls",
+      "selection_score": 5,
+      "approved_reference_icon_id": "tabler:star",
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:star",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "star",
+        "source_asset_name": "star_line",
+        "label": "Favorite",
+        "purpose": "Show a favorite, featured, or starred state.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "favorite",
+          "starred",
+          "featured",
+          "saved",
+          "important"
+        ],
+        "use_when": "Use when the interface marks something as a favorite, featured item, or starred state.",
+        "avoid_when": "Do not use for ratings or success when the meaning is specifically saved or favored.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A star symbol used for saved or favored items.",
+        "intent": "inform",
+        "domain": "product_status",
+        "synonyms": [
+          "starred item",
+          "favorite",
+          "featured",
+          "marked important"
+        ],
+        "evidence": [
+          "source_name",
+          "approved_reference",
+          "svg_payload"
+        ],
+        "confidence": 0.9
+      },
+      "visual_review_input": {
+        "source_asset_name": "star_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.92 2.868a1.25 1.25 0 0 1 2.16 0l2.795 4.798 5.428 1.176a1.25 1.25 0 0 1 .667 2.054l-3.7 4.141.56 5.525a1.25 1.25 0 0 1-1.748 1.27L12 19.592l-5.082 2.24a1.25 1.25 0 0 1-1.748-1.27l.56-5.525-3.7-4.14a1.25 1.25 0 0 1 .667-2.055l5.428-1.176zM12 4.987 9.687 8.959a1.25 1.25 0 0 1-.816.592l-4.492.973 3.062 3.427c.234.262.347.61.312.959l-.463 4.573 4.206-1.854a1.25 1.25 0 0 1 1.008 0l4.206 1.854-.463-4.573a1.25 1.25 0 0 1 .311-.959l3.063-3.427-4.492-.973a1.25 1.25 0 0 1-.816-.592z\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:camera_2_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:camera_2_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "camera_2_ai",
+        "source_asset_name": "camera_2_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "camera",
+          "2",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "camera tool",
+          "2 tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "camera_2_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M20 2a1 1 0 0 1 .946.677l.13.378a3 3 0 0 0 1.869 1.87l.378.129a1 1 0 0 1 0 1.892l-.378.13a3 3 0 0 0-1.87 1.869l-.129.378a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.869-1.87l-.378-.129a1 1 0 0 1 0-1.892l.378-.13a3 3 0 0 0 1.87-1.869l.129-.378A1 1 0 0 1 20 2m0 3.196a5.006 5.006 0 0 1-.804.804c.298.236.567.506.804.804.236-.298.506-.568.804-.804A5.006 5.006 0 0 1 20 5.196M8 3.586A2 2 0 0 1 9.414 3H14a1 1 0 1 1 0 2H9.414L8 6.414A2 2 0 0 1 6.586 7H4v12h16v-6a1 1 0 1 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2.586zM9 12.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-5a5 5 0 1 0 0 10 5 5 0 0 0 0-10\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:music_2_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:music_2_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "music_2_ai",
+        "source_asset_name": "music_2_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "music",
+          "2",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "music tool",
+          "2 tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "music_2_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M19.026 2.27a1.5 1.5 0 0 1 1.968 1.292l.006.132v3.585a2 2 0 0 1-1.218 1.84l-.15.057L15 10.721V17.5l-.005.212a4.5 4.5 0 1 1-2.214-4.092l.219.138V6.44a3 3 0 0 1 1.88-2.782l.171-.064zM10.5 15a2.5 2.5 0 1 0 2.495 2.664L13 17.5a2.5 2.5 0 0 0-2.5-2.5M7 1a1 1 0 0 1 .946.677l.13.378a3 3 0 0 0 1.869 1.87l.378.129a1 1 0 0 1 0 1.892l-.378.13a3 3 0 0 0-1.87 1.869l-.129.378a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.869-1.87l-.378-.129a1 1 0 0 1 0-1.892l.378-.13a3 3 0 0 0 1.87-1.869l.129-.378A1 1 0 0 1 7 1m12 3.387-3.316 1.106a1 1 0 0 0-.677.832L15 6.441v2.171l4-1.333zm-12-.19A5.004 5.004 0 0 1 6.196 5c.298.236.568.506.804.804.236-.298.506-.568.804-.804A5.004 5.004 0 0 1 7 4.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:pencil_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:pencil_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "pencil_ai",
+        "source_asset_name": "pencil_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "pencil",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "pencil tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "pencil_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><title>pencil_ai_line</title><g fill=\"none\" fill-rule=\"nonzero\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036q-.016-.004-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427q-.004-.016-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092q.019.005.029-.008l.004-.014-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014-.034.614q.001.018.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M17 17a1 1 0 0 1 .898.56l.048.117c.05.147.156.269.292.34l.085.037a1 1 0 0 1 .118 1.844l-.118.048a.6.6 0 0 0-.34.292l-.037.085a1 1 0 0 1-1.844.118l-.048-.118a.6.6 0 0 0-.292-.34l-.085-.037a1 1 0 0 1-.118-1.844l.118-.048a.6.6 0 0 0 .34-.292l.1-.23A1 1 0 0 1 17 17m3.278-13.985.707.707a3 3 0 0 1 0 4.243L9.672 19.278c-.133.133-.3.226-.483.268l-4.596 1.06a1 1 0 0 1-1.2-1.199l1.061-4.597c.042-.182.135-.35.268-.482L16.035 3.015a3 3 0 0 1 4.243 0m-4.95 3.535-8.99 8.988-.636 2.759 2.758-.636 8.99-8.99zM6 0a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377C5.222.285 5.552 0 6 0m11.45 4.429-.708.706 2.121 2.122.708-.707a1 1 0 0 0 0-1.414l-.707-.707a1 1 0 0 0-1.415 0M6 3.196A5 5 0 0 1 5.196 4q.449.355.804.803.356-.447.803-.803A5 5 0 0 1 6 3.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:pic_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:pic_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "pic_ai",
+        "source_asset_name": "pic_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "pic",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "pic tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "pic_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M20 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a1 1 0 1 1 2 0v2.1l4.995-4.994a1.25 1.25 0 0 1 1.768 0l4.065 4.066 1.238-1.238a1.25 1.25 0 0 1 1.768 0L20 15.101V5h-8a1 1 0 1 1 0-2zM9.879 12.05 4 17.93V19h16v-1.071l-3.05-3.05-.707.707.207.207a1 1 0 0 1-1.414 1.414zM5 2a1 1 0 0 1 .898.56l.048.117.13.378a3 3 0 0 0 1.684 1.8l.185.07.378.129a1 1 0 0 1 .117 1.844l-.117.048-.378.13a3 3 0 0 0-1.8 1.684l-.07.185-.129.378a1 1 0 0 1-1.844.117l-.048-.117-.13-.378a3 3 0 0 0-1.684-1.8l-.185-.07-.378-.129a1 1 0 0 1-.117-1.844l.117-.048.378-.13a3 3 0 0 0 1.8-1.684l.07-.185.129-.378A1 1 0 0 1 5 2m10.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3M5 5.196A5.004 5.004 0 0 1 4.196 6c.298.236.568.506.804.804.236-.298.506-.568.804-.804A5.004 5.004 0 0 1 5 5.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:quill_pen_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:quill_pen_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "quill_pen_ai",
+        "source_asset_name": "quill_pen_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "quill",
+          "pen",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "quill tool",
+          "pen tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "quill_pen_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M20.262 2.434a1.005 1.005 0 0 1 .944.454l.078.126.109.202.081.174.083.205c.315.838.552 2.297-.542 3.956a2.631 2.631 0 0 1-.276.345.996.996 0 0 1-.03.368 15.7 15.7 0 0 1-.75 2.136c-.551 1.263-1.328 2.54-2.423 3.636-2.05 2.05-4.742 2.991-6.844 3.43-.825.173-1.576.271-2.186.327l-.487.038-.21.013-.128 1.063-.098.906-.038.412-.037.518A5.177 5.177 0 0 0 7.5 21a1 1 0 1 1-2 0c0-.104.004-.225.01-.36l.03-.437.043-.489.08-.772.058-.502c.205-1.732.446-3.426.987-5.09.625-1.92 1.75-4.379 3.757-6.385 1.573-1.574 3.432-2.611 5.106-3.29l.452-.177.44-.16c.072-.025.144-.05.215-.073l.42-.136.402-.12.384-.107.363-.093.34-.08.315-.07.546-.105.577-.091zM19.76 4.53l-.322.062-.37.079-.415.098a17.93 17.93 0 0 0-.222.058l-.47.13c-.162.048-.33.1-.501.156l-.527.18c-1.615.584-3.508 1.54-5.054 3.086-1.704 1.703-2.7 3.84-3.269 5.59-.165.507-.293.977-.39 1.388l-.104.462.465-.043a17.365 17.365 0 0 0 1.702-.267c1.92-.401 4.179-1.228 5.838-2.888.85-.849 1.484-1.857 1.954-2.905-.976.52-2.018.986-2.759 1.233a1 1 0 0 1-.632-1.898c.674-.224 1.758-.713 2.754-1.265.494-.274.946-.552 1.301-.808l.226-.17.17-.141.065-.06.095-.095a.56.56 0 0 0 .05-.063c.527-.798.52-1.48.415-1.919M5 1a1 1 0 0 1 .898.56l.048.117.13.378a3 3 0 0 0 1.684 1.8l.185.07.378.129a1 1 0 0 1 .117 1.844l-.117.048-.378.13a3 3 0 0 0-1.8 1.684l-.07.185-.129.378a1 1 0 0 1-1.844.117l-.048-.117-.13-.378a3 3 0 0 0-1.684-1.8l-.185-.07-.378-.129a1 1 0 0 1-.117-1.844l.117-.048.378-.13a3 3 0 0 0 1.8-1.684l.07-.185.129-.378A1 1 0 0 1 5 1m0 3.196A5.004 5.004 0 0 1 4.196 5c.298.236.568.506.804.804.236-.298.506-.568.804-.804A5.004 5.004 0 0 1 5 4.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:signature_2_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:signature_2_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "signature_2_ai",
+        "source_asset_name": "signature_2_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "signature",
+          "2",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "signature tool",
+          "2 tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "signature_2_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><title>signature_2_ai_line</title><g fill=\"none\" fill-rule=\"nonzero\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036q-.016-.004-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427q-.004-.016-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092q.019.005.029-.008l.004-.014-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014-.034.614q.001.018.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M5.186 11.411c.159 1.783 1.149 3.714 3.194 5.349 2.116 1.691 3.585 2.476 5.822 2.796a1.001 1.001 0 0 1-.283 1.98c-2.712-.388-4.507-1.391-6.788-3.214-2.403-1.92-3.722-4.325-3.938-6.733a1 1 0 1 1 1.993-.178m15.33-2.74c1.46 2.661 1.595 5.762.03 7.85-1.125 1.499-2.806 1.982-4.476 1.914-1.65-.068-3.394-.67-4.907-1.464a1 1 0 1 1 .929-1.77c1.352.71 2.8 1.183 4.06 1.235 1.239.05 2.185-.302 2.795-1.116.944-1.258 1.035-3.464-.185-5.686a1 1 0 0 1 1.754-.962m.262-5.45a1 1 0 0 1 0 1.415l-9.9 9.9a1 1 0 0 1-1.413-1.415l9.9-9.9a1 1 0 0 1 1.413 0M6 1a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377C5.222 1.285 5.552 1 6 1m0 3.196A5 5 0 0 1 5.196 5q.449.355.804.803.356-.447.803-.803A5 5 0 0 1 6 4.196m6.624-.995c.722.09 1.444.261 2.149.514a1 1 0 0 1-.676 1.883 8 8 0 0 0-1.721-.412 1 1 0 0 1 .248-1.985\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:terminal_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:terminal_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "terminal_ai",
+        "source_asset_name": "terminal_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "terminal",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "terminal tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "terminal_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><title>terminal_ai_line</title><g fill=\"none\" fill-rule=\"nonzero\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036q-.016-.004-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427q-.004-.016-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092q.019.005.029-.008l.004-.014-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014-.034.614q.001.018.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M18 2a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377C17.222 2.285 17.552 2 18 2m0 3.196a5 5 0 0 1-.804.804q.448.355.804.803A5 5 0 0 1 18.803 6 5 5 0 0 1 18 5.196m-12.95.44 5.657 5.657a1 1 0 0 1 0 1.414L5.05 18.364a1 1 0 0 1-1.414-1.414L8.586 12l-4.95-4.95A1 1 0 1 1 5.05 5.636M20 17a1 1 0 1 1 0 2h-8a1 1 0 1 1 0-2z\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:terminal_box_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:terminal_box_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "terminal_box_ai",
+        "source_asset_name": "terminal_box_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "terminal",
+          "box",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "terminal tool",
+          "box tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "terminal_box_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><title>terminal_box_ai_line</title><g fill=\"none\" fill-rule=\"nonzero\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036q-.016-.004-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427q-.004-.016-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092q.019.005.029-.008l.004-.014-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014-.034.614q.001.018.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 3a1 1 0 1 1 0 2H5v14h14v-6a1 1 0 1 1 2 0v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4 11a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2zM9.05 8.465l2.829 2.828a1 1 0 0 1 0 1.414L9.05 15.535a1.001 1.001 0 0 1-1.415-1.414L9.758 12 7.636 9.879A1 1 0 0 1 9.05 8.465M19 1a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377C18.222 1.285 18.552 1 19 1m0 3.196a5 5 0 0 1-.804.804q.449.355.804.803.356-.447.803-.803A5 5 0 0 1 19 4.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:textbox_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:textbox_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "textbox_ai",
+        "source_asset_name": "textbox_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "textbox",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "textbox tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "textbox_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 3c.768 0 1.47.289 2 .764a2.988 2.988 0 0 1 1.772-.755L16 3h1a1 1 0 0 1 .117 1.993L17 5h-1a1 1 0 0 0-.993.883L15 6v12a1 1 0 0 0 .883.993L16 19h1a1 1 0 0 1 .117 1.993L17 21h-1c-.768 0-1.47-.289-2-.764a2.988 2.988 0 0 1-1.772.755L12 21h-1a1 1 0 0 1-.117-1.993L11 19h1a1 1 0 0 0 .993-.883L13 18V6a1 1 0 0 0-.883-.993L12 5h-1a1 1 0 0 1-.117-1.993L11 3zm7 4a2 2 0 0 1 1.995 1.85L21 9v6a2 2 0 0 1-1.85 1.995L19 17h-3v-2h3V9h-3V7zM5 13v2h7v2H5a2 2 0 0 1-1.995-1.85L3 15v-2zm1-9a1 1 0 0 1 .898.56l.048.117.13.378a3 3 0 0 0 1.684 1.8l.185.07.378.129a1 1 0 0 1 .117 1.844l-.117.048-.378.13a3 3 0 0 0-1.8 1.684l-.07.185-.129.378a1 1 0 0 1-1.844.118l-.048-.118-.13-.378a3 3 0 0 0-1.684-1.8l-.185-.07-.378-.129a1 1 0 0 1-.117-1.844l.117-.048.378-.13a3 3 0 0 0 1.8-1.684l.07-.185.129-.378A1 1 0 0 1 6 4m0 3.196A5.004 5.004 0 0 1 5.196 8c.298.236.568.506.804.804.236-.298.506-.568.804-.804A5.004 5.004 0 0 1 6 7.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:translate_2_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:translate_2_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "translate_2_ai",
+        "source_asset_name": "translate_2_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "translate",
+          "2",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "translate tool",
+          "2 tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "translate_2_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M9 3a1 1 0 0 1 1 1v1h3a1 1 0 1 1 0 2h-.055c-.223 2.032-1.116 3.99-2.545 5.688a13.192 13.192 0 0 0 2.121 1.494l2.067-4.592a1 1 0 0 1 1.824 0l4.5 10a1 1 0 0 1-1.824.82L18.003 18h-5.007l-1.084 2.41a1 1 0 0 1-1.824-.82l1.61-3.576c-.998-.553-1.901-1.19-2.7-1.895-1.287 1.136-2.848 2.098-4.627 2.81a1 1 0 1 1-.743-1.857c1.557-.623 2.887-1.441 3.972-2.382A11.468 11.468 0 0 1 5.622 9.35a1 1 0 0 1 1.873-.702A9.408 9.408 0 0 0 9 11.244C10.065 9.921 10.72 8.458 10.928 7H4a1 1 0 0 1 0-2h4V4a1 1 0 0 1 1-1m8.103 13L15.5 12.437 13.898 16zM19 1a1 1 0 0 1 .946.677l.13.378a3 3 0 0 0 1.869 1.87l.378.129a1 1 0 0 1 0 1.892l-.378.13a3 3 0 0 0-1.87 1.869l-.129.378a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.869-1.87l-.378-.129a1 1 0 0 1 0-1.892l.378-.13a3 3 0 0 0 1.87-1.869l.129-.378A1 1 0 0 1 19 1m0 3.196a5.006 5.006 0 0 1-.804.804c.298.236.567.506.804.804.236-.298.506-.568.804-.804A5.006 5.006 0 0 1 19 4.196\"/></g></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "mingcute:video_ai",
+      "family_key": "systems_ai",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "ready_for_editor_review",
+      "current_candidate_record": {
+        "icon_id": "mingcute:video_ai",
+        "source_group": "free",
+        "source_library": "mingcute",
+        "source_name": "video_ai",
+        "source_asset_name": "video_ai_line",
+        "label": "AI Assist",
+        "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
+        "category": "agent_lifecycle",
+        "semantic_tags": [
+          "video",
+          "ai",
+          "agent lifecycle"
+        ],
+        "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+        "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+        "intent": "inform",
+        "domain": "ai_agents",
+        "synonyms": [
+          "ai assist",
+          "video tool",
+          "ai tool"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.84
+      },
+      "visual_review_input": {
+        "source_asset_name": "video_ai_line",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><title>video_ai_line</title><g fill=\"none\" fill-rule=\"nonzero\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036q-.016-.004-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427q-.004-.016-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092q.019.005.029-.008l.004-.014-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014-.034.614q.001.018.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M2 19V5a2 2 0 0 1 2-2h9a1 1 0 1 1 0 2H4v14h16v-7a1 1 0 1 1 2 0v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2M8.651 8.48a1.235 1.235 0 0 1 1.689-.842c.504.216 1.568.702 2.916 1.48a28 28 0 0 1 2.74 1.786c.661.495.665 1.483.001 1.98-.437.326-1.383 1-2.742 1.784a28 28 0 0 1-2.915 1.481 1.234 1.234 0 0 1-1.715-.99 29 29 0 0 1-.176-3.265c0-1.551.112-2.719.176-3.264zM20 1a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377.062-.146A1 1 0 0 1 20 1m0 3.196a5 5 0 0 1-.804.804q.449.355.804.803.356-.447.803-.803A5 5 0 0 1 20 4.196m-9.55 7.698c0 .772.03 1.44.066 1.97a29 29 0 0 0 3.414-1.97 29 29 0 0 0-3.414-1.972c-.037.53-.067 1.199-.067 1.972\"/></g></svg>"
+        }
+      }
+    }
+  ]
+}

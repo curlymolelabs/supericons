@@ -1,0 +1,80 @@
+[
+  {
+    "icon_id": "mingcute:selector_horizontal",
+    "source_group": "free",
+    "source_library": "mingcute",
+    "source_name": "selector_horizontal",
+    "source_asset_name": "selector_horizontal_line",
+    "label": "Horizontal Selector",
+    "purpose": "Show a horizontal selector, drag handle, or horizontal adjustment point.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "horizontal selector",
+      "horizontal handle",
+      "range handle",
+      "adjustment control",
+      "selector"
+    ],
+    "use_when": "Use when the interface adjusts, highlights, or exposes a selector that moves along a horizontal axis.",
+    "avoid_when": "Do not use for plain divider lines or left-right navigation when the meaning is specifically a horizontal selector or adjustment handle.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "private_operational_enrichment",
+    "projection_policy": "internal_only",
+    "is_premium": false,
+    "depicts": "A horizontal selector or handle used to adjust or highlight a left-to-right control.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "synonyms": [
+      "horizontal selector",
+      "horizontal handle",
+      "range control handle",
+      "horizontal adjustment"
+    ],
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9
+  },
+  {
+    "icon_id": "mingcute:selector_vertical",
+    "source_group": "free",
+    "source_library": "mingcute",
+    "source_name": "selector_vertical",
+    "source_asset_name": "selector_vertical_line",
+    "label": "Vertical Selector",
+    "purpose": "Show a vertical selector, drag handle, or vertical adjustment point.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "vertical selector",
+      "vertical handle",
+      "range handle",
+      "adjustment control",
+      "selector"
+    ],
+    "use_when": "Use when the interface adjusts, highlights, or exposes a selector that moves along a vertical axis.",
+    "avoid_when": "Do not use for plain divider lines or up-down navigation when the meaning is specifically a vertical selector or adjustment handle.",
+    "version": "1.0.0",
+    "status": "draft",
+    "access_tier": "private_operational_enrichment",
+    "projection_policy": "internal_only",
+    "is_premium": false,
+    "depicts": "A vertical selector or handle used to adjust or highlight an up-and-down control.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "synonyms": [
+      "vertical selector",
+      "vertical handle",
+      "range control handle",
+      "vertical adjustment"
+    ],
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9
+  }
+]
