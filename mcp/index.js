@@ -18,6 +18,7 @@ import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { searchIcons } from './search.js';
 import { searchIconsHostedMcp } from './hosted-search-client.js';
+import { recommendIconsForTask } from './recommend-icons.js';
 import { validateApiKey } from './auth.js';
 import {
   MATERIAL_EXPORT_DEFAULT_AXES,
@@ -428,6 +429,12 @@ function buildStructuredToolErrorResponse(error, fallbackMessage) {
   return buildTextResponse(payload);
 }
 
+function shouldAllowLocalSearchFallback() {
+  const raw = String(process.env.SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK || '').trim().toLowerCase();
+  if (!raw) return true;
+  return raw === '1' || raw === 'true' || raw === 'on';
+}
+
 function buildSelectorInstructions(selectorMode, selectorToken) {
   if (selectorMode === 'literal') {
     return 'The CSS already includes the selector you supplied, so you can use it as returned without replacing any placeholder token.';
@@ -472,6 +479,29 @@ async function resolveAccessibleIcon(id, library) {
   );
   if (!loose) return null;
   return buildToolIconResult(loose);
+}
+
+async function searchAccessibleIcons({ query, library, limit }) {
+  const accessibleIcons = getAccessibleIcons();
+  const searchableIcons = library
+    ? accessibleIcons.filter((icon) => icon.lib === library)
+    : accessibleIcons;
+
+  let results;
+  try {
+    const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
+    const byKey = new Map(searchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
+    results = (hostedPayload.results || [])
+      .map((row) => byKey.get(row.icon_id))
+      .filter(Boolean);
+  } catch (error) {
+    if (!shouldAllowLocalSearchFallback()) {
+      throw error;
+    }
+    results = searchIcons(query, searchableIcons, synonyms, { library, limit });
+  }
+
+  return mergeSemanticMatchesIntoIcons(query, results, searchableIcons, semanticRegistryMap, { limit });
 }
 
 // ============================================================
@@ -534,11 +564,6 @@ server.tool(
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
   },
   async ({ query, library, limit }) => {
-    const accessibleIcons = getAccessibleIcons();
-    const searchableIcons = library
-      ? accessibleIcons.filter((icon) => icon.lib === library)
-      : accessibleIcons;
-
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
@@ -547,19 +572,10 @@ server.tool(
 
     let results;
     try {
-      const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
-      const byKey = new Map(searchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
-      results = (hostedPayload.results || [])
-        .map((row) => byKey.get(row.icon_id))
-        .filter(Boolean);
+      results = await searchAccessibleIcons({ query, library, limit });
     } catch (error) {
-      if (process.env.SUPERICONS_ALLOW_LOCAL_SEARCH_FALLBACK !== '1') {
-        return buildStructuredToolErrorResponse(error, 'Hosted SuperIcons search is unavailable.');
-      }
-      results = searchIcons(query, searchableIcons, synonyms, { library, limit });
+      return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
     }
-
-    results = mergeSemanticMatchesIntoIcons(query, results, searchableIcons, semanticRegistryMap, { limit });
 
     if (results.length === 0) {
       void logMcpSearchAttempt({
@@ -590,6 +606,43 @@ server.tool(
       results: formatted,
     });
     return buildTextResponse({ results: formatted, source: 'Powered by SuperIcons (https://supericons.dev)' });
+  }
+);
+
+// --- Tool: recommend_icons ---
+server.tool(
+  'recommend_icons',
+  'Recommend the most suitable icons for one or more UI slots. Returns shortlist choices with preview-ready SVGs, short reasons, and SI semantic guidance when available.',
+  {
+    task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
+    library: z.string().optional().describe('Optional library filter such as mingcute, lucide, tabler, material, or simpleicons.'),
+    slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
+    limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
+  },
+  async ({ task, library, slots, limit_per_slot }) => {
+    if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
+      return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
+    }
+
+    try {
+      const payload = await recommendIconsForTask({
+        task,
+        library,
+        slots,
+        limitPerSlot: limit_per_slot,
+        semanticMap: semanticRegistryMap,
+        searchIconsForQuery: ({ query, library: searchLibrary, limit }) =>
+          searchAccessibleIcons({ query, library: searchLibrary, limit }),
+        buildIconResult: buildToolIconResult,
+      });
+
+      return buildTextResponse({
+        ...payload,
+        source: 'Powered by SuperIcons (https://supericons.dev)',
+      });
+    } catch (error) {
+      return buildStructuredToolErrorResponse(error, 'SuperIcons icon recommendation is unavailable.');
+    }
   }
 );
 

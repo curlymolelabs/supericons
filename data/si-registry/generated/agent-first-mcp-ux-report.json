@@ -1,0 +1,477 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-21T07:51:10.967Z",
+  "summary": {
+    "fixture_count": 1,
+    "total_slots": 4,
+    "total_hits": 4
+  },
+  "results": [
+    {
+      "id": "mingcute-bottom-nav",
+      "task": "Replace the 4 bottom navigation icons/buttons. Show me the preview before implementation.",
+      "library": "mingcute",
+      "slot_count": 4,
+      "hit_count": 4,
+      "slot_results": [
+        {
+          "slot": "Home tab",
+          "expected_icon_id": "mingcute:home_3_line",
+          "recommended_icon_id": "mingcute:home_3_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "home tab",
+            "home house main",
+            "home",
+            "house",
+            "main",
+            "home house"
+          ],
+          "recommended": {
+            "id": "home_3_line",
+            "library": "mingcute",
+            "name": "home 3",
+            "label": "Home",
+            "purpose": "Show the home destination, root view, or main landing area of the product.",
+            "semantic_fit": "Strong fit for Home tab: Show the home destination, root view, or main landing area of the product.",
+            "why_selected": "Home matches Home tab and visually reads as a house-shaped home destination symbol..",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.772 2.688a2 2 0 0 1 2.317-.099l.139.1 8.384 6.52c.721.561.37 1.692-.499 1.785l-.116.006H20v8a2 2 0 0 1-1.85 1.995L18 21H6a2 2 0 0 1-1.994-1.85L4 19v-8h-.997C2.09 11 1.671 9.892 2.3 9.285l.088-.076zM12 4.267 5.625 9.225c.229.185.375.468.375.785V19h3v-5a3 3 0 1 1 6 0v5h3v-8.99c0-.317.146-.6.375-.785zM12 13a1 1 0 0 0-1 1v5h2v-5a1 1 0 0 0-1-1\"/></g></svg>",
+            "semantic": {
+              "label": "Home",
+              "purpose": "Show the home destination, root view, or main landing area of the product.",
+              "category": "navigation_interface",
+              "semantic_tags": [
+                "home",
+                "root",
+                "main",
+                "start",
+                "destination"
+              ],
+              "synonyms": [
+                "home page",
+                "main screen",
+                "start page",
+                "root destination"
+              ],
+              "use_when": "Use when the interface moves to the home destination or main landing area.",
+              "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+              "depicts": "A house-shaped home destination symbol.",
+              "intent": "navigate",
+              "domain": "ui_shell",
+              "confidence": 0.9
+            }
+          },
+          "alternatives": [
+            {
+              "id": "home_2_line",
+              "library": "mingcute",
+              "name": "home 2",
+              "label": "Home",
+              "purpose": "Show the home destination, root view, or main landing area of the product.",
+              "semantic_fit": "Strong fit for Home tab: Show the home destination, root view, or main landing area of the product.",
+              "why_selected": "Home matches Home tab and visually reads as a house-shaped home destination symbol..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.772 2.688a2 2 0 0 1 2.456 0l8.384 6.52c.753.587.337 1.792-.615 1.792H20v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8h-.997c-.953 0-1.367-1.206-.615-1.791zM5.625 9.225c.229.185.375.468.375.785V19h12v-8.99c0-.317.146-.6.375-.785L12 4.267z\"/></g></svg>",
+              "semantic": {
+                "label": "Home",
+                "purpose": "Show the home destination, root view, or main landing area of the product.",
+                "category": "navigation_interface",
+                "semantic_tags": [
+                  "home",
+                  "root",
+                  "main",
+                  "start",
+                  "destination"
+                ],
+                "synonyms": [
+                  "home page",
+                  "main screen",
+                  "start page",
+                  "root destination"
+                ],
+                "use_when": "Use when the interface moves to the home destination or main landing area.",
+                "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+                "depicts": "A house-shaped home destination symbol.",
+                "intent": "navigate",
+                "domain": "ui_shell",
+                "confidence": 0.9
+              }
+            },
+            {
+              "id": "home_1_line",
+              "library": "mingcute",
+              "name": "home 1",
+              "label": "Home",
+              "purpose": "Show the home destination, root view, or main landing area of the product.",
+              "semantic_fit": "Strong fit for Home tab: Show the home destination, root view, or main landing area of the product.",
+              "why_selected": "Home matches Home tab and visually reads as a house-shaped home destination symbol..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M10.8 2.65a2 2 0 0 1 2.4 0l7 5.25a2 2 0 0 1 .8 1.6V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9.5a2 2 0 0 1 .8-1.6zm1.2 1.6L5 9.5V19h14V9.5z\"/></g></svg>",
+              "semantic": {
+                "label": "Home",
+                "purpose": "Show the home destination, root view, or main landing area of the product.",
+                "category": "navigation_interface",
+                "semantic_tags": [
+                  "home",
+                  "root",
+                  "main",
+                  "start",
+                  "destination"
+                ],
+                "synonyms": [
+                  "home page",
+                  "main screen",
+                  "start page",
+                  "root destination"
+                ],
+                "use_when": "Use when the interface moves to the home destination or main landing area.",
+                "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+                "depicts": "A house-shaped home destination symbol.",
+                "intent": "navigate",
+                "domain": "ui_shell",
+                "confidence": 0.9
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Create action",
+          "expected_icon_id": "mingcute:add_line",
+          "recommended_icon_id": "mingcute:add_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "create action",
+            "create add plus new compose",
+            "create",
+            "add",
+            "plus",
+            "new"
+          ],
+          "recommended": {
+            "id": "add_line",
+            "library": "mingcute",
+            "name": "add",
+            "label": "Add",
+            "purpose": "Show add as a direct object, concept, or themed surface cue.",
+            "semantic_fit": "Strong fit for Create action: Show add as a direct object, concept, or themed surface cue.",
+            "why_selected": "Add matches Create action and visually reads as a symbol representing add..",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M11 20a1 1 0 1 0 2 0v-7h7a1 1 0 1 0 0-2h-7V4a1 1 0 1 0-2 0v7H4a1 1 0 1 0 0 2h7z\"/></g></svg>",
+            "semantic": {
+              "label": "Add",
+              "purpose": "Show add as a direct object, concept, or themed surface cue.",
+              "category": "status_feedback",
+              "semantic_tags": [
+                "add"
+              ],
+              "synonyms": [
+                "add"
+              ],
+              "use_when": "Use when the interface refers directly to add as an object, concept, or themed surface cue.",
+              "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+              "depicts": "A symbol representing add.",
+              "intent": "inform",
+              "domain": "ui_controls",
+              "confidence": 0.7
+            }
+          },
+          "alternatives": [
+            {
+              "id": "plus_line",
+              "library": "mingcute",
+              "name": "plus",
+              "label": "Plus",
+              "purpose": "Show plus as a direct object, concept, or themed surface cue.",
+              "semantic_fit": "Strong fit for Create action: Show plus as a direct object, concept, or themed surface cue.",
+              "why_selected": "Plus matches Create action and visually reads as a symbol representing plus..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4h4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h4zm4 0h-2v5a1 1 0 0 1-1 1H5v2h5a1 1 0 0 1 1 1v5h2v-5a1 1 0 0 1 1-1h5v-2h-5a1 1 0 0 1-1-1z\"/></g></svg>",
+              "semantic": {
+                "label": "Plus",
+                "purpose": "Show plus as a direct object, concept, or themed surface cue.",
+                "category": "status_feedback",
+                "semantic_tags": [
+                  "plus"
+                ],
+                "synonyms": [
+                  "plus"
+                ],
+                "use_when": "Use when the interface refers directly to plus as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+                "depicts": "A symbol representing plus.",
+                "intent": "inform",
+                "domain": "ui_controls",
+                "confidence": 0.7
+              }
+            },
+            {
+              "id": "add_circle_line",
+              "library": "mingcute",
+              "name": "add circle",
+              "label": "Add Circle",
+              "purpose": "Show add circle as a direct object, concept, or themed surface cue.",
+              "semantic_fit": "Strong fit for Create action: Show add circle as a direct object, concept, or themed surface cue.",
+              "why_selected": "Add Circle matches Create action and visually reads as a symbol representing add circle..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2m0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16m0 3a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H8a1 1 0 1 1 0-2h3V8a1 1 0 0 1 1-1\"/></g></svg>",
+              "semantic": {
+                "label": "Add Circle",
+                "purpose": "Show add circle as a direct object, concept, or themed surface cue.",
+                "category": "status_feedback",
+                "semantic_tags": [
+                  "add",
+                  "circle"
+                ],
+                "synonyms": [
+                  "add",
+                  "circle"
+                ],
+                "use_when": "Use when the interface refers directly to add circle as an object, concept, or themed surface cue.",
+                "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+                "depicts": "A symbol representing add circle.",
+                "intent": "inform",
+                "domain": "ui_controls",
+                "confidence": 0.7
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Alerts tab",
+          "expected_icon_id": "mingcute:notification_line",
+          "recommended_icon_id": "mingcute:notification_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "alerts tab",
+            "alerts notification bell alarm",
+            "alerts",
+            "notification",
+            "bell",
+            "alarm"
+          ],
+          "recommended": {
+            "id": "notification_line",
+            "library": "mingcute",
+            "name": "notification",
+            "label": "Notifications",
+            "purpose": "Show notifications, alerts, or incoming event attention.",
+            "semantic_fit": "Strong fit for Alerts tab: Show notifications, alerts, or incoming event attention.",
+            "why_selected": "Notifications matches Alerts tab and visually reads as a bell-based notification symbol..",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2.001 2.001 0 0 1-.212-.894V9a5 5 0 0 0-5-5\"/></g></svg>",
+            "semantic": {
+              "label": "Notifications",
+              "purpose": "Show notifications, alerts, or incoming event attention.",
+              "category": "status_feedback",
+              "semantic_tags": [
+                "notification",
+                "alert",
+                "bell",
+                "inbox status",
+                "attention"
+              ],
+              "synonyms": [
+                "notifications",
+                "alerts",
+                "notification state",
+                "bell status"
+              ],
+              "use_when": "Use when the interface shows notification status, unread alerts, or muted notification state.",
+              "avoid_when": "Do not use for general warning states when the meaning is specifically notifications.",
+              "depicts": "A bell-based notification symbol.",
+              "intent": "inform",
+              "domain": "product_status",
+              "confidence": 0.87
+            }
+          },
+          "alternatives": [
+            {
+              "id": "notification_newdot_line",
+              "library": "mingcute",
+              "name": "notification newdot",
+              "label": "New Notification",
+              "purpose": "Show a newly arrived notification or unread alert.",
+              "semantic_fit": "Strong fit for Alerts tab: Show a newly arrived notification or unread alert.",
+              "why_selected": "New Notification matches Alerts tab and visually reads as a bell-based notification symbol..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M5 9a7 7 0 0 1 7.582-6.976 1 1 0 1 1-.164 1.993A5 5 0 0 0 7 9v3.528a3 3 0 0 1-.317 1.342L5.618 16h12.764l-1.065-2.13A3.001 3.001 0 0 1 17 12.528V11A1 1 0 0 1 19 11v1.528a1 1 0 0 0 .105.447l1.717 3.433A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592l1.716-3.433A1 1 0 0 0 5 12.528zm5.268 9a2 2 0 0 0 3.464 0zM17.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M14 5.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0\"/></g></svg>",
+              "semantic": {
+                "label": "New Notification",
+                "purpose": "Show a newly arrived notification or unread alert.",
+                "category": "status_feedback",
+                "semantic_tags": [
+                  "notification",
+                  "alert",
+                  "bell",
+                  "inbox status",
+                  "attention"
+                ],
+                "synonyms": [
+                  "new notification",
+                  "alerts",
+                  "notification state",
+                  "bell status"
+                ],
+                "use_when": "Use when the interface shows notification status, unread alerts, or muted notification state.",
+                "avoid_when": "Do not use for general warning states when the meaning is specifically notifications.",
+                "depicts": "A bell-based notification symbol.",
+                "intent": "inform",
+                "domain": "product_status",
+                "confidence": 0.87
+              }
+            },
+            {
+              "id": "notification_off_line",
+              "library": "mingcute",
+              "name": "notification off",
+              "label": "Notifications Off",
+              "purpose": "Show muted, disabled, or turned-off notifications.",
+              "semantic_fit": "Strong fit for Alerts tab: Show muted, disabled, or turned-off notifications.",
+              "why_selected": "Notifications Off matches Alerts tab and visually reads as a bell-based notification symbol..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M0 0h24v24H0z\"/><path fill=\"currentColor\" d=\"m5.025 8.429 1.977 1.977v2.122a3 3 0 0 1-.317 1.342L5.62 16h6.976l2.916 2.916A4.002 4.002 0 0 1 8.126 18H4.164a1.1 1.1 0 0 1-.984-1.592l1.716-3.433a1 1 0 0 0 .106-.447V9c0-.192.008-.383.023-.571M12.002 2a7 7 0 0 1 7 7v3.528a1 1 0 0 0 .105.447l1.717 3.433A1.1 1.1 0 0 1 19.84 18h-.426l1.071 1.071a1 1 0 0 1-1.414 1.414L3.515 4.93a1 1 0 1 1 1.414-1.414l1.393 1.393A6.99 6.99 0 0 1 12.002 2m1.73 16h-3.464a2 2 0 0 0 3.464 0m-1.73-14a4.997 4.997 0 0 0-4.24 2.348L17.414 16h.97l-1.065-2.13a3 3 0 0 1-.317-1.342V9a5 5 0 0 0-5-5\"/></g></svg>",
+              "semantic": {
+                "label": "Notifications Off",
+                "purpose": "Show muted, disabled, or turned-off notifications.",
+                "category": "status_feedback",
+                "semantic_tags": [
+                  "notification",
+                  "alert",
+                  "bell",
+                  "inbox status",
+                  "attention"
+                ],
+                "synonyms": [
+                  "notifications off",
+                  "alerts",
+                  "notification state",
+                  "bell status"
+                ],
+                "use_when": "Use when the interface shows notification status, unread alerts, or muted notification state.",
+                "avoid_when": "Do not use for general warning states when the meaning is specifically notifications.",
+                "depicts": "A bell-based notification symbol.",
+                "intent": "inform",
+                "domain": "product_status",
+                "confidence": 0.87
+              }
+            }
+          ],
+          "matched": true
+        },
+        {
+          "slot": "Profile tab",
+          "expected_icon_id": "mingcute:user_1_line",
+          "recommended_icon_id": "mingcute:user_1_line",
+          "match_label": "Matched expected recommendation",
+          "queries_used": [
+            "profile tab",
+            "profile user account person",
+            "profile",
+            "user",
+            "account",
+            "person"
+          ],
+          "recommended": {
+            "id": "user_1_line",
+            "library": "mingcute",
+            "name": "user 1",
+            "label": "User",
+            "purpose": "Show a user, profile, member, or account identity.",
+            "semantic_fit": "Strong fit for Profile tab: Show a user, profile, member, or account identity.",
+            "why_selected": "User matches Profile tab and visually reads as a user or profile silhouette..",
+            "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M16 14a5 5 0 0 1 4.995 4.783L21 19v2a1 1 0 0 1-1.993.117L19 21v-2a3 3 0 0 0-2.824-2.995L16 16H8a3 3 0 0 0-2.995 2.824L5 19v2a1 1 0 0 1-1.993.117L3 21v-2a5 5 0 0 1 4.783-4.995L8 14zM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6\"/></g></svg>",
+            "semantic": {
+              "label": "User",
+              "purpose": "Show a user, profile, member, or account identity.",
+              "category": "communication_social",
+              "semantic_tags": [
+                "user",
+                "profile",
+                "member",
+                "account",
+                "person"
+              ],
+              "synonyms": [
+                "profile",
+                "member",
+                "account",
+                "person"
+              ],
+              "use_when": "Use when the interface refers to a user, member, profile, or account identity.",
+              "avoid_when": "Do not use for specific profile actions when the meaning is a generic user identity only.",
+              "depicts": "A user or profile silhouette.",
+              "intent": "inform",
+              "domain": "communication",
+              "confidence": 0.86
+            }
+          },
+          "alternatives": [
+            {
+              "id": "user_2_line",
+              "library": "mingcute",
+              "name": "user 2",
+              "label": "User",
+              "purpose": "Show a user, profile, member, or account identity.",
+              "semantic_fit": "Strong fit for Profile tab: Show a user, profile, member, or account identity.",
+              "why_selected": "User matches Profile tab and visually reads as a user or profile silhouette..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M16 14a5 5 0 0 1 4.995 4.783L21 19v1a2 2 0 0 1-1.85 1.995L19 22H5a2 2 0 0 1-1.995-1.85L3 20v-1a5 5 0 0 1 4.783-4.995L8 14zm0 2H8a3 3 0 0 0-2.995 2.824L5 19v1h14v-1a3 3 0 0 0-2.824-2.995zM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6\"/></g></svg>",
+              "semantic": {
+                "label": "User",
+                "purpose": "Show a user, profile, member, or account identity.",
+                "category": "communication_social",
+                "semantic_tags": [
+                  "user",
+                  "profile",
+                  "member",
+                  "account",
+                  "person"
+                ],
+                "synonyms": [
+                  "profile",
+                  "member",
+                  "account",
+                  "person"
+                ],
+                "use_when": "Use when the interface refers to a user, member, profile, or account identity.",
+                "avoid_when": "Do not use for specific profile actions when the meaning is a generic user identity only.",
+                "depicts": "A user or profile silhouette.",
+                "intent": "inform",
+                "domain": "communication",
+                "confidence": 0.86
+              }
+            },
+            {
+              "id": "user_3_line",
+              "library": "mingcute",
+              "name": "user 3",
+              "label": "User",
+              "purpose": "Show a user, profile, member, or account identity.",
+              "semantic_fit": "Strong fit for Profile tab: Show a user, profile, member, or account identity.",
+              "why_selected": "User matches Profile tab and visually reads as a user or profile silhouette..",
+              "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><g fill=\"none\" fill-rule=\"evenodd\"><path d=\"M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z\"/><path fill=\"currentColor\" d=\"M12 13c2.396 0 4.575.694 6.178 1.672.8.488 1.484 1.064 1.978 1.69.486.615.844 1.351.844 2.138 0 .845-.411 1.511-1.003 1.986-.56.45-1.299.748-2.084.956-1.578.417-3.684.558-5.913.558s-4.335-.14-5.913-.558c-.785-.208-1.524-.506-2.084-.956C3.41 20.01 3 19.345 3 18.5c0-.787.358-1.523.844-2.139.494-.625 1.177-1.2 1.978-1.69C7.425 13.695 9.605 13 12 13m0 2c-2.023 0-3.843.59-5.136 1.379-.647.394-1.135.822-1.45 1.222-.324.41-.414.72-.414.899 0 .122.037.251.255.426.249.2.682.407 1.344.582C7.917 19.858 9.811 20 12 20c2.19 0 4.083-.143 5.4-.492.663-.175 1.096-.382 1.345-.582.218-.175.255-.304.255-.426 0-.18-.09-.489-.413-.899-.316-.4-.804-.828-1.451-1.222C15.843 15.589 14.023 15 12 15m0-13a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6\"/></g></svg>",
+              "semantic": {
+                "label": "User",
+                "purpose": "Show a user, profile, member, or account identity.",
+                "category": "communication_social",
+                "semantic_tags": [
+                  "user",
+                  "profile",
+                  "member",
+                  "account",
+                  "person"
+                ],
+                "synonyms": [
+                  "profile",
+                  "member",
+                  "account",
+                  "person"
+                ],
+                "use_when": "Use when the interface refers to a user, member, profile, or account identity.",
+                "avoid_when": "Do not use for specific profile actions when the meaning is a generic user identity only.",
+                "depicts": "A user or profile silhouette.",
+                "intent": "inform",
+                "domain": "communication",
+                "confidence": 0.86
+              }
+            }
+          ],
+          "matched": true
+        }
+      ]
+    }
+  ]
+}

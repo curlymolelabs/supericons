@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent-First MCP UX Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --panel: #fffdf8;
+      --ink: #211a14;
+      --muted: #6c6155;
+      --line: #ddd2c3;
+      --accent: #8d5a2b;
+      --soft: #f2e2ce;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf8f1 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    section, .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(33, 26, 20, 0.06);
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, h4 {
+      margin-top: 0;
+      color: var(--ink);
+    }
+    p, li {
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffaf2;
+      padding: 18px;
+    }
+    .preview {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: start;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: #f5eee4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5b3819;
+    }
+    .icon svg {
+      width: 32px;
+      height: 32px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Checkpoint</p>
+      <h1>Can the new recommendation flow help an agent choose icons faster?</h1>
+      <p>This first report checks the exact bottom-navigation use case that was tested in an external MCP client. The goal is to see whether the new recommendation tool can return shortlist choices with previews and short reasons, without forcing the agent to manually break the task into many separate search prompts.</p>
+      <p><strong>Headline result:</strong> 4 of 4 slots matched the current expected MingCute pick.</p>
+    </section>
+    
+      <section>
+        <p class="eyebrow">Fixture</p>
+        <h2>mingcute-bottom-nav</h2>
+        <p><strong>Task:</strong> Replace the 4 bottom navigation icons/buttons. Show me the preview before implementation.</p>
+        <p><strong>Library:</strong> mingcute</p>
+        <p><strong>Slot hit rate:</strong> 4 / 4</p>
+        <div class="grid">
+          
+        <article class="card">
+          <p class="eyebrow">Home tab</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> mingcute:home_3_line</p>
+          <p><strong>Recommended:</strong> mingcute:home_3_line</p>
+          <p><strong>Queries used:</strong> home tab, home house main, home, house, main, home house</p>
+          
+          <div class="preview">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M10.772 2.688a2 2 0 0 1 2.317-.099l.139.1 8.384 6.52c.721.561.37 1.692-.499 1.785l-.116.006H20v8a2 2 0 0 1-1.85 1.995L18 21H6a2 2 0 0 1-1.994-1.85L4 19v-8h-.997C2.09 11 1.671 9.892 2.3 9.285l.088-.076zM12 4.267 5.625 9.225c.229.185.375.468.375.785V19h3v-5a3 3 0 1 1 6 0v5h3v-8.99c0-.317.146-.6.375-.785zM12 13a1 1 0 0 0-1 1v5h2v-5a1 1 0 0 0-1-1"/></g></svg></div>
+            <div>
+              <strong>mingcute:home_3_line</strong>
+              <p>Home matches Home tab and visually reads as a house-shaped home destination symbol..</p>
+              <p><strong>Fit:</strong> Strong fit for Home tab: Show the home destination, root view, or main landing area of the product.</p>
+            </div>
+          </div>
+        
+          <h4>Alternatives</h4>
+          <ul><li><strong>mingcute:home_2_line</strong> - Home</li><li><strong>mingcute:home_1_line</strong> - Home</li></ul>
+        </article>
+      
+        <article class="card">
+          <p class="eyebrow">Create action</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> mingcute:add_line</p>
+          <p><strong>Recommended:</strong> mingcute:add_line</p>
+          <p><strong>Queries used:</strong> create action, create add plus new compose, create, add, plus, new</p>
+          
+          <div class="preview">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M11 20a1 1 0 1 0 2 0v-7h7a1 1 0 1 0 0-2h-7V4a1 1 0 1 0-2 0v7H4a1 1 0 1 0 0 2h7z"/></g></svg></div>
+            <div>
+              <strong>mingcute:add_line</strong>
+              <p>Add matches Create action and visually reads as a symbol representing add..</p>
+              <p><strong>Fit:</strong> Strong fit for Create action: Show add as a direct object, concept, or themed surface cue.</p>
+            </div>
+          </div>
+        
+          <h4>Alternatives</h4>
+          <ul><li><strong>mingcute:plus_line</strong> - Plus</li><li><strong>mingcute:add_circle_line</strong> - Add Circle</li></ul>
+        </article>
+      
+        <article class="card">
+          <p class="eyebrow">Alerts tab</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> mingcute:notification_line</p>
+          <p><strong>Recommended:</strong> mingcute:notification_line</p>
+          <p><strong>Queries used:</strong> alerts tab, alerts notification bell alarm, alerts, notification, bell, alarm</p>
+          
+          <div class="preview">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.594 23.258l-.012.002-.071.035-.02.004-.014-.004-.071-.036c-.01-.003-.019 0-.024.006l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113-.014.002-.184.093-.01.01-.003.011.018.43.005.012.008.008.201.092c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.003-.011.018-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2.001 2.001 0 0 1-.212-.894V9a5 5 0 0 0-5-5"/></g></svg></div>
+            <div>
+              <strong>mingcute:notification_line</strong>
+              <p>Notifications matches Alerts tab and visually reads as a bell-based notification symbol..</p>
+              <p><strong>Fit:</strong> Strong fit for Alerts tab: Show notifications, alerts, or incoming event attention.</p>
+            </div>
+          </div>
+        
+          <h4>Alternatives</h4>
+          <ul><li><strong>mingcute:notification_newdot_line</strong> - New Notification</li><li><strong>mingcute:notification_off_line</strong> - Notifications Off</li></ul>
+        </article>
+      
+        <article class="card">
+          <p class="eyebrow">Profile tab</p>
+          <h3>Matched expected recommendation</h3>
+          <p><strong>Expected:</strong> mingcute:user_1_line</p>
+          <p><strong>Recommended:</strong> mingcute:user_1_line</p>
+          <p><strong>Queries used:</strong> profile tab, profile user account person, profile, user, account, person</p>
+          
+          <div class="preview">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z"/><path fill="currentColor" d="M16 14a5 5 0 0 1 4.995 4.783L21 19v2a1 1 0 0 1-1.993.117L19 21v-2a3 3 0 0 0-2.824-2.995L16 16H8a3 3 0 0 0-2.995 2.824L5 19v2a1 1 0 0 1-1.993.117L3 21v-2a5 5 0 0 1 4.783-4.995L8 14zM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></g></svg></div>
+            <div>
+              <strong>mingcute:user_1_line</strong>
+              <p>User matches Profile tab and visually reads as a user or profile silhouette..</p>
+              <p><strong>Fit:</strong> Strong fit for Profile tab: Show a user, profile, member, or account identity.</p>
+            </div>
+          </div>
+        
+          <h4>Alternatives</h4>
+          <ul><li><strong>mingcute:user_2_line</strong> - User</li><li><strong>mingcute:user_3_line</strong> - User</li></ul>
+        </article>
+      
+        </div>
+      </section>
+    
+  </main>
+</body>
+</html>

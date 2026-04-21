@@ -52,6 +52,7 @@
     "verify:mingcute-approved-records": "node scripts/verify-mingcute-approved-records.mjs",
     "verify:simpleicons-approved-records": "node scripts/verify-simpleicons-approved-records.mjs",
     "evaluate:agent-semantic-usefulness": "node scripts/evaluate-agent-semantic-usefulness.mjs",
+    "evaluate:agent-first-mcp-ux": "node scripts/evaluate-agent-first-mcp-ux.mjs",
     "estimate:purpose-chip-single-model-batch-tokens": "node scripts/estimate-purpose-chip-batch-tokens.mjs",
     "verify:store-shell-contract": "node scripts/verify-store-shell-contract.mjs",
     "verify:view-route-policy": "node scripts/verify-view-route-policy.mjs",

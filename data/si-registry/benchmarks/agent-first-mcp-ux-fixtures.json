@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "fixtures": [
+    {
+      "id": "mingcute-bottom-nav",
+      "task": "Replace the 4 bottom navigation icons/buttons. Show me the preview before implementation.",
+      "library": "mingcute",
+      "limit_per_slot": 3,
+      "slots": [
+        {
+          "slot": "Home tab",
+          "expected_icon_id": "mingcute:home_3_line"
+        },
+        {
+          "slot": "Create action",
+          "expected_icon_id": "mingcute:add_line"
+        },
+        {
+          "slot": "Alerts tab",
+          "expected_icon_id": "mingcute:notification_line"
+        },
+        {
+          "slot": "Profile tab",
+          "expected_icon_id": "mingcute:user_1_line"
+        }
+      ]
+    }
+  ]
+}

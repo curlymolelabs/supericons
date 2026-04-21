@@ -30,11 +30,32 @@ function tokenize(value) {
   return normalized ? normalized.split(' ') : [];
 }
 
-function getIconRegistryId(iconOrLibrary, maybeId) {
+function buildPossibleRegistryIds(library, id) {
+  const baseId = `${library}:${id}`;
+  const ids = [baseId];
+
+  if (library === 'mingcute') {
+    const normalizedId = String(id || '').replace(/_(line|fill)$/i, '');
+    if (normalizedId && normalizedId !== id) {
+      ids.push(`${library}:${normalizedId}`);
+    }
+  }
+
+  return ids;
+}
+
+function getPrimaryRegistryId(iconOrLibrary, maybeId) {
   if (typeof iconOrLibrary === 'object' && iconOrLibrary) {
     return `${iconOrLibrary.lib}:${iconOrLibrary.id}`;
   }
   return `${iconOrLibrary}:${maybeId}`;
+}
+
+function getPossibleRegistryIds(iconOrLibrary, maybeId) {
+  if (typeof iconOrLibrary === 'object' && iconOrLibrary) {
+    return buildPossibleRegistryIds(iconOrLibrary.lib, iconOrLibrary.id);
+  }
+  return buildPossibleRegistryIds(iconOrLibrary, maybeId);
 }
 
 export function loadSemanticRegistryRecords(dataDir) {
@@ -67,7 +88,11 @@ export function buildPublicSemanticPayload(record) {
 }
 
 export function getSemanticRecordForIcon(semanticMap, iconOrLibrary, maybeId) {
-  return semanticMap.get(getIconRegistryId(iconOrLibrary, maybeId)) || null;
+  for (const registryId of getPossibleRegistryIds(iconOrLibrary, maybeId)) {
+    const record = semanticMap.get(registryId);
+    if (record) return record;
+  }
+  return null;
 }
 
 export function attachSemanticPayload(target, semanticMap, iconOrLibrary, maybeId) {
@@ -167,7 +192,14 @@ export function mergeSemanticMatchesIntoIcons(query, baselineIcons, searchableIc
   const baseline = Array.isArray(baselineIcons) ? baselineIcons : [];
   const searchable = Array.isArray(searchableIcons) ? searchableIcons : [];
 
-  const byId = new Map(searchable.map((icon) => [getIconRegistryId(icon), icon]));
+  const byId = new Map();
+  for (const icon of searchable) {
+    for (const registryId of getPossibleRegistryIds(icon)) {
+      if (!byId.has(registryId)) {
+        byId.set(registryId, icon);
+      }
+    }
+  }
   const merged = [];
   const seen = new Set();
 
@@ -179,14 +211,14 @@ export function mergeSemanticMatchesIntoIcons(query, baselineIcons, searchableIc
   for (const match of semanticMatches) {
     const icon = byId.get(match.record.icon_id);
     if (!icon) continue;
-    const registryId = getIconRegistryId(icon);
+    const registryId = getPrimaryRegistryId(icon);
     if (seen.has(registryId)) continue;
     merged.push(icon);
     seen.add(registryId);
   }
 
   for (const icon of baseline) {
-    const registryId = getIconRegistryId(icon);
+    const registryId = getPrimaryRegistryId(icon);
     if (seen.has(registryId)) continue;
     merged.push(icon);
     seen.add(registryId);
