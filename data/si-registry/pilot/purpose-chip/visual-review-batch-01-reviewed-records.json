@@ -10,8 +10,6 @@
       "depicts": "A technical system symbol combined with a lightning accent.",
       "purpose": "Show accelerated data work, high-speed data action, or powered database activity.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "fast data",
         "accelerated database",
@@ -32,8 +30,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:message-circle-code",
@@ -43,8 +41,6 @@
       "depicts": "A message bubble with a communication or code detail.",
       "purpose": "Show code-focused conversation, developer chat, or technical message exchange.",
       "category": "message_actions",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "code message",
         "developer chat",
@@ -65,8 +61,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:message-square-code",
@@ -76,8 +72,6 @@
       "depicts": "A message bubble with a communication or code detail.",
       "purpose": "Show code-focused conversation, developer chat, or technical message exchange.",
       "category": "message_actions",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "code message",
         "developer chat",
@@ -98,8 +92,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:network",
@@ -109,8 +103,6 @@
       "depicts": "Network shown as a connected system or branching structure.",
       "purpose": "Show a connected network, linked nodes, or system graph.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "network",
         "graph",
@@ -131,8 +123,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:wand-sparkles",
@@ -142,8 +134,6 @@
       "depicts": "An enhancement-focused symbol used for generated or improved output.",
       "purpose": "Show AI enhancement, generated improvement, or smart polishing of content.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "enhancement",
         "ai improve",
@@ -164,8 +154,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:layers-3",
@@ -175,8 +165,6 @@
       "depicts": "System Layers shown as a structured process or layered system symbol.",
       "purpose": "Show layered system structure or multiple stacked system layers.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "layers",
         "system layers",
@@ -197,8 +185,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:messages-square",
@@ -208,8 +196,6 @@
       "depicts": "A message bubble with a communication or code detail.",
       "purpose": "Show grouped message threads, conversations, or discussion space.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "messages",
         "threads",
@@ -230,8 +216,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:plug-zap",
@@ -241,8 +227,6 @@
       "depicts": "A technical system symbol combined with a lightning accent.",
       "purpose": "Show a fast or powered integration, connected tool, or energized plug-in path.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "integration",
         "plug in",
@@ -263,8 +247,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:router",
@@ -274,8 +258,6 @@
       "depicts": "Routing shown as a connected system or branching structure.",
       "purpose": "Show routing, path selection, or network traffic direction.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "routing",
         "network path",
@@ -296,8 +278,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:waypoints",
@@ -307,8 +289,6 @@
       "depicts": "Waypoints shown as a structured process or layered system symbol.",
       "purpose": "Show named waypoints, milestones, or stepping stones in a process.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "waypoints",
         "milestones",
@@ -329,8 +309,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.79,
-      "confidence_band": "medium"
+      "routing_score": 0.79,
+      "routing_band": "medium"
     },
     {
       "icon_id": "tabler:circle-dot",
@@ -340,8 +320,6 @@
       "depicts": "A circle with a dot indicating the active or current position.",
       "purpose": "Show an active selection, current point, or present position in a sequence when nearby context makes that role explicit.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "current",
         "active",
@@ -362,8 +340,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "tabler:archive",
@@ -373,8 +351,6 @@
       "depicts": "Archived state shown as a compact interface mark.",
       "purpose": "Show archived items that have been stored away from the main active view.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "archive",
         "stored",
@@ -395,8 +371,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bookmark",
@@ -406,8 +382,6 @@
       "depicts": "Saved state shown as a compact interface mark.",
       "purpose": "Show saved items or content bookmarked for later.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bookmark",
         "saved",
@@ -428,8 +402,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:flag",
@@ -439,8 +413,6 @@
       "depicts": "Flagged state shown as a compact interface mark.",
       "purpose": "Show content that has been flagged, marked, or needs attention.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "flagged",
         "marked",
@@ -461,8 +433,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:heart",
@@ -472,8 +444,6 @@
       "depicts": "A heart symbol used for likes, favorites, or affection.",
       "purpose": "Show a liked, loved, or favorited state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "liked",
         "favorite",
@@ -494,8 +464,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:star",
@@ -505,8 +475,6 @@
       "depicts": "A star symbol used for saved or favored items.",
       "purpose": "Show a favorite, featured, or starred state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "favorite",
         "starred",
@@ -527,8 +495,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mood-sad",
@@ -538,8 +506,6 @@
       "depicts": "A sad face used for negative sentiment.",
       "purpose": "Show negative sentiment, dissatisfaction, or a sad emotional state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "sad",
         "negative mood",
@@ -560,8 +526,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mood-smile",
@@ -571,8 +537,6 @@
       "depicts": "A smiling face used for positive sentiment.",
       "purpose": "Show positive sentiment, satisfaction, or a happy emotional state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "happy",
         "positive mood",
@@ -593,8 +557,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:pinned",
@@ -604,8 +568,6 @@
       "depicts": "Pinned state shown as a compact interface mark.",
       "purpose": "Show content pinned to stay visible or prioritized.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "pinned",
         "priority",
@@ -626,8 +588,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     }
   ]
 }

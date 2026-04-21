@@ -70,8 +70,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -80,8 +78,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-settings",
@@ -118,8 +115,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing user scan.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "user",
           "scan"
@@ -127,8 +122,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user-scan",
@@ -165,8 +159,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow archery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "archery"
@@ -174,8 +166,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-archery",
@@ -213,8 +204,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow enlarge tag.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "enlarge",
@@ -223,8 +212,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-enlarge-tag",
@@ -262,8 +250,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow reduce tag.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "reduce",
@@ -272,8 +258,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-reduce-tag",
@@ -310,8 +295,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow separate.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "separate"
@@ -319,8 +302,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-separate",
@@ -358,8 +340,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow separate vertical.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "separate",
@@ -368,8 +348,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-separate-vertical",
@@ -406,8 +385,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow union.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "union"
@@ -415,8 +392,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-union",
@@ -454,8 +430,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow union vertical.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "union",
@@ -464,8 +438,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-union-vertical",
@@ -502,8 +475,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bus stop.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bus",
           "stop"
@@ -511,8 +482,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bus-stop",
@@ -550,8 +520,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing chat plus in.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "chat",
           "plus",
@@ -560,8 +528,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "chat-plus-in",
@@ -598,8 +565,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cube scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cube",
           "scan"
@@ -607,8 +572,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cube-scan",
@@ -646,8 +610,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -657,8 +619,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-not-found",
@@ -695,8 +656,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fingerprint scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fingerprint",
           "scan"
@@ -704,8 +663,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fingerprint-scan",
@@ -742,8 +700,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing iris scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "iris",
           "scan"
@@ -751,8 +707,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "iris-scan",
@@ -790,8 +745,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "media folder",
@@ -801,8 +754,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "media-image-folder",
@@ -840,8 +792,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "media folder",
@@ -851,8 +801,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "media-video-folder",
@@ -889,8 +838,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing pause window.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "pause",
           "window"
@@ -898,8 +845,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pause-window",
@@ -936,8 +882,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing playlist play.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "playlist",
           "play"
@@ -945,8 +889,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "playlist-play",
@@ -983,8 +926,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing scan barcode.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "scan",
           "barcode"
@@ -992,8 +933,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "scan-barcode",
@@ -1030,8 +970,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing voice scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "voice",
           "scan"
@@ -1039,8 +977,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "voice-scan",

@@ -10,8 +10,6 @@
       "depicts": "A symbol representing calendar plus.",
       "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "plus"
@@ -26,8 +24,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:user_plus",
@@ -37,8 +35,6 @@
       "depicts": "A symbol representing user plus.",
       "purpose": "Show user plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "plus"
@@ -53,8 +49,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:album_open",
@@ -64,8 +60,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "album",
         "open",
@@ -81,8 +75,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bin_plus_in",
@@ -92,8 +86,6 @@
       "depicts": "A symbol representing bin plus in.",
       "purpose": "Show bin plus in as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bin",
         "plus",
@@ -110,8 +102,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bookmark_book",
@@ -121,8 +113,6 @@
       "depicts": "A symbol representing bookmark book.",
       "purpose": "Show bookmark book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "book"
@@ -137,8 +127,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bookmark_circle",
@@ -148,8 +138,6 @@
       "depicts": "A symbol representing bookmark circle.",
       "purpose": "Show bookmark circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "circle"
@@ -164,8 +152,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bubble_download",
@@ -175,8 +163,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bubble",
         "download",
@@ -192,8 +178,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bubble_upload",
@@ -203,8 +189,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bubble",
         "upload",
@@ -220,8 +204,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:calendar_minus",
@@ -231,8 +215,6 @@
       "depicts": "A symbol representing calendar minus.",
       "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "minus"
@@ -247,8 +229,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:calendar_rotate",
@@ -258,8 +240,6 @@
       "depicts": "A symbol representing calendar rotate.",
       "purpose": "Show calendar rotate as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "rotate"
@@ -274,8 +254,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:calendar_xmark",
@@ -285,8 +265,6 @@
       "depicts": "A symbol representing calendar xmark.",
       "purpose": "Show calendar xmark as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "xmark"
@@ -301,8 +279,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:cart_plus",
@@ -312,8 +290,6 @@
       "depicts": "A symbol representing cart plus.",
       "purpose": "Show cart plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cart",
         "plus"
@@ -328,8 +304,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:cloud_bookmark",
@@ -339,8 +315,6 @@
       "depicts": "A symbol representing cloud bookmark.",
       "purpose": "Show cloud bookmark as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "bookmark"
@@ -355,8 +329,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:cloud_download",
@@ -366,8 +340,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "download",
@@ -383,8 +355,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:cloud_upload",
@@ -394,8 +366,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "upload",
@@ -411,8 +381,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:download_circle",
@@ -422,8 +392,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "circle",
@@ -439,8 +407,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:download_data_window",
@@ -450,8 +418,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "data",
@@ -469,8 +435,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:download_square",
@@ -480,8 +446,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "square",
@@ -497,8 +461,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:edit_pencil",
@@ -508,8 +472,6 @@
       "depicts": "A symbol representing edit pencil.",
       "purpose": "Show edit pencil as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "pencil"
@@ -524,8 +486,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:floppy_disk_arrow_in",
@@ -535,8 +497,6 @@
       "depicts": "A symbol representing floppy disk arrow in.",
       "purpose": "Show floppy disk arrow in as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "floppy",
         "disk",
@@ -555,8 +515,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:floppy_disk_arrow_out",
@@ -566,8 +526,6 @@
       "depicts": "A symbol representing floppy disk arrow out.",
       "purpose": "Show floppy disk arrow out as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "floppy",
         "disk",
@@ -586,8 +544,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:frame_plus_in",
@@ -597,8 +555,6 @@
       "depicts": "A symbol representing frame plus in.",
       "purpose": "Show frame plus in as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "frame",
         "plus",
@@ -615,8 +571,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

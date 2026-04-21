@@ -23,7 +23,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:database-zap",
         "source_group": "pilot",
@@ -47,9 +47,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical system symbol combined with a lightning accent.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.94,
         "synonyms": [
           "accelerated database",
           "fast data operation",
@@ -74,7 +71,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Database Zap to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.9,
+        "current_candidate_routing_score": 0.9,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-database-zap\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 15 21.84\" /> <path d=\"M21 5V8\" /> <path d=\"M21 12L18 17H22L19 22\" /> <path d=\"M3 12A9 3 0 0 0 14.59 14.87\" /> </svg>",
         "renderable_icon_payload": {
@@ -89,7 +86,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:message-circle-code",
         "source_group": "pilot",
@@ -113,9 +110,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message bubble with a communication or code detail.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.94,
         "synonyms": [
           "technical message",
           "developer message",
@@ -140,7 +134,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Message Circle Code to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.9,
+        "current_candidate_routing_score": 0.9,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-message-circle-code\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m10 9-3 3 3 3\" /> <path d=\"m14 15 3-3-3-3\" /> <path d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\" /> </svg>",
         "renderable_icon_payload": {
@@ -155,7 +149,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:message-square-code",
         "source_group": "pilot",
@@ -179,9 +173,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message bubble with a communication or code detail.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.94,
         "synonyms": [
           "technical message",
           "developer message",
@@ -206,7 +197,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Message Square Code to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.9,
+        "current_candidate_routing_score": 0.9,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-message-square-code\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z\" /> <path d=\"m10 8-3 3 3 3\" /> <path d=\"m14 14 3-3-3-3\" /> </svg>",
         "renderable_icon_payload": {
@@ -221,7 +212,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:network",
         "source_group": "pilot",
@@ -245,9 +236,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Network shown as a connected system or branching structure.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.94,
         "synonyms": [
           "network",
           "connected system",
@@ -272,7 +260,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Network to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.88,
+        "current_candidate_routing_score": 0.88,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-network\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" /> <rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" /> <rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1\" /> <path d=\"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3\" /> <path d=\"M12 12V8\" /> </svg>",
         "renderable_icon_payload": {
@@ -287,7 +275,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:wand-sparkles",
         "source_group": "pilot",
@@ -311,9 +299,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An enhancement-focused symbol used for generated or improved output.",
-        "intent": "inform",
-        "domain": "ai_agents",
-        "confidence": 0.94,
         "synonyms": [
           "smart improve",
           "ai enhancement",
@@ -338,7 +323,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Wand Sparkles to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.88,
+        "current_candidate_routing_score": 0.88,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-wand-sparkles\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\" /> <path d=\"m14 7 3 3\" /> <path d=\"M5 6v4\" /> <path d=\"M19 14v4\" /> <path d=\"M10 2v2\" /> <path d=\"M7 8H3\" /> <path d=\"M21 16h-4\" /> <path d=\"M11 3H9\" /> </svg>",
         "renderable_icon_payload": {
@@ -353,7 +338,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:layers-3",
         "source_group": "pilot",
@@ -377,9 +362,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "System Layers shown as a structured process or layered system symbol.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.93,
         "synonyms": [
           "system layers",
           "system layers view",
@@ -404,7 +386,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Layers 3 to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-layers-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z\" /> <path d=\"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12\" /> <path d=\"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17\" /> </svg>",
         "renderable_icon_payload": {
@@ -419,7 +401,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:messages-square",
         "source_group": "pilot",
@@ -443,9 +425,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message bubble with a communication or code detail.",
-        "intent": "inform",
-        "domain": "communication",
-        "confidence": 0.93,
         "synonyms": [
           "message threads",
           "chat threads",
@@ -470,7 +449,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Messages Square to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-messages-square\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z\" /> <path d=\"M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1\" /> </svg>",
         "renderable_icon_payload": {
@@ -485,7 +464,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:plug-zap",
         "source_group": "pilot",
@@ -509,9 +488,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical system symbol combined with a lightning accent.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.93,
         "synonyms": [
           "fast integration",
           "powered connector",
@@ -536,7 +512,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Plug Zap to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-plug-zap\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z\" /> <path d=\"m2 22 3-3\" /> <path d=\"M7.5 13.5 10 11\" /> <path d=\"M10.5 16.5 13 14\" /> <path d=\"m18 3-4 4h6l-4 4\" /> </svg>",
         "renderable_icon_payload": {
@@ -551,7 +527,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:router",
         "source_group": "pilot",
@@ -575,9 +551,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Routing shown as a connected system or branching structure.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.93,
         "synonyms": [
           "routing",
           "connected system",
@@ -602,7 +575,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Router to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-router\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" /> <path d=\"M6.01 18H6\" /> <path d=\"M10.01 18H10\" /> <path d=\"M15 10v4\" /> <path d=\"M17.84 7.17a4 4 0 0 0-5.66 0\" /> <path d=\"M20.66 4.34a8 8 0 0 0-11.31 0\" /> </svg>",
         "renderable_icon_payload": {
@@ -617,7 +590,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "lucide:waypoints",
         "source_group": "pilot",
@@ -641,9 +614,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Waypoints shown as a structured process or layered system symbol.",
-        "intent": "inform",
-        "domain": "developer_tools",
-        "confidence": 0.93,
         "synonyms": [
           "waypoints",
           "waypoints view",
@@ -668,7 +638,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Waypoints to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-waypoints\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m10.586 5.414-5.172 5.172\" /> <path d=\"m18.586 13.414-5.172 5.172\" /> <path d=\"M6 12h12\" /> <circle cx=\"12\" cy=\"20\" r=\"2\" /> <circle cx=\"12\" cy=\"4\" r=\"2\" /> <circle cx=\"20\" cy=\"12\" r=\"2\" /> <circle cx=\"4\" cy=\"12\" r=\"2\" /> </svg>",
         "renderable_icon_payload": {
@@ -683,7 +653,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:circle-dot",
         "source_group": "pilot",
@@ -707,9 +677,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A circle with a dot indicating the active or current position.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.91,
         "synonyms": [
           "current step",
           "active marker",
@@ -734,7 +701,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Circle Dot to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.84,
+        "current_candidate_routing_score": 0.84,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-circle-dot\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" /> </svg>",
         "renderable_icon_payload": {
@@ -749,7 +716,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:archive",
         "source_group": "pilot",
@@ -773,9 +740,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Archived state shown as a compact interface mark.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.89,
         "synonyms": [
           "archived",
           "archived item",
@@ -800,7 +764,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Archive to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-archive\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2\" /> <path d=\"M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10\" /> <path d=\"M10 12l4 0\" /> </svg>",
         "renderable_icon_payload": {
@@ -815,7 +779,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:bookmark",
         "source_group": "pilot",
@@ -839,9 +803,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Saved state shown as a compact interface mark.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.89,
         "synonyms": [
           "saved",
           "saved item",
@@ -866,7 +827,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Bookmark to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-bookmark\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4\" /> </svg>",
         "renderable_icon_payload": {
@@ -881,7 +842,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:flag",
         "source_group": "pilot",
@@ -905,9 +866,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Flagged state shown as a compact interface mark.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.89,
         "synonyms": [
           "flagged",
           "flagged item",
@@ -932,7 +890,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Flag to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-flag\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9\" /> <path d=\"M5 21v-7\" /> </svg>",
         "renderable_icon_payload": {
@@ -947,7 +905,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:heart",
         "source_group": "pilot",
@@ -971,9 +929,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A heart symbol used for likes, favorites, or affection.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.89,
         "synonyms": [
           "heart",
           "liked item",
@@ -998,7 +953,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Heart to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-heart\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /> </svg>",
         "renderable_icon_payload": {
@@ -1013,7 +968,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:star",
         "source_group": "pilot",
@@ -1037,9 +992,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A star symbol used for saved or favored items.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.89,
         "synonyms": [
           "starred item",
           "favorite",
@@ -1064,7 +1016,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Star to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-star\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873l-6.158 -3.245\" /> </svg>",
         "renderable_icon_payload": {
@@ -1079,7 +1031,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:mood-sad",
         "source_group": "pilot",
@@ -1103,9 +1055,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A sad face used for negative sentiment.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.87,
         "synonyms": [
           "sad",
           "negative sentiment",
@@ -1130,7 +1079,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Mood Sad to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.8,
+        "current_candidate_routing_score": 0.8,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-mood-sad\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" /> <path d=\"M9 10l.01 0\" /> <path d=\"M15 10l.01 0\" /> <path d=\"M9.5 15.25a3.5 3.5 0 0 1 5 0\" /> </svg>",
         "renderable_icon_payload": {
@@ -1145,7 +1094,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "tabler:mood-smile",
         "source_group": "pilot",
@@ -1169,9 +1118,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A smiling face used for positive sentiment.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.87,
         "synonyms": [
           "happy",
           "positive sentiment",
@@ -1196,7 +1142,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Mood Smile to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.8,
+        "current_candidate_routing_score": 0.8,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-mood-smile\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" /> <path d=\"M9 10l.01 0\" /> <path d=\"M15 10l.01 0\" /> <path d=\"M9.5 15a3.5 3.5 0 0 0 5 0\" /> </svg>",
         "renderable_icon_payload": {
@@ -1211,7 +1157,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "visual_review",
-      "confidence_band": "medium",
+      "routing_band": "medium",
       "current_candidate_record": {
         "icon_id": "tabler:pinned",
         "source_group": "pilot",
@@ -1235,9 +1181,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Pinned state shown as a compact interface mark.",
-        "intent": "inform",
-        "domain": "product_status",
-        "confidence": 0.85,
         "synonyms": [
           "pinned",
           "pinned item",
@@ -1262,7 +1205,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Pinned to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.78,
+        "current_candidate_routing_score": 0.78,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-pinned\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M9 4v6l-2 4v2h10v-2l-2 -4v-6\" /> <path d=\"M12 16l0 5\" /> <path d=\"M8 4l8 0\" /> </svg>",
         "renderable_icon_payload": {

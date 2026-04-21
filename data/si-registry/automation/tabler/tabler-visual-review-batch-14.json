@@ -273,8 +273,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "off"
@@ -282,8 +280,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-off",
@@ -320,8 +317,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices pc.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "pc"
@@ -329,8 +324,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-pc",
@@ -368,8 +362,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices pc off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "pc",
@@ -378,8 +370,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-pc-off",
@@ -416,8 +407,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices pin.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "devices",
           "pin"
@@ -425,8 +414,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-pin",
@@ -463,8 +451,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices question.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "question"
@@ -472,8 +458,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-question",
@@ -510,8 +495,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices share.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "share"
@@ -519,8 +502,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-share",
@@ -557,8 +539,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices star.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "devices",
           "star"
@@ -566,8 +546,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-star",
@@ -603,16 +582,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing diabolo.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "diabolo"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "diabolo",
@@ -649,8 +625,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing diabolo off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "diabolo",
           "off"
@@ -658,8 +632,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "diabolo-off",
@@ -695,16 +668,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dialpad.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dialpad"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dialpad",
@@ -741,8 +711,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dialpad off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dialpad",
           "off"
@@ -750,8 +718,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dialpad-off",
@@ -788,8 +755,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing diamond off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "diamond",
           "off"
@@ -797,8 +762,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "diamond-off",
@@ -834,16 +798,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing diamonds.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "diamonds"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "diamonds",
@@ -879,16 +840,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing diaper.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "diaper"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "diaper",
@@ -924,16 +882,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice",
@@ -970,8 +925,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "1"
@@ -979,8 +932,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-1",
@@ -1017,8 +969,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "2"
@@ -1026,8 +976,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-2",
@@ -1064,8 +1013,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "3"
@@ -1073,8 +1020,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-3",
@@ -1111,8 +1057,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "4"
@@ -1120,8 +1064,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-4",
@@ -1158,8 +1101,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "5"
@@ -1167,8 +1108,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-5",
@@ -1205,8 +1145,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dice.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dice",
           "6"
@@ -1214,8 +1152,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dice-6",
@@ -1251,16 +1188,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dimensions.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dimensions"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dimensions",
@@ -1296,16 +1230,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing direction.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction",
@@ -1342,8 +1273,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing direction arrows.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction",
           "arrows"
@@ -1351,8 +1280,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction-arrows",
@@ -1389,8 +1317,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing direction horizontal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction",
           "horizontal"
@@ -1398,8 +1324,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction-horizontal",
@@ -1436,8 +1361,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing direction sign.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction",
           "sign"
@@ -1445,8 +1368,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction-sign",
@@ -1484,8 +1406,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing direction sign off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction",
           "sign",
@@ -1494,8 +1414,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction-sign-off",
@@ -1532,8 +1451,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing directions off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "directions",
           "off"
@@ -1541,8 +1458,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "directions-off",
@@ -1579,8 +1495,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing disabled off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "disabled",
           "off"
@@ -1588,8 +1502,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "disabled-off",
@@ -1626,8 +1539,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing disc golf.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "disc",
           "golf"
@@ -1635,8 +1546,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "disc-golf",
@@ -1673,8 +1583,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing disc off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "disc",
           "off"
@@ -1682,8 +1590,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "disc-off",
@@ -1719,16 +1626,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing discount.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "discount"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "discount",
@@ -1765,8 +1669,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing discount off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "discount",
           "off"
@@ -1774,8 +1676,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "discount-off",
@@ -1811,16 +1712,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing divide.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "divide"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "divide",
@@ -1856,16 +1754,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dna.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dna"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dna",
@@ -1902,8 +1797,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dna.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dna",
           "2"
@@ -1911,8 +1804,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dna-2",
@@ -1950,8 +1842,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dna off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dna",
           "2",
@@ -1960,8 +1850,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dna-2-off",
@@ -1998,8 +1887,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dna off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dna",
           "off"
@@ -2007,8 +1894,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dna-off",
@@ -2045,8 +1931,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dog bowl.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dog",
           "bowl"
@@ -2054,8 +1938,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dog-bowl",
@@ -2092,8 +1975,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing door enter.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "door",
           "enter"
@@ -2101,8 +1982,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "door-enter",
@@ -2139,8 +2019,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing door exit.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "door",
           "exit"
@@ -2148,8 +2026,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "door-exit",
@@ -2186,8 +2063,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing door off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "door",
           "off"
@@ -2195,8 +2070,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "door-off",
@@ -2234,8 +2108,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dots circle horizontal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dots",
           "circle",
@@ -2244,8 +2116,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dots-circle-horizontal",
@@ -2282,8 +2153,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dots diagonal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dots",
           "diagonal"
@@ -2291,8 +2160,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dots-diagonal",
@@ -2330,8 +2198,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dots diagonal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dots",
           "diagonal",
@@ -2340,8 +2206,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dots-diagonal-2",
@@ -2378,8 +2243,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing drone off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "drone",
           "off"
@@ -2387,8 +2250,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "drone-off",
@@ -2425,8 +2287,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing drop circle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "drop",
           "circle"
@@ -2434,8 +2294,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "drop-circle",
@@ -2471,16 +2330,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet",
@@ -2517,8 +2373,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet bolt.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "bolt"
@@ -2526,8 +2380,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-bolt",
@@ -2564,8 +2417,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet cancel.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "cancel"
@@ -2573,8 +2424,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-cancel",
@@ -2611,8 +2461,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet cog.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "cog"
@@ -2620,8 +2468,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-cog",
@@ -2658,8 +2505,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet dollar.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "dollar"
@@ -2667,8 +2512,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-dollar",
@@ -2705,8 +2549,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet exclamation.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "exclamation"
@@ -2714,8 +2556,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-exclamation",
@@ -2752,8 +2593,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet half.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "half"
@@ -2761,8 +2600,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-half",
@@ -2800,8 +2638,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet half.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "half",
@@ -2810,8 +2646,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-half-2",
@@ -2848,8 +2683,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet heart.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "droplet",
           "heart"
@@ -2857,8 +2690,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-heart",
@@ -2895,8 +2727,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet minus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "minus"
@@ -2904,8 +2734,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-minus",
@@ -2942,8 +2771,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "off"
@@ -2951,8 +2778,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-off",
@@ -2989,8 +2815,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet pin.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "droplet",
           "pin"
@@ -2998,8 +2822,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-pin",
@@ -3036,8 +2859,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet question.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "question"
@@ -3045,8 +2866,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-question",
@@ -3083,8 +2903,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet share.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplet",
           "share"
@@ -3092,8 +2910,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-share",
@@ -3130,8 +2947,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplet star.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "droplet",
           "star"
@@ -3139,8 +2954,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplet-star",
@@ -3176,16 +2990,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing droplets.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "droplets"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "droplets",
@@ -3222,8 +3033,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dual screen.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dual",
           "screen"
@@ -3231,8 +3040,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dual-screen",
@@ -3268,16 +3076,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing dumpling.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "dumpling"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dumpling",
@@ -3314,8 +3119,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing e passport.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "e",
           "passport"
@@ -3323,8 +3126,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "e-passport",
@@ -3361,8 +3163,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ear off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ear",
           "off"
@@ -3370,8 +3170,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ear-off",
@@ -3409,8 +3208,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ease in out.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ease",
           "in",
@@ -3419,8 +3216,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ease-in-out",
@@ -3460,8 +3256,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ease in out control points.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ease",
           "in",
@@ -3472,8 +3266,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ease-in-out-control-points",
@@ -3510,8 +3303,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing egg cracked.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "egg",
           "cracked"
@@ -3519,8 +3310,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "egg-cracked",
@@ -3557,8 +3347,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing egg fried.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "egg",
           "fried"
@@ -3566,8 +3354,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "egg-fried",
@@ -3604,8 +3391,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing egg off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "egg",
           "off"
@@ -3613,8 +3398,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "egg-off",
@@ -3650,16 +3434,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing eggs.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "eggs"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eggs",
@@ -3695,16 +3476,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing elevator.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "elevator"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "elevator",
@@ -3741,8 +3519,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing elevator off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "elevator",
           "off"
@@ -3750,8 +3526,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "elevator-off",
@@ -3788,8 +3563,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing emergency bed.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "emergency",
           "bed"
@@ -3797,8 +3570,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "emergency-bed",
@@ -3834,16 +3606,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing empathize.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "empathize"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "empathize",
@@ -3880,8 +3649,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing empathize off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "empathize",
           "off"
@@ -3889,8 +3656,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "empathize-off",
@@ -3926,16 +3692,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing emphasis.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "emphasis"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "emphasis",
@@ -3972,8 +3735,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing engine off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "engine",
           "off"
@@ -3981,8 +3742,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "engine-off",
@@ -4018,16 +3778,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing equal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "equal"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "equal",
@@ -4064,8 +3821,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing equal double.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "equal",
           "double"
@@ -4073,8 +3828,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "equal-double",
@@ -4111,8 +3865,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing equal not.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "equal",
           "not"
@@ -4120,8 +3872,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "equal-not",
@@ -4158,8 +3909,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing eraser off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "eraser",
           "off"
@@ -4167,8 +3916,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eraser-off",
@@ -4204,16 +3952,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing escalator.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "escalator"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "escalator",
@@ -4249,16 +3994,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exchange.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exchange"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exchange",
@@ -4295,8 +4037,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exchange off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exchange",
           "off"
@@ -4304,8 +4044,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exchange-off",
@@ -4342,8 +4081,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exclamation circle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exclamation",
           "circle"
@@ -4351,8 +4088,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exclamation-circle",
@@ -4389,8 +4125,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exclamation mark.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exclamation",
           "mark"
@@ -4398,8 +4132,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exclamation-mark",
@@ -4437,8 +4170,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exclamation mark off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exclamation",
           "mark",
@@ -4447,8 +4178,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exclamation-mark-off",
@@ -4484,16 +4214,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing explicit.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "explicit"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "explicit",
@@ -4530,8 +4257,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing explicit off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "explicit",
           "off"
@@ -4539,8 +4264,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "explicit-off",
@@ -4577,8 +4301,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exposure.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exposure",
           "0"
@@ -4586,8 +4308,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exposure-0",
@@ -4625,8 +4346,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exposure minus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exposure",
           "minus",
@@ -4635,8 +4354,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exposure-minus-1",
@@ -4674,8 +4392,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exposure minus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exposure",
           "minus",
@@ -4684,8 +4400,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exposure-minus-2",
@@ -4722,8 +4437,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing exposure off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "exposure",
           "off"
@@ -4731,8 +4444,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "exposure-off",
@@ -4769,8 +4481,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing eyeglass.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "eyeglass",
           "2"
@@ -4778,8 +4488,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eyeglass-2",
@@ -4816,8 +4525,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing eyeglass off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "eyeglass",
           "off"
@@ -4825,8 +4532,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eyeglass-off",
@@ -4863,8 +4569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing face id.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "face",
           "id"
@@ -4872,8 +4576,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "face-id",
@@ -4911,8 +4614,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing face mask off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "face",
           "mask",
@@ -4921,8 +4622,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "face-mask-off",
@@ -4958,16 +4658,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fall.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fall"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fall",
@@ -5003,16 +4700,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing favicon.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "favicon"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "favicon",
@@ -5048,16 +4742,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing feather.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "feather"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "feather",
@@ -5094,8 +4785,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing feather off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "feather",
           "off"
@@ -5103,8 +4792,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "feather-off",
@@ -5140,16 +4828,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fence.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fence"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fence",
@@ -5186,8 +4871,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fence off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fence",
           "off"
@@ -5195,8 +4878,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fence-off",
@@ -5232,16 +4914,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ferry.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ferry"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ferry",
@@ -5278,8 +4957,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fidget spinner.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fidget",
           "spinner"
@@ -5287,8 +4964,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fidget-spinner",
@@ -5325,8 +5001,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing files off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "files",
           "off"
@@ -5334,8 +5008,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "files-off",
@@ -5371,16 +5044,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing filters.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "filters"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "filters",
@@ -5417,8 +5087,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fingerprint off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fingerprint",
           "off"
@@ -5426,8 +5094,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fingerprint-off",
@@ -5464,8 +5131,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fire extinguisher.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fire",
           "extinguisher"
@@ -5473,8 +5138,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fire-extinguisher",
@@ -5511,8 +5175,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fire hydrant.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fire",
           "hydrant"
@@ -5520,8 +5182,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fire-hydrant",
@@ -5559,8 +5220,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fire hydrant off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fire",
           "hydrant",
@@ -5569,8 +5228,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fire-hydrant-off",
@@ -5606,16 +5264,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing firetruck.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "firetruck"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "firetruck",
@@ -5652,8 +5307,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing firewall flame.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "firewall",
           "flame"
@@ -5661,8 +5314,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "firewall-flame",
@@ -5701,8 +5353,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing first aid kit off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "first",
           "aid",
@@ -5712,8 +5362,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "first-aid-kit-off",
@@ -5750,8 +5399,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fish bone.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fish",
           "bone"
@@ -5759,8 +5406,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fish-bone",
@@ -5797,8 +5443,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fish christianity.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fish",
           "christianity"
@@ -5806,8 +5450,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fish-christianity",
@@ -5844,8 +5487,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fish hook.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fish",
           "hook"
@@ -5853,8 +5494,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fish-hook",
@@ -5892,8 +5532,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fish hook off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fish",
           "hook",
@@ -5902,8 +5540,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fish-hook-off",
@@ -5940,8 +5577,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fish off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fish",
           "off"
@@ -5949,8 +5584,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fish-off",
@@ -5988,8 +5622,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "2",
@@ -5998,8 +5630,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-2-off",
@@ -6036,8 +5667,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag bitcoin.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "bitcoin"
@@ -6045,8 +5674,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-bitcoin",
@@ -6083,8 +5711,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag bolt.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "bolt"
@@ -6092,8 +5718,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-bolt",
@@ -6130,8 +5755,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag cancel.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "cancel"
@@ -6139,8 +5762,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-cancel",
@@ -6177,8 +5799,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag cog.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "cog"
@@ -6186,8 +5806,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-cog",
@@ -6224,8 +5843,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag discount.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "discount"
@@ -6233,8 +5850,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-discount",
@@ -6271,8 +5887,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag dollar.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "dollar"
@@ -6280,8 +5894,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-dollar",
@@ -6318,8 +5931,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag exclamation.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "exclamation"
@@ -6327,8 +5938,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-exclamation",
@@ -6365,8 +5975,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag heart.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "flag",
           "heart"
@@ -6374,8 +5982,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-heart",
@@ -6412,8 +6019,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag minus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "minus"
@@ -6421,8 +6026,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-minus",
@@ -6459,8 +6063,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "off"
@@ -6468,8 +6070,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-off",
@@ -6506,8 +6107,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag pin.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "flag",
           "pin"
@@ -6515,8 +6114,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-pin",
@@ -6553,8 +6151,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag question.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "question"
@@ -6562,8 +6158,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-question",
@@ -6600,8 +6195,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag share.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "share"
@@ -6609,8 +6202,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-share",
@@ -6647,8 +6239,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag spark.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "spark"
@@ -6656,8 +6246,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-spark",
@@ -6694,8 +6283,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag star.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "flag",
           "star"
@@ -6703,8 +6290,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-star",
@@ -6741,8 +6327,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flame off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flame",
           "off"
@@ -6750,8 +6334,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flame-off",
@@ -6787,16 +6370,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flare.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flare"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flare",
@@ -6834,8 +6414,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flask off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flask",
           "2",
@@ -6844,8 +6422,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flask-2-off",
@@ -6882,8 +6459,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flask off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flask",
           "off"
@@ -6891,8 +6466,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flask-off",
@@ -6929,8 +6503,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flip flops.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flip",
           "flops"
@@ -6938,8 +6510,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flip-flops",
@@ -6976,8 +6547,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing float center.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "float",
           "center"
@@ -6985,8 +6554,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "float-center",
@@ -7023,8 +6591,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing float none.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "float",
           "none"
@@ -7032,8 +6598,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "float-none",
@@ -7070,8 +6635,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flower off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flower",
           "off"
@@ -7079,8 +6642,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flower-off",
@@ -7116,16 +6678,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing focus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "focus"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "focus",
@@ -7162,8 +6721,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing focus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "focus",
           "2"
@@ -7171,8 +6728,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "focus-2",
@@ -7209,8 +6765,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing focus auto.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "focus",
           "auto"
@@ -7218,8 +6772,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "focus-auto",
@@ -7256,8 +6809,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing focus centered.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "focus",
           "centered"
@@ -7265,8 +6816,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "focus-centered",
@@ -7302,16 +6852,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fold.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fold"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fold",
@@ -7348,8 +6895,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing folders off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folders",
           "off"
@@ -7357,8 +6902,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folders-off",
@@ -7394,16 +6938,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing forbid.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "forbid"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forbid",
@@ -7440,8 +6981,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing forbid.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "forbid",
           "2"
@@ -7449,8 +6988,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forbid-2",
@@ -7486,16 +7024,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing forklift.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "forklift"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forklift",
@@ -7531,16 +7066,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing forms.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "forms"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forms",
@@ -7576,16 +7108,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fountain.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fountain"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fountain",
@@ -7622,8 +7151,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fountain off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fountain",
           "off"
@@ -7631,8 +7158,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fountain-off",
@@ -7669,8 +7195,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing frame off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "frame",
           "off"
@@ -7678,8 +7202,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "frame-off",
@@ -7716,8 +7239,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing free rights.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "free",
           "rights"
@@ -7725,8 +7246,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "free-rights",
@@ -7763,8 +7283,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing freeze column.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "freeze",
           "column"
@@ -7772,8 +7290,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "freeze-column",
@@ -7810,8 +7327,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing freeze row.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "freeze",
           "row"
@@ -7819,8 +7334,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "freeze-row",
@@ -7858,8 +7372,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing freeze row column.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "freeze",
           "row",
@@ -7868,8 +7380,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "freeze-row-column",
@@ -7906,8 +7417,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fridge off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fridge",
           "off"
@@ -7915,8 +7424,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fridge-off",
@@ -7952,16 +7460,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing friends.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "friends"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "friends",
@@ -7998,8 +7503,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing friends off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "friends",
           "off"
@@ -8007,8 +7510,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "friends-off",
@@ -8044,16 +7546,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing frustum.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "frustum"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "frustum",
@@ -8090,8 +7589,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing frustum off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "frustum",
           "off"
@@ -8099,8 +7596,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "frustum-off",
@@ -8136,16 +7632,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing function.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "function"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "function",
@@ -8182,8 +7675,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing function off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "function",
           "off"
@@ -8191,8 +7682,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "function-off",
@@ -8228,16 +7718,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing galaxy.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "galaxy"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "galaxy",
@@ -8274,8 +7761,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing garden cart.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "garden",
           "cart"
@@ -8283,8 +7768,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "garden-cart",
@@ -8322,8 +7806,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing garden cart off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "garden",
           "cart",
@@ -8332,8 +7814,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "garden-cart-off",
@@ -8371,8 +7852,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gas station off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gas",
           "station",
@@ -8381,8 +7860,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gas-station-off",
@@ -8418,16 +7896,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gauge.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gauge"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gauge",
@@ -8464,8 +7939,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gauge off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gauge",
           "off"
@@ -8473,8 +7946,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gauge-off",
@@ -8510,16 +7982,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gavel.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gavel"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gavel",
@@ -8556,8 +8025,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender agender.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "agender"
@@ -8565,8 +8032,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-agender",
@@ -8603,8 +8069,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender androgyne.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "androgyne"
@@ -8612,8 +8076,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-androgyne",
@@ -8650,8 +8113,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender bigender.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "bigender"
@@ -8659,8 +8120,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-bigender",
@@ -8697,8 +8157,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender demiboy.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "demiboy"
@@ -8706,8 +8164,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-demiboy",
@@ -8744,8 +8201,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender demigirl.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "demigirl"
@@ -8753,8 +8208,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-demigirl",
@@ -8791,8 +8245,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender epicene.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "epicene"
@@ -8800,8 +8252,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-epicene",
@@ -8838,8 +8289,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender female.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "female"
@@ -8847,8 +8296,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-female",
@@ -8885,8 +8333,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender femme.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "femme"
@@ -8894,8 +8340,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-femme",
@@ -8932,8 +8377,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender genderfluid.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "genderfluid"
@@ -8941,8 +8384,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-genderfluid",
@@ -8979,8 +8421,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender genderless.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "genderless"
@@ -8988,8 +8428,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-genderless",
@@ -9026,8 +8465,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender genderqueer.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "genderqueer"
@@ -9035,8 +8472,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-genderqueer",
@@ -9073,8 +8509,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender hermaphrodite.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "hermaphrodite"
@@ -9082,8 +8516,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-hermaphrodite",
@@ -9120,8 +8553,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender intergender.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "intergender"
@@ -9129,8 +8560,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-intergender",
@@ -9167,8 +8597,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender male.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "male"
@@ -9176,8 +8604,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-male",
@@ -9214,8 +8641,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender neutrois.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "neutrois"
@@ -9223,8 +8648,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-neutrois",
@@ -9261,8 +8685,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender third.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "third"
@@ -9270,8 +8692,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-third",
@@ -9308,8 +8729,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender transgender.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "transgender"
@@ -9317,8 +8736,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-transgender",
@@ -9355,8 +8773,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gender trasvesti.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gender",
           "trasvesti"
@@ -9364,8 +8780,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gender-trasvesti",
@@ -9401,16 +8816,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing geometry.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "geometry"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "geometry",
@@ -9447,8 +8859,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ghost.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ghost",
           "2"
@@ -9456,8 +8866,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ghost-2",
@@ -9494,8 +8903,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ghost.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ghost",
           "3"
@@ -9503,8 +8910,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ghost-3",
@@ -9541,8 +8947,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ghost off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ghost",
           "off"
@@ -9550,8 +8954,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ghost-off",
@@ -9587,16 +8990,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gif.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gif"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gif",
@@ -9633,8 +9033,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gift off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gift",
           "off"
@@ -9642,8 +9040,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gift-off",
@@ -9681,8 +9078,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing git branch deleted.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "git",
           "branch",
@@ -9691,8 +9086,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "git-branch-deleted",
@@ -9730,8 +9124,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing git cherry pick.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "git",
           "cherry",
@@ -9740,8 +9132,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "git-cherry-pick",
@@ -9778,8 +9169,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing git fork.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "git",
           "fork"
@@ -9787,8 +9176,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "git-fork",
@@ -9827,8 +9215,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing git pull request closed.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "git",
           "pull",
@@ -9838,8 +9224,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "git-pull-request-closed",
@@ -9878,8 +9263,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing git pull request draft.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "git",
           "pull",
@@ -9889,8 +9272,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "git-pull-request-draft",
@@ -9926,16 +9308,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gizmo.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gizmo"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gizmo",
@@ -9971,16 +9350,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass",
@@ -10017,8 +9393,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass champagne.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass",
           "champagne"
@@ -10026,8 +9400,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass-champagne",
@@ -10064,8 +9437,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass cocktail.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass",
           "cocktail"
@@ -10073,8 +9444,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass-cocktail",
@@ -10111,8 +9481,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass full.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass",
           "full"
@@ -10120,8 +9488,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass-full",
@@ -10158,8 +9525,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass gin.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass",
           "gin"
@@ -10167,8 +9532,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass-gin",
@@ -10205,8 +9569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing glass off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "glass",
           "off"
@@ -10214,8 +9576,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "glass-off",
@@ -10252,8 +9613,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing globe off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "globe",
           "off"
@@ -10261,8 +9620,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "globe-off",
@@ -10299,8 +9657,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing go game.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "go",
           "game"
@@ -10308,8 +9664,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "go-game",
@@ -10345,16 +9700,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing golf.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "golf"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "golf",
@@ -10391,8 +9743,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing golf off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "golf",
           "off"
@@ -10400,8 +9750,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "golf-off",
@@ -10437,16 +9786,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing gps.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "gps"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gps",
@@ -10482,16 +9828,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grain.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grain"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grain",
@@ -10527,16 +9870,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing graph.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "graph"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "graph",
@@ -10573,8 +9913,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing graph off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "graph",
           "off"
@@ -10582,8 +9920,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "graph-off",
@@ -10619,16 +9956,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grave.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grave"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grave",
@@ -10665,8 +9999,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grave.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grave",
           "2"
@@ -10674,8 +10006,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grave-2",
@@ -10711,16 +10042,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grill.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grill"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grill",
@@ -10757,8 +10085,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grill fork.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grill",
           "fork"
@@ -10766,8 +10092,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grill-fork",
@@ -10804,8 +10129,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grill off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grill",
           "off"
@@ -10813,8 +10136,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grill-off",
@@ -10851,8 +10173,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grill spatula.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grill",
           "spatula"
@@ -10860,8 +10180,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grill-spatula",
@@ -10898,8 +10217,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grip horizontal.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grip",
           "horizontal"
@@ -10907,8 +10224,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grip-horizontal",
@@ -10945,8 +10261,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing grip vertical.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "grip",
           "vertical"
@@ -10954,8 +10268,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grip-vertical",

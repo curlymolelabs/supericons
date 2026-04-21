@@ -10,8 +10,6 @@
       "depicts": "A symbol representing alarm clock.",
       "purpose": "Show alarm clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "clock"
@@ -26,8 +24,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:alarm_clock_minus",
@@ -37,8 +35,6 @@
       "depicts": "A symbol representing alarm clock minus.",
       "purpose": "Show alarm clock minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "clock",
@@ -55,8 +51,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:alarm_clock_off",
@@ -66,8 +62,6 @@
       "depicts": "A symbol representing alarm clock off.",
       "purpose": "Show alarm clock off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "clock",
@@ -84,8 +78,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:alarm_plus",
@@ -95,8 +89,6 @@
       "depicts": "A symbol representing alarm plus.",
       "purpose": "Show alarm plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "plus"
@@ -111,8 +103,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:archive_restore",
@@ -122,8 +114,6 @@
       "depicts": "A symbol representing archive restore.",
       "purpose": "Show archive restore as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "archive",
         "restore"
@@ -138,8 +128,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_plus",
@@ -149,8 +139,6 @@
       "depicts": "A symbol representing badge plus.",
       "purpose": "Show badge plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "plus"
@@ -165,8 +153,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_x",
@@ -176,8 +164,6 @@
       "depicts": "A symbol representing badge x.",
       "purpose": "Show badge x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "x"
@@ -192,8 +178,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:banknote_x",
@@ -203,8 +189,6 @@
       "depicts": "A symbol representing banknote x.",
       "purpose": "Show banknote x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "banknote",
         "x"
@@ -219,8 +203,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:battery_plus",
@@ -230,8 +214,6 @@
       "depicts": "A symbol representing battery plus.",
       "purpose": "Show battery plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "plus"
@@ -246,8 +228,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_copy",
@@ -257,8 +239,6 @@
       "depicts": "A symbol representing book copy.",
       "purpose": "Show book copy as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "copy"
@@ -273,8 +253,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_open",
@@ -284,8 +264,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "open",
@@ -301,8 +279,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_open_text",
@@ -312,8 +290,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "open",
@@ -331,8 +307,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_plus",
@@ -342,8 +318,6 @@
       "depicts": "A symbol representing book plus.",
       "purpose": "Show book plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "plus"
@@ -358,8 +332,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_user",
@@ -369,8 +343,6 @@
       "depicts": "A symbol representing book user.",
       "purpose": "Show book user as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "book",
         "user"
@@ -385,8 +357,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_x",
@@ -396,8 +368,6 @@
       "depicts": "A symbol representing book x.",
       "purpose": "Show book x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "x"
@@ -412,8 +382,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bookmark_minus",
@@ -423,8 +393,6 @@
       "depicts": "A symbol representing bookmark minus.",
       "purpose": "Show bookmark minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "minus"
@@ -439,8 +407,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_1",
@@ -450,8 +418,6 @@
       "depicts": "A symbol representing calendar.",
       "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "1"
@@ -466,8 +432,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_cog",
@@ -477,8 +443,6 @@
       "depicts": "A symbol representing calendar cog.",
       "purpose": "Show calendar cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "cog"
@@ -493,8 +457,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_days",
@@ -504,8 +468,6 @@
       "depicts": "A symbol representing calendar days.",
       "purpose": "Show calendar days as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "days"
@@ -520,8 +482,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_fold",
@@ -531,8 +493,6 @@
       "depicts": "A symbol representing calendar fold.",
       "purpose": "Show calendar fold as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "fold"
@@ -547,8 +507,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_heart",
@@ -558,8 +518,6 @@
       "depicts": "A symbol representing calendar heart.",
       "purpose": "Show calendar heart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "calendar",
         "heart"
@@ -574,8 +532,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_minus",
@@ -585,8 +543,6 @@
       "depicts": "A symbol representing calendar minus.",
       "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "minus"
@@ -601,8 +557,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_minus_2",
@@ -612,8 +568,6 @@
       "depicts": "A symbol representing calendar minus.",
       "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "minus",
@@ -630,8 +584,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_off",
@@ -641,8 +595,6 @@
       "depicts": "A symbol representing calendar off.",
       "purpose": "Show calendar off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "off"
@@ -657,8 +609,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_range",
@@ -668,8 +620,6 @@
       "depicts": "A symbol representing calendar range.",
       "purpose": "Show calendar range as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "range"
@@ -684,8 +634,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:calendar_sync",
@@ -695,8 +645,6 @@
       "depicts": "A symbol representing calendar sync.",
       "purpose": "Show calendar sync as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "sync"
@@ -711,8 +659,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:chevron_first",
@@ -722,8 +670,6 @@
       "depicts": "A symbol representing chevron first.",
       "purpose": "Show chevron first as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chevron",
         "first"
@@ -738,8 +684,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:chevron_last",
@@ -749,8 +695,6 @@
       "depicts": "A symbol representing chevron last.",
       "purpose": "Show chevron last as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chevron",
         "last"
@@ -765,8 +709,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:circle_fading_plus",
@@ -776,8 +720,6 @@
       "depicts": "A symbol representing circle fading plus.",
       "purpose": "Show circle fading plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "circle",
         "fading",
@@ -794,8 +736,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:circle_plus",
@@ -805,8 +747,6 @@
       "depicts": "A symbol representing circle plus.",
       "purpose": "Show circle plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "circle",
         "plus"
@@ -821,8 +761,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:circle_user",
@@ -832,8 +772,6 @@
       "depicts": "A symbol representing circle user.",
       "purpose": "Show circle user as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "circle",
         "user"
@@ -848,8 +786,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:circle_user_round",
@@ -859,8 +797,6 @@
       "depicts": "A symbol representing circle user round.",
       "purpose": "Show circle user round as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "circle",
         "user",
@@ -877,8 +813,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clipboard_clock",
@@ -888,8 +824,6 @@
       "depicts": "A symbol representing clipboard clock.",
       "purpose": "Show clipboard clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "clock"
@@ -904,8 +838,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clipboard_copy",
@@ -915,8 +849,6 @@
       "depicts": "A symbol representing clipboard copy.",
       "purpose": "Show clipboard copy as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "copy"
@@ -931,8 +863,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clipboard_edit",
@@ -942,8 +874,6 @@
       "depicts": "A symbol representing clipboard edit.",
       "purpose": "Show clipboard edit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "edit"
@@ -958,8 +888,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clipboard_plus",
@@ -969,8 +899,6 @@
       "depicts": "A symbol representing clipboard plus.",
       "purpose": "Show clipboard plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "plus"
@@ -985,8 +913,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clipboard_x",
@@ -996,8 +924,6 @@
       "depicts": "A symbol representing clipboard x.",
       "purpose": "Show clipboard x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "x"
@@ -1012,8 +938,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_1",
@@ -1023,8 +949,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "1"
@@ -1039,8 +963,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_10",
@@ -1050,8 +974,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "10"
@@ -1066,8 +988,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_11",
@@ -1077,8 +999,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "11"
@@ -1093,8 +1013,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_12",
@@ -1104,8 +1024,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "12"
@@ -1120,8 +1038,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_3",
@@ -1131,8 +1049,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "3"
@@ -1147,8 +1063,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_4",
@@ -1158,8 +1074,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "4"
@@ -1174,8 +1088,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_5",
@@ -1185,8 +1099,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "5"
@@ -1201,8 +1113,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_6",
@@ -1212,8 +1124,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "6"
@@ -1228,8 +1138,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_7",
@@ -1239,8 +1149,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "7"
@@ -1255,8 +1163,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_8",
@@ -1266,8 +1174,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "8"
@@ -1282,8 +1188,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_9",
@@ -1293,8 +1199,6 @@
       "depicts": "A symbol representing clock.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "9"
@@ -1309,8 +1213,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:clock_fading",
@@ -1320,8 +1224,6 @@
       "depicts": "A symbol representing clock fading.",
       "purpose": "Show clock fading as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clock",
         "fading"
@@ -1336,8 +1238,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:cloud_download",
@@ -1347,8 +1249,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "download",
@@ -1364,8 +1264,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:cloud_upload",
@@ -1375,8 +1275,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "upload",
@@ -1392,8 +1290,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:columns_settings",
@@ -1403,8 +1301,6 @@
       "depicts": "A symbol representing columns settings.",
       "purpose": "Show columns settings as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "columns",
         "settings"
@@ -1419,8 +1315,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:copy_minus",
@@ -1430,8 +1326,6 @@
       "depicts": "A symbol representing copy minus.",
       "purpose": "Show copy minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "copy",
         "minus"
@@ -1446,8 +1340,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:copy_slash",
@@ -1457,8 +1351,6 @@
       "depicts": "A symbol representing copy slash.",
       "purpose": "Show copy slash as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "copy",
         "slash"
@@ -1473,8 +1365,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:diamond_plus",
@@ -1484,8 +1376,6 @@
       "depicts": "A symbol representing diamond plus.",
       "purpose": "Show diamond plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "diamond",
         "plus"
@@ -1500,8 +1390,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:door_open",
@@ -1511,8 +1401,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "door",
         "open",
@@ -1528,8 +1416,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:download_cloud",
@@ -1539,8 +1427,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "cloud",
@@ -1556,8 +1442,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_digit",
@@ -1567,8 +1453,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "digit"
@@ -1584,8 +1468,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_exclamation_point",
@@ -1595,8 +1479,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "exclamation",
@@ -1614,8 +1496,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_headphone",
@@ -1625,8 +1507,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "headphone"
@@ -1642,8 +1522,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_heart",
@@ -1653,8 +1533,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "heart"
@@ -1670,8 +1548,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_image",
@@ -1681,8 +1559,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "image"
@@ -1698,8 +1574,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_input",
@@ -1709,8 +1585,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "input"
@@ -1726,8 +1600,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_json",
@@ -1737,8 +1611,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "json"
@@ -1754,8 +1626,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_json_2",
@@ -1765,8 +1637,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "json",
@@ -1784,8 +1654,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_line_chart",
@@ -1795,8 +1665,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "line",
@@ -1814,8 +1682,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_minus",
@@ -1825,8 +1693,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "minus"
@@ -1842,8 +1708,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_minus_2",
@@ -1853,8 +1719,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "minus",
@@ -1872,8 +1736,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_output",
@@ -1883,8 +1747,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "output"
@@ -1900,8 +1762,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_pen",
@@ -1911,8 +1773,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "pen"
@@ -1928,8 +1788,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_pen_line",
@@ -1939,8 +1799,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "pen",
@@ -1958,8 +1816,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_pie_chart",
@@ -1969,8 +1827,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "pie",
@@ -1988,8 +1844,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_question",
@@ -1999,8 +1855,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "question"
@@ -2016,8 +1870,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_question_mark",
@@ -2027,8 +1881,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "question",
@@ -2046,8 +1898,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_signal",
@@ -2057,8 +1909,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "signal"
@@ -2074,8 +1924,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_signature",
@@ -2085,8 +1935,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "signature"
@@ -2102,8 +1950,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_sliders",
@@ -2113,8 +1961,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "sliders"
@@ -2130,8 +1976,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_spreadsheet",
@@ -2141,8 +1987,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "spreadsheet"
@@ -2158,8 +2002,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_stack",
@@ -2169,8 +2013,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "stack"
@@ -2186,8 +2028,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_symlink",
@@ -2197,8 +2039,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "symlink"
@@ -2214,8 +2054,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_terminal",
@@ -2225,8 +2065,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "terminal"
@@ -2242,8 +2080,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_text",
@@ -2253,8 +2091,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "text"
@@ -2270,8 +2106,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_type",
@@ -2281,8 +2117,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "type"
@@ -2298,8 +2132,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_type_2",
@@ -2309,8 +2143,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "type",
@@ -2328,8 +2160,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_video",
@@ -2339,8 +2171,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "video"
@@ -2356,8 +2186,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_video_2",
@@ -2367,8 +2197,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "video",
@@ -2386,8 +2214,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_video_camera",
@@ -2397,8 +2225,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "video",
@@ -2416,8 +2242,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_volume",
@@ -2427,8 +2253,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "volume"
@@ -2444,8 +2268,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_volume_2",
@@ -2455,8 +2279,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "volume",
@@ -2474,8 +2296,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_heart",
@@ -2485,8 +2307,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "heart"
@@ -2502,8 +2322,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_tree",
@@ -2513,8 +2333,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "tree"
@@ -2530,8 +2348,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:funnel_plus",
@@ -2541,8 +2359,6 @@
       "depicts": "A symbol representing funnel plus.",
       "purpose": "Show funnel plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "funnel",
         "plus"
@@ -2557,8 +2373,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:funnel_x",
@@ -2568,8 +2384,6 @@
       "depicts": "A symbol representing funnel x.",
       "purpose": "Show funnel x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "funnel",
         "x"
@@ -2584,8 +2398,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:git_branch_plus",
@@ -2595,8 +2409,6 @@
       "depicts": "A symbol representing git branch plus.",
       "purpose": "Show git branch plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "branch",
@@ -2613,8 +2425,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:globe_x",
@@ -2624,8 +2436,6 @@
       "depicts": "A symbol representing globe x.",
       "purpose": "Show globe x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "globe",
         "x"
@@ -2640,8 +2450,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:hard_drive_download",
@@ -2651,8 +2461,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hard",
         "drive",
@@ -2670,8 +2478,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:hard_drive_upload",
@@ -2681,8 +2489,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hard",
         "drive",
@@ -2700,8 +2506,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:heart_plus",
@@ -2711,8 +2517,6 @@
       "depicts": "A symbol representing heart plus.",
       "purpose": "Show heart plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "heart",
         "plus"
@@ -2727,8 +2531,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:house_plus",
@@ -2738,8 +2542,6 @@
       "depicts": "A symbol representing house plus.",
       "purpose": "Show house plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "house",
         "plus"
@@ -2754,8 +2556,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:image_plus",
@@ -2765,8 +2567,6 @@
       "depicts": "A symbol representing image plus.",
       "purpose": "Show image plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "image",
         "plus"
@@ -2781,8 +2581,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:layers_plus",
@@ -2792,8 +2592,6 @@
       "depicts": "A symbol representing layers plus.",
       "purpose": "Show layers plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "layers",
         "plus"
@@ -2808,8 +2606,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:layout_panel_top",
@@ -2819,8 +2617,6 @@
       "depicts": "A symbol representing layout panel top.",
       "purpose": "Show layout panel top as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "layout",
         "panel",
@@ -2837,8 +2633,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:layout_template",
@@ -2848,8 +2644,6 @@
       "depicts": "A symbol representing layout template.",
       "purpose": "Show layout template as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "layout",
         "template"
@@ -2864,8 +2658,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:link_2_off",
@@ -2875,8 +2669,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a linked file, connected document, or reference to external file content.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "link",
         "2",
@@ -2895,8 +2687,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

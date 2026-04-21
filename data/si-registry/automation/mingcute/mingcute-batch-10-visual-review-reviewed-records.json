@@ -12,8 +12,6 @@
       "depicts": "A horizontal selector or handle used to adjust or highlight a left-to-right control.",
       "purpose": "Show a horizontal selector, drag handle, or horizontal adjustment point.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "horizontal selector",
         "horizontal handle",
@@ -34,8 +32,8 @@
         "svg-payload",
         "editorial-judgment"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:selector_vertical",
@@ -45,8 +43,6 @@
       "depicts": "A vertical selector or handle used to adjust or highlight an up-and-down control.",
       "purpose": "Show a vertical selector, drag handle, or vertical adjustment point.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "vertical selector",
         "vertical handle",
@@ -67,8 +63,8 @@
         "svg-payload",
         "editorial-judgment"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     }
   ]
 }

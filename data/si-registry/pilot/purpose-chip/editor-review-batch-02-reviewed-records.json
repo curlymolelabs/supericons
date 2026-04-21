@@ -10,8 +10,6 @@
       "depicts": "A grid of small squares representing app destinations.",
       "purpose": "Show an app grid, app launcher, or collection of app destinations.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "apps",
         "app grid",
@@ -32,8 +30,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:chevron_left",
@@ -43,8 +41,6 @@
       "depicts": "A left-facing navigation arrow.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -65,8 +61,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:chevron_right",
@@ -76,8 +72,6 @@
       "depicts": "A right-facing navigation arrow.",
       "purpose": "Show a move forward to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -98,8 +92,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:dashboard",
@@ -109,8 +103,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or a dashboard-style overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -131,8 +123,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:data_object",
@@ -142,8 +134,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data object or typed record.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "data object",
         "structured record",
@@ -164,8 +154,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:database",
@@ -175,8 +165,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -197,8 +185,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:database_search",
@@ -208,8 +196,6 @@
       "depicts": "A search-focused symbol showing structured or scoped search.",
       "purpose": "Show search across stored records or structured data.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "search",
         "database",
@@ -230,8 +216,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:dataset",
@@ -241,8 +227,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a dataset or grouped training data.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "dataset",
         "training data",
@@ -263,8 +247,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:dataset_linked",
@@ -274,8 +258,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show linked datasets or connected data sets.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "linked dataset",
         "connected data",
@@ -296,8 +278,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:drag_indicator",
@@ -307,8 +289,6 @@
       "depicts": "A grip pattern used for dragging or reordering.",
       "purpose": "Show that an item can be dragged, moved, or reordered.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "drag",
         "reorder",
@@ -329,8 +309,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:expand_less",
@@ -340,8 +320,6 @@
       "depicts": "An upward control indicating content can close or fold away.",
       "purpose": "Show that open content, options, or details can collapse closed.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "collapse",
         "show less",
@@ -362,8 +340,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:expand_more",
@@ -373,8 +351,6 @@
       "depicts": "A downward control indicating more content can open.",
       "purpose": "Show that more content, options, or details can expand open.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "expand",
         "show more",
@@ -395,8 +371,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:filter_list",
@@ -406,8 +382,6 @@
       "depicts": "A list or funnel control for narrowing visible results.",
       "purpose": "Show filtering of a list, results, or visible data set.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "list filter",
@@ -428,8 +402,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:first_page",
@@ -439,8 +413,6 @@
       "depicts": "A page-jump control that moves to the beginning of a list or pager.",
       "purpose": "Show a jump to the first page or start of a paged result set.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "first page",
         "start",
@@ -461,8 +433,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:fullscreen",
@@ -472,8 +444,6 @@
       "depicts": "A frame-expansion icon that fills the available screen.",
       "purpose": "Show entering full screen or expanding content to take over the screen.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "full screen",
         "expand view",
@@ -494,8 +464,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:fullscreen_exit",
@@ -505,8 +475,6 @@
       "depicts": "A frame-collapse icon returning from a full-screen view.",
       "purpose": "Show leaving full screen or restoring a smaller view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "exit full screen",
         "restore view",
@@ -527,8 +495,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:generating_tokens",
@@ -538,8 +506,6 @@
       "depicts": "Token Generation shown as an AI model or token-related symbol.",
       "purpose": "Show token generation, token streaming, or incremental model output.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "token generation",
         "streaming",
@@ -560,8 +526,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.81,
-      "confidence_band": "medium"
+      "routing_score": 0.81,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:grid_view",
@@ -571,8 +537,6 @@
       "depicts": "A tiled layout icon showing content in a grid.",
       "purpose": "Show a grid or tiled view mode for browsing content.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "grid view",
         "tiles",
@@ -593,8 +557,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:last_page",
@@ -604,8 +568,6 @@
       "depicts": "A page-jump control that moves to the end of a list or pager.",
       "purpose": "Show a jump to the last page or end of a paged result set.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "last page",
         "end",
@@ -626,8 +588,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:memory",
@@ -637,8 +599,6 @@
       "depicts": "A memory-related symbol for saved context or retained state.",
       "purpose": "Show retained memory, saved context, or remembered state inside a system.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "memory",
         "saved context",
@@ -659,8 +619,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:memory_alt",
@@ -670,8 +630,6 @@
       "depicts": "A memory-related symbol for saved context or retained state.",
       "purpose": "Show retained memory, saved context, or remembered state inside a system.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "memory",
         "saved context",
@@ -692,8 +650,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:menu_open",
@@ -703,8 +661,6 @@
       "depicts": "A menu icon shown in an opened or opening state.",
       "purpose": "Show that the main menu or side menu can open or has been revealed.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "menu",
         "open menu",
@@ -725,8 +681,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:model_training",
@@ -736,8 +692,6 @@
       "depicts": "Model Training shown as an AI model or token-related symbol.",
       "purpose": "Show model training, learning, or tuning of an AI system.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "model training",
         "learning",
@@ -758,8 +712,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.81,
-      "confidence_band": "medium"
+      "routing_score": 0.81,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:open_in_full",
@@ -769,8 +723,6 @@
       "depicts": "A frame-expansion icon that fills the available screen.",
       "purpose": "Show entering full screen or expanding content to take over the screen.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "full screen",
         "expand view",
@@ -791,8 +743,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:open_in_new",
@@ -802,8 +754,6 @@
       "depicts": "An outward arrow showing content opening in a new destination.",
       "purpose": "Show opening content in a new tab, new window, or external destination.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "open in new",
         "external",
@@ -824,8 +774,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:redo",
@@ -835,8 +785,6 @@
       "depicts": "A curved arrow replaying a previous state change.",
       "purpose": "Show redoing an action that was just undone.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "redo",
         "repeat action",
@@ -857,8 +805,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:refresh",
@@ -868,8 +816,6 @@
       "depicts": "A circular arrow loop used for reloading or refetching.",
       "purpose": "Show refreshing or reloading the current view, results, or visible content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -890,8 +836,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:robot",
@@ -901,8 +847,6 @@
       "depicts": "A robot-like symbol for an assistant or automated agent.",
       "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "agent",
         "assistant",
@@ -923,8 +867,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:schema",
@@ -934,8 +878,6 @@
       "depicts": "A structured schema symbol for typed data rules.",
       "purpose": "Show structured schema, field rules, or typed data shape.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "schema",
         "data shape",
@@ -956,8 +898,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:segment",
@@ -967,8 +909,6 @@
       "depicts": "A segmented switch used for quick view or mode changes.",
       "purpose": "Show segment layout, grouped bars, or a compact segmented interface when nearby UI context makes that meaning clear.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "segmented control",
         "switch view",
@@ -989,8 +929,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:smart_toy",
@@ -1000,8 +940,6 @@
       "depicts": "A robot-like symbol for an assistant or automated agent.",
       "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "agent",
         "assistant",
@@ -1022,8 +960,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:sort",
@@ -1033,8 +971,6 @@
       "depicts": "A control that changes ordering or ranking of items.",
       "purpose": "Show sorting of a list, results, or ordered set of items.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "order",
@@ -1055,8 +991,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:tab",
@@ -1066,8 +1002,6 @@
       "depicts": "A tab-like layout marker for switching sections.",
       "purpose": "Show tabbed navigation between sibling sections or views.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "tabs",
         "tab navigation",
@@ -1088,8 +1022,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:terminal",
@@ -1099,8 +1033,6 @@
       "depicts": "A command-line terminal prompt.",
       "purpose": "Show command-line tooling, terminal access, or developer shell work.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "terminal",
         "command line",
@@ -1121,8 +1053,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:token",
@@ -1132,8 +1064,6 @@
       "depicts": "Token shown as an AI model or token-related symbol.",
       "purpose": "Show token units, model tokens, or token-based usage.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "token",
         "usage unit",
@@ -1154,8 +1084,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.81,
-      "confidence_band": "medium"
+      "routing_score": 0.81,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:undo",
@@ -1165,8 +1095,6 @@
       "depicts": "A curved arrow returning to a previous state.",
       "purpose": "Show undoing the most recent action.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "undo",
         "reverse action",
@@ -1187,8 +1115,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:view_list",
@@ -1198,8 +1126,6 @@
       "depicts": "A stacked-line layout icon for list presentation.",
       "purpose": "Show a list view mode for browsing content in rows.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "list view",
         "rows",
@@ -1220,8 +1146,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:view_module",
@@ -1231,8 +1157,6 @@
       "depicts": "A tiled layout icon showing content in a grid.",
       "purpose": "Show a grid or tiled view mode for browsing content.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "grid view",
         "tiles",
@@ -1253,8 +1177,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:view_sidebar",
@@ -1264,8 +1188,6 @@
       "depicts": "A layout icon showing a main area beside a sidebar.",
       "purpose": "Show a sidebar layout or a control that opens, closes, or focuses the sidebar.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "sidebar",
         "layout",
@@ -1286,8 +1208,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:webhook",
@@ -1297,8 +1219,6 @@
       "depicts": "A hook-like integration symbol for events or callbacks.",
       "purpose": "Show a webhook, event callback, or trigger sent between systems.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "webhook",
         "event callback",
@@ -1319,8 +1239,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:zoom_in",
@@ -1330,8 +1250,6 @@
       "depicts": "A zoom control for scaling content in.",
       "purpose": "Show zooming in on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "in",
@@ -1352,8 +1270,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:zoom_out",
@@ -1363,8 +1281,6 @@
       "depicts": "A zoom control for scaling content out.",
       "purpose": "Show zooming out on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "out",
@@ -1385,8 +1301,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:more_horiz",
@@ -1396,8 +1312,6 @@
       "depicts": "A grouped dot icon used for overflow actions.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "overflow",
@@ -1418,8 +1332,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:more_vert",
@@ -1429,8 +1343,6 @@
       "depicts": "A grouped dot icon used for overflow actions.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "overflow",
@@ -1451,8 +1363,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:picture_in_picture_alt",
@@ -1462,8 +1374,6 @@
       "depicts": "A small floating window inside a larger frame.",
       "purpose": "Show picture-in-picture or a floating mini-player style layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "picture in picture",
         "floating window",
@@ -1484,8 +1394,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:splitscreen",
@@ -1495,8 +1405,6 @@
       "depicts": "A layout icon showing the screen divided into sections.",
       "purpose": "Show a split-screen or side-by-side layout mode.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "split view",
         "side by side",
@@ -1517,8 +1425,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:unfold_less",
@@ -1528,8 +1436,6 @@
       "depicts": "An upward control indicating content can close or fold away.",
       "purpose": "Show that open content, options, or details can collapse closed.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "collapse",
         "show less",
@@ -1550,8 +1456,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:unfold_more",
@@ -1561,8 +1467,6 @@
       "depicts": "A downward control indicating more content can open.",
       "purpose": "Show that more content, options, or details can expand open.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "expand",
         "show more",
@@ -1583,8 +1487,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     }
   ]
 }

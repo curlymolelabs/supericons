@@ -10,8 +10,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "droplet",
         "check",
@@ -29,8 +27,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:menu_scale",
@@ -40,8 +38,6 @@
       "depicts": "A stacked-line menu or drawer entry icon.",
       "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "menu",
         "navigation",
@@ -62,8 +58,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:more_horiz",
@@ -73,8 +69,6 @@
       "depicts": "A grouped dot icon used for overflow actions.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "overflow",
@@ -95,8 +89,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:more_vert",
@@ -106,8 +100,6 @@
       "depicts": "A grouped dot icon used for overflow actions.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "overflow",
@@ -128,8 +120,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:warning_circle",
@@ -139,8 +131,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "warning",
         "circle",
@@ -158,8 +148,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:window_lock",
@@ -169,8 +159,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -191,8 +179,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:database_warning",
@@ -202,8 +190,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "database",
         "warning",
@@ -220,8 +206,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:grid_plus",
@@ -231,8 +217,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a grid layout or switching content into a grid view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "grid",
@@ -250,8 +234,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:shield_download",
@@ -261,8 +245,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "download",
@@ -280,8 +262,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shield_plus_in",
@@ -291,8 +273,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "plus",
@@ -312,8 +292,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shield_upload",
@@ -323,8 +303,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "upload",
@@ -342,8 +320,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shopping_code_check",
@@ -353,8 +331,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "shopping",
         "code",
@@ -373,8 +349,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:user_badge_check",
@@ -384,8 +360,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "user",
         "badge",
@@ -404,8 +378,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:airplane",
@@ -415,8 +389,6 @@
       "depicts": "A symbol representing airplane.",
       "purpose": "Show airplane as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "airplane"
       ],
@@ -430,8 +402,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:airplay",
@@ -441,8 +413,6 @@
       "depicts": "A symbol representing airplay.",
       "purpose": "Show airplay as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airplay"
       ],
@@ -456,8 +426,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:album",
@@ -467,8 +437,6 @@
       "depicts": "A symbol representing album.",
       "purpose": "Show album as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "album"
       ],
@@ -482,8 +450,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:apple",
@@ -493,8 +461,6 @@
       "depicts": "The official Apple brand or product mark.",
       "purpose": "Show the official Apple brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "apple",
         "brand",
@@ -511,8 +477,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:asana",
@@ -522,8 +488,6 @@
       "depicts": "The official Asana brand or product mark.",
       "purpose": "Show the official Asana brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "asana",
         "brand",
@@ -540,8 +504,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:asterisk",
@@ -551,8 +515,6 @@
       "depicts": "The official Asterisk brand or product mark.",
       "purpose": "Show the official Asterisk brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "asterisk",
         "brand",
@@ -569,8 +531,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:attachment",
@@ -580,8 +542,6 @@
       "depicts": "A symbol representing attachment.",
       "purpose": "Show attachment as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "attachment"
       ],
@@ -595,8 +555,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bank",
@@ -606,8 +566,6 @@
       "depicts": "A symbol representing bank.",
       "purpose": "Show bank as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bank"
       ],
@@ -621,8 +579,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:barcode",
@@ -632,8 +590,6 @@
       "depicts": "A symbol representing barcode.",
       "purpose": "Show barcode as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barcode"
       ],
@@ -647,8 +603,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:basketball",
@@ -658,8 +614,6 @@
       "depicts": "A symbol representing basketball.",
       "purpose": "Show basketball as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basketball"
       ],
@@ -673,8 +627,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:battery_charging",
@@ -684,8 +638,6 @@
       "depicts": "A symbol representing battery charging.",
       "purpose": "Show battery charging as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "charging"
@@ -701,8 +653,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bed",
@@ -712,8 +664,6 @@
       "depicts": "A symbol representing bed.",
       "purpose": "Show bed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed"
       ],
@@ -727,8 +677,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:behance",
@@ -738,8 +688,6 @@
       "depicts": "The official Behance brand or product mark.",
       "purpose": "Show the official Behance brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "behance",
         "brand",
@@ -756,8 +704,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bitbucket",
@@ -767,8 +715,6 @@
       "depicts": "The official Bitbucket brand or product mark.",
       "purpose": "Show the official Bitbucket brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "bitbucket",
         "brand",
@@ -785,8 +731,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bluetooth",
@@ -796,8 +742,6 @@
       "depicts": "The official Bluetooth brand or product mark.",
       "purpose": "Show the official Bluetooth brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "bluetooth",
         "brand",
@@ -814,8 +758,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bold",
@@ -825,8 +769,6 @@
       "depicts": "A symbol representing bold.",
       "purpose": "Show bold as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bold"
       ],
@@ -840,8 +782,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:book",
@@ -851,8 +793,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book"
       ],
@@ -866,8 +806,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:border_bottom",
@@ -877,8 +817,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -899,8 +837,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:border_inner",
@@ -910,8 +848,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -932,8 +868,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:border_top",
@@ -943,8 +879,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -965,8 +899,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:box",
@@ -976,8 +910,6 @@
       "depicts": "The official Box brand or product mark.",
       "purpose": "Show the official Box brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "box",
         "brand",
@@ -994,8 +926,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:brain",
@@ -1005,8 +937,6 @@
       "depicts": "A stylized brain shape.",
       "purpose": "Show reasoning, thinking, or model cognition in AI-related product flows.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "thinking",
         "reasoning",
@@ -1029,8 +959,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:brightness",
@@ -1040,8 +970,6 @@
       "depicts": "A symbol representing brightness.",
       "purpose": "Show brightness as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brightness"
       ],
@@ -1055,8 +983,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bug",
@@ -1066,8 +994,6 @@
       "depicts": "A symbol representing bug.",
       "purpose": "Show bug as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bug"
       ],
@@ -1081,8 +1007,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:bus",
@@ -1092,8 +1018,6 @@
       "depicts": "A symbol representing bus.",
       "purpose": "Show bus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bus"
       ],
@@ -1107,8 +1031,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:camera",
@@ -1118,8 +1042,6 @@
       "depicts": "A symbol representing camera.",
       "purpose": "Show camera as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "camera"
       ],
@@ -1133,8 +1055,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:car",
@@ -1144,8 +1066,6 @@
       "depicts": "A symbol representing car.",
       "purpose": "Show car as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "car"
       ],
@@ -1159,8 +1079,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cash",
@@ -1170,8 +1090,6 @@
       "depicts": "A symbol representing cash.",
       "purpose": "Show cash as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cash"
       ],
@@ -1185,8 +1103,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:church",
@@ -1196,8 +1114,6 @@
       "depicts": "A symbol representing church.",
       "purpose": "Show church as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "church"
       ],
@@ -1211,8 +1127,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:circle",
@@ -1222,8 +1138,6 @@
       "depicts": "The official Circle brand or product mark.",
       "purpose": "Show the official Circle brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "circle",
         "brand",
@@ -1240,8 +1154,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cloud",
@@ -1251,8 +1165,6 @@
       "depicts": "A symbol representing cloud.",
       "purpose": "Show cloud as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud"
       ],
@@ -1266,8 +1178,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:color_picker",
@@ -1277,8 +1189,6 @@
       "depicts": "A symbol representing color picker.",
       "purpose": "Show color picker as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "color",
         "picker"
@@ -1294,8 +1204,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:combine",
@@ -1305,8 +1215,6 @@
       "depicts": "A symbol representing combine.",
       "purpose": "Show combine as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "combine"
       ],
@@ -1320,8 +1228,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:compass",
@@ -1331,8 +1239,6 @@
       "depicts": "A symbol representing compass.",
       "purpose": "Show compass as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "compass"
       ],
@@ -1346,8 +1252,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:computer",
@@ -1357,8 +1263,6 @@
       "depicts": "A symbol representing computer.",
       "purpose": "Show computer as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "computer"
       ],
@@ -1372,8 +1276,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cookie",
@@ -1383,8 +1287,6 @@
       "depicts": "A symbol representing cookie.",
       "purpose": "Show cookie as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cookie"
       ],
@@ -1398,8 +1300,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:copyright",
@@ -1409,8 +1311,6 @@
       "depicts": "A symbol representing copyright.",
       "purpose": "Show copyright as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "copyright"
       ],
@@ -1424,8 +1324,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cube",
@@ -1435,8 +1335,6 @@
       "depicts": "A symbol representing cube.",
       "purpose": "Show cube as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cube"
       ],
@@ -1450,8 +1348,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cylinder",
@@ -1461,8 +1359,6 @@
       "depicts": "A symbol representing cylinder.",
       "purpose": "Show cylinder as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cylinder"
       ],
@@ -1476,8 +1372,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:dashboard",
@@ -1487,8 +1383,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -1509,8 +1403,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:dashboard_dots",
@@ -1520,8 +1414,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -1542,8 +1434,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:dashboard_speed",
@@ -1553,8 +1445,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -1575,8 +1465,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:desk",
@@ -1586,8 +1476,6 @@
       "depicts": "A symbol representing desk.",
       "purpose": "Show desk as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "desk"
       ],
@@ -1601,8 +1489,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:discord",
@@ -1612,8 +1500,6 @@
       "depicts": "The official Discord brand or product mark.",
       "purpose": "Show the official Discord brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "discord",
         "brand",
@@ -1630,8 +1516,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:drawer",
@@ -1641,8 +1527,6 @@
       "depicts": "A symbol representing drawer.",
       "purpose": "Show drawer as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "drawer"
       ],
@@ -1656,8 +1540,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:dribbble",
@@ -1667,8 +1551,6 @@
       "depicts": "The official Dribbble brand or product mark.",
       "purpose": "Show the official Dribbble brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "dribbble",
         "brand",
@@ -1685,8 +1567,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:drone",
@@ -1696,8 +1578,6 @@
       "depicts": "The official Drone brand or product mark.",
       "purpose": "Show the official Drone brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "drone",
         "brand",
@@ -1714,8 +1594,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ease_in",
@@ -1725,8 +1605,6 @@
       "depicts": "A symbol representing ease in.",
       "purpose": "Show ease in as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ease",
         "in"
@@ -1742,8 +1620,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ease_in_control_point",
@@ -1753,8 +1631,6 @@
       "depicts": "A symbol representing ease in control point.",
       "purpose": "Show ease in control point as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ease",
         "in",
@@ -1774,8 +1650,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ease_out",
@@ -1785,8 +1661,6 @@
       "depicts": "A symbol representing ease out.",
       "purpose": "Show ease out as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ease",
         "out"
@@ -1802,8 +1676,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ease_out_control_point",
@@ -1813,8 +1687,6 @@
       "depicts": "A symbol representing ease out control point.",
       "purpose": "Show ease out control point as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ease",
         "out",
@@ -1834,8 +1706,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:egg",
@@ -1845,8 +1717,6 @@
       "depicts": "A symbol representing egg.",
       "purpose": "Show egg as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "egg"
       ],
@@ -1860,8 +1730,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:emoji",
@@ -1871,8 +1741,6 @@
       "depicts": "A symbol representing emoji.",
       "purpose": "Show emoji as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "emoji"
       ],
@@ -1886,8 +1754,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:exclude",
@@ -1897,8 +1765,6 @@
       "depicts": "A symbol representing exclude.",
       "purpose": "Show exclude as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "exclude"
       ],
@@ -1912,8 +1778,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:facebook",
@@ -1923,8 +1789,6 @@
       "depicts": "The official Facebook brand or product mark.",
       "purpose": "Show the official Facebook brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "facebook",
         "brand",
@@ -1941,8 +1805,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:female",
@@ -1952,8 +1816,6 @@
       "depicts": "A symbol representing female.",
       "purpose": "Show female as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "female"
       ],
@@ -1967,8 +1829,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:figma",
@@ -1978,8 +1840,6 @@
       "depicts": "The official Figma brand or product mark.",
       "purpose": "Show the official Figma brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "figma",
         "brand",
@@ -1996,8 +1856,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:fingerprint",
@@ -2007,8 +1867,6 @@
       "depicts": "A symbol representing fingerprint.",
       "purpose": "Show fingerprint as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fingerprint"
       ],
@@ -2022,8 +1880,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:fish",
@@ -2033,8 +1891,6 @@
       "depicts": "A symbol representing fish.",
       "purpose": "Show fish as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fish"
       ],
@@ -2048,8 +1904,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:flash",
@@ -2059,8 +1915,6 @@
       "depicts": "A symbol representing flash.",
       "purpose": "Show flash as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flash"
       ],
@@ -2074,8 +1928,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:flask",
@@ -2085,8 +1939,6 @@
       "depicts": "The official Flask brand or product mark.",
       "purpose": "Show the official Flask brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "flask",
         "brand",
@@ -2103,8 +1955,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:flower",
@@ -2114,8 +1966,6 @@
       "depicts": "The official Flower brand or product mark.",
       "purpose": "Show the official Flower brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "flower",
         "brand",
@@ -2132,8 +1982,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:fog",
@@ -2143,8 +1993,6 @@
       "depicts": "A symbol representing fog.",
       "purpose": "Show fog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fog"
       ],
@@ -2158,8 +2006,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:football",
@@ -2169,8 +2017,6 @@
       "depicts": "A symbol representing football.",
       "purpose": "Show football as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "football"
       ],
@@ -2184,8 +2030,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:frame",
@@ -2195,8 +2041,6 @@
       "depicts": "A symbol representing frame.",
       "purpose": "Show frame as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "frame"
       ],
@@ -2210,8 +2054,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:fridge",
@@ -2221,8 +2065,6 @@
       "depicts": "A symbol representing fridge.",
       "purpose": "Show fridge as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fridge"
       ],
@@ -2236,8 +2078,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:gift",
@@ -2247,8 +2089,6 @@
       "depicts": "A symbol representing gift.",
       "purpose": "Show gift as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "gift"
       ],
@@ -2262,8 +2102,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git",
@@ -2273,8 +2113,6 @@
       "depicts": "The official Git brand or product mark.",
       "purpose": "Show the official Git brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "git",
         "brand",
@@ -2291,8 +2129,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git_branch",
@@ -2302,8 +2140,6 @@
       "depicts": "A symbol representing git branch.",
       "purpose": "Show git branch as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "branch"
@@ -2319,8 +2155,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git_commit",
@@ -2330,8 +2166,6 @@
       "depicts": "A symbol representing git commit.",
       "purpose": "Show git commit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "commit"
@@ -2347,8 +2181,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git_compare",
@@ -2358,8 +2192,6 @@
       "depicts": "A symbol representing git compare.",
       "purpose": "Show git compare as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "compare"
@@ -2375,8 +2207,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git_merge",
@@ -2386,8 +2218,6 @@
       "depicts": "A symbol representing git merge.",
       "purpose": "Show git merge as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "merge"
@@ -2403,8 +2233,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:git_pull_request",
@@ -2414,8 +2244,6 @@
       "depicts": "A symbol representing git pull request.",
       "purpose": "Show git pull request as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "git",
         "pull",
@@ -2433,8 +2261,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:github",
@@ -2444,8 +2272,6 @@
       "depicts": "The official GitHub brand or product mark.",
       "purpose": "Show the official GitHub brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "github",
         "brand",
@@ -2462,8 +2288,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:globe",
@@ -2473,8 +2299,6 @@
       "depicts": "A symbol representing globe.",
       "purpose": "Show globe as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "globe"
       ],
@@ -2488,8 +2312,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:google",
@@ -2499,8 +2323,6 @@
       "depicts": "The official Google brand or product mark.",
       "purpose": "Show the official Google brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "google",
         "brand",
@@ -2517,8 +2339,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:group",
@@ -2528,8 +2350,6 @@
       "depicts": "A symbol representing group.",
       "purpose": "Show group as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "group"
       ],
@@ -2543,8 +2363,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hammer",
@@ -2554,8 +2374,6 @@
       "depicts": "A symbol representing hammer.",
       "purpose": "Show hammer as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hammer"
       ],
@@ -2569,8 +2387,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hand_card",
@@ -2580,8 +2398,6 @@
       "depicts": "A symbol representing hand card.",
       "purpose": "Show hand card as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hand",
         "card"
@@ -2597,8 +2413,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hashtag",
@@ -2608,8 +2424,6 @@
       "depicts": "A symbol representing hashtag.",
       "purpose": "Show hashtag as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hashtag"
       ],
@@ -2623,8 +2437,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hat",
@@ -2634,8 +2448,6 @@
       "depicts": "A symbol representing hat.",
       "purpose": "Show hat as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hat"
       ],
@@ -2649,8 +2461,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:heart",
@@ -2660,8 +2472,6 @@
       "depicts": "A heart symbol used for likes, favorites, or affection.",
       "purpose": "Show a liked, loved, or favorited state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "liked",
         "favorite",
@@ -2682,8 +2492,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:heavy_rain",
@@ -2693,8 +2503,6 @@
       "depicts": "A symbol representing heavy rain.",
       "purpose": "Show heavy rain as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "heavy",
         "rain"
@@ -2710,8 +2518,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:help_circle",
@@ -2721,8 +2529,6 @@
       "depicts": "A circled help symbol.",
       "purpose": "Show help, guidance, or a place to get assistance.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "help",
         "guidance",
@@ -2743,8 +2549,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hexagon",
@@ -2754,8 +2560,6 @@
       "depicts": "A symbol representing hexagon.",
       "purpose": "Show hexagon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hexagon"
       ],
@@ -2769,8 +2573,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hospital",
@@ -2780,8 +2584,6 @@
       "depicts": "A symbol representing hospital.",
       "purpose": "Show hospital as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "hospital"
       ],
@@ -2795,8 +2597,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:hourglass",
@@ -2806,8 +2608,6 @@
       "depicts": "An hourglass used for waiting or process time.",
       "purpose": "Show waiting, in-progress delay, or time passing before completion.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "waiting",
         "delay",
@@ -2828,8 +2628,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:html5",
@@ -2839,8 +2639,6 @@
       "depicts": "The official HTML5 brand or product mark.",
       "purpose": "Show the official HTML5 brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "html5",
         "brand",
@@ -2857,8 +2655,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ice_cream",
@@ -2868,8 +2666,6 @@
       "depicts": "A symbol representing ice cream.",
       "purpose": "Show ice cream as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ice",
         "cream"
@@ -2885,8 +2681,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:instagram",
@@ -2896,8 +2692,6 @@
       "depicts": "The official Instagram brand or product mark.",
       "purpose": "Show the official Instagram brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "instagram",
         "brand",
@@ -2914,8 +2708,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:intersect",
@@ -2925,8 +2719,6 @@
       "depicts": "A symbol representing intersect.",
       "purpose": "Show intersect as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "intersect"
       ],
@@ -2940,8 +2732,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:italic",
@@ -2951,8 +2743,6 @@
       "depicts": "A symbol representing italic.",
       "purpose": "Show italic as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "italic"
       ],
@@ -2966,8 +2756,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:laptop",
@@ -2977,8 +2767,6 @@
       "depicts": "A symbol representing laptop.",
       "purpose": "Show laptop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "laptop"
       ],
@@ -2992,8 +2780,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:leaf",
@@ -3003,8 +2791,6 @@
       "depicts": "A symbol representing leaf.",
       "purpose": "Show leaf as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "leaf"
       ],
@@ -3018,8 +2804,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:lens",
@@ -3029,8 +2815,6 @@
       "depicts": "The official Lens brand or product mark.",
       "purpose": "Show the official Lens brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "lens",
         "brand",
@@ -3047,8 +2831,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:linear",
@@ -3058,8 +2842,6 @@
       "depicts": "The official Linear brand or product mark.",
       "purpose": "Show the official Linear brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "linear",
         "brand",
@@ -3076,8 +2858,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:linux",
@@ -3087,8 +2869,6 @@
       "depicts": "The official Linux brand or product mark.",
       "purpose": "Show the official Linux brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "linux",
         "brand",
@@ -3105,8 +2885,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:magnet",
@@ -3116,8 +2896,6 @@
       "depicts": "A symbol representing magnet.",
       "purpose": "Show magnet as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "magnet"
       ],
@@ -3131,8 +2909,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:male",
@@ -3142,8 +2920,6 @@
       "depicts": "A symbol representing male.",
       "purpose": "Show male as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "male"
       ],
@@ -3157,8 +2933,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:map",
@@ -3168,8 +2944,6 @@
       "depicts": "A symbol representing map.",
       "purpose": "Show map as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map"
       ],
@@ -3183,8 +2957,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:map_pin",
@@ -3194,8 +2968,6 @@
       "depicts": "A location pin marker.",
       "purpose": "Show a place, saved location, or map marker.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map pin",
         "location",
@@ -3216,8 +2988,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:mastodon",
@@ -3227,8 +2999,6 @@
       "depicts": "The official Mastodon brand or product mark.",
       "purpose": "Show the official Mastodon brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "mastodon",
         "brand",
@@ -3245,8 +3015,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:medal",
@@ -3256,8 +3026,6 @@
       "depicts": "A symbol representing medal.",
       "purpose": "Show medal as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "medal"
       ],
@@ -3271,8 +3039,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:medium",
@@ -3282,8 +3050,6 @@
       "depicts": "The official Medium brand or product mark.",
       "purpose": "Show the official Medium brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "medium",
         "brand",
@@ -3300,8 +3066,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:metro",
@@ -3311,8 +3077,6 @@
       "depicts": "The official Metro brand or product mark.",
       "purpose": "Show the official Metro brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "metro",
         "brand",
@@ -3329,8 +3093,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:microphone",
@@ -3340,8 +3104,6 @@
       "depicts": "A symbol representing microphone.",
       "purpose": "Show microphone as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "microphone"
       ],
@@ -3355,8 +3117,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:microscope",
@@ -3366,8 +3128,6 @@
       "depicts": "A symbol representing microscope.",
       "purpose": "Show microscope as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "microscope"
       ],
@@ -3381,8 +3141,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:minus_circle",
@@ -3392,8 +3152,6 @@
       "depicts": "A symbol representing minus circle.",
       "purpose": "Show minus circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "minus",
         "circle"
@@ -3409,8 +3167,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:minus_square",
@@ -3420,8 +3178,6 @@
       "depicts": "A minus sign inside a square button.",
       "purpose": "Show removing, reducing, or subtracting within the current surface.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove",
         "minus",
@@ -3442,8 +3198,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:mirror",
@@ -3453,8 +3209,6 @@
       "depicts": "A symbol representing mirror.",
       "purpose": "Show mirror as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "mirror"
       ],
@@ -3468,8 +3222,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:movie",
@@ -3479,8 +3233,6 @@
       "depicts": "A symbol representing movie.",
       "purpose": "Show movie as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "movie"
       ],
@@ -3494,8 +3246,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:network",
@@ -3505,8 +3257,6 @@
       "depicts": "Network shown as a connected system or branching structure.",
       "purpose": "Show a connected network, linked nodes, or system graph.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "network",
         "graph",
@@ -3527,8 +3277,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:npm",
@@ -3538,8 +3288,6 @@
       "depicts": "The official npm brand or product mark.",
       "purpose": "Show the official npm brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "npm",
         "brand",
@@ -3556,8 +3304,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:octagon",
@@ -3567,8 +3315,6 @@
       "depicts": "A symbol representing octagon.",
       "purpose": "Show octagon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "octagon"
       ],
@@ -3582,8 +3328,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:package",
@@ -3593,8 +3339,6 @@
       "depicts": "A symbol representing package.",
       "purpose": "Show package as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "package"
       ],
@@ -3608,8 +3352,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:palette",
@@ -3619,8 +3363,6 @@
       "depicts": "A symbol representing palette.",
       "purpose": "Show palette as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "palette"
       ],
@@ -3634,8 +3376,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:parking",
@@ -3645,8 +3387,6 @@
       "depicts": "A symbol representing parking.",
       "purpose": "Show parking as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "parking"
       ],
@@ -3660,8 +3400,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:paypal",
@@ -3671,8 +3411,6 @@
       "depicts": "The official PayPal brand or product mark.",
       "purpose": "Show the official PayPal brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "commerce",
       "semantic_tags": [
         "paypal",
         "brand",
@@ -3689,8 +3427,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:peerlist",
@@ -3700,8 +3438,6 @@
       "depicts": "The official Peerlist brand or product mark.",
       "purpose": "Show the official Peerlist brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "peerlist",
         "brand",
@@ -3718,8 +3454,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:pentagon",
@@ -3729,8 +3465,6 @@
       "depicts": "A symbol representing pentagon.",
       "purpose": "Show pentagon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pentagon"
       ],
@@ -3744,8 +3478,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:percentage",
@@ -3755,8 +3489,6 @@
       "depicts": "A symbol representing percentage.",
       "purpose": "Show percentage as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "percentage"
       ],
@@ -3770,8 +3502,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:phone",
@@ -3781,8 +3513,6 @@
       "depicts": "A symbol representing phone.",
       "purpose": "Show phone as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "phone"
       ],
@@ -3796,8 +3526,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:pin",
@@ -3807,8 +3537,6 @@
       "depicts": "A pin or pushpin symbol.",
       "purpose": "Show pinning, saving a spot, or keeping an item fixed in place.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pin",
         "keep in place",
@@ -3829,8 +3557,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:pinterest",
@@ -3840,8 +3568,6 @@
       "depicts": "The official Pinterest brand or product mark.",
       "purpose": "Show the official Pinterest brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "pinterest",
         "brand",
@@ -3858,8 +3584,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:planet",
@@ -3869,8 +3595,6 @@
       "depicts": "The official Planet brand or product mark.",
       "purpose": "Show the official Planet brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "planet",
         "brand",
@@ -3887,8 +3611,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:playlist",
@@ -3898,8 +3622,6 @@
       "depicts": "A symbol representing playlist.",
       "purpose": "Show playlist as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "playlist"
       ],
@@ -3913,8 +3635,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:rain",
@@ -3924,8 +3646,6 @@
       "depicts": "A symbol representing rain.",
       "purpose": "Show rain as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "rain"
       ],
@@ -3939,8 +3659,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:repeat",
@@ -3950,8 +3670,6 @@
       "depicts": "A symbol representing repeat.",
       "purpose": "Show repeat as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "repeat"
       ],
@@ -3965,8 +3683,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:rocket",
@@ -3976,8 +3694,6 @@
       "depicts": "The official Rocket brand or product mark.",
       "purpose": "Show the official Rocket brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "rocket",
         "brand",
@@ -3994,8 +3710,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:rook",
@@ -4005,8 +3721,6 @@
       "depicts": "The official Rook brand or product mark.",
       "purpose": "Show the official Rook brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "rook",
         "brand",
@@ -4023,8 +3737,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:ruler",
@@ -4034,8 +3748,6 @@
       "depicts": "A symbol representing ruler.",
       "purpose": "Show ruler as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ruler"
       ],
@@ -4049,8 +3761,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:safari",
@@ -4060,8 +3772,6 @@
       "depicts": "The official Safari brand or product mark.",
       "purpose": "Show the official Safari brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "safari",
         "brand",
@@ -4078,8 +3788,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:scarf",
@@ -4089,8 +3799,6 @@
       "depicts": "A symbol representing scarf.",
       "purpose": "Show scarf as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scarf"
       ],
@@ -4104,8 +3812,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:screenshot",
@@ -4115,8 +3823,6 @@
       "depicts": "A symbol representing screenshot.",
       "purpose": "Show screenshot as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "screenshot"
       ],
@@ -4130,8 +3836,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shirt",
@@ -4141,8 +3847,6 @@
       "depicts": "A symbol representing shirt.",
       "purpose": "Show shirt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "shirt"
       ],
@@ -4156,8 +3860,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shop",
@@ -4167,8 +3871,6 @@
       "depicts": "A symbol representing shop.",
       "purpose": "Show shop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "shop"
       ],
@@ -4182,8 +3884,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:shuffle",
@@ -4193,8 +3895,6 @@
       "depicts": "A symbol representing shuffle.",
       "purpose": "Show shuffle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "shuffle"
       ],
@@ -4208,8 +3908,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:skateboard",
@@ -4219,8 +3919,6 @@
       "depicts": "A symbol representing skateboard.",
       "purpose": "Show skateboard as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "skateboard"
       ],
@@ -4234,8 +3932,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:skateboarding",
@@ -4245,8 +3943,6 @@
       "depicts": "A symbol representing skateboarding.",
       "purpose": "Show skateboarding as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "skateboarding"
       ],
@@ -4260,8 +3956,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:snapchat",
@@ -4271,8 +3967,6 @@
       "depicts": "The official Snapchat brand or product mark.",
       "purpose": "Show the official Snapchat brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "snapchat",
         "brand",
@@ -4289,8 +3983,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:snow",
@@ -4300,8 +3994,6 @@
       "depicts": "A symbol representing snow.",
       "purpose": "Show snow as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "snow"
       ],
@@ -4315,8 +4007,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:sofa",
@@ -4326,8 +4018,6 @@
       "depicts": "A symbol representing sofa.",
       "purpose": "Show sofa as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sofa"
       ],
@@ -4341,8 +4031,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:spotify",
@@ -4352,8 +4042,6 @@
       "depicts": "The official Spotify brand or product mark.",
       "purpose": "Show the official Spotify brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "spotify",
         "brand",
@@ -4370,8 +4058,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:square",
@@ -4381,8 +4069,6 @@
       "depicts": "The official Square commerce platform brand mark.",
       "purpose": "Show the official Square commerce platform brand or connected payments service.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "commerce",
       "semantic_tags": [
         "square",
         "brand",
@@ -4402,8 +4088,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:stackoverflow",
@@ -4413,8 +4099,6 @@
       "depicts": "The official Stack Overflow brand or product mark.",
       "purpose": "Show the official Stack Overflow brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "stack overflow",
         "brand",
@@ -4434,8 +4118,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:star",
@@ -4445,8 +4129,6 @@
       "depicts": "A star symbol used for saved or favored items.",
       "purpose": "Show a favorite, featured, or starred state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "favorite",
         "starred",
@@ -4467,8 +4149,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:strikethrough",
@@ -4478,8 +4160,6 @@
       "depicts": "A symbol representing strikethrough.",
       "purpose": "Show strikethrough as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "strikethrough"
       ],
@@ -4493,8 +4173,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:suitcase",
@@ -4504,8 +4184,6 @@
       "depicts": "A symbol representing suitcase.",
       "purpose": "Show suitcase as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "suitcase"
       ],
@@ -4519,8 +4197,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:swimming",
@@ -4530,8 +4208,6 @@
       "depicts": "A symbol representing swimming.",
       "purpose": "Show swimming as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "swimming"
       ],
@@ -4545,8 +4221,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:table",
@@ -4556,8 +4232,6 @@
       "depicts": "A symbol representing table.",
       "purpose": "Show table as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "table"
       ],
@@ -4571,8 +4245,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:telegram",
@@ -4582,8 +4256,6 @@
       "depicts": "The official Telegram brand or product mark.",
       "purpose": "Show the official Telegram brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "telegram",
         "brand",
@@ -4600,8 +4272,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:terminal",
@@ -4611,8 +4283,6 @@
       "depicts": "A command-line terminal prompt.",
       "purpose": "Show command-line tooling, terminal access, or developer shell work.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "terminal",
         "command line",
@@ -4633,8 +4303,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:test_tube",
@@ -4644,8 +4314,6 @@
       "depicts": "A symbol representing test tube.",
       "purpose": "Show test tube as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "test",
         "tube"
@@ -4661,8 +4329,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:text",
@@ -4672,8 +4340,6 @@
       "depicts": "A symbol representing text.",
       "purpose": "Show text as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "text"
       ],
@@ -4687,8 +4353,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:threads",
@@ -4698,8 +4364,6 @@
       "depicts": "The official Threads social platform brand mark.",
       "purpose": "Show the official Threads social platform brand or connected social destination.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "threads",
         "brand",
@@ -4720,8 +4384,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:thunderstorm",
@@ -4731,8 +4395,6 @@
       "depicts": "A symbol representing thunderstorm.",
       "purpose": "Show thunderstorm as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "thunderstorm"
       ],
@@ -4746,8 +4408,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:tiktok",
@@ -4757,8 +4419,6 @@
       "depicts": "The official TikTok brand or product mark.",
       "purpose": "Show the official TikTok brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "tiktok",
         "brand",
@@ -4775,8 +4435,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:tower",
@@ -4786,8 +4446,6 @@
       "depicts": "The official Tower brand or product mark.",
       "purpose": "Show the official Tower brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "tower",
         "brand",
@@ -4804,8 +4462,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:train",
@@ -4815,8 +4473,6 @@
       "depicts": "A symbol representing train.",
       "purpose": "Show train as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "train"
       ],
@@ -4830,8 +4486,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:translate",
@@ -4841,8 +4497,6 @@
       "depicts": "A symbol representing translate.",
       "purpose": "Show translate as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "translate"
       ],
@@ -4856,8 +4510,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:tree",
@@ -4867,8 +4521,6 @@
       "depicts": "A symbol representing tree.",
       "purpose": "Show tree as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "tree"
       ],
@@ -4882,8 +4534,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:trello",
@@ -4893,8 +4545,6 @@
       "depicts": "The official Trello brand or product mark.",
       "purpose": "Show the official Trello brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "trello",
         "brand",
@@ -4911,8 +4561,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:triangle",
@@ -4922,8 +4572,6 @@
       "depicts": "A symbol representing triangle.",
       "purpose": "Show triangle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "triangle"
       ],
@@ -4937,8 +4585,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:trophy",
@@ -4948,8 +4596,6 @@
       "depicts": "A trophy cup with handles and a base.",
       "purpose": "Show an achievement, award, milestone, or winning outcome.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "achievement",
         "award",
@@ -4970,8 +4616,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:truck",
@@ -4981,8 +4627,6 @@
       "depicts": "A symbol representing truck.",
       "purpose": "Show truck as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "truck"
       ],
@@ -4996,8 +4640,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:tunnel",
@@ -5007,8 +4651,6 @@
       "depicts": "A symbol representing tunnel.",
       "purpose": "Show tunnel as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "tunnel"
       ],
@@ -5022,8 +4664,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:umbrella",
@@ -5033,8 +4675,6 @@
       "depicts": "A symbol representing umbrella.",
       "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "umbrella"
       ],
@@ -5048,8 +4688,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:underline",
@@ -5059,8 +4699,6 @@
       "depicts": "A symbol representing underline.",
       "purpose": "Show underline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "underline"
       ],
@@ -5074,8 +4712,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:union",
@@ -5085,8 +4723,6 @@
       "depicts": "A symbol representing union.",
       "purpose": "Show union as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "union"
       ],
@@ -5100,8 +4736,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:unity",
@@ -5111,8 +4747,6 @@
       "depicts": "The official Unity brand or product mark.",
       "purpose": "Show the official Unity brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "unity",
         "brand",
@@ -5129,8 +4763,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:usb",
@@ -5140,8 +4774,6 @@
       "depicts": "A symbol representing usb.",
       "purpose": "Show usb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "usb"
       ],
@@ -5155,8 +4787,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:video_camera",
@@ -5166,8 +4798,6 @@
       "depicts": "A symbol representing video camera.",
       "purpose": "Show video camera as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "video",
         "camera"
@@ -5183,8 +4813,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:voice",
@@ -5194,8 +4824,6 @@
       "depicts": "A symbol representing voice.",
       "purpose": "Show voice as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "voice"
       ],
@@ -5209,8 +4837,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:wallet",
@@ -5220,8 +4848,6 @@
       "depicts": "A symbol representing wallet.",
       "purpose": "Show wallet as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "wallet"
       ],
@@ -5235,8 +4861,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:whatsapp",
@@ -5246,8 +4872,6 @@
       "depicts": "The official WhatsApp brand or product mark.",
       "purpose": "Show the official WhatsApp brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "whatsapp",
         "brand",
@@ -5264,8 +4888,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:wifi",
@@ -5275,8 +4899,6 @@
       "depicts": "A wireless signal icon representing network connection.",
       "purpose": "Show wireless connection status or network availability.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "wifi",
         "network",
@@ -5297,8 +4919,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:wifi_off",
@@ -5308,8 +4930,6 @@
       "depicts": "A symbol representing wifi off.",
       "purpose": "Show wifi off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "wifi",
         "off"
@@ -5325,8 +4945,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:wind",
@@ -5336,8 +4956,6 @@
       "depicts": "A symbol representing wind.",
       "purpose": "Show wind as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "wind"
       ],
@@ -5351,8 +4969,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:windows",
@@ -5362,8 +4980,6 @@
       "depicts": "A symbol representing windows.",
       "purpose": "Show windows as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "windows"
       ],
@@ -5377,8 +4993,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:yelp",
@@ -5388,8 +5004,6 @@
       "depicts": "The official Yelp brand or product mark.",
       "purpose": "Show the official Yelp brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "yelp",
         "brand",
@@ -5406,8 +5020,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:yoga",
@@ -5417,8 +5031,6 @@
       "depicts": "A symbol representing yoga.",
       "purpose": "Show yoga as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "yoga"
       ],
@@ -5432,8 +5044,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:youtube",
@@ -5443,8 +5055,6 @@
       "depicts": "The official YouTube brand or product mark.",
       "purpose": "Show the official YouTube brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "youtube",
         "brand",
@@ -5461,8 +5071,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:zoom_in",
@@ -5472,8 +5082,6 @@
       "depicts": "A zoom control for scaling content in.",
       "purpose": "Show zooming in on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "in",
@@ -5494,8 +5102,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:zoom_out",
@@ -5505,8 +5113,6 @@
       "depicts": "A zoom control for scaling content out.",
       "purpose": "Show zooming out on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "out",
@@ -5527,8 +5133,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:align_center",
@@ -5538,8 +5144,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -5560,8 +5164,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:align_justify",
@@ -5571,8 +5175,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -5593,8 +5195,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:album_list",
@@ -5604,8 +5206,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a list layout or switching content into a list view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "list view",
         "album",
@@ -5623,8 +5223,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bell_notification",
@@ -5634,8 +5234,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show notifications, alerts, or attention for incoming events.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bell",
         "notification",
@@ -5652,8 +5250,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:brain_warning",
@@ -5663,8 +5261,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "brain",
         "warning",
@@ -5681,8 +5277,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bubble_warning",
@@ -5692,8 +5288,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "bubble",
         "warning",
@@ -5710,8 +5304,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:card_shield",
@@ -5721,8 +5315,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "card",
         "shield",
@@ -5740,8 +5332,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:cpu_warning",
@@ -5751,8 +5343,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "cpu",
         "warning",
@@ -5769,8 +5359,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:domotic_warning",
@@ -5780,8 +5370,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "domotic",
         "warning",
@@ -5798,8 +5386,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:dots_grid_3x3",
@@ -5809,8 +5397,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a grid layout or switching content into a grid view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "dots",
@@ -5830,8 +5416,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:double_check",
@@ -5841,8 +5427,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "double",
         "check",
@@ -5859,8 +5443,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:drone_check",
@@ -5870,8 +5454,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "drone",
         "check",
@@ -5888,8 +5470,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:fast_arrow_up_square",
@@ -5899,8 +5481,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -5920,8 +5500,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:fingerprint_check_circle",
@@ -5931,8 +5511,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "fingerprint",
         "check",
@@ -5951,8 +5529,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:google_drive_check",
@@ -5962,8 +5540,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "google",
         "drive",
@@ -5982,8 +5558,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:google_drive_warning",
@@ -5993,8 +5569,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "google",
         "drive",
@@ -6013,8 +5587,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:grid_minus",
@@ -6024,8 +5598,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a grid layout or switching content into a grid view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "grid",
@@ -6043,8 +5615,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:grid_xmark",
@@ -6054,8 +5626,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a grid layout or switching content into a grid view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "grid",
@@ -6073,8 +5643,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:headset_warning",
@@ -6084,8 +5654,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "headset",
         "warning",
@@ -6102,8 +5670,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:health_shield",
@@ -6113,8 +5681,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "health",
         "shield",
@@ -6132,8 +5698,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "iconoir:heart_arrow_down",
@@ -6143,8 +5709,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -6163,8 +5727,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     }
   ]
 }

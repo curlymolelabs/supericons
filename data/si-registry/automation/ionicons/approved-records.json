@@ -21,14 +21,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.85,
     "synonyms": [
       "warning",
       "alert status",
@@ -57,14 +54,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.85,
     "synonyms": [
       "warning",
       "alert status",
@@ -94,15 +88,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -133,15 +124,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -173,14 +161,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -213,14 +198,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go back",
       "previous screen",
@@ -251,14 +233,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -291,14 +270,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go forward",
       "next screen",
@@ -329,15 +305,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -368,15 +341,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -407,14 +377,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "redo",
       "arrow control",
@@ -445,14 +412,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "redo",
       "arrow control",
@@ -483,14 +447,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "undo",
       "arrow control",
@@ -521,14 +482,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "undo",
       "arrow control",
@@ -560,14 +518,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -600,14 +555,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go back",
       "previous screen",
@@ -638,14 +590,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -678,14 +627,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go forward",
       "next screen",
@@ -715,14 +661,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.85,
     "synonyms": [
       "confirmed",
       "bag status",
@@ -751,14 +694,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.85,
     "synonyms": [
       "blocked",
       "ban status",
@@ -788,15 +728,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -827,15 +764,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -867,14 +801,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -904,14 +835,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -941,15 +869,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -980,15 +905,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -1020,14 +942,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -1057,14 +976,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -1094,15 +1010,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -1133,15 +1046,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -1173,14 +1083,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -1210,14 +1117,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -1247,15 +1151,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -1286,15 +1187,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -1326,14 +1224,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -1363,14 +1258,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -1399,14 +1291,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "code",
       "code tool",
@@ -1435,14 +1324,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "code",
       "code tool",
@@ -1471,14 +1357,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "code",
       "code tool",
@@ -1508,14 +1391,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "code",
       "code tool",
@@ -1546,15 +1426,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "filter results",
       "refine list",
@@ -1585,15 +1462,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "locked",
       "secure access",
@@ -1624,15 +1498,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "show",
       "preview",
@@ -1663,15 +1534,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "show",
       "preview",
@@ -1702,15 +1570,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "filter results",
       "refine list",
@@ -1741,15 +1606,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "filter results",
       "refine list",
@@ -1778,14 +1640,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.83,
     "synonyms": [
       "grid view",
       "grid view control",
@@ -1817,14 +1676,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go back",
       "previous screen",
@@ -1856,14 +1712,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "go forward",
       "next screen",
@@ -1894,15 +1747,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "go home",
       "home page",
@@ -1933,15 +1783,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "access key",
       "credentials",
@@ -1971,14 +1818,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.83,
     "synonyms": [
       "list view",
       "list view control",
@@ -2008,14 +1852,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.83,
     "synonyms": [
       "list view",
       "list view control",
@@ -2046,15 +1887,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "locked",
       "secure access",
@@ -2084,14 +1922,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "locked",
       "secure access",
@@ -2122,14 +1957,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "message",
       "mail",
@@ -2160,14 +1992,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "message",
       "mail",
@@ -2198,14 +2027,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "message",
       "mail",
@@ -2238,15 +2064,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A stacked-line menu or drawer entry icon.",
-    "intent": "control",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "main menu",
       "navigation drawer",
@@ -2277,15 +2100,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2316,15 +2136,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2355,15 +2172,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2394,15 +2208,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2433,15 +2244,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2472,15 +2280,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2511,15 +2316,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2550,15 +2352,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2587,14 +2386,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "power",
       "power control",
@@ -2623,14 +2419,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "code",
       "qr tool",
@@ -2661,15 +2454,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "reload",
       "refresh view",
@@ -2700,15 +2490,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "reload",
       "refresh view",
@@ -2739,15 +2526,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2778,15 +2562,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2817,15 +2598,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "back button",
       "previous screen",
@@ -2856,15 +2634,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "next",
       "continue",
@@ -2895,15 +2670,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "find",
       "search content",
@@ -2934,15 +2706,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "find",
       "search content",
@@ -2971,14 +2740,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "act",
-    "domain": "communication",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "message",
       "mail",
@@ -3008,14 +2774,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.84,
     "synonyms": [
       "server control",
       "server tool",
@@ -3044,14 +2807,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "protection",
       "secure access",
@@ -3082,14 +2842,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "protection",
       "secure access",
@@ -3119,14 +2876,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.86,
     "synonyms": [
       "protection",
       "secure access",
@@ -3156,14 +2910,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "swap horizontal outline",
       "swap control",
@@ -3193,14 +2944,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "swap vertical outline",
       "swap control",
@@ -3231,14 +2979,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -3268,14 +3013,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -3303,14 +3045,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "enabled toggle",
       "toggle control",
@@ -3340,15 +3079,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A trash bin used for discard or deletion.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "delete item",
       "remove",
@@ -3379,15 +3115,12 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A trash bin used for discard or deletion.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "approved_reference",
       "svg_payload"
     ],
-    "confidence": 0.9,
     "synonyms": [
       "delete item",
       "remove",
@@ -3418,14 +3151,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move down",
       "go down",
@@ -3455,14 +3185,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.82,
     "synonyms": [
       "move up",
       "go up",
@@ -3490,14 +3217,11 @@
     "projection_policy": "future_public_record",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
-    "confidence": 0.85,
     "synonyms": [
       "warning",
       "warning status",

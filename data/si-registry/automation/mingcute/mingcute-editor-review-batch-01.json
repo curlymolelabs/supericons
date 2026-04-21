@@ -50,8 +50,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A search-focused symbol showing structured or scoped search.",
-        "intent": "discover",
-        "domain": "developer_tools",
         "synonyms": [
           "find file",
           "search files",
@@ -62,8 +60,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_search_line",
@@ -103,8 +100,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A trash bin used for discard or deletion.",
-        "intent": "delete",
-        "domain": "ui_controls",
         "synonyms": [
           "delete item",
           "remove",
@@ -115,8 +110,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_delete_line",
@@ -156,8 +150,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Checklist Complete shown with a completion check mark.",
-        "intent": "confirm",
-        "domain": "product_status",
         "synonyms": [
           "checklist done",
           "completed",
@@ -168,8 +160,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "list_check_line",
@@ -209,8 +200,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -221,8 +210,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "list_search_line",
@@ -262,8 +250,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A horizontal toggle switch in the on position.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "turned on",
           "enabled state",
@@ -274,8 +260,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "toggle_right_line",
@@ -315,8 +300,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -327,8 +310,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_2_ai_line",
@@ -368,8 +350,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -380,8 +360,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_3_ai_line",
@@ -421,8 +400,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -433,8 +410,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_ai_line",
@@ -474,8 +450,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -486,8 +460,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "AZ_sort_ascending_letters_line",
@@ -527,8 +500,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -539,8 +510,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "AZ_sort_descending_letters_line",
@@ -580,8 +550,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-pointing arrow with a return-like stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "back button",
           "previous screen",
@@ -592,8 +560,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "back_2_line",
@@ -633,8 +600,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-pointing arrow with a return-like stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "back button",
           "previous screen",
@@ -645,8 +610,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "back_line",
@@ -686,8 +650,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A clock face used for time or waiting.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "pending time",
           "scheduled",
@@ -698,8 +660,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "clock_line",
@@ -739,8 +700,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A large X mark used as a close control.",
-        "intent": "dismiss",
-        "domain": "ui_shell",
         "synonyms": [
           "close panel",
           "dismiss",
@@ -751,8 +710,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "close_line",
@@ -792,8 +750,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A panel-style layout icon for a dashboard surface.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "overview page",
           "main dashboard",
@@ -804,8 +760,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dashboard_2_line",
@@ -845,8 +800,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A panel-style layout icon for a dashboard surface.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "overview page",
           "main dashboard",
@@ -857,8 +810,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dashboard_3_line",
@@ -898,8 +850,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A panel-style layout icon for a dashboard surface.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "overview page",
           "main dashboard",
@@ -910,8 +860,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dashboard_4_line",
@@ -951,8 +900,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A panel-style layout icon for a dashboard surface.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "overview page",
           "main dashboard",
@@ -963,8 +910,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dashboard_line",
@@ -1004,8 +950,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A trash bin used for discard or deletion.",
-        "intent": "delete",
-        "domain": "ui_controls",
         "synonyms": [
           "delete item",
           "remove",
@@ -1016,8 +960,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "delete_2_line",
@@ -1057,8 +1000,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A trash bin used for discard or deletion.",
-        "intent": "delete",
-        "domain": "ui_controls",
         "synonyms": [
           "delete item",
           "remove",
@@ -1069,8 +1010,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "delete_3_line",
@@ -1110,8 +1050,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A trash bin used for discard or deletion.",
-        "intent": "delete",
-        "domain": "ui_controls",
         "synonyms": [
           "delete item",
           "remove",
@@ -1122,8 +1060,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "delete_line",
@@ -1163,8 +1100,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An eye symbol used for visibility or preview.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "show content",
           "visible state",
@@ -1175,8 +1110,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eye_2_line",
@@ -1216,8 +1150,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An eye symbol used for visibility or preview.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "show content",
           "visible state",
@@ -1228,8 +1160,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eye_line",
@@ -1269,8 +1200,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A funnel shape that narrows content into a smaller output.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "refine results",
           "filter data",
@@ -1281,8 +1210,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "filter_2_line",
@@ -1322,8 +1250,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A funnel shape that narrows content into a smaller output.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "refine results",
           "filter data",
@@ -1334,8 +1260,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "filter_3_line",
@@ -1375,8 +1300,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A funnel shape that narrows content into a smaller output.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "refine results",
           "filter data",
@@ -1387,8 +1310,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "filter_line",
@@ -1428,8 +1350,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1440,8 +1360,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forward_2_line",
@@ -1481,8 +1400,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1493,8 +1410,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "forward_line",
@@ -1534,8 +1450,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A frame-collapse icon returning from a full-screen view.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "leave full screen",
           "restore window",
@@ -1546,8 +1460,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fullscreen_exit_line",
@@ -1587,8 +1500,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A frame-expansion icon that fills the available screen.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "maximize view",
           "enter full screen",
@@ -1599,8 +1510,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fullscreen_line",
@@ -1640,8 +1550,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1652,8 +1560,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_1_line",
@@ -1693,8 +1600,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1705,8 +1610,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_2_line",
@@ -1746,8 +1650,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1758,8 +1660,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_3_line",
@@ -1799,8 +1700,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1811,8 +1710,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_4_line",
@@ -1852,8 +1750,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1864,8 +1760,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_5_line",
@@ -1905,8 +1800,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1917,8 +1810,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_6_line",
@@ -1958,8 +1850,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -1970,8 +1860,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_7_line",
@@ -2011,8 +1900,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A key symbol for access or credentials.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "access key",
           "credentials",
@@ -2023,8 +1910,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "key_1_line",
@@ -2064,8 +1950,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A key symbol for access or credentials.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "access key",
           "credentials",
@@ -2076,8 +1960,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "key_2_line",
@@ -2117,8 +2000,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A key symbol for access or credentials.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "access key",
           "credentials",
@@ -2129,8 +2010,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "key_3_line",
@@ -2170,8 +2050,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A key symbol for access or credentials.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "access key",
           "credentials",
@@ -2182,8 +2060,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "key_4_line",
@@ -2223,8 +2100,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A closed lock showing protected access.",
-        "intent": "confirm",
-        "domain": "security",
         "synonyms": [
           "secure lock",
           "restricted",
@@ -2235,8 +2110,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "lock_line",
@@ -2276,8 +2150,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Three horizontal bars stacked like a hamburger menu.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "open menu",
           "navigation menu",
@@ -2288,8 +2160,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "menu_line",
@@ -2329,8 +2200,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -2341,8 +2210,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "numbers_09_sort_ascending_line",
@@ -2382,8 +2250,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -2394,8 +2260,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "numbers_09_sort_descending_line",
@@ -2435,8 +2300,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -2447,8 +2310,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "numbers_90_sort_ascending_line",
@@ -2488,8 +2350,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control that changes ordering or ranking of items.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "sort list",
           "change order",
@@ -2500,8 +2360,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "numbers_90_sort_descending_line",
@@ -2541,8 +2400,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -2553,8 +2410,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_1_line",
@@ -2594,8 +2450,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -2606,8 +2460,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_2_line",
@@ -2647,8 +2500,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -2659,8 +2510,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_3_line",
@@ -2700,8 +2550,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -2712,8 +2560,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_4_line",
@@ -2753,8 +2600,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -2765,8 +2610,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_anticlockwise_1_line",
@@ -2806,8 +2650,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -2818,8 +2660,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_2_line",
@@ -2859,8 +2700,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -2871,8 +2710,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_3_line",
@@ -2912,8 +2750,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -2924,8 +2760,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_line",

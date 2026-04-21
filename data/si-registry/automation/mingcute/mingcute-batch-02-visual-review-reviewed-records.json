@@ -10,8 +10,6 @@
       "depicts": "A close mark inside a button-like boundary or standalone close shape.",
       "purpose": "Show closing, dismissing, or removing the current surface or dialog.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "dismiss",
@@ -31,8 +29,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:expand_player",
@@ -42,8 +40,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "expand",
         "player"
@@ -58,8 +54,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:external_link",
@@ -69,8 +65,6 @@
       "depicts": "An outbound arrow leaving a square or window frame.",
       "purpose": "Show opening a destination outside the current app, surface, or page.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_controls",
       "semantic_tags": [
         "external link",
         "open external",
@@ -90,8 +84,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:fan_direction_front",
@@ -101,8 +95,6 @@
       "depicts": "An airflow or fan-direction symbol pointing forward.",
       "purpose": "Show front-facing airflow direction or a climate-device front-direction setting.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "front airflow",
         "fan direction",
@@ -122,8 +114,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.76,
-      "confidence_band": "medium"
+      "routing_score": 0.76,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_bottom_close",
@@ -133,8 +125,6 @@
       "depicts": "A shell layout icon showing the bottom panel closing.",
       "purpose": "Show closing or collapsing the bottom panel in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "close",
         "bottom panel",
@@ -154,8 +144,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_bottom_open",
@@ -165,8 +155,6 @@
       "depicts": "A shell layout icon showing the bottom panel opening.",
       "purpose": "Show opening or expanding the bottom panel in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "open",
         "bottom panel",
@@ -186,8 +174,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_leftbar_close",
@@ -197,8 +185,6 @@
       "depicts": "A shell layout icon showing the left sidebar closing.",
       "purpose": "Show closing or collapsing the left sidebar in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "close",
         "left sidebar",
@@ -218,8 +204,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_leftbar_open",
@@ -229,8 +215,6 @@
       "depicts": "A shell layout icon showing the left sidebar opening.",
       "purpose": "Show opening or expanding the left sidebar in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "open",
         "left sidebar",
@@ -250,8 +234,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_rightbar_close",
@@ -261,8 +245,6 @@
       "depicts": "A shell layout icon showing the right sidebar closing.",
       "purpose": "Show closing or collapsing the right sidebar in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "close",
         "right sidebar",
@@ -282,8 +264,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_rightbar_open",
@@ -293,8 +275,6 @@
       "depicts": "A shell layout icon showing the right sidebar opening.",
       "purpose": "Show opening or expanding the right sidebar in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "open",
         "right sidebar",
@@ -314,8 +294,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_top_close",
@@ -325,8 +305,6 @@
       "depicts": "A shell layout icon showing the top panel closing.",
       "purpose": "Show closing or collapsing the top panel in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "close",
         "top panel",
@@ -346,8 +324,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_top_open",
@@ -357,8 +335,6 @@
       "depicts": "A shell layout icon showing the top panel opening.",
       "purpose": "Show opening or expanding the top panel in the current shell layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "open",
         "top panel",
@@ -378,8 +354,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_edit",
@@ -389,8 +365,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Edit User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -410,8 +384,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_follow_2",
@@ -421,8 +395,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Follow User action or status for a user profile or account.",
       "category": "communication_social",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -442,8 +414,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_follow",
@@ -453,8 +425,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Follow User action or status for a user profile or account.",
       "category": "communication_social",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -474,8 +444,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_pin",
@@ -485,8 +455,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Pin User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -506,8 +474,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_question",
@@ -517,8 +485,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "User Help action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -538,8 +504,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_visible",
@@ -549,8 +515,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Visible User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -570,8 +534,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:align_left_2",
@@ -581,8 +545,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -602,8 +564,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_left",
@@ -613,8 +575,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -634,8 +594,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_right_2",
@@ -645,8 +605,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -666,8 +624,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_right",
@@ -677,8 +635,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -698,8 +654,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:notification",
@@ -709,8 +665,6 @@
       "depicts": "A bell-based notification symbol.",
       "purpose": "Show notifications, alerts, or incoming event attention.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "notification",
         "alert",
@@ -730,8 +684,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:notification_newdot",
@@ -741,8 +695,6 @@
       "depicts": "A bell-based notification symbol.",
       "purpose": "Show a newly arrived notification or unread alert.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "notification",
         "alert",
@@ -762,8 +714,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:notification_off",
@@ -773,8 +725,6 @@
       "depicts": "A bell-based notification symbol.",
       "purpose": "Show muted, disabled, or turned-off notifications.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "notification",
         "alert",
@@ -794,8 +744,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:add_square",
@@ -805,8 +755,6 @@
       "depicts": "A plus sign inside a square button.",
       "purpose": "Show adding, creating, or increasing within the current surface.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add",
         "create",
@@ -826,8 +774,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:air_condition_open",
@@ -837,8 +785,6 @@
       "depicts": "An air-conditioner unit in an open or active state.",
       "purpose": "Show an air-conditioner device in an open, active, or enabled state.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "air conditioner",
         "climate device",
@@ -858,8 +804,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bookmark_edit",
@@ -869,8 +815,6 @@
       "depicts": "A bookmark paired with an edit cue.",
       "purpose": "Show editing or changing a saved bookmark, favorite, or saved reference.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit bookmark",
         "saved item",
@@ -890,8 +834,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_blank",
@@ -901,8 +845,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -922,8 +864,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_bottom",
@@ -933,8 +875,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -954,8 +894,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_horizontal",
@@ -965,8 +905,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -986,8 +924,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_inner",
@@ -997,8 +935,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -1018,8 +954,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_outer",
@@ -1029,8 +965,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -1050,8 +984,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_radius",
@@ -1061,8 +995,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -1082,8 +1014,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_top",
@@ -1093,8 +1025,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -1114,8 +1044,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:border_vertical",
@@ -1125,8 +1055,6 @@
       "depicts": "A border or edge-formatting control.",
       "purpose": "Show border formatting, border placement, or border style inside a layout or formatting tool.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "border",
         "formatting",
@@ -1146,8 +1074,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:clock_2",
@@ -1157,8 +1085,6 @@
       "depicts": "A round clock face showing time.",
       "purpose": "Show time, schedule, recency, or a time-based status cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "time",
         "clock",
@@ -1178,8 +1104,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:close_circle_dash",
@@ -1189,8 +1115,6 @@
       "depicts": "A close mark inside a dashed circular boundary.",
       "purpose": "Show dismissing or removing a temporary option, state, or circular token.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "dismiss",
         "remove option",
@@ -1210,8 +1134,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:close_circle",
@@ -1221,8 +1145,6 @@
       "depicts": "A close mark inside a button-like boundary or standalone close shape.",
       "purpose": "Show closing, dismissing, or removing the current surface or dialog.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "dismiss",
@@ -1242,8 +1164,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:close_medium",
@@ -1253,8 +1175,6 @@
       "depicts": "A close mark inside a button-like boundary or standalone close shape.",
       "purpose": "Show closing, dismissing, or removing the current surface or dialog.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "dismiss",
@@ -1274,8 +1194,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:diamond_square",
@@ -1285,8 +1205,6 @@
       "depicts": "A diamond set inside a square frame.",
       "purpose": "Show a geometric diamond-inside-square shape or an abstract shape option.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "diamond shape",
         "abstract shape",
@@ -1306,8 +1224,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.72,
-      "confidence_band": "medium"
+      "routing_score": 0.72,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:direction_dot",
@@ -1317,8 +1235,6 @@
       "depicts": "A dotted circular target with directional meaning.",
       "purpose": "Show a directional marker, orientation target, or a generic direction indicator.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "direction target",
         "orientation",
@@ -1338,8 +1254,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:download_2",
@@ -1349,8 +1265,6 @@
       "depicts": "A downward transfer or save action.",
       "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "save",
@@ -1370,8 +1284,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:download_3",
@@ -1381,8 +1295,6 @@
       "depicts": "A downward transfer or save action.",
       "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "save",
@@ -1402,8 +1314,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:download",
@@ -1413,8 +1325,6 @@
       "depicts": "A downward transfer or save action.",
       "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "save",
@@ -1434,8 +1344,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:edit_2",
@@ -1445,8 +1355,6 @@
       "depicts": "A pencil or editing cue.",
       "purpose": "Show editing, modifying, or changing the current content or record.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "modify",
@@ -1466,8 +1374,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:edit_3",
@@ -1477,8 +1385,6 @@
       "depicts": "A pencil or editing cue.",
       "purpose": "Show editing, modifying, or changing the current content or record.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "modify",
@@ -1498,8 +1404,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:edit_4",
@@ -1509,8 +1415,6 @@
       "depicts": "A pencil or editing cue.",
       "purpose": "Show editing, modifying, or changing the current content or record.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "modify",
@@ -1530,8 +1434,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:edit",
@@ -1541,8 +1445,6 @@
       "depicts": "A pencil or editing cue.",
       "purpose": "Show editing, modifying, or changing the current content or record.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "modify",
@@ -1562,8 +1464,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:fan_2",
@@ -1573,8 +1475,6 @@
       "depicts": "A fan or rotor symbol.",
       "purpose": "Show a fan, airflow device, or rotor-like object.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fan",
         "airflow",
@@ -1594,8 +1494,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:fan",
@@ -1605,8 +1505,6 @@
       "depicts": "A fan or rotor symbol.",
       "purpose": "Show a fan, airflow device, or rotor-like object.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fan",
         "airflow",
@@ -1626,8 +1524,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folding_fan",
@@ -1637,8 +1535,6 @@
       "depicts": "A folding hand fan.",
       "purpose": "Show a folding fan object or a decorative fan-themed surface.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fan",
         "airflow",
@@ -1658,8 +1554,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:follow",
@@ -1669,8 +1565,6 @@
       "depicts": "A list or profile-like follow control.",
       "purpose": "Show following, subscribing to, or tracking an item, account, or surface.",
       "category": "communication_social",
-      "intent": "act",
-      "domain": "communication",
       "semantic_tags": [
         "follow",
         "subscribe",
@@ -1690,8 +1584,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:git_pull_request_close",
@@ -1701,8 +1595,6 @@
       "depicts": "A pull request path with a close mark.",
       "purpose": "Show closing or ending a pull request or merge proposal in a developer workflow.",
       "category": "engineering_developer_tools",
-      "intent": "control",
-      "domain": "developer_tools",
       "semantic_tags": [
         "pull request",
         "close pr",
@@ -1722,8 +1614,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_10",
@@ -1733,8 +1625,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1754,8 +1644,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_11",
@@ -1765,8 +1655,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1786,8 +1674,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_2",
@@ -1797,8 +1685,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1818,8 +1704,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_3",
@@ -1829,8 +1715,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1850,8 +1734,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_4",
@@ -1861,8 +1745,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1882,8 +1764,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_5",
@@ -1893,8 +1775,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1914,8 +1794,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_6",
@@ -1925,8 +1805,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1946,8 +1824,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_7",
@@ -1957,8 +1835,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -1978,8 +1854,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_8",
@@ -1989,8 +1865,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -2010,8 +1884,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_9",
@@ -2021,8 +1895,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -2042,8 +1914,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_bottom",
@@ -2053,8 +1925,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -2074,8 +1944,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout",
@@ -2085,8 +1955,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -2106,8 +1974,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:layout_top",
@@ -2117,8 +1985,6 @@
       "depicts": "A shell or panel layout arrangement.",
       "purpose": "Show a layout preset, panel arrangement, or shell structure choice.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "layout",
         "panel layout",
@@ -2138,8 +2004,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:link_2",
@@ -2149,8 +2015,6 @@
       "depicts": "A linked-chain symbol.",
       "purpose": "Show linking, a connected reference, or a hyperlink-style connection.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "link",
         "connection",
@@ -2170,8 +2034,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:link_3",
@@ -2181,8 +2045,6 @@
       "depicts": "A linked-chain symbol.",
       "purpose": "Show linking, a connected reference, or a hyperlink-style connection.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "link",
         "connection",
@@ -2202,8 +2064,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:link",
@@ -2213,8 +2075,6 @@
       "depicts": "A linked-chain symbol.",
       "purpose": "Show linking, a connected reference, or a hyperlink-style connection.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "link",
         "connection",
@@ -2234,8 +2094,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:map_pin",
@@ -2245,8 +2105,6 @@
       "depicts": "A location pin marker.",
       "purpose": "Show a place, saved location, or map marker.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map pin",
         "location",
@@ -2266,8 +2124,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:minus_square",
@@ -2277,8 +2135,6 @@
       "depicts": "A minus sign inside a square button.",
       "purpose": "Show removing, reducing, or subtracting within the current surface.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove",
         "minus",
@@ -2298,8 +2154,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:open_door",
@@ -2309,8 +2165,6 @@
       "depicts": "A door opening outward.",
       "purpose": "Show opening a door, entering a doorway, or an exit-style door action.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "open door",
         "door",
@@ -2330,8 +2184,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pin_2",
@@ -2341,8 +2195,6 @@
       "depicts": "A pin or pushpin symbol.",
       "purpose": "Show pinning, saving a spot, or keeping an item fixed in place.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pin",
         "keep in place",
@@ -2362,8 +2214,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:pin",
@@ -2373,8 +2225,6 @@
       "depicts": "A pin or pushpin symbol.",
       "purpose": "Show pinning, saving a spot, or keeping an item fixed in place.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pin",
         "keep in place",
@@ -2394,8 +2244,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:profile",
@@ -2405,8 +2255,6 @@
       "depicts": "An ID-card or profile panel symbol.",
       "purpose": "Show a profile, account card, or identity details surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "communication",
       "semantic_tags": [
         "profile",
         "account",
@@ -2426,8 +2274,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:question_2",
@@ -2437,8 +2285,6 @@
       "depicts": "A question-mark help cue.",
       "purpose": "Show help, uncertainty, or a prompt for more explanation.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "help",
         "question",
@@ -2458,8 +2304,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:question",
@@ -2469,8 +2315,6 @@
       "depicts": "A question-mark help cue.",
       "purpose": "Show help, uncertainty, or a prompt for more explanation.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "help",
         "question",
@@ -2490,8 +2334,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:red_packet_open",
@@ -2501,8 +2345,6 @@
       "depicts": "An opened red packet or envelope.",
       "purpose": "Show opening a red packet, reward envelope, or culturally specific gift packet.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "red packet",
         "reward envelope",
@@ -2522,8 +2364,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.77,
-      "confidence_band": "medium"
+      "routing_score": 0.77,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:rewind_backward_square_10",
@@ -2533,8 +2375,6 @@
       "depicts": "A rewind control with a time step label.",
       "purpose": "Show jumping backward by a fixed number of seconds in media playback.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "rewind",
         "jump back",
@@ -2554,8 +2394,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:rewind_backward_square_15",
@@ -2565,8 +2405,6 @@
       "depicts": "A rewind control with a time step label.",
       "purpose": "Show jumping backward by a fixed number of seconds in media playback.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "rewind",
         "jump back",
@@ -2586,8 +2424,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:rewind_backward_square_30",
@@ -2597,8 +2435,6 @@
       "depicts": "A rewind control with a time step label.",
       "purpose": "Show jumping backward by a fixed number of seconds in media playback.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "rewind",
         "jump back",
@@ -2618,8 +2454,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:rewind_backward_square_5",
@@ -2629,8 +2465,6 @@
       "depicts": "A rewind control with a time step label.",
       "purpose": "Show jumping backward by a fixed number of seconds in media playback.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "rewind",
         "jump back",
@@ -2650,8 +2484,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:square",
@@ -2661,8 +2495,6 @@
       "depicts": "A simple square outline.",
       "purpose": "Show a square shape, shape selection, or an abstract square marker.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "shape",
@@ -2682,8 +2514,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:upload_2",
@@ -2693,8 +2525,6 @@
       "depicts": "An upward transfer or submit action.",
       "purpose": "Show uploading, sending, or pushing content out from the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload",
         "send",
@@ -2714,8 +2544,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:upload_3",
@@ -2725,8 +2555,6 @@
       "depicts": "An upward transfer or submit action.",
       "purpose": "Show uploading, sending, or pushing content out from the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload",
         "send",
@@ -2746,8 +2574,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:upload",
@@ -2757,8 +2585,6 @@
       "depicts": "An upward transfer or submit action.",
       "purpose": "Show uploading, sending, or pushing content out from the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload",
         "send",
@@ -2778,8 +2604,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_1",
@@ -2789,8 +2615,6 @@
       "depicts": "A user or profile silhouette.",
       "purpose": "Show a user, profile, member, or account identity.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile",
@@ -2810,8 +2634,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_2",
@@ -2821,8 +2645,6 @@
       "depicts": "A user or profile silhouette.",
       "purpose": "Show a user, profile, member, or account identity.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile",
@@ -2842,8 +2664,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_3",
@@ -2853,8 +2675,6 @@
       "depicts": "A user or profile silhouette.",
       "purpose": "Show a user, profile, member, or account identity.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile",
@@ -2874,8 +2694,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_4",
@@ -2885,8 +2705,6 @@
       "depicts": "A user or profile silhouette.",
       "purpose": "Show a user, profile, member, or account identity.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile",
@@ -2906,8 +2724,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_5",
@@ -2917,8 +2735,6 @@
       "depicts": "A user or profile silhouette.",
       "purpose": "Show a user, profile, member, or account identity.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile",
@@ -2938,8 +2754,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_add_2",
@@ -2949,8 +2765,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Add User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -2970,8 +2784,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_add",
@@ -2981,8 +2795,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Add User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3002,8 +2814,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_forbid",
@@ -3013,8 +2825,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Block User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3034,8 +2844,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_hide",
@@ -3045,8 +2855,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Hide User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3066,8 +2874,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_remove_2",
@@ -3077,8 +2885,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Remove User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3098,8 +2904,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_remove",
@@ -3109,8 +2915,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Remove User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3130,8 +2934,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_security",
@@ -3141,8 +2945,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "User Security action or status for a user profile or account.",
       "category": "security",
-      "intent": "control",
-      "domain": "security",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3162,8 +2964,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_setting",
@@ -3173,8 +2975,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "User Settings action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3194,8 +2994,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_x",
@@ -3205,8 +3005,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Remove User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3226,8 +3024,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:align_bottom",
@@ -3237,8 +3035,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3258,8 +3054,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_center",
@@ -3269,8 +3065,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3290,8 +3084,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_horizontal_center",
@@ -3301,8 +3095,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3322,8 +3114,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_justify",
@@ -3333,8 +3125,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3354,8 +3144,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_top",
@@ -3365,8 +3155,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3386,8 +3174,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_vertical_center",
@@ -3397,8 +3185,6 @@
       "depicts": "A formatting alignment control.",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alignment",
         "formatting",
@@ -3418,8 +3204,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:close_small",
@@ -3429,8 +3215,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "small"
@@ -3445,8 +3229,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     }
   ]
 }

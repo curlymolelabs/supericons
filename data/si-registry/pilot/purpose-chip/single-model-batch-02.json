@@ -29,7 +29,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:menu",
         "source_group": "pilot",
@@ -59,8 +59,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:menu",
@@ -71,7 +70,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Menu to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"M140-254.62v-59.99h680v59.99H140ZM140-450v-60h680v60H140Zm0-195.39v-59.99h680v59.99H140Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -86,7 +85,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:close",
         "source_group": "pilot",
@@ -116,8 +115,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:close",
@@ -128,7 +126,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Close to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -143,7 +141,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:home",
         "source_group": "pilot",
@@ -173,8 +171,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:home",
@@ -185,7 +182,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Home to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"M240-200h133.85v-237.69h212.3V-200H720v-360L480-740.77 240-560v360Zm-60 60v-450l300-225.77L780-590v450H526.15v-237.69h-92.3V-140H180Zm300-330.38Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -200,7 +197,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:search",
         "source_group": "pilot",
@@ -230,8 +227,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:search",
@@ -242,7 +238,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Search to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -257,7 +253,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:settings",
         "source_group": "pilot",
@@ -287,8 +283,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:settings",
@@ -299,7 +294,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Settings to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"m387.69-100-15.23-121.85q-16.07-5.38-32.96-15.07-16.88-9.7-30.19-20.77L196.46-210l-92.3-160 97.61-73.77q-1.38-8.92-1.96-17.92-.58-9-.58-17.93 0-8.53.58-17.34t1.96-19.27L104.16-590l92.3-159.23 112.46 47.31q14.47-11.46 30.89-20.96t32.27-15.27L387.69-860h184.62l15.23 122.23q18 6.54 32.57 15.27 14.58 8.73 29.43 20.58l114-47.31L855.84-590l-99.15 74.92q2.15 9.69 2.35 18.12.19 8.42.19 16.96 0 8.15-.39 16.58-.38 8.42-2.76 19.27L854.46-370l-92.31 160-112.61-48.08q-14.85 11.85-30.31 20.96-15.46 9.12-31.69 14.89L572.31-100H387.69ZM440-160h78.62L533-267.15q30.62-8 55.96-22.73 25.35-14.74 48.89-37.89L737.23-286l39.39-68-86.77-65.38q5-15.54 6.8-30.47 1.81-14.92 1.81-30.15 0-15.62-1.81-30.15-1.8-14.54-6.8-29.7L777.38-606 738-674l-100.54 42.38q-20.08-21.46-48.11-37.92-28.04-16.46-56.73-23.31L520-800h-79.38l-13.24 106.77q-30.61 7.23-56.53 22.15-25.93 14.93-49.47 38.46L222-674l-39.38 68L269-541.62q-5 14.24-7 29.62t-2 32.38q0 15.62 2 30.62 2 15 6.62 29.62l-86 65.38L222-286l99-42q22.77 23.38 48.69 38.31 25.93 14.92 57.31 22.92L440-160Zm40.46-200q49.92 0 84.96-35.04 35.04-35.04 35.04-84.96 0-49.92-35.04-84.96Q530.38-600 480.46-600q-50.54 0-85.27 35.04T360.46-480q0 49.92 34.73 84.96Q429.92-360 480.46-360ZM480-480Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -314,7 +309,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:arrow_back",
         "source_group": "pilot",
@@ -345,8 +340,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:arrow_back",
@@ -357,7 +351,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Arrow Back to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"m294.92-450 227.85 227.85L480-180 180-480l300-300 42.77 42.15L294.92-510H780v60H294.92Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -372,7 +366,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "material:arrow_forward",
         "source_group": "pilot",
@@ -403,8 +397,7 @@
           "navigation",
           "wayfinding",
           "layout"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "material:arrow_forward",
@@ -415,7 +408,7 @@
         "purpose_chip_category_id": "navigation-wayfinding",
         "current_candidate_purpose": "Show Arrow Forward to represent navigation & wayfinding in the interface.",
         "current_candidate_category": "navigation_interface",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available_local_material",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" fill=\"currentColor\"><path d=\"M665.08-450H180v-60h485.08L437.23-737.85 480-780l300 300-300 300-42.77-42.15L665.08-450Z\"/></svg>\n",
         "renderable_icon_payload": {
@@ -430,7 +423,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "lucide:binary",
         "source_group": "pilot",
@@ -460,8 +453,7 @@
           "ai",
           "agents",
           "automation"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "lucide:binary",
@@ -472,7 +464,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Binary to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-binary\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect x=\"14\" y=\"14\" width=\"4\" height=\"6\" rx=\"2\" /> <rect x=\"6\" y=\"4\" width=\"4\" height=\"6\" rx=\"2\" /> <path d=\"M6 20h4\" /> <path d=\"M14 10h4\" /> <path d=\"M6 14h2v6\" /> <path d=\"M14 4h2v6\" /> </svg>",
         "renderable_icon_payload": {
@@ -487,7 +479,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "lucide:blocks",
         "source_group": "pilot",
@@ -517,8 +509,7 @@
           "ai",
           "agents",
           "automation"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "icon_id": "lucide:blocks",
@@ -529,7 +520,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Blocks to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.86,
+        "current_candidate_routing_score": 0.86,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-blocks\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2\" /> <rect x=\"14\" y=\"2\" width=\"8\" height=\"8\" rx=\"1\" /> </svg>",
         "renderable_icon_payload": {
@@ -544,7 +535,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "lucide:code-xml",
         "source_group": "pilot",
@@ -575,8 +566,7 @@
           "ai",
           "agents",
           "automation"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "icon_id": "lucide:code-xml",
@@ -587,7 +577,7 @@
         "purpose_chip_category_id": "ai-agent-workflows",
         "current_candidate_purpose": "Show Code Xml to represent ai & agents in the interface.",
         "current_candidate_category": "agent_lifecycle",
-        "current_candidate_confidence": 0.9,
+        "current_candidate_routing_score": 0.9,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg class=\"lucide lucide-code-xml\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m18 16 4-4-4-4\" /> <path d=\"m6 8-4 4 4 4\" /> <path d=\"m14.5 4-5 16\" /> </svg>",
         "renderable_icon_payload": {
@@ -602,7 +592,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "ready_for_editor_review",
-      "confidence_band": "high_confidence",
+      "routing_band": "high_confidence",
       "current_candidate_record": {
         "icon_id": "tabler:alert-triangle",
         "source_group": "pilot",
@@ -633,8 +623,7 @@
           "status",
           "feedback",
           "signals"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "icon_id": "tabler:alert-triangle",
@@ -645,7 +634,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Alert Triangle to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.82,
+        "current_candidate_routing_score": 0.82,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 9v4\" /> <path d=\"M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0\" /> <path d=\"M12 16h.01\" /> </svg>",
         "renderable_icon_payload": {
@@ -660,7 +649,7 @@
       "purpose_chip_category_id": "status-feedback",
       "purpose_chip_category_label": "Status & Feedback",
       "queue_outcome": "needs_visual_review",
-      "confidence_band": "needs_review",
+      "routing_band": "needs_review",
       "current_candidate_record": {
         "icon_id": "tabler:power",
         "source_group": "pilot",
@@ -690,8 +679,7 @@
           "status",
           "feedback",
           "signals"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "icon_id": "tabler:power",
@@ -702,7 +690,7 @@
         "purpose_chip_category_id": "status-feedback",
         "current_candidate_purpose": "Show Power to represent status & feedback in the interface.",
         "current_candidate_category": "status_feedback",
-        "current_candidate_confidence": 0.8,
+        "current_candidate_routing_score": 0.8,
         "visual_payload_status": "svg_available",
         "source_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-power\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M7 6a7.75 7.75 0 1 0 10 0\" /> <path d=\"M12 4l0 8\" /> </svg>",
         "renderable_icon_payload": {

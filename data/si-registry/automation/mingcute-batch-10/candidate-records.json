@@ -23,8 +23,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A horizontal selector or handle used to adjust or highlight a left-to-right control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "horizontal selector",
       "horizontal handle",
@@ -35,8 +33,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "mingcute:selector_vertical",
@@ -62,8 +59,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A vertical selector or handle used to adjust or highlight an up-and-down control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "vertical selector",
       "vertical handle",
@@ -74,7 +69,6 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   }
 ]

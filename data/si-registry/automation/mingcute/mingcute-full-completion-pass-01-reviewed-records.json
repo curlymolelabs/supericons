@@ -10,8 +10,6 @@
       "depicts": "An air-conditioner unit in an open or active state.",
       "purpose": "Show an air-conditioner device in an open, active, or enabled state.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "air conditioner",
         "climate device",
@@ -32,8 +30,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airbnb",
@@ -43,8 +41,6 @@
       "depicts": "The official Airbnb brand or product mark.",
       "purpose": "Show the official Airbnb brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "airbnb",
         "brand",
@@ -63,8 +59,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_arrow_down",
@@ -74,8 +70,6 @@
       "depicts": "An alignment control that moves content toward the bottom edge.",
       "purpose": "Show aligning selected content, layers, or blocks to the bottom edge of a layout.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align bottom",
         "bottom alignment",
@@ -96,8 +90,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_arrow_left",
@@ -107,8 +101,6 @@
       "depicts": "An alignment control that moves content toward the left edge.",
       "purpose": "Show aligning selected content, layers, or blocks to the left edge of a layout.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align left",
         "left alignment",
@@ -129,8 +121,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_arrow_right",
@@ -140,8 +132,6 @@
       "depicts": "An alignment control that moves content toward the right edge.",
       "purpose": "Show aligning selected content, layers, or blocks to the right edge of a layout.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align right",
         "right alignment",
@@ -162,8 +152,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:align_arrow_up",
@@ -173,8 +163,6 @@
       "depicts": "An alignment control that moves content toward the top edge.",
       "purpose": "Show aligning selected content, layers, or blocks to the top edge of a layout.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align top",
         "top alignment",
@@ -195,8 +183,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:alipay",
@@ -206,8 +194,6 @@
       "depicts": "The official Alipay brand or product mark.",
       "purpose": "Show the official Alipay brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "alipay",
         "brand",
@@ -226,8 +212,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:android",
@@ -237,8 +223,6 @@
       "depicts": "The official Android brand or product mark.",
       "purpose": "Show the official Android brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "android",
         "brand",
@@ -257,8 +241,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:android_2",
@@ -268,8 +252,6 @@
       "depicts": "The official Android brand or product mark.",
       "purpose": "Show the official Android brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "android",
         "android 2",
@@ -288,8 +270,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:apple",
@@ -299,8 +281,6 @@
       "depicts": "The official Apple brand or product mark.",
       "purpose": "Show the official Apple brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "apple",
         "brand",
@@ -319,8 +299,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:apple_intelligence",
@@ -330,8 +310,6 @@
       "depicts": "The official Apple Intelligence brand or product mark.",
       "purpose": "Show the official Apple Intelligence brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "apple intelligence",
         "brand",
@@ -349,8 +327,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:apple_intelligence_frame",
@@ -360,8 +338,6 @@
       "depicts": "The official Apple Intelligence Frame brand or product mark.",
       "purpose": "Show the official Apple Intelligence Frame brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "apple intelligence frame",
         "brand",
@@ -379,8 +355,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:appstore",
@@ -390,8 +366,6 @@
       "depicts": "The official App Store brand or product mark.",
       "purpose": "Show the official App Store brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "app store",
         "appstore",
@@ -411,8 +385,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:arc_browser",
@@ -422,8 +396,6 @@
       "depicts": "The official Arc Browser brand or product mark.",
       "purpose": "Show the official Arc Browser brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "arc browser",
         "brand",
@@ -441,8 +413,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:avalanche_avax",
@@ -452,8 +424,6 @@
       "depicts": "The official Avalanche Avax brand or product mark.",
       "purpose": "Show the official Avalanche Avax brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "avalanche avax",
         "brand",
@@ -472,8 +442,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:behance",
@@ -483,8 +453,6 @@
       "depicts": "The official Behance brand or product mark.",
       "purpose": "Show the official Behance brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "behance",
         "brand",
@@ -503,8 +471,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:bilibili",
@@ -514,8 +482,6 @@
       "depicts": "The official Bilibili brand or product mark.",
       "purpose": "Show the official Bilibili brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "bilibili",
         "brand",
@@ -534,8 +500,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:binance_coin_bnb",
@@ -545,8 +511,6 @@
       "depicts": "The official Binance Coin Bnb brand or product mark.",
       "purpose": "Show the official Binance Coin Bnb brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "binance coin bnb",
         "brand",
@@ -565,8 +529,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:binance_usd_busd",
@@ -576,8 +540,6 @@
       "depicts": "The official Binance Usd Busd brand or product mark.",
       "purpose": "Show the official Binance Usd Busd brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "binance usd busd",
         "brand",
@@ -596,8 +558,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:bluesky_social",
@@ -607,8 +569,6 @@
       "depicts": "The official Bluesky Social brand or product mark.",
       "purpose": "Show the official Bluesky Social brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "bluesky social",
         "brand",
@@ -626,8 +586,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:bnb",
@@ -637,8 +597,6 @@
       "depicts": "The official Bnb brand or product mark.",
       "purpose": "Show the official Bnb brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "bnb",
         "brand",
@@ -657,8 +615,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:border_left",
@@ -668,8 +626,6 @@
       "depicts": "A border-formatting control that emphasizes the left edge.",
       "purpose": "Show applying, toggling, or highlighting the left border of a layout, table, or text frame.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "left border",
         "border formatting",
@@ -690,8 +646,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:border_right",
@@ -701,8 +657,6 @@
       "depicts": "A border-formatting control that emphasizes the right edge.",
       "purpose": "Show applying, toggling, or highlighting the right border of a layout, table, or text frame.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "right border",
         "border formatting",
@@ -723,8 +677,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:cardano_ada",
@@ -734,8 +688,6 @@
       "depicts": "The official Cardano Ada brand or product mark.",
       "purpose": "Show the official Cardano Ada brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "cardano ada",
         "brand",
@@ -754,8 +706,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:carplay",
@@ -765,8 +717,6 @@
       "depicts": "The official Carplay brand or product mark.",
       "purpose": "Show the official Carplay brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "carplay",
         "brand",
@@ -784,8 +734,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:chrome",
@@ -795,8 +745,6 @@
       "depicts": "The official Chrome brand or product mark.",
       "purpose": "Show the official Chrome brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "chrome",
         "brand",
@@ -814,8 +762,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:claude",
@@ -825,8 +773,6 @@
       "depicts": "The official Claude brand or product mark.",
       "purpose": "Show the official Claude brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "claude",
         "brand",
@@ -845,8 +791,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:codepen",
@@ -856,8 +802,6 @@
       "depicts": "The official Codepen brand or product mark.",
       "purpose": "Show the official Codepen brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "codepen",
         "brand",
@@ -875,8 +819,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:copilot",
@@ -886,8 +830,6 @@
       "depicts": "The official Copilot brand or product mark.",
       "purpose": "Show the official Copilot brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "copilot",
         "brand",
@@ -905,8 +847,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:deepseek",
@@ -916,8 +858,6 @@
       "depicts": "The official Deepseek brand or product mark.",
       "purpose": "Show the official Deepseek brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "deepseek",
         "brand",
@@ -935,8 +875,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:delete_back",
@@ -946,8 +886,6 @@
       "depicts": "A delete or erase cue aimed backward to the previous character or item.",
       "purpose": "Show deleting the previous character, erasing backward, or a backspace-like removal action.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete backward",
         "backspace",
@@ -969,8 +907,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:diamond_square",
@@ -980,8 +918,6 @@
       "depicts": "A diamond set inside a square frame.",
       "purpose": "Show a geometric diamond-inside-square shape or an abstract shape option.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "diamond shape",
         "abstract shape",
@@ -1002,8 +938,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:dingtalk",
@@ -1013,8 +949,6 @@
       "depicts": "The official Dingtalk brand or product mark.",
       "purpose": "Show the official Dingtalk brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "dingtalk",
         "brand",
@@ -1032,8 +966,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:direction_arrow",
@@ -1043,8 +977,6 @@
       "depicts": "A circular directional control with arrow cues on four sides.",
       "purpose": "Show a directional pad, four-way navigation control, or move-in-any-direction surface.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "navigation",
       "semantic_tags": [
         "direction pad",
         "d-pad",
@@ -1065,8 +997,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:direction_dot",
@@ -1076,8 +1008,6 @@
       "depicts": "A circular directional control with four dot markers around the center.",
       "purpose": "Show a four-way directional selector, focus pad, or controller-style navigation surface.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "navigation",
       "semantic_tags": [
         "direction pad",
         "direction dots",
@@ -1098,8 +1028,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:discord",
@@ -1109,8 +1039,6 @@
       "depicts": "The official Discord brand or product mark.",
       "purpose": "Show the official Discord brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "discord",
         "brand",
@@ -1129,8 +1057,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dogecoin_doge",
@@ -1140,8 +1068,6 @@
       "depicts": "The official Dogecoin Doge brand or product mark.",
       "purpose": "Show the official Dogecoin Doge brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "dogecoin doge",
         "brand",
@@ -1160,8 +1086,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dribbble",
@@ -1171,8 +1097,6 @@
       "depicts": "The official Dribbble brand or product mark.",
       "purpose": "Show the official Dribbble brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "dribbble",
         "brand",
@@ -1191,8 +1115,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dropbox",
@@ -1202,8 +1126,6 @@
       "depicts": "The official Dropbox brand or product mark.",
       "purpose": "Show the official Dropbox brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "dropbox",
         "brand",
@@ -1222,8 +1144,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:edge",
@@ -1233,8 +1155,6 @@
       "depicts": "The official Edge brand or product mark.",
       "purpose": "Show the official Edge brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "edge",
         "brand",
@@ -1252,8 +1172,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:facebook",
@@ -1263,8 +1183,6 @@
       "depicts": "The official Facebook brand or product mark.",
       "purpose": "Show the official Facebook brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "facebook",
         "brand",
@@ -1283,8 +1201,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:fan_direction_front",
@@ -1294,8 +1212,6 @@
       "depicts": "An airflow or fan-direction symbol pointing forward.",
       "purpose": "Show front-facing airflow direction or a climate-device front-direction setting.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "front airflow",
         "fan direction",
@@ -1316,8 +1232,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:figma",
@@ -1327,8 +1243,6 @@
       "depicts": "The official Figma brand or product mark.",
       "purpose": "Show the official Figma brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "figma",
         "brand",
@@ -1347,8 +1261,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:firefox",
@@ -1358,8 +1272,6 @@
       "depicts": "The official Firefox brand or product mark.",
       "purpose": "Show the official Firefox brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "firefox",
         "brand",
@@ -1378,8 +1290,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:git_lab",
@@ -1389,8 +1301,6 @@
       "depicts": "The official GitLab brand or product mark.",
       "purpose": "Show the official GitLab brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "gitlab",
         "git lab",
@@ -1410,8 +1320,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:github",
@@ -1421,8 +1331,6 @@
       "depicts": "The official GitHub brand or product mark.",
       "purpose": "Show the official GitHub brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "github",
         "brand",
@@ -1441,8 +1349,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:github_2",
@@ -1452,8 +1360,6 @@
       "depicts": "The official Github brand or product mark.",
       "purpose": "Show the official Github brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "github",
         "github 2",
@@ -1472,8 +1378,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:google",
@@ -1483,8 +1389,6 @@
       "depicts": "The official Google brand or product mark.",
       "purpose": "Show the official Google brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "google",
         "brand",
@@ -1503,8 +1407,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:google_gemini",
@@ -1514,8 +1418,6 @@
       "depicts": "The official Google Gemini brand or product mark.",
       "purpose": "Show the official Google Gemini brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "google gemini",
         "googlegemini",
@@ -1536,8 +1438,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:google_play",
@@ -1547,8 +1449,6 @@
       "depicts": "The official Google Play brand or product mark.",
       "purpose": "Show the official Google Play brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "google play",
         "googleplay",
@@ -1569,8 +1469,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:grok",
@@ -1580,8 +1480,6 @@
       "depicts": "The official Grok brand or product mark.",
       "purpose": "Show the official Grok brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "grok",
         "brand",
@@ -1599,8 +1497,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:grok_2",
@@ -1610,8 +1508,6 @@
       "depicts": "The official Grok brand or product mark.",
       "purpose": "Show the official Grok brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "grok",
         "grok 2",
@@ -1630,8 +1526,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:gumroad",
@@ -1641,8 +1537,6 @@
       "depicts": "The official Gumroad brand or product mark.",
       "purpose": "Show the official Gumroad brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "gumroad",
         "brand",
@@ -1661,8 +1555,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:high_voltage_power",
@@ -1672,8 +1566,6 @@
       "depicts": "A power symbol paired with a high-voltage electrical cue.",
       "purpose": "Show electrical hazard, high-voltage equipment, or a power state that requires caution.",
       "category": "security",
-      "intent": "warn",
-      "domain": "security",
       "semantic_tags": [
         "high voltage",
         "electrical hazard",
@@ -1694,8 +1586,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_wifi",
@@ -1705,8 +1597,6 @@
       "depicts": "A home symbol paired with a Wi-Fi connectivity cue.",
       "purpose": "Show home connectivity, smart-home context, or a home network surface.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "connected home",
         "smart home",
@@ -1728,8 +1618,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:homepod",
@@ -1739,8 +1629,6 @@
       "depicts": "The official Homepod brand or product mark.",
       "purpose": "Show the official Homepod brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "homepod",
         "brand",
@@ -1758,8 +1646,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:homepod_mini",
@@ -1769,8 +1657,6 @@
       "depicts": "The official Homepod Mini brand or product mark.",
       "purpose": "Show the official Homepod Mini brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "homepod mini",
         "brand",
@@ -1788,8 +1674,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:imac",
@@ -1799,8 +1685,6 @@
       "depicts": "The official Imac brand or product mark.",
       "purpose": "Show the official Imac brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "imac",
         "brand",
@@ -1819,8 +1703,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:instagram",
@@ -1830,8 +1714,6 @@
       "depicts": "The official Instagram brand or product mark.",
       "purpose": "Show the official Instagram brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "instagram",
         "brand",
@@ -1850,8 +1732,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:ios",
@@ -1861,8 +1743,6 @@
       "depicts": "The official iOS brand or product mark.",
       "purpose": "Show the official iOS brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "ios",
         "brand",
@@ -1881,8 +1761,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:kakao_talk",
@@ -1892,8 +1772,6 @@
       "depicts": "The official KakaoTalk brand or product mark.",
       "purpose": "Show the official KakaoTalk brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "kakaotalk",
         "kakao talk",
@@ -1913,8 +1791,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:lemon_squeezy",
@@ -1924,8 +1802,6 @@
       "depicts": "The official Lemon Squeezy brand or product mark.",
       "purpose": "Show the official Lemon Squeezy brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "lemon squeezy",
         "lemonsqueezy",
@@ -1946,8 +1822,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:lie_down",
@@ -1957,8 +1833,6 @@
       "depicts": "A person in a lying or reclining posture.",
       "purpose": "Show lying down, reclining, resting posture, or a body-position theme.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "lie down",
         "recline",
@@ -1979,8 +1853,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "high"
+      "routing_score": 0.85,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:line",
@@ -1990,8 +1864,6 @@
       "depicts": "The official LINE brand or product mark.",
       "purpose": "Show the official LINE brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "line",
         "line messenger",
@@ -2012,8 +1884,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:line_app",
@@ -2023,8 +1895,6 @@
       "depicts": "The official Line App brand or product mark.",
       "purpose": "Show the official Line App brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "line app",
         "brand",
@@ -2042,8 +1912,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:linear",
@@ -2053,8 +1923,6 @@
       "depicts": "The official Linear brand or product mark.",
       "purpose": "Show the official Linear brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "linear",
         "brand",
@@ -2073,8 +1941,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:linkedin",
@@ -2084,8 +1952,6 @@
       "depicts": "The official Linkedin brand or product mark.",
       "purpose": "Show the official Linkedin brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "linkedin",
         "brand",
@@ -2103,8 +1969,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:linux",
@@ -2114,8 +1980,6 @@
       "depicts": "The official Linux brand or product mark.",
       "purpose": "Show the official Linux brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "linux",
         "brand",
@@ -2134,8 +1998,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:look_down",
@@ -2145,8 +2009,6 @@
       "depicts": "A face or gaze cue directed downward.",
       "purpose": "Show looking downward, downward gaze, or a face-direction cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "look down",
         "downward gaze",
@@ -2167,8 +2029,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:look_left",
@@ -2178,8 +2040,6 @@
       "depicts": "A face or gaze cue directed to the left.",
       "purpose": "Show looking left, leftward gaze, or a face-direction cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "look left",
         "leftward gaze",
@@ -2200,8 +2060,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:look_right",
@@ -2211,8 +2071,6 @@
       "depicts": "A face or gaze cue directed to the right.",
       "purpose": "Show looking right, rightward gaze, or a face-direction cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "look right",
         "rightward gaze",
@@ -2233,8 +2091,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:look_up",
@@ -2244,8 +2102,6 @@
       "depicts": "A face or gaze cue directed upward.",
       "purpose": "Show looking up, upward gaze, or a face-direction cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "look up",
         "upward gaze",
@@ -2266,8 +2122,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:mastercard",
@@ -2277,8 +2133,6 @@
       "depicts": "The official MasterCard brand or product mark.",
       "purpose": "Show the official MasterCard brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "mastercard",
         "brand",
@@ -2297,8 +2151,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:mastodon",
@@ -2308,8 +2162,6 @@
       "depicts": "The official Mastodon brand or product mark.",
       "purpose": "Show the official Mastodon brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "mastodon",
         "brand",
@@ -2328,8 +2180,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:medium",
@@ -2339,8 +2191,6 @@
       "depicts": "The official Medium brand or product mark.",
       "purpose": "Show the official Medium brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "medium",
         "brand",
@@ -2359,8 +2209,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:messenger",
@@ -2370,8 +2220,6 @@
       "depicts": "The official Messenger brand or product mark.",
       "purpose": "Show the official Messenger brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "messenger",
         "brand",
@@ -2390,8 +2238,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:meta",
@@ -2401,8 +2249,6 @@
       "depicts": "The official Meta brand or product mark.",
       "purpose": "Show the official Meta brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "meta",
         "brand",
@@ -2421,8 +2267,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:mingcute",
@@ -2432,8 +2278,6 @@
       "depicts": "The official Mingcute brand or product mark.",
       "purpose": "Show the official Mingcute brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "mingcute",
         "brand",
@@ -2451,8 +2295,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:misskey",
@@ -2462,8 +2306,6 @@
       "depicts": "The official Misskey brand or product mark.",
       "purpose": "Show the official Misskey brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "misskey",
         "brand",
@@ -2482,8 +2324,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:monero",
@@ -2493,8 +2335,6 @@
       "depicts": "The official Monero brand or product mark.",
       "purpose": "Show the official Monero brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "monero",
         "brand",
@@ -2513,8 +2353,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:netease_music",
@@ -2524,8 +2364,6 @@
       "depicts": "The official Netease Music brand or product mark.",
       "purpose": "Show the official Netease Music brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "netease music",
         "brand",
@@ -2543,8 +2381,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:nintendo_switch",
@@ -2554,8 +2392,6 @@
       "depicts": "The official Nintendo Switch brand or product mark.",
       "purpose": "Show the official Nintendo Switch brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "nintendo switch",
         "brand",
@@ -2573,8 +2409,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:notion",
@@ -2584,8 +2420,6 @@
       "depicts": "The official Notion brand or product mark.",
       "purpose": "Show the official Notion brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "notion",
         "brand",
@@ -2604,8 +2438,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:openai",
@@ -2615,8 +2449,6 @@
       "depicts": "The official Openai brand or product mark.",
       "purpose": "Show the official Openai brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "openai",
         "brand",
@@ -2634,8 +2466,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:paypal",
@@ -2645,8 +2477,6 @@
       "depicts": "The official PayPal brand or product mark.",
       "purpose": "Show the official PayPal brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "paypal",
         "brand",
@@ -2665,8 +2495,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:perplexity",
@@ -2676,8 +2506,6 @@
       "depicts": "The official Perplexity brand or product mark.",
       "purpose": "Show the official Perplexity brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "perplexity",
         "brand",
@@ -2696,8 +2524,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:pinterest",
@@ -2707,8 +2535,6 @@
       "depicts": "The official Pinterest brand or product mark.",
       "purpose": "Show the official Pinterest brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "pinterest",
         "brand",
@@ -2727,8 +2553,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:play_football",
@@ -2738,8 +2564,6 @@
       "depicts": "A person playing football or soccer.",
       "purpose": "Show football or soccer play, sports activity, or a themed athletics surface.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "football",
         "soccer",
@@ -2760,8 +2584,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:qq",
@@ -2771,8 +2595,6 @@
       "depicts": "The official QQ brand or product mark.",
       "purpose": "Show the official QQ brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "qq",
         "brand",
@@ -2791,8 +2613,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:react",
@@ -2802,8 +2624,6 @@
       "depicts": "The official React brand or product mark.",
       "purpose": "Show the official React brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "react",
         "brand",
@@ -2822,8 +2642,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:record_mail",
@@ -2833,8 +2653,6 @@
       "depicts": "An envelope paired with a record or log cue.",
       "purpose": "Show logged mail, recorded delivery, or mail history tracking.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "recorded mail",
         "mail log",
@@ -2855,8 +2673,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:red_packet_open",
@@ -2866,8 +2684,6 @@
       "depicts": "An opened red packet or envelope.",
       "purpose": "Show opening a red packet, reward envelope, or culturally specific gift packet.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "red packet",
         "reward envelope",
@@ -2888,8 +2704,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:reddit",
@@ -2899,8 +2715,6 @@
       "depicts": "The official Reddit brand or product mark.",
       "purpose": "Show the official Reddit brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "reddit",
         "brand",
@@ -2919,8 +2733,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_4_ai",
@@ -2930,8 +2744,6 @@
       "depicts": "A refresh loop paired with an AI cue.",
       "purpose": "Show rerunning an AI action, regenerating a result, or refreshing an AI-assisted output.",
       "category": "agent_lifecycle",
-      "intent": "act",
-      "domain": "ai_agents",
       "semantic_tags": [
         "rerun ai",
         "regenerate",
@@ -2953,8 +2765,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:roblox",
@@ -2964,8 +2776,6 @@
       "depicts": "The official Roblox brand or product mark.",
       "purpose": "Show the official Roblox brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "roblox",
         "brand",
@@ -2984,8 +2794,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:safari",
@@ -2995,8 +2805,6 @@
       "depicts": "The official Safari brand or product mark.",
       "purpose": "Show the official Safari brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "safari",
         "brand",
@@ -3015,8 +2823,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_2_none",
@@ -3026,8 +2834,6 @@
       "depicts": "A magnifying glass with a clear no-result mark inside the search lens.",
       "purpose": "Show an empty search result, unsuccessful find action, or a no-match search state.",
       "category": "search_discovery",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "no search results",
         "empty search",
@@ -3048,8 +2854,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_none",
@@ -3059,8 +2865,6 @@
       "depicts": "A magnifying glass with a clear no-result mark inside the search lens.",
       "purpose": "Show an empty search result, unsuccessful find action, or a no-match search state.",
       "category": "search_discovery",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "no search results",
         "empty search",
@@ -3081,8 +2885,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:signal",
@@ -3092,8 +2896,6 @@
       "depicts": "The official Signal brand or product mark.",
       "purpose": "Show the official Signal brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "signal",
         "brand",
@@ -3112,8 +2914,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:siri",
@@ -3123,8 +2925,6 @@
       "depicts": "The official Siri brand or product mark.",
       "purpose": "Show the official Siri brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "siri",
         "brand",
@@ -3142,8 +2942,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:siri_frame",
@@ -3153,8 +2953,6 @@
       "depicts": "The official Siri Frame brand or product mark.",
       "purpose": "Show the official Siri Frame brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "siri frame",
         "brand",
@@ -3172,8 +2970,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:snapchat",
@@ -3183,8 +2981,6 @@
       "depicts": "The official Snapchat brand or product mark.",
       "purpose": "Show the official Snapchat brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "snapchat",
         "brand",
@@ -3203,8 +2999,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:spotify",
@@ -3214,8 +3010,6 @@
       "depicts": "The official Spotify brand or product mark.",
       "purpose": "Show the official Spotify brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "spotify",
         "brand",
@@ -3234,8 +3028,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:square",
@@ -3245,8 +3039,6 @@
       "depicts": "A simple square outline.",
       "purpose": "Show a square shape, shape selection, or an abstract square marker.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "shape",
@@ -3267,8 +3059,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:steam",
@@ -3278,8 +3070,6 @@
       "depicts": "The official Steam brand or product mark.",
       "purpose": "Show the official Steam brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "steam",
         "brand",
@@ -3298,8 +3088,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:stripe",
@@ -3309,8 +3099,6 @@
       "depicts": "The official Stripe brand or product mark.",
       "purpose": "Show the official Stripe brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "stripe",
         "brand",
@@ -3329,8 +3117,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:telegram",
@@ -3340,8 +3128,6 @@
       "depicts": "The official Telegram brand or product mark.",
       "purpose": "Show the official Telegram brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "telegram",
         "brand",
@@ -3360,8 +3146,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:threads",
@@ -3371,8 +3157,6 @@
       "depicts": "The official Threads brand or product mark.",
       "purpose": "Show the official Threads brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "threads",
         "instagram threads",
@@ -3395,8 +3179,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:tiktok",
@@ -3406,8 +3190,6 @@
       "depicts": "The official TikTok brand or product mark.",
       "purpose": "Show the official TikTok brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "tiktok",
         "brand",
@@ -3426,8 +3208,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer",
@@ -3437,8 +3219,6 @@
       "depicts": "Two horizontal transfer arrows showing exchange between left and right.",
       "purpose": "Show transferring, swapping, or moving items between left and right lanes or lists.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "transfer",
         "swap",
@@ -3459,8 +3239,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer_2",
@@ -3470,8 +3250,6 @@
       "depicts": "Two vertical transfer arrows showing exchange between top and bottom.",
       "purpose": "Show transferring, swapping, or moving items between upper and lower positions.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "transfer",
         "swap",
@@ -3492,8 +3270,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer_3",
@@ -3503,8 +3281,6 @@
       "depicts": "Opposing horizontal transfer arrows for two-way left and right exchange.",
       "purpose": "Show two-way transfer or swap between left and right destinations.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "transfer left right",
         "swap",
@@ -3525,8 +3301,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer_4",
@@ -3536,8 +3312,6 @@
       "depicts": "Opposing vertical transfer arrows for two-way top and bottom exchange.",
       "purpose": "Show two-way transfer or swap between upper and lower destinations.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "transfer up down",
         "swap",
@@ -3558,8 +3332,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer_horizontal",
@@ -3569,8 +3343,6 @@
       "depicts": "A dense horizontal transfer control with opposing arrows for left-right exchange.",
       "purpose": "Show horizontal transfer, exchange, or move-between-lists behavior in a compact control.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "horizontal transfer",
         "swap",
@@ -3591,8 +3363,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:transfer_vertical",
@@ -3602,8 +3374,6 @@
       "depicts": "A dense vertical transfer control with opposing arrows for top-bottom exchange.",
       "purpose": "Show vertical transfer, exchange, or move-between-rows behavior in a compact control.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "vertical transfer",
         "swap",
@@ -3624,8 +3394,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:trello_board",
@@ -3635,8 +3405,6 @@
       "depicts": "The official Trello Board brand or product mark.",
       "purpose": "Show the official Trello Board brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "trello board",
         "brand",
@@ -3654,8 +3422,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:twitch",
@@ -3665,8 +3433,6 @@
       "depicts": "The official Twitch brand or product mark.",
       "purpose": "Show the official Twitch brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "twitch",
         "brand",
@@ -3685,8 +3451,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:twitter",
@@ -3696,8 +3462,6 @@
       "depicts": "The official Twitter brand or product mark.",
       "purpose": "Show the official Twitter brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "twitter",
         "brand",
@@ -3715,8 +3479,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:viber_messenger",
@@ -3726,8 +3490,6 @@
       "depicts": "The official Viber Messenger brand or product mark.",
       "purpose": "Show the official Viber Messenger brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "viber messenger",
         "brand",
@@ -3745,8 +3507,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:visa",
@@ -3756,8 +3518,6 @@
       "depicts": "The official Visa brand or product mark.",
       "purpose": "Show the official Visa brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "visa",
         "brand",
@@ -3776,8 +3536,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:vkontakte",
@@ -3787,8 +3547,6 @@
       "depicts": "The official Vkontakte brand or product mark.",
       "purpose": "Show the official Vkontakte brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "vkontakte",
         "brand",
@@ -3806,8 +3564,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:vscode",
@@ -3817,8 +3575,6 @@
       "depicts": "The official Vscode brand or product mark.",
       "purpose": "Show the official Vscode brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "vscode",
         "brand",
@@ -3836,8 +3592,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:vue",
@@ -3847,8 +3603,6 @@
       "depicts": "The official Vue brand or product mark.",
       "purpose": "Show the official Vue brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "vue",
         "brand",
@@ -3866,8 +3620,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:warm_up",
@@ -3877,8 +3631,6 @@
       "depicts": "A person doing a warm-up or stretch before exercise.",
       "purpose": "Show warm-up movement, pre-workout stretching, or exercise preparation.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "warm-up",
         "exercise",
@@ -3899,8 +3651,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:warm_up_2",
@@ -3910,8 +3662,6 @@
       "depicts": "A person doing a second warm-up or stretch pose.",
       "purpose": "Show a warm-up routine, stretch sequence, or exercise-preparation variation.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "warm-up",
         "exercise",
@@ -3932,8 +3682,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:warm_up_3",
@@ -3943,8 +3693,6 @@
       "depicts": "A person doing a third warm-up or stretch pose.",
       "purpose": "Show a warm-up routine, stretch sequence, or exercise-preparation variation.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "warm-up",
         "exercise",
@@ -3965,8 +3713,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:wechat",
@@ -3976,8 +3724,6 @@
       "depicts": "The official WeChat brand or product mark.",
       "purpose": "Show the official WeChat brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "wechat",
         "brand",
@@ -3996,8 +3742,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:wechat_miniprogram",
@@ -4007,8 +3753,6 @@
       "depicts": "The official Wechat Miniprogram brand or product mark.",
       "purpose": "Show the official Wechat Miniprogram brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "wechat miniprogram",
         "brand",
@@ -4026,8 +3770,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:wechat_pay",
@@ -4037,8 +3781,6 @@
       "depicts": "The official Wechat Pay brand or product mark.",
       "purpose": "Show the official Wechat Pay brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "wechat pay",
         "brand",
@@ -4056,8 +3798,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:weibo",
@@ -4067,8 +3809,6 @@
       "depicts": "The official Weibo brand or product mark.",
       "purpose": "Show the official Weibo brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "weibo",
         "brand",
@@ -4086,8 +3826,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:whatsapp",
@@ -4097,8 +3837,6 @@
       "depicts": "The official WhatsApp brand or product mark.",
       "purpose": "Show the official WhatsApp brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "whatsapp",
         "brand",
@@ -4117,8 +3855,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:xbox",
@@ -4128,8 +3866,6 @@
       "depicts": "The official Xbox brand or product mark.",
       "purpose": "Show the official Xbox brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "xbox",
         "brand",
@@ -4147,8 +3883,8 @@
         "svg-payload",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:youtube",
@@ -4158,8 +3894,6 @@
       "depicts": "The official YouTube brand or product mark.",
       "purpose": "Show the official YouTube brand or product mark.",
       "category": "brand_identity",
-      "intent": "inform",
-      "domain": "brand_platforms",
       "semantic_tags": [
         "youtube",
         "brand",
@@ -4178,8 +3912,8 @@
         "approved-reference",
         "editorial-review"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     }
   ]
 }

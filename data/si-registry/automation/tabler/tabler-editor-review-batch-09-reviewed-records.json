@@ -10,8 +10,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -29,8 +27,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "tabler:basket_up",
@@ -40,8 +38,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -59,8 +55,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "tabler:border_left",
@@ -70,8 +66,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -91,8 +85,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:border_right",
@@ -102,8 +96,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -123,8 +115,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bounce_left",
@@ -134,8 +126,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -155,8 +145,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bounce_right",
@@ -166,8 +156,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -187,8 +175,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     }
   ]
 }

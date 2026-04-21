@@ -10,8 +10,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "map",
         "pin",
@@ -30,8 +28,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_pin_check_inside",
@@ -41,8 +39,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "map",
         "pin",
@@ -63,8 +59,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_circle_heart",
@@ -74,8 +70,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -96,8 +90,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_dot",
@@ -107,8 +101,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -129,8 +121,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_heart",
@@ -140,8 +132,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -162,8 +152,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_off",
@@ -173,8 +163,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -195,8 +183,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_quote",
@@ -206,8 +194,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -228,8 +214,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_reply",
@@ -239,8 +225,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -261,8 +245,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_share",
@@ -272,8 +256,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -294,8 +276,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:message_square_text",
@@ -305,8 +287,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "square",
@@ -327,8 +307,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:monitor_check",
@@ -338,8 +318,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "monitor",
         "check",
@@ -356,8 +334,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:more_horizontal",
@@ -367,8 +345,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -386,8 +362,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:more_vertical",
@@ -397,8 +373,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -416,8 +390,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:mouse_pointer_ban",
@@ -427,8 +401,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show that an action, object, or state is blocked, prohibited, or not allowed.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "mouse",
         "pointer",
@@ -447,8 +419,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:octagon_alert",
@@ -458,8 +430,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "octagon",
         "alert",
@@ -476,8 +446,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:package_check",
@@ -487,8 +457,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "package",
         "check",
@@ -505,8 +473,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:panel_left_close",
@@ -516,8 +484,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -538,8 +504,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:panel_left_open",
@@ -549,8 +515,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -571,8 +535,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:panel_right_close",
@@ -582,8 +546,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -604,8 +566,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:panel_right_open",
@@ -615,8 +577,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -637,8 +597,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:printer_check",
@@ -648,8 +608,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "printer",
         "check",
@@ -666,8 +624,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:send_horizonal",
@@ -677,8 +635,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
       "category": "message_actions",
-      "intent": "act",
-      "domain": "communication",
       "semantic_tags": [
         "send",
         "horizonal",
@@ -697,8 +653,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:send_horizontal",
@@ -708,8 +664,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
       "category": "message_actions",
-      "intent": "act",
-      "domain": "communication",
       "semantic_tags": [
         "send",
         "horizontal",
@@ -728,8 +682,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:shield_ellipsis",
@@ -739,8 +693,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "ellipsis",
@@ -758,8 +710,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:shield_half",
@@ -769,8 +721,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "half",
@@ -788,8 +738,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:shield_minus",
@@ -799,8 +749,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "minus",
@@ -818,8 +766,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:shield_off",
@@ -829,8 +777,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "off",
@@ -848,8 +794,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:shield_question",
@@ -859,8 +805,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "question",
@@ -878,8 +822,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:shield_question_mark",
@@ -889,8 +833,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "question",
@@ -910,8 +852,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:sidebar",
@@ -921,8 +863,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "menu",
         "sidebar"
@@ -938,8 +878,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:spell_check",
@@ -949,8 +889,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "spell",
         "check",
@@ -967,8 +905,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:spell_check_2",
@@ -978,8 +916,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "spell",
         "check",
@@ -998,8 +934,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_arrow_down_left",
@@ -1009,8 +945,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1032,8 +966,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_down_right",
@@ -1043,8 +977,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1066,8 +998,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_out_down_left",
@@ -1077,8 +1009,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1101,8 +1031,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_out_down_right",
@@ -1112,8 +1042,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1136,8 +1064,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_out_up_left",
@@ -1147,8 +1075,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1171,8 +1097,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_out_up_right",
@@ -1182,8 +1108,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1206,8 +1130,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_right_enter",
@@ -1217,8 +1141,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1240,8 +1162,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_right_exit",
@@ -1251,8 +1173,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1274,8 +1194,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_up_left",
@@ -1285,8 +1205,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1308,8 +1226,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_arrow_up_right",
@@ -1319,8 +1237,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1342,8 +1258,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_check",
@@ -1353,8 +1269,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "square",
         "check",
@@ -1371,8 +1285,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_check_big",
@@ -1382,8 +1296,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "square",
         "check",
@@ -1402,8 +1314,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_chevron_down",
@@ -1413,8 +1325,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -1433,8 +1343,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_chevron_left",
@@ -1444,8 +1354,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1466,8 +1374,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_chevron_right",
@@ -1477,8 +1385,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1499,8 +1405,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:square_chevron_up",
@@ -1510,8 +1416,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1530,8 +1434,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ticket_check",
@@ -1541,8 +1445,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "ticket",
         "check",
@@ -1559,8 +1461,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:triangle_alert",
@@ -1570,8 +1472,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "triangle",
         "alert",
@@ -1588,8 +1488,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:undo_2",
@@ -1599,8 +1499,6 @@
       "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
       "purpose": "Show undoing the most recent action.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "undo",
         "2",
@@ -1617,8 +1515,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:undo_dot",
@@ -1628,8 +1526,6 @@
       "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
       "purpose": "Show undoing the most recent action.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "undo",
         "dot",
@@ -1646,8 +1542,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:unlock_keyhole",
@@ -1657,8 +1553,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show open access, unlocked state, or released protection.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "unlock",
         "keyhole",
@@ -1676,8 +1570,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:waves_arrow_down",
@@ -1687,8 +1581,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -1707,8 +1599,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:waves_arrow_up",
@@ -1718,8 +1610,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1738,8 +1628,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:wind_arrow_down",
@@ -1749,8 +1639,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -1769,8 +1657,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:arrows_up_from_line",
@@ -1780,8 +1668,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1801,8 +1687,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_down",
@@ -1812,8 +1698,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -1831,8 +1715,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_up",
@@ -1842,8 +1726,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1861,8 +1743,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_up_2",
@@ -1872,8 +1754,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1892,8 +1772,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     }
   ]
 }

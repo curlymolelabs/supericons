@@ -108,8 +108,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmark plus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmark",
           "plus"
@@ -117,8 +115,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmark-plus",
@@ -155,8 +152,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar clock.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "clock"
@@ -164,8 +159,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-clock",
@@ -202,8 +196,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar plus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "plus"
@@ -211,8 +203,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-plus",
@@ -249,8 +240,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar user.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "calendar",
           "user"
@@ -258,8 +247,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-user",
@@ -296,8 +284,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing clock edit.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "clock",
           "edit"
@@ -305,8 +291,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "clock-edit",
@@ -343,8 +328,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing clock plus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "clock",
           "plus"
@@ -352,8 +335,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "clock-plus",
@@ -390,8 +372,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing clock x.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "clock",
           "x"
@@ -399,8 +379,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "clock-x",
@@ -438,8 +417,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow rotary straight.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "rotary",
@@ -448,8 +425,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-rotary-straight",
@@ -487,8 +463,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow zig zag.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "zig",
@@ -497,8 +471,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-zig-zag",
@@ -535,8 +508,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing error.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "error",
           "404"
@@ -544,8 +515,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "error-404",
@@ -583,8 +553,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing error off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "error",
           "404",
@@ -593,8 +561,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "error-404-off",
@@ -632,8 +599,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing face id error.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "face",
           "id",
@@ -642,8 +607,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "face-id-error",
@@ -680,8 +644,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -690,8 +652,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-text",
@@ -729,8 +690,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -740,8 +699,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-text-spark",
@@ -778,8 +736,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -788,8 +744,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-time",
@@ -827,8 +782,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -838,8 +791,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-bmp",
@@ -877,8 +829,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -888,8 +838,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-css",
@@ -927,8 +876,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -938,8 +885,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-csv",
@@ -977,8 +923,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -988,8 +932,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-doc",
@@ -1027,8 +970,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1038,8 +979,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-docx",
@@ -1077,8 +1017,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1088,8 +1026,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-html",
@@ -1127,8 +1064,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1138,8 +1073,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-jpg",
@@ -1177,8 +1111,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1188,8 +1120,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-js",
@@ -1227,8 +1158,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1238,8 +1167,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-jsx",
@@ -1277,8 +1205,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1288,8 +1214,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-pdf",
@@ -1327,8 +1252,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1338,8 +1261,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-php",
@@ -1377,8 +1299,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1388,8 +1308,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-png",
@@ -1427,8 +1346,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1438,8 +1355,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-ppt",
@@ -1477,8 +1393,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1488,8 +1402,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-rs",
@@ -1527,8 +1440,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1538,8 +1449,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-sql",
@@ -1577,8 +1487,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1588,8 +1496,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-svg",
@@ -1627,8 +1534,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1638,8 +1543,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-ts",
@@ -1677,8 +1581,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1688,8 +1590,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-tsx",
@@ -1727,8 +1628,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1738,8 +1637,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-txt",
@@ -1777,8 +1675,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1788,8 +1684,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-vue",
@@ -1827,8 +1722,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1838,8 +1731,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-xls",
@@ -1877,8 +1769,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1888,8 +1778,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-xml",
@@ -1927,8 +1816,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1938,8 +1825,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-type-zip",
@@ -1976,8 +1862,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing flag pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "flag",
           "pause"
@@ -1985,8 +1869,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "flag-pause",
@@ -2023,8 +1906,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing hand stop.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "hand",
           "stop"
@@ -2032,8 +1913,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "hand-stop",
@@ -2070,8 +1950,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing heart pause.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "heart",
           "pause"
@@ -2079,8 +1957,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "heart-pause",
@@ -2117,8 +1994,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing location pause.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "location",
           "pause"
@@ -2126,8 +2001,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "location-pause",
@@ -2164,8 +2038,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing map pause.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "map",
           "pause"
@@ -2173,8 +2045,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "map-pause",
@@ -2212,8 +2083,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing map pin pause.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "map",
           "pin",
@@ -2222,8 +2091,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "map-pin-pause",
@@ -2260,8 +2128,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing navigation pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "navigation",
           "pause"
@@ -2269,8 +2135,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "navigation-pause",
@@ -2307,8 +2172,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing object scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "object",
           "scan"
@@ -2316,8 +2179,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "object-scan",
@@ -2354,8 +2216,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing pencil pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "pencil",
           "pause"
@@ -2363,8 +2223,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pencil-pause",
@@ -2401,8 +2260,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing phone pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "phone",
           "pause"
@@ -2410,8 +2267,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "phone-pause",
@@ -2448,8 +2304,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing photo pause.",
-        "intent": "inform",
-        "domain": "media",
         "synonyms": [
           "photo",
           "pause"
@@ -2457,8 +2311,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "photo-pause",
@@ -2495,8 +2348,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing photo scan.",
-        "intent": "inform",
-        "domain": "media",
         "synonyms": [
           "photo",
           "scan"
@@ -2504,8 +2355,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "photo-scan",
@@ -2542,8 +2392,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing route scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "route",
           "scan"
@@ -2551,8 +2399,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "route-scan",
@@ -2589,8 +2436,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing scan position.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "scan",
           "position"
@@ -2598,8 +2443,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "scan-position",
@@ -2636,8 +2480,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing scan traces.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "scan",
           "traces"
@@ -2645,8 +2487,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "scan-traces",
@@ -2683,8 +2524,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing target arrow.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "target",
           "arrow"
@@ -2692,8 +2531,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "target-arrow",
@@ -2731,8 +2569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing text scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "text",
           "scan",
@@ -2741,8 +2577,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "text-scan-2",
@@ -2780,8 +2615,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing view arrow.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "view",
           "360",
@@ -2790,8 +2623,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "view-360-arrow",
@@ -2828,8 +2660,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing zoom scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "zoom",
           "scan"
@@ -2837,8 +2667,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "zoom-scan",
@@ -2876,8 +2705,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing layout align left.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "layout",
           "align",
@@ -2886,8 +2713,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "layout-align-left",
@@ -2925,8 +2751,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing layout align right.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "layout",
           "align",
@@ -2935,8 +2759,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "layout-align-right",

@@ -10,8 +10,6 @@
       "depicts": "A search-focused symbol showing structured or scoped search.",
       "purpose": "Show search across files or code assets.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "file search",
         "search code",
@@ -32,8 +30,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:folder-search",
@@ -43,8 +41,6 @@
       "depicts": "A search-focused symbol showing structured or scoped search.",
       "purpose": "Show search across folders, directories, or grouped content.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "folder search",
         "directory search",
@@ -65,8 +61,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:scan-eye",
@@ -76,8 +72,6 @@
       "depicts": "An eye and scan mark showing inspection or visual scanning.",
       "purpose": "Show visual scanning, inspection, or a focused detection pass.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ai_agents",
       "semantic_tags": [
         "scan",
         "inspect",
@@ -98,8 +92,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "lucide:server-cog",
@@ -109,8 +103,6 @@
       "depicts": "A server with a control gear.",
       "purpose": "Show server-side control, configuration, or backend operation.",
       "category": "systems_architecture",
-      "intent": "configure",
-      "domain": "developer_tools",
       "semantic_tags": [
         "server",
         "backend control",
@@ -131,8 +123,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:cloud-check",
@@ -142,8 +134,6 @@
       "depicts": "A cloud with a check mark showing successful cloud state.",
       "purpose": "Show that content is synced, backed up, or safely stored in the cloud.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "cloud synced",
         "backed up",
@@ -164,8 +154,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:help-circle",
@@ -175,8 +165,6 @@
       "depicts": "A circled help symbol.",
       "purpose": "Show help, guidance, or a place to get assistance.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "help",
         "guidance",
@@ -197,8 +185,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:info-circle",
@@ -208,8 +196,6 @@
       "depicts": "A circled information symbol.",
       "purpose": "Show helpful information, extra context, or a neutral informational state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "information",
         "info",
@@ -230,8 +216,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail-check",
@@ -241,8 +227,6 @@
       "depicts": "Mail Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed mail state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -263,8 +247,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message-check",
@@ -274,8 +258,6 @@
       "depicts": "Message Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed message state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -296,8 +278,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:progress-check",
@@ -307,8 +289,6 @@
       "depicts": "A progress or task indicator with a completion check.",
       "purpose": "Show progress that has completed or a task that finished successfully.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "completed",
         "progress done",
@@ -329,8 +309,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell",
@@ -340,8 +320,6 @@
       "depicts": "A bell symbol used for alerts and notifications.",
       "purpose": "Show notifications, alerts, or items needing attention.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "notifications",
         "alerts",
@@ -362,8 +340,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clipboard-check",
@@ -373,8 +351,6 @@
       "depicts": "Clipboard Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed clipboard state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -395,8 +371,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clock",
@@ -406,8 +382,6 @@
       "depicts": "A clock face used for time or waiting.",
       "purpose": "Show time-based waiting, scheduled status, or a pending state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "time",
         "pending",
@@ -428,8 +402,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye",
@@ -439,8 +413,6 @@
       "depicts": "An eye symbol used for visibility or preview.",
       "purpose": "Show visibility, preview, or content that is currently shown.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "show",
@@ -461,8 +433,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye-off",
@@ -472,8 +444,6 @@
       "depicts": "An eye symbol crossed to show hidden visibility.",
       "purpose": "Show hidden content, turned-off visibility, or a concealed state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "hidden",
         "concealed",
@@ -494,8 +464,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:hourglass",
@@ -505,8 +475,6 @@
       "depicts": "An hourglass used for waiting or process time.",
       "purpose": "Show waiting, in-progress delay, or time passing before completion.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "waiting",
         "delay",
@@ -527,8 +495,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:key",
@@ -538,8 +506,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show credentials, access keys, or a key-based access concept.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "credentials",
@@ -560,8 +526,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:list-check",
@@ -571,8 +537,6 @@
       "depicts": "Checklist Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed checklist state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -593,8 +557,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:loader-2",
@@ -604,8 +568,6 @@
       "depicts": "A spinning or circular loader indicator.",
       "purpose": "Show an active loading or in-progress system state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "loading",
         "in progress",
@@ -626,8 +588,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock",
@@ -637,8 +599,6 @@
       "depicts": "A closed lock showing protected access.",
       "purpose": "Show locked access, protection, or content that requires permission.",
       "category": "security",
-      "intent": "confirm",
-      "domain": "security",
       "semantic_tags": [
         "locked",
         "protected",
@@ -659,8 +619,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock-open",
@@ -670,8 +630,6 @@
       "depicts": "An open lock showing access is available.",
       "purpose": "Show unlocked access, open permission, or content that is no longer locked.",
       "category": "security",
-      "intent": "confirm",
-      "domain": "security",
       "semantic_tags": [
         "unlocked",
         "open access",
@@ -692,8 +650,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rosette-discount-check",
@@ -703,8 +661,6 @@
       "depicts": "A rosette badge with a check mark for verified discount or offer status.",
       "purpose": "Show a verified offer, confirmed discount, or trusted deal badge.",
       "category": "commerce",
-      "intent": "confirm",
-      "domain": "commerce",
       "semantic_tags": [
         "verified offer",
         "discount",
@@ -725,8 +681,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:thumb-down",
@@ -736,8 +692,6 @@
       "depicts": "A thumbs-down feedback symbol.",
       "purpose": "Show negative feedback, disapproval, or a disliked state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "disapproval",
         "dislike",
@@ -758,8 +712,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:thumb-up",
@@ -769,8 +723,6 @@
       "depicts": "A thumbs-up feedback symbol.",
       "purpose": "Show positive feedback, approval, or a liked state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "approval",
         "like",
@@ -791,8 +743,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:trending-down",
@@ -802,8 +754,6 @@
       "depicts": "A line or arrow showing decline over time.",
       "purpose": "Show a downward trend, decrease, or negative movement in a metric.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "analytics",
       "semantic_tags": [
         "downward trend",
         "decrease",
@@ -824,8 +774,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:wifi",
@@ -835,8 +785,6 @@
       "depicts": "A wireless signal icon representing network connection.",
       "purpose": "Show wireless connection status or network availability.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "wifi",
         "network",
@@ -857,8 +805,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:sort-ascending",
@@ -868,8 +816,6 @@
       "depicts": "An ordering control that arranges items from low to high or A to Z.",
       "purpose": "Show ascending sort order for a list, results set, or ordered collection.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort ascending",
         "order low to high",
@@ -890,8 +836,8 @@
         "taxonomy-seed",
         "svg-payload"
       ],
-      "confidence_score": 0.89,
-      "confidence_band": "high"
+      "routing_score": 0.89,
+      "routing_band": "high"
     }
   ]
 }

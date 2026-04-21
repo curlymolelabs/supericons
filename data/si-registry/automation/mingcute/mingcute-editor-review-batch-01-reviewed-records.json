@@ -10,8 +10,6 @@
       "depicts": "A file shape paired with a search cue.",
       "purpose": "Show searching within files, code assets, or file-based content.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "file search",
         "search files",
@@ -32,8 +30,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:folder_delete",
@@ -43,8 +41,6 @@
       "depicts": "A folder paired with a delete cue.",
       "purpose": "Show deleting, removing, or discarding a folder or container.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete folder",
         "remove folder",
@@ -65,8 +61,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:list_check",
@@ -76,8 +72,6 @@
       "depicts": "A list paired with a completion check.",
       "purpose": "Show a completed checklist, confirmed list item, or checked list state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "checklist",
         "complete",
@@ -98,8 +92,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:list_search",
@@ -109,8 +103,6 @@
       "depicts": "A list paired with a search cue.",
       "purpose": "Show searching within a visible list, records table, or scoped list view.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "list search",
         "search list",
@@ -131,8 +123,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:toggle_right",
@@ -142,8 +134,6 @@
       "depicts": "A toggle switch in the on position.",
       "purpose": "Show that a setting, control, or feature is switched on or enabled.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "ui_controls",
       "semantic_tags": [
         "toggle",
         "enabled",
@@ -164,8 +154,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_2_ai",
@@ -175,8 +165,6 @@
       "depicts": "A search symbol paired with an AI marker.",
       "purpose": "Show AI-assisted search, agent lookup, or model-guided retrieval.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai search",
         "assistant search",
@@ -197,8 +185,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_3_ai",
@@ -208,8 +196,6 @@
       "depicts": "A search symbol paired with an AI marker.",
       "purpose": "Show AI-assisted search, agent lookup, or model-guided retrieval.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai search",
         "assistant search",
@@ -230,8 +216,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_ai",
@@ -241,8 +227,6 @@
       "depicts": "A search symbol paired with an AI marker.",
       "purpose": "Show AI-assisted search, agent lookup, or model-guided retrieval.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai search",
         "assistant search",
@@ -263,8 +247,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:az_sort_ascending_letters",
@@ -274,8 +258,6 @@
       "depicts": "A sort control for alphabetical ascending order.",
       "purpose": "Show sorting text items from A to Z.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "alphabetical",
@@ -296,8 +278,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:az_sort_descending_letters",
@@ -307,8 +289,6 @@
       "depicts": "A sort control for alphabetical descending order.",
       "purpose": "Show sorting text items from Z to A.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "alphabetical",
@@ -329,8 +309,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:back_2",
@@ -340,8 +320,6 @@
       "depicts": "A left-facing navigation arrow.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -362,8 +340,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:back",
@@ -373,8 +351,6 @@
       "depicts": "A left-facing navigation arrow.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -395,8 +371,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:clock",
@@ -406,8 +382,6 @@
       "depicts": "A clock face used for time or waiting.",
       "purpose": "Show time-based waiting, scheduled status, or a pending state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "time",
         "pending",
@@ -428,8 +402,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:close",
@@ -439,8 +413,6 @@
       "depicts": "A large X mark used as a close control.",
       "purpose": "Close, dismiss, or collapse an open surface such as a modal, drawer, or panel.",
       "category": "navigation_interface",
-      "intent": "dismiss",
-      "domain": "ui_shell",
       "semantic_tags": [
         "close",
         "dismiss",
@@ -461,8 +433,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dashboard_2",
@@ -472,8 +444,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -494,8 +464,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dashboard_3",
@@ -505,8 +475,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -527,8 +495,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dashboard_4",
@@ -538,8 +506,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -560,8 +526,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:dashboard",
@@ -571,8 +537,6 @@
       "depicts": "A panel-style layout icon for a dashboard surface.",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dashboard",
         "overview",
@@ -593,8 +557,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:delete_2",
@@ -604,8 +568,6 @@
       "depicts": "A delete or trash symbol used for removal.",
       "purpose": "Show delete, remove, or discard actions for content or items.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete",
         "remove",
@@ -626,8 +588,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:delete_3",
@@ -637,8 +599,6 @@
       "depicts": "A delete or trash symbol used for removal.",
       "purpose": "Show delete, remove, or discard actions for content or items.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete",
         "remove",
@@ -659,8 +619,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:delete",
@@ -670,8 +630,6 @@
       "depicts": "A delete or trash symbol used for removal.",
       "purpose": "Show delete, remove, or discard actions for content or items.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete",
         "remove",
@@ -692,8 +650,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:eye_2",
@@ -703,8 +661,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -725,8 +681,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:eye",
@@ -736,8 +692,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -758,8 +712,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:filter_2",
@@ -769,8 +723,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -791,8 +743,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:filter_3",
@@ -802,8 +754,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -824,8 +774,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:filter",
@@ -835,8 +785,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -857,8 +805,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:forward_2",
@@ -868,8 +816,6 @@
       "depicts": "A right-facing navigation arrow.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -890,8 +836,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:forward",
@@ -901,8 +847,6 @@
       "depicts": "A right-facing navigation arrow.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -923,8 +867,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:fullscreen_exit",
@@ -934,8 +878,6 @@
       "depicts": "A frame-collapse icon returning from a full-screen view.",
       "purpose": "Show leaving full screen or restoring a smaller view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "exit full screen",
         "restore view",
@@ -956,8 +898,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:fullscreen",
@@ -967,8 +909,6 @@
       "depicts": "A frame-expansion icon that fills the available screen.",
       "purpose": "Show entering full screen or expanding content to take over the screen.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "full screen",
         "expand view",
@@ -989,8 +929,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_1",
@@ -1000,8 +940,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1022,8 +960,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_2",
@@ -1033,8 +971,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1055,8 +991,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_3",
@@ -1066,8 +1002,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1088,8 +1022,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_4",
@@ -1099,8 +1033,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1121,8 +1053,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_5",
@@ -1132,8 +1064,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1154,8 +1084,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_6",
@@ -1165,8 +1095,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1187,8 +1115,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:home_7",
@@ -1198,8 +1126,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1220,8 +1146,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:key_1",
@@ -1231,8 +1157,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show access credentials, keys, or secure key-based access.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "access",
@@ -1253,8 +1177,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:key_2",
@@ -1264,8 +1188,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show access credentials, keys, or secure key-based access.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "access",
@@ -1286,8 +1208,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:key_3",
@@ -1297,8 +1219,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show access credentials, keys, or secure key-based access.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "access",
@@ -1319,8 +1239,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:key_4",
@@ -1330,8 +1250,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show access credentials, keys, or secure key-based access.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "access",
@@ -1352,8 +1270,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:lock",
@@ -1363,8 +1281,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -1385,8 +1301,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:menu",
@@ -1396,8 +1312,6 @@
       "depicts": "A stacked-line menu or drawer entry icon.",
       "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "menu",
         "navigation",
@@ -1418,8 +1332,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:numbers_09_sort_ascending",
@@ -1429,8 +1343,6 @@
       "depicts": "A sort control for numeric ascending order.",
       "purpose": "Show sorting numbers from 0 to 9.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "numbers",
@@ -1451,8 +1363,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:numbers_09_sort_descending",
@@ -1462,8 +1374,6 @@
       "depicts": "A sort control for numeric descending order.",
       "purpose": "Show sorting numbers from 9 to 0.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "numbers",
@@ -1484,8 +1394,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:numbers_90_sort_ascending",
@@ -1495,8 +1405,6 @@
       "depicts": "A sort control for numeric descending order.",
       "purpose": "Show sorting numbers from 9 to 0.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "numbers",
@@ -1517,8 +1425,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:numbers_90_sort_descending",
@@ -1528,8 +1436,6 @@
       "depicts": "A sort control for numeric ascending order.",
       "purpose": "Show sorting numbers from 0 to 9.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "numbers",
@@ -1550,8 +1456,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_1",
@@ -1561,8 +1467,6 @@
       "depicts": "A circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -1583,8 +1487,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_2",
@@ -1594,8 +1498,6 @@
       "depicts": "A circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -1616,8 +1518,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_3",
@@ -1627,8 +1529,6 @@
       "depicts": "A circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -1649,8 +1549,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_4",
@@ -1660,8 +1560,6 @@
       "depicts": "A circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -1682,8 +1580,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:refresh_anticlockwise_1",
@@ -1693,8 +1591,6 @@
       "depicts": "A circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -1715,8 +1611,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_2",
@@ -1726,8 +1622,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -1748,8 +1642,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search_3",
@@ -1759,8 +1653,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -1781,8 +1673,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:search",
@@ -1792,8 +1684,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -1814,8 +1704,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     }
   ]
 }

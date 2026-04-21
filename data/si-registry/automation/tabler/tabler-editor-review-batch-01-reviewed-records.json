@@ -10,8 +10,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -32,8 +30,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_back_up",
@@ -43,8 +41,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -65,8 +61,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_back_up_double",
@@ -76,8 +72,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -98,8 +92,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_forward",
@@ -109,8 +103,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -131,8 +123,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_forward_up",
@@ -142,8 +134,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -164,8 +154,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_forward_up_double",
@@ -175,8 +165,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -197,8 +185,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell_plus",
@@ -208,8 +196,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show notifications, alerts, or attention for incoming events.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bell",
         "plus",
@@ -227,8 +213,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell_search",
@@ -238,8 +224,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -260,8 +244,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bookmark_edit",
@@ -271,8 +255,6 @@
       "depicts": "A bookmark paired with an edit cue.",
       "purpose": "Show editing or changing a saved bookmark, favorite, or saved reference.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit bookmark",
         "saved item",
@@ -293,8 +275,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar_check",
@@ -304,8 +286,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "calendar",
         "check",
@@ -323,8 +303,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar_search",
@@ -334,8 +314,6 @@
       "depicts": "A calendar paired with a search cue.",
       "purpose": "Show searching for dates, events, or schedule entries inside a calendar view.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "calendar search",
         "find event",
@@ -356,8 +334,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar_x",
@@ -367,8 +345,6 @@
       "depicts": "A symbol representing calendar x.",
       "purpose": "Show calendar x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "x"
@@ -384,8 +360,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clock_check",
@@ -395,8 +371,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "clock",
         "check",
@@ -414,8 +388,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clock_search",
@@ -425,8 +399,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -447,8 +419,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:copy_check",
@@ -458,8 +430,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "copy",
         "check",
@@ -477,8 +447,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_edit",
@@ -488,8 +458,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -510,8 +478,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_plus",
@@ -521,8 +489,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -543,8 +509,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_search",
@@ -554,8 +520,6 @@
       "depicts": "A search-focused symbol showing structured or scoped search.",
       "purpose": "Show search across stored records or structured data.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "search",
         "database",
@@ -576,8 +540,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_x",
@@ -587,8 +551,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -609,8 +571,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_check",
@@ -620,8 +582,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -642,8 +602,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_code",
@@ -653,8 +613,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -675,8 +633,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_edit",
@@ -686,8 +644,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -708,8 +664,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_pause",
@@ -719,8 +675,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -741,8 +695,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_plus",
@@ -752,8 +706,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -774,8 +726,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_search",
@@ -785,8 +737,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -807,8 +757,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_x",
@@ -818,8 +768,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -840,8 +788,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_check",
@@ -851,8 +799,6 @@
       "depicts": "A file paired with a check cue.",
       "purpose": "Show a confirmed, approved, or completed file state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "confirmed file",
         "approved file",
@@ -873,8 +819,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_code",
@@ -884,8 +830,6 @@
       "depicts": "A file paired with code or markup symbols.",
       "purpose": "Show a source file, code document, or developer file artifact.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "code file",
         "source file",
@@ -906,8 +850,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_code_2",
@@ -917,8 +861,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "file",
         "code",
@@ -938,8 +880,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_database",
@@ -949,8 +891,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -971,8 +911,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_download",
@@ -982,8 +922,6 @@
       "depicts": "A file paired with a downward download cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download file",
         "export file",
@@ -1004,8 +942,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_info",
@@ -1015,8 +953,6 @@
       "depicts": "A file paired with an information cue.",
       "purpose": "Show details, metadata, or extra information about a file.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "file info",
         "details",
@@ -1037,8 +973,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_plus",
@@ -1048,8 +984,6 @@
       "depicts": "A file paired with an add cue inside the file boundary.",
       "purpose": "Show creating or adding a new file or document.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new file",
         "create file",
@@ -1070,8 +1004,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_search",
@@ -1081,8 +1015,6 @@
       "depicts": "A file shape paired with a search cue.",
       "purpose": "Show searching within files, code assets, or file-based content.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "file search",
         "search files",
@@ -1103,8 +1035,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_upload",
@@ -1114,8 +1046,6 @@
       "depicts": "A file paired with an upward upload cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload file",
         "import file",
@@ -1136,8 +1066,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_x",
@@ -1147,8 +1077,6 @@
       "depicts": "A file paired with a remove cue.",
       "purpose": "Show removing, clearing, or rejecting a file.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove file",
         "delete file",
@@ -1169,8 +1097,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_check",
@@ -1180,8 +1108,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1202,8 +1128,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_code",
@@ -1213,8 +1139,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1235,8 +1159,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_edit",
@@ -1246,8 +1170,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1268,8 +1190,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_pause",
@@ -1279,8 +1201,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1301,8 +1221,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_plus",
@@ -1312,8 +1232,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1334,8 +1252,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_search",
@@ -1345,8 +1263,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -1367,8 +1283,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_x",
@@ -1378,8 +1294,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1400,8 +1314,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_check",
@@ -1411,8 +1325,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1433,8 +1345,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_code",
@@ -1444,8 +1356,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1466,8 +1376,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_edit",
@@ -1477,8 +1387,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1499,8 +1407,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_pause",
@@ -1510,8 +1418,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1532,8 +1438,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_plus",
@@ -1543,8 +1449,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1565,8 +1469,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_search",
@@ -1576,8 +1480,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -1598,8 +1500,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_x",
@@ -1609,8 +1511,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -1631,8 +1531,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_check",
@@ -1642,8 +1542,6 @@
       "depicts": "A folder paired with a check cue.",
       "purpose": "Show a confirmed, approved, or completed folder state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "confirmed folder",
         "approved folder",
@@ -1664,8 +1562,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_code",
@@ -1675,8 +1573,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "folder",
         "code",
@@ -1694,8 +1590,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_open",
@@ -1705,8 +1601,6 @@
       "depicts": "An open folder indicating entry into a container.",
       "purpose": "Show opening a folder or entering a file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "open folder",
         "folder",
@@ -1727,8 +1621,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_plus",
@@ -1738,8 +1632,6 @@
       "depicts": "A folder paired with an add cue.",
       "purpose": "Show creating or adding a new folder or directory.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new folder",
         "create folder",
@@ -1760,8 +1652,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_search",
@@ -1771,8 +1663,6 @@
       "depicts": "A search-focused symbol showing structured or scoped search.",
       "purpose": "Show search across folders, directories, or grouped content.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "developer_tools",
       "semantic_tags": [
         "folder search",
         "directory search",
@@ -1793,8 +1683,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_x",
@@ -1804,8 +1694,6 @@
       "depicts": "A folder paired with a remove cue.",
       "purpose": "Show removing, clearing, or rejecting a folder.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove folder",
         "delete folder",
@@ -1826,8 +1714,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_check",
@@ -1837,8 +1725,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1859,8 +1745,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_edit",
@@ -1870,8 +1756,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1892,8 +1776,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_link",
@@ -1903,8 +1787,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1925,8 +1807,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_lock",
@@ -1936,8 +1818,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1958,8 +1838,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_plus",
@@ -1969,8 +1849,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -1991,8 +1869,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_search",
@@ -2002,8 +1880,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -2024,8 +1900,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_shield",
@@ -2035,8 +1911,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -2057,8 +1931,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_x",
@@ -2068,8 +1942,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -2090,8 +1962,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:layout_grid",
@@ -2101,8 +1973,6 @@
       "depicts": "A grid of tiles or dots representing a grid layout.",
       "purpose": "Show a grid layout, tile view, or multi-item overview surface.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "tiles",
@@ -2123,8 +1993,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:layout_list",
@@ -2134,8 +2004,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a list layout or switching content into a list view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "list view",
         "layout",
@@ -2154,8 +2022,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:list_check",
@@ -2165,8 +2033,6 @@
       "depicts": "A list paired with a completion check.",
       "purpose": "Show a completed checklist, confirmed list item, or checked list state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "checklist",
         "complete",
@@ -2187,8 +2053,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:list_search",
@@ -2198,8 +2064,6 @@
       "depicts": "A list paired with a search cue.",
       "purpose": "Show searching within a visible list, records table, or scoped list view.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "list search",
         "search list",
@@ -2220,8 +2084,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_check",
@@ -2231,8 +2095,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -2253,8 +2115,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_code",
@@ -2264,8 +2126,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -2286,8 +2146,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_open",
@@ -2297,8 +2157,6 @@
       "depicts": "An open lock showing access is available.",
       "purpose": "Show unlocked access, open permission, or content that is no longer locked.",
       "category": "security",
-      "intent": "confirm",
-      "domain": "security",
       "semantic_tags": [
         "unlocked",
         "open access",
@@ -2319,8 +2177,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_pause",
@@ -2330,8 +2188,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -2352,8 +2208,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_plus",
@@ -2363,8 +2219,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -2385,8 +2239,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_search",
@@ -2396,8 +2250,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -2418,8 +2270,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_x",
@@ -2429,8 +2281,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -2451,8 +2301,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_check",
@@ -2462,8 +2312,6 @@
       "depicts": "Mail Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed mail state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -2484,8 +2332,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_forward",
@@ -2495,8 +2343,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -2517,8 +2363,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_plus",
@@ -2528,8 +2374,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show mail, email communication, or an email-related action.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "mail",
         "plus",
@@ -2549,8 +2393,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_search",
@@ -2560,8 +2404,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -2582,8 +2424,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_x",
@@ -2593,8 +2435,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show mail, email communication, or an email-related action.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "mail",
         "x",
@@ -2614,8 +2454,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_2_search",
@@ -2625,8 +2465,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -2647,8 +2485,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_check",
@@ -2658,8 +2496,6 @@
       "depicts": "Message Complete shown with a completion check mark.",
       "purpose": "Show a completed or confirmed message state.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "complete",
         "confirmed",
@@ -2680,8 +2516,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_check",
@@ -2691,8 +2527,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "message",
         "circle",
@@ -2712,8 +2546,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_code",
@@ -2723,8 +2557,6 @@
       "depicts": "A message bubble with a communication or code detail.",
       "purpose": "Show code-focused conversation, developer chat, or technical message exchange.",
       "category": "message_actions",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "code message",
         "developer chat",
@@ -2745,8 +2577,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_plus",
@@ -2756,8 +2588,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -2779,8 +2609,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_search",
@@ -2790,8 +2620,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -2812,8 +2640,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_x",
@@ -2823,8 +2651,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -2846,8 +2672,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_forward",
@@ -2857,8 +2683,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -2879,8 +2703,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_search",
@@ -2890,8 +2714,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -2912,8 +2734,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:refresh_alert",
@@ -2923,8 +2745,6 @@
       "depicts": "Two curved arrows forming a circular refresh loop.",
       "purpose": "Show refreshing or reloading the current view, results, or content state.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "refresh",
         "reload",
@@ -2945,8 +2765,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:scan_eye",
@@ -2956,8 +2776,6 @@
       "depicts": "An eye and scan mark showing inspection or visual scanning.",
       "purpose": "Show visual scanning, inspection, or a focused detection pass.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ai_agents",
       "semantic_tags": [
         "scan",
         "inspect",
@@ -2978,8 +2796,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:settings_search",
@@ -2989,8 +2807,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -3011,8 +2827,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:shield_check",
@@ -3022,8 +2838,6 @@
       "depicts": "A shield outline with a checkmark.",
       "purpose": "Show verified protection, trusted status, or a confirmed security safeguard.",
       "category": "security",
-      "intent": "confirm",
-      "domain": "security",
       "semantic_tags": [
         "security",
         "trust",
@@ -3044,8 +2858,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:shield_lock",
@@ -3055,8 +2869,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -3077,8 +2889,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:shield_plus",
@@ -3088,8 +2900,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "plus",
@@ -3108,8 +2918,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:shield_search",
@@ -3119,8 +2929,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -3141,8 +2949,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:shield_x",
@@ -3152,8 +2960,6 @@
       "depicts": "A security symbol used for access, protection, or trusted safeguards.",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "shield",
         "x",
@@ -3172,8 +2978,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:trash_x",
@@ -3183,8 +2989,6 @@
       "depicts": "A trash bin used for discard or deletion.",
       "purpose": "Show delete, discard, or remove actions for content or items.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "delete",
         "trash",
@@ -3205,8 +3009,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:user_check",
@@ -3216,8 +3020,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "user",
         "check",
@@ -3235,8 +3037,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:user_edit",
@@ -3246,8 +3048,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Edit User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3268,8 +3068,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:user_key",
@@ -3279,8 +3079,6 @@
       "depicts": "A key symbol for access or credentials.",
       "purpose": "Show credentials, access keys, or a key-based access concept.",
       "category": "security_auth",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "key",
         "credentials",
@@ -3301,8 +3099,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:user_search",
@@ -3312,8 +3110,6 @@
       "depicts": "A user or profile paired with a search cue.",
       "purpose": "Show searching for users, profiles, or people records.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "user search",
         "search people",
@@ -3334,8 +3130,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:user_x",
@@ -3345,8 +3141,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "Remove User action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -3367,8 +3161,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_ai",
@@ -3378,8 +3172,6 @@
       "depicts": "A file paired with an AI cue.",
       "purpose": "Show AI assistance applied to files, writing, editing, or content generation.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai assist",
         "assistant",
@@ -3400,8 +3192,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_ai",
@@ -3411,8 +3203,6 @@
       "depicts": "An envelope paired with an AI cue.",
       "purpose": "Show assistant-generated messaging, AI communication, or an AI-authored reply surface.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "assistant message",
         "ai communication",
@@ -3433,8 +3223,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:adjustments_search",
@@ -3444,8 +3234,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -3466,8 +3254,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:alert_circle",
@@ -3477,8 +3265,6 @@
       "depicts": "An exclamation-style alert mark inside a circle.",
       "purpose": "Show a warning, alert, or attention-needed state that is not full failure.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "alert",
         "warning",
@@ -3499,8 +3285,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:alert_octagon",
@@ -3510,8 +3296,6 @@
       "depicts": "A warning symbol used for caution or alert states.",
       "purpose": "Show caution, alert, or warning status that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "warning",
         "alert",
@@ -3532,8 +3316,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:alert_triangle",
@@ -3543,8 +3327,6 @@
       "depicts": "A triangle warning sign with a central attention mark.",
       "purpose": "Show a warning, caution, or elevated-risk state that needs attention.",
       "category": "status_feedback",
-      "intent": "warn",
-      "domain": "product_status",
       "semantic_tags": [
         "warning",
         "caution",
@@ -3565,8 +3347,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:archive",
@@ -3576,8 +3358,6 @@
       "depicts": "Archived state shown as a compact interface mark.",
       "purpose": "Show archived items that have been stored away from the main active view.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "archive",
         "stored",
@@ -3598,8 +3378,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_down",
@@ -3609,8 +3389,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -3630,8 +3408,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_down_line",
@@ -3641,8 +3419,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -3662,8 +3438,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_left",
@@ -3673,8 +3449,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -3696,8 +3470,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_left_line",
@@ -3707,8 +3481,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -3730,8 +3502,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_right",
@@ -3741,8 +3513,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -3764,8 +3534,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_right_line",
@@ -3775,8 +3545,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -3798,8 +3566,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_up",
@@ -3809,8 +3577,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -3830,8 +3596,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_big_up_line",
@@ -3841,8 +3607,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -3862,8 +3626,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_down",
@@ -3873,8 +3637,6 @@
       "depicts": "A directional arrow pointing down.",
       "purpose": "Show moving, stepping, or navigating down within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move down",
         "down direction",
@@ -3895,8 +3657,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_down_circle",
@@ -3906,8 +3668,6 @@
       "depicts": "A directional arrow pointing down.",
       "purpose": "Show moving, stepping, or navigating down within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move down",
         "down direction",
@@ -3928,8 +3688,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_down_left",
@@ -3939,8 +3699,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -3962,8 +3720,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_down_right",
@@ -3973,8 +3731,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -3996,8 +3752,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_down_square",
@@ -4007,8 +3763,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -4028,8 +3782,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_left",
@@ -4039,8 +3793,6 @@
       "depicts": "A directional arrow pointing left.",
       "purpose": "Show moving, stepping, or navigating left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move left",
         "left direction",
@@ -4061,8 +3813,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_left_circle",
@@ -4072,8 +3824,6 @@
       "depicts": "A directional arrow pointing left.",
       "purpose": "Show moving, stepping, or navigating left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move left",
         "left direction",
@@ -4094,8 +3844,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_left_right",
@@ -4105,8 +3855,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -4128,8 +3876,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_left_square",
@@ -4139,8 +3887,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -4162,8 +3908,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_right",
@@ -4173,8 +3919,6 @@
       "depicts": "A directional arrow pointing right.",
       "purpose": "Show moving, stepping, or navigating right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move right",
         "right direction",
@@ -4195,8 +3939,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_right_circle",
@@ -4206,8 +3950,6 @@
       "depicts": "A directional arrow pointing right.",
       "purpose": "Show moving, stepping, or navigating right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move right",
         "right direction",
@@ -4228,8 +3970,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_right_square",
@@ -4239,8 +3981,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -4262,8 +4002,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_up",
@@ -4273,8 +4013,6 @@
       "depicts": "A directional arrow pointing up.",
       "purpose": "Show moving, stepping, or navigating up within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move up",
         "up direction",
@@ -4295,8 +4033,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_up_circle",
@@ -4306,8 +4044,6 @@
       "depicts": "A directional arrow pointing up.",
       "purpose": "Show moving, stepping, or navigating up within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move up",
         "up direction",
@@ -4328,8 +4064,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_up_left",
@@ -4339,8 +4075,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -4362,8 +4096,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_up_right",
@@ -4373,8 +4107,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -4396,8 +4128,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrow_up_square",
@@ -4407,8 +4139,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -4428,8 +4158,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:arrows_sort",
@@ -4439,8 +4169,6 @@
       "depicts": "A control that changes ordering or ranking of items.",
       "purpose": "Show sorting of a list, results, or ordered set of items.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "order",
@@ -4461,8 +4189,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:ban",
@@ -4472,8 +4200,6 @@
       "depicts": "A prohibition circle with a diagonal slash.",
       "purpose": "Show that an action, object, or state is blocked, prohibited, or not allowed.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "blocked",
         "prohibited",
@@ -4494,8 +4220,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:basket_search",
@@ -4505,8 +4231,6 @@
       "depicts": "A magnifying glass.",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_shell",
       "semantic_tags": [
         "search",
         "find",
@@ -4527,8 +4251,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell",
@@ -4538,8 +4262,6 @@
       "depicts": "A bell symbol used for alerts and notifications.",
       "purpose": "Show notifications, alerts, or items needing attention.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "notifications",
         "alerts",
@@ -4560,8 +4282,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell_minus",
@@ -4571,8 +4293,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show notifications, alerts, or attention for incoming events.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bell",
         "minus",
@@ -4590,8 +4310,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bell_off",
@@ -4601,8 +4321,6 @@
       "depicts": "A status or attention symbol used to communicate state clearly.",
       "purpose": "Show notifications, alerts, or attention for incoming events.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bell",
         "off",
@@ -4620,8 +4338,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:bookmark",
@@ -4631,8 +4349,6 @@
       "depicts": "Saved state shown as a compact interface mark.",
       "purpose": "Show saved items or content bookmarked for later.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bookmark",
         "saved",
@@ -4653,8 +4369,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:brand_google_home",
@@ -4664,8 +4380,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -4686,8 +4400,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar",
@@ -4697,8 +4411,6 @@
       "depicts": "A symbol representing calendar.",
       "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar"
       ],
@@ -4712,8 +4424,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar_month",
@@ -4723,8 +4435,6 @@
       "depicts": "A symbol representing calendar month.",
       "purpose": "Show calendar month as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "month"
@@ -4740,8 +4450,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:calendar_week",
@@ -4751,8 +4461,6 @@
       "depicts": "A symbol representing calendar week.",
       "purpose": "Show calendar week as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "week"
@@ -4768,8 +4476,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:cash_banknote_move_back",
@@ -4779,8 +4487,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -4801,8 +4507,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:cash_move_back",
@@ -4812,8 +4518,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -4834,8 +4538,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:chevron_down",
@@ -4845,8 +4549,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -4865,8 +4567,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:chevron_left",
@@ -4876,8 +4578,6 @@
       "depicts": "A left-facing navigation arrow.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -4898,8 +4598,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:chevron_right",
@@ -4909,8 +4609,6 @@
       "depicts": "A right-facing navigation arrow.",
       "purpose": "Show a move forward to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -4931,8 +4629,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:chevron_up",
@@ -4942,8 +4640,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -4962,8 +4658,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_arrow_down",
@@ -4973,8 +4669,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -4994,8 +4688,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_arrow_left",
@@ -5005,8 +4699,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -5028,8 +4720,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_arrow_right",
@@ -5039,8 +4731,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -5062,8 +4752,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_arrow_up",
@@ -5073,8 +4763,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -5094,8 +4782,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_chevron_down",
@@ -5105,8 +4793,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -5126,8 +4812,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_chevron_left",
@@ -5137,8 +4823,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -5160,8 +4844,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_chevron_right",
@@ -5171,8 +4855,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -5194,8 +4876,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_chevron_up",
@@ -5205,8 +4887,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -5226,8 +4906,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:circle_x",
@@ -5237,8 +4917,6 @@
       "depicts": "An X inside a circle.",
       "purpose": "Show a failed, rejected, cancelled, or negative-result state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "error",
         "failed",
@@ -5259,8 +4937,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clipboard_list",
@@ -5270,8 +4948,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a list layout or switching content into a list view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "list view",
         "clipboard",
@@ -5290,8 +4966,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clock",
@@ -5301,8 +4977,6 @@
       "depicts": "A clock face used for time or waiting.",
       "purpose": "Show time-based waiting, scheduled status, or a pending state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "time",
         "pending",
@@ -5323,8 +4997,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:clock_2",
@@ -5334,8 +5008,6 @@
       "depicts": "A round clock face showing time.",
       "purpose": "Show time, schedule, recency, or a time-based status cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "time",
         "clock",
@@ -5356,8 +5028,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:code",
@@ -5367,8 +5039,6 @@
       "depicts": "Code or markup symbols for programming content.",
       "purpose": "Show code, programming, or developer-facing technical content.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "code",
         "programming",
@@ -5389,8 +5059,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:color_filter",
@@ -5400,8 +5070,6 @@
       "depicts": "A filter cue paired with color-oriented meaning.",
       "purpose": "Show filtering or refining content by color or color-based criteria.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "color filter",
         "filter by color",
@@ -5422,8 +5090,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:copy",
@@ -5433,8 +5101,6 @@
       "depicts": "A symbol representing copy.",
       "purpose": "Show copy as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "copy"
       ],
@@ -5448,8 +5114,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database",
@@ -5459,8 +5125,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5481,8 +5145,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_cog",
@@ -5492,8 +5156,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5514,8 +5176,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_dollar",
@@ -5525,8 +5187,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5547,8 +5207,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_exclamation",
@@ -5558,8 +5218,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5580,8 +5238,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_export",
@@ -5591,8 +5249,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5613,8 +5269,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_heart",
@@ -5624,8 +5280,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5646,8 +5300,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_import",
@@ -5657,8 +5311,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5679,8 +5331,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_leak",
@@ -5690,8 +5342,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5712,8 +5362,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_minus",
@@ -5723,8 +5373,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5745,8 +5393,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_off",
@@ -5756,8 +5404,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5778,8 +5424,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_share",
@@ -5789,8 +5435,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5811,8 +5455,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_smile",
@@ -5822,8 +5466,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5844,8 +5486,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:database_star",
@@ -5855,8 +5497,6 @@
       "depicts": "A structured data symbol for stored records or organized information.",
       "purpose": "Show a structured data store or database.",
       "category": "analytics_data",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "database",
         "data store",
@@ -5877,8 +5517,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:download",
@@ -5888,8 +5528,6 @@
       "depicts": "A downward transfer or save action.",
       "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "save",
@@ -5910,8 +5548,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:edit",
@@ -5921,8 +5559,6 @@
       "depicts": "A pencil or editing cue.",
       "purpose": "Show editing, modifying, or changing the current content or record.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit",
         "modify",
@@ -5943,8 +5579,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_down",
@@ -5954,8 +5590,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -5976,8 +5610,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:eye_up",
@@ -5987,8 +5621,6 @@
       "depicts": "An eye symbol for visible or reveal state.",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "visible",
         "view",
@@ -6009,8 +5641,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file",
@@ -6020,8 +5652,6 @@
       "depicts": "A generic file or document symbol.",
       "purpose": "Show a file, document, or generic file artifact.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "document",
@@ -6042,8 +5672,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_certificate",
@@ -6053,8 +5683,6 @@
       "depicts": "A file paired with a certificate or verified seal.",
       "purpose": "Show a verified file, certified document, or trusted file artifact.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "certified file",
         "verified document",
@@ -6075,8 +5703,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_export",
@@ -6086,8 +5714,6 @@
       "depicts": "A file paired with an outward export cue.",
       "purpose": "Show exporting or sending a file out of the current system.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "export file",
         "send file",
@@ -6108,8 +5734,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_import",
@@ -6119,8 +5745,6 @@
       "depicts": "A file paired with an inward import cue.",
       "purpose": "Show importing, bringing in, or adding a file into the current system.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "import file",
         "add file",
@@ -6141,8 +5765,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_star",
@@ -6152,8 +5776,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "star"
@@ -6170,8 +5792,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_unknown",
@@ -6181,8 +5803,6 @@
       "depicts": "A file paired with an unknown or unclear-type cue.",
       "purpose": "Show a file of unknown type, unrecognized format, or unspecified document kind.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "unknown file",
         "unrecognized file",
@@ -6203,8 +5823,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:file_zip",
@@ -6214,8 +5834,6 @@
       "depicts": "A file paired with a zipper cue.",
       "purpose": "Show a compressed file, archive, or zipped document.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "compressed file",
         "zip file",
@@ -6236,8 +5854,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_down",
@@ -6247,8 +5865,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -6269,8 +5885,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_2_up",
@@ -6280,8 +5896,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -6302,8 +5916,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_down",
@@ -6313,8 +5927,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -6335,8 +5947,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:filter_up",
@@ -6346,8 +5958,6 @@
       "depicts": "A funnel-shaped control used to narrow visible results.",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "filter",
         "refine",
@@ -6368,8 +5978,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder",
@@ -6379,8 +5989,6 @@
       "depicts": "A generic folder or directory symbol.",
       "purpose": "Show a folder, directory, or file container.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "directory",
@@ -6401,8 +6009,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_down",
@@ -6412,8 +6020,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -6432,8 +6038,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_minus",
@@ -6443,8 +6049,6 @@
       "depicts": "A folder paired with a minus or remove cue.",
       "purpose": "Show removing a folder from the current context or unassigning a folder-like container.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove folder",
         "folder minus",
@@ -6465,8 +6069,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_star",
@@ -6476,8 +6080,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "star"
@@ -6494,8 +6096,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:folder_up",
@@ -6505,8 +6107,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -6525,8 +6125,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:grid_3x3",
@@ -6536,8 +6136,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a grid layout or switching content into a grid view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "grid view",
         "grid",
@@ -6556,8 +6154,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home",
@@ -6567,8 +6165,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6589,8 +6185,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_2",
@@ -6600,8 +6196,6 @@
       "depicts": "A house-shaped home destination symbol.",
       "purpose": "Show the home destination, root view, or main landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6622,8 +6216,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_bitcoin",
@@ -6633,8 +6227,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6655,8 +6247,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_bolt",
@@ -6666,8 +6258,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6688,8 +6278,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_cancel",
@@ -6699,8 +6289,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6721,8 +6309,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_cog",
@@ -6732,8 +6320,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6754,8 +6340,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_dollar",
@@ -6765,8 +6351,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6787,8 +6371,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_dot",
@@ -6798,8 +6382,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6820,8 +6402,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_down",
@@ -6831,8 +6413,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6853,8 +6433,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_eco",
@@ -6864,8 +6444,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6886,8 +6464,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:home_up",
@@ -6897,8 +6475,6 @@
       "depicts": "A simple house silhouette with a doorway.",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "home",
         "root",
@@ -6919,8 +6495,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_down",
@@ -6930,8 +6506,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -6952,8 +6526,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:lock_up",
@@ -6963,8 +6537,6 @@
       "depicts": "A closed padlock.",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "lock",
         "secure",
@@ -6985,8 +6557,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail",
@@ -6996,8 +6568,6 @@
       "depicts": "An envelope for email or message delivery.",
       "purpose": "Show mail, email, or inbox-related communication.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "mail",
         "email",
@@ -7018,8 +6588,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_minus",
@@ -7029,8 +6599,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show mail, email communication, or an email-related action.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "mail",
         "minus",
@@ -7050,8 +6618,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:mail_question",
@@ -7061,8 +6629,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show mail, email communication, or an email-related action.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "mail",
         "question",
@@ -7082,8 +6648,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_2",
@@ -7093,8 +6659,6 @@
       "depicts": "A message bubble for chat or written communication.",
       "purpose": "Show chat, messaging, or message-based communication.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "chat",
@@ -7115,8 +6679,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle",
@@ -7126,8 +6690,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -7147,8 +6709,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_heart",
@@ -7158,8 +6720,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -7181,8 +6741,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_off",
@@ -7192,8 +6752,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -7215,8 +6773,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:message_circle_question",
@@ -7226,8 +6784,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "message",
         "circle",
@@ -7249,8 +6805,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:moneybag_move_back",
@@ -7260,8 +6816,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -7282,8 +6836,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:player_skip_back",
@@ -7293,8 +6847,6 @@
       "depicts": "A left-pointing arrow with a return-like stem.",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "back",
         "previous",
@@ -7315,8 +6867,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:player_skip_forward",
@@ -7326,8 +6878,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -7348,8 +6898,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_10",
@@ -7359,8 +6909,6 @@
       "depicts": "A media control for jumping ahead in playback.",
       "purpose": "Show jumping forward to the next segment, time step, or media item.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "skip forward",
         "jump ahead",
@@ -7381,8 +6929,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_15",
@@ -7392,8 +6940,6 @@
       "depicts": "A media control for jumping ahead in playback.",
       "purpose": "Show jumping forward to the next segment, time step, or media item.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "skip forward",
         "jump ahead",
@@ -7414,8 +6960,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_20",
@@ -7425,8 +6971,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -7447,8 +6991,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_30",
@@ -7458,8 +7002,6 @@
       "depicts": "A media control for jumping ahead in playback.",
       "purpose": "Show jumping forward to the next segment, time step, or media item.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "skip forward",
         "jump ahead",
@@ -7480,8 +7022,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_40",
@@ -7491,8 +7033,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -7513,8 +7053,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_5",
@@ -7524,8 +7064,6 @@
       "depicts": "A media control for jumping ahead in playback.",
       "purpose": "Show jumping forward to the next segment, time step, or media item.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "skip forward",
         "jump ahead",
@@ -7546,8 +7084,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_50",
@@ -7557,8 +7095,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -7579,8 +7115,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:rewind_forward_60",
@@ -7590,8 +7126,6 @@
       "depicts": "A right-pointing arrow with a forward stem.",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "ui_shell",
       "semantic_tags": [
         "forward",
         "next",
@@ -7612,8 +7146,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:server",
@@ -7623,8 +7157,6 @@
       "depicts": "A stacked server or infrastructure unit.",
       "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "server",
         "backend",
@@ -7645,8 +7177,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:server_2",
@@ -7656,8 +7188,6 @@
       "depicts": "A stacked server or infrastructure unit.",
       "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "server",
         "backend",
@@ -7678,8 +7208,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:server_cog",
@@ -7689,8 +7219,6 @@
       "depicts": "A server with a control gear.",
       "purpose": "Show server-side control, configuration, or backend operation.",
       "category": "systems_architecture",
-      "intent": "configure",
-      "domain": "developer_tools",
       "semantic_tags": [
         "server",
         "backend control",
@@ -7711,8 +7239,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:server_off",
@@ -7722,8 +7250,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show server-side control, configuration, or backend operation.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "server",
         "off",
@@ -7741,8 +7267,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:square_arrow_down",
@@ -7752,8 +7278,6 @@
       "depicts": "A directional arrow pointing down.",
       "purpose": "Show moving, stepping, or navigating down within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move down",
         "down direction",
@@ -7774,8 +7298,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:square_arrow_left",
@@ -7785,8 +7309,6 @@
       "depicts": "A directional arrow pointing left.",
       "purpose": "Show moving, stepping, or navigating left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "move left",
         "left direction",
@@ -7807,8 +7329,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "tabler:ai",
@@ -7818,8 +7340,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai",
         "agent lifecycle"
@@ -7835,8 +7355,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     }
   ]
 }

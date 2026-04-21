@@ -10,8 +10,6 @@
       "depicts": "A paper-plane style arrow used for outbound sending.",
       "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
       "category": "message_actions",
-      "intent": "act",
-      "domain": "communication",
       "semantic_tags": [
         "send",
         "submit",
@@ -32,8 +30,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:sort_ascending",
@@ -43,8 +41,6 @@
       "depicts": "An ordering control that arranges items from low to high or A to Z.",
       "purpose": "Show ascending sort order for a list, results set, or ordered collection.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort ascending",
         "order low to high",
@@ -65,8 +61,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:sort_descending",
@@ -76,8 +72,6 @@
       "depicts": "A control that changes ordering or ranking of items.",
       "purpose": "Show sorting of a list, results, or ordered set of items.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "order",
@@ -98,8 +92,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:za_sort_ascending_letters",
@@ -109,8 +103,6 @@
       "depicts": "A control that changes ordering or ranking of items.",
       "purpose": "Show sorting of a list, results, or ordered set of items.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "order",
@@ -131,8 +123,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:za_sort_descending_letters",
@@ -142,8 +134,6 @@
       "depicts": "A control that changes ordering or ranking of items.",
       "purpose": "Show sorting of a list, results, or ordered set of items.",
       "category": "data_controls",
-      "intent": "refine",
-      "domain": "ui_controls",
       "semantic_tags": [
         "sort",
         "order",
@@ -164,8 +154,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_left",
@@ -175,8 +165,6 @@
       "depicts": "A layout with a strong left-side panel.",
       "purpose": "Show a layout mode where the main side panel sits on the left.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "left panel",
         "left sidebar",
@@ -196,8 +184,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:layout_right",
@@ -207,8 +195,6 @@
       "depicts": "A layout with a strong right-side panel.",
       "purpose": "Show a layout mode where the main side panel sits on the right.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "right panel",
         "right sidebar",
@@ -228,8 +214,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:text_direction_left",
@@ -239,8 +225,6 @@
       "depicts": "A text direction control pointing left.",
       "purpose": "Show switching text direction toward the left or applying a left-direction text flow.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "text direction",
         "left text",
@@ -260,8 +244,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:text_direction_right",
@@ -271,8 +255,6 @@
       "depicts": "A text direction control pointing right.",
       "purpose": "Show switching text direction toward the right or applying a right-direction text flow.",
       "category": "data_controls",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "text direction",
         "right text",
@@ -292,8 +274,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:thumb_down_2",
@@ -303,8 +285,6 @@
       "depicts": "A thumbs-down disapproval gesture.",
       "purpose": "Show negative feedback, disapproval, or a disliked state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "disapproval",
         "negative feedback",
@@ -324,8 +304,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:thumb_up_2",
@@ -335,8 +315,6 @@
       "depicts": "A thumbs-up approval gesture.",
       "purpose": "Show positive feedback, approval, or a liked state.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "approval",
         "positive feedback",
@@ -356,8 +334,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.88,
-      "confidence_band": "high"
+      "routing_score": 0.88,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:user_info",
@@ -367,8 +345,6 @@
       "depicts": "A user profile paired with an information cue.",
       "purpose": "Show profile details, account information, or user-specific help and metadata.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user info",
         "profile details",
@@ -388,8 +364,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:archive",
@@ -399,8 +375,6 @@
       "depicts": "Archived state shown as a compact interface mark.",
       "purpose": "Show archived items that have been stored away from the main active view.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "archive",
         "stored",
@@ -421,8 +395,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:bookmark",
@@ -432,8 +406,6 @@
       "depicts": "Saved state shown as a compact interface mark.",
       "purpose": "Show saved items or content bookmarked for later.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "bookmark",
         "saved",
@@ -454,8 +426,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:brain",
@@ -465,8 +437,6 @@
       "depicts": "A stylized brain shape.",
       "purpose": "Show reasoning, thinking, or model cognition in AI-related product flows.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "thinking",
         "reasoning",
@@ -489,8 +459,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:terminal",
@@ -500,8 +470,6 @@
       "depicts": "A command-line terminal prompt.",
       "purpose": "Show command-line tooling, terminal access, or developer shell work.",
       "category": "engineering_developer_tools",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "terminal",
         "command line",
@@ -522,8 +490,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:trophy",
@@ -533,8 +501,6 @@
       "depicts": "A trophy cup with handles and a base.",
       "purpose": "Show an achievement, award, milestone, or winning outcome.",
       "category": "status_feedback",
-      "intent": "confirm",
-      "domain": "product_status",
       "semantic_tags": [
         "achievement",
         "award",
@@ -555,8 +521,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:webhook",
@@ -566,8 +532,6 @@
       "depicts": "A hook-like integration symbol for events or callbacks.",
       "purpose": "Show a webhook, event callback, or trigger sent between systems.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "webhook",
         "event callback",
@@ -588,8 +552,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:wifi",
@@ -599,8 +563,6 @@
       "depicts": "A wireless signal icon representing network connection.",
       "purpose": "Show wireless connection status or network availability.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "wifi",
         "network",
@@ -621,8 +583,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:zoom_in",
@@ -632,8 +594,6 @@
       "depicts": "A zoom control for scaling content in.",
       "purpose": "Show zooming in on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "in",
@@ -654,8 +614,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:zoom_out",
@@ -665,8 +625,6 @@
       "depicts": "A zoom control for scaling content out.",
       "purpose": "Show zooming out on content or a workspace view.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "zoom",
         "out",
@@ -687,8 +645,8 @@
         "approved-reference",
         "svg-payload"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:left",
@@ -698,8 +656,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -718,8 +674,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:lie_down",
@@ -729,8 +685,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -748,8 +702,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:list_expansion",
@@ -759,8 +713,6 @@
       "depicts": "A list paired with expand controls.",
       "purpose": "Show expanding a list, opening more list rows, or revealing additional items in a list view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "expand list",
         "show more items",
@@ -780,8 +732,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:list_ordered",
@@ -791,8 +743,6 @@
       "depicts": "A numbered list layout.",
       "purpose": "Show an ordered list, ranked list, or numbered sequence view.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_shell",
       "semantic_tags": [
         "ordered list",
         "numbered list",
@@ -812,8 +762,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.87,
-      "confidence_band": "high"
+      "routing_score": 0.87,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:look_down",
@@ -823,8 +773,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -842,8 +790,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:look_left",
@@ -853,8 +801,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -874,8 +820,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:look_right",
@@ -885,8 +831,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -906,8 +850,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:look_up",
@@ -917,8 +861,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -936,8 +878,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:more_1",
@@ -947,8 +889,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -966,8 +906,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:more_2",
@@ -977,8 +917,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -996,8 +934,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:more_3",
@@ -1007,8 +945,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -1026,8 +962,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:more_4",
@@ -1037,8 +973,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show an overflow menu with more actions or options.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "more options",
         "more",
@@ -1056,8 +990,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:quote_left",
@@ -1067,8 +1001,6 @@
       "depicts": "An opening quotation mark.",
       "purpose": "Show the start of a quoted statement, testimonial, or cited passage.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "opening quote",
         "quoted text",
@@ -1088,8 +1020,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:quote_right",
@@ -1099,8 +1031,6 @@
       "depicts": "A closing quotation mark.",
       "purpose": "Show the end of a quoted statement, testimonial, or cited passage.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "closing quote",
         "quoted text",
@@ -1120,8 +1050,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:right",
@@ -1131,8 +1061,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -1151,8 +1079,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:scrollable_list",
@@ -1162,8 +1090,6 @@
       "depicts": "A shell or layout control symbol used for major navigation and view changes.",
       "purpose": "Show a list layout or switching content into a list view.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "list view",
         "scrollable",
@@ -1181,8 +1107,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:send_plane",
@@ -1192,8 +1118,6 @@
       "depicts": "A message or mail symbol used for communication and message flow.",
       "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
       "category": "message_actions",
-      "intent": "act",
-      "domain": "communication",
       "semantic_tags": [
         "send",
         "plane",
@@ -1212,8 +1136,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:up",
@@ -1223,8 +1147,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1241,8 +1163,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:warm_up_2",
@@ -1252,8 +1174,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1272,8 +1192,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:warm_up_3",
@@ -1283,8 +1203,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1303,8 +1221,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:warm_up",
@@ -1314,8 +1232,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -1333,8 +1249,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:ai",
@@ -1344,8 +1260,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "ai",
         "agent lifecycle"
@@ -1360,8 +1274,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_2_ai",
@@ -1371,8 +1285,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "book",
         "2",
@@ -1391,8 +1303,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_6_ai",
@@ -1402,8 +1314,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "book",
         "6",
@@ -1422,8 +1332,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_ai",
@@ -1433,8 +1343,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "book",
         "ai",
@@ -1451,8 +1359,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brush_2_ai",
@@ -1462,8 +1370,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "brush",
         "2",
@@ -1482,8 +1388,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brush_3_ai",
@@ -1493,8 +1399,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "brush",
         "3",
@@ -1513,8 +1417,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bulb_2_ai",
@@ -1524,8 +1428,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "bulb",
         "2",
@@ -1544,8 +1446,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bulb_ai",
@@ -1555,8 +1457,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "bulb",
         "ai",
@@ -1573,8 +1473,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:camcorder_ai",
@@ -1584,8 +1484,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "camcorder",
         "ai",
@@ -1602,8 +1500,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:cellphone_2_ai",
@@ -1613,8 +1511,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "cellphone",
         "2",
@@ -1633,8 +1529,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:chat_1_ai",
@@ -1644,8 +1540,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "chat",
         "1",
@@ -1664,8 +1558,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:chat_2_ai",
@@ -1675,8 +1569,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "chat",
         "2",
@@ -1695,8 +1587,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:chat_3_ai",
@@ -1706,8 +1598,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "chat",
         "3",
@@ -1726,8 +1616,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:chat_4_ai",
@@ -1737,8 +1627,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "chat",
         "4",
@@ -1757,8 +1645,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:classify_2_ai",
@@ -1768,8 +1656,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "classify",
         "2",
@@ -1788,8 +1674,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:classify_3_ai",
@@ -1799,8 +1685,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "classify",
         "3",
@@ -1819,8 +1703,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:classify_ai",
@@ -1830,8 +1714,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "classify",
         "ai",
@@ -1848,8 +1730,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:content_ai",
@@ -1859,8 +1741,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "content",
         "ai",
@@ -1877,8 +1757,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:down_small",
@@ -1888,8 +1768,6 @@
       "depicts": "A downward arrow or movement cue.",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move",
@@ -1907,8 +1785,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:eraser_ai",
@@ -1918,8 +1796,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "eraser",
         "ai",
@@ -1936,8 +1812,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:head_ai",
@@ -1947,8 +1823,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "head",
         "ai",
@@ -1965,8 +1839,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:left_small",
@@ -1976,8 +1850,6 @@
       "depicts": "A left-facing arrow or backward navigation cue.",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "back",
         "previous",
@@ -1997,8 +1869,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:mic_ai",
@@ -2008,8 +1880,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "mic",
         "ai",
@@ -2026,8 +1896,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:paint_brush_ai",
@@ -2037,8 +1907,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "paint",
         "brush",
@@ -2057,8 +1925,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pen_2_ai",
@@ -2068,8 +1936,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "pen",
         "2",
@@ -2088,8 +1954,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pen_ai",
@@ -2099,8 +1965,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "pen",
         "ai",
@@ -2117,8 +1981,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pencil_2_ai",
@@ -2128,8 +1992,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "pencil",
         "2",
@@ -2148,8 +2010,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pencil_3_ai",
@@ -2159,8 +2021,6 @@
       "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "pencil",
         "3",
@@ -2179,8 +2039,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:right_small",
@@ -2190,8 +2050,6 @@
       "depicts": "A right-facing arrow or forward navigation cue.",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "forward",
         "next",
@@ -2211,8 +2069,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:up_small",
@@ -2222,8 +2080,6 @@
       "depicts": "An upward arrow or movement cue.",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move",
@@ -2241,8 +2097,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     }
   ]
 }

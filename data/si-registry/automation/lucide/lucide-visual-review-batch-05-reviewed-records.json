@@ -10,8 +10,6 @@
       "depicts": "A symbol representing location edit.",
       "purpose": "Show location edit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "location",
         "edit"
@@ -26,8 +24,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_pin_plus",
@@ -37,8 +35,6 @@
       "depicts": "A symbol representing map pin plus.",
       "purpose": "Show map pin plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map",
         "pin",
@@ -55,8 +51,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_pin_plus_inside",
@@ -66,8 +62,6 @@
       "depicts": "A symbol representing map pin plus inside.",
       "purpose": "Show map pin plus inside as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map",
         "pin",
@@ -86,8 +80,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_pin_x",
@@ -97,8 +91,6 @@
       "depicts": "A symbol representing map pin x.",
       "purpose": "Show map pin x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map",
         "pin",
@@ -115,8 +107,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_pin_x_inside",
@@ -126,8 +118,6 @@
       "depicts": "A symbol representing map pin x inside.",
       "purpose": "Show map pin x inside as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map",
         "pin",
@@ -146,8 +136,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:map_plus",
@@ -157,8 +147,6 @@
       "depicts": "A symbol representing map plus.",
       "purpose": "Show map plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "map",
         "plus"
@@ -173,8 +161,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:monitor_x",
@@ -184,8 +172,6 @@
       "depicts": "A symbol representing monitor x.",
       "purpose": "Show monitor x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "monitor",
         "x"
@@ -200,8 +186,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:octagon_x",
@@ -211,8 +197,6 @@
       "depicts": "A symbol representing octagon x.",
       "purpose": "Show octagon x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "octagon",
         "x"
@@ -227,8 +211,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:package_open",
@@ -238,8 +222,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "package",
         "open",
@@ -255,8 +237,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:package_plus",
@@ -266,8 +248,6 @@
       "depicts": "A symbol representing package plus.",
       "purpose": "Show package plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "package",
         "plus"
@@ -282,8 +262,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:package_x",
@@ -293,8 +273,6 @@
       "depicts": "A symbol representing package x.",
       "purpose": "Show package x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "package",
         "x"
@@ -309,8 +287,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:panel_bottom_close",
@@ -320,8 +298,6 @@
       "depicts": "A symbol representing panel bottom close.",
       "purpose": "Show panel bottom close as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "panel",
         "bottom",
@@ -338,8 +314,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:panel_bottom_open",
@@ -349,8 +325,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "panel",
         "bottom",
@@ -368,8 +342,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:panel_top_close",
@@ -379,8 +353,6 @@
       "depicts": "A symbol representing panel top close.",
       "purpose": "Show panel top close as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "panel",
         "top",
@@ -397,8 +369,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:panel_top_open",
@@ -408,8 +380,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "panel",
         "top",
@@ -427,8 +397,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:pause_octagon",
@@ -438,8 +408,6 @@
       "depicts": "A symbol representing pause octagon.",
       "purpose": "Show pause octagon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pause",
         "octagon"
@@ -454,8 +422,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:play_square",
@@ -465,8 +433,6 @@
       "depicts": "A symbol representing play square.",
       "purpose": "Show play square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "play",
         "square"
@@ -481,8 +447,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:plus_circle",
@@ -492,8 +458,6 @@
       "depicts": "A symbol representing plus circle.",
       "purpose": "Show plus circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "plus",
         "circle"
@@ -508,8 +472,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:plus_square",
@@ -519,8 +483,6 @@
       "depicts": "A symbol representing plus square.",
       "purpose": "Show plus square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "plus",
         "square"
@@ -535,8 +497,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:printer_x",
@@ -546,8 +508,6 @@
       "depicts": "A symbol representing printer x.",
       "purpose": "Show printer x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "printer",
         "x"
@@ -562,8 +522,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:scan_heart",
@@ -573,8 +533,6 @@
       "depicts": "A symbol representing scan heart.",
       "purpose": "Show scan heart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "scan",
         "heart"
@@ -589,8 +547,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:smile_plus",
@@ -600,8 +558,6 @@
       "depicts": "A symbol representing smile plus.",
       "purpose": "Show smile plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "smile",
         "plus"
@@ -616,8 +572,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_pause",
@@ -627,8 +583,6 @@
       "depicts": "A symbol representing square pause.",
       "purpose": "Show square pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "pause"
@@ -643,8 +597,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_play",
@@ -654,8 +608,6 @@
       "depicts": "A symbol representing square play.",
       "purpose": "Show square play as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "play"
@@ -670,8 +622,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_plus",
@@ -681,8 +633,6 @@
       "depicts": "A symbol representing square plus.",
       "purpose": "Show square plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "plus"
@@ -697,8 +647,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_stop",
@@ -708,8 +658,6 @@
       "depicts": "A symbol representing square stop.",
       "purpose": "Show square stop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "stop"
@@ -724,8 +672,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_user",
@@ -735,8 +683,6 @@
       "depicts": "A symbol representing square user.",
       "purpose": "Show square user as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "square",
         "user"
@@ -751,8 +697,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_user_round",
@@ -762,8 +708,6 @@
       "depicts": "A symbol representing square user round.",
       "purpose": "Show square user round as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "square",
         "user",
@@ -780,8 +724,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:square_x",
@@ -791,8 +735,6 @@
       "depicts": "A symbol representing square x.",
       "purpose": "Show square x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "square",
         "x"
@@ -807,8 +749,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ticket_plus",
@@ -818,8 +760,6 @@
       "depicts": "A symbol representing ticket plus.",
       "purpose": "Show ticket plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ticket",
         "plus"
@@ -834,8 +774,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ticket_x",
@@ -845,8 +785,6 @@
       "depicts": "A symbol representing ticket x.",
       "purpose": "Show ticket x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ticket",
         "x"
@@ -861,8 +799,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:tv_minimal_play",
@@ -872,8 +810,6 @@
       "depicts": "A symbol representing tv minimal play.",
       "purpose": "Show tv minimal play as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "tv",
         "minimal",
@@ -890,8 +826,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:upload_cloud",
@@ -901,8 +837,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload",
         "cloud",
@@ -918,8 +852,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user",
@@ -929,8 +863,6 @@
       "depicts": "A symbol representing user.",
       "purpose": "Show user as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user"
       ],
@@ -943,8 +875,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_circle",
@@ -954,8 +886,6 @@
       "depicts": "A symbol representing user circle.",
       "purpose": "Show user circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "circle"
@@ -970,8 +900,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_circle_2",
@@ -981,8 +911,6 @@
       "depicts": "A symbol representing user circle.",
       "purpose": "Show user circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "circle",
@@ -999,8 +927,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_cog",
@@ -1010,8 +938,6 @@
       "depicts": "A symbol representing user cog.",
       "purpose": "Show user cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "cog"
@@ -1026,8 +952,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_cog_2",
@@ -1037,8 +963,6 @@
       "depicts": "A symbol representing user cog.",
       "purpose": "Show user cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "cog",
@@ -1055,8 +979,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_minus",
@@ -1066,8 +990,6 @@
       "depicts": "A symbol representing user minus.",
       "purpose": "Show user minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "minus"
@@ -1082,8 +1004,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_minus_2",
@@ -1093,8 +1015,6 @@
       "depicts": "A symbol representing user minus.",
       "purpose": "Show user minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "minus",
@@ -1111,8 +1031,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_pen",
@@ -1122,8 +1042,6 @@
       "depicts": "A symbol representing user pen.",
       "purpose": "Show user pen as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "pen"
@@ -1138,8 +1056,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_round",
@@ -1149,8 +1067,6 @@
       "depicts": "A symbol representing user round.",
       "purpose": "Show user round as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "round"
@@ -1165,8 +1081,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_round_cog",
@@ -1176,8 +1092,6 @@
       "depicts": "A symbol representing user round cog.",
       "purpose": "Show user round cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "round",
@@ -1194,8 +1108,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_round_minus",
@@ -1205,8 +1119,6 @@
       "depicts": "A symbol representing user round minus.",
       "purpose": "Show user round minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "round",
@@ -1223,8 +1135,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_round_pen",
@@ -1234,8 +1146,6 @@
       "depicts": "A symbol representing user round pen.",
       "purpose": "Show user round pen as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "round",
@@ -1252,8 +1162,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_square",
@@ -1263,8 +1173,6 @@
       "depicts": "A symbol representing user square.",
       "purpose": "Show user square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "square"
@@ -1279,8 +1187,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:user_square_2",
@@ -1290,8 +1198,6 @@
       "depicts": "A symbol representing user square.",
       "purpose": "Show user square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "square",
@@ -1308,8 +1214,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:volume_x",
@@ -1319,8 +1225,6 @@
       "depicts": "A symbol representing volume x.",
       "purpose": "Show volume x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "volume",
         "x"
@@ -1335,8 +1239,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:x_circle",
@@ -1346,8 +1250,6 @@
       "depicts": "A symbol representing x circle.",
       "purpose": "Show x circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "x",
         "circle"
@@ -1362,8 +1264,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:x_line_top",
@@ -1373,8 +1275,6 @@
       "depicts": "A symbol representing x line top.",
       "purpose": "Show x line top as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "x",
         "line",
@@ -1391,8 +1291,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:x_octagon",
@@ -1402,8 +1302,6 @@
       "depicts": "A symbol representing x octagon.",
       "purpose": "Show x octagon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "x",
         "octagon"
@@ -1418,8 +1316,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:x_square",
@@ -1429,8 +1327,6 @@
       "depicts": "A symbol representing x square.",
       "purpose": "Show x square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "x",
         "square"
@@ -1445,8 +1341,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_braces_corner",
@@ -1456,8 +1352,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "braces",
@@ -1475,8 +1369,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_minus_corner",
@@ -1486,8 +1380,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "minus",
@@ -1505,8 +1397,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_type_corner",
@@ -1516,8 +1408,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "type",
@@ -1535,8 +1425,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:verified",
@@ -1546,8 +1436,6 @@
       "depicts": "A symbol representing verified.",
       "purpose": "Show verified as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "verified"
       ],
@@ -1560,8 +1448,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:accessibility",
@@ -1571,8 +1459,6 @@
       "depicts": "A symbol representing accessibility.",
       "purpose": "Show accessibility as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "accessibility"
       ],
@@ -1585,8 +1471,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:activity",
@@ -1596,8 +1482,6 @@
       "depicts": "A symbol representing activity.",
       "purpose": "Show activity as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "activity"
       ],
@@ -1610,8 +1494,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:activity_square",
@@ -1621,8 +1505,6 @@
       "depicts": "A symbol representing activity square.",
       "purpose": "Show activity square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "activity",
         "square"
@@ -1637,8 +1519,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:air_vent",
@@ -1648,8 +1530,6 @@
       "depicts": "A symbol representing air vent.",
       "purpose": "Show air vent as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "air",
         "vent"
@@ -1664,8 +1544,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:alarm_minus",
@@ -1675,8 +1555,6 @@
       "depicts": "A symbol representing alarm minus.",
       "purpose": "Show alarm minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "minus"
@@ -1691,8 +1569,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:alarm_smoke",
@@ -1702,8 +1580,6 @@
       "depicts": "A symbol representing alarm smoke.",
       "purpose": "Show alarm smoke as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "smoke"
@@ -1718,8 +1594,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ambulance",
@@ -1729,8 +1605,6 @@
       "depicts": "A symbol representing ambulance.",
       "purpose": "Show ambulance as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ambulance"
       ],
@@ -1743,8 +1617,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ampersand",
@@ -1754,8 +1628,6 @@
       "depicts": "A symbol representing ampersand.",
       "purpose": "Show ampersand as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ampersand"
       ],
@@ -1768,8 +1640,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:ampersands",
@@ -1779,8 +1651,6 @@
       "depicts": "A symbol representing ampersands.",
       "purpose": "Show ampersands as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ampersands"
       ],
@@ -1793,8 +1663,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:amphora",
@@ -1804,8 +1674,6 @@
       "depicts": "A symbol representing amphora.",
       "purpose": "Show amphora as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "amphora"
       ],
@@ -1818,8 +1686,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:annoyed",
@@ -1829,8 +1697,6 @@
       "depicts": "A symbol representing annoyed.",
       "purpose": "Show annoyed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "annoyed"
       ],
@@ -1843,8 +1709,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:antenna",
@@ -1854,8 +1720,6 @@
       "depicts": "A symbol representing antenna.",
       "purpose": "Show antenna as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "antenna"
       ],
@@ -1868,8 +1732,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:anvil",
@@ -1879,8 +1743,6 @@
       "depicts": "A symbol representing anvil.",
       "purpose": "Show anvil as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "anvil"
       ],
@@ -1893,8 +1755,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:aperture",
@@ -1904,8 +1766,6 @@
       "depicts": "A symbol representing aperture.",
       "purpose": "Show aperture as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aperture"
       ],
@@ -1918,8 +1778,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:app_window",
@@ -1929,8 +1789,6 @@
       "depicts": "A symbol representing app window.",
       "purpose": "Show app window as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "app",
         "window"
@@ -1945,8 +1803,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:app_window_mac",
@@ -1956,8 +1814,6 @@
       "depicts": "A symbol representing app window mac.",
       "purpose": "Show app window mac as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "app",
         "window",
@@ -1974,8 +1830,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:area_chart",
@@ -1985,8 +1841,6 @@
       "depicts": "A symbol representing area chart.",
       "purpose": "Show area chart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "area",
         "chart"
@@ -2001,8 +1855,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:armchair",
@@ -2012,8 +1866,6 @@
       "depicts": "A symbol representing armchair.",
       "purpose": "Show armchair as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "armchair"
       ],
@@ -2026,8 +1878,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:asterisk_square",
@@ -2037,8 +1889,6 @@
       "depicts": "A symbol representing asterisk square.",
       "purpose": "Show asterisk square as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "asterisk",
         "square"
@@ -2053,8 +1903,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:at_sign",
@@ -2064,8 +1914,6 @@
       "depicts": "A symbol representing at sign.",
       "purpose": "Show at sign as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "at",
         "sign"
@@ -2080,8 +1928,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:atom",
@@ -2091,8 +1939,6 @@
       "depicts": "A symbol representing atom.",
       "purpose": "Show atom as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "atom"
       ],
@@ -2105,8 +1951,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:audio_lines",
@@ -2116,8 +1962,6 @@
       "depicts": "A symbol representing audio lines.",
       "purpose": "Show audio lines as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "audio",
         "lines"
@@ -2132,8 +1976,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:audio_waveform",
@@ -2143,8 +1987,6 @@
       "depicts": "A symbol representing audio waveform.",
       "purpose": "Show audio waveform as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "audio",
         "waveform"
@@ -2159,8 +2001,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:axis_3_d",
@@ -2170,8 +2012,6 @@
       "depicts": "A symbol representing axis d.",
       "purpose": "Show axis d as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "axis",
         "3",
@@ -2188,8 +2028,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:axis_3d",
@@ -2199,8 +2039,6 @@
       "depicts": "A symbol representing axis 3d.",
       "purpose": "Show axis 3d as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "axis",
         "3d"
@@ -2215,8 +2053,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_cent",
@@ -2226,8 +2064,6 @@
       "depicts": "A symbol representing badge cent.",
       "purpose": "Show badge cent as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "cent"
@@ -2242,8 +2078,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_dollar_sign",
@@ -2253,8 +2089,6 @@
       "depicts": "A symbol representing badge dollar sign.",
       "purpose": "Show badge dollar sign as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "dollar",
@@ -2271,8 +2105,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_euro",
@@ -2282,8 +2116,6 @@
       "depicts": "A symbol representing badge euro.",
       "purpose": "Show badge euro as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "euro"
@@ -2298,8 +2130,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_help",
@@ -2309,8 +2141,6 @@
       "depicts": "A symbol representing badge help.",
       "purpose": "Show badge help as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "help"
@@ -2325,8 +2155,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_indian_rupee",
@@ -2336,8 +2166,6 @@
       "depicts": "A symbol representing badge indian rupee.",
       "purpose": "Show badge indian rupee as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "indian",
@@ -2354,8 +2182,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_japanese_yen",
@@ -2365,8 +2193,6 @@
       "depicts": "A symbol representing badge japanese yen.",
       "purpose": "Show badge japanese yen as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "japanese",
@@ -2383,8 +2209,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_minus",
@@ -2394,8 +2220,6 @@
       "depicts": "A symbol representing badge minus.",
       "purpose": "Show badge minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "minus"
@@ -2410,8 +2234,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_percent",
@@ -2421,8 +2245,6 @@
       "depicts": "A symbol representing badge percent.",
       "purpose": "Show badge percent as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "percent"
@@ -2437,8 +2259,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_pound_sterling",
@@ -2448,8 +2270,6 @@
       "depicts": "A symbol representing badge pound sterling.",
       "purpose": "Show badge pound sterling as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "pound",
@@ -2466,8 +2286,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_question_mark",
@@ -2477,8 +2297,6 @@
       "depicts": "A symbol representing badge question mark.",
       "purpose": "Show badge question mark as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "question",
@@ -2495,8 +2313,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_russian_ruble",
@@ -2506,8 +2324,6 @@
       "depicts": "A symbol representing badge russian ruble.",
       "purpose": "Show badge russian ruble as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "russian",
@@ -2524,8 +2340,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_swiss_franc",
@@ -2535,8 +2351,6 @@
       "depicts": "A symbol representing badge swiss franc.",
       "purpose": "Show badge swiss franc as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "swiss",
@@ -2553,8 +2367,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:badge_turkish_lira",
@@ -2564,8 +2378,6 @@
       "depicts": "A symbol representing badge turkish lira.",
       "purpose": "Show badge turkish lira as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge",
         "turkish",
@@ -2582,8 +2394,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:baggage_claim",
@@ -2593,8 +2405,6 @@
       "depicts": "A symbol representing baggage claim.",
       "purpose": "Show baggage claim as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baggage",
         "claim"
@@ -2609,8 +2419,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:balloon",
@@ -2620,8 +2430,6 @@
       "depicts": "A symbol representing balloon.",
       "purpose": "Show balloon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "balloon"
       ],
@@ -2634,8 +2442,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:banana",
@@ -2645,8 +2453,6 @@
       "depicts": "A symbol representing banana.",
       "purpose": "Show banana as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "banana"
       ],
@@ -2659,8 +2465,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bandage",
@@ -2670,8 +2476,6 @@
       "depicts": "A symbol representing bandage.",
       "purpose": "Show bandage as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bandage"
       ],
@@ -2684,8 +2488,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:banknote",
@@ -2695,8 +2499,6 @@
       "depicts": "A symbol representing banknote.",
       "purpose": "Show banknote as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "banknote"
       ],
@@ -2709,8 +2511,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart",
@@ -2720,8 +2522,6 @@
       "depicts": "A symbol representing bar chart.",
       "purpose": "Show bar chart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart"
@@ -2736,8 +2536,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_2",
@@ -2747,8 +2547,6 @@
       "depicts": "A symbol representing bar chart.",
       "purpose": "Show bar chart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2765,8 +2563,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_3",
@@ -2776,8 +2574,6 @@
       "depicts": "A symbol representing bar chart.",
       "purpose": "Show bar chart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2794,8 +2590,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_4",
@@ -2805,8 +2601,6 @@
       "depicts": "A symbol representing bar chart.",
       "purpose": "Show bar chart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2823,8 +2617,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_big",
@@ -2834,8 +2628,6 @@
       "depicts": "A symbol representing bar chart big.",
       "purpose": "Show bar chart big as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2852,8 +2644,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_horizontal",
@@ -2863,8 +2655,6 @@
       "depicts": "A symbol representing bar chart horizontal.",
       "purpose": "Show bar chart horizontal as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2881,8 +2671,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bar_chart_horizontal_big",
@@ -2892,8 +2682,6 @@
       "depicts": "A symbol representing bar chart horizontal big.",
       "purpose": "Show bar chart horizontal big as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -2912,8 +2700,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:barrel",
@@ -2923,8 +2711,6 @@
       "depicts": "A symbol representing barrel.",
       "purpose": "Show barrel as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barrel"
       ],
@@ -2937,8 +2723,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:baseline",
@@ -2948,8 +2734,6 @@
       "depicts": "A symbol representing baseline.",
       "purpose": "Show baseline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baseline"
       ],
@@ -2962,8 +2746,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:battery_full",
@@ -2973,8 +2757,6 @@
       "depicts": "A symbol representing battery full.",
       "purpose": "Show battery full as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "full"
@@ -2989,8 +2771,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:battery_low",
@@ -3000,8 +2782,6 @@
       "depicts": "A symbol representing battery low.",
       "purpose": "Show battery low as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "low"
@@ -3016,8 +2796,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:battery_medium",
@@ -3027,8 +2807,6 @@
       "depicts": "A symbol representing battery medium.",
       "purpose": "Show battery medium as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "medium"
@@ -3043,8 +2821,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:beaker",
@@ -3054,8 +2832,6 @@
       "depicts": "A symbol representing beaker.",
       "purpose": "Show beaker as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beaker"
       ],
@@ -3068,8 +2844,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bean",
@@ -3079,8 +2855,6 @@
       "depicts": "A symbol representing bean.",
       "purpose": "Show bean as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bean"
       ],
@@ -3093,8 +2867,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bean_off",
@@ -3104,8 +2878,6 @@
       "depicts": "A symbol representing bean off.",
       "purpose": "Show bean off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bean",
         "off"
@@ -3120,8 +2892,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bed_double",
@@ -3131,8 +2903,6 @@
       "depicts": "A symbol representing bed double.",
       "purpose": "Show bed double as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed",
         "double"
@@ -3147,8 +2917,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bed_single",
@@ -3158,8 +2928,6 @@
       "depicts": "A symbol representing bed single.",
       "purpose": "Show bed single as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed",
         "single"
@@ -3174,8 +2942,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:beef",
@@ -3185,8 +2953,6 @@
       "depicts": "A symbol representing beef.",
       "purpose": "Show beef as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beef"
       ],
@@ -3199,8 +2965,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:beer",
@@ -3210,8 +2976,6 @@
       "depicts": "A symbol representing beer.",
       "purpose": "Show beer as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beer"
       ],
@@ -3224,8 +2988,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:beer_off",
@@ -3235,8 +2999,6 @@
       "depicts": "A symbol representing beer off.",
       "purpose": "Show beer off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beer",
         "off"
@@ -3251,8 +3013,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_horizonal_end",
@@ -3262,8 +3024,6 @@
       "depicts": "A symbol representing between horizonal end.",
       "purpose": "Show between horizonal end as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "horizonal",
@@ -3280,8 +3040,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_horizonal_start",
@@ -3291,8 +3051,6 @@
       "depicts": "A symbol representing between horizonal start.",
       "purpose": "Show between horizonal start as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "horizonal",
@@ -3309,8 +3067,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_horizontal_end",
@@ -3320,8 +3078,6 @@
       "depicts": "A symbol representing between horizontal end.",
       "purpose": "Show between horizontal end as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "horizontal",
@@ -3338,8 +3094,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_horizontal_start",
@@ -3349,8 +3105,6 @@
       "depicts": "A symbol representing between horizontal start.",
       "purpose": "Show between horizontal start as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "horizontal",
@@ -3367,8 +3121,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_vertical_end",
@@ -3378,8 +3132,6 @@
       "depicts": "A symbol representing between vertical end.",
       "purpose": "Show between vertical end as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "vertical",
@@ -3396,8 +3148,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:between_vertical_start",
@@ -3407,8 +3159,6 @@
       "depicts": "A symbol representing between vertical start.",
       "purpose": "Show between vertical start as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "between",
         "vertical",
@@ -3425,8 +3175,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:biceps_flexed",
@@ -3436,8 +3186,6 @@
       "depicts": "A symbol representing biceps flexed.",
       "purpose": "Show biceps flexed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "biceps",
         "flexed"
@@ -3452,8 +3200,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:binoculars",
@@ -3463,8 +3211,6 @@
       "depicts": "A symbol representing binoculars.",
       "purpose": "Show binoculars as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "binoculars"
       ],
@@ -3477,8 +3223,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:biohazard",
@@ -3488,8 +3234,6 @@
       "depicts": "A symbol representing biohazard.",
       "purpose": "Show biohazard as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "biohazard"
       ],
@@ -3502,8 +3246,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:birdhouse",
@@ -3513,8 +3257,6 @@
       "depicts": "A symbol representing birdhouse.",
       "purpose": "Show birdhouse as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "birdhouse"
       ],
@@ -3527,8 +3269,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:blend",
@@ -3538,8 +3280,6 @@
       "depicts": "A symbol representing blend.",
       "purpose": "Show blend as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "blend"
       ],
@@ -3552,8 +3292,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:blinds",
@@ -3563,8 +3303,6 @@
       "depicts": "A symbol representing blinds.",
       "purpose": "Show blinds as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "blinds"
       ],
@@ -3577,8 +3315,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bluetooth_connected",
@@ -3588,8 +3326,6 @@
       "depicts": "A symbol representing bluetooth connected.",
       "purpose": "Show bluetooth connected as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluetooth",
         "connected"
@@ -3604,8 +3340,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bluetooth_searching",
@@ -3615,8 +3351,6 @@
       "depicts": "A symbol representing bluetooth searching.",
       "purpose": "Show bluetooth searching as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluetooth",
         "searching"
@@ -3631,8 +3365,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bolt",
@@ -3642,8 +3376,6 @@
       "depicts": "A symbol representing bolt.",
       "purpose": "Show bolt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bolt"
       ],
@@ -3656,8 +3388,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_a",
@@ -3667,8 +3399,6 @@
       "depicts": "A symbol representing book a.",
       "purpose": "Show book a as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "a"
@@ -3683,8 +3413,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_audio",
@@ -3694,8 +3424,6 @@
       "depicts": "A symbol representing book audio.",
       "purpose": "Show book audio as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "audio"
@@ -3710,8 +3438,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_dashed",
@@ -3721,8 +3449,6 @@
       "depicts": "A symbol representing book dashed.",
       "purpose": "Show book dashed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "dashed"
@@ -3737,8 +3463,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_headphones",
@@ -3748,8 +3474,6 @@
       "depicts": "A symbol representing book headphones.",
       "purpose": "Show book headphones as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "headphones"
@@ -3764,8 +3488,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_heart",
@@ -3775,8 +3499,6 @@
       "depicts": "A symbol representing book heart.",
       "purpose": "Show book heart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "book",
         "heart"
@@ -3791,8 +3513,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_image",
@@ -3802,8 +3524,6 @@
       "depicts": "A symbol representing book image.",
       "purpose": "Show book image as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "image"
@@ -3818,8 +3538,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_marked",
@@ -3829,8 +3549,6 @@
       "depicts": "A symbol representing book marked.",
       "purpose": "Show book marked as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "marked"
@@ -3845,8 +3563,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_minus",
@@ -3856,8 +3574,6 @@
       "depicts": "A symbol representing book minus.",
       "purpose": "Show book minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "minus"
@@ -3872,8 +3588,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_template",
@@ -3883,8 +3599,6 @@
       "depicts": "A symbol representing book template.",
       "purpose": "Show book template as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "template"
@@ -3899,8 +3613,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_text",
@@ -3910,8 +3624,6 @@
       "depicts": "A symbol representing book text.",
       "purpose": "Show book text as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "text"
@@ -3926,8 +3638,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:book_type",
@@ -3937,8 +3649,6 @@
       "depicts": "A symbol representing book type.",
       "purpose": "Show book type as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "type"
@@ -3953,8 +3663,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:boom_box",
@@ -3964,8 +3674,6 @@
       "depicts": "A symbol representing boom box.",
       "purpose": "Show boom box as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "boom",
         "box"
@@ -3980,8 +3688,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bottle_wine",
@@ -3991,8 +3699,6 @@
       "depicts": "A symbol representing bottle wine.",
       "purpose": "Show bottle wine as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bottle",
         "wine"
@@ -4007,8 +3713,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:box_select",
@@ -4018,8 +3724,6 @@
       "depicts": "A symbol representing box select.",
       "purpose": "Show box select as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "box",
         "select"
@@ -4034,8 +3738,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:boxes",
@@ -4045,8 +3749,6 @@
       "depicts": "A symbol representing boxes.",
       "purpose": "Show boxes as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "boxes"
       ],
@@ -4059,8 +3761,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:brain_cog",
@@ -4070,8 +3772,6 @@
       "depicts": "A symbol representing brain cog.",
       "purpose": "Show brain cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brain",
         "cog"
@@ -4086,8 +3786,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:brick_wall",
@@ -4097,8 +3797,6 @@
       "depicts": "A symbol representing brick wall.",
       "purpose": "Show brick wall as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brick",
         "wall"
@@ -4113,8 +3811,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:brick_wall_fire",
@@ -4124,8 +3822,6 @@
       "depicts": "A symbol representing brick wall fire.",
       "purpose": "Show brick wall fire as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brick",
         "wall",
@@ -4142,8 +3838,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:briefcase_business",
@@ -4153,8 +3849,6 @@
       "depicts": "A symbol representing briefcase business.",
       "purpose": "Show briefcase business as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase",
         "business"
@@ -4169,8 +3863,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:briefcase_conveyor_belt",
@@ -4180,8 +3874,6 @@
       "depicts": "A symbol representing briefcase conveyor belt.",
       "purpose": "Show briefcase conveyor belt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase",
         "conveyor",
@@ -4198,8 +3890,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:briefcase_medical",
@@ -4209,8 +3901,6 @@
       "depicts": "A symbol representing briefcase medical.",
       "purpose": "Show briefcase medical as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase",
         "medical"
@@ -4225,8 +3915,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bring_to_front",
@@ -4236,8 +3926,6 @@
       "depicts": "A symbol representing bring to front.",
       "purpose": "Show bring to front as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bring",
         "to",
@@ -4254,8 +3942,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:brush_cleaning",
@@ -4265,8 +3953,6 @@
       "depicts": "A symbol representing brush cleaning.",
       "purpose": "Show brush cleaning as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brush",
         "cleaning"
@@ -4281,8 +3967,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bubbles",
@@ -4292,8 +3978,6 @@
       "depicts": "A symbol representing bubbles.",
       "purpose": "Show bubbles as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bubbles"
       ],
@@ -4306,8 +3990,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bug_off",
@@ -4317,8 +4001,6 @@
       "depicts": "A symbol representing bug off.",
       "purpose": "Show bug off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bug",
         "off"
@@ -4333,8 +4015,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:building",
@@ -4344,8 +4026,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building"
       ],
@@ -4358,8 +4038,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

@@ -44,8 +44,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -54,8 +52,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_music_line",
@@ -92,8 +89,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -102,8 +97,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_star_line",
@@ -140,8 +134,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -150,8 +142,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_star_line",
@@ -188,8 +179,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing user heart.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "user",
           "heart"
@@ -197,8 +186,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user_heart_line",
@@ -235,8 +223,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing user star.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "user",
           "star"
@@ -244,8 +230,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user_star_line",
@@ -281,16 +266,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing abs.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "abs"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ABS_line",
@@ -327,8 +309,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ad circle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ad",
           "circle"
@@ -336,8 +316,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ad_circle_line",
@@ -375,8 +354,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ad circle off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ad",
           "circle",
@@ -385,8 +362,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ad_circle_off_line",
@@ -423,8 +399,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ad rectangle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ad",
           "rectangle"
@@ -432,8 +406,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ad_rectangle_line",
@@ -471,8 +444,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ad rectangle off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ad",
           "rectangle",
@@ -481,8 +452,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ad_rectangle_off_line",
@@ -520,8 +490,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing add circle dash.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "add",
           "circle",
@@ -530,8 +498,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "add_circle_dash_line",
@@ -568,8 +535,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing add circle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "add",
           "circle"
@@ -577,8 +542,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "add_circle_line",
@@ -614,16 +578,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing add.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "add"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "add_line",
@@ -660,8 +621,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aerial lift.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aerial",
           "lift"
@@ -669,8 +628,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "aerial_lift_line",
@@ -707,8 +665,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aiming.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aiming",
           "2"
@@ -716,8 +672,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "aiming_2_line",
@@ -753,16 +708,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aiming.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aiming"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "aiming_line",
@@ -799,8 +751,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing air balloon.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "air",
           "balloon"
@@ -808,8 +758,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "air_balloon_line",
@@ -846,8 +795,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing air condition.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "air",
           "condition"
@@ -855,8 +802,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "air_condition_line",
@@ -892,16 +838,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airbnb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "airbnb"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airbnb_line",
@@ -937,16 +880,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airdrop.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "airdrop"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airdrop_line",
@@ -982,16 +922,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airplane.",
-        "intent": "inform",
-        "domain": "navigation",
         "synonyms": [
           "airplane"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airplane_line",
@@ -1027,16 +964,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airplay.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "airplay"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airplay_line",
@@ -1073,8 +1007,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airpods.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "airpods",
           "2"
@@ -1082,8 +1014,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airpods_2_line",
@@ -1119,16 +1050,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing airpods.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "airpods"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "airpods_line",
@@ -1165,8 +1093,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing alarm.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "alarm",
           "1"
@@ -1174,8 +1100,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alarm_1_line",
@@ -1212,8 +1137,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing alarm.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "alarm",
           "2"
@@ -1221,8 +1144,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alarm_2_line",
@@ -1259,8 +1181,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing album.",
-        "intent": "inform",
-        "domain": "media",
         "synonyms": [
           "album",
           "2"
@@ -1268,8 +1188,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "album_2_line",
@@ -1305,16 +1224,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing album.",
-        "intent": "inform",
-        "domain": "media",
         "synonyms": [
           "album"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "album_line",
@@ -1350,16 +1266,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing alipay.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "alipay"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alipay_line",
@@ -1396,8 +1309,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing american football.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "american",
           "football"
@@ -1405,8 +1316,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "american_football_line",
@@ -1442,16 +1352,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing anchor.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "anchor"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "anchor_line",
@@ -1487,16 +1394,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing and.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "and"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "and_line",
@@ -1533,8 +1437,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing android.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "android",
           "2"
@@ -1542,8 +1444,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "android_2_line",
@@ -1579,16 +1480,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing android.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "android"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "android_line",
@@ -1624,16 +1522,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing angel.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "angel"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "angel_line",
@@ -1669,16 +1564,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing angry.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "angry"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "angry_line",
@@ -1714,16 +1606,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing anniversary.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "anniversary"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "anniversary_line",
@@ -1759,16 +1648,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing announcement.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "announcement"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "announcement_line",
@@ -1805,8 +1691,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing anticlockwise alt.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "anticlockwise",
           "alt"
@@ -1814,8 +1698,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "anticlockwise_alt_line",
@@ -1851,16 +1734,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing anticlockwise.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "anticlockwise"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "anticlockwise_line",
@@ -1897,8 +1777,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing apple fruit.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "apple",
           "fruit"
@@ -1906,8 +1784,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "apple_fruit_line",
@@ -1945,8 +1822,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing apple intelligence frame.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "apple",
           "intelligence",
@@ -1955,8 +1830,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "apple_intelligence_frame_line",
@@ -1993,8 +1867,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing apple intelligence.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "apple",
           "intelligence"
@@ -2002,8 +1874,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "apple_intelligence_line",
@@ -2039,16 +1910,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing apple.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "apple"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "apple_line",
@@ -2084,16 +1952,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing appstore.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "appstore"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "appstore_line",
@@ -2129,16 +1994,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aquarius.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aquarius"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "Aquarius_line",
@@ -2175,8 +2037,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arc browser.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arc",
           "browser"
@@ -2184,8 +2044,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arc_browser_line",
@@ -2221,16 +2080,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aries.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aries"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "Aries_line",
@@ -2266,16 +2122,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing artboard.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "artboard"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "artboard_line",
@@ -2312,8 +2165,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing aspect ratio.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "aspect",
           "ratio"
@@ -2321,8 +2172,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "aspect_ratio_line",
@@ -2359,8 +2209,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing asterisk.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "asterisk",
           "2"
@@ -2368,8 +2216,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "asterisk_2_line",
@@ -2405,16 +2252,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing asterisk.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "asterisk"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "asterisk_line",
@@ -2450,16 +2294,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing at.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "at"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "at_line",
@@ -2496,8 +2337,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing attachment.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "attachment",
           "2"
@@ -2505,8 +2344,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "attachment_2_line",
@@ -2543,8 +2381,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing attachment.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "attachment",
           "3"
@@ -2552,8 +2388,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "attachment_3_line",
@@ -2589,16 +2424,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing attachment.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "attachment"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "attachment_line",
@@ -2634,16 +2466,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing auction.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "auction"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "auction_line",
@@ -2680,8 +2509,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing audio tape.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "audio",
           "tape"
@@ -2689,8 +2516,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "audio_tape_line",
@@ -2727,8 +2553,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing auto hold.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "auto",
           "hold"
@@ -2736,8 +2560,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "auto_hold_line",
@@ -2774,8 +2597,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing avalanche avax.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "avalanche",
           "avax"
@@ -2783,8 +2604,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "avalanche_AVAX_line",
@@ -2820,16 +2640,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing award.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "award"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "award_line",
@@ -2865,16 +2682,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing axe.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "axe"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "axe_line",
@@ -2911,8 +2725,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing baby carriage.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "baby",
           "carriage"
@@ -2920,8 +2732,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "baby_carriage_line",
@@ -2957,16 +2768,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing baby.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "baby"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "baby_line",
@@ -3002,16 +2810,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing backboard.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "backboard"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "backboard_line",
@@ -3047,16 +2852,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing background.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "background"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "background_line",
@@ -3092,16 +2894,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing backpack.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "backpack"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "backpack_line",
@@ -3137,16 +2936,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing badge.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "badge"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "badge_line",
@@ -3182,16 +2978,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing badminton.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "badminton"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "badminton_line",
@@ -3227,16 +3020,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing balance.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "balance"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "balance_line",
@@ -3273,8 +3063,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing balloon.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "balloon",
           "2"
@@ -3282,8 +3070,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "balloon_2_line",
@@ -3320,8 +3107,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bank card.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bank",
           "card"
@@ -3329,8 +3114,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bank_card_line",
@@ -3366,16 +3150,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bank.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bank"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bank_line",
@@ -3414,8 +3195,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bank of china tower.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bank",
           "of",
@@ -3425,8 +3204,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bank_of_china_tower_line",
@@ -3462,16 +3240,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing barbell.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "barbell"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "barbell_line",
@@ -3507,16 +3282,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing barcode.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "barcode"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "barcode_line",
@@ -3554,8 +3326,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing base station.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "base",
           "station",
@@ -3564,8 +3334,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "base_station_2_line",
@@ -3602,8 +3371,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing base station.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "base",
           "station"
@@ -3611,8 +3378,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "base_station_line",
@@ -3649,8 +3415,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing baseball.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "baseball",
           "2"
@@ -3658,8 +3422,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "baseball_2_line",
@@ -3695,16 +3458,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing baseball.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "baseball"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "baseball_line",
@@ -3741,8 +3501,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing basket.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "basket",
           "2"
@@ -3750,8 +3508,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "basket_2_line",
@@ -3787,16 +3544,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing basket.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "basket"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "basket_line",
@@ -3832,16 +3586,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing basketball.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "basketball"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "basketball_line",
@@ -3877,16 +3628,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bath.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bath"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bath_line",
@@ -3923,8 +3671,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "1"
@@ -3932,8 +3678,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_1_line",
@@ -3970,8 +3715,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "2"
@@ -3979,8 +3722,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_2_line",
@@ -4017,8 +3759,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "3"
@@ -4026,8 +3766,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_3_line",
@@ -4064,8 +3803,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "4"
@@ -4073,8 +3810,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_4_line",
@@ -4111,8 +3847,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery automotive.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "automotive"
@@ -4120,8 +3854,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_automotive_line",
@@ -4158,8 +3891,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery charging.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery",
           "charging"
@@ -4167,8 +3898,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_charging_line",
@@ -4204,16 +3934,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing battery.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "battery"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "battery_line",
@@ -4249,16 +3976,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing beachball.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "beachball"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "beachball_line",
@@ -4294,16 +4018,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bear.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bear"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bear_line",
@@ -4339,16 +4060,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing beard.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "beard"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "beard_line",
@@ -4385,8 +4103,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bed.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bed",
           "2"
@@ -4394,8 +4110,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bed_2_line",
@@ -4431,16 +4146,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bed.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bed"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bed_line",
@@ -4478,8 +4190,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bedside table.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bedside",
           "table",
@@ -4488,8 +4198,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bedside_table_2_line",
@@ -4526,8 +4235,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bedside table.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bedside",
           "table"
@@ -4535,8 +4242,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bedside_table_line",
@@ -4572,16 +4278,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing behance.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "behance"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "behance_line",
@@ -4618,8 +4321,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing big ben.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "big",
           "ben"
@@ -4627,8 +4328,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "big_ben_line",
@@ -4664,16 +4364,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bike.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bike"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bike_line",
@@ -4709,16 +4406,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bilibili.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bilibili"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bilibili_line",
@@ -4755,8 +4449,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bill.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bill",
           "2"
@@ -4764,8 +4456,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bill_2_line",
@@ -4801,16 +4492,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bill.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bill"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bill_line",
@@ -4848,8 +4536,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing binance coin bnb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "binance",
           "coin",
@@ -4858,8 +4544,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "binance_coin_BNB_line",
@@ -4897,8 +4582,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing binance usd busd.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "binance",
           "usd",
@@ -4907,8 +4590,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "binance_USD_BUSD_line",
@@ -4944,16 +4626,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bird.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bird"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bird_line",
@@ -4990,8 +4669,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing birthday.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "birthday",
           "2"
@@ -4999,8 +4676,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "birthday_2_line",
@@ -5038,8 +4714,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing black board.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "black",
           "board",
@@ -5048,8 +4722,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "black_board_2_line",
@@ -5086,8 +4759,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing black board.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "black",
           "board"
@@ -5095,8 +4766,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "black_board_line",
@@ -5132,16 +4802,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing blessing.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "blessing"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "blessing_line",
@@ -5177,16 +4844,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bling.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bling"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bling_line",
@@ -5222,16 +4886,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing blockquote.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "blockquote"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "blockquote_line",
@@ -5268,8 +4929,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bluesky social.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bluesky",
           "social"
@@ -5277,8 +4936,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bluesky_social_line",
@@ -5314,16 +4972,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bluetooth.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bluetooth"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bluetooth_line",
@@ -5360,8 +5015,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bluetooth off.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bluetooth",
           "off"
@@ -5369,8 +5022,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bluetooth_off_line",
@@ -5406,16 +5058,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bnb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bnb"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "BNB_line",
@@ -5451,16 +5100,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing board.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "board"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "board_line",
@@ -5496,16 +5142,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing body.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "body"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "body_line",
@@ -5541,16 +5184,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bold.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bold"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bold_line",
@@ -5586,16 +5226,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bomb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bomb"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bomb_line",
@@ -5631,16 +5268,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bone.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bone"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bone_line",
@@ -5677,8 +5311,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book",
           "2"
@@ -5686,8 +5318,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_2_line",
@@ -5724,8 +5355,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book",
           "3"
@@ -5733,8 +5362,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_3_line",
@@ -5771,8 +5399,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book",
           "4"
@@ -5780,8 +5406,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_4_line",
@@ -5818,8 +5443,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book",
           "5"
@@ -5827,8 +5450,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_5_line",
@@ -5865,8 +5487,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book",
           "6"
@@ -5874,8 +5494,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_6_line",
@@ -5911,16 +5530,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "book"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "book_line",
@@ -5957,8 +5573,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmark add.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmark",
           "add"
@@ -5966,8 +5580,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmark_add_line",
@@ -6004,8 +5617,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmark remove.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmark",
           "remove"
@@ -6013,8 +5624,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmark_remove_line",
@@ -6050,16 +5660,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmarks.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmarks"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmarks_line",
@@ -6095,16 +5702,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing boom.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "boom"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "boom_line",
@@ -6141,8 +5745,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bottle glass.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bottle",
           "glass"
@@ -6150,8 +5752,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bottle_glass_line",
@@ -6187,16 +5788,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bottle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bottle"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bottle_line",
@@ -6233,8 +5831,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bow tie.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bow",
           "tie"
@@ -6242,8 +5838,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bow_tie_line",
@@ -6279,16 +5874,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bowknot.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bowknot"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bowknot_line",
@@ -6325,8 +5917,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bowl.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bowl",
           "2"
@@ -6334,8 +5924,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bowl_2_line",
@@ -6371,16 +5960,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bowl.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bowl"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bowl_line",
@@ -6417,8 +6003,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing box.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "box",
           "2"
@@ -6426,8 +6010,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "box_2_line",
@@ -6464,8 +6047,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing box.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "box",
           "3"
@@ -6473,8 +6054,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "box_3_line",
@@ -6511,8 +6091,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing box.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "box",
           "4"
@@ -6520,8 +6098,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "box_4_line",
@@ -6557,16 +6134,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing box.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "box"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "box_line",
@@ -6602,16 +6176,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing braces.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "braces"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "braces_line",
@@ -6648,8 +6219,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brackets angle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brackets",
           "angle"
@@ -6657,8 +6226,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brackets_angle_line",
@@ -6694,16 +6262,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brackets.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brackets"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brackets_line",
@@ -6739,16 +6304,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brake.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brake"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brake_line",
@@ -6784,16 +6346,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bread.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bread"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bread_line",
@@ -6830,8 +6389,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bridge.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bridge",
           "2"
@@ -6839,8 +6396,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bridge_2_line",
@@ -6876,16 +6432,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bridge.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bridge"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bridge_line",
@@ -6921,16 +6474,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brief.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brief"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brief_line",
@@ -6967,8 +6517,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing briefcase.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "briefcase",
           "2"
@@ -6976,8 +6524,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "briefcase_2_line",
@@ -7013,16 +6560,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing briefcase.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "briefcase"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "briefcase_line",
@@ -7058,16 +6602,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brightness.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brightness"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brightness_line",
@@ -7103,16 +6644,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing broom.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "broom"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "broom_line",
@@ -7149,8 +6687,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brush.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brush",
           "2"
@@ -7158,8 +6694,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brush_2_line",
@@ -7196,8 +6731,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brush.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brush",
           "3"
@@ -7205,8 +6738,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brush_3_line",
@@ -7242,16 +6774,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing brush.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "brush"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "brush_line",
@@ -7287,16 +6816,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bubble.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bubble"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bubble_line",
@@ -7332,16 +6858,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bug.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bug"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bug_line",
@@ -7378,8 +6901,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "1"
@@ -7387,8 +6908,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_1_line",
@@ -7425,8 +6945,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "2"
@@ -7434,8 +6952,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_2_line",
@@ -7472,8 +6989,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "3"
@@ -7481,8 +6996,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_3_line",
@@ -7519,8 +7033,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "4"
@@ -7528,8 +7040,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_4_line",
@@ -7566,8 +7077,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "5"
@@ -7575,8 +7084,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_5_line",
@@ -7613,8 +7121,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing building.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "building",
           "6"
@@ -7622,8 +7128,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "building_6_line",
@@ -7660,8 +7165,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bulb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bulb",
           "2"
@@ -7669,8 +7172,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bulb_2_line",
@@ -7706,16 +7208,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bulb.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bulb"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bulb_line",
@@ -7753,8 +7252,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing burj al arab.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "burj",
           "al",
@@ -7763,8 +7260,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "burj_al_arab_line",
@@ -7802,8 +7298,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing burj khalifa tower.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "burj",
           "khalifa",
@@ -7812,8 +7306,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "burj_khalifa_tower_line",
@@ -7850,8 +7343,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bus",
           "2"
@@ -7859,8 +7350,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bus_2_line",
@@ -7896,16 +7386,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bus"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bus_line",
@@ -7942,8 +7429,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing butterfly.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "butterfly",
           "2"
@@ -7951,8 +7436,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "butterfly_2_line",
@@ -7988,16 +7472,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing butterfly.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "butterfly"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "butterfly_line",
@@ -8033,16 +7514,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing button.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "button"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "button_line",
@@ -8079,8 +7557,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cactus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cactus",
           "2"
@@ -8088,8 +7564,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cactus_2_line",
@@ -8125,16 +7600,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cactus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cactus"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cactus_line",
@@ -8170,16 +7642,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cake.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cake"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cake_line",
@@ -8216,8 +7685,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "2"
@@ -8225,8 +7692,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_2_line",
@@ -8263,8 +7729,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "3"
@@ -8272,8 +7736,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_3_line",
@@ -8310,8 +7773,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar add.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "add"
@@ -8319,8 +7780,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_add_line",
@@ -8357,8 +7817,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar day.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "day"
@@ -8366,8 +7824,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_day_line",
@@ -8403,16 +7860,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_line",
@@ -8449,8 +7903,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar month.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "month"
@@ -8458,8 +7910,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_month_line",
@@ -8497,8 +7948,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar time add.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "time",
@@ -8507,8 +7956,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_time_add_line",
@@ -8545,8 +7993,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar week.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "week"
@@ -8554,8 +8000,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_week_line",
@@ -8592,8 +8037,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar x.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "x"
@@ -8601,8 +8044,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar_x_line",
@@ -8639,8 +8081,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing camcorder.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "camcorder",
           "2"
@@ -8648,8 +8088,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "camcorder_2_line",

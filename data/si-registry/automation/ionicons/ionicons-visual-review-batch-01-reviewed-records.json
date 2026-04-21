@@ -10,8 +10,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a folder or entering a file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "open",
@@ -28,8 +26,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:archive_outline",
@@ -39,8 +37,6 @@
       "depicts": "A symbol representing archive outline.",
       "purpose": "Show archive outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "archive",
         "outline"
@@ -55,8 +51,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bookmark_outline",
@@ -66,8 +62,6 @@
       "depicts": "A symbol representing bookmark outline.",
       "purpose": "Show bookmark outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "outline"
@@ -82,8 +76,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:calendar_clear_outline",
@@ -93,8 +87,6 @@
       "depicts": "A symbol representing calendar clear outline.",
       "purpose": "Show calendar clear outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "clear",
@@ -111,8 +103,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:calendar_number_outline",
@@ -122,8 +114,6 @@
       "depicts": "A symbol representing calendar number outline.",
       "purpose": "Show calendar number outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "number",
@@ -140,8 +130,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:calendar_outline",
@@ -151,8 +141,6 @@
       "depicts": "A symbol representing calendar outline.",
       "purpose": "Show calendar outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "outline"
@@ -167,8 +155,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chevron_collapse_outline",
@@ -178,8 +166,6 @@
       "depicts": "A symbol representing chevron collapse outline.",
       "purpose": "Show chevron collapse outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chevron",
         "collapse",
@@ -196,8 +182,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chevron_expand_outline",
@@ -207,8 +193,6 @@
       "depicts": "A symbol representing chevron expand outline.",
       "purpose": "Show chevron expand outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chevron",
         "expand",
@@ -225,8 +209,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:close_circle_outline",
@@ -236,8 +220,6 @@
       "depicts": "A symbol representing close circle outline.",
       "purpose": "Show close circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "circle",
@@ -254,8 +236,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:close_outline",
@@ -265,8 +247,6 @@
       "depicts": "A symbol representing close outline.",
       "purpose": "Show close outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "close",
         "outline"
@@ -281,8 +261,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_download_outline",
@@ -292,8 +272,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "download",
@@ -311,8 +289,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_upload_outline",
@@ -322,8 +300,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "upload",
@@ -341,8 +317,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:copy_outline",
@@ -352,8 +328,6 @@
       "depicts": "A symbol representing copy outline.",
       "purpose": "Show copy outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "copy",
         "outline"
@@ -368,8 +342,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:download_outline",
@@ -379,8 +353,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download",
         "outline",
@@ -396,8 +368,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:file_tray_full_outline",
@@ -407,8 +379,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "tray",
@@ -428,8 +398,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:file_tray_outline",
@@ -439,8 +409,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "tray",
@@ -458,8 +426,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:file_tray_stacked_outline",
@@ -469,8 +437,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "tray",
@@ -490,8 +456,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:folder_outline",
@@ -501,8 +467,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "outline"
@@ -518,8 +482,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:link_outline",
@@ -529,8 +493,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a linked file, connected document, or reference to external file content.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "link",
         "outline",
@@ -547,8 +509,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:open_outline",
@@ -558,8 +520,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "open",
         "outline",
@@ -575,8 +535,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:pause_circle_outline",
@@ -586,8 +546,6 @@
       "depicts": "A symbol representing pause circle outline.",
       "purpose": "Show pause circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pause",
         "circle",
@@ -604,8 +562,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:pause_outline",
@@ -615,8 +573,6 @@
       "depicts": "A symbol representing pause outline.",
       "purpose": "Show pause outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pause",
         "outline"
@@ -631,8 +587,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:play_circle_outline",
@@ -642,8 +598,6 @@
       "depicts": "A symbol representing play circle outline.",
       "purpose": "Show play circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "play",
         "circle",
@@ -660,8 +614,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:play_outline",
@@ -671,8 +625,6 @@
       "depicts": "A symbol representing play outline.",
       "purpose": "Show play outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "play",
         "outline"
@@ -687,8 +639,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:scan_circle_outline",
@@ -698,8 +650,6 @@
       "depicts": "A symbol representing scan circle outline.",
       "purpose": "Show scan circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan",
         "circle",
@@ -716,8 +666,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:scan_outline",
@@ -727,8 +677,6 @@
       "depicts": "A symbol representing scan outline.",
       "purpose": "Show scan outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan",
         "outline"
@@ -743,8 +691,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:settings_outline",
@@ -754,8 +702,6 @@
       "depicts": "A symbol representing settings outline.",
       "purpose": "Show settings outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "settings",
         "outline"
@@ -770,8 +716,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:stop_circle_outline",
@@ -781,8 +727,6 @@
       "depicts": "A symbol representing stop circle outline.",
       "purpose": "Show stop circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "stop",
         "circle",
@@ -799,8 +743,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:stop_outline",
@@ -810,8 +754,6 @@
       "depicts": "A symbol representing stop outline.",
       "purpose": "Show stop outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "stop",
         "outline"
@@ -826,8 +768,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:accessibility_outline",
@@ -837,8 +779,6 @@
       "depicts": "A symbol representing accessibility outline.",
       "purpose": "Show accessibility outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "accessibility",
         "outline"
@@ -853,8 +793,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:add_circle_outline",
@@ -864,8 +804,6 @@
       "depicts": "A symbol representing add circle outline.",
       "purpose": "Show add circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add",
         "circle",
@@ -882,8 +820,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:add_outline",
@@ -893,8 +831,6 @@
       "depicts": "A symbol representing add outline.",
       "purpose": "Show add outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add",
         "outline"
@@ -909,8 +845,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:airplane_outline",
@@ -920,8 +856,6 @@
       "depicts": "A symbol representing airplane outline.",
       "purpose": "Show airplane outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "airplane",
         "outline"
@@ -936,8 +870,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:alarm_outline",
@@ -947,8 +881,6 @@
       "depicts": "A symbol representing alarm outline.",
       "purpose": "Show alarm outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "outline"
@@ -963,8 +895,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:albums_outline",
@@ -974,8 +906,6 @@
       "depicts": "A symbol representing albums outline.",
       "purpose": "Show albums outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "albums",
         "outline"
@@ -990,8 +920,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:american_football_outline",
@@ -1001,8 +931,6 @@
       "depicts": "A symbol representing american football outline.",
       "purpose": "Show american football outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "american",
         "football",
@@ -1019,8 +947,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:analytics_outline",
@@ -1030,8 +958,6 @@
       "depicts": "A symbol representing analytics outline.",
       "purpose": "Show analytics outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "analytics",
         "outline"
@@ -1046,8 +972,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:aperture_outline",
@@ -1057,8 +983,6 @@
       "depicts": "A symbol representing aperture outline.",
       "purpose": "Show aperture outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aperture",
         "outline"
@@ -1073,8 +997,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:apps_outline",
@@ -1084,8 +1008,6 @@
       "depicts": "A symbol representing apps outline.",
       "purpose": "Show apps outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "apps",
         "outline"
@@ -1100,8 +1022,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:at_circle_outline",
@@ -1111,8 +1033,6 @@
       "depicts": "A symbol representing at circle outline.",
       "purpose": "Show at circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "at",
         "circle",
@@ -1129,8 +1049,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:at_outline",
@@ -1140,8 +1060,6 @@
       "depicts": "A symbol representing at outline.",
       "purpose": "Show at outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "at",
         "outline"
@@ -1156,8 +1074,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:attach_outline",
@@ -1167,8 +1085,6 @@
       "depicts": "A symbol representing attach outline.",
       "purpose": "Show attach outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "attach",
         "outline"
@@ -1183,8 +1099,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:backspace_outline",
@@ -1194,8 +1110,6 @@
       "depicts": "A symbol representing backspace outline.",
       "purpose": "Show backspace outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "backspace",
         "outline"
@@ -1210,8 +1124,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bag_add_outline",
@@ -1221,8 +1135,6 @@
       "depicts": "A symbol representing bag add outline.",
       "purpose": "Show bag add outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bag",
         "add",
@@ -1239,8 +1151,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bag_handle_outline",
@@ -1250,8 +1162,6 @@
       "depicts": "A symbol representing bag handle outline.",
       "purpose": "Show bag handle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bag",
         "handle",
@@ -1268,8 +1178,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bag_outline",
@@ -1279,8 +1189,6 @@
       "depicts": "A symbol representing bag outline.",
       "purpose": "Show bag outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bag",
         "outline"
@@ -1295,8 +1203,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bag_remove_outline",
@@ -1306,8 +1214,6 @@
       "depicts": "A symbol representing bag remove outline.",
       "purpose": "Show bag remove outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bag",
         "remove",
@@ -1324,8 +1230,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:balloon_outline",
@@ -1335,8 +1241,6 @@
       "depicts": "A symbol representing balloon outline.",
       "purpose": "Show balloon outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "balloon",
         "outline"
@@ -1351,8 +1255,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bandage_outline",
@@ -1362,8 +1266,6 @@
       "depicts": "A symbol representing bandage outline.",
       "purpose": "Show bandage outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bandage",
         "outline"
@@ -1378,8 +1280,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bar_chart_outline",
@@ -1389,8 +1291,6 @@
       "depicts": "A symbol representing bar chart outline.",
       "purpose": "Show bar chart outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bar",
         "chart",
@@ -1407,8 +1307,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:barbell_outline",
@@ -1418,8 +1318,6 @@
       "depicts": "A symbol representing barbell outline.",
       "purpose": "Show barbell outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barbell",
         "outline"
@@ -1434,8 +1332,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:barcode_outline",
@@ -1445,8 +1343,6 @@
       "depicts": "A symbol representing barcode outline.",
       "purpose": "Show barcode outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barcode",
         "outline"
@@ -1461,8 +1357,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:baseball_outline",
@@ -1472,8 +1368,6 @@
       "depicts": "A symbol representing baseball outline.",
       "purpose": "Show baseball outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baseball",
         "outline"
@@ -1488,8 +1382,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:basket_outline",
@@ -1499,8 +1393,6 @@
       "depicts": "A symbol representing basket outline.",
       "purpose": "Show basket outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basket",
         "outline"
@@ -1515,8 +1407,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:basketball_outline",
@@ -1526,8 +1418,6 @@
       "depicts": "A symbol representing basketball outline.",
       "purpose": "Show basketball outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basketball",
         "outline"
@@ -1542,8 +1432,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:battery_charging_outline",
@@ -1553,8 +1443,6 @@
       "depicts": "A symbol representing battery charging outline.",
       "purpose": "Show battery charging outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "charging",
@@ -1571,8 +1459,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:battery_dead_outline",
@@ -1582,8 +1470,6 @@
       "depicts": "A symbol representing battery dead outline.",
       "purpose": "Show battery dead outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "dead",
@@ -1600,8 +1486,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:battery_full_outline",
@@ -1611,8 +1497,6 @@
       "depicts": "A symbol representing battery full outline.",
       "purpose": "Show battery full outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "full",
@@ -1629,8 +1513,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:battery_half_outline",
@@ -1640,8 +1524,6 @@
       "depicts": "A symbol representing battery half outline.",
       "purpose": "Show battery half outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "half",
@@ -1658,8 +1540,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:beaker_outline",
@@ -1669,8 +1551,6 @@
       "depicts": "A symbol representing beaker outline.",
       "purpose": "Show beaker outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beaker",
         "outline"
@@ -1685,8 +1565,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bed_outline",
@@ -1696,8 +1576,6 @@
       "depicts": "A symbol representing bed outline.",
       "purpose": "Show bed outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed",
         "outline"
@@ -1712,8 +1590,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:beer_outline",
@@ -1723,8 +1601,6 @@
       "depicts": "A symbol representing beer outline.",
       "purpose": "Show beer outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beer",
         "outline"
@@ -1739,8 +1615,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bicycle_outline",
@@ -1750,8 +1626,6 @@
       "depicts": "A symbol representing bicycle outline.",
       "purpose": "Show bicycle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bicycle",
         "outline"
@@ -1766,8 +1640,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:binoculars_outline",
@@ -1777,8 +1651,6 @@
       "depicts": "A symbol representing binoculars outline.",
       "purpose": "Show binoculars outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "binoculars",
         "outline"
@@ -1793,8 +1665,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bluetooth_outline",
@@ -1804,8 +1676,6 @@
       "depicts": "A symbol representing bluetooth outline.",
       "purpose": "Show bluetooth outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluetooth",
         "outline"
@@ -1820,8 +1690,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:boat_outline",
@@ -1831,8 +1701,6 @@
       "depicts": "A symbol representing boat outline.",
       "purpose": "Show boat outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "boat",
         "outline"
@@ -1847,8 +1715,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:body_outline",
@@ -1858,8 +1726,6 @@
       "depicts": "A symbol representing body outline.",
       "purpose": "Show body outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "body",
         "outline"
@@ -1874,8 +1740,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bonfire_outline",
@@ -1885,8 +1751,6 @@
       "depicts": "A symbol representing bonfire outline.",
       "purpose": "Show bonfire outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bonfire",
         "outline"
@@ -1901,8 +1765,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:book_outline",
@@ -1912,8 +1776,6 @@
       "depicts": "A symbol representing book outline.",
       "purpose": "Show book outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "outline"
@@ -1928,8 +1790,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bookmarks_outline",
@@ -1939,8 +1801,6 @@
       "depicts": "A symbol representing bookmarks outline.",
       "purpose": "Show bookmarks outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmarks",
         "outline"
@@ -1955,8 +1815,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bowling_ball_outline",
@@ -1966,8 +1826,6 @@
       "depicts": "A symbol representing bowling ball outline.",
       "purpose": "Show bowling ball outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bowling",
         "ball",
@@ -1984,8 +1842,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:briefcase_outline",
@@ -1995,8 +1853,6 @@
       "depicts": "A symbol representing briefcase outline.",
       "purpose": "Show briefcase outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase",
         "outline"
@@ -2011,8 +1867,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:browsers_outline",
@@ -2022,8 +1878,6 @@
       "depicts": "A symbol representing browsers outline.",
       "purpose": "Show browsers outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "browsers",
         "outline"
@@ -2038,8 +1892,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:brush_outline",
@@ -2049,8 +1903,6 @@
       "depicts": "A symbol representing brush outline.",
       "purpose": "Show brush outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brush",
         "outline"
@@ -2065,8 +1917,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bug_outline",
@@ -2076,8 +1928,6 @@
       "depicts": "A symbol representing bug outline.",
       "purpose": "Show bug outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bug",
         "outline"
@@ -2092,8 +1942,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:build_outline",
@@ -2103,8 +1953,6 @@
       "depicts": "A symbol representing build outline.",
       "purpose": "Show build outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "build",
         "outline"
@@ -2119,8 +1967,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bulb_outline",
@@ -2130,8 +1978,6 @@
       "depicts": "A symbol representing bulb outline.",
       "purpose": "Show bulb outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bulb",
         "outline"
@@ -2146,8 +1992,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:bus_outline",
@@ -2157,8 +2003,6 @@
       "depicts": "A symbol representing bus outline.",
       "purpose": "Show bus outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bus",
         "outline"
@@ -2173,8 +2017,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:business_outline",
@@ -2184,8 +2028,6 @@
       "depicts": "A symbol representing business outline.",
       "purpose": "Show business outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "business",
         "outline"
@@ -2200,8 +2042,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cafe_outline",
@@ -2211,8 +2053,6 @@
       "depicts": "A symbol representing cafe outline.",
       "purpose": "Show cafe outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cafe",
         "outline"
@@ -2227,8 +2067,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:calculator_outline",
@@ -2238,8 +2078,6 @@
       "depicts": "A symbol representing calculator outline.",
       "purpose": "Show calculator outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calculator",
         "outline"
@@ -2254,8 +2092,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:call_outline",
@@ -2265,8 +2103,6 @@
       "depicts": "A symbol representing call outline.",
       "purpose": "Show call outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "call",
         "outline"
@@ -2281,8 +2117,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:camera_outline",
@@ -2292,8 +2128,6 @@
       "depicts": "A symbol representing camera outline.",
       "purpose": "Show camera outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "camera",
         "outline"
@@ -2308,8 +2142,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:camera_reverse_outline",
@@ -2319,8 +2153,6 @@
       "depicts": "A symbol representing camera reverse outline.",
       "purpose": "Show camera reverse outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "camera",
         "reverse",
@@ -2337,8 +2169,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:car_outline",
@@ -2348,8 +2180,6 @@
       "depicts": "A symbol representing car outline.",
       "purpose": "Show car outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "car",
         "outline"
@@ -2364,8 +2194,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:car_sport_outline",
@@ -2375,8 +2205,6 @@
       "depicts": "A symbol representing car sport outline.",
       "purpose": "Show car sport outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "car",
         "sport",
@@ -2393,8 +2221,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:card_outline",
@@ -2404,8 +2232,6 @@
       "depicts": "A symbol representing card outline.",
       "purpose": "Show card outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "card",
         "outline"
@@ -2420,8 +2246,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cart_outline",
@@ -2431,8 +2257,6 @@
       "depicts": "A symbol representing cart outline.",
       "purpose": "Show cart outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cart",
         "outline"
@@ -2447,8 +2271,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cash_outline",
@@ -2458,8 +2282,6 @@
       "depicts": "A symbol representing cash outline.",
       "purpose": "Show cash outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cash",
         "outline"
@@ -2474,8 +2296,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cellular_outline",
@@ -2485,8 +2307,6 @@
       "depicts": "A symbol representing cellular outline.",
       "purpose": "Show cellular outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cellular",
         "outline"
@@ -2501,8 +2321,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chatbox_ellipses_outline",
@@ -2512,8 +2332,6 @@
       "depicts": "A symbol representing chatbox ellipses outline.",
       "purpose": "Show chatbox ellipses outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chatbox",
         "ellipses",
@@ -2530,8 +2348,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chatbox_outline",
@@ -2541,8 +2359,6 @@
       "depicts": "A symbol representing chatbox outline.",
       "purpose": "Show chatbox outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chatbox",
         "outline"
@@ -2557,8 +2373,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chatbubble_ellipses_outline",
@@ -2568,8 +2384,6 @@
       "depicts": "A symbol representing chatbubble ellipses outline.",
       "purpose": "Show chatbubble ellipses outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chatbubble",
         "ellipses",
@@ -2586,8 +2400,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chatbubble_outline",
@@ -2597,8 +2411,6 @@
       "depicts": "A symbol representing chatbubble outline.",
       "purpose": "Show chatbubble outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chatbubble",
         "outline"
@@ -2613,8 +2425,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:chatbubbles_outline",
@@ -2624,8 +2436,6 @@
       "depicts": "A symbol representing chatbubbles outline.",
       "purpose": "Show chatbubbles outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chatbubbles",
         "outline"
@@ -2640,8 +2450,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:checkbox_outline",
@@ -2651,8 +2461,6 @@
       "depicts": "A symbol representing checkbox outline.",
       "purpose": "Show checkbox outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "checkbox",
         "outline"
@@ -2667,8 +2475,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:checkmark_circle_outline",
@@ -2678,8 +2486,6 @@
       "depicts": "A symbol representing checkmark circle outline.",
       "purpose": "Show checkmark circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "checkmark",
         "circle",
@@ -2696,8 +2502,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:checkmark_done_circle_outline",
@@ -2707,8 +2513,6 @@
       "depicts": "A symbol representing checkmark done circle outline.",
       "purpose": "Show checkmark done circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "checkmark",
         "done",
@@ -2727,8 +2531,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:checkmark_done_outline",
@@ -2738,8 +2542,6 @@
       "depicts": "A symbol representing checkmark done outline.",
       "purpose": "Show checkmark done outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "checkmark",
         "done",
@@ -2756,8 +2558,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:checkmark_outline",
@@ -2767,8 +2569,6 @@
       "depicts": "A symbol representing checkmark outline.",
       "purpose": "Show checkmark outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "checkmark",
         "outline"
@@ -2783,8 +2583,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:clipboard_outline",
@@ -2794,8 +2594,6 @@
       "depicts": "A symbol representing clipboard outline.",
       "purpose": "Show clipboard outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "clipboard",
         "outline"
@@ -2810,8 +2608,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_circle_outline",
@@ -2821,8 +2619,6 @@
       "depicts": "A symbol representing cloud circle outline.",
       "purpose": "Show cloud circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "circle",
@@ -2839,8 +2635,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_done_outline",
@@ -2850,8 +2646,6 @@
       "depicts": "A symbol representing cloud done outline.",
       "purpose": "Show cloud done outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "done",
@@ -2868,8 +2662,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_offline_outline",
@@ -2879,8 +2673,6 @@
       "depicts": "A symbol representing cloud offline outline.",
       "purpose": "Show cloud offline outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "offline",
@@ -2897,8 +2689,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloud_outline",
@@ -2908,8 +2700,6 @@
       "depicts": "A symbol representing cloud outline.",
       "purpose": "Show cloud outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloud",
         "outline"
@@ -2924,8 +2714,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloudy_night_outline",
@@ -2935,8 +2725,6 @@
       "depicts": "A symbol representing cloudy night outline.",
       "purpose": "Show cloudy night outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloudy",
         "night",
@@ -2953,8 +2741,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cloudy_outline",
@@ -2964,8 +2752,6 @@
       "depicts": "A symbol representing cloudy outline.",
       "purpose": "Show cloudy outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cloudy",
         "outline"
@@ -2980,8 +2766,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cog_outline",
@@ -2991,8 +2777,6 @@
       "depicts": "A symbol representing cog outline.",
       "purpose": "Show cog outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cog",
         "outline"
@@ -3007,8 +2791,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:color_fill_outline",
@@ -3018,8 +2802,6 @@
       "depicts": "A symbol representing color fill outline.",
       "purpose": "Show color fill outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "color",
         "fill",
@@ -3036,8 +2818,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:color_palette_outline",
@@ -3047,8 +2829,6 @@
       "depicts": "A symbol representing color palette outline.",
       "purpose": "Show color palette outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "color",
         "palette",
@@ -3065,8 +2845,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:color_wand_outline",
@@ -3076,8 +2856,6 @@
       "depicts": "A symbol representing color wand outline.",
       "purpose": "Show color wand outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "color",
         "wand",
@@ -3094,8 +2872,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:compass_outline",
@@ -3105,8 +2883,6 @@
       "depicts": "A symbol representing compass outline.",
       "purpose": "Show compass outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "compass",
         "outline"
@@ -3121,8 +2897,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:construct_outline",
@@ -3132,8 +2908,6 @@
       "depicts": "A symbol representing construct outline.",
       "purpose": "Show construct outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "construct",
         "outline"
@@ -3148,8 +2922,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:contract_outline",
@@ -3159,8 +2933,6 @@
       "depicts": "A symbol representing contract outline.",
       "purpose": "Show contract outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "contract",
         "outline"
@@ -3175,8 +2947,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:contrast_outline",
@@ -3186,8 +2958,6 @@
       "depicts": "A symbol representing contrast outline.",
       "purpose": "Show contrast outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "contrast",
         "outline"
@@ -3202,8 +2972,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:create_outline",
@@ -3213,8 +2983,6 @@
       "depicts": "A symbol representing create outline.",
       "purpose": "Show create outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "create",
         "outline"
@@ -3229,8 +2997,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:crop_outline",
@@ -3240,8 +3008,6 @@
       "depicts": "A symbol representing crop outline.",
       "purpose": "Show crop outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "crop",
         "outline"
@@ -3256,8 +3022,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cube_outline",
@@ -3267,8 +3033,6 @@
       "depicts": "A symbol representing cube outline.",
       "purpose": "Show cube outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cube",
         "outline"
@@ -3283,8 +3047,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:cut_outline",
@@ -3294,8 +3058,6 @@
       "depicts": "A symbol representing cut outline.",
       "purpose": "Show cut outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cut",
         "outline"
@@ -3310,8 +3072,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:desktop_outline",
@@ -3321,8 +3083,6 @@
       "depicts": "A symbol representing desktop outline.",
       "purpose": "Show desktop outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "desktop",
         "outline"
@@ -3337,8 +3097,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:diamond_outline",
@@ -3348,8 +3108,6 @@
       "depicts": "A symbol representing diamond outline.",
       "purpose": "Show diamond outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "diamond",
         "outline"
@@ -3364,8 +3122,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:dice_outline",
@@ -3375,8 +3133,6 @@
       "depicts": "A symbol representing dice outline.",
       "purpose": "Show dice outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "dice",
         "outline"
@@ -3391,8 +3147,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:disc_outline",
@@ -3402,8 +3158,6 @@
       "depicts": "A symbol representing disc outline.",
       "purpose": "Show disc outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "disc",
         "outline"
@@ -3418,8 +3172,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:document_attach_outline",
@@ -3429,8 +3183,6 @@
       "depicts": "A symbol representing document attach outline.",
       "purpose": "Show document attach outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "document",
         "attach",
@@ -3447,8 +3199,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:document_outline",
@@ -3458,8 +3210,6 @@
       "depicts": "A symbol representing document outline.",
       "purpose": "Show document outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "document",
         "outline"
@@ -3474,8 +3224,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:document_text_outline",
@@ -3485,8 +3235,6 @@
       "depicts": "A symbol representing document text outline.",
       "purpose": "Show document text outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "document",
         "text",
@@ -3503,8 +3251,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:documents_outline",
@@ -3514,8 +3262,6 @@
       "depicts": "A symbol representing documents outline.",
       "purpose": "Show documents outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "documents",
         "outline"
@@ -3530,8 +3276,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:duplicate_outline",
@@ -3541,8 +3287,6 @@
       "depicts": "A symbol representing duplicate outline.",
       "purpose": "Show duplicate outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "duplicate",
         "outline"
@@ -3557,8 +3301,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ear_outline",
@@ -3568,8 +3312,6 @@
       "depicts": "A symbol representing ear outline.",
       "purpose": "Show ear outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ear",
         "outline"
@@ -3584,8 +3326,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:earth_outline",
@@ -3595,8 +3337,6 @@
       "depicts": "A symbol representing earth outline.",
       "purpose": "Show earth outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "earth",
         "outline"
@@ -3611,8 +3351,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:easel_outline",
@@ -3622,8 +3362,6 @@
       "depicts": "A symbol representing easel outline.",
       "purpose": "Show easel outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "easel",
         "outline"
@@ -3638,8 +3376,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:egg_outline",
@@ -3649,8 +3387,6 @@
       "depicts": "A symbol representing egg outline.",
       "purpose": "Show egg outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "egg",
         "outline"
@@ -3665,8 +3401,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ellipse_outline",
@@ -3676,8 +3412,6 @@
       "depicts": "A symbol representing ellipse outline.",
       "purpose": "Show ellipse outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ellipse",
         "outline"
@@ -3692,8 +3426,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ellipsis_horizontal_circle_outline",
@@ -3703,8 +3437,6 @@
       "depicts": "A symbol representing ellipsis horizontal circle outline.",
       "purpose": "Show ellipsis horizontal circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ellipsis",
         "horizontal",
@@ -3723,8 +3455,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ellipsis_horizontal_outline",
@@ -3734,8 +3466,6 @@
       "depicts": "A symbol representing ellipsis horizontal outline.",
       "purpose": "Show ellipsis horizontal outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ellipsis",
         "horizontal",
@@ -3752,8 +3482,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ellipsis_vertical_circle_outline",
@@ -3763,8 +3493,6 @@
       "depicts": "A symbol representing ellipsis vertical circle outline.",
       "purpose": "Show ellipsis vertical circle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ellipsis",
         "vertical",
@@ -3783,8 +3511,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:ellipsis_vertical_outline",
@@ -3794,8 +3522,6 @@
       "depicts": "A symbol representing ellipsis vertical outline.",
       "purpose": "Show ellipsis vertical outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ellipsis",
         "vertical",
@@ -3812,8 +3538,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:enter_outline",
@@ -3823,8 +3549,6 @@
       "depicts": "A symbol representing enter outline.",
       "purpose": "Show enter outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "enter",
         "outline"
@@ -3839,8 +3563,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:exit_outline",
@@ -3850,8 +3574,6 @@
       "depicts": "A symbol representing exit outline.",
       "purpose": "Show exit outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "exit",
         "outline"
@@ -3866,8 +3588,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:expand_outline",
@@ -3877,8 +3599,6 @@
       "depicts": "A symbol representing expand outline.",
       "purpose": "Show expand outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "expand",
         "outline"
@@ -3893,8 +3613,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:extension_puzzle_outline",
@@ -3904,8 +3624,6 @@
       "depicts": "A symbol representing extension puzzle outline.",
       "purpose": "Show extension puzzle outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "extension",
         "puzzle",
@@ -3922,8 +3640,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:eyedrop_outline",
@@ -3933,8 +3651,6 @@
       "depicts": "A symbol representing eyedrop outline.",
       "purpose": "Show eyedrop outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "eyedrop",
         "outline"
@@ -3949,8 +3665,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:fast_food_outline",
@@ -3960,8 +3676,6 @@
       "depicts": "A symbol representing fast food outline.",
       "purpose": "Show fast food outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fast",
         "food",
@@ -3978,8 +3692,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:female_outline",
@@ -3989,8 +3703,6 @@
       "depicts": "A symbol representing female outline.",
       "purpose": "Show female outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "female",
         "outline"
@@ -4005,8 +3717,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:film_outline",
@@ -4016,8 +3728,6 @@
       "depicts": "A symbol representing film outline.",
       "purpose": "Show film outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "film",
         "outline"
@@ -4032,8 +3742,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:finger_print_outline",
@@ -4043,8 +3753,6 @@
       "depicts": "A symbol representing finger print outline.",
       "purpose": "Show finger print outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "finger",
         "print",
@@ -4061,8 +3769,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:fish_outline",
@@ -4072,8 +3780,6 @@
       "depicts": "A symbol representing fish outline.",
       "purpose": "Show fish outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fish",
         "outline"
@@ -4088,8 +3794,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:fitness_outline",
@@ -4099,8 +3805,6 @@
       "depicts": "A symbol representing fitness outline.",
       "purpose": "Show fitness outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fitness",
         "outline"
@@ -4115,8 +3819,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flag_outline",
@@ -4126,8 +3830,6 @@
       "depicts": "A symbol representing flag outline.",
       "purpose": "Show flag outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flag",
         "outline"
@@ -4142,8 +3844,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flame_outline",
@@ -4153,8 +3855,6 @@
       "depicts": "A symbol representing flame outline.",
       "purpose": "Show flame outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flame",
         "outline"
@@ -4169,8 +3869,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flash_off_outline",
@@ -4180,8 +3880,6 @@
       "depicts": "A symbol representing flash off outline.",
       "purpose": "Show flash off outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flash",
         "off",
@@ -4198,8 +3896,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flash_outline",
@@ -4209,8 +3907,6 @@
       "depicts": "A symbol representing flash outline.",
       "purpose": "Show flash outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flash",
         "outline"
@@ -4225,8 +3921,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flashlight_outline",
@@ -4236,8 +3932,6 @@
       "depicts": "A symbol representing flashlight outline.",
       "purpose": "Show flashlight outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flashlight",
         "outline"
@@ -4252,8 +3946,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flask_outline",
@@ -4263,8 +3957,6 @@
       "depicts": "A symbol representing flask outline.",
       "purpose": "Show flask outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flask",
         "outline"
@@ -4279,8 +3971,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:flower_outline",
@@ -4290,8 +3982,6 @@
       "depicts": "A symbol representing flower outline.",
       "purpose": "Show flower outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "flower",
         "outline"
@@ -4306,8 +3996,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:football_outline",
@@ -4317,8 +4007,6 @@
       "depicts": "A symbol representing football outline.",
       "purpose": "Show football outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "football",
         "outline"
@@ -4333,8 +4021,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "ionicons:footsteps_outline",
@@ -4344,8 +4032,6 @@
       "depicts": "A symbol representing footsteps outline.",
       "purpose": "Show footsteps outline as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "footsteps",
         "outline"
@@ -4360,8 +4046,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

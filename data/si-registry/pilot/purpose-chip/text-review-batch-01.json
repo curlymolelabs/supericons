@@ -23,7 +23,7 @@
       "purpose_chip_category_id": "navigation-wayfinding",
       "purpose_chip_category_label": "Navigation & Wayfinding",
       "queue_outcome": "text_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "material:launch",
         "source_group": "pilot",
@@ -47,9 +47,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An outward arrow showing content opening in a new destination.",
-        "intent": "navigate",
-        "domain": "navigation",
-        "confidence": 0.9,
         "synonyms": [
           "open external",
           "new tab",
@@ -88,15 +85,12 @@
         "projection_policy": "future_public_record",
         "is_premium": false,
         "depicts": "An outward arrow showing content opening in a new destination.",
-        "intent": "navigate",
-        "domain": "navigation",
         "review_state": "human_reviewed",
         "evidence": [
           "source_name",
           "taxonomy_seed",
           "svg_payload"
         ],
-        "confidence": 0.94,
         "synonyms": [
           "open external",
           "new tab",
@@ -110,7 +104,7 @@
       "purpose_chip_category_id": "ai-agent-workflows",
       "purpose_chip_category_label": "AI & Agents",
       "queue_outcome": "text_review",
-      "confidence_band": "high",
+      "routing_band": "high",
       "current_candidate_record": {
         "icon_id": "material:workflow",
         "source_group": "pilot",
@@ -134,9 +128,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Workflow shown as a structured process or layered system symbol.",
-        "intent": "inform",
-        "domain": "ai_agents",
-        "confidence": 0.9,
         "synonyms": [
           "workflow",
           "workflow view",
@@ -175,15 +166,12 @@
         "projection_policy": "future_public_record",
         "is_premium": false,
         "depicts": "Connected boxes forming a simple process flow.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "review_state": "human_reviewed",
         "evidence": [
           "source_name",
           "visual_inspection",
           "editorial_judgment"
         ],
-        "confidence": 0.92,
         "synonyms": [
           "agent flow",
           "automation flow",

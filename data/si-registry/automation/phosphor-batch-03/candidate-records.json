@@ -19,8 +19,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing watch.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "watch"
     ],
@@ -28,8 +26,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:wheelchair",
@@ -51,8 +48,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wheelchair.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wheelchair"
     ],
@@ -60,8 +55,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:wind",
@@ -83,8 +77,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wind.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wind"
     ],
@@ -92,8 +84,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:wine",
@@ -118,8 +109,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Wine brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Wine"
     ],
@@ -127,8 +116,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:yarn",
@@ -153,8 +141,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Yarn brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Yarn"
     ],
@@ -162,8 +148,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:align_bottom",
@@ -189,8 +174,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align bottom",
       "alignment control",
@@ -201,8 +184,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:align_top",
@@ -228,8 +210,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align top",
       "alignment control",
@@ -240,8 +220,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "phosphor:arrow_fat_lines_right",
@@ -269,8 +248,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -280,8 +257,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_fat_lines_up",
@@ -308,8 +284,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -318,8 +292,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_fat_right",
@@ -346,8 +319,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -357,8 +328,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_fat_up",
@@ -384,8 +354,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -394,8 +362,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_down",
@@ -421,8 +388,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -431,8 +396,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_down_left",
@@ -460,8 +424,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -471,8 +433,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_down_right",
@@ -500,8 +461,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -511,8 +470,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_left",
@@ -539,8 +497,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -550,8 +506,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_right",
@@ -578,8 +533,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -589,8 +542,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_up",
@@ -616,8 +568,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -626,8 +576,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_up_left",
@@ -655,8 +604,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -666,8 +613,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_line_up_right",
@@ -695,8 +641,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -706,8 +650,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_down",
@@ -733,8 +676,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -743,8 +684,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_down_left",
@@ -772,8 +712,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -783,8 +721,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_down_right",
@@ -812,8 +749,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -823,8 +758,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_in",
@@ -848,8 +782,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow square in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "square",
@@ -858,8 +790,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_left",
@@ -886,8 +817,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -897,8 +826,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_out",
@@ -922,8 +850,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow square out.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "square",
@@ -932,8 +858,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_right",
@@ -960,8 +885,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -971,8 +894,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_up",
@@ -998,8 +920,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -1008,8 +928,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_up_left",
@@ -1037,8 +956,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1048,8 +965,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_square_up_right",
@@ -1077,8 +993,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1088,8 +1002,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_down_left",
@@ -1117,8 +1030,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1128,8 +1039,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_down_right",
@@ -1157,8 +1067,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1168,8 +1076,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_left_down",
@@ -1197,8 +1104,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1208,8 +1113,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_left_up",
@@ -1237,8 +1141,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1248,8 +1150,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_right_down",
@@ -1277,8 +1178,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1288,8 +1187,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_right_up",
@@ -1317,8 +1215,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1328,8 +1224,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_up_left",
@@ -1357,8 +1252,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1368,8 +1261,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:arrow_u_up_right",
@@ -1397,8 +1289,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1408,8 +1298,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:battery_plus",
@@ -1432,8 +1321,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "plus"
@@ -1441,8 +1328,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_plus_vertical",
@@ -1466,8 +1352,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery plus vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "plus",
@@ -1476,8 +1360,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bell_simple_ringing",
@@ -1502,8 +1385,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -1513,8 +1394,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:bell_simple_slash",
@@ -1539,8 +1419,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -1550,8 +1428,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:bell_simple_z",
@@ -1576,8 +1453,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -1587,8 +1462,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:bell_slash",
@@ -1612,8 +1486,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -1622,8 +1494,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:bluetooth_x",
@@ -1646,8 +1517,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bluetooth x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bluetooth",
       "x"
@@ -1655,8 +1524,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:book_bookmark",
@@ -1679,8 +1547,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing book bookmark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "book",
       "bookmark"
@@ -1688,8 +1554,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:book_open",
@@ -1713,8 +1578,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "book file"
@@ -1722,8 +1585,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:book_open_text",
@@ -1748,8 +1610,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "book file",
@@ -1758,8 +1618,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:bookmark_simple",
@@ -1782,8 +1641,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmark simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmark",
       "simple"
@@ -1791,8 +1648,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:box_arrow_down",
@@ -1818,8 +1674,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -1828,8 +1682,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:box_arrow_up",
@@ -1855,8 +1708,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -1865,8 +1716,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:calendar_blank",
@@ -1889,8 +1739,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar blank.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "blank"
@@ -1898,8 +1746,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_dot",
@@ -1922,8 +1769,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar dot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "dot"
@@ -1931,8 +1776,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_dots",
@@ -1955,8 +1799,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar dots.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "dots"
@@ -1964,8 +1806,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_heart",
@@ -1988,8 +1829,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "calendar",
       "heart"
@@ -1997,8 +1836,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_minus",
@@ -2021,8 +1859,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "minus"
@@ -2030,8 +1866,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_slash",
@@ -2054,8 +1889,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "slash"
@@ -2063,8 +1896,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:calendar_star",
@@ -2087,8 +1919,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar star.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "calendar",
       "star"
@@ -2096,8 +1926,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:call_bell",
@@ -2121,8 +1950,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "call status",
@@ -2131,8 +1958,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:camera_plus",
@@ -2155,8 +1981,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera plus.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera",
       "plus"
@@ -2164,8 +1988,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:cell_signal_x",
@@ -2189,8 +2012,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cell signal x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cell",
       "signal",
@@ -2199,8 +2020,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:check_fat",
@@ -2224,8 +2044,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "check status",
@@ -2234,8 +2052,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:check_square_offset",
@@ -2260,8 +2077,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "check status",
@@ -2271,8 +2086,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:circles_three_plus",
@@ -2296,8 +2110,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing circles three plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "circles",
       "three",
@@ -2306,8 +2118,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:clock_afternoon",
@@ -2330,8 +2141,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clock afternoon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clock",
       "afternoon"
@@ -2339,8 +2148,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:clock_clockwise",
@@ -2363,8 +2171,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clock clockwise.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clock",
       "clockwise"
@@ -2372,8 +2178,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:clock_countdown",
@@ -2396,8 +2201,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clock countdown.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clock",
       "countdown"
@@ -2405,8 +2208,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:clock_counter_clockwise",
@@ -2430,8 +2232,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clock counter clockwise.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clock",
       "counter",
@@ -2440,8 +2240,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:cloud_arrow_down",
@@ -2467,8 +2266,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -2477,8 +2274,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:cloud_arrow_up",
@@ -2504,8 +2300,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -2514,8 +2308,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:cloud_warning",
@@ -2539,8 +2332,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "cloud status",
@@ -2549,8 +2340,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:cloud_x",
@@ -2573,8 +2363,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "x"
@@ -2582,8 +2370,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:columns_plus_left",
@@ -2610,8 +2397,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -2621,8 +2406,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:columns_plus_right",
@@ -2649,8 +2433,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -2660,8 +2442,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:copy_simple",
@@ -2684,8 +2465,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copy simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copy",
       "simple"
@@ -2693,8 +2472,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:door_open",
@@ -2718,8 +2496,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "door file"
@@ -2727,8 +2503,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:download_simple",
@@ -2752,8 +2527,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "simple file"
@@ -2761,8 +2534,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:envelope_open",
@@ -2786,8 +2558,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "envelope file"
@@ -2795,8 +2565,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:envelope_simple_open",
@@ -2821,8 +2590,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "envelope file",
@@ -2831,8 +2598,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_png",
@@ -2855,8 +2621,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -2865,8 +2629,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_ppt",
@@ -2889,8 +2652,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -2899,8 +2660,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_py",
@@ -2923,8 +2683,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -2933,8 +2691,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_rs",
@@ -2957,8 +2714,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -2967,8 +2722,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_sql",
@@ -2991,8 +2745,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3001,8 +2753,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_svg",
@@ -3025,8 +2776,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3035,8 +2784,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_text",
@@ -3059,8 +2807,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3069,8 +2815,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_ts",
@@ -3093,8 +2838,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3103,8 +2846,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_tsx",
@@ -3127,8 +2869,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3137,8 +2877,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_txt",
@@ -3161,8 +2900,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3171,8 +2908,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_video",
@@ -3195,8 +2931,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3205,8 +2939,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_vue",
@@ -3229,8 +2962,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3239,8 +2970,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:file_xls",
@@ -3263,8 +2993,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -3273,8 +3001,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:flow_arrow",
@@ -3297,8 +3024,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flow arrow.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flow",
       "arrow"
@@ -3306,8 +3031,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:funnel_simple_x",
@@ -3331,8 +3055,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing funnel simple x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "funnel",
       "simple",
@@ -3341,8 +3063,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:funnel_x",
@@ -3365,8 +3086,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing funnel x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "funnel",
       "x"
@@ -3374,8 +3093,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:globe_simple_x",
@@ -3399,8 +3117,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing globe simple x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "globe",
       "simple",
@@ -3409,8 +3125,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:globe_x",
@@ -3433,8 +3148,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing globe x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "globe",
       "x"
@@ -3442,8 +3155,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:hand_arrow_down",
@@ -3469,8 +3181,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -3479,8 +3189,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:hand_arrow_up",
@@ -3506,8 +3215,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -3516,8 +3223,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:link_break",
@@ -3541,8 +3247,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -3551,8 +3255,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:link_simple",
@@ -3576,8 +3279,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -3586,8 +3287,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:link_simple_break",
@@ -3612,8 +3312,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -3623,8 +3321,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:link_simple_horizontal",
@@ -3649,8 +3346,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -3660,8 +3355,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:link_simple_horizontal_break",
@@ -3687,8 +3381,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -3699,8 +3391,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:magnifying_glass_plus",
@@ -3724,8 +3415,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing magnifying glass plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "magnifying",
       "glass",
@@ -3734,8 +3423,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:map_pin_plus",
@@ -3759,8 +3447,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing map pin plus.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "map",
       "pin",
@@ -3769,8 +3455,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:monitor_arrow_up",
@@ -3796,8 +3481,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -3806,8 +3489,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:music_notes_plus",
@@ -3831,8 +3513,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing music notes plus.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "music",
       "notes",
@@ -3841,8 +3521,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:navigation_arrow",
@@ -3865,8 +3544,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing navigation arrow.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "navigation",
       "arrow"
@@ -3874,8 +3551,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:network_x",
@@ -3898,8 +3574,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing network x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "network",
       "x"
@@ -3907,8 +3581,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:phone_plus",
@@ -3931,8 +3604,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "plus"
@@ -3940,8 +3611,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:phone_x",
@@ -3964,8 +3634,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "x"
@@ -3973,8 +3641,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:plus_circle",
@@ -3997,8 +3664,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus",
       "circle"
@@ -4006,8 +3671,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:plus_minus",
@@ -4030,8 +3694,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus",
       "minus"
@@ -4039,8 +3701,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:plus_square",
@@ -4063,8 +3724,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus",
       "square"
@@ -4072,8 +3731,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:receipt_x",
@@ -4096,8 +3754,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing receipt x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "receipt",
       "x"
@@ -4105,8 +3761,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:rows_plus_bottom",
@@ -4130,8 +3785,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rows plus bottom.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rows",
       "plus",
@@ -4140,8 +3793,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:rows_plus_top",
@@ -4165,8 +3817,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rows plus top.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rows",
       "plus",
@@ -4175,8 +3825,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:seal_check",
@@ -4200,8 +3849,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "seal status",
@@ -4210,8 +3857,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:seal_warning",
@@ -4235,8 +3881,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "seal status",
@@ -4245,8 +3889,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:selection_plus",
@@ -4269,8 +3912,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing selection plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "selection",
       "plus"
@@ -4278,8 +3919,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:shield_slash",
@@ -4303,8 +3943,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -4314,8 +3952,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "phosphor:shopping_bag_open",
@@ -4340,8 +3977,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "shopping file",
@@ -4350,8 +3985,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:smiley_x_eyes",
@@ -4375,8 +4009,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing smiley x eyes.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "smiley",
       "x",
@@ -4385,8 +4017,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:speaker_simple_x",
@@ -4410,8 +4041,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing speaker simple x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "speaker",
       "simple",
@@ -4420,8 +4049,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:speaker_x",
@@ -4444,8 +4072,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing speaker x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "speaker",
       "x"
@@ -4453,8 +4079,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:stack_plus",
@@ -4477,8 +4102,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing stack plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "stack",
       "plus"
@@ -4486,8 +4109,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:tray_arrow_down",
@@ -4513,8 +4135,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4523,8 +4143,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:tray_arrow_up",
@@ -4550,8 +4169,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -4560,8 +4177,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "phosphor:upload_simple",
@@ -4585,8 +4201,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "upload file",
       "simple file"
@@ -4594,8 +4208,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "phosphor:user",
@@ -4617,16 +4230,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_circle",
@@ -4649,8 +4259,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user circle.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "circle"
@@ -4658,8 +4266,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_circle_dashed",
@@ -4683,8 +4290,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user circle dashed.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "circle",
@@ -4693,8 +4298,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_circle_gear",
@@ -4718,8 +4322,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user circle gear.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "circle",
@@ -4728,8 +4330,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_circle_minus",
@@ -4753,8 +4354,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user circle minus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "circle",
@@ -4763,8 +4362,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_focus",
@@ -4787,8 +4385,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user focus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "focus"
@@ -4796,8 +4392,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_gear",
@@ -4820,8 +4415,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user gear.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "gear"
@@ -4829,8 +4422,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_minus",
@@ -4853,8 +4445,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user minus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "minus"
@@ -4862,8 +4452,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_rectangle",
@@ -4886,8 +4475,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user rectangle.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "rectangle"
@@ -4895,8 +4482,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_sound",
@@ -4919,8 +4505,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user sound.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "sound"
@@ -4928,8 +4512,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_square",
@@ -4952,8 +4535,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user square.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "square"
@@ -4961,8 +4542,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:user_switch",
@@ -4985,8 +4565,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user switch.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "switch"
@@ -4994,8 +4572,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:warning_circle",
@@ -5019,8 +4596,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "warning status",
@@ -5029,8 +4604,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:warning_diamond",
@@ -5054,8 +4628,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "warning status",
@@ -5064,8 +4636,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:warning_octagon",
@@ -5089,8 +4660,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "warning status",
@@ -5099,8 +4668,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "phosphor:wifi_x",
@@ -5123,8 +4691,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wifi x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wifi",
       "x"
@@ -5132,8 +4698,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:x_circle",
@@ -5156,8 +4721,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing x circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "x",
       "circle"
@@ -5165,8 +4728,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:x_logo",
@@ -5189,8 +4751,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing x logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "x",
       "logo"
@@ -5198,8 +4758,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:x_square",
@@ -5222,8 +4781,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing x square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "x",
       "square"
@@ -5231,8 +4788,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:acorn",
@@ -5254,16 +4810,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing acorn.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "acorn"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:address_book",
@@ -5286,8 +4839,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing address book.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "address",
       "book"
@@ -5295,8 +4846,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:address_book_tabs",
@@ -5320,8 +4870,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing address book tabs.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "address",
       "book",
@@ -5330,8 +4878,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:air_traffic_control",
@@ -5355,8 +4902,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing air traffic control.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "air",
       "traffic",
@@ -5365,8 +4910,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:airplane_in_flight",
@@ -5390,8 +4934,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane in flight.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane",
       "in",
@@ -5400,8 +4942,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:airplane_landing",
@@ -5424,8 +4965,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane landing.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane",
       "landing"
@@ -5433,8 +4972,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:airplane_takeoff",
@@ -5457,8 +4995,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane takeoff.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane",
       "takeoff"
@@ -5466,8 +5002,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:airplane_taxiing",
@@ -5490,8 +5025,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane taxiing.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane",
       "taxiing"
@@ -5499,8 +5032,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:airplane_tilt",
@@ -5523,8 +5055,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane tilt.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane",
       "tilt"
@@ -5532,8 +5062,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:alarm",
@@ -5555,16 +5084,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing alarm.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "alarm"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:alien",
@@ -5586,16 +5112,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing alien.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "alien"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:amazon_logo",
@@ -5618,8 +5141,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing amazon logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "amazon",
       "logo"
@@ -5627,8 +5148,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:ambulance",
@@ -5650,16 +5170,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ambulance.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ambulance"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:anchor_simple",
@@ -5682,8 +5199,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing anchor simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "anchor",
       "simple"
@@ -5691,8 +5206,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:android_logo",
@@ -5715,8 +5229,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing android logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "android",
       "logo"
@@ -5724,8 +5236,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:angle",
@@ -5747,16 +5258,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing angle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "angle"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:angular_logo",
@@ -5779,8 +5287,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing angular logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "angular",
       "logo"
@@ -5788,8 +5294,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:aperture",
@@ -5811,16 +5316,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing aperture.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "aperture"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:app_store_logo",
@@ -5844,8 +5346,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing app store logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "app",
       "store",
@@ -5854,8 +5354,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:app_window",
@@ -5878,8 +5377,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing app window.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "app",
       "window"
@@ -5887,8 +5384,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:apple_logo",
@@ -5911,8 +5407,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing apple logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "apple",
       "logo"
@@ -5920,8 +5414,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:apple_podcasts_logo",
@@ -5945,8 +5438,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing apple podcasts logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "apple",
       "podcasts",
@@ -5955,8 +5446,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:approximate_equals",
@@ -5979,8 +5469,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing approximate equals.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "approximate",
       "equals"
@@ -5988,8 +5476,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:armchair",
@@ -6011,16 +5498,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing armchair.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "armchair"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_clockwise",
@@ -6043,8 +5527,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows clockwise.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "clockwise"
@@ -6052,8 +5534,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_counter_clockwise",
@@ -6077,8 +5558,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows counter clockwise.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "counter",
@@ -6087,8 +5566,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_horizontal",
@@ -6111,8 +5589,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "horizontal"
@@ -6120,8 +5596,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_in",
@@ -6144,8 +5619,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "in"
@@ -6153,8 +5626,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_in_cardinal",
@@ -6178,8 +5650,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows in cardinal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "in",
@@ -6188,8 +5658,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_in_line_horizontal",
@@ -6214,8 +5683,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows in line horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "in",
@@ -6225,8 +5692,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_in_line_vertical",
@@ -6251,8 +5717,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows in line vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "in",
@@ -6262,8 +5726,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_in_simple",
@@ -6287,8 +5750,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows in simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "in",
@@ -6297,8 +5758,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_merge",
@@ -6321,8 +5781,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows merge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "merge"
@@ -6330,8 +5788,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_out",
@@ -6354,8 +5811,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows out.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "out"
@@ -6363,8 +5818,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_out_cardinal",
@@ -6388,8 +5842,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows out cardinal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "out",
@@ -6398,8 +5850,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_out_line_horizontal",
@@ -6424,8 +5875,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows out line horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "out",
@@ -6435,8 +5884,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_out_line_vertical",
@@ -6461,8 +5909,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows out line vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "out",
@@ -6472,8 +5918,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_out_simple",
@@ -6497,8 +5942,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows out simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "out",
@@ -6507,8 +5950,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_split",
@@ -6531,8 +5973,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows split.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "split"
@@ -6540,8 +5980,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:arrows_vertical",
@@ -6564,8 +6003,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "vertical"
@@ -6573,8 +6010,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:article",
@@ -6596,16 +6032,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing article.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "article"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:article_medium",
@@ -6628,8 +6061,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing article medium.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "article",
       "medium"
@@ -6637,8 +6068,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:article_ny_times",
@@ -6662,8 +6092,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing article ny times.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "article",
       "ny",
@@ -6672,8 +6100,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:asclepius",
@@ -6695,16 +6122,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing asclepius.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "asclepius"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:asterisk_simple",
@@ -6727,8 +6151,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing asterisk simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "asterisk",
       "simple"
@@ -6736,8 +6158,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:atom",
@@ -6759,16 +6180,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing atom.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "atom"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:avocado",
@@ -6790,16 +6208,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing avocado.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "avocado"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:backspace",
@@ -6821,16 +6236,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing backspace.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "backspace"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bag",
@@ -6852,16 +6264,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bag"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bag_simple",
@@ -6884,8 +6293,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bag simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bag",
       "simple"
@@ -6893,8 +6300,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:balloon",
@@ -6916,16 +6322,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing balloon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "balloon"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bandaids",
@@ -6947,16 +6350,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bandaids.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bandaids"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:barn",
@@ -6978,16 +6378,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing barn.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "barn"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:barricade",
@@ -7009,16 +6406,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing barricade.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "barricade"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:baseball_cap",
@@ -7041,8 +6435,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing baseball cap.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "baseball",
       "cap"
@@ -7050,8 +6442,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:baseball_helmet",
@@ -7074,8 +6465,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing baseball helmet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "baseball",
       "helmet"
@@ -7083,8 +6472,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bathtub",
@@ -7106,16 +6494,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bathtub.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bathtub"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_charging_vertical",
@@ -7139,8 +6524,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery charging vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "charging",
@@ -7149,8 +6532,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_empty",
@@ -7173,8 +6555,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery empty.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "empty"
@@ -7182,8 +6562,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_full",
@@ -7206,8 +6585,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery full.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "full"
@@ -7215,8 +6592,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_high",
@@ -7239,8 +6615,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery high.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "high"
@@ -7248,8 +6622,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_low",
@@ -7272,8 +6645,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery low.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "low"
@@ -7281,8 +6652,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_medium",
@@ -7305,8 +6675,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery medium.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "medium"
@@ -7314,8 +6682,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_vertical_empty",
@@ -7339,8 +6706,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery vertical empty.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "vertical",
@@ -7349,8 +6714,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_vertical_full",
@@ -7374,8 +6738,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery vertical full.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "vertical",
@@ -7384,8 +6746,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_vertical_high",
@@ -7409,8 +6770,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery vertical high.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "vertical",
@@ -7419,8 +6778,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_vertical_low",
@@ -7444,8 +6802,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery vertical low.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "vertical",
@@ -7454,8 +6810,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:battery_vertical_medium",
@@ -7479,8 +6834,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery vertical medium.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "vertical",
@@ -7489,8 +6842,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:beach_ball",
@@ -7513,8 +6865,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing beach ball.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "beach",
       "ball"
@@ -7522,8 +6872,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:beanie",
@@ -7545,16 +6894,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing beanie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "beanie"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:beer_bottle",
@@ -7577,8 +6923,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing beer bottle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "beer",
       "bottle"
@@ -7586,8 +6930,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:beer_stein",
@@ -7610,8 +6953,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing beer stein.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "beer",
       "stein"
@@ -7619,8 +6960,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:behance_logo",
@@ -7643,8 +6983,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing behance logo.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "behance",
       "logo"
@@ -7652,8 +6990,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:belt",
@@ -7675,16 +7012,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing belt.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "belt"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bezier_curve",
@@ -7707,8 +7041,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bezier curve.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bezier",
       "curve"
@@ -7716,8 +7048,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bicycle",
@@ -7739,16 +7070,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bicycle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bicycle"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:binoculars",
@@ -7770,16 +7098,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing binoculars.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "binoculars"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:biohazard",
@@ -7801,16 +7126,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing biohazard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "biohazard"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bluetooth_connected",
@@ -7833,8 +7155,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bluetooth connected.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bluetooth",
       "connected"
@@ -7842,8 +7162,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bluetooth_slash",
@@ -7866,8 +7185,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bluetooth slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bluetooth",
       "slash"
@@ -7875,8 +7192,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bookmarks_simple",
@@ -7899,8 +7215,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmarks simple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmarks",
       "simple"
@@ -7908,8 +7222,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:books",
@@ -7931,16 +7244,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing books.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "books"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:boot",
@@ -7962,16 +7272,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing boot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "boot"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:boules",
@@ -7993,16 +7300,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing boules.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "boules"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bounding_box",
@@ -8025,8 +7329,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bounding box.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bounding",
       "box"
@@ -8034,8 +7336,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bowl_food",
@@ -8058,8 +7359,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bowl food.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bowl",
       "food"
@@ -8067,8 +7366,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bowl_steam",
@@ -8091,8 +7389,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bowl steam.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bowl",
       "steam"
@@ -8100,8 +7396,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:bowling_ball",
@@ -8124,8 +7419,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bowling ball.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bowling",
       "ball"
@@ -8133,8 +7426,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:boxing_glove",
@@ -8157,8 +7449,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing boxing glove.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "boxing",
       "glove"
@@ -8166,8 +7456,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:brackets_curly",
@@ -8190,8 +7479,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brackets curly.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brackets",
       "curly"
@@ -8199,8 +7486,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:brackets_round",
@@ -8223,8 +7509,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brackets round.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brackets",
       "round"
@@ -8232,8 +7516,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "phosphor:brackets_square",
@@ -8256,8 +7539,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brackets square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brackets",
       "square"
@@ -8265,7 +7546,6 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   }
 ]

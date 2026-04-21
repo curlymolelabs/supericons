@@ -10,8 +10,6 @@
       "depicts": "A symbol representing bookmark plus.",
       "purpose": "Show bookmark plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "plus"
@@ -26,8 +24,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:bookmark_x",
@@ -37,8 +35,6 @@
       "depicts": "A symbol representing bookmark x.",
       "purpose": "Show bookmark x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "x"
@@ -53,8 +49,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_play",
@@ -64,8 +60,6 @@
       "depicts": "A file paired with a play cue.",
       "purpose": "Show playing, previewing, or opening a playable media file.",
       "category": "media_playback",
-      "intent": "act",
-      "domain": "media",
       "semantic_tags": [
         "play file",
         "media file",
@@ -85,8 +79,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_plus",
@@ -96,8 +90,6 @@
       "depicts": "A file paired with an add cue.",
       "purpose": "Show creating or adding a new file or document.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new file",
         "create file",
@@ -117,8 +109,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_x",
@@ -128,8 +120,6 @@
       "depicts": "A file paired with a remove cue.",
       "purpose": "Show removing, clearing, or rejecting a file.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove file",
         "delete file",
@@ -149,8 +139,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:collection_play",
@@ -160,8 +150,6 @@
       "depicts": "A symbol representing collection play.",
       "purpose": "Show collection play as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "collection",
         "play"
@@ -176,8 +164,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_bar_graph",
@@ -187,8 +175,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "bar",
@@ -206,8 +192,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_binary",
@@ -217,8 +203,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "binary"
@@ -234,8 +218,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_break",
@@ -245,8 +229,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "break"
@@ -262,8 +244,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_diff",
@@ -273,8 +255,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "diff"
@@ -290,8 +270,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark",
@@ -301,8 +281,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark"
@@ -318,8 +296,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_bar_graph",
@@ -329,8 +307,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -350,8 +326,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_binary",
@@ -361,8 +337,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -380,8 +354,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_break",
@@ -391,8 +365,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -410,8 +382,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_diff",
@@ -421,8 +393,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -440,8 +410,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_easel",
@@ -451,8 +421,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -470,8 +438,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_excel",
@@ -481,8 +449,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -500,8 +466,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:file_earmark_font",
@@ -511,8 +477,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "earmark",
@@ -530,8 +494,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:folder_symlink",
@@ -541,8 +505,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "symlink"
@@ -558,8 +520,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:google_play",
@@ -569,8 +531,6 @@
       "depicts": "A symbol representing google play.",
       "purpose": "Show google play as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "google",
         "play"
@@ -585,8 +545,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:pause_btn",
@@ -596,8 +556,6 @@
       "depicts": "A symbol representing pause btn.",
       "purpose": "Show pause btn as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pause",
         "btn"
@@ -612,8 +570,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:play_btn",
@@ -623,8 +581,6 @@
       "depicts": "A symbol representing play btn.",
       "purpose": "Show play btn as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "play",
         "btn"
@@ -639,8 +595,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:upc_scan",
@@ -650,8 +606,6 @@
       "depicts": "A symbol representing upc scan.",
       "purpose": "Show upc scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upc",
         "scan"
@@ -666,8 +620,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

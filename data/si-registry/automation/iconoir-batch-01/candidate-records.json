@@ -23,8 +23,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "next",
       "continue",
@@ -35,8 +33,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:calendar_arrow_down",
@@ -62,8 +59,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -73,8 +68,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:calendar_arrow_up",
@@ -100,8 +94,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -111,8 +103,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:calendar_check",
@@ -136,8 +127,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "calendar status",
@@ -147,8 +136,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_check",
@@ -174,8 +162,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -186,8 +172,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_script_plus",
@@ -213,8 +198,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -225,8 +208,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_search",
@@ -252,8 +234,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A search-focused symbol showing structured or scoped search.",
-    "intent": "discover",
-    "domain": "developer_tools",
     "synonyms": [
       "search records",
       "query database",
@@ -264,8 +244,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_settings",
@@ -291,8 +270,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -303,8 +280,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:filter_list",
@@ -330,8 +306,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A list or funnel control for narrowing visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "filter results",
       "narrow list",
@@ -342,8 +316,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:filter_list_circle",
@@ -369,8 +342,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "filter results",
       "refine list",
@@ -381,8 +352,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:folder_plus",
@@ -408,8 +378,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A folder paired with an add cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "create folder",
       "new directory",
@@ -420,8 +388,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:folder_warning",
@@ -447,8 +414,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A folder paired with a warning cue.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "folder alert",
       "warning folder",
@@ -459,8 +424,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:forward_message",
@@ -486,8 +450,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "next",
       "continue",
@@ -498,8 +460,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_shield",
@@ -525,8 +486,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -537,8 +496,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_user",
@@ -564,8 +522,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -576,8 +532,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key_back",
@@ -603,8 +558,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "back button",
       "previous screen",
@@ -615,8 +568,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key_plus",
@@ -642,8 +594,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -654,8 +604,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mail_open",
@@ -681,8 +630,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An opened envelope for viewed or opened mail.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "read email",
       "opened mail",
@@ -693,8 +640,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:scan_qr_code",
@@ -719,8 +665,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "scan tool",
@@ -731,8 +675,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_alert",
@@ -756,8 +699,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "shield status",
@@ -767,8 +708,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_check",
@@ -794,8 +734,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shield outline with a checkmark.",
-    "intent": "confirm",
-    "domain": "security",
     "synonyms": [
       "verified security",
       "trusted",
@@ -806,8 +744,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_eye",
@@ -833,8 +770,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -845,8 +780,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_search",
@@ -872,8 +806,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -884,8 +816,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_secure",
@@ -911,8 +842,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -923,8 +852,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:archive",
@@ -950,8 +878,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Archived state shown as a compact interface mark.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "archived",
       "archived item",
@@ -962,8 +888,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:area_search",
@@ -989,8 +914,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -1001,8 +924,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down",
@@ -1028,8 +950,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing down.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go down",
       "down arrow",
@@ -1040,8 +960,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_circle",
@@ -1067,8 +986,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing down.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go down",
       "down arrow",
@@ -1079,8 +996,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_left",
@@ -1107,8 +1023,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1119,8 +1033,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_left_circle",
@@ -1148,8 +1061,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1160,8 +1071,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_left_square",
@@ -1189,8 +1099,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1201,8 +1109,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_right",
@@ -1229,8 +1136,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1241,8 +1146,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_right_circle",
@@ -1270,8 +1174,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1282,8 +1184,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_right_square",
@@ -1311,8 +1212,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1323,8 +1222,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_left",
@@ -1350,8 +1248,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing left.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go left",
       "left arrow",
@@ -1362,8 +1258,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_left_circle",
@@ -1389,8 +1284,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing left.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go left",
       "left arrow",
@@ -1401,8 +1294,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_right",
@@ -1428,8 +1320,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing right.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go right",
       "right arrow",
@@ -1440,8 +1330,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_right_circle",
@@ -1467,8 +1356,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing right.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go right",
       "right arrow",
@@ -1479,8 +1366,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up",
@@ -1506,8 +1392,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing up.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go up",
       "up arrow",
@@ -1518,8 +1402,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_circle",
@@ -1545,8 +1428,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing up.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go up",
       "up arrow",
@@ -1557,8 +1438,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_left",
@@ -1585,8 +1465,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1597,8 +1475,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_left_circle",
@@ -1626,8 +1503,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1638,8 +1513,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_left_square",
@@ -1667,8 +1541,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -1679,8 +1551,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_right",
@@ -1707,8 +1578,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1719,8 +1588,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_right_circle",
@@ -1748,8 +1616,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1760,8 +1626,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_right_square",
@@ -1789,8 +1654,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1801,8 +1664,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:badge_check",
@@ -1826,8 +1688,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "badge status",
@@ -1837,8 +1697,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:battery_warning",
@@ -1862,8 +1721,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "battery status",
@@ -1873,8 +1730,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bell",
@@ -1900,8 +1756,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A bell symbol used for alerts and notifications.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "alerts",
       "notification center",
@@ -1912,8 +1766,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bell_off",
@@ -1937,8 +1790,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -1948,8 +1799,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:book_lock",
@@ -1975,8 +1825,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -1987,8 +1835,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bookmark",
@@ -2014,8 +1861,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Saved state shown as a compact interface mark.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "saved",
       "saved item",
@@ -2026,8 +1871,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bubble_search",
@@ -2053,8 +1897,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -2065,8 +1907,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:calendar",
@@ -2088,8 +1929,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar"
     ],
@@ -2097,8 +1936,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:card_lock",
@@ -2124,8 +1962,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -2136,8 +1972,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:check",
@@ -2163,8 +1998,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A check mark used for confirmation or completion.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "success",
       "completed",
@@ -2175,8 +2008,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:check_circle",
@@ -2202,8 +2034,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A check mark used for confirmation or completion.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "success",
       "completed",
@@ -2214,8 +2044,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:check_square",
@@ -2239,8 +2068,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "check status",
@@ -2250,8 +2077,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:clipboard_check",
@@ -2277,8 +2103,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Clipboard Complete shown with a completion check mark.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "clipboard done",
       "completed",
@@ -2289,8 +2113,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:clock",
@@ -2316,8 +2139,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A clock face used for time or waiting.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "pending time",
       "scheduled",
@@ -2328,8 +2149,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cloud_check",
@@ -2355,8 +2175,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A cloud with a check mark showing successful cloud state.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "cloud backup complete",
       "synced to cloud",
@@ -2367,8 +2185,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:code",
@@ -2394,8 +2211,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Code or markup symbols for programming content.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "programming",
       "source code",
@@ -2406,8 +2221,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:color_filter",
@@ -2433,8 +2247,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A filter cue paired with color-oriented meaning.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "filter colors",
       "color refinement",
@@ -2445,8 +2257,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:copy",
@@ -2468,8 +2279,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copy.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copy"
     ],
@@ -2477,8 +2286,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database",
@@ -2504,8 +2312,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2516,8 +2322,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_backup",
@@ -2543,8 +2348,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2555,8 +2358,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_export",
@@ -2582,8 +2384,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2594,8 +2394,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_monitor",
@@ -2621,8 +2420,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2633,8 +2430,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_restore",
@@ -2660,8 +2456,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2672,8 +2466,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_script",
@@ -2699,8 +2492,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2711,8 +2502,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_script_minus",
@@ -2738,8 +2528,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2750,8 +2538,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_star",
@@ -2777,8 +2564,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2789,8 +2574,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_stats",
@@ -2816,8 +2600,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2828,8 +2610,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_tag",
@@ -2855,8 +2636,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2867,8 +2646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:database_xmark",
@@ -2894,8 +2672,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A structured data symbol for stored records or organized information.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "data store",
       "structured storage",
@@ -2906,8 +2682,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:download",
@@ -2933,8 +2708,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward transfer or save action.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download",
       "save locally",
@@ -2945,8 +2718,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:drone_refresh",
@@ -2972,8 +2744,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "reload",
       "refresh view",
@@ -2984,8 +2754,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:edit",
@@ -3011,8 +2780,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pencil or editing cue.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "edit item",
       "modify",
@@ -3023,8 +2790,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:eye",
@@ -3050,8 +2816,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -3062,8 +2826,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:eye_closed",
@@ -3089,8 +2852,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -3101,8 +2862,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:filter",
@@ -3128,8 +2888,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "filter results",
       "refine list",
@@ -3140,8 +2898,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:filter_alt",
@@ -3167,8 +2924,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A funnel-shaped control used to narrow visible results.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "filter results",
       "refine list",
@@ -3179,8 +2934,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:fingerprint_lock_circle",
@@ -3206,8 +2960,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -3218,8 +2970,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:folder",
@@ -3245,8 +2996,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A generic folder or directory symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "directory",
       "file folder",
@@ -3257,8 +3006,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:folder_minus",
@@ -3284,8 +3032,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A folder paired with a minus or remove cue.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "synonyms": [
       "remove folder",
       "folder minus",
@@ -3296,8 +3042,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:forward",
@@ -3323,8 +3068,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing navigation arrow.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3335,8 +3078,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:forward_15_seconds",
@@ -3362,8 +3104,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-pointing arrow with a forward stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "next",
       "continue",
@@ -3374,8 +3114,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:google_home",
@@ -3401,8 +3140,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3413,8 +3150,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home",
@@ -3440,8 +3176,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3452,8 +3186,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_alt",
@@ -3479,8 +3212,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3491,8 +3222,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_alt_slim",
@@ -3518,8 +3248,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3530,8 +3258,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_alt_slim_horiz",
@@ -3557,8 +3284,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3569,8 +3294,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_hospital",
@@ -3596,8 +3320,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3608,8 +3330,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_sale",
@@ -3635,8 +3356,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3647,8 +3366,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_simple",
@@ -3674,8 +3392,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3686,8 +3402,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_simple_door",
@@ -3713,8 +3428,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3725,8 +3438,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_table",
@@ -3752,8 +3464,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3764,8 +3474,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_temperature_in",
@@ -3791,8 +3500,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3803,8 +3510,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:home_temperature_out",
@@ -3830,8 +3536,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -3842,8 +3546,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:info_circle",
@@ -3869,8 +3572,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A circled information symbol.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "info",
       "more information",
@@ -3881,8 +3582,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:input_search",
@@ -3908,8 +3608,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -3920,8 +3618,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key",
@@ -3947,8 +3644,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -3959,8 +3654,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key_command",
@@ -3986,8 +3680,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -3998,8 +3690,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key_minus",
@@ -4025,8 +3716,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -4037,8 +3726,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:key_xmark",
@@ -4064,8 +3752,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -4076,8 +3762,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:layout_left",
@@ -4103,8 +3788,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A layout with a strong left-side panel.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "left sidebar layout",
       "left panel view",
@@ -4115,8 +3798,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:layout_right",
@@ -4142,8 +3824,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A layout with a strong right-side panel.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "right sidebar layout",
       "right panel view",
@@ -4154,8 +3834,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:link",
@@ -4181,8 +3860,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A linked-chain symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked",
       "hyperlink",
@@ -4193,8 +3870,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:list",
@@ -4217,8 +3893,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -4228,8 +3902,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:lock",
@@ -4255,8 +3928,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -4267,8 +3938,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:lock_slash",
@@ -4294,8 +3964,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -4306,8 +3974,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:lock_square",
@@ -4333,8 +4000,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -4345,8 +4010,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mac_control_key",
@@ -4372,8 +4036,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -4384,8 +4046,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mac_option_key",
@@ -4411,8 +4072,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -4423,8 +4082,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mail",
@@ -4450,8 +4108,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An envelope for email or message delivery.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "email",
       "inbox",
@@ -4462,8 +4118,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:maps_turn_back",
@@ -4489,8 +4144,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-pointing arrow with a return-like stem.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "back button",
       "previous screen",
@@ -4501,8 +4154,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:menu",
@@ -4528,8 +4180,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stacked-line menu or drawer entry icon.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "main menu",
       "navigation drawer",
@@ -4540,8 +4190,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:message",
@@ -4564,8 +4213,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -4576,8 +4223,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:package_lock",
@@ -4603,8 +4249,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -4615,8 +4259,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:page_search",
@@ -4642,8 +4285,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -4654,8 +4295,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:pause",
@@ -4681,8 +4321,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pause control with two vertical bars.",
-    "intent": "control",
-    "domain": "media",
     "synonyms": [
       "pause playback",
       "pause media",
@@ -4693,8 +4331,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:play",
@@ -4720,8 +4357,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A play triangle for starting playback.",
-    "intent": "act",
-    "domain": "media",
     "synonyms": [
       "play media",
       "start playback",
@@ -4732,8 +4367,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:plus",
@@ -4755,8 +4389,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus"
     ],
@@ -4764,8 +4396,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:qr_code",
@@ -4789,8 +4420,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "qr tool",
@@ -4800,8 +4429,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:refresh",
@@ -4827,8 +4455,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "reload",
       "refresh view",
@@ -4839,8 +4465,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:refresh_circle",
@@ -4866,8 +4491,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "reload",
       "refresh view",
@@ -4878,8 +4501,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:refresh_double",
@@ -4905,8 +4527,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Two curved arrows forming a circular refresh loop.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "reload",
       "refresh view",
@@ -4917,8 +4537,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:search",
@@ -4944,8 +4563,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -4956,8 +4573,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:search_engine",
@@ -4983,8 +4599,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -4995,8 +4609,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:search_window",
@@ -5022,8 +4635,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A magnifying glass.",
-    "intent": "discover",
-    "domain": "ui_shell",
     "synonyms": [
       "find",
       "search content",
@@ -5034,8 +4645,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:send",
@@ -5061,8 +4671,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A paper-plane style arrow used for outbound sending.",
-    "intent": "act",
-    "domain": "communication",
     "synonyms": [
       "send message",
       "submit",
@@ -5073,8 +4681,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:server",
@@ -5100,8 +4707,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stacked server or infrastructure unit.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "backend server",
       "hosted service",
@@ -5112,8 +4717,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:settings",
@@ -5139,8 +4743,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A gear with a center hub.",
-    "intent": "configure",
-    "domain": "ui_shell",
     "synonyms": [
       "preferences",
       "config",
@@ -5151,8 +4753,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield",
@@ -5178,8 +4779,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shield used for protection, trust, or guarded access.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "secure shield",
       "protected state",
@@ -5190,8 +4789,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_minus",
@@ -5215,8 +4813,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -5227,8 +4823,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shield_question",
@@ -5252,8 +4847,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -5264,8 +4857,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shopping_bag_check",
@@ -5290,8 +4882,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "shopping status",
@@ -5302,8 +4892,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:sort",
@@ -5329,8 +4918,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A control that changes ordering or ranking of items.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "sort list",
       "change order",
@@ -5341,8 +4928,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:sort_down",
@@ -5368,8 +4954,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A control that changes ordering or ranking of items.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "sort list",
       "change order",
@@ -5380,8 +4964,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:sort_up",
@@ -5407,8 +4990,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A control that changes ordering or ranking of items.",
-    "intent": "refine",
-    "domain": "ui_controls",
     "synonyms": [
       "sort list",
       "change order",
@@ -5419,8 +5000,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:trash",
@@ -5446,8 +5026,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A trash bin used for discard or deletion.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "synonyms": [
       "delete item",
       "remove",
@@ -5458,8 +5036,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:undo",
@@ -5485,8 +5062,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A curved arrow returning to a previous state.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "revert action",
       "go back one step",
@@ -5497,8 +5072,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:upload",
@@ -5524,8 +5098,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward transfer or submit action.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "upload",
       "send up",
@@ -5536,8 +5108,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:user_star",
@@ -5563,8 +5134,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A user silhouette paired with a specific account action or status cue.",
-    "intent": "control",
-    "domain": "communication",
     "synonyms": [
       "user star",
       "user action",
@@ -5575,8 +5144,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:voice_lock_circle",
@@ -5602,8 +5170,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -5614,8 +5180,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:x",
@@ -5642,8 +5207,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official X social platform brand mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "X",
       "X platform",
@@ -5653,8 +5216,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:folder_settings",
@@ -5677,8 +5239,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "folder",
       "folder folder",
@@ -5687,8 +5247,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:message_alert",
@@ -5712,8 +5271,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "message status",
@@ -5722,8 +5279,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:send_mail",
@@ -5747,8 +5303,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "act",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -5759,8 +5313,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:user_scan",
@@ -5783,8 +5336,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user scan.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "scan"
@@ -5792,8 +5343,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrows_up_from_line",
@@ -5820,8 +5370,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5831,8 +5379,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:border_left",
@@ -5858,8 +5405,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -5870,8 +5415,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:border_right",
@@ -5897,8 +5441,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -5909,8 +5451,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bounce_left",
@@ -5936,8 +5477,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -5948,8 +5487,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bounce_right",
@@ -5975,8 +5513,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -5987,8 +5523,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:graph_down",
@@ -6013,8 +5548,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6024,8 +5557,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:graph_up",
@@ -6050,8 +5582,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -6061,8 +5591,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:redo",
@@ -6088,8 +5617,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A curved arrow replaying a previous state change.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "redo last change",
       "reapply action",
@@ -6100,8 +5627,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:thumbs_down",
@@ -6126,8 +5652,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6137,8 +5661,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:thumbs_up",
@@ -6163,8 +5686,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -6174,8 +5695,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:transition_left",
@@ -6201,8 +5721,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -6213,8 +5731,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:transition_right",
@@ -6240,8 +5757,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -6252,8 +5767,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:align_left",
@@ -6279,8 +5793,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align left",
       "alignment control",
@@ -6291,8 +5803,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:align_right",
@@ -6318,8 +5829,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align right",
       "alignment control",
@@ -6330,8 +5839,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:arrow_archery",
@@ -6354,8 +5862,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow archery.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "archery"
@@ -6363,8 +5869,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_down_tag",
@@ -6390,8 +5895,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6400,8 +5903,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:arrow_enlarge_tag",
@@ -6425,8 +5927,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow enlarge tag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "enlarge",
@@ -6435,8 +5935,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_left_tag",
@@ -6463,8 +5962,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -6474,8 +5971,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:arrow_reduce_tag",
@@ -6499,8 +5995,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow reduce tag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "reduce",
@@ -6509,8 +6003,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_right_tag",
@@ -6537,8 +6030,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -6548,8 +6039,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:arrow_separate",
@@ -6572,8 +6062,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow separate.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "separate"
@@ -6581,8 +6069,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_separate_vertical",
@@ -6606,8 +6093,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow separate vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "separate",
@@ -6616,8 +6101,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_union",
@@ -6640,8 +6124,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow union.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "union"
@@ -6649,8 +6131,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_union_vertical",
@@ -6674,8 +6155,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow union vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "union",
@@ -6684,8 +6163,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:arrow_up_tag",
@@ -6711,8 +6189,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -6721,8 +6197,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:bus_stop",
@@ -6745,8 +6220,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bus stop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bus",
       "stop"
@@ -6754,8 +6227,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:chat_bubble_check",
@@ -6780,8 +6252,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "chat status",
@@ -6791,8 +6261,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:chat_bubble_warning",
@@ -6817,8 +6286,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "chat status",
@@ -6828,8 +6295,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:chat_plus_in",
@@ -6853,8 +6319,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat plus in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "plus",
@@ -6863,8 +6327,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:clock_rotate_right",
@@ -6891,8 +6354,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -6902,8 +6363,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:code_brackets",
@@ -6927,8 +6387,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "code tool",
@@ -6937,8 +6395,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:code_brackets_square",
@@ -6963,8 +6420,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "code tool",
@@ -6974,8 +6429,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:cube_scan",
@@ -6998,8 +6452,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cube scan.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cube",
       "scan"
@@ -7007,8 +6459,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:data_transfer_check",
@@ -7033,8 +6484,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "data transfer check",
       "data control",
@@ -7044,8 +6493,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:data_transfer_warning",
@@ -7070,8 +6518,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "data transfer warning",
       "data control",
@@ -7081,8 +6527,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:dot_arrow_down",
@@ -7108,8 +6553,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -7118,8 +6561,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:dot_arrow_left",
@@ -7146,8 +6588,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -7157,8 +6597,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:dot_arrow_right",
@@ -7185,8 +6624,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -7196,8 +6633,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:dot_arrow_up",
@@ -7223,8 +6659,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -7233,8 +6667,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_down",
@@ -7260,8 +6693,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -7270,8 +6701,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_down_square",
@@ -7298,8 +6728,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -7308,8 +6736,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_left",
@@ -7336,8 +6763,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -7347,8 +6772,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_left_square",
@@ -7376,8 +6800,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -7387,8 +6809,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_right",
@@ -7415,8 +6836,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -7426,8 +6845,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_right_square",
@@ -7455,8 +6873,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -7466,8 +6882,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_up",
@@ -7493,8 +6908,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -7503,8 +6916,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:file_not_found",
@@ -7528,8 +6940,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -7539,8 +6949,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:fingerprint_scan",
@@ -7563,8 +6972,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fingerprint scan.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fingerprint",
       "scan"
@@ -7572,8 +6979,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:iris_scan",
@@ -7596,8 +7002,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing iris scan.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "iris",
       "scan"
@@ -7605,8 +7009,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:mail_in",
@@ -7630,8 +7033,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -7642,8 +7043,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:mail_out",
@@ -7667,8 +7067,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -7679,8 +7077,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:media_image_folder",
@@ -7704,8 +7101,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "folder",
       "media folder",
@@ -7715,8 +7110,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:media_video_folder",
@@ -7740,8 +7134,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "folder",
       "media folder",
@@ -7751,8 +7143,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:message_text",
@@ -7776,8 +7167,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -7788,8 +7177,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:pause_window",
@@ -7812,8 +7200,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pause window.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pause",
       "window"
@@ -7821,8 +7207,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:playlist_play",
@@ -7845,8 +7230,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing playlist play.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "playlist",
       "play"
@@ -7854,8 +7237,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:quote_message",
@@ -7879,8 +7261,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -7891,8 +7271,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:reply_to_message",
@@ -7917,8 +7296,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message or mail symbol used for communication and message flow.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message",
       "mail",
@@ -7930,8 +7307,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:scan_barcode",
@@ -7954,8 +7330,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing scan barcode.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "scan",
       "barcode"
@@ -7963,8 +7337,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:server_connection",
@@ -7988,8 +7361,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "server control",
       "server tool",
@@ -7998,8 +7369,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:shopping_code",
@@ -8023,8 +7393,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "shopping tool",
@@ -8033,8 +7401,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:shopping_code_xmark",
@@ -8059,8 +7426,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "shopping tool",
@@ -8070,8 +7435,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "iconoir:voice_scan",
@@ -8094,8 +7458,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing voice scan.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "voice",
       "scan"
@@ -8103,7 +7465,6 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   }
 ]

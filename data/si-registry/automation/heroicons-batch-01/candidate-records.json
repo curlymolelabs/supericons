@@ -23,8 +23,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An open folder indicating entry into a container.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open folder",
       "browse folder",
@@ -35,8 +33,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:folder_plus",
@@ -62,8 +59,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A folder paired with an add cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "create folder",
       "new directory",
@@ -74,8 +69,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:lock_open",
@@ -101,8 +95,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An open lock showing access is available.",
-    "intent": "confirm",
-    "domain": "security",
     "synonyms": [
       "open lock",
       "unlocked",
@@ -113,8 +105,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:shield_check",
@@ -140,8 +131,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shield outline with a checkmark.",
-    "intent": "confirm",
-    "domain": "security",
     "synonyms": [
       "verified security",
       "trusted",
@@ -152,8 +141,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down",
@@ -179,8 +167,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing down.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go down",
       "down arrow",
@@ -191,8 +177,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_circle",
@@ -218,8 +203,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing down.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go down",
       "down arrow",
@@ -230,8 +213,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_left",
@@ -258,8 +240,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -270,8 +250,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_right",
@@ -298,8 +277,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -310,8 +287,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_left",
@@ -337,8 +313,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing left.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go left",
       "left arrow",
@@ -349,8 +323,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_left_circle",
@@ -376,8 +349,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing left.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go left",
       "left arrow",
@@ -388,8 +359,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_right",
@@ -415,8 +385,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing right.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go right",
       "right arrow",
@@ -427,8 +395,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_right_circle",
@@ -454,8 +421,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing right.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go right",
       "right arrow",
@@ -466,8 +431,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up",
@@ -493,8 +457,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing up.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go up",
       "up arrow",
@@ -505,8 +467,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_circle",
@@ -532,8 +493,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A directional arrow pointing up.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go up",
       "up arrow",
@@ -544,8 +503,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_left",
@@ -572,8 +530,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -584,8 +540,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_right",
@@ -612,8 +567,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -624,8 +577,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:bell",
@@ -651,8 +603,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A bell symbol used for alerts and notifications.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "alerts",
       "notification center",
@@ -663,8 +613,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:bell_slash",
@@ -688,8 +637,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -699,8 +646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:bookmark",
@@ -726,8 +672,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Saved state shown as a compact interface mark.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "saved",
       "saved item",
@@ -738,8 +682,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:calendar",
@@ -761,8 +704,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar"
     ],
@@ -770,8 +711,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:check",
@@ -797,8 +737,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A check mark used for confirmation or completion.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "success",
       "completed",
@@ -809,8 +747,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:check_circle",
@@ -836,8 +773,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A check mark used for confirmation or completion.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "success",
       "completed",
@@ -848,8 +783,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chevron_down",
@@ -874,8 +808,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -885,8 +817,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chevron_left",
@@ -912,8 +843,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing navigation arrow.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous",
@@ -924,8 +853,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chevron_right",
@@ -951,8 +879,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing navigation arrow.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "next",
       "go forward",
@@ -963,8 +889,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chevron_up",
@@ -989,8 +914,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -1000,8 +923,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:clock",
@@ -1027,8 +949,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A clock face used for time or waiting.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "pending time",
       "scheduled",
@@ -1039,8 +959,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:cloud_arrow_down",
@@ -1066,8 +985,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -1077,8 +994,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:cloud_arrow_up",
@@ -1104,8 +1020,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -1115,8 +1029,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:eye",
@@ -1142,8 +1055,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -1154,8 +1065,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:eye_dropper",
@@ -1181,8 +1091,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -1193,8 +1101,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:eye_slash",
@@ -1220,8 +1127,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An eye symbol for visible or reveal state.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "show",
       "preview",
@@ -1232,8 +1137,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:folder",
@@ -1259,8 +1163,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A generic folder or directory symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "directory",
       "file folder",
@@ -1271,8 +1173,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:folder_minus",
@@ -1298,8 +1199,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A folder paired with a minus or remove cue.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "synonyms": [
       "remove folder",
       "folder minus",
@@ -1310,8 +1209,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:forward",
@@ -1337,8 +1235,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing navigation arrow.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -1349,8 +1245,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:home",
@@ -1376,8 +1271,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -1388,8 +1281,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:home_modern",
@@ -1415,8 +1307,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A simple house silhouette with a doorway.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "go home",
       "home page",
@@ -1427,8 +1317,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:key",
@@ -1454,8 +1343,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A key symbol for access or credentials.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "access key",
       "credentials",
@@ -1466,8 +1353,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:link",
@@ -1493,8 +1379,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A linked-chain symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked",
       "hyperlink",
@@ -1505,8 +1389,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:lock_closed",
@@ -1532,8 +1415,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -1544,8 +1425,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:pause",
@@ -1571,8 +1451,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pause control with two vertical bars.",
-    "intent": "control",
-    "domain": "media",
     "synonyms": [
       "pause playback",
       "pause media",
@@ -1583,8 +1461,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:pause_circle",
@@ -1610,8 +1487,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pause control inside a circular boundary.",
-    "intent": "control",
-    "domain": "media",
     "synonyms": [
       "pause playback",
       "pause media",
@@ -1622,8 +1497,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:play",
@@ -1649,8 +1523,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A play triangle for starting playback.",
-    "intent": "act",
-    "domain": "media",
     "synonyms": [
       "play media",
       "start playback",
@@ -1661,8 +1533,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:play_circle",
@@ -1688,8 +1559,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A play control inside a circular boundary.",
-    "intent": "act",
-    "domain": "media",
     "synonyms": [
       "play media",
       "start playback",
@@ -1700,8 +1569,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:plus",
@@ -1723,8 +1591,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus"
     ],
@@ -1732,8 +1598,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:qr_code",
@@ -1757,8 +1622,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "qr tool",
@@ -1768,8 +1631,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:server",
@@ -1795,8 +1657,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stacked server or infrastructure unit.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "backend server",
       "hosted service",
@@ -1807,8 +1667,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:shield_exclamation",
@@ -1832,8 +1691,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -1844,8 +1701,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:stop",
@@ -1871,8 +1727,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A square stop control.",
-    "intent": "control",
-    "domain": "media",
     "synonyms": [
       "stop playback",
       "end media",
@@ -1883,8 +1737,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:stop_circle",
@@ -1910,8 +1763,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stop control inside a circular boundary.",
-    "intent": "control",
-    "domain": "media",
     "synonyms": [
       "stop playback",
       "end media",
@@ -1922,8 +1773,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:trash",
@@ -1949,8 +1799,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A trash bin used for discard or deletion.",
-    "intent": "delete",
-    "domain": "ui_controls",
     "synonyms": [
       "delete item",
       "remove",
@@ -1961,8 +1809,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:archive_box_arrow_down",
@@ -1989,8 +1836,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -1999,8 +1844,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:archive_box_x_mark",
@@ -2025,8 +1869,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing archive box x mark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "archive",
       "box",
@@ -2036,8 +1878,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bell_alert",
@@ -2061,8 +1902,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "bell status",
@@ -2071,8 +1910,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "heroicons:folder_arrow_down",
@@ -2098,8 +1936,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -2108,8 +1944,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:play_pause",
@@ -2132,8 +1967,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing play pause.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "play",
       "pause"
@@ -2141,8 +1974,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:user_plus",
@@ -2165,8 +1997,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user plus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "plus"
@@ -2174,8 +2004,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrows_right_left",
@@ -2202,8 +2031,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -2214,8 +2041,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:arrows_up_down",
@@ -2241,8 +2067,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -2252,8 +2076,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:bold",
@@ -2275,8 +2098,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bold.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bold"
     ],
@@ -2284,8 +2105,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:briefcase",
@@ -2307,8 +2127,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing briefcase.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "briefcase"
     ],
@@ -2316,8 +2134,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:cake",
@@ -2339,8 +2156,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cake.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cake"
     ],
@@ -2348,8 +2163,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:camera",
@@ -2371,8 +2185,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera"
     ],
@@ -2380,8 +2192,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chart_bar",
@@ -2404,8 +2215,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart bar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "bar"
@@ -2414,8 +2223,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:chart_pie",
@@ -2438,8 +2246,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart pie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "pie"
@@ -2448,8 +2254,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:clipboard",
@@ -2471,8 +2276,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard"
     ],
@@ -2480,8 +2283,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:cloud",
@@ -2503,8 +2305,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud"
     ],
@@ -2512,8 +2312,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:command_line",
@@ -2535,8 +2334,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing command.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "command"
     ],
@@ -2544,8 +2341,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:cube",
@@ -2567,8 +2363,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cube.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cube"
     ],
@@ -2576,8 +2370,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:currency_dollar",
@@ -2600,8 +2393,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency dollar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "dollar"
@@ -2610,8 +2401,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:currency_euro",
@@ -2634,8 +2424,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency euro.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "euro"
@@ -2644,8 +2432,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:currency_pound",
@@ -2668,8 +2455,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency pound.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "pound"
@@ -2678,8 +2463,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:currency_rupee",
@@ -2702,8 +2486,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency rupee.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "rupee"
@@ -2712,8 +2494,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:document",
@@ -2735,8 +2516,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing document.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "document"
     ],
@@ -2744,8 +2523,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:film",
@@ -2767,8 +2545,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing film.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "film"
     ],
@@ -2776,8 +2552,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:fire",
@@ -2799,8 +2574,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fire.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fire"
     ],
@@ -2808,8 +2581,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:flag",
@@ -2835,8 +2607,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Flagged state shown as a compact interface mark.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "flagged",
       "flagged item",
@@ -2847,8 +2617,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:gift",
@@ -2870,8 +2639,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing gift.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "gift"
     ],
@@ -2879,8 +2646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:h3",
@@ -2905,8 +2671,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official H3 brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "H3"
     ],
@@ -2914,8 +2678,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:hashtag",
@@ -2937,8 +2700,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hashtag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hashtag"
     ],
@@ -2946,8 +2707,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:heart",
@@ -2973,8 +2733,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A heart symbol used for likes, favorites, or affection.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "heart",
       "liked item",
@@ -2985,8 +2743,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:inbox",
@@ -3008,8 +2765,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing inbox.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "inbox"
     ],
@@ -3017,8 +2772,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:italic",
@@ -3040,8 +2794,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing italic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "italic"
     ],
@@ -3049,8 +2801,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:lifebuoy",
@@ -3072,8 +2823,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing lifebuoy.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "lifebuoy"
     ],
@@ -3081,8 +2830,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:map",
@@ -3104,8 +2852,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing map.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "map"
     ],
@@ -3113,8 +2859,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:map_pin",
@@ -3140,8 +2885,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A location pin marker.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "location pin",
       "map marker",
@@ -3152,8 +2895,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:microphone",
@@ -3175,8 +2917,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing microphone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "microphone"
     ],
@@ -3184,8 +2924,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:minus_circle",
@@ -3208,8 +2947,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing minus circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "minus",
       "circle"
@@ -3218,8 +2955,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:moon",
@@ -3241,8 +2977,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing moon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "moon"
     ],
@@ -3250,8 +2984,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:paint_brush",
@@ -3274,8 +3007,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing paint brush.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "paint",
       "brush"
@@ -3284,8 +3015,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:pencil",
@@ -3307,8 +3037,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pencil.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pencil"
     ],
@@ -3316,8 +3044,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:phone",
@@ -3339,8 +3066,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone"
     ],
@@ -3348,8 +3073,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:power",
@@ -3375,8 +3099,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A power symbol for turning a system or device on or off.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "turn on",
       "turn off",
@@ -3387,8 +3109,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:radio",
@@ -3410,8 +3131,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing radio.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "radio"
     ],
@@ -3419,8 +3138,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:rss",
@@ -3445,8 +3163,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official RSS brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "RSS"
     ],
@@ -3454,8 +3170,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:scale",
@@ -3477,8 +3192,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing scale.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "scale"
     ],
@@ -3486,8 +3199,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:scissors",
@@ -3509,8 +3221,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing scissors.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "scissors"
     ],
@@ -3518,8 +3228,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:signal",
@@ -3544,8 +3253,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Signal brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Signal"
     ],
@@ -3553,8 +3260,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:sparkles",
@@ -3576,8 +3282,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing sparkles.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "sparkles"
     ],
@@ -3585,8 +3289,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:star",
@@ -3612,8 +3315,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A star symbol used for saved or favored items.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "starred item",
       "favorite",
@@ -3624,8 +3325,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:strikethrough",
@@ -3647,8 +3347,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing strikethrough.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "strikethrough"
     ],
@@ -3656,8 +3354,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:sun",
@@ -3679,8 +3376,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing sun.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "sun"
     ],
@@ -3688,8 +3383,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:tag",
@@ -3711,8 +3405,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing tag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "tag"
     ],
@@ -3720,8 +3412,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:ticket",
@@ -3743,8 +3434,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ticket.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ticket"
     ],
@@ -3752,8 +3441,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:trophy",
@@ -3779,8 +3467,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A trophy cup with handles and a base.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "milestone reached",
       "award",
@@ -3791,8 +3477,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:truck",
@@ -3814,8 +3499,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing truck.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "truck"
     ],
@@ -3823,8 +3506,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:underline",
@@ -3846,8 +3528,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing underline.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "underline"
     ],
@@ -3855,8 +3535,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:video_camera",
@@ -3879,8 +3558,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing video camera.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "video",
       "camera"
@@ -3889,8 +3566,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:wallet",
@@ -3912,8 +3588,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wallet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wallet"
     ],
@@ -3921,8 +3595,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:wifi",
@@ -3948,8 +3621,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A wireless signal icon representing network connection.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "wireless",
       "network signal",
@@ -3960,8 +3631,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "heroicons:archive_box",
@@ -3984,8 +3654,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing archive box.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "archive",
       "box"
@@ -3993,8 +3661,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_on_square",
@@ -4021,8 +3688,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4031,8 +3696,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_on_square_stack",
@@ -4060,8 +3724,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4070,8 +3732,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_down_tray",
@@ -4097,8 +3758,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4107,8 +3766,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_left_end_on_rectangle",
@@ -4137,8 +3795,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4148,8 +3804,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_left_on_rectangle",
@@ -4177,8 +3832,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4188,8 +3841,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_left_start_on_rectangle",
@@ -4218,8 +3870,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4229,8 +3879,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_long_down",
@@ -4256,8 +3905,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4266,8 +3913,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_long_left",
@@ -4294,8 +3940,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4305,8 +3949,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_long_right",
@@ -4333,8 +3976,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4344,8 +3985,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_long_up",
@@ -4371,8 +4011,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -4381,8 +4019,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_path",
@@ -4405,8 +4042,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow path.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "path"
@@ -4414,8 +4049,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrow_path_rounded_square",
@@ -4440,8 +4074,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrow path rounded square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrow",
       "path",
@@ -4451,8 +4083,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrow_right_end_on_rectangle",
@@ -4481,8 +4112,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4492,8 +4121,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_right_on_rectangle",
@@ -4521,8 +4149,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4532,8 +4158,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_right_start_on_rectangle",
@@ -4562,8 +4187,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4573,8 +4196,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_top_right_on_square",
@@ -4603,8 +4225,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4614,8 +4234,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_trending_down",
@@ -4641,8 +4260,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -4651,8 +4268,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_trending_up",
@@ -4678,8 +4294,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -4688,8 +4302,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_down_left",
@@ -4717,8 +4330,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4728,8 +4339,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_down_right",
@@ -4757,8 +4367,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4768,8 +4376,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_left_down",
@@ -4797,8 +4404,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4808,8 +4413,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_left_up",
@@ -4837,8 +4441,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4848,8 +4450,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_right_down",
@@ -4877,8 +4478,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4888,8 +4487,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_right_up",
@@ -4917,8 +4515,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -4928,8 +4524,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_up_left",
@@ -4957,8 +4552,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -4968,8 +4561,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_turn_up_right",
@@ -4997,8 +4589,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -5008,8 +4598,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_on_square",
@@ -5036,8 +4625,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5046,8 +4633,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_on_square_stack",
@@ -5075,8 +4661,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5085,8 +4669,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_up_tray",
@@ -5112,8 +4695,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5122,8 +4703,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_uturn_down",
@@ -5149,8 +4729,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -5159,8 +4737,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_uturn_left",
@@ -5187,8 +4764,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -5198,8 +4773,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_uturn_right",
@@ -5226,8 +4800,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -5237,8 +4809,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_uturn_up",
@@ -5264,8 +4835,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5274,8 +4843,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:bars_arrow_down",
@@ -5301,8 +4869,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -5311,8 +4877,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:bars_arrow_up",
@@ -5338,8 +4903,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5348,8 +4911,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:bell_snooze",
@@ -5373,8 +4935,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -5383,8 +4943,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "heroicons:book_open",
@@ -5408,8 +4967,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "book file"
@@ -5417,8 +4974,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "heroicons:bookmark_slash",
@@ -5441,8 +4997,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmark slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmark",
       "slash"
@@ -5450,8 +5004,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bookmark_square",
@@ -5474,8 +5027,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmark square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmark",
       "square"
@@ -5483,8 +5034,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:calendar_date_range",
@@ -5508,8 +5058,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar date range.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "date",
@@ -5518,8 +5066,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:calendar_days",
@@ -5542,8 +5089,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar days.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "days"
@@ -5551,8 +5096,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:check_badge",
@@ -5576,8 +5120,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "check status",
@@ -5586,8 +5128,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "heroicons:chevron_double_down",
@@ -5613,8 +5154,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -5623,8 +5162,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:chevron_double_left",
@@ -5651,8 +5189,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -5662,8 +5198,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chevron_double_right",
@@ -5690,8 +5225,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -5701,8 +5234,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chevron_double_up",
@@ -5728,8 +5260,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5738,8 +5268,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:chevron_up_down",
@@ -5765,8 +5294,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -5775,8 +5302,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:clipboard_document_check",
@@ -5801,8 +5327,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "clipboard status",
@@ -5812,8 +5336,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "heroicons:clipboard_document_list",
@@ -5838,8 +5361,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -5850,8 +5371,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "heroicons:code_bracket",
@@ -5875,8 +5395,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "code tool",
@@ -5885,8 +5403,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "heroicons:code_bracket_square",
@@ -5911,8 +5428,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "code",
       "code tool",
@@ -5922,8 +5437,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "heroicons:cursor_arrow_rays",
@@ -5947,8 +5461,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cursor arrow rays.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cursor",
       "arrow",
@@ -5957,8 +5469,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cursor_arrow_ripple",
@@ -5982,8 +5493,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cursor arrow ripple.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cursor",
       "arrow",
@@ -5992,8 +5501,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:document_arrow_down",
@@ -6019,8 +5527,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6029,8 +5535,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:document_arrow_up",
@@ -6056,8 +5561,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -6066,8 +5569,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:document_check",
@@ -6091,8 +5593,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "document status",
@@ -6101,8 +5601,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "heroicons:document_plus",
@@ -6125,8 +5624,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing document plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "document",
       "plus"
@@ -6134,8 +5631,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:envelope_open",
@@ -6159,8 +5655,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "envelope file"
@@ -6168,8 +5662,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "heroicons:inbox_arrow_down",
@@ -6195,8 +5688,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6205,8 +5696,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:link_slash",
@@ -6230,8 +5720,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "linked file",
       "link file",
@@ -6240,8 +5728,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "heroicons:list_bullet",
@@ -6265,8 +5752,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -6276,8 +5761,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "heroicons:magnifying_glass_plus",
@@ -6301,8 +5785,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing magnifying glass plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "magnifying",
       "glass",
@@ -6311,8 +5793,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:numbered_list",
@@ -6336,8 +5817,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -6347,8 +5826,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "heroicons:phone_arrow_down_left",
@@ -6376,8 +5854,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -6387,8 +5863,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:phone_arrow_up_right",
@@ -6416,8 +5891,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -6427,8 +5900,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:phone_x_mark",
@@ -6452,8 +5924,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone x mark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "x",
@@ -6462,8 +5932,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:plus_circle",
@@ -6486,8 +5955,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus",
       "circle"
@@ -6495,8 +5962,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:queue_list",
@@ -6520,8 +5986,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -6531,8 +5995,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "heroicons:server_stack",
@@ -6556,8 +6019,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "server control",
       "server tool",
@@ -6566,8 +6027,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.84
+    ]
   },
   {
     "icon_id": "heroicons:speaker_x_mark",
@@ -6591,8 +6051,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing speaker x mark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "speaker",
       "x",
@@ -6601,8 +6059,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:squares_plus",
@@ -6625,8 +6082,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing squares plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "squares",
       "plus"
@@ -6634,8 +6089,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:user",
@@ -6657,16 +6111,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:user_circle",
@@ -6689,8 +6140,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user circle.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "circle"
@@ -6698,8 +6147,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:user_group",
@@ -6722,8 +6170,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user group.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "group"
@@ -6731,8 +6177,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:user_minus",
@@ -6755,8 +6200,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user minus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "minus"
@@ -6764,8 +6207,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:x_circle",
@@ -6788,8 +6230,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing x circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "x",
       "circle"
@@ -6797,8 +6237,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:x_mark",
@@ -6821,8 +6260,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing x mark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "x",
       "mark"
@@ -6830,8 +6267,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrow_small_down",
@@ -6857,8 +6293,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6867,8 +6301,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:arrow_small_left",
@@ -6895,8 +6328,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -6906,8 +6337,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_small_right",
@@ -6934,8 +6364,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -6945,8 +6373,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:arrow_small_up",
@@ -6972,8 +6399,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -6982,8 +6407,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "heroicons:plus_small",
@@ -7006,8 +6430,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing plus small.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "plus",
       "small"
@@ -7015,8 +6437,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:academic_cap",
@@ -7039,8 +6460,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing academic cap.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "academic",
       "cap"
@@ -7048,8 +6467,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:adjustments_horizontal",
@@ -7072,8 +6490,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing adjustments horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "adjustments",
       "horizontal"
@@ -7081,8 +6497,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:adjustments_vertical",
@@ -7105,8 +6520,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing adjustments vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "adjustments",
       "vertical"
@@ -7114,8 +6527,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrows_pointing_in",
@@ -7139,8 +6551,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows pointing in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "pointing",
@@ -7149,8 +6559,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:arrows_pointing_out",
@@ -7174,8 +6583,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing arrows pointing out.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "arrows",
       "pointing",
@@ -7184,8 +6591,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:at_symbol",
@@ -7208,8 +6614,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing at symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "at",
       "symbol"
@@ -7217,8 +6621,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:backspace",
@@ -7240,16 +6643,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing backspace.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "backspace"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:backward",
@@ -7271,16 +6671,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing backward.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "backward"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:banknotes",
@@ -7302,16 +6699,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing banknotes.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "banknotes"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bars_2",
@@ -7334,8 +6728,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bars.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bars",
       "2"
@@ -7343,8 +6735,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bars_3",
@@ -7367,8 +6758,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bars.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bars",
       "3"
@@ -7376,8 +6765,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bars_3_bottom_left",
@@ -7405,8 +6793,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -7416,8 +6802,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:bars_3_bottom_right",
@@ -7445,8 +6830,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -7456,8 +6839,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:bars_3_center_left",
@@ -7485,8 +6867,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -7496,8 +6876,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:bars_4",
@@ -7520,8 +6899,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bars.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bars",
       "4"
@@ -7529,8 +6906,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:battery_0",
@@ -7553,8 +6929,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "0"
@@ -7562,8 +6936,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:battery_100",
@@ -7586,8 +6959,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "100"
@@ -7595,8 +6966,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:battery_50",
@@ -7619,8 +6989,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "50"
@@ -7628,8 +6996,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:beaker",
@@ -7651,16 +7018,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing beaker.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "beaker"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bolt",
@@ -7682,16 +7046,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bolt.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bolt"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bolt_slash",
@@ -7714,8 +7075,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bolt slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bolt",
       "slash"
@@ -7723,8 +7082,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:bug_ant",
@@ -7747,8 +7105,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bug ant.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bug",
       "ant"
@@ -7756,8 +7112,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:building_library",
@@ -7780,8 +7135,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building library.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "library"
@@ -7789,8 +7142,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:building_office",
@@ -7813,8 +7165,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building office.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "office"
@@ -7822,8 +7172,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:building_office_2",
@@ -7847,8 +7196,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building office.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "office",
@@ -7857,8 +7204,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:building_storefront",
@@ -7881,8 +7227,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building storefront.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "storefront"
@@ -7890,8 +7234,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:calculator",
@@ -7913,16 +7256,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calculator.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calculator"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:chart_bar_square",
@@ -7946,8 +7286,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart bar square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "bar",
@@ -7956,8 +7294,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_bottom_center",
@@ -7982,8 +7319,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat bubble bottom center.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "bubble",
@@ -7993,8 +7328,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_bottom_center_text",
@@ -8020,8 +7354,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat bubble bottom center text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "bubble",
@@ -8032,8 +7364,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_left",
@@ -8060,8 +7391,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -8071,8 +7400,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_left_ellipsis",
@@ -8100,8 +7428,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -8111,8 +7437,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_left_right",
@@ -8140,8 +7465,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -8151,8 +7474,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_oval_left",
@@ -8180,8 +7502,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -8191,8 +7511,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:chat_bubble_oval_left_ellipsis",
@@ -8221,8 +7540,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -8232,8 +7549,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "heroicons:circle_stack",
@@ -8256,8 +7572,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing circle stack.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "circle",
       "stack"
@@ -8265,8 +7579,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:clipboard_document",
@@ -8289,8 +7602,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard document.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard",
       "document"
@@ -8298,8 +7609,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cog",
@@ -8321,16 +7631,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cog.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cog"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cog_6_tooth",
@@ -8354,8 +7661,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cog tooth.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cog",
       "6",
@@ -8364,8 +7669,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cog_8_tooth",
@@ -8389,8 +7693,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cog tooth.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cog",
       "8",
@@ -8399,8 +7701,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:computer_desktop",
@@ -8423,8 +7724,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing computer desktop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "computer",
       "desktop"
@@ -8432,8 +7731,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cpu_chip",
@@ -8456,8 +7754,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cpu chip.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cpu",
       "chip"
@@ -8465,8 +7761,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:credit_card",
@@ -8489,8 +7784,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing credit card.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "credit",
       "card"
@@ -8498,8 +7791,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:cube_transparent",
@@ -8522,8 +7814,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cube transparent.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cube",
       "transparent"
@@ -8531,8 +7821,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:currency_bangladeshi",
@@ -8555,8 +7844,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency bangladeshi.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "bangladeshi"
@@ -8564,8 +7851,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:currency_yen",
@@ -8588,8 +7874,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency yen.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "yen"
@@ -8597,8 +7881,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "heroicons:device_phone_mobile",
@@ -8622,8 +7905,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing device phone mobile.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "device",
       "phone",
@@ -8632,7 +7913,6 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   }
 ]

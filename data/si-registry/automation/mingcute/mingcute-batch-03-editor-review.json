@@ -46,8 +46,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A heart symbol used for likes, favorites, or affection.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "heart",
           "liked item",
@@ -58,8 +56,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "heart_line",
@@ -99,8 +96,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A star symbol used for saved or favored items.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "starred item",
           "favorite",
@@ -111,8 +106,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "star_line",
@@ -151,8 +145,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "camera tool",
@@ -162,8 +154,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "camera_2_ai_line",
@@ -202,8 +193,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "music tool",
@@ -213,8 +202,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "music_2_ai_line",
@@ -252,8 +240,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "pencil tool",
@@ -262,8 +248,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pencil_ai_line",
@@ -301,8 +286,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "pic tool",
@@ -311,8 +294,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pic_ai_line",
@@ -351,8 +333,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "quill tool",
@@ -362,8 +342,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "quill_pen_ai_line",
@@ -402,8 +381,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "signature tool",
@@ -413,8 +390,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "signature_2_ai_line",
@@ -452,8 +428,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "terminal tool",
@@ -462,8 +436,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "terminal_ai_line",
@@ -502,8 +475,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "terminal tool",
@@ -513,8 +484,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "terminal_box_ai_line",
@@ -552,8 +522,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "textbox tool",
@@ -562,8 +530,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "textbox_ai_line",
@@ -602,8 +569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "translate tool",
@@ -613,8 +578,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "translate_2_ai_line",
@@ -652,8 +616,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "video tool",
@@ -662,8 +624,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "video_ai_line",

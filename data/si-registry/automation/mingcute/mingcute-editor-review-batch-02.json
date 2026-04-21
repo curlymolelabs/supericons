@@ -52,8 +52,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-pointing arrow with a return-like stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "back button",
           "previous screen",
@@ -64,8 +62,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "delete_back_line",
@@ -105,8 +102,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "Two curved arrows forming a circular refresh loop.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "reload",
           "refresh view",
@@ -117,8 +112,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "refresh_4_ai_line",
@@ -160,8 +154,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -171,8 +163,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_down_circle_line",
@@ -213,8 +204,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -224,8 +213,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_down_line",
@@ -267,8 +255,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -278,8 +264,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_up_circle_line",
@@ -320,8 +305,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -331,8 +314,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_up_line",
@@ -374,8 +356,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -385,8 +365,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_down_circle_line",
@@ -427,8 +406,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -438,8 +415,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_down_line",
@@ -481,8 +457,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -492,8 +466,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_up_circle_line",
@@ -534,8 +507,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -545,8 +516,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_up_line",
@@ -586,8 +556,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A funnel shape that narrows content into a smaller output.",
-        "intent": "refine",
-        "domain": "ui_controls",
         "synonyms": [
           "refine results",
           "filter data",
@@ -598,8 +566,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "color_filter_line",
@@ -639,8 +606,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -651,8 +616,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fast_forward_line",
@@ -692,8 +656,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A simple house silhouette with a doorway.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "go home",
           "home page",
@@ -704,8 +666,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "home_wifi_line",
@@ -745,8 +706,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A circular power-button symbol with a vertical line at the top.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "power button",
           "turn on",
@@ -757,8 +716,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "power_line",
@@ -798,8 +756,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -810,8 +766,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_10_line",
@@ -851,8 +806,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -863,8 +816,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_15_line",
@@ -904,8 +856,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -916,8 +866,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_30_line",
@@ -957,8 +906,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -969,8 +916,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_5_line",
@@ -1010,8 +956,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1022,8 +966,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_square_10_line",
@@ -1063,8 +1006,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1075,8 +1016,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_square_15_line",
@@ -1116,8 +1056,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1128,8 +1066,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_square_30_line",
@@ -1169,8 +1106,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1181,8 +1116,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "rewind_forward_square_5_line",
@@ -1222,8 +1156,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A closed lock showing protected access.",
-        "intent": "confirm",
-        "domain": "security",
         "synonyms": [
           "secure lock",
           "restricted",
@@ -1234,8 +1166,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "safe_lock_line",
@@ -1275,8 +1206,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -1287,8 +1216,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_2_none_line",
@@ -1328,8 +1256,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -1340,8 +1266,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "search_none_line",
@@ -1381,8 +1306,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1393,8 +1316,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "share_forward_line",
@@ -1434,8 +1356,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-pointing arrow with a forward stem.",
-        "intent": "navigate",
-        "domain": "ui_shell",
         "synonyms": [
           "next",
           "continue",
@@ -1446,8 +1366,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "skip_forward_line",
@@ -1487,8 +1406,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A thumbs-down feedback symbol.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "disliked",
           "negative signal",
@@ -1499,8 +1416,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "thumb_down_line",
@@ -1540,8 +1456,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A thumbs-up feedback symbol.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "liked",
           "approved",
@@ -1552,8 +1466,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "thumb_up_line",
@@ -1593,8 +1506,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A line or arrow showing decline over time.",
-        "intent": "inform",
-        "domain": "analytics",
         "synonyms": [
           "trend down",
           "decline",
@@ -1605,8 +1516,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "trending_down_line",
@@ -1646,8 +1556,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward-trending line with an arrow.",
-        "intent": "inform",
-        "domain": "analytics",
         "synonyms": [
           "growth trend",
           "upward trend",
@@ -1658,8 +1566,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "trending_up_line",
@@ -1699,8 +1606,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A closed lock showing protected access.",
-        "intent": "confirm",
-        "domain": "security",
         "synonyms": [
           "secure lock",
           "restricted",
@@ -1711,8 +1616,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user_lock_line",
@@ -1752,8 +1656,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A magnifying glass.",
-        "intent": "discover",
-        "domain": "ui_shell",
         "synonyms": [
           "find",
           "search content",
@@ -1764,8 +1666,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user_search_line",
@@ -1805,8 +1706,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A robot-like symbol for an assistant or automated agent.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai agent",
           "assistant bot",
@@ -1817,8 +1716,7 @@
           "source_name",
           "approved_reference",
           "svg_payload"
-        ],
-        "confidence": 0.9
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "robot_line",
@@ -1858,8 +1756,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -1868,8 +1764,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_down_circle_line",
@@ -1908,8 +1803,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -1918,8 +1811,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_down_line",
@@ -1960,8 +1852,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -1971,8 +1861,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_circle_line",
@@ -2012,8 +1901,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -2023,8 +1910,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_left_line",
@@ -2065,8 +1951,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -2076,8 +1960,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_circle_line",
@@ -2117,8 +2000,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -2128,8 +2009,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_right_line",
@@ -2169,8 +2049,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -2179,8 +2057,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_to_down_line",
@@ -2221,8 +2098,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -2232,8 +2107,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_to_left_line",
@@ -2274,8 +2148,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -2285,8 +2157,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_to_right_line",
@@ -2326,8 +2197,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -2336,8 +2205,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_to_up_line",
@@ -2377,8 +2245,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -2387,8 +2253,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_up_circle_line",
@@ -2427,8 +2292,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -2437,8 +2300,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow_up_line",
@@ -2476,8 +2338,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "hidden",
           "eye status",
@@ -2486,8 +2346,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "eye_close_line",
@@ -2525,8 +2384,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "file status",
@@ -2535,8 +2392,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_check_line",
@@ -2574,8 +2430,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "developer_tools",
         "synonyms": [
           "code",
           "file tool",
@@ -2584,8 +2438,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_code_line",
@@ -2623,8 +2476,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "info",
           "file status",
@@ -2633,8 +2484,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_info_line",
@@ -2672,8 +2522,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "more options",
           "more options control",
@@ -2683,8 +2531,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_more_line",
@@ -2722,8 +2569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "file status",
@@ -2732,8 +2577,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_warning_line",
@@ -2771,8 +2615,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "folder status",
@@ -2781,8 +2623,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_check_line",
@@ -2820,8 +2661,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "info",
           "folder status",
@@ -2830,8 +2669,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_info_line",
@@ -2869,8 +2707,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "more options",
           "more options control",
@@ -2880,8 +2716,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_more_line",
@@ -2919,8 +2754,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "folder status",
@@ -2929,8 +2762,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_warning_line",
@@ -2969,8 +2801,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "list view",
           "list view control",
@@ -2981,8 +2811,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "list_check_2_line",
@@ -3021,8 +2850,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "list view",
           "list view control",
@@ -3033,8 +2860,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "list_check_3_line",
@@ -3072,8 +2898,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "list view",
           "list view control",
@@ -3083,8 +2907,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "list_collapse_line",
@@ -3122,8 +2945,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -3134,8 +2955,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "mail_open_line",
@@ -3173,8 +2993,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "act",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -3185,8 +3003,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "mail_send_line",
@@ -3226,8 +3043,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -3236,8 +3051,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "square_arrow_down_line",
@@ -3278,8 +3092,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -3289,8 +3101,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "square_arrow_left_line",
@@ -3331,8 +3142,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -3342,8 +3151,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "square_arrow_right_line",
@@ -3383,8 +3191,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -3393,8 +3199,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "square_arrow_up_line",
@@ -3435,8 +3240,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -3446,8 +3249,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "toggle_left_2_line",
@@ -3487,8 +3289,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -3498,8 +3298,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "toggle_left_line",
@@ -3540,8 +3339,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -3551,8 +3348,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "toggle_right_2_line",
@@ -3592,8 +3388,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -3602,8 +3396,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "align_arrow_down_line",
@@ -3643,8 +3436,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -3653,8 +3444,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "align_arrow_up_line",
@@ -3695,8 +3485,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -3706,8 +3494,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "corner_down_left_line",
@@ -3748,8 +3535,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -3759,8 +3544,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "corner_down_right_line",
@@ -3801,8 +3585,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -3812,8 +3594,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "corner_up_left_line",
@@ -3854,8 +3635,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -3865,8 +3644,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "corner_up_right_line",
@@ -3905,8 +3683,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "edit tool",
@@ -3916,8 +3692,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "edit_2_ai_line",
@@ -3956,8 +3731,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "edit tool",
@@ -3967,8 +3740,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "edit_3_ai_line",
@@ -4006,8 +3778,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "ai assist",
           "file tool",
@@ -4016,8 +3786,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_ai_line",
@@ -4057,8 +3826,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -4067,8 +3834,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "large_arrow_down_line",
@@ -4109,8 +3875,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -4120,8 +3884,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "large_arrow_left_line",
@@ -4162,8 +3925,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -4173,8 +3934,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "large_arrow_right_line",
@@ -4214,8 +3974,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -4224,8 +3982,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "large_arrow_up_line",
@@ -4263,8 +4020,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "assistant message",
           "mail tool",
@@ -4273,8 +4028,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "mail_ai_line",
@@ -4313,8 +4067,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "assistant message",
           "message tool",
@@ -4324,8 +4076,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_1_ai_line",
@@ -4364,8 +4115,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "assistant message",
           "message tool",
@@ -4375,8 +4124,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_2_ai_line",
@@ -4415,8 +4163,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "assistant message",
           "message tool",
@@ -4426,8 +4172,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_3_ai_line",
@@ -4466,8 +4211,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "ai_agents",
         "synonyms": [
           "assistant message",
           "message tool",
@@ -4477,8 +4220,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_4_ai_line",
@@ -4516,8 +4258,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "alert status",
@@ -4526,8 +4266,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alert_diamond_line",
@@ -4564,8 +4303,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "alert status"
@@ -4573,8 +4310,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alert_line",
@@ -4612,8 +4348,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "alert status",
@@ -4622,8 +4356,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "alert_octagon_line",
@@ -4662,8 +4395,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -4672,8 +4403,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrows_down_line",
@@ -4713,8 +4443,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -4724,8 +4452,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrows_left_line",
@@ -4765,8 +4492,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -4776,8 +4501,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrows_right_line",
@@ -4816,8 +4540,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -4826,8 +4548,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrows_up_line",
@@ -4865,8 +4586,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "notification",
           "bell status",
@@ -4875,8 +4594,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bell_ringing_line",
@@ -4916,8 +4634,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A left-facing arrow or backward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go back",
           "previous screen",
@@ -4927,8 +4643,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "border_left_line",
@@ -4968,8 +4683,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A right-facing arrow or forward navigation cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "go forward",
           "next screen",
@@ -4979,8 +4692,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "border_right_line",
@@ -5018,8 +4730,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "check status",
@@ -5028,8 +4738,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "check_2_line",
@@ -5068,8 +4777,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "check status",
@@ -5079,8 +4786,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "check_circle_dash_line",
@@ -5118,8 +4824,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "check status",
@@ -5128,8 +4832,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "check_circle_line",
@@ -5166,8 +4869,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "inform",
-        "domain": "product_status",
         "synonyms": [
           "confirmed",
           "check status"
@@ -5175,8 +4876,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "check_line",
@@ -5213,8 +4913,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "developer_tools",
         "synonyms": [
           "code",
           "code tool"
@@ -5222,8 +4920,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "code_line",
@@ -5261,8 +4958,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "grid view",
           "grid view control",
@@ -5272,8 +4967,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "dot_grid_line",
@@ -5311,8 +5005,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -5321,8 +5013,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "down_line",
@@ -5361,8 +5052,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -5371,8 +5060,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "escalator_down_line",
@@ -5411,8 +5099,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -5421,8 +5107,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "escalator_up_line",
@@ -5462,8 +5147,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A downward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move down",
           "go down",
@@ -5472,8 +5155,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fan_direction_down_line",
@@ -5513,8 +5195,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "An upward arrow or movement cue.",
-        "intent": "navigate",
-        "domain": "navigation",
         "synonyms": [
           "move up",
           "go up",
@@ -5523,8 +5203,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fan_direction_up_line",
@@ -5561,8 +5240,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "fullscreen",
           "fullscreen control",
@@ -5572,8 +5249,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fullscreen_2_line",
@@ -5612,8 +5288,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "exit fullscreen",
           "exit fullscreen control",
@@ -5624,8 +5298,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fullscreen_exit_2_line",
@@ -5663,8 +5336,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "unlocked",
           "secure access",
@@ -5674,8 +5345,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "gesture_unlock_line",
@@ -5713,8 +5383,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "grid view",
           "grid view control",
@@ -5724,8 +5392,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grid_2_line",
@@ -5762,8 +5429,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "grid view",
           "grid view control",
@@ -5772,8 +5437,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "grid_line",
@@ -5812,8 +5476,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
-        "intent": "control",
-        "domain": "ui_controls",
         "synonyms": [
           "power",
           "high control",
@@ -5823,8 +5485,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.82
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "high_voltage_power_line",
@@ -5862,8 +5523,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-        "intent": "control",
-        "domain": "ui_shell",
         "synonyms": [
           "grid view",
           "grid view control",
@@ -5873,8 +5532,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.83
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "layout_grid_line",
@@ -5911,8 +5569,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -5922,8 +5578,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "mail_line",
@@ -5961,8 +5616,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -5973,8 +5626,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_1_line",
@@ -6012,8 +5664,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -6024,8 +5674,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_2_line",
@@ -6063,8 +5712,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -6075,8 +5722,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_3_line",
@@ -6114,8 +5760,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -6126,8 +5770,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "message_4_line",
@@ -6165,8 +5808,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A message or mail symbol used for communication and message flow.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "message",
           "mail",
@@ -6177,8 +5818,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "record_mail_line",
@@ -6216,8 +5856,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "safe status",
@@ -6226,8 +5864,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "safe_alert_line",
@@ -6266,8 +5903,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "protection",
           "secure access",
@@ -6278,8 +5913,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "safe_shield_2_line",
@@ -6317,8 +5951,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "protection",
           "secure access",
@@ -6328,8 +5960,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "safe_shield_line",
@@ -6367,8 +5998,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "developer_tools",
         "synonyms": [
           "server control",
           "server tool",
@@ -6377,8 +6006,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "server_2_line",
@@ -6415,8 +6043,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
-        "intent": "inform",
-        "domain": "developer_tools",
         "synonyms": [
           "server control",
           "server tool"
@@ -6424,8 +6050,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.84
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "server_line",
@@ -6462,8 +6087,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "protection",
           "secure access",
@@ -6472,8 +6095,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "shield_line",
@@ -6511,8 +6133,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "protection",
           "secure access",
@@ -6522,8 +6142,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "shield_shape_line",
@@ -6560,8 +6179,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-        "intent": "inform",
-        "domain": "security",
         "synonyms": [
           "unlocked",
           "secure access",
@@ -6570,8 +6187,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.86
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "unlock_line",
@@ -6609,8 +6225,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "user status",
@@ -6619,8 +6233,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user_warning_line",
@@ -6657,8 +6270,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A status or attention symbol used to communicate state clearly.",
-        "intent": "warn",
-        "domain": "product_status",
         "synonyms": [
           "warning",
           "warning status"
@@ -6666,8 +6277,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.85
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "warning_line",

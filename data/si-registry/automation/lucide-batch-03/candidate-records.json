@@ -23,8 +23,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A cloud with a check mark showing successful cloud state.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "cloud backup complete",
       "synced to cloud",
@@ -35,8 +33,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:file_music",
@@ -59,8 +56,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "file",
       "file file",
@@ -70,8 +65,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:calendar_clock",
@@ -94,8 +88,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar clock.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "clock"
@@ -103,8 +95,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:calendar_plus",
@@ -127,8 +118,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "plus"
@@ -136,8 +125,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:calendar_plus_2",
@@ -161,8 +149,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "plus",
@@ -171,8 +157,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:calendar_x_2",
@@ -196,8 +181,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "x",
@@ -206,8 +189,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:clock_plus",
@@ -230,8 +212,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clock plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clock",
       "plus"
@@ -239,8 +219,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:copy_plus",
@@ -263,8 +242,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copy plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copy",
       "plus"
@@ -272,8 +249,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:copy_x",
@@ -296,8 +272,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copy x.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copy",
       "x"
@@ -305,8 +279,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:user_plus",
@@ -329,8 +302,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user plus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "plus"
@@ -338,8 +309,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:user_plus_2",
@@ -363,8 +333,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user plus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "plus",
@@ -373,8 +341,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:user_round_plus",
@@ -398,8 +365,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user round plus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "round",
@@ -408,8 +373,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:user_round_x",
@@ -433,8 +397,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user round x.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "round",
@@ -443,8 +405,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:user_x_2",
@@ -468,8 +429,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user x.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "x",
@@ -478,8 +437,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "lucide:airplay",
@@ -501,8 +459,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplay.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "airplay"
     ],
@@ -510,8 +466,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:album",
@@ -533,8 +488,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing album.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "album"
     ],
@@ -542,8 +495,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:anchor",
@@ -565,8 +517,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing anchor.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "anchor"
     ],
@@ -574,8 +524,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:angry",
@@ -597,8 +546,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing angry.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "angry"
     ],
@@ -606,8 +553,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:apple",
@@ -632,8 +578,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Apple brand or product mark.",
-    "intent": "inform",
-    "domain": "ui_shell",
     "synonyms": [
       "Apple"
     ],
@@ -641,8 +585,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:asterisk",
@@ -667,8 +610,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Asterisk brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Asterisk"
     ],
@@ -676,8 +617,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:award",
@@ -699,8 +639,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing award.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "award"
     ],
@@ -708,8 +646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:axe",
@@ -731,8 +668,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing axe.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "axe"
     ],
@@ -740,8 +675,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:baby",
@@ -763,8 +697,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing baby.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "baby"
     ],
@@ -772,8 +704,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:backpack",
@@ -795,8 +726,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing backpack.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "backpack"
     ],
@@ -804,8 +733,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:badge",
@@ -827,8 +755,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing badge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "badge"
     ],
@@ -836,8 +762,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:barcode",
@@ -859,8 +784,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing barcode.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "barcode"
     ],
@@ -868,8 +791,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bath",
@@ -891,8 +813,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bath.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bath"
     ],
@@ -900,8 +820,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:battery",
@@ -923,8 +842,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery"
     ],
@@ -932,8 +849,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:battery_charging",
@@ -956,8 +872,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery charging.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "charging"
@@ -966,8 +880,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bed",
@@ -989,8 +902,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bed.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bed"
     ],
@@ -998,8 +909,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bike",
@@ -1021,8 +931,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bike.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bike"
     ],
@@ -1030,8 +938,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:binary",
@@ -1057,8 +964,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Abstract bit-like shapes arranged as machine-level binary marks.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "binary code",
       "bit data",
@@ -1069,8 +974,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bird",
@@ -1092,8 +996,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bird.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bird"
     ],
@@ -1101,8 +1003,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bitcoin",
@@ -1127,8 +1028,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Bitcoin brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Bitcoin"
     ],
@@ -1136,8 +1035,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:blocks",
@@ -1163,8 +1061,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A large rounded block with a smaller detached block above it.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "components",
       "modules",
@@ -1175,8 +1071,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bluetooth",
@@ -1201,8 +1096,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Bluetooth brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Bluetooth"
     ],
@@ -1210,8 +1103,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bluetooth_off",
@@ -1234,8 +1126,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bluetooth off.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bluetooth",
       "off"
@@ -1244,8 +1134,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bold",
@@ -1267,8 +1156,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bold.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bold"
     ],
@@ -1276,8 +1163,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bomb",
@@ -1299,8 +1185,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bomb.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bomb"
     ],
@@ -1308,8 +1192,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bone",
@@ -1331,8 +1214,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bone"
     ],
@@ -1340,8 +1221,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:book",
@@ -1363,8 +1243,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing book.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "book"
     ],
@@ -1372,8 +1250,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:box",
@@ -1398,8 +1275,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Box brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Box"
     ],
@@ -1407,8 +1282,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:braces",
@@ -1430,8 +1304,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing braces.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "braces"
     ],
@@ -1439,8 +1311,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:brackets",
@@ -1462,8 +1333,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brackets.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brackets"
     ],
@@ -1471,8 +1340,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:brain",
@@ -1498,8 +1366,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stylized brain shape.",
-    "intent": "inform",
-    "domain": "ai_agents",
     "synonyms": [
       "Brain",
       "thinking",
@@ -1512,8 +1378,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:brain_circuit",
@@ -1539,8 +1404,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A brain shape with circuit-style nodes and branches.",
-    "intent": "inform",
-    "domain": "ai_agents",
     "synonyms": [
       "ai thinking",
       "model reasoning",
@@ -1551,8 +1414,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:briefcase",
@@ -1574,8 +1436,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing briefcase.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "briefcase"
     ],
@@ -1583,8 +1443,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:brush",
@@ -1606,8 +1465,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brush.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brush"
     ],
@@ -1615,8 +1472,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bug",
@@ -1638,8 +1494,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bug.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bug"
     ],
@@ -1647,8 +1501,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:building_2",
@@ -1671,8 +1524,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "2"
@@ -1681,8 +1532,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:bus",
@@ -1704,8 +1554,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bus"
     ],
@@ -1713,8 +1561,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cake",
@@ -1736,8 +1583,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cake.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cake"
     ],
@@ -1745,8 +1590,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:camera",
@@ -1768,8 +1612,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera"
     ],
@@ -1777,8 +1619,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:candy",
@@ -1800,8 +1641,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing candy.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "candy"
     ],
@@ -1809,8 +1648,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:car",
@@ -1832,8 +1670,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing car.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "car"
     ],
@@ -1841,8 +1677,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:carrot",
@@ -1864,8 +1699,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing carrot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "carrot"
     ],
@@ -1873,8 +1706,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cat",
@@ -1896,8 +1728,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cat"
     ],
@@ -1905,8 +1735,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:chart_bar",
@@ -1929,8 +1758,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart bar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "bar"
@@ -1939,8 +1766,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:chart_line",
@@ -1963,8 +1789,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart line.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "line"
@@ -1973,8 +1797,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:chart_pie",
@@ -1997,8 +1820,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chart pie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chart",
       "pie"
@@ -2007,8 +1828,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:chef_hat",
@@ -2031,8 +1851,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chef hat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chef",
       "hat"
@@ -2041,8 +1859,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:church",
@@ -2064,8 +1881,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing church.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "church"
     ],
@@ -2073,8 +1888,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:circle",
@@ -2099,8 +1913,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Circle brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Circle"
     ],
@@ -2108,8 +1920,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:circuit_board",
@@ -2135,8 +1946,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A rounded square board with circuit nodes and traces.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "compute architecture",
       "system infrastructure",
@@ -2147,8 +1956,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:clapperboard",
@@ -2170,8 +1978,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clapperboard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clapperboard"
     ],
@@ -2179,8 +1985,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:clipboard",
@@ -2202,8 +2007,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard"
     ],
@@ -2211,8 +2014,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cloud",
@@ -2234,8 +2036,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud"
     ],
@@ -2243,8 +2043,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cloud_lightning",
@@ -2267,8 +2066,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud lightning.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "lightning"
@@ -2277,8 +2074,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cloud_snow",
@@ -2301,8 +2097,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud snow.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "snow"
@@ -2311,8 +2105,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:codesandbox",
@@ -2337,8 +2130,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official CodeSandbox brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "CodeSandbox"
     ],
@@ -2346,8 +2137,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:columns_2",
@@ -2370,8 +2160,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing columns.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "columns",
       "2"
@@ -2380,8 +2168,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:columns_3",
@@ -2404,8 +2191,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing columns.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "columns",
       "3"
@@ -2414,8 +2199,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:combine",
@@ -2437,8 +2221,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing combine.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "combine"
     ],
@@ -2446,8 +2228,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:command",
@@ -2469,8 +2250,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing command.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "command"
     ],
@@ -2478,8 +2257,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:compass",
@@ -2501,8 +2279,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing compass.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "compass"
     ],
@@ -2510,8 +2286,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:computer",
@@ -2533,8 +2308,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing computer.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "computer"
     ],
@@ -2542,8 +2315,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cookie",
@@ -2565,8 +2337,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cookie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cookie"
     ],
@@ -2574,8 +2344,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:copyright",
@@ -2597,8 +2366,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copyright.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copyright"
     ],
@@ -2606,8 +2373,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cross",
@@ -2629,8 +2395,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cross.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cross"
     ],
@@ -2638,8 +2402,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:cylinder",
@@ -2661,8 +2424,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cylinder.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cylinder"
     ],
@@ -2670,8 +2431,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:diamond",
@@ -2693,8 +2453,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing diamond.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "diamond"
     ],
@@ -2702,8 +2460,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:disc",
@@ -2725,8 +2482,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing disc.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "disc"
     ],
@@ -2734,8 +2489,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:dog",
@@ -2757,8 +2511,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dog.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dog"
     ],
@@ -2766,8 +2518,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:donut",
@@ -2789,8 +2540,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing donut.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "donut"
     ],
@@ -2798,8 +2547,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:dribbble",
@@ -2824,8 +2572,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Dribbble brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Dribbble"
     ],
@@ -2833,8 +2579,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:drone",
@@ -2859,8 +2604,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Drone brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Drone"
     ],
@@ -2868,8 +2611,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:drum",
@@ -2891,8 +2633,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing drum.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "drum"
     ],
@@ -2900,8 +2640,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:ear",
@@ -2923,8 +2662,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ear.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ear"
     ],
@@ -2932,8 +2669,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:earth",
@@ -2955,8 +2691,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing earth.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "earth"
     ],
@@ -2964,8 +2698,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:egg",
@@ -2987,8 +2720,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing egg.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "egg"
     ],
@@ -2996,8 +2727,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:eraser",
@@ -3022,8 +2752,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Eraser brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Eraser"
     ],
@@ -3031,8 +2759,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:facebook",
@@ -3057,8 +2784,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Facebook brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Facebook"
     ],
@@ -3066,8 +2791,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:factory",
@@ -3089,8 +2813,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing factory.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "factory"
     ],
@@ -3098,8 +2820,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fan",
@@ -3124,8 +2845,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A fan or rotor symbol.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fan",
       "airflow device",
@@ -3136,8 +2855,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:ferris_wheel",
@@ -3160,8 +2878,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ferris wheel.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ferris",
       "wheel"
@@ -3170,8 +2886,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:figma",
@@ -3196,8 +2911,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Figma brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "Figma"
     ],
@@ -3205,8 +2918,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:files",
@@ -3231,8 +2943,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Files brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Files"
     ],
@@ -3240,8 +2950,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:film",
@@ -3263,8 +2972,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing film.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "film"
     ],
@@ -3272,8 +2979,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fingerprint",
@@ -3295,8 +3001,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fingerprint.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fingerprint"
     ],
@@ -3304,8 +3008,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fish",
@@ -3327,8 +3030,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fish.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fish"
     ],
@@ -3336,8 +3037,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flag",
@@ -3363,8 +3063,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Flagged state shown as a compact interface mark.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "flagged",
       "flagged item",
@@ -3375,8 +3073,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flame",
@@ -3398,8 +3095,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flame.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flame"
     ],
@@ -3407,8 +3102,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flashlight",
@@ -3430,8 +3124,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flashlight.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flashlight"
     ],
@@ -3439,8 +3131,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flip_horizontal",
@@ -3463,8 +3154,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flip horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flip",
       "horizontal"
@@ -3473,8 +3162,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flip_vertical",
@@ -3497,8 +3185,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flip vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flip",
       "vertical"
@@ -3507,8 +3193,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flower",
@@ -3533,8 +3218,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Flower brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Flower"
     ],
@@ -3542,8 +3225,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:flower_2",
@@ -3566,8 +3248,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flower.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flower",
       "2"
@@ -3576,8 +3256,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fold_horizontal",
@@ -3600,8 +3279,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fold horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fold",
       "horizontal"
@@ -3610,8 +3287,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fold_vertical",
@@ -3634,8 +3310,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fold vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fold",
       "vertical"
@@ -3644,8 +3318,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:folders",
@@ -3667,8 +3340,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing folders.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "folders"
     ],
@@ -3676,8 +3347,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:fork_knife",
@@ -3700,8 +3370,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fork knife.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fork",
       "knife"
@@ -3710,8 +3378,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:frame",
@@ -3733,8 +3400,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing frame.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "frame"
     ],
@@ -3742,8 +3407,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:framer",
@@ -3768,8 +3432,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Framer brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "Framer"
     ],
@@ -3777,8 +3439,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:ghost",
@@ -3803,8 +3464,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Ghost brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Ghost"
     ],
@@ -3812,8 +3471,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:gift",
@@ -3835,8 +3493,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing gift.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "gift"
     ],
@@ -3844,8 +3500,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:git_branch",
@@ -3868,8 +3523,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git branch.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "branch"
@@ -3878,8 +3531,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:git_commit",
@@ -3902,8 +3554,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git commit.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "commit"
@@ -3912,8 +3562,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:git_compare",
@@ -3936,8 +3585,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git compare.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "compare"
@@ -3946,8 +3593,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:git_merge",
@@ -3970,8 +3616,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git merge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "merge"
@@ -3980,8 +3624,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:git_pull_request",
@@ -4005,8 +3648,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git pull request.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "pull",
@@ -4016,8 +3657,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:github",
@@ -4042,8 +3682,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official GitHub brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "GitHub"
     ],
@@ -4051,8 +3689,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:gitlab",
@@ -4077,8 +3714,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official GitLab brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "GitLab"
     ],
@@ -4086,8 +3721,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:globe",
@@ -4109,8 +3743,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing globe.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "globe"
     ],
@@ -4118,8 +3750,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:globe_2",
@@ -4142,8 +3773,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing globe.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "globe",
       "2"
@@ -4152,8 +3781,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:grab",
@@ -4178,8 +3806,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Grab brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Grab"
     ],
@@ -4187,8 +3813,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:group",
@@ -4210,8 +3835,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing group.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "group"
     ],
@@ -4219,8 +3842,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:guitar",
@@ -4242,8 +3864,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing guitar.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "guitar"
     ],
@@ -4251,8 +3871,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hamburger",
@@ -4274,8 +3893,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hamburger.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hamburger"
     ],
@@ -4283,8 +3900,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hammer",
@@ -4306,8 +3922,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hammer.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hammer"
     ],
@@ -4315,8 +3929,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hand",
@@ -4338,8 +3951,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hand.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hand"
     ],
@@ -4347,8 +3958,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hand_grab",
@@ -4371,8 +3981,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hand grab.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hand",
       "grab"
@@ -4381,8 +3989,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hand_heart",
@@ -4405,8 +4012,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hand heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "hand",
       "heart"
@@ -4415,8 +4020,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:handshake",
@@ -4441,8 +4045,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Handshake brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Handshake"
     ],
@@ -4450,8 +4052,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:haze",
@@ -4473,8 +4074,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing haze.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "haze"
     ],
@@ -4482,8 +4081,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:heading_1",
@@ -4506,8 +4104,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing heading.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "heading",
       "1"
@@ -4516,8 +4112,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:heading_2",
@@ -4540,8 +4135,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing heading.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "heading",
       "2"
@@ -4550,8 +4143,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:heading_3",
@@ -4574,8 +4166,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing heading.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "heading",
       "3"
@@ -4584,8 +4174,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:heart",
@@ -4611,8 +4200,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A heart symbol used for likes, favorites, or affection.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "heart",
       "liked item",
@@ -4623,8 +4210,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:heart_crack",
@@ -4647,8 +4233,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing heart crack.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "heart",
       "crack"
@@ -4657,8 +4241,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:help_circle",
@@ -4684,8 +4267,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A circled help symbol.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "help center",
       "need help",
@@ -4696,8 +4277,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hexagon",
@@ -4719,8 +4299,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hexagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hexagon"
     ],
@@ -4728,8 +4306,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:history",
@@ -4751,8 +4328,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing history.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "history"
     ],
@@ -4760,8 +4335,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hop",
@@ -4783,8 +4357,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hop"
     ],
@@ -4792,8 +4364,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hospital",
@@ -4815,8 +4386,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hospital.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hospital"
     ],
@@ -4824,8 +4393,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hotel",
@@ -4847,8 +4415,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hotel.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hotel"
     ],
@@ -4856,8 +4422,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:hourglass",
@@ -4883,8 +4448,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An hourglass used for waiting or process time.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "in progress wait",
       "pending delay",
@@ -4895,8 +4458,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:house",
@@ -4918,8 +4480,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing house.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "house"
     ],
@@ -4927,8 +4487,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:ice_cream",
@@ -4951,8 +4510,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ice cream.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ice",
       "cream"
@@ -4961,8 +4518,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:ice_cream_2",
@@ -4986,8 +4542,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ice cream.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ice",
       "cream",
@@ -4997,8 +4551,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:inbox",
@@ -5020,8 +4573,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing inbox.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "inbox"
     ],
@@ -5029,8 +4580,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:indent_decrease",
@@ -5053,8 +4603,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing indent decrease.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "indent",
       "decrease"
@@ -5063,8 +4611,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:indent_increase",
@@ -5087,8 +4634,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing indent increase.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "indent",
       "increase"
@@ -5097,8 +4642,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:inspect",
@@ -5120,8 +4664,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing inspect.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "inspect"
     ],
@@ -5129,8 +4671,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:instagram",
@@ -5155,8 +4696,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Instagram brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Instagram"
     ],
@@ -5164,8 +4703,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:italic",
@@ -5187,8 +4725,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing italic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "italic"
     ],
@@ -5196,8 +4732,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:keyboard",
@@ -5219,8 +4754,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing keyboard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "keyboard"
     ],
@@ -5228,8 +4761,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:laptop",
@@ -5251,8 +4783,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing laptop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "laptop"
     ],
@@ -5260,8 +4790,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:laptop_2",
@@ -5284,8 +4813,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing laptop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "laptop",
       "2"
@@ -5294,8 +4821,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:laugh",
@@ -5317,8 +4843,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing laugh.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "laugh"
     ],
@@ -5326,8 +4850,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:layers",
@@ -5349,8 +4872,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing layers.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "layers"
     ],
@@ -5358,8 +4879,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:layers_3",
@@ -5385,8 +4905,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "System Layers shown as a structured process or layered system symbol.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "system layers",
       "system layers view",
@@ -5397,8 +4915,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:leaf",
@@ -5420,8 +4937,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing leaf.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "leaf"
     ],
@@ -5429,8 +4944,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:loader_2",
@@ -5456,8 +4970,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A spinning or circular loader indicator.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "loading state",
       "working",
@@ -5468,8 +4980,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:lollipop",
@@ -5491,8 +5002,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing lollipop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "lollipop"
     ],
@@ -5500,8 +5009,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:luggage",
@@ -5523,8 +5031,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing luggage.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "luggage"
     ],
@@ -5532,8 +5038,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:magnet",
@@ -5555,8 +5060,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing magnet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "magnet"
     ],
@@ -5564,8 +5067,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mailbox",
@@ -5590,8 +5092,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official mailbox brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "mailbox"
     ],
@@ -5599,8 +5099,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:map",
@@ -5622,8 +5121,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing map.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "map"
     ],
@@ -5631,8 +5128,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:map_pin",
@@ -5658,8 +5154,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A location pin marker.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "location pin",
       "map marker",
@@ -5670,8 +5164,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:medal",
@@ -5693,8 +5186,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing medal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "medal"
     ],
@@ -5702,8 +5193,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:meh",
@@ -5725,8 +5215,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing meh.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "meh"
     ],
@@ -5734,8 +5222,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:messages_square",
@@ -5761,8 +5248,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A message bubble with a communication or code detail.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "message threads",
       "chat threads",
@@ -5773,8 +5258,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mic",
@@ -5796,8 +5280,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mic"
     ],
@@ -5805,8 +5287,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mic_2",
@@ -5829,8 +5310,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mic",
       "2"
@@ -5839,8 +5318,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mic_off",
@@ -5863,8 +5341,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mic off.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mic",
       "off"
@@ -5873,8 +5349,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:microscope",
@@ -5896,8 +5371,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing microscope.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "microscope"
     ],
@@ -5905,8 +5378,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:minimize",
@@ -5928,8 +5400,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing minimize.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "minimize"
     ],
@@ -5937,8 +5407,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:minus_circle",
@@ -5961,8 +5430,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing minus circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "minus",
       "circle"
@@ -5971,8 +5438,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:minus_square",
@@ -5998,8 +5464,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A minus sign inside a square button.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "remove item",
       "minus action",
@@ -6010,8 +5474,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:monitor",
@@ -6033,8 +5496,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing monitor.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "monitor"
     ],
@@ -6042,8 +5503,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:moon",
@@ -6065,8 +5525,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing moon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "moon"
     ],
@@ -6074,8 +5532,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mountain",
@@ -6097,8 +5554,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mountain.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mountain"
     ],
@@ -6106,8 +5561,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:mouse",
@@ -6129,8 +5583,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mouse.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mouse"
     ],
@@ -6138,8 +5590,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:move",
@@ -6161,8 +5612,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing move.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "move"
     ],
@@ -6170,8 +5619,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:music",
@@ -6193,8 +5641,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing music.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "music"
     ],
@@ -6202,8 +5648,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:music_2",
@@ -6226,8 +5671,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing music.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "music",
       "2"
@@ -6236,8 +5679,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:music_3",
@@ -6260,8 +5702,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing music.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "music",
       "3"
@@ -6270,8 +5710,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:navigation",
@@ -6293,8 +5732,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing navigation.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "navigation"
     ],
@@ -6302,8 +5739,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:network",
@@ -6329,8 +5765,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Network shown as a connected system or branching structure.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "network",
       "connected system",
@@ -6341,8 +5775,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:nfc",
@@ -6367,8 +5800,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official NFC brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "NFC"
     ],
@@ -6376,8 +5807,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:notebook",
@@ -6399,8 +5829,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing notebook.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "notebook"
     ],
@@ -6408,8 +5836,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:octagon",
@@ -6431,8 +5858,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing octagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "octagon"
     ],
@@ -6440,8 +5865,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:omega",
@@ -6463,8 +5887,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing omega.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "omega"
     ],
@@ -6472,8 +5894,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:package",
@@ -6495,8 +5916,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing package.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "package"
     ],
@@ -6504,8 +5923,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:package_2",
@@ -6528,8 +5946,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing package.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "package",
       "2"
@@ -6538,8 +5954,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:palette",
@@ -6561,8 +5976,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing palette.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "palette"
     ],
@@ -6570,8 +5983,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:parentheses",
@@ -6593,8 +6005,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing parentheses.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "parentheses"
     ],
@@ -6602,8 +6012,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pen",
@@ -6625,8 +6034,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pen.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pen"
     ],
@@ -6634,8 +6041,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pen_line",
@@ -6657,8 +6063,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pen.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pen"
     ],
@@ -6666,8 +6070,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pencil",
@@ -6689,8 +6092,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pencil.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pencil"
     ],
@@ -6698,8 +6099,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pencil_line",
@@ -6721,8 +6121,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pencil.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pencil"
     ],
@@ -6730,8 +6128,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pencil_ruler",
@@ -6754,8 +6151,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pencil ruler.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pencil",
       "ruler"
@@ -6764,8 +6159,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pentagon",
@@ -6787,8 +6181,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pentagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pentagon"
     ],
@@ -6796,8 +6188,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:phone",
@@ -6819,8 +6210,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone"
     ],
@@ -6828,8 +6217,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:phone_call",
@@ -6852,8 +6240,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone call.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "call"
@@ -6862,8 +6248,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:phone_incoming",
@@ -6886,8 +6271,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone incoming.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "incoming"
@@ -6896,8 +6279,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:phone_off",
@@ -6920,8 +6302,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone off.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "off"
@@ -6930,8 +6310,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:phone_outgoing",
@@ -6954,8 +6333,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone outgoing.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone",
       "outgoing"
@@ -6964,8 +6341,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pin",
@@ -6991,8 +6367,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pin or pushpin symbol.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "pin item",
       "keep pinned",
@@ -7003,8 +6377,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:pizza",
@@ -7026,8 +6399,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pizza.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pizza"
     ],
@@ -7035,8 +6406,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:plane",
@@ -7061,8 +6431,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Plane brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Plane"
     ],
@@ -7070,8 +6438,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:projector",
@@ -7093,8 +6460,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing projector.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "projector"
     ],
@@ -7102,8 +6467,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:rabbit",
@@ -7125,8 +6489,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rabbit.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rabbit"
     ],
@@ -7134,8 +6496,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:radar",
@@ -7160,8 +6521,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Radar brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Radar"
     ],
@@ -7169,8 +6528,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:radio",
@@ -7192,8 +6550,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing radio.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "radio"
     ],
@@ -7201,8 +6557,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:rainbow",
@@ -7224,8 +6579,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rainbow.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rainbow"
     ],
@@ -7233,8 +6586,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:rectangle_vertical",
@@ -7257,8 +6609,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rectangle vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rectangle",
       "vertical"
@@ -7267,8 +6617,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:recycle",
@@ -7290,8 +6639,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing recycle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "recycle"
     ],
@@ -7299,8 +6646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:repeat",
@@ -7322,8 +6668,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing repeat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "repeat"
     ],
@@ -7331,8 +6675,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "lucide:rocket",
@@ -7357,8 +6700,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Rocket brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Rocket"
     ],
@@ -7366,7 +6707,6 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   }
 ]

@@ -67,8 +67,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar plus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "plus"
@@ -76,8 +74,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-plus",
@@ -114,8 +111,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing user plus.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "user",
           "plus"
@@ -123,8 +118,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user-plus",
@@ -162,8 +156,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "open file",
           "album file"
@@ -171,8 +163,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "album-open",
@@ -210,8 +201,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bin plus in.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bin",
           "plus",
@@ -220,8 +209,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bin-plus-in",
@@ -258,8 +246,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmark book.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmark",
           "book"
@@ -267,8 +253,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmark-book",
@@ -305,8 +290,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing bookmark circle.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "bookmark",
           "circle"
@@ -314,8 +297,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bookmark-circle",
@@ -353,8 +335,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "bubble file"
@@ -362,8 +342,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bubble-download",
@@ -401,8 +380,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "upload file",
           "bubble file"
@@ -410,8 +387,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "bubble-upload",
@@ -448,8 +424,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar minus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "minus"
@@ -457,8 +431,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-minus",
@@ -495,8 +468,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar rotate.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "rotate"
@@ -504,8 +475,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-rotate",
@@ -542,8 +512,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing calendar xmark.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "calendar",
           "xmark"
@@ -551,8 +519,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "calendar-xmark",
@@ -589,8 +556,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cart plus.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cart",
           "plus"
@@ -598,8 +563,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cart-plus",
@@ -636,8 +600,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cloud bookmark.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cloud",
           "bookmark"
@@ -645,8 +607,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cloud-bookmark",
@@ -684,8 +645,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "cloud file"
@@ -693,8 +652,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cloud-download",
@@ -732,8 +690,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "upload file",
           "cloud file"
@@ -741,8 +697,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cloud-upload",
@@ -780,8 +735,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "circle file"
@@ -789,8 +742,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "download-circle",
@@ -829,8 +781,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "data file",
@@ -839,8 +789,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "download-data-window",
@@ -878,8 +827,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "square file"
@@ -887,8 +834,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "download-square",
@@ -925,8 +871,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing edit pencil.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "edit",
           "pencil"
@@ -934,8 +878,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "edit-pencil",
@@ -974,8 +917,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing floppy disk arrow in.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "floppy",
           "disk",
@@ -985,8 +926,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "floppy-disk-arrow-in",
@@ -1025,8 +965,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing floppy disk arrow out.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "floppy",
           "disk",
@@ -1036,8 +974,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "floppy-disk-arrow-out",
@@ -1075,8 +1012,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing frame plus in.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "frame",
           "plus",
@@ -1085,8 +1020,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "frame-plus-in",

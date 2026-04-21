@@ -10,8 +10,6 @@
       "depicts": "A file paired with an archive zipper cue.",
       "purpose": "Show archiving, compressing, or opening a file archive.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "archive file",
         "compressed file",
@@ -31,8 +29,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_clock",
@@ -42,8 +40,6 @@
       "depicts": "A file paired with a clock cue.",
       "purpose": "Show a file tied to time, schedule, or recency.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "timed file",
         "scheduled file",
@@ -63,8 +59,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_edit",
@@ -74,8 +70,6 @@
       "depicts": "A file paired with an edit cue.",
       "purpose": "Show editing or updating a file or document.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit file",
         "update file",
@@ -95,8 +89,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_play",
@@ -106,8 +100,6 @@
       "depicts": "A file paired with a play cue.",
       "purpose": "Show playing, previewing, or opening a playable media file.",
       "category": "media_playback",
-      "intent": "act",
-      "domain": "media",
       "semantic_tags": [
         "play file",
         "media file",
@@ -127,8 +119,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_plus",
@@ -138,8 +130,6 @@
       "depicts": "A file paired with an add cue inside the file boundary.",
       "purpose": "Show creating or adding a new file or document.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new file",
         "create file",
@@ -159,8 +149,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_plus_2",
@@ -170,8 +160,6 @@
       "depicts": "A file paired with an add cue outside the file boundary.",
       "purpose": "Show adding a file into the current context.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add file",
         "insert file",
@@ -191,8 +179,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_scan",
@@ -202,8 +190,6 @@
       "depicts": "A file paired with a scan-target cue.",
       "purpose": "Show scanning, inspecting, or capturing a document file.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan file",
         "document scan",
@@ -223,8 +209,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_user",
@@ -234,8 +220,6 @@
       "depicts": "A file paired with a user silhouette.",
       "purpose": "Show a file tied to a user, profile, or account record.",
       "category": "communication_social",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user file",
         "profile document",
@@ -255,8 +239,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_x",
@@ -266,8 +250,6 @@
       "depicts": "A file paired with a remove cue.",
       "purpose": "Show removing, clearing, or rejecting a file.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove file",
         "delete file",
@@ -287,8 +269,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:file_x_2",
@@ -298,8 +280,6 @@
       "depicts": "A file paired with an external remove cue.",
       "purpose": "Show removing or detaching a file from the current context.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove file",
         "delete file",
@@ -319,8 +299,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_archive",
@@ -330,8 +310,6 @@
       "depicts": "A folder paired with an archive zipper cue.",
       "purpose": "Show archiving, compressing, or opening a folder archive.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "archive folder",
         "compressed folder",
@@ -351,8 +329,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_clock",
@@ -362,8 +340,6 @@
       "depicts": "A folder paired with a clock cue.",
       "purpose": "Show a folder tied to time, schedule, or recency.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "timed folder",
         "scheduled folder",
@@ -383,8 +359,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.78,
-      "confidence_band": "medium"
+      "routing_score": 0.78,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_edit",
@@ -394,8 +370,6 @@
       "depicts": "A folder paired with an edit cue.",
       "purpose": "Show editing or renaming a folder or directory.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "edit folder",
         "rename folder",
@@ -415,8 +389,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_open_dot",
@@ -426,8 +400,6 @@
       "depicts": "An open folder paired with a small status dot.",
       "purpose": "Show an open folder with an active, current, or highlighted marker.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "active folder",
         "current folder",
@@ -447,8 +419,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.77,
-      "confidence_band": "medium"
+      "routing_score": 0.77,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_plus",
@@ -458,8 +430,6 @@
       "depicts": "A folder paired with an add cue.",
       "purpose": "Show creating or adding a new folder or directory.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new folder",
         "create folder",
@@ -479,8 +449,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:folder_x",
@@ -490,8 +460,6 @@
       "depicts": "A folder paired with a remove cue.",
       "purpose": "Show removing, clearing, or rejecting a folder.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove folder",
         "delete folder",
@@ -511,8 +479,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "lucide:bug_play",
@@ -522,8 +490,6 @@
       "depicts": "A bug symbol paired with a play cue.",
       "purpose": "Show replaying or running a bug scenario during testing or debugging.",
       "category": "engineering_developer_tools",
-      "intent": "act",
-      "domain": "developer_tools",
       "semantic_tags": [
         "bug replay",
         "debug run",
@@ -543,8 +509,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.72,
-      "confidence_band": "medium"
+      "routing_score": 0.72,
+      "routing_band": "medium"
     }
   ]
 }

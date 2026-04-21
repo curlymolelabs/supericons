@@ -10,8 +10,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "music"
@@ -27,8 +25,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_star",
@@ -38,8 +36,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "star"
@@ -55,8 +51,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_star",
@@ -66,8 +62,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "star"
@@ -83,8 +77,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_heart",
@@ -94,8 +88,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "User Heart action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -115,8 +107,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:user_star",
@@ -126,8 +118,6 @@
       "depicts": "A user silhouette paired with a specific account action or status cue.",
       "purpose": "User Star action or status for a user profile or account.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "profile action",
@@ -147,8 +137,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:abs",
@@ -158,8 +148,6 @@
       "depicts": "A symbol representing abs.",
       "purpose": "Show abs as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "abs"
       ],
@@ -172,8 +160,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:ad_circle",
@@ -183,8 +171,6 @@
       "depicts": "A symbol representing ad circle.",
       "purpose": "Show ad circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ad",
         "circle"
@@ -199,8 +185,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:ad_circle_off",
@@ -210,8 +196,6 @@
       "depicts": "A symbol representing ad circle off.",
       "purpose": "Show ad circle off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ad",
         "circle",
@@ -228,8 +212,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:ad_rectangle",
@@ -239,8 +223,6 @@
       "depicts": "A symbol representing ad rectangle.",
       "purpose": "Show ad rectangle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ad",
         "rectangle"
@@ -255,8 +237,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:ad_rectangle_off",
@@ -266,8 +248,6 @@
       "depicts": "A symbol representing ad rectangle off.",
       "purpose": "Show ad rectangle off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "ad",
         "rectangle",
@@ -284,8 +264,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:add_circle_dash",
@@ -295,8 +275,6 @@
       "depicts": "A symbol representing add circle dash.",
       "purpose": "Show add circle dash as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add",
         "circle",
@@ -313,8 +291,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:add_circle",
@@ -324,8 +302,6 @@
       "depicts": "A symbol representing add circle.",
       "purpose": "Show add circle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add",
         "circle"
@@ -340,8 +316,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:add",
@@ -351,8 +327,6 @@
       "depicts": "A symbol representing add.",
       "purpose": "Show add as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "add"
       ],
@@ -365,8 +339,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aerial_lift",
@@ -376,8 +350,6 @@
       "depicts": "A symbol representing aerial lift.",
       "purpose": "Show aerial lift as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aerial",
         "lift"
@@ -392,8 +364,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aiming_2",
@@ -403,8 +375,6 @@
       "depicts": "A symbol representing aiming.",
       "purpose": "Show aiming as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aiming",
         "2"
@@ -419,8 +389,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aiming",
@@ -430,8 +400,6 @@
       "depicts": "A symbol representing aiming.",
       "purpose": "Show aiming as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aiming"
       ],
@@ -444,8 +412,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:air_balloon",
@@ -455,8 +423,6 @@
       "depicts": "A symbol representing air balloon.",
       "purpose": "Show air balloon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "air",
         "balloon"
@@ -471,8 +437,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:air_condition",
@@ -482,8 +448,6 @@
       "depicts": "A symbol representing air condition.",
       "purpose": "Show air condition as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "air",
         "condition"
@@ -498,8 +462,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airbnb",
@@ -509,8 +473,6 @@
       "depicts": "A symbol representing airbnb.",
       "purpose": "Show airbnb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airbnb"
       ],
@@ -523,8 +485,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airdrop",
@@ -534,8 +496,6 @@
       "depicts": "A symbol representing airdrop.",
       "purpose": "Show airdrop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airdrop"
       ],
@@ -548,8 +508,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airplane",
@@ -559,8 +519,6 @@
       "depicts": "A symbol representing airplane.",
       "purpose": "Show airplane as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "navigation",
       "semantic_tags": [
         "airplane"
       ],
@@ -573,8 +531,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airplay",
@@ -584,8 +542,6 @@
       "depicts": "A symbol representing airplay.",
       "purpose": "Show airplay as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airplay"
       ],
@@ -598,8 +554,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airpods_2",
@@ -609,8 +565,6 @@
       "depicts": "A symbol representing airpods.",
       "purpose": "Show airpods as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airpods",
         "2"
@@ -625,8 +579,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:airpods",
@@ -636,8 +590,6 @@
       "depicts": "A symbol representing airpods.",
       "purpose": "Show airpods as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "airpods"
       ],
@@ -650,8 +602,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:alarm_1",
@@ -661,8 +613,6 @@
       "depicts": "A symbol representing alarm.",
       "purpose": "Show alarm as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "1"
@@ -677,8 +627,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:alarm_2",
@@ -688,8 +638,6 @@
       "depicts": "A symbol representing alarm.",
       "purpose": "Show alarm as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alarm",
         "2"
@@ -704,8 +652,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:album_2",
@@ -715,8 +663,6 @@
       "depicts": "A symbol representing album.",
       "purpose": "Show album as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "album",
         "2"
@@ -731,8 +677,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:album",
@@ -742,8 +688,6 @@
       "depicts": "A symbol representing album.",
       "purpose": "Show album as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "media",
       "semantic_tags": [
         "album"
       ],
@@ -756,8 +700,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:alipay",
@@ -767,8 +711,6 @@
       "depicts": "A symbol representing alipay.",
       "purpose": "Show alipay as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "alipay"
       ],
@@ -781,8 +723,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:american_football",
@@ -792,8 +734,6 @@
       "depicts": "A symbol representing american football.",
       "purpose": "Show american football as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "american",
         "football"
@@ -808,8 +748,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:anchor",
@@ -819,8 +759,6 @@
       "depicts": "A symbol representing anchor.",
       "purpose": "Show anchor as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "anchor"
       ],
@@ -833,8 +771,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:and",
@@ -844,8 +782,6 @@
       "depicts": "A symbol representing and.",
       "purpose": "Show and as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "and"
       ],
@@ -858,8 +794,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:android_2",
@@ -869,8 +805,6 @@
       "depicts": "A symbol representing android.",
       "purpose": "Show android as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "android",
         "2"
@@ -885,8 +819,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:android",
@@ -896,8 +830,6 @@
       "depicts": "A symbol representing android.",
       "purpose": "Show android as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "android"
       ],
@@ -910,8 +842,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:angel",
@@ -921,8 +853,6 @@
       "depicts": "A symbol representing angel.",
       "purpose": "Show angel as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "angel"
       ],
@@ -935,8 +865,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:angry",
@@ -946,8 +876,6 @@
       "depicts": "A symbol representing angry.",
       "purpose": "Show angry as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "angry"
       ],
@@ -960,8 +888,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:anniversary",
@@ -971,8 +899,6 @@
       "depicts": "A symbol representing anniversary.",
       "purpose": "Show anniversary as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "anniversary"
       ],
@@ -985,8 +911,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:announcement",
@@ -996,8 +922,6 @@
       "depicts": "A symbol representing announcement.",
       "purpose": "Show announcement as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "announcement"
       ],
@@ -1010,8 +934,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:anticlockwise_alt",
@@ -1021,8 +945,6 @@
       "depicts": "A symbol representing anticlockwise alt.",
       "purpose": "Show anticlockwise alt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "anticlockwise",
         "alt"
@@ -1037,8 +959,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:anticlockwise",
@@ -1048,8 +970,6 @@
       "depicts": "A symbol representing anticlockwise.",
       "purpose": "Show anticlockwise as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "anticlockwise"
       ],
@@ -1062,8 +982,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:apple_fruit",
@@ -1073,8 +993,6 @@
       "depicts": "A symbol representing apple fruit.",
       "purpose": "Show apple fruit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "apple",
         "fruit"
@@ -1089,8 +1007,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:apple_intelligence_frame",
@@ -1100,8 +1018,6 @@
       "depicts": "A symbol representing apple intelligence frame.",
       "purpose": "Show apple intelligence frame as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "apple",
         "intelligence",
@@ -1118,8 +1034,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:apple_intelligence",
@@ -1129,8 +1045,6 @@
       "depicts": "A symbol representing apple intelligence.",
       "purpose": "Show apple intelligence as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "apple",
         "intelligence"
@@ -1145,8 +1059,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:apple",
@@ -1156,8 +1070,6 @@
       "depicts": "A symbol representing apple.",
       "purpose": "Show apple as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "apple"
       ],
@@ -1170,8 +1082,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:appstore",
@@ -1181,8 +1093,6 @@
       "depicts": "A symbol representing appstore.",
       "purpose": "Show appstore as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "appstore"
       ],
@@ -1195,8 +1105,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aquarius",
@@ -1206,8 +1116,6 @@
       "depicts": "A symbol representing aquarius.",
       "purpose": "Show aquarius as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aquarius"
       ],
@@ -1220,8 +1128,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:arc_browser",
@@ -1231,8 +1139,6 @@
       "depicts": "A symbol representing arc browser.",
       "purpose": "Show arc browser as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arc",
         "browser"
@@ -1247,8 +1153,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aries",
@@ -1258,8 +1164,6 @@
       "depicts": "A symbol representing aries.",
       "purpose": "Show aries as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aries"
       ],
@@ -1272,8 +1176,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:artboard",
@@ -1283,8 +1187,6 @@
       "depicts": "A symbol representing artboard.",
       "purpose": "Show artboard as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "artboard"
       ],
@@ -1297,8 +1199,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:aspect_ratio",
@@ -1308,8 +1210,6 @@
       "depicts": "A symbol representing aspect ratio.",
       "purpose": "Show aspect ratio as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "aspect",
         "ratio"
@@ -1324,8 +1224,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:asterisk_2",
@@ -1335,8 +1235,6 @@
       "depicts": "A symbol representing asterisk.",
       "purpose": "Show asterisk as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "asterisk",
         "2"
@@ -1351,8 +1249,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:asterisk",
@@ -1362,8 +1260,6 @@
       "depicts": "A symbol representing asterisk.",
       "purpose": "Show asterisk as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "asterisk"
       ],
@@ -1376,8 +1272,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:at",
@@ -1387,8 +1283,6 @@
       "depicts": "A symbol representing at.",
       "purpose": "Show at as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "at"
       ],
@@ -1401,8 +1295,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:attachment_2",
@@ -1412,8 +1306,6 @@
       "depicts": "A symbol representing attachment.",
       "purpose": "Show attachment as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "attachment",
         "2"
@@ -1428,8 +1320,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:attachment_3",
@@ -1439,8 +1331,6 @@
       "depicts": "A symbol representing attachment.",
       "purpose": "Show attachment as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "attachment",
         "3"
@@ -1455,8 +1345,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:attachment",
@@ -1466,8 +1356,6 @@
       "depicts": "A symbol representing attachment.",
       "purpose": "Show attachment as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "attachment"
       ],
@@ -1480,8 +1368,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:auction",
@@ -1491,8 +1379,6 @@
       "depicts": "A symbol representing auction.",
       "purpose": "Show auction as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "auction"
       ],
@@ -1505,8 +1391,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:audio_tape",
@@ -1516,8 +1402,6 @@
       "depicts": "A symbol representing audio tape.",
       "purpose": "Show audio tape as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "audio",
         "tape"
@@ -1532,8 +1416,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:auto_hold",
@@ -1543,8 +1427,6 @@
       "depicts": "A symbol representing auto hold.",
       "purpose": "Show auto hold as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "auto",
         "hold"
@@ -1559,8 +1441,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:avalanche_avax",
@@ -1570,8 +1452,6 @@
       "depicts": "A symbol representing avalanche avax.",
       "purpose": "Show avalanche avax as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "avalanche",
         "avax"
@@ -1586,8 +1466,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:award",
@@ -1597,8 +1477,6 @@
       "depicts": "A symbol representing award.",
       "purpose": "Show award as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "award"
       ],
@@ -1611,8 +1489,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:axe",
@@ -1622,8 +1500,6 @@
       "depicts": "A symbol representing axe.",
       "purpose": "Show axe as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "axe"
       ],
@@ -1636,8 +1512,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:baby_carriage",
@@ -1647,8 +1523,6 @@
       "depicts": "A symbol representing baby carriage.",
       "purpose": "Show baby carriage as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baby",
         "carriage"
@@ -1663,8 +1537,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:baby",
@@ -1674,8 +1548,6 @@
       "depicts": "A symbol representing baby.",
       "purpose": "Show baby as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baby"
       ],
@@ -1688,8 +1560,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:backboard",
@@ -1699,8 +1571,6 @@
       "depicts": "A symbol representing backboard.",
       "purpose": "Show backboard as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "backboard"
       ],
@@ -1713,8 +1583,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:background",
@@ -1724,8 +1594,6 @@
       "depicts": "A symbol representing background.",
       "purpose": "Show background as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "background"
       ],
@@ -1738,8 +1606,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:backpack",
@@ -1749,8 +1617,6 @@
       "depicts": "A symbol representing backpack.",
       "purpose": "Show backpack as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "backpack"
       ],
@@ -1763,8 +1629,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:badge",
@@ -1774,8 +1640,6 @@
       "depicts": "A symbol representing badge.",
       "purpose": "Show badge as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badge"
       ],
@@ -1788,8 +1652,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:badminton",
@@ -1799,8 +1663,6 @@
       "depicts": "A symbol representing badminton.",
       "purpose": "Show badminton as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "badminton"
       ],
@@ -1813,8 +1675,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:balance",
@@ -1824,8 +1686,6 @@
       "depicts": "A symbol representing balance.",
       "purpose": "Show balance as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "balance"
       ],
@@ -1838,8 +1698,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:balloon_2",
@@ -1849,8 +1709,6 @@
       "depicts": "A symbol representing balloon.",
       "purpose": "Show balloon as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "balloon",
         "2"
@@ -1865,8 +1723,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bank_card",
@@ -1876,8 +1734,6 @@
       "depicts": "A symbol representing bank card.",
       "purpose": "Show bank card as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bank",
         "card"
@@ -1892,8 +1748,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bank",
@@ -1903,8 +1759,6 @@
       "depicts": "A symbol representing bank.",
       "purpose": "Show bank as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bank"
       ],
@@ -1917,8 +1771,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bank_of_china_tower",
@@ -1928,8 +1782,6 @@
       "depicts": "A symbol representing bank of china tower.",
       "purpose": "Show bank of china tower as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bank",
         "of",
@@ -1948,8 +1800,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:barbell",
@@ -1959,8 +1811,6 @@
       "depicts": "A symbol representing barbell.",
       "purpose": "Show barbell as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barbell"
       ],
@@ -1973,8 +1823,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:barcode",
@@ -1984,8 +1834,6 @@
       "depicts": "A symbol representing barcode.",
       "purpose": "Show barcode as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barcode"
       ],
@@ -1998,8 +1846,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:base_station_2",
@@ -2009,8 +1857,6 @@
       "depicts": "A symbol representing base station.",
       "purpose": "Show base station as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "base",
         "station",
@@ -2027,8 +1873,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:base_station",
@@ -2038,8 +1884,6 @@
       "depicts": "A symbol representing base station.",
       "purpose": "Show base station as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "base",
         "station"
@@ -2054,8 +1898,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:baseball_2",
@@ -2065,8 +1909,6 @@
       "depicts": "A symbol representing baseball.",
       "purpose": "Show baseball as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baseball",
         "2"
@@ -2081,8 +1923,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:baseball",
@@ -2092,8 +1934,6 @@
       "depicts": "A symbol representing baseball.",
       "purpose": "Show baseball as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "baseball"
       ],
@@ -2106,8 +1946,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:basket_2",
@@ -2117,8 +1957,6 @@
       "depicts": "A symbol representing basket.",
       "purpose": "Show basket as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basket",
         "2"
@@ -2133,8 +1971,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:basket",
@@ -2144,8 +1982,6 @@
       "depicts": "A symbol representing basket.",
       "purpose": "Show basket as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basket"
       ],
@@ -2158,8 +1994,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:basketball",
@@ -2169,8 +2005,6 @@
       "depicts": "A symbol representing basketball.",
       "purpose": "Show basketball as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "basketball"
       ],
@@ -2183,8 +2017,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bath",
@@ -2194,8 +2028,6 @@
       "depicts": "A symbol representing bath.",
       "purpose": "Show bath as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bath"
       ],
@@ -2208,8 +2040,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_1",
@@ -2219,8 +2051,6 @@
       "depicts": "A symbol representing battery.",
       "purpose": "Show battery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "1"
@@ -2235,8 +2065,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_2",
@@ -2246,8 +2076,6 @@
       "depicts": "A symbol representing battery.",
       "purpose": "Show battery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "2"
@@ -2262,8 +2090,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_3",
@@ -2273,8 +2101,6 @@
       "depicts": "A symbol representing battery.",
       "purpose": "Show battery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "3"
@@ -2289,8 +2115,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_4",
@@ -2300,8 +2126,6 @@
       "depicts": "A symbol representing battery.",
       "purpose": "Show battery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "4"
@@ -2316,8 +2140,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_automotive",
@@ -2327,8 +2151,6 @@
       "depicts": "A symbol representing battery automotive.",
       "purpose": "Show battery automotive as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "automotive"
@@ -2343,8 +2165,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery_charging",
@@ -2354,8 +2176,6 @@
       "depicts": "A symbol representing battery charging.",
       "purpose": "Show battery charging as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery",
         "charging"
@@ -2370,8 +2190,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:battery",
@@ -2381,8 +2201,6 @@
       "depicts": "A symbol representing battery.",
       "purpose": "Show battery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "battery"
       ],
@@ -2395,8 +2213,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:beachball",
@@ -2406,8 +2224,6 @@
       "depicts": "A symbol representing beachball.",
       "purpose": "Show beachball as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beachball"
       ],
@@ -2420,8 +2236,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bear",
@@ -2431,8 +2247,6 @@
       "depicts": "A symbol representing bear.",
       "purpose": "Show bear as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bear"
       ],
@@ -2445,8 +2259,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:beard",
@@ -2456,8 +2270,6 @@
       "depicts": "A symbol representing beard.",
       "purpose": "Show beard as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "beard"
       ],
@@ -2470,8 +2282,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bed_2",
@@ -2481,8 +2293,6 @@
       "depicts": "A symbol representing bed.",
       "purpose": "Show bed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed",
         "2"
@@ -2497,8 +2307,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bed",
@@ -2508,8 +2318,6 @@
       "depicts": "A symbol representing bed.",
       "purpose": "Show bed as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bed"
       ],
@@ -2522,8 +2330,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bedside_table_2",
@@ -2533,8 +2341,6 @@
       "depicts": "A symbol representing bedside table.",
       "purpose": "Show bedside table as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bedside",
         "table",
@@ -2551,8 +2357,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bedside_table",
@@ -2562,8 +2368,6 @@
       "depicts": "A symbol representing bedside table.",
       "purpose": "Show bedside table as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bedside",
         "table"
@@ -2578,8 +2382,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:behance",
@@ -2589,8 +2393,6 @@
       "depicts": "A symbol representing behance.",
       "purpose": "Show behance as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "behance"
       ],
@@ -2603,8 +2405,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:big_ben",
@@ -2614,8 +2416,6 @@
       "depicts": "A symbol representing big ben.",
       "purpose": "Show big ben as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "big",
         "ben"
@@ -2630,8 +2430,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bike",
@@ -2641,8 +2441,6 @@
       "depicts": "A symbol representing bike.",
       "purpose": "Show bike as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bike"
       ],
@@ -2655,8 +2453,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bilibili",
@@ -2666,8 +2464,6 @@
       "depicts": "A symbol representing bilibili.",
       "purpose": "Show bilibili as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bilibili"
       ],
@@ -2680,8 +2476,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bill_2",
@@ -2691,8 +2487,6 @@
       "depicts": "A symbol representing bill.",
       "purpose": "Show bill as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bill",
         "2"
@@ -2707,8 +2501,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bill",
@@ -2718,8 +2512,6 @@
       "depicts": "A symbol representing bill.",
       "purpose": "Show bill as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bill"
       ],
@@ -2732,8 +2524,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:binance_coin_bnb",
@@ -2743,8 +2535,6 @@
       "depicts": "A symbol representing binance coin bnb.",
       "purpose": "Show binance coin bnb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "binance",
         "coin",
@@ -2761,8 +2551,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:binance_usd_busd",
@@ -2772,8 +2562,6 @@
       "depicts": "A symbol representing binance usd busd.",
       "purpose": "Show binance usd busd as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "binance",
         "usd",
@@ -2790,8 +2578,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bird",
@@ -2801,8 +2589,6 @@
       "depicts": "A symbol representing bird.",
       "purpose": "Show bird as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bird"
       ],
@@ -2815,8 +2601,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:birthday_2",
@@ -2826,8 +2612,6 @@
       "depicts": "A symbol representing birthday.",
       "purpose": "Show birthday as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "birthday",
         "2"
@@ -2842,8 +2626,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:black_board_2",
@@ -2853,8 +2637,6 @@
       "depicts": "A symbol representing black board.",
       "purpose": "Show black board as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "black",
         "board",
@@ -2871,8 +2653,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:black_board",
@@ -2882,8 +2664,6 @@
       "depicts": "A symbol representing black board.",
       "purpose": "Show black board as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "black",
         "board"
@@ -2898,8 +2678,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:blessing",
@@ -2909,8 +2689,6 @@
       "depicts": "A symbol representing blessing.",
       "purpose": "Show blessing as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "blessing"
       ],
@@ -2923,8 +2701,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bling",
@@ -2934,8 +2712,6 @@
       "depicts": "A symbol representing bling.",
       "purpose": "Show bling as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bling"
       ],
@@ -2948,8 +2724,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:blockquote",
@@ -2959,8 +2735,6 @@
       "depicts": "A symbol representing blockquote.",
       "purpose": "Show blockquote as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "blockquote"
       ],
@@ -2973,8 +2747,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bluesky_social",
@@ -2984,8 +2758,6 @@
       "depicts": "A symbol representing bluesky social.",
       "purpose": "Show bluesky social as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluesky",
         "social"
@@ -3000,8 +2772,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bluetooth",
@@ -3011,8 +2783,6 @@
       "depicts": "A symbol representing bluetooth.",
       "purpose": "Show bluetooth as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluetooth"
       ],
@@ -3025,8 +2795,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bluetooth_off",
@@ -3036,8 +2806,6 @@
       "depicts": "A symbol representing bluetooth off.",
       "purpose": "Show bluetooth off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bluetooth",
         "off"
@@ -3052,8 +2820,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bnb",
@@ -3063,8 +2831,6 @@
       "depicts": "A symbol representing bnb.",
       "purpose": "Show bnb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bnb"
       ],
@@ -3077,8 +2843,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:board",
@@ -3088,8 +2854,6 @@
       "depicts": "A symbol representing board.",
       "purpose": "Show board as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "board"
       ],
@@ -3102,8 +2866,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:body",
@@ -3113,8 +2877,6 @@
       "depicts": "A symbol representing body.",
       "purpose": "Show body as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "body"
       ],
@@ -3127,8 +2889,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bold",
@@ -3138,8 +2900,6 @@
       "depicts": "A symbol representing bold.",
       "purpose": "Show bold as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bold"
       ],
@@ -3152,8 +2912,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bomb",
@@ -3163,8 +2923,6 @@
       "depicts": "A symbol representing bomb.",
       "purpose": "Show bomb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bomb"
       ],
@@ -3177,8 +2935,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bone",
@@ -3188,8 +2946,6 @@
       "depicts": "A symbol representing bone.",
       "purpose": "Show bone as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bone"
       ],
@@ -3202,8 +2958,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_2",
@@ -3213,8 +2969,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "2"
@@ -3229,8 +2983,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_3",
@@ -3240,8 +2994,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "3"
@@ -3256,8 +3008,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_4",
@@ -3267,8 +3019,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "4"
@@ -3283,8 +3033,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_5",
@@ -3294,8 +3044,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "5"
@@ -3310,8 +3058,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book_6",
@@ -3321,8 +3069,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book",
         "6"
@@ -3337,8 +3083,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:book",
@@ -3348,8 +3094,6 @@
       "depicts": "A symbol representing book.",
       "purpose": "Show book as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "book"
       ],
@@ -3362,8 +3106,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bookmark_add",
@@ -3373,8 +3117,6 @@
       "depicts": "A symbol representing bookmark add.",
       "purpose": "Show bookmark add as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "add"
@@ -3389,8 +3131,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bookmark_remove",
@@ -3400,8 +3142,6 @@
       "depicts": "A symbol representing bookmark remove.",
       "purpose": "Show bookmark remove as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmark",
         "remove"
@@ -3416,8 +3156,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bookmarks",
@@ -3427,8 +3167,6 @@
       "depicts": "A symbol representing bookmarks.",
       "purpose": "Show bookmarks as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bookmarks"
       ],
@@ -3441,8 +3179,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:boom",
@@ -3452,8 +3190,6 @@
       "depicts": "A symbol representing boom.",
       "purpose": "Show boom as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "boom"
       ],
@@ -3466,8 +3202,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bottle_glass",
@@ -3477,8 +3213,6 @@
       "depicts": "A symbol representing bottle glass.",
       "purpose": "Show bottle glass as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bottle",
         "glass"
@@ -3493,8 +3227,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bottle",
@@ -3504,8 +3238,6 @@
       "depicts": "A symbol representing bottle.",
       "purpose": "Show bottle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bottle"
       ],
@@ -3518,8 +3250,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bow_tie",
@@ -3529,8 +3261,6 @@
       "depicts": "A symbol representing bow tie.",
       "purpose": "Show bow tie as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bow",
         "tie"
@@ -3545,8 +3275,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bowknot",
@@ -3556,8 +3286,6 @@
       "depicts": "A symbol representing bowknot.",
       "purpose": "Show bowknot as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bowknot"
       ],
@@ -3570,8 +3298,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bowl_2",
@@ -3581,8 +3309,6 @@
       "depicts": "A symbol representing bowl.",
       "purpose": "Show bowl as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bowl",
         "2"
@@ -3597,8 +3323,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bowl",
@@ -3608,8 +3334,6 @@
       "depicts": "A symbol representing bowl.",
       "purpose": "Show bowl as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bowl"
       ],
@@ -3622,8 +3346,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:box_2",
@@ -3633,8 +3357,6 @@
       "depicts": "A symbol representing box.",
       "purpose": "Show box as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "box",
         "2"
@@ -3649,8 +3371,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:box_3",
@@ -3660,8 +3382,6 @@
       "depicts": "A symbol representing box.",
       "purpose": "Show box as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "box",
         "3"
@@ -3676,8 +3396,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:box_4",
@@ -3687,8 +3407,6 @@
       "depicts": "A symbol representing box.",
       "purpose": "Show box as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "box",
         "4"
@@ -3703,8 +3421,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:box",
@@ -3714,8 +3432,6 @@
       "depicts": "A symbol representing box.",
       "purpose": "Show box as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "box"
       ],
@@ -3728,8 +3444,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:braces",
@@ -3739,8 +3455,6 @@
       "depicts": "A symbol representing braces.",
       "purpose": "Show braces as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "braces"
       ],
@@ -3753,8 +3467,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brackets_angle",
@@ -3764,8 +3478,6 @@
       "depicts": "A symbol representing brackets angle.",
       "purpose": "Show brackets angle as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brackets",
         "angle"
@@ -3780,8 +3492,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brackets",
@@ -3791,8 +3503,6 @@
       "depicts": "A symbol representing brackets.",
       "purpose": "Show brackets as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brackets"
       ],
@@ -3805,8 +3515,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brake",
@@ -3816,8 +3526,6 @@
       "depicts": "A symbol representing brake.",
       "purpose": "Show brake as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brake"
       ],
@@ -3830,8 +3538,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bread",
@@ -3841,8 +3549,6 @@
       "depicts": "A symbol representing bread.",
       "purpose": "Show bread as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bread"
       ],
@@ -3855,8 +3561,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bridge_2",
@@ -3866,8 +3572,6 @@
       "depicts": "A symbol representing bridge.",
       "purpose": "Show bridge as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bridge",
         "2"
@@ -3882,8 +3586,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bridge",
@@ -3893,8 +3597,6 @@
       "depicts": "A symbol representing bridge.",
       "purpose": "Show bridge as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bridge"
       ],
@@ -3907,8 +3609,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brief",
@@ -3918,8 +3620,6 @@
       "depicts": "A symbol representing brief.",
       "purpose": "Show brief as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brief"
       ],
@@ -3932,8 +3632,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:briefcase_2",
@@ -3943,8 +3643,6 @@
       "depicts": "A symbol representing briefcase.",
       "purpose": "Show briefcase as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase",
         "2"
@@ -3959,8 +3657,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:briefcase",
@@ -3970,8 +3668,6 @@
       "depicts": "A symbol representing briefcase.",
       "purpose": "Show briefcase as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "briefcase"
       ],
@@ -3984,8 +3680,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brightness",
@@ -3995,8 +3691,6 @@
       "depicts": "A symbol representing brightness.",
       "purpose": "Show brightness as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brightness"
       ],
@@ -4009,8 +3703,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:broom",
@@ -4020,8 +3714,6 @@
       "depicts": "A symbol representing broom.",
       "purpose": "Show broom as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "broom"
       ],
@@ -4034,8 +3726,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brush_2",
@@ -4045,8 +3737,6 @@
       "depicts": "A symbol representing brush.",
       "purpose": "Show brush as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brush",
         "2"
@@ -4061,8 +3751,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brush_3",
@@ -4072,8 +3762,6 @@
       "depicts": "A symbol representing brush.",
       "purpose": "Show brush as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brush",
         "3"
@@ -4088,8 +3776,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:brush",
@@ -4099,8 +3787,6 @@
       "depicts": "A symbol representing brush.",
       "purpose": "Show brush as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "brush"
       ],
@@ -4113,8 +3799,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bubble",
@@ -4124,8 +3810,6 @@
       "depicts": "A symbol representing bubble.",
       "purpose": "Show bubble as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bubble"
       ],
@@ -4138,8 +3822,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bug",
@@ -4149,8 +3833,6 @@
       "depicts": "A symbol representing bug.",
       "purpose": "Show bug as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bug"
       ],
@@ -4163,8 +3845,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_1",
@@ -4174,8 +3856,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "1"
@@ -4190,8 +3870,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_2",
@@ -4201,8 +3881,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "2"
@@ -4217,8 +3895,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_3",
@@ -4228,8 +3906,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "3"
@@ -4244,8 +3920,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_4",
@@ -4255,8 +3931,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "4"
@@ -4271,8 +3945,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_5",
@@ -4282,8 +3956,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "5"
@@ -4298,8 +3970,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:building_6",
@@ -4309,8 +3981,6 @@
       "depicts": "A symbol representing building.",
       "purpose": "Show building as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "building",
         "6"
@@ -4325,8 +3995,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bulb_2",
@@ -4336,8 +4006,6 @@
       "depicts": "A symbol representing bulb.",
       "purpose": "Show bulb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bulb",
         "2"
@@ -4352,8 +4020,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bulb",
@@ -4363,8 +4031,6 @@
       "depicts": "A symbol representing bulb.",
       "purpose": "Show bulb as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bulb"
       ],
@@ -4377,8 +4043,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:burj_al_arab",
@@ -4388,8 +4054,6 @@
       "depicts": "A symbol representing burj al arab.",
       "purpose": "Show burj al arab as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "burj",
         "al",
@@ -4406,8 +4070,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:burj_khalifa_tower",
@@ -4417,8 +4081,6 @@
       "depicts": "A symbol representing burj khalifa tower.",
       "purpose": "Show burj khalifa tower as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "burj",
         "khalifa",
@@ -4435,8 +4097,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bus_2",
@@ -4446,8 +4108,6 @@
       "depicts": "A symbol representing bus.",
       "purpose": "Show bus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bus",
         "2"
@@ -4462,8 +4122,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:bus",
@@ -4473,8 +4133,6 @@
       "depicts": "A symbol representing bus.",
       "purpose": "Show bus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bus"
       ],
@@ -4487,8 +4145,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:butterfly_2",
@@ -4498,8 +4156,6 @@
       "depicts": "A symbol representing butterfly.",
       "purpose": "Show butterfly as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "butterfly",
         "2"
@@ -4514,8 +4170,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:butterfly",
@@ -4525,8 +4181,6 @@
       "depicts": "A symbol representing butterfly.",
       "purpose": "Show butterfly as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "butterfly"
       ],
@@ -4539,8 +4193,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:button",
@@ -4550,8 +4204,6 @@
       "depicts": "A symbol representing button.",
       "purpose": "Show button as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "button"
       ],
@@ -4564,8 +4216,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:cactus_2",
@@ -4575,8 +4227,6 @@
       "depicts": "A symbol representing cactus.",
       "purpose": "Show cactus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cactus",
         "2"
@@ -4591,8 +4241,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:cactus",
@@ -4602,8 +4252,6 @@
       "depicts": "A symbol representing cactus.",
       "purpose": "Show cactus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cactus"
       ],
@@ -4616,8 +4264,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:cake",
@@ -4627,8 +4275,6 @@
       "depicts": "A symbol representing cake.",
       "purpose": "Show cake as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cake"
       ],
@@ -4641,8 +4287,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_2",
@@ -4652,8 +4298,6 @@
       "depicts": "A symbol representing calendar.",
       "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "2"
@@ -4668,8 +4312,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_3",
@@ -4679,8 +4323,6 @@
       "depicts": "A symbol representing calendar.",
       "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "3"
@@ -4695,8 +4337,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_add",
@@ -4706,8 +4348,6 @@
       "depicts": "A symbol representing calendar add.",
       "purpose": "Show calendar add as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "add"
@@ -4722,8 +4362,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_day",
@@ -4733,8 +4373,6 @@
       "depicts": "A symbol representing calendar day.",
       "purpose": "Show calendar day as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "day"
@@ -4749,8 +4387,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar",
@@ -4760,8 +4398,6 @@
       "depicts": "A symbol representing calendar.",
       "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar"
       ],
@@ -4774,8 +4410,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_month",
@@ -4785,8 +4421,6 @@
       "depicts": "A symbol representing calendar month.",
       "purpose": "Show calendar month as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "month"
@@ -4801,8 +4435,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_time_add",
@@ -4812,8 +4446,6 @@
       "depicts": "A symbol representing calendar time add.",
       "purpose": "Show calendar time add as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "time",
@@ -4830,8 +4462,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_week",
@@ -4841,8 +4473,6 @@
       "depicts": "A symbol representing calendar week.",
       "purpose": "Show calendar week as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "week"
@@ -4857,8 +4487,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:calendar_x",
@@ -4868,8 +4498,6 @@
       "depicts": "A symbol representing calendar x.",
       "purpose": "Show calendar x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "x"
@@ -4884,8 +4512,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:camcorder_2",
@@ -4895,8 +4523,6 @@
       "depicts": "A symbol representing camcorder.",
       "purpose": "Show camcorder as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "camcorder",
         "2"
@@ -4911,8 +4537,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     }
   ]
 }

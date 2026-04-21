@@ -107,8 +107,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing user scan.",
-        "intent": "inform",
-        "domain": "communication",
         "synonyms": [
           "user",
           "scan"
@@ -116,8 +114,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "user-scan",
@@ -154,8 +151,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow bounce.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "bounce"
@@ -163,8 +158,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-bounce",
@@ -201,8 +195,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow capsule.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "capsule"
@@ -210,8 +202,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-capsule",
@@ -248,8 +239,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow fork.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "fork"
@@ -257,8 +246,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-fork",
@@ -295,8 +283,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow guide.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "guide"
@@ -304,8 +290,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-guide",
@@ -342,8 +327,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow iteration.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "iteration"
@@ -351,8 +334,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-iteration",
@@ -389,8 +371,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow merge.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "merge"
@@ -398,8 +378,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-merge",
@@ -437,8 +416,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing arrow merge both.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "arrow",
           "merge",
@@ -447,8 +424,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "arrow-merge-both",
@@ -485,8 +461,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing body scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "body",
           "scan"
@@ -494,8 +468,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "body-scan",
@@ -532,8 +505,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing camera pause.",
-        "intent": "inform",
-        "domain": "media",
         "synonyms": [
           "camera",
           "pause"
@@ -541,8 +512,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "camera-pause",
@@ -579,8 +549,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing cloud pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "cloud",
           "pause"
@@ -588,8 +556,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "cloud-pause",
@@ -627,8 +594,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device desktop pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "desktop",
@@ -637,8 +602,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-desktop-pause",
@@ -676,8 +640,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device imac pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "imac",
@@ -686,8 +648,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-imac-pause",
@@ -726,8 +687,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device ipad horizontal pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "ipad",
@@ -737,8 +696,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-ipad-horizontal-pause",
@@ -776,8 +734,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device ipad pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "ipad",
@@ -786,8 +742,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-ipad-pause",
@@ -825,8 +780,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device mobile pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "mobile",
@@ -835,8 +788,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-mobile-pause",
@@ -874,8 +826,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device tablet pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "tablet",
@@ -884,8 +834,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-tablet-pause",
@@ -923,8 +872,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing device watch pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "device",
           "watch",
@@ -933,8 +880,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "device-watch-pause",
@@ -971,8 +917,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing devices pause.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "devices",
           "pause"
@@ -980,8 +924,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "devices-pause",
@@ -1018,8 +961,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing ear scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "ear",
           "scan"
@@ -1027,8 +968,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "ear-scan",
@@ -1065,8 +1005,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1075,8 +1013,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-function",
@@ -1113,8 +1050,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1123,8 +1058,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-horizontal",
@@ -1161,8 +1095,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1171,8 +1103,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-infinity",
@@ -1209,8 +1140,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1219,8 +1148,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-invoice",
@@ -1257,8 +1185,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1267,8 +1193,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-isr",
@@ -1305,8 +1230,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1315,8 +1238,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-lambda",
@@ -1353,8 +1275,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1363,8 +1283,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-like",
@@ -1401,8 +1320,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1411,8 +1328,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-minus",
@@ -1449,8 +1365,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1459,8 +1373,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-neutral",
@@ -1497,8 +1410,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1507,8 +1418,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-off",
@@ -1545,8 +1455,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1555,8 +1463,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-orientation",
@@ -1593,8 +1500,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1603,8 +1508,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-pencil",
@@ -1641,8 +1545,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1651,8 +1553,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-percent",
@@ -1689,8 +1590,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1699,8 +1598,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-phone",
@@ -1737,8 +1635,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1747,8 +1643,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-report",
@@ -1785,8 +1680,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1795,8 +1688,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-rss",
@@ -1833,8 +1725,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1843,8 +1733,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-sad",
@@ -1881,8 +1770,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1891,8 +1778,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-scissors",
@@ -1929,8 +1815,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1939,8 +1823,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-shredder",
@@ -1977,8 +1860,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -1987,8 +1868,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-signal",
@@ -2025,8 +1905,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -2035,8 +1913,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-smile",
@@ -2073,8 +1950,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -2083,8 +1958,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-spark",
@@ -2121,8 +1995,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -2131,8 +2003,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-spreadsheet",
@@ -2169,8 +2040,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -2179,8 +2048,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-stack",
@@ -2217,8 +2085,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -2227,8 +2093,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file-symlink",
@@ -2265,8 +2130,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing fingerprint scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "fingerprint",
           "scan"
@@ -2274,8 +2137,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "fingerprint-scan",
@@ -2312,8 +2174,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2322,8 +2182,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-bolt",
@@ -2360,8 +2219,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2370,8 +2227,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-cancel",
@@ -2408,8 +2264,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2418,8 +2272,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-cog",
@@ -2456,8 +2309,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2466,8 +2317,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-dollar",
@@ -2504,8 +2354,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2514,8 +2362,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-exclamation",
@@ -2552,8 +2399,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2562,8 +2407,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-heart",
@@ -2600,8 +2444,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2610,8 +2452,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-off",
@@ -2648,8 +2489,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2658,8 +2497,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-pin",
@@ -2696,8 +2534,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2706,8 +2542,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-question",
@@ -2744,8 +2579,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2754,8 +2587,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-root",
@@ -2792,8 +2624,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2802,8 +2632,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-share",
@@ -2840,8 +2669,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -2850,8 +2677,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder-symlink",
@@ -2888,8 +2714,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A symbol representing line scan.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "line",
           "scan"
@@ -2897,8 +2721,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "line-scan",

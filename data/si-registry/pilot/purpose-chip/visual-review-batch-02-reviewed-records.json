@@ -10,8 +10,6 @@
       "depicts": "Network Intelligence shown as a connected system or branching structure.",
       "purpose": "Show connected-system insight, graph intelligence, or analysis across linked parts of a system.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "network intelligence",
         "system insight",
@@ -32,8 +30,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:network_intelligence_history",
@@ -43,8 +41,6 @@
       "depicts": "Network Intelligence shown as a connected system or branching structure.",
       "purpose": "Show historical network insight, past graph activity, or connected-system analysis over time.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "network intelligence",
         "system insight",
@@ -65,8 +61,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.94,
-      "confidence_band": "high"
+      "routing_score": 0.94,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:network_intelligence_update",
@@ -76,8 +72,6 @@
       "depicts": "Network Intelligence shown as a connected system or branching structure.",
       "purpose": "Show insight across a connected system, network activity, or graph-like intelligence.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "network intelligence",
         "system insight",
@@ -98,8 +92,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.82,
-      "confidence_band": "medium"
+      "routing_score": 0.82,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:prompt_suggestion",
@@ -109,8 +103,6 @@
       "depicts": "An enhancement-focused symbol used for generated or improved output.",
       "purpose": "Show inserting a suggested prompt, reusing suggested text, or applying a prompt suggestion into an input.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "prompt",
         "suggestion",
@@ -131,8 +123,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:account_tree",
@@ -142,8 +134,6 @@
       "depicts": "Hierarchy shown as a connected system or branching structure.",
       "purpose": "Show nested hierarchy, branching structure, or parent-child relationships.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "hierarchy",
         "tree",
@@ -164,8 +154,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:arrow_downward",
@@ -175,8 +165,6 @@
       "depicts": "A downward arrow for movement or direction.",
       "purpose": "Show downward movement, moving an item down, or navigating to a lower position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "down",
         "move down",
@@ -197,8 +185,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:arrow_upward",
@@ -208,8 +196,6 @@
       "depicts": "An upward arrow for movement or direction.",
       "purpose": "Show upward movement, moving an item up, or navigating to a higher position.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "up",
         "move up",
@@ -230,8 +216,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:auto_awesome",
@@ -241,8 +227,6 @@
       "depicts": "An enhancement-focused symbol used for generated or improved output.",
       "purpose": "Show AI enhancement, generated improvement, or smart polishing of content.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "enhancement",
         "ai improve",
@@ -263,8 +247,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:dock_to_left",
@@ -274,8 +258,6 @@
       "depicts": "A layout control that snaps or docks content to the left side.",
       "purpose": "Show docking or pinning content to the left side of the layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dock",
         "left",
@@ -296,8 +278,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:dock_to_right",
@@ -307,8 +289,6 @@
       "depicts": "A layout control that snaps or docks content to the right side.",
       "purpose": "Show docking or pinning content to the right side of the layout.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_shell",
       "semantic_tags": [
         "dock",
         "right",
@@ -329,8 +309,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:double_arrow",
@@ -340,8 +320,6 @@
       "depicts": "A doubled arrow suggesting a faster or larger forward step.",
       "purpose": "Show a faster forward move, larger next step, or jump to a further destination.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "jump forward",
         "fast move",
@@ -362,8 +340,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.81,
-      "confidence_band": "medium"
+      "routing_score": 0.81,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:hub",
@@ -373,8 +351,6 @@
       "depicts": "Hub shown as a connected system or branching structure.",
       "purpose": "Show a central hub that connects multiple related system parts.",
       "category": "systems_architecture",
-      "intent": "inform",
-      "domain": "developer_tools",
       "semantic_tags": [
         "hub",
         "central node",
@@ -395,8 +371,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:psychology",
@@ -406,8 +382,6 @@
       "depicts": "A thinking-focused symbol used for cognition or mental processing.",
       "purpose": "Show reasoning, analytical thought, or a deliberate thinking process.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "reasoning",
         "thinking",
@@ -428,8 +402,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:psychology_alt",
@@ -439,8 +413,6 @@
       "depicts": "A thinking-focused symbol used for cognition or mental processing.",
       "purpose": "Show questioning, uncertainty, or a thinking state centered on an open question.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "reasoning",
         "thinking",
@@ -461,8 +433,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.81,
-      "confidence_band": "medium"
+      "routing_score": 0.81,
+      "routing_band": "medium"
     },
     {
       "icon_id": "material:subdirectory_arrow_right",
@@ -472,8 +444,6 @@
       "depicts": "An arrow entering a nested branch or sublevel.",
       "purpose": "Show a move into a nested section, child route, or deeper branch in a hierarchy.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "nested route",
         "subdirectory",
@@ -494,8 +464,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.93,
-      "confidence_band": "high"
+      "routing_score": 0.93,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:swap_horiz",
@@ -505,8 +475,6 @@
       "depicts": "Opposing arrows indicating exchange or order swap.",
       "purpose": "Show swapping, reversing, or exchanging positions or directions.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "swap",
         "switch",
@@ -527,8 +495,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.91,
-      "confidence_band": "high"
+      "routing_score": 0.91,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:swap_vert",
@@ -538,8 +506,6 @@
       "depicts": "Opposing arrows indicating exchange or order swap.",
       "purpose": "Show swapping, reversing, or exchanging positions or directions.",
       "category": "system_control",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "swap",
         "switch",
@@ -560,8 +526,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.91,
-      "confidence_band": "high"
+      "routing_score": 0.91,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:density_medium",
@@ -571,8 +537,6 @@
       "depicts": "A compact layout marker for list or content density.",
       "purpose": "Show view density or compactness controls for how much content is shown.",
       "category": "navigation_interface",
-      "intent": "control",
-      "domain": "ui_controls",
       "semantic_tags": [
         "density",
         "compact view",
@@ -593,8 +557,8 @@
         "visual-inspection",
         "editorial-review"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     }
   ]
 }

@@ -10,8 +10,6 @@
       "depicts": "An outward arrow showing content opening in a new destination.",
       "purpose": "Show opening content in a new tab, new window, or external destination.",
       "category": "navigation_interface",
-      "intent": "navigate",
-      "domain": "navigation",
       "semantic_tags": [
         "open in new",
         "external",
@@ -32,8 +30,8 @@
         "approved-reference",
         "metadata-only"
       ],
-      "confidence_score": 0.91,
-      "confidence_band": "high"
+      "routing_score": 0.91,
+      "routing_band": "high"
     },
     {
       "icon_id": "material:workflow",
@@ -43,8 +41,6 @@
       "depicts": "Workflow shown as a structured process or layered system symbol.",
       "purpose": "Show a multi-step workflow, orchestration path, or linked automation sequence.",
       "category": "agent_lifecycle",
-      "intent": "inform",
-      "domain": "ai_agents",
       "semantic_tags": [
         "workflow",
         "orchestration",
@@ -65,8 +61,8 @@
         "approved-reference",
         "metadata-only"
       ],
-      "confidence_score": 0.9,
-      "confidence_band": "high"
+      "routing_score": 0.9,
+      "routing_band": "high"
     }
   ]
 }

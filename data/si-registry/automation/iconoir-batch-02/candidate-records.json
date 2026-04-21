@@ -21,8 +21,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "droplet status",
@@ -32,8 +30,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:menu_scale",
@@ -59,8 +56,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stacked-line menu or drawer entry icon.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "main menu",
       "navigation drawer",
@@ -71,8 +66,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:more_horiz",
@@ -98,8 +92,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A grouped dot icon used for overflow actions.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "overflow menu",
       "more actions",
@@ -110,8 +102,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:more_vert",
@@ -137,8 +128,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A grouped dot icon used for overflow actions.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "overflow menu",
       "more actions",
@@ -149,8 +138,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:warning_circle",
@@ -174,8 +162,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "warning status",
@@ -185,8 +171,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:window_lock",
@@ -212,8 +197,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A closed padlock.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "locked",
       "secure access",
@@ -224,8 +207,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:calendar_plus",
@@ -248,8 +230,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "plus"
@@ -257,8 +237,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:database_warning",
@@ -282,8 +261,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "database status",
@@ -292,8 +269,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:grid_plus",
@@ -317,8 +293,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "grid view",
       "grid view control",
@@ -328,8 +302,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "iconoir:shield_download",
@@ -353,8 +326,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -364,8 +335,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:shield_plus_in",
@@ -390,8 +360,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -402,8 +370,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:shield_upload",
@@ -427,8 +394,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -438,8 +403,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:shopping_code_check",
@@ -464,8 +428,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "shopping status",
@@ -475,8 +437,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:user_badge_check",
@@ -501,8 +462,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "user status",
@@ -512,8 +471,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:user_plus",
@@ -536,8 +494,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing user plus.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "user",
       "plus"
@@ -545,8 +501,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:airplane",
@@ -568,8 +523,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplane.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "airplane"
     ],
@@ -577,8 +530,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:airplay",
@@ -600,8 +552,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing airplay.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "airplay"
     ],
@@ -609,8 +559,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:album",
@@ -632,8 +581,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing album.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "album"
     ],
@@ -641,8 +588,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:apple",
@@ -667,8 +613,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Apple brand or product mark.",
-    "intent": "inform",
-    "domain": "ui_shell",
     "synonyms": [
       "Apple"
     ],
@@ -676,8 +620,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:asana",
@@ -702,8 +645,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Asana brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Asana"
     ],
@@ -711,8 +652,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:asterisk",
@@ -737,8 +677,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Asterisk brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Asterisk"
     ],
@@ -746,8 +684,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:attachment",
@@ -769,8 +706,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing attachment.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "attachment"
     ],
@@ -778,8 +713,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bank",
@@ -801,8 +735,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bank.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bank"
     ],
@@ -810,8 +742,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:barcode",
@@ -833,8 +764,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing barcode.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "barcode"
     ],
@@ -842,8 +771,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:basketball",
@@ -865,8 +793,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing basketball.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "basketball"
     ],
@@ -874,8 +800,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:battery_charging",
@@ -898,8 +823,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing battery charging.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "battery",
       "charging"
@@ -908,8 +831,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bed",
@@ -931,8 +853,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bed.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bed"
     ],
@@ -940,8 +860,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:behance",
@@ -966,8 +885,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Behance brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Behance"
     ],
@@ -975,8 +892,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bitbucket",
@@ -1001,8 +917,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Bitbucket brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Bitbucket"
     ],
@@ -1010,8 +924,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bluetooth",
@@ -1036,8 +949,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Bluetooth brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Bluetooth"
     ],
@@ -1045,8 +956,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bold",
@@ -1068,8 +978,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bold.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bold"
     ],
@@ -1077,8 +985,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:book",
@@ -1100,8 +1007,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing book.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "book"
     ],
@@ -1109,8 +1014,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:border_bottom",
@@ -1136,8 +1040,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A border or edge-formatting control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "bottom border",
       "border control",
@@ -1148,8 +1050,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:border_inner",
@@ -1175,8 +1076,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A border or edge-formatting control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "inner borders",
       "border control",
@@ -1187,8 +1086,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:border_top",
@@ -1214,8 +1112,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A border or edge-formatting control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "top border",
       "border control",
@@ -1226,8 +1122,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:box",
@@ -1252,8 +1147,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Box brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Box"
     ],
@@ -1261,8 +1154,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:brain",
@@ -1288,8 +1180,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A stylized brain shape.",
-    "intent": "inform",
-    "domain": "ai_agents",
     "synonyms": [
       "Brain",
       "thinking",
@@ -1302,8 +1192,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:brightness",
@@ -1325,8 +1214,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brightness.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brightness"
     ],
@@ -1334,8 +1221,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bug",
@@ -1357,8 +1243,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bug.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bug"
     ],
@@ -1366,8 +1250,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:bus",
@@ -1389,8 +1272,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bus"
     ],
@@ -1398,8 +1279,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:camera",
@@ -1421,8 +1301,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera"
     ],
@@ -1430,8 +1308,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:car",
@@ -1453,8 +1330,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing car.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "car"
     ],
@@ -1462,8 +1337,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cash",
@@ -1485,8 +1359,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cash"
     ],
@@ -1494,8 +1366,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:church",
@@ -1517,8 +1388,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing church.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "church"
     ],
@@ -1526,8 +1395,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:circle",
@@ -1552,8 +1420,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Circle brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Circle"
     ],
@@ -1561,8 +1427,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cloud",
@@ -1584,8 +1449,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud"
     ],
@@ -1593,8 +1456,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:color_picker",
@@ -1617,8 +1479,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing color picker.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "color",
       "picker"
@@ -1627,8 +1487,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:combine",
@@ -1650,8 +1509,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing combine.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "combine"
     ],
@@ -1659,8 +1516,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:compass",
@@ -1682,8 +1538,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing compass.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "compass"
     ],
@@ -1691,8 +1545,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:computer",
@@ -1714,8 +1567,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing computer.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "computer"
     ],
@@ -1723,8 +1574,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cookie",
@@ -1746,8 +1596,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cookie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cookie"
     ],
@@ -1755,8 +1603,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:copyright",
@@ -1778,8 +1625,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing copyright.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "copyright"
     ],
@@ -1787,8 +1632,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cube",
@@ -1810,8 +1654,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cube.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cube"
     ],
@@ -1819,8 +1661,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:cylinder",
@@ -1842,8 +1683,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cylinder.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cylinder"
     ],
@@ -1851,8 +1690,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:dashboard",
@@ -1878,8 +1716,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A panel-style layout icon for a dashboard surface.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "overview page",
       "dashboard home",
@@ -1890,8 +1726,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:dashboard_dots",
@@ -1917,8 +1752,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A panel-style layout icon for a dashboard surface.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "overview page",
       "dashboard home",
@@ -1929,8 +1762,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:dashboard_speed",
@@ -1956,8 +1788,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A panel-style layout icon for a dashboard surface.",
-    "intent": "navigate",
-    "domain": "ui_shell",
     "synonyms": [
       "overview page",
       "dashboard home",
@@ -1968,8 +1798,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:desk",
@@ -1991,8 +1820,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing desk.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "desk"
     ],
@@ -2000,8 +1827,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:discord",
@@ -2026,8 +1852,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Discord brand or product mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "Discord"
     ],
@@ -2035,8 +1859,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:drawer",
@@ -2058,8 +1881,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing drawer.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "drawer"
     ],
@@ -2067,8 +1888,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:dribbble",
@@ -2093,8 +1913,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Dribbble brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Dribbble"
     ],
@@ -2102,8 +1920,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:drone",
@@ -2128,8 +1945,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Drone brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Drone"
     ],
@@ -2137,8 +1952,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ease_in",
@@ -2161,8 +1975,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ease in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ease",
       "in"
@@ -2171,8 +1983,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ease_in_control_point",
@@ -2197,8 +2008,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ease in control point.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ease",
       "in",
@@ -2209,8 +2018,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ease_out",
@@ -2233,8 +2041,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ease out.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ease",
       "out"
@@ -2243,8 +2049,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ease_out_control_point",
@@ -2269,8 +2074,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ease out control point.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ease",
       "out",
@@ -2281,8 +2084,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:egg",
@@ -2304,8 +2106,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing egg.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "egg"
     ],
@@ -2313,8 +2113,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:emoji",
@@ -2336,8 +2135,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji"
     ],
@@ -2345,8 +2142,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:exclude",
@@ -2368,8 +2164,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclude.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclude"
     ],
@@ -2377,8 +2171,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:facebook",
@@ -2403,8 +2196,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Facebook brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Facebook"
     ],
@@ -2412,8 +2203,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:female",
@@ -2435,8 +2225,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing female.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "female"
     ],
@@ -2444,8 +2232,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:figma",
@@ -2470,8 +2257,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Figma brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "Figma"
     ],
@@ -2479,8 +2264,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:fingerprint",
@@ -2502,8 +2286,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fingerprint.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fingerprint"
     ],
@@ -2511,8 +2293,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:fish",
@@ -2534,8 +2315,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fish.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fish"
     ],
@@ -2543,8 +2322,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:flash",
@@ -2566,8 +2344,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing flash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "flash"
     ],
@@ -2575,8 +2351,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:flask",
@@ -2601,8 +2376,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Flask brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Flask"
     ],
@@ -2610,8 +2383,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:flower",
@@ -2636,8 +2408,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Flower brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Flower"
     ],
@@ -2645,8 +2415,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:fog",
@@ -2668,8 +2437,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fog.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fog"
     ],
@@ -2677,8 +2444,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:football",
@@ -2700,8 +2466,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing football.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "football"
     ],
@@ -2709,8 +2473,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:frame",
@@ -2732,8 +2495,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing frame.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "frame"
     ],
@@ -2741,8 +2502,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:fridge",
@@ -2764,8 +2524,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing fridge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "fridge"
     ],
@@ -2773,8 +2531,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:gift",
@@ -2796,8 +2553,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing gift.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "gift"
     ],
@@ -2805,8 +2560,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git",
@@ -2831,8 +2585,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Git brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Git"
     ],
@@ -2840,8 +2592,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git_branch",
@@ -2864,8 +2615,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git branch.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "branch"
@@ -2874,8 +2623,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git_commit",
@@ -2898,8 +2646,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git commit.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "commit"
@@ -2908,8 +2654,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git_compare",
@@ -2932,8 +2677,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git compare.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "compare"
@@ -2942,8 +2685,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git_merge",
@@ -2966,8 +2708,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git merge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "merge"
@@ -2976,8 +2716,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:git_pull_request",
@@ -3001,8 +2740,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing git pull request.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "git",
       "pull",
@@ -3012,8 +2749,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:github",
@@ -3038,8 +2774,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official GitHub brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "GitHub"
     ],
@@ -3047,8 +2781,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:globe",
@@ -3070,8 +2803,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing globe.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "globe"
     ],
@@ -3079,8 +2810,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:google",
@@ -3105,8 +2835,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Google brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Google"
     ],
@@ -3114,8 +2842,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:group",
@@ -3137,8 +2864,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing group.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "group"
     ],
@@ -3146,8 +2871,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hammer",
@@ -3169,8 +2893,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hammer.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hammer"
     ],
@@ -3178,8 +2900,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hand_card",
@@ -3202,8 +2923,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hand card.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hand",
       "card"
@@ -3212,8 +2931,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hashtag",
@@ -3235,8 +2953,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hashtag.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hashtag"
     ],
@@ -3244,8 +2960,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hat",
@@ -3267,8 +2982,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hat"
     ],
@@ -3276,8 +2989,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:heart",
@@ -3303,8 +3015,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A heart symbol used for likes, favorites, or affection.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "heart",
       "liked item",
@@ -3315,8 +3025,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:heavy_rain",
@@ -3339,8 +3048,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing heavy rain.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "heavy",
       "rain"
@@ -3349,8 +3056,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:help_circle",
@@ -3376,8 +3082,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A circled help symbol.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "help center",
       "need help",
@@ -3388,8 +3092,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hexagon",
@@ -3411,8 +3114,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hexagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hexagon"
     ],
@@ -3420,8 +3121,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hospital",
@@ -3443,8 +3143,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing hospital.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "hospital"
     ],
@@ -3452,8 +3150,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:hourglass",
@@ -3479,8 +3176,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An hourglass used for waiting or process time.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "in progress wait",
       "pending delay",
@@ -3491,8 +3186,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:html5",
@@ -3517,8 +3211,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official HTML5 brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "HTML5"
     ],
@@ -3526,8 +3218,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ice_cream",
@@ -3550,8 +3241,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ice cream.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ice",
       "cream"
@@ -3560,8 +3249,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:instagram",
@@ -3586,8 +3274,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Instagram brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Instagram"
     ],
@@ -3595,8 +3281,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:intersect",
@@ -3618,8 +3303,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing intersect.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "intersect"
     ],
@@ -3627,8 +3310,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:italic",
@@ -3650,8 +3332,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing italic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "italic"
     ],
@@ -3659,8 +3339,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:laptop",
@@ -3682,8 +3361,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing laptop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "laptop"
     ],
@@ -3691,8 +3368,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:leaf",
@@ -3714,8 +3390,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing leaf.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "leaf"
     ],
@@ -3723,8 +3397,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:lens",
@@ -3749,8 +3422,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Lens brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Lens"
     ],
@@ -3758,8 +3429,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:linear",
@@ -3784,8 +3454,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Linear brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Linear"
     ],
@@ -3793,8 +3461,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:linux",
@@ -3819,8 +3486,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Linux brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Linux"
     ],
@@ -3828,8 +3493,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:magnet",
@@ -3851,8 +3515,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing magnet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "magnet"
     ],
@@ -3860,8 +3522,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:male",
@@ -3883,8 +3544,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing male.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "male"
     ],
@@ -3892,8 +3551,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:map",
@@ -3915,8 +3573,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing map.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "map"
     ],
@@ -3924,8 +3580,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:map_pin",
@@ -3951,8 +3606,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A location pin marker.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "location pin",
       "map marker",
@@ -3963,8 +3616,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mastodon",
@@ -3989,8 +3641,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Mastodon brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Mastodon"
     ],
@@ -3998,8 +3648,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:medal",
@@ -4021,8 +3670,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing medal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "medal"
     ],
@@ -4030,8 +3677,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:medium",
@@ -4056,8 +3702,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Medium brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Medium"
     ],
@@ -4065,8 +3709,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:metro",
@@ -4091,8 +3734,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Metro brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Metro"
     ],
@@ -4100,8 +3741,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:microphone",
@@ -4123,8 +3763,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing microphone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "microphone"
     ],
@@ -4132,8 +3770,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:microscope",
@@ -4155,8 +3792,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing microscope.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "microscope"
     ],
@@ -4164,8 +3799,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:minus_circle",
@@ -4188,8 +3822,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing minus circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "minus",
       "circle"
@@ -4198,8 +3830,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:minus_square",
@@ -4225,8 +3856,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A minus sign inside a square button.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "remove item",
       "minus action",
@@ -4237,8 +3866,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:mirror",
@@ -4260,8 +3888,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing mirror.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "mirror"
     ],
@@ -4269,8 +3895,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:movie",
@@ -4292,8 +3917,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing movie.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "movie"
     ],
@@ -4301,8 +3924,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:network",
@@ -4328,8 +3950,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "Network shown as a connected system or branching structure.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "network",
       "connected system",
@@ -4340,8 +3960,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:npm",
@@ -4366,8 +3985,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official npm brand or product mark.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "npm"
     ],
@@ -4375,8 +3992,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:octagon",
@@ -4398,8 +4014,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing octagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "octagon"
     ],
@@ -4407,8 +4021,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:package",
@@ -4430,8 +4043,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing package.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "package"
     ],
@@ -4439,8 +4050,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:palette",
@@ -4462,8 +4072,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing palette.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "palette"
     ],
@@ -4471,8 +4079,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:parking",
@@ -4494,8 +4101,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing parking.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "parking"
     ],
@@ -4503,8 +4108,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:paypal",
@@ -4529,8 +4133,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official PayPal brand or product mark.",
-    "intent": "inform",
-    "domain": "commerce",
     "synonyms": [
       "PayPal"
     ],
@@ -4538,8 +4140,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:peerlist",
@@ -4564,8 +4165,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Peerlist brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Peerlist"
     ],
@@ -4573,8 +4172,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:pentagon",
@@ -4596,8 +4194,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing pentagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "pentagon"
     ],
@@ -4605,8 +4201,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:percentage",
@@ -4628,8 +4223,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing percentage.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "percentage"
     ],
@@ -4637,8 +4230,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:phone",
@@ -4660,8 +4252,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing phone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "phone"
     ],
@@ -4669,8 +4259,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:pin",
@@ -4696,8 +4285,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A pin or pushpin symbol.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "pin item",
       "keep pinned",
@@ -4708,8 +4295,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:pinterest",
@@ -4734,8 +4320,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Pinterest brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Pinterest"
     ],
@@ -4743,8 +4327,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:planet",
@@ -4769,8 +4352,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Planet brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Planet"
     ],
@@ -4778,8 +4359,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:playlist",
@@ -4801,8 +4381,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing playlist.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "playlist"
     ],
@@ -4810,8 +4388,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:rain",
@@ -4833,8 +4410,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing rain.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "rain"
     ],
@@ -4842,8 +4417,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:repeat",
@@ -4865,8 +4439,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing repeat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "repeat"
     ],
@@ -4874,8 +4446,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:rocket",
@@ -4900,8 +4471,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Rocket brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Rocket"
     ],
@@ -4909,8 +4478,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:rook",
@@ -4935,8 +4503,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Rook brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Rook"
     ],
@@ -4944,8 +4510,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:ruler",
@@ -4967,8 +4532,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ruler.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ruler"
     ],
@@ -4976,8 +4539,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:safari",
@@ -5002,8 +4564,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Safari brand or product mark.",
-    "intent": "inform",
-    "domain": "ui_shell",
     "synonyms": [
       "Safari"
     ],
@@ -5011,8 +4571,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:scarf",
@@ -5034,8 +4593,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing scarf.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "scarf"
     ],
@@ -5043,8 +4600,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:screenshot",
@@ -5066,8 +4622,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing screenshot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "screenshot"
     ],
@@ -5075,8 +4629,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shirt",
@@ -5098,8 +4651,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing shirt.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "shirt"
     ],
@@ -5107,8 +4658,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shop",
@@ -5130,8 +4680,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing shop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "shop"
     ],
@@ -5139,8 +4687,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:shuffle",
@@ -5162,8 +4709,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing shuffle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "shuffle"
     ],
@@ -5171,8 +4716,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:skateboard",
@@ -5194,8 +4738,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing skateboard.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "skateboard"
     ],
@@ -5203,8 +4745,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:skateboarding",
@@ -5226,8 +4767,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing skateboarding.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "skateboarding"
     ],
@@ -5235,8 +4774,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:snapchat",
@@ -5261,8 +4799,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Snapchat brand or product mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "Snapchat"
     ],
@@ -5270,8 +4806,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:snow",
@@ -5293,8 +4828,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing snow.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "snow"
     ],
@@ -5302,8 +4835,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:sofa",
@@ -5325,8 +4857,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing sofa.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "sofa"
     ],
@@ -5334,8 +4864,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:spotify",
@@ -5360,8 +4889,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Spotify brand or product mark.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "Spotify"
     ],
@@ -5369,8 +4896,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:square",
@@ -5397,8 +4923,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Square commerce platform brand mark.",
-    "intent": "inform",
-    "domain": "commerce",
     "synonyms": [
       "Square",
       "Square Payments"
@@ -5407,8 +4931,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:stackoverflow",
@@ -5435,8 +4958,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Stack Overflow brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Stack Overflow",
       "stackoverflow"
@@ -5445,8 +4966,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:star",
@@ -5472,8 +4992,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A star symbol used for saved or favored items.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "starred item",
       "favorite",
@@ -5484,8 +5002,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:strikethrough",
@@ -5507,8 +5024,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing strikethrough.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "strikethrough"
     ],
@@ -5516,8 +5031,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:suitcase",
@@ -5539,8 +5053,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing suitcase.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "suitcase"
     ],
@@ -5548,8 +5060,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:swimming",
@@ -5571,8 +5082,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing swimming.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "swimming"
     ],
@@ -5580,8 +5089,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:table",
@@ -5603,8 +5111,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing table.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "table"
     ],
@@ -5612,8 +5118,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:telegram",
@@ -5638,8 +5143,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Telegram brand or product mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "Telegram"
     ],
@@ -5647,8 +5150,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:terminal",
@@ -5674,8 +5176,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A command-line terminal prompt.",
-    "intent": "inform",
-    "domain": "developer_tools",
     "synonyms": [
       "shell",
       "console",
@@ -5686,8 +5186,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:test_tube",
@@ -5710,8 +5209,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing test tube.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "test",
       "tube"
@@ -5720,8 +5217,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:text",
@@ -5743,8 +5239,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "text"
     ],
@@ -5752,8 +5246,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:threads",
@@ -5780,8 +5273,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Threads social platform brand mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "Threads",
       "Instagram Threads",
@@ -5791,8 +5282,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:thunderstorm",
@@ -5814,8 +5304,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing thunderstorm.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "thunderstorm"
     ],
@@ -5823,8 +5311,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:tiktok",
@@ -5849,8 +5336,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official TikTok brand or product mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "TikTok"
     ],
@@ -5858,8 +5343,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:tower",
@@ -5884,8 +5368,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Tower brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Tower"
     ],
@@ -5893,8 +5375,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:train",
@@ -5916,8 +5397,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing train.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "train"
     ],
@@ -5925,8 +5404,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:translate",
@@ -5948,8 +5426,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing translate.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "translate"
     ],
@@ -5957,8 +5433,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:tree",
@@ -5980,8 +5455,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing tree.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "tree"
     ],
@@ -5989,8 +5462,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:trello",
@@ -6015,8 +5487,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Trello brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Trello"
     ],
@@ -6024,8 +5494,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:triangle",
@@ -6047,8 +5516,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing triangle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "triangle"
     ],
@@ -6056,8 +5523,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:trophy",
@@ -6083,8 +5549,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A trophy cup with handles and a base.",
-    "intent": "confirm",
-    "domain": "product_status",
     "synonyms": [
       "milestone reached",
       "award",
@@ -6095,8 +5559,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:truck",
@@ -6118,8 +5581,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing truck.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "truck"
     ],
@@ -6127,8 +5588,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:tunnel",
@@ -6150,8 +5610,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing tunnel.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "tunnel"
     ],
@@ -6159,8 +5617,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:umbrella",
@@ -6182,8 +5639,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing umbrella.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "umbrella"
     ],
@@ -6191,8 +5646,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:underline",
@@ -6214,8 +5668,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing underline.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "underline"
     ],
@@ -6223,8 +5675,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:union",
@@ -6246,8 +5697,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing union.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "union"
     ],
@@ -6255,8 +5704,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:unity",
@@ -6281,8 +5729,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Unity brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Unity"
     ],
@@ -6290,8 +5736,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:usb",
@@ -6313,8 +5758,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing usb.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "usb"
     ],
@@ -6322,8 +5765,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:video_camera",
@@ -6346,8 +5788,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing video camera.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "video",
       "camera"
@@ -6356,8 +5796,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:voice",
@@ -6379,8 +5818,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing voice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "voice"
     ],
@@ -6388,8 +5825,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:wallet",
@@ -6411,8 +5847,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wallet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wallet"
     ],
@@ -6420,8 +5854,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:whatsapp",
@@ -6446,8 +5879,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official WhatsApp brand or product mark.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "WhatsApp"
     ],
@@ -6455,8 +5886,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:wifi",
@@ -6482,8 +5912,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A wireless signal icon representing network connection.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "wireless",
       "network signal",
@@ -6494,8 +5922,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:wifi_off",
@@ -6518,8 +5945,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wifi off.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wifi",
       "off"
@@ -6528,8 +5953,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:wind",
@@ -6551,8 +5975,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing wind.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "wind"
     ],
@@ -6560,8 +5982,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:windows",
@@ -6583,8 +6004,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing windows.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "windows"
     ],
@@ -6592,8 +6011,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:yelp",
@@ -6618,8 +6036,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official Yelp brand or product mark.",
-    "intent": "inform",
-    "domain": "brand_platforms",
     "synonyms": [
       "Yelp"
     ],
@@ -6627,8 +6043,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:yoga",
@@ -6650,8 +6065,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing yoga.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "yoga"
     ],
@@ -6659,8 +6072,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:youtube",
@@ -6685,8 +6097,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "The official YouTube brand or product mark.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "YouTube"
     ],
@@ -6694,8 +6104,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:zoom_in",
@@ -6721,8 +6130,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A zoom control for scaling content in.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "zoom in",
       "magnify view",
@@ -6733,8 +6140,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:zoom_out",
@@ -6760,8 +6166,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A zoom control for scaling content out.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "zoom out",
       "shrink view",
@@ -6772,8 +6176,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:align_center",
@@ -6799,8 +6202,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align center",
       "alignment control",
@@ -6811,8 +6212,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:align_justify",
@@ -6838,8 +6238,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A formatting alignment control.",
-    "intent": "control",
-    "domain": "ui_controls",
     "synonyms": [
       "align justify",
       "alignment control",
@@ -6850,8 +6248,7 @@
       "source_name",
       "approved_reference",
       "svg_payload"
-    ],
-    "confidence": 0.9
+    ]
   },
   {
     "icon_id": "iconoir:album_list",
@@ -6875,8 +6272,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "list view",
       "list view control",
@@ -6886,8 +6281,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "iconoir:album_open",
@@ -6911,8 +6305,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "open file",
       "album file"
@@ -6920,8 +6312,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:bell_notification",
@@ -6945,8 +6336,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "notification",
       "bell status",
@@ -6955,8 +6344,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:bin_plus_in",
@@ -6980,8 +6368,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bin plus in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bin",
       "plus",
@@ -6990,8 +6376,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:bookmark_book",
@@ -7014,8 +6399,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmark book.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmark",
       "book"
@@ -7023,8 +6406,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:bookmark_circle",
@@ -7047,8 +6429,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookmark circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookmark",
       "circle"
@@ -7056,8 +6436,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:brain_warning",
@@ -7081,8 +6460,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "brain status",
@@ -7091,8 +6468,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:bubble_download",
@@ -7116,8 +6492,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "bubble file"
@@ -7125,8 +6499,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:bubble_upload",
@@ -7150,8 +6523,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "upload file",
       "bubble file"
@@ -7159,8 +6530,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:bubble_warning",
@@ -7184,8 +6554,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "bubble status",
@@ -7194,8 +6562,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:calendar_minus",
@@ -7218,8 +6585,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "minus"
@@ -7227,8 +6592,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:calendar_rotate",
@@ -7251,8 +6615,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar rotate.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "rotate"
@@ -7260,8 +6622,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:calendar_xmark",
@@ -7284,8 +6645,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar xmark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar",
       "xmark"
@@ -7293,8 +6652,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:card_shield",
@@ -7318,8 +6676,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -7329,8 +6685,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:cart_plus",
@@ -7353,8 +6708,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart plus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart",
       "plus"
@@ -7362,8 +6715,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:cloud_bookmark",
@@ -7386,8 +6738,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud bookmark.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "bookmark"
@@ -7395,8 +6745,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:cloud_download",
@@ -7420,8 +6769,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "cloud file"
@@ -7429,8 +6776,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:cloud_upload",
@@ -7454,8 +6800,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "upload file",
       "cloud file"
@@ -7463,8 +6807,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:cpu_warning",
@@ -7488,8 +6831,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "cpu status",
@@ -7498,8 +6839,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:domotic_warning",
@@ -7523,8 +6863,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "domotic status",
@@ -7533,8 +6871,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:dots_grid_3x3",
@@ -7559,8 +6896,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "grid view",
       "grid view control",
@@ -7571,8 +6906,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "iconoir:double_check",
@@ -7596,8 +6930,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "double status",
@@ -7606,8 +6938,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:download_circle",
@@ -7631,8 +6962,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "circle file"
@@ -7640,8 +6969,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:download_data_window",
@@ -7666,8 +6994,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "data file",
@@ -7676,8 +7002,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:download_square",
@@ -7701,8 +7026,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A file or folder symbol paired with an action or state cue.",
-    "intent": "act",
-    "domain": "ui_controls",
     "synonyms": [
       "download file",
       "square file"
@@ -7710,8 +7033,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.8
+    ]
   },
   {
     "icon_id": "iconoir:drone_check",
@@ -7735,8 +7057,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "drone status",
@@ -7745,8 +7065,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:edit_pencil",
@@ -7769,8 +7088,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing edit pencil.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "edit",
       "pencil"
@@ -7778,8 +7095,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:fast_arrow_up_square",
@@ -7806,8 +7122,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -7816,8 +7130,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "iconoir:fingerprint_check_circle",
@@ -7842,8 +7155,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "fingerprint status",
@@ -7853,8 +7164,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:floppy_disk_arrow_in",
@@ -7879,8 +7189,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing floppy disk arrow in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "floppy",
       "disk",
@@ -7890,8 +7198,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:floppy_disk_arrow_out",
@@ -7916,8 +7223,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing floppy disk arrow out.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "floppy",
       "disk",
@@ -7927,8 +7232,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:frame_plus_in",
@@ -7952,8 +7256,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing frame plus in.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "frame",
       "plus",
@@ -7962,8 +7264,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "iconoir:google_drive_check",
@@ -7988,8 +7289,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "inform",
-    "domain": "product_status",
     "synonyms": [
       "confirmed",
       "google status",
@@ -7999,8 +7298,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:google_drive_warning",
@@ -8025,8 +7323,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "google status",
@@ -8036,8 +7332,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:grid_minus",
@@ -8061,8 +7356,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "grid view",
       "grid view control",
@@ -8072,8 +7365,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "iconoir:grid_xmark",
@@ -8097,8 +7389,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A shell or layout control symbol used for major navigation and view changes.",
-    "intent": "control",
-    "domain": "ui_shell",
     "synonyms": [
       "grid view",
       "grid view control",
@@ -8108,8 +7398,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.83
+    ]
   },
   {
     "icon_id": "iconoir:headset_warning",
@@ -8133,8 +7422,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A status or attention symbol used to communicate state clearly.",
-    "intent": "warn",
-    "domain": "product_status",
     "synonyms": [
       "warning",
       "headset status",
@@ -8143,8 +7430,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.85
+    ]
   },
   {
     "icon_id": "iconoir:health_shield",
@@ -8168,8 +7454,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A security symbol used for access, protection, or trusted safeguards.",
-    "intent": "inform",
-    "domain": "security",
     "synonyms": [
       "protection",
       "secure access",
@@ -8179,8 +7463,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "iconoir:heart_arrow_down",
@@ -8206,8 +7489,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -8216,7 +7497,6 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   }
 ]

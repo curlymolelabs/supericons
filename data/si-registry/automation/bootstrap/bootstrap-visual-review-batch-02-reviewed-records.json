@@ -10,8 +10,6 @@
       "depicts": "A symbol representing calendar plus.",
       "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "calendar",
         "plus"
@@ -26,8 +24,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:arrow_clockwise",
@@ -37,8 +35,6 @@
       "depicts": "A symbol representing arrow clockwise.",
       "purpose": "Show arrow clockwise as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "clockwise"
@@ -53,8 +49,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:arrow_counterclockwise",
@@ -64,8 +60,6 @@
       "depicts": "A symbol representing arrow counterclockwise.",
       "purpose": "Show arrow counterclockwise as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "counterclockwise"
@@ -80,8 +74,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "bootstrap:arrow_repeat",
@@ -91,8 +85,6 @@
       "depicts": "A symbol representing arrow repeat.",
       "purpose": "Show arrow repeat as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "repeat"
@@ -107,8 +99,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

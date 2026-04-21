@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-04-21T15:07:29.918Z",
+  "generated_at": "2026-04-21T15:32:46.178Z",
   "library_id": "mingcute",
   "library_label": "MingCute",
   "library_order": 1,
   "verdict": {
-    "status": "fully_approved_complete",
-    "message": "The library now meets the stricter completion standard: every icon is approved and the public registry matches the full library size.",
-    "recommended_next_step": "Move to the next incomplete library or the next library in the rollout order."
+    "status": "incomplete_needs_follow_up",
+    "message": "Every icon has been processed, but the library is still incomplete because some icons remain unresolved or still use weak placeholder semantics.",
+    "recommended_next_step": "Keep working through the remaining hold, draft, and placeholder-approved icons until every icon is genuinely suitable."
   },
   "coverage": {
     "source_total_icons": 1662,
@@ -29,6 +29,17 @@
     "hold_ratio": 0,
     "draft_ratio": 0,
     "batch_count": 15,
+    "generic_placeholder_record_count": 1130,
+    "generic_placeholder_examples": [
+      "mingcute:add",
+      "mingcute:add_circle",
+      "mingcute:add_circle_dash",
+      "mingcute:aerial_lift",
+      "mingcute:aiming",
+      "mingcute:aiming_2",
+      "mingcute:air_balloon",
+      "mingcute:air_condition"
+    ],
     "top_categories": [
       {
         "key": "status_feedback",
@@ -147,7 +158,9 @@
     "banned_field_hit_count": 0,
     "banned_field_hits": []
   },
-  "gaps": [],
+  "gaps": [
+    "1130 approved records still use generic placeholder semantics and must be re-reviewed before the library can count as fully complete."
+  ],
   "manual_spotcheck": {
     "approved_examples": [
       "mingcute:abs",

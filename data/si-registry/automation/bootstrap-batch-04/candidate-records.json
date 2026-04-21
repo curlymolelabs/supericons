@@ -23,8 +23,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -34,8 +32,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:blockquote_right",
@@ -61,8 +58,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -72,8 +67,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:body_text",
@@ -96,8 +90,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing body text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "body",
       "text"
@@ -105,8 +97,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:book_half",
@@ -129,8 +120,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing book half.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "book",
       "half"
@@ -138,8 +127,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bookshelf",
@@ -161,16 +149,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bookshelf.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bookshelf"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:boombox",
@@ -192,16 +177,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing boombox.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "boombox"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bootstrap_reboot",
@@ -224,8 +206,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bootstrap reboot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bootstrap",
       "reboot"
@@ -233,8 +213,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border",
@@ -256,16 +235,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border_all",
@@ -288,8 +264,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border all.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border",
       "all"
@@ -297,8 +271,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border_center",
@@ -321,8 +294,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border center.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border",
       "center"
@@ -330,8 +301,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border_middle",
@@ -354,8 +324,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border middle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border",
       "middle"
@@ -363,8 +331,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border_style",
@@ -387,8 +354,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border style.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border",
       "style"
@@ -396,8 +361,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:border_width",
@@ -420,8 +384,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing border width.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "border",
       "width"
@@ -429,8 +391,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bounding_box",
@@ -453,8 +414,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bounding box.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bounding",
       "box"
@@ -462,8 +421,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bounding_box_circles",
@@ -487,8 +445,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bounding box circles.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bounding",
       "box",
@@ -497,8 +453,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:box_seam",
@@ -521,8 +476,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing box seam.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "box",
       "seam"
@@ -530,8 +483,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:box2",
@@ -553,16 +505,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing box2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "box2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:box2_heart",
@@ -585,8 +534,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing box2 heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "box2",
       "heart"
@@ -594,8 +541,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:boxes",
@@ -617,16 +563,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing boxes.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "boxes"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:braces_asterisk",
@@ -649,8 +592,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing braces asterisk.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "braces",
       "asterisk"
@@ -658,8 +599,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:brightness_alt_high",
@@ -683,8 +623,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brightness alt high.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brightness",
       "alt",
@@ -693,8 +631,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:brightness_alt_low",
@@ -718,8 +655,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brightness alt low.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brightness",
       "alt",
@@ -728,8 +663,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:brightness_high",
@@ -752,8 +686,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brightness high.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brightness",
       "high"
@@ -761,8 +693,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:brightness_low",
@@ -785,8 +716,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brightness low.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brightness",
       "low"
@@ -794,8 +723,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:brilliance",
@@ -817,16 +745,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing brilliance.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "brilliance"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:broadcast",
@@ -848,16 +773,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing broadcast.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "broadcast"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:broadcast_pin",
@@ -880,8 +802,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing broadcast pin.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "broadcast",
       "pin"
@@ -889,8 +809,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:browser_chrome",
@@ -913,8 +832,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing browser chrome.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "browser",
       "chrome"
@@ -922,8 +839,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:browser_edge",
@@ -946,8 +862,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing browser edge.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "browser",
       "edge"
@@ -955,8 +869,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:browser_firefox",
@@ -979,8 +892,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing browser firefox.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "browser",
       "firefox"
@@ -988,8 +899,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:browser_safari",
@@ -1012,8 +922,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing browser safari.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "browser",
       "safari"
@@ -1021,8 +929,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bucket",
@@ -1044,16 +951,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bucket.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bucket"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building",
@@ -1075,16 +979,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_add",
@@ -1107,8 +1008,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building add.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "add"
@@ -1116,8 +1015,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_dash",
@@ -1140,8 +1038,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building dash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "dash"
@@ -1149,8 +1045,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_down",
@@ -1175,8 +1070,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -1185,8 +1078,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "bootstrap:building_exclamation",
@@ -1209,8 +1101,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building exclamation.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "exclamation"
@@ -1218,8 +1108,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_gear",
@@ -1242,8 +1131,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building gear.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "gear"
@@ -1251,8 +1138,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_slash",
@@ -1275,8 +1161,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing building slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "building",
       "slash"
@@ -1284,8 +1168,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:building_up",
@@ -1310,8 +1193,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -1320,8 +1201,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "bootstrap:buildings",
@@ -1343,16 +1223,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing buildings.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "buildings"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bullseye",
@@ -1374,16 +1251,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bullseye.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bullseye"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:bus_front",
@@ -1406,8 +1280,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing bus front.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "bus",
       "front"
@@ -1415,8 +1287,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:c_circle",
@@ -1439,8 +1310,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing c circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "c",
       "circle"
@@ -1448,8 +1317,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:c_square",
@@ -1472,8 +1340,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing c square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "c",
       "square"
@@ -1481,8 +1347,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cake2",
@@ -1504,16 +1369,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cake2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cake2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calculator",
@@ -1535,16 +1397,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calculator.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calculator"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2",
@@ -1566,16 +1425,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_date",
@@ -1598,8 +1454,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 date.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "date"
@@ -1607,8 +1461,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_day",
@@ -1631,8 +1484,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 day.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "day"
@@ -1640,8 +1491,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_event",
@@ -1664,8 +1514,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 event.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "event"
@@ -1673,8 +1521,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_heart",
@@ -1697,8 +1544,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "calendar2",
       "heart"
@@ -1706,8 +1551,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_minus",
@@ -1730,8 +1574,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "minus"
@@ -1739,8 +1581,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_month",
@@ -1763,8 +1604,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 month.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "month"
@@ -1772,8 +1611,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_range",
@@ -1796,8 +1634,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 range.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "range"
@@ -1805,8 +1641,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar2_week",
@@ -1829,8 +1664,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar2 week.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar2",
       "week"
@@ -1838,8 +1671,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar3",
@@ -1861,16 +1693,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar3.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar3"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar3_event",
@@ -1893,8 +1722,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar3 event.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar3",
       "event"
@@ -1902,8 +1729,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar3_range",
@@ -1926,8 +1752,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar3 range.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar3",
       "range"
@@ -1935,8 +1759,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar3_week",
@@ -1959,8 +1782,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar3 week.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar3",
       "week"
@@ -1968,8 +1789,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar4",
@@ -1991,16 +1811,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar4.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar4"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar4_event",
@@ -2023,8 +1840,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar4 event.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar4",
       "event"
@@ -2032,8 +1847,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar4_range",
@@ -2056,8 +1870,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar4 range.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar4",
       "range"
@@ -2065,8 +1877,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:calendar4_week",
@@ -2089,8 +1900,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing calendar4 week.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "calendar4",
       "week"
@@ -2098,8 +1907,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:camera_reels",
@@ -2122,8 +1930,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera reels.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera",
       "reels"
@@ -2131,8 +1937,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:camera_video",
@@ -2155,8 +1960,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera video.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera",
       "video"
@@ -2164,8 +1967,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:camera_video_off",
@@ -2189,8 +1991,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera video off.",
-    "intent": "inform",
-    "domain": "media",
     "synonyms": [
       "camera",
       "video",
@@ -2199,8 +1999,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:camera2",
@@ -2222,16 +2021,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing camera2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "camera2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:capslock",
@@ -2253,16 +2049,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing capslock.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "capslock"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:capsule_pill",
@@ -2285,8 +2078,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing capsule pill.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "capsule",
       "pill"
@@ -2294,8 +2085,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:car_front",
@@ -2318,8 +2108,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing car front.",
-    "intent": "inform",
-    "domain": "navigation",
     "synonyms": [
       "car",
       "front"
@@ -2327,8 +2115,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:card_checklist",
@@ -2351,8 +2138,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing card checklist.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "card",
       "checklist"
@@ -2360,8 +2145,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:card_heading",
@@ -2384,8 +2168,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing card heading.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "card",
       "heading"
@@ -2393,8 +2175,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:card_image",
@@ -2417,8 +2198,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing card image.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "card",
       "image"
@@ -2426,8 +2205,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:card_text",
@@ -2450,8 +2228,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing card text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "card",
       "text"
@@ -2459,8 +2235,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:caret_down_square",
@@ -2486,8 +2261,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -2496,8 +2269,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "bootstrap:caret_left_square",
@@ -2524,8 +2296,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -2535,8 +2305,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:caret_right_square",
@@ -2563,8 +2332,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -2574,8 +2341,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:caret_up_square",
@@ -2601,8 +2367,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "An upward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move up",
       "go up",
@@ -2611,8 +2375,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "bootstrap:cart",
@@ -2634,16 +2397,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cart_dash",
@@ -2666,8 +2426,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart dash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart",
       "dash"
@@ -2675,8 +2433,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cart2",
@@ -2698,16 +2455,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cart3",
@@ -2729,16 +2483,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart3.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart3"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cart4",
@@ -2760,16 +2511,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cart4.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cart4"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cash_coin",
@@ -2792,8 +2540,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cash coin.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cash",
       "coin"
@@ -2801,8 +2547,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cash_stack",
@@ -2825,8 +2570,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cash stack.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cash",
       "stack"
@@ -2834,8 +2577,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cassette",
@@ -2857,16 +2599,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cassette.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cassette"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cast",
@@ -2888,16 +2627,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cast.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cast"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cc_circle",
@@ -2920,8 +2656,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cc circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cc",
       "circle"
@@ -2929,8 +2663,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cc_square",
@@ -2953,8 +2686,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cc square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cc",
       "square"
@@ -2962,8 +2693,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat",
@@ -2985,16 +2715,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_dots",
@@ -3017,8 +2744,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat dots.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "dots"
@@ -3026,8 +2751,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_heart",
@@ -3050,8 +2774,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "chat",
       "heart"
@@ -3059,8 +2781,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_left",
@@ -3086,8 +2807,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -3097,8 +2816,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_left_dots",
@@ -3125,8 +2843,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -3136,8 +2852,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_left_heart",
@@ -3164,8 +2879,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -3175,8 +2888,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_left_quote",
@@ -3203,8 +2915,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -3214,8 +2924,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_left_text",
@@ -3242,8 +2951,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A left-facing arrow or backward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go back",
       "previous screen",
@@ -3253,8 +2960,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_quote",
@@ -3277,8 +2983,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat quote.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "quote"
@@ -3286,8 +2990,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_right",
@@ -3313,8 +3016,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3324,8 +3025,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_right_dots",
@@ -3352,8 +3052,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3363,8 +3061,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_right_heart",
@@ -3391,8 +3088,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3402,8 +3097,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_right_quote",
@@ -3430,8 +3124,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3441,8 +3133,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_right_text",
@@ -3469,8 +3160,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A right-facing arrow or forward navigation cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "go forward",
       "next screen",
@@ -3480,8 +3169,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.86
+    ]
   },
   {
     "icon_id": "bootstrap:chat_square",
@@ -3504,8 +3192,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "square"
@@ -3513,8 +3199,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_square_dots",
@@ -3538,8 +3223,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat square dots.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "square",
@@ -3548,8 +3231,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_square_heart",
@@ -3573,8 +3255,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat square heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "chat",
       "square",
@@ -3583,8 +3263,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_square_quote",
@@ -3608,8 +3287,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat square quote.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "square",
@@ -3618,8 +3295,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_square_text",
@@ -3643,8 +3319,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat square text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "square",
@@ -3653,8 +3327,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:chat_text",
@@ -3677,8 +3350,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing chat text.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "chat",
       "text"
@@ -3686,8 +3357,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:check2",
@@ -3709,16 +3379,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing check2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "check2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:check2_all",
@@ -3741,8 +3408,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing check2 all.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "check2",
       "all"
@@ -3750,8 +3415,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:check2_circle",
@@ -3774,8 +3438,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing check2 circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "check2",
       "circle"
@@ -3783,8 +3445,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:check2_square",
@@ -3807,8 +3468,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing check2 square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "check2",
       "square"
@@ -3816,8 +3475,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:circle_half",
@@ -3840,8 +3498,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing circle half.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "circle",
       "half"
@@ -3849,8 +3505,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:circle_square",
@@ -3873,8 +3528,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing circle square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "circle",
       "square"
@@ -3882,8 +3535,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard_data",
@@ -3906,8 +3558,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard data.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard",
       "data"
@@ -3915,8 +3565,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard_heart",
@@ -3939,8 +3588,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "clipboard",
       "heart"
@@ -3948,8 +3595,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard_minus",
@@ -3972,8 +3618,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard",
       "minus"
@@ -3981,8 +3625,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard_pulse",
@@ -4005,8 +3648,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard pulse.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard",
       "pulse"
@@ -4014,8 +3655,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard2",
@@ -4037,16 +3677,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard2_data",
@@ -4069,8 +3706,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard2 data.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard2",
       "data"
@@ -4078,8 +3713,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard2_heart",
@@ -4102,8 +3736,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard2 heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "clipboard2",
       "heart"
@@ -4111,8 +3743,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard2_minus",
@@ -4135,8 +3766,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard2 minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard2",
       "minus"
@@ -4144,8 +3773,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:clipboard2_pulse",
@@ -4168,8 +3796,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing clipboard2 pulse.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "clipboard2",
       "pulse"
@@ -4177,8 +3803,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_drizzle",
@@ -4201,8 +3826,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud drizzle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "drizzle"
@@ -4210,8 +3833,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_fog",
@@ -4234,8 +3856,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud fog.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "fog"
@@ -4243,8 +3863,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_fog2",
@@ -4267,8 +3886,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud fog2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "fog2"
@@ -4276,8 +3893,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_hail",
@@ -4300,8 +3916,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud hail.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "hail"
@@ -4309,8 +3923,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_haze",
@@ -4333,8 +3946,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud haze.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "haze"
@@ -4342,8 +3953,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_haze2",
@@ -4366,8 +3976,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud haze2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "haze2"
@@ -4375,8 +3983,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_lightning_rain",
@@ -4400,8 +4007,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud lightning rain.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "lightning",
@@ -4410,8 +4015,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_minus",
@@ -4434,8 +4038,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud minus.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "minus"
@@ -4443,8 +4045,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_moon",
@@ -4467,8 +4068,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud moon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "moon"
@@ -4476,8 +4075,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_rain",
@@ -4500,8 +4098,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud rain.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "rain"
@@ -4509,8 +4105,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_rain_heavy",
@@ -4534,8 +4129,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud rain heavy.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "rain",
@@ -4544,8 +4137,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_slash",
@@ -4568,8 +4160,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "slash"
@@ -4577,8 +4167,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_sleet",
@@ -4601,8 +4190,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud sleet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "sleet"
@@ -4610,8 +4197,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloud_sun",
@@ -4634,8 +4220,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloud sun.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloud",
       "sun"
@@ -4643,8 +4227,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cloudy",
@@ -4666,16 +4249,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cloudy.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cloudy"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:collection",
@@ -4697,16 +4277,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing collection.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "collection"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:columns",
@@ -4728,16 +4305,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing columns.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "columns"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:columns_gap",
@@ -4760,8 +4334,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing columns gap.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "columns",
       "gap"
@@ -4769,8 +4341,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cone",
@@ -4792,16 +4363,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cone.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cone"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cone_striped",
@@ -4824,8 +4392,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cone striped.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cone",
       "striped"
@@ -4833,8 +4399,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:controller",
@@ -4856,16 +4421,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing controller.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "controller"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cpu",
@@ -4887,16 +4449,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cpu.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cpu"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:credit_card",
@@ -4919,8 +4478,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing credit card.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "credit",
       "card"
@@ -4928,8 +4485,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:credit_card_2_front",
@@ -4954,8 +4510,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing credit card front.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "credit",
       "card",
@@ -4965,8 +4519,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:crop",
@@ -4988,16 +4541,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing crop.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "crop"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:crosshair",
@@ -5019,16 +4569,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing crosshair.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "crosshair"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:crosshair2",
@@ -5050,16 +4597,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing crosshair2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "crosshair2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cup",
@@ -5081,16 +4625,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cup.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cup"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cup_hot",
@@ -5113,8 +4654,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cup hot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cup",
       "hot"
@@ -5122,8 +4661,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:cup_straw",
@@ -5146,8 +4684,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing cup straw.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "cup",
       "straw"
@@ -5155,8 +4691,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:currency_exchange",
@@ -5179,8 +4714,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency exchange.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "exchange"
@@ -5188,8 +4721,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:currency_yen",
@@ -5212,8 +4744,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing currency yen.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "currency",
       "yen"
@@ -5221,8 +4751,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dash_circle",
@@ -5245,8 +4774,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dash circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dash",
       "circle"
@@ -5254,8 +4781,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dash_circle_dotted",
@@ -5279,8 +4805,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dash circle dotted.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dash",
       "circle",
@@ -5289,8 +4813,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dash_lg",
@@ -5313,8 +4836,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dash lg.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dash",
       "lg"
@@ -5322,8 +4843,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dash_square",
@@ -5346,8 +4866,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dash square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dash",
       "square"
@@ -5355,8 +4873,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dash_square_dotted",
@@ -5380,8 +4897,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dash square dotted.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dash",
       "square",
@@ -5390,8 +4905,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:device_hdd",
@@ -5414,8 +4928,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing device hdd.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "device",
       "hdd"
@@ -5423,8 +4935,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:device_ssd",
@@ -5447,8 +4958,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing device ssd.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "device",
       "ssd"
@@ -5456,8 +4965,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:diagram_2",
@@ -5480,8 +4988,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing diagram.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "diagram",
       "2"
@@ -5489,8 +4995,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:diagram_3",
@@ -5513,8 +5018,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing diagram.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "diagram",
       "3"
@@ -5522,8 +5025,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:diamond_half",
@@ -5546,8 +5048,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing diamond half.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "diamond",
       "half"
@@ -5555,8 +5055,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_1",
@@ -5579,8 +5078,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "1"
@@ -5588,8 +5085,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_2",
@@ -5612,8 +5108,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "2"
@@ -5621,8 +5115,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_3",
@@ -5645,8 +5138,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "3"
@@ -5654,8 +5145,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_4",
@@ -5678,8 +5168,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "4"
@@ -5687,8 +5175,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_5",
@@ -5711,8 +5198,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "5"
@@ -5720,8 +5205,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dice_6",
@@ -5744,8 +5228,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dice.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dice",
       "6"
@@ -5753,8 +5235,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:displayport",
@@ -5776,16 +5257,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing displayport.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "displayport"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:distribute_horizontal",
@@ -5808,8 +5286,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing distribute horizontal.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "distribute",
       "horizontal"
@@ -5817,8 +5293,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:distribute_vertical",
@@ -5841,8 +5316,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing distribute vertical.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "distribute",
       "vertical"
@@ -5850,8 +5323,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:door_closed",
@@ -5874,8 +5346,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing door closed.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "door",
       "closed"
@@ -5883,8 +5353,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dot",
@@ -5906,16 +5375,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dot.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dot"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:dpad",
@@ -5937,16 +5403,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing dpad.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "dpad"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:droplet",
@@ -5968,16 +5431,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing droplet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "droplet"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:droplet_half",
@@ -6000,8 +5460,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing droplet half.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "droplet",
       "half"
@@ -6009,8 +5467,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:duffle",
@@ -6032,16 +5489,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing duffle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "duffle"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:earbuds",
@@ -6063,16 +5517,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing earbuds.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "earbuds"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:easel",
@@ -6094,16 +5545,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing easel.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "easel"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:easel2",
@@ -6125,16 +5573,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing easel2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "easel2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:easel3",
@@ -6156,16 +5601,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing easel3.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "easel3"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:egg_fried",
@@ -6188,8 +5630,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing egg fried.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "egg",
       "fried"
@@ -6197,8 +5637,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:eject",
@@ -6220,16 +5659,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing eject.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "eject"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_angry",
@@ -6252,8 +5688,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji angry.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "angry"
@@ -6261,8 +5695,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_astonished",
@@ -6285,8 +5718,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji astonished.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "astonished"
@@ -6294,8 +5725,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_dizzy",
@@ -6318,8 +5748,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji dizzy.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "dizzy"
@@ -6327,8 +5755,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_expressionless",
@@ -6351,8 +5778,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji expressionless.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "expressionless"
@@ -6360,8 +5785,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_frown",
@@ -6384,8 +5808,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji frown.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "frown"
@@ -6393,8 +5815,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_grimace",
@@ -6417,8 +5838,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji grimace.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "grimace"
@@ -6426,8 +5845,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_grin",
@@ -6450,8 +5868,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji grin.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "grin"
@@ -6459,8 +5875,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_heart_eyes",
@@ -6484,8 +5899,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji heart eyes.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "heart",
@@ -6494,8 +5907,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_kiss",
@@ -6518,8 +5930,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji kiss.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "kiss"
@@ -6527,8 +5937,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_laughing",
@@ -6551,8 +5960,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji laughing.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "laughing"
@@ -6560,8 +5967,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_neutral",
@@ -6584,8 +5990,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji neutral.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "neutral"
@@ -6593,8 +5997,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_smile",
@@ -6617,8 +6020,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji smile.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "smile"
@@ -6626,8 +6027,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_smile_upside_down",
@@ -6654,8 +6054,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A downward arrow or movement cue.",
-    "intent": "navigate",
-    "domain": "navigation",
     "synonyms": [
       "move down",
       "go down",
@@ -6664,8 +6062,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.82
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_sunglasses",
@@ -6688,8 +6085,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji sunglasses.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "sunglasses"
@@ -6697,8 +6092,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_surprise",
@@ -6721,8 +6115,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji surprise.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "surprise"
@@ -6730,8 +6122,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_tear",
@@ -6754,8 +6145,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji tear.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "tear"
@@ -6763,8 +6152,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:emoji_wink",
@@ -6787,8 +6175,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing emoji wink.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "emoji",
       "wink"
@@ -6796,8 +6182,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope",
@@ -6819,16 +6204,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_at",
@@ -6851,8 +6233,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope at.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope",
       "at"
@@ -6860,8 +6240,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_dash",
@@ -6884,8 +6263,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope dash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope",
       "dash"
@@ -6893,8 +6270,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_exclamation",
@@ -6917,8 +6293,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope exclamation.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope",
       "exclamation"
@@ -6926,8 +6300,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_heart",
@@ -6950,8 +6323,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "envelope",
       "heart"
@@ -6959,8 +6330,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_paper",
@@ -6983,8 +6353,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope paper.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope",
       "paper"
@@ -6992,8 +6360,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_paper_heart",
@@ -7017,8 +6384,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope paper heart.",
-    "intent": "inform",
-    "domain": "communication",
     "synonyms": [
       "envelope",
       "paper",
@@ -7027,8 +6392,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:envelope_slash",
@@ -7051,8 +6415,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing envelope slash.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "envelope",
       "slash"
@@ -7060,8 +6422,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:escape",
@@ -7083,16 +6444,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing escape.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "escape"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:ethernet",
@@ -7114,16 +6472,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ethernet.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ethernet"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:ev_front",
@@ -7146,8 +6501,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ev front.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ev",
       "front"
@@ -7155,8 +6508,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:ev_station",
@@ -7179,8 +6531,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing ev station.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "ev",
       "station"
@@ -7188,8 +6538,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation",
@@ -7211,16 +6560,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_circle",
@@ -7243,8 +6589,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation circle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "circle"
@@ -7252,8 +6596,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_diamond",
@@ -7276,8 +6619,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation diamond.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "diamond"
@@ -7285,8 +6626,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_lg",
@@ -7309,8 +6649,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation lg.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "lg"
@@ -7318,8 +6656,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_octagon",
@@ -7342,8 +6679,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation octagon.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "octagon"
@@ -7351,8 +6686,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_square",
@@ -7375,8 +6709,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation square.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "square"
@@ -7384,8 +6716,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:exclamation_triangle",
@@ -7408,8 +6739,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing exclamation triangle.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "exclamation",
       "triangle"
@@ -7417,8 +6746,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:explicit",
@@ -7440,16 +6768,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing explicit.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "explicit"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:eyedropper",
@@ -7471,16 +6796,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing eyedropper.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "eyedropper"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:eyeglasses",
@@ -7502,16 +6824,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing eyeglasses.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "eyeglasses"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:feather",
@@ -7533,16 +6852,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing feather.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "feather"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:feather2",
@@ -7564,16 +6880,13 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing feather2.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "feather2"
     ],
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:files_alt",
@@ -7596,8 +6909,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing files alt.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "files",
       "alt"
@@ -7605,8 +6916,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_aac",
@@ -7629,8 +6939,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype aac.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "aac"
@@ -7638,8 +6946,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_bmp",
@@ -7662,8 +6969,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype bmp.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "bmp"
@@ -7671,8 +6976,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_cs",
@@ -7695,8 +6999,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype cs.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "cs"
@@ -7704,8 +7006,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_css",
@@ -7728,8 +7029,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype css.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "css"
@@ -7737,8 +7036,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_csv",
@@ -7761,8 +7059,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype csv.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "csv"
@@ -7770,8 +7066,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_doc",
@@ -7794,8 +7089,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype doc.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "doc"
@@ -7803,8 +7096,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_docx",
@@ -7827,8 +7119,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype docx.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "docx"
@@ -7836,8 +7126,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_exe",
@@ -7860,8 +7149,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype exe.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "exe"
@@ -7869,8 +7156,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_gif",
@@ -7893,8 +7179,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype gif.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "gif"
@@ -7902,8 +7186,7 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   },
   {
     "icon_id": "bootstrap:filetype_heic",
@@ -7926,8 +7209,6 @@
     "projection_policy": "internal_only",
     "is_premium": false,
     "depicts": "A symbol representing filetype heic.",
-    "intent": "inform",
-    "domain": "ui_controls",
     "synonyms": [
       "filetype",
       "heic"
@@ -7935,7 +7216,6 @@
     "evidence": [
       "source_name",
       "svg_payload"
-    ],
-    "confidence": 0.7
+    ]
   }
 ]

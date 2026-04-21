@@ -45,8 +45,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download file",
           "file file"
@@ -54,8 +52,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_download_line",
@@ -92,8 +89,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "upload file",
           "file file"
@@ -101,8 +96,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_upload_line",
@@ -139,8 +133,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "download folder",
           "folder folder"
@@ -148,8 +140,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_download_line",
@@ -187,8 +178,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "open folder",
           "folder folder",
@@ -197,8 +186,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_open_2_line",
@@ -235,8 +223,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "open folder",
           "folder folder"
@@ -244,8 +230,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_open_line",
@@ -282,8 +267,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "act",
-        "domain": "ui_controls",
         "synonyms": [
           "upload folder",
           "folder folder"
@@ -291,8 +274,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_upload_line",
@@ -330,8 +312,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "align",
           "arrow",
@@ -340,8 +320,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "align_arrow_left_line",
@@ -379,8 +358,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "align",
           "arrow",
@@ -389,8 +366,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "align_arrow_right_line",
@@ -427,8 +403,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "barcode",
           "scan"
@@ -436,8 +410,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "barcode_scan_line",
@@ -474,8 +447,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "direction",
           "arrow"
@@ -483,8 +454,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "direction_arrow_line",
@@ -521,8 +491,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -531,8 +499,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_certificate_line",
@@ -569,8 +536,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -579,8 +544,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_export_line",
@@ -617,8 +581,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -627,8 +589,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_forbid_line",
@@ -665,8 +626,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -675,8 +634,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_import_line",
@@ -712,8 +670,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file"
@@ -721,8 +677,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_line",
@@ -759,8 +714,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -769,8 +722,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_locked_line",
@@ -807,8 +759,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -817,8 +767,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_new_line",
@@ -855,8 +804,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -865,8 +812,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_security_line",
@@ -903,8 +849,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -913,8 +857,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_unknown_line",
@@ -951,8 +894,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "file",
           "file file",
@@ -961,8 +902,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "file_zip_line",
@@ -999,8 +939,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1009,8 +947,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_2_line",
@@ -1047,8 +984,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1057,8 +992,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_3_line",
@@ -1095,8 +1029,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1105,8 +1037,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_forbid_line",
@@ -1142,8 +1073,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder"
@@ -1151,8 +1080,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_line",
@@ -1190,8 +1118,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1201,8 +1127,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_locked_2_line",
@@ -1239,8 +1164,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1249,8 +1172,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_locked_line",
@@ -1287,8 +1209,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1297,8 +1217,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_minus_line",
@@ -1335,8 +1254,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1345,8 +1262,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_security_line",
@@ -1383,8 +1299,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "folder folder",
@@ -1393,8 +1307,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "folder_zip_line",
@@ -1431,8 +1344,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "google",
           "play"
@@ -1440,8 +1351,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "google_play_line",
@@ -1478,8 +1388,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A file or folder symbol paired with an action or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "folder",
           "new folder",
@@ -1488,8 +1396,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.8
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "new_folder_line",
@@ -1526,8 +1433,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "pause",
           "circle"
@@ -1535,8 +1440,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pause_circle_line",
@@ -1572,16 +1476,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "pause"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "pause_line",
@@ -1618,8 +1519,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "play",
           "circle"
@@ -1627,8 +1526,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "play_circle_line",
@@ -1665,8 +1563,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "play",
           "football"
@@ -1674,8 +1570,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "play_football_line",
@@ -1711,16 +1606,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "play"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "play_line",
@@ -1757,8 +1649,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "scan",
           "2"
@@ -1766,8 +1656,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "scan_2_line",
@@ -1803,16 +1692,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "scan"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "scan_line",
@@ -1849,8 +1735,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "skip",
           "previous"
@@ -1858,8 +1742,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "skip_previous_line",
@@ -1896,8 +1779,6 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "stop",
           "circle"
@@ -1905,8 +1786,7 @@
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "stop_circle_line",
@@ -1942,16 +1822,13 @@
         "projection_policy": "internal_only",
         "is_premium": false,
         "depicts": "A general interface symbol used for a straightforward control or state cue.",
-        "intent": "inform",
-        "domain": "ui_controls",
         "synonyms": [
           "stop"
         ],
         "evidence": [
           "source_name",
           "svg_payload"
-        ],
-        "confidence": 0.7
+        ]
       },
       "visual_review_input": {
         "source_asset_name": "stop_line",

@@ -10,8 +10,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "settings"
@@ -27,8 +25,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:user_scan",
@@ -38,8 +36,6 @@
       "depicts": "A symbol representing user scan.",
       "purpose": "Show user scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "communication",
       "semantic_tags": [
         "user",
         "scan"
@@ -54,8 +50,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_archery",
@@ -65,8 +61,6 @@
       "depicts": "A symbol representing arrow archery.",
       "purpose": "Show arrow archery as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "archery"
@@ -81,8 +75,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_enlarge_tag",
@@ -92,8 +86,6 @@
       "depicts": "A symbol representing arrow enlarge tag.",
       "purpose": "Show arrow enlarge tag as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "enlarge",
@@ -110,8 +102,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_reduce_tag",
@@ -121,8 +113,6 @@
       "depicts": "A symbol representing arrow reduce tag.",
       "purpose": "Show arrow reduce tag as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "reduce",
@@ -139,8 +129,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_separate",
@@ -150,8 +140,6 @@
       "depicts": "A symbol representing arrow separate.",
       "purpose": "Show arrow separate as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "separate"
@@ -166,8 +154,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_separate_vertical",
@@ -177,8 +165,6 @@
       "depicts": "A symbol representing arrow separate vertical.",
       "purpose": "Show arrow separate vertical as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "separate",
@@ -195,8 +181,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_union",
@@ -206,8 +192,6 @@
       "depicts": "A symbol representing arrow union.",
       "purpose": "Show arrow union as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "union"
@@ -222,8 +206,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:arrow_union_vertical",
@@ -233,8 +217,6 @@
       "depicts": "A symbol representing arrow union vertical.",
       "purpose": "Show arrow union vertical as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "arrow",
         "union",
@@ -251,8 +233,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:bus_stop",
@@ -262,8 +244,6 @@
       "depicts": "A symbol representing bus stop.",
       "purpose": "Show bus stop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "bus",
         "stop"
@@ -278,8 +258,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:chat_plus_in",
@@ -289,8 +269,6 @@
       "depicts": "A symbol representing chat plus in.",
       "purpose": "Show chat plus in as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "chat",
         "plus",
@@ -307,8 +285,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:cube_scan",
@@ -318,8 +296,6 @@
       "depicts": "A symbol representing cube scan.",
       "purpose": "Show cube scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "cube",
         "scan"
@@ -334,8 +310,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:file_not_found",
@@ -345,8 +321,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "not",
@@ -364,8 +338,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:fingerprint_scan",
@@ -375,8 +349,6 @@
       "depicts": "A symbol representing fingerprint scan.",
       "purpose": "Show fingerprint scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "fingerprint",
         "scan"
@@ -391,8 +363,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:iris_scan",
@@ -402,8 +374,6 @@
       "depicts": "A symbol representing iris scan.",
       "purpose": "Show iris scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "iris",
         "scan"
@@ -418,8 +388,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:media_image_folder",
@@ -429,8 +399,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "media",
         "image",
@@ -448,8 +416,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:media_video_folder",
@@ -459,8 +427,6 @@
       "depicts": "A file or folder symbol paired with an action or state cue.",
       "purpose": "Show a folder, container, or directory-related action.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "media",
         "video",
@@ -478,8 +444,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:pause_window",
@@ -489,8 +455,6 @@
       "depicts": "A symbol representing pause window.",
       "purpose": "Show pause window as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "pause",
         "window"
@@ -505,8 +469,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:playlist_play",
@@ -516,8 +480,6 @@
       "depicts": "A symbol representing playlist play.",
       "purpose": "Show playlist play as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "playlist",
         "play"
@@ -532,8 +494,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:scan_barcode",
@@ -543,8 +505,6 @@
       "depicts": "A symbol representing scan barcode.",
       "purpose": "Show scan barcode as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan",
         "barcode"
@@ -559,8 +519,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     },
     {
       "icon_id": "iconoir:voice_scan",
@@ -570,8 +530,6 @@
       "depicts": "A symbol representing voice scan.",
       "purpose": "Show voice scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "voice",
         "scan"
@@ -586,8 +544,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.74,
-      "confidence_band": "medium"
+      "routing_score": 0.74,
+      "routing_band": "medium"
     }
   ]
 }

@@ -10,8 +10,6 @@
       "depicts": "A file paired with a downward download cue.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download file",
         "export file",
@@ -31,8 +29,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_upload",
@@ -42,8 +40,6 @@
       "depicts": "A file paired with an upward upload cue.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload file",
         "import file",
@@ -63,8 +59,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_download",
@@ -74,8 +70,6 @@
       "depicts": "A folder paired with a downward download cue.",
       "purpose": "Show downloading, exporting, or saving a folder or grouped file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "download folder",
         "export folder",
@@ -95,8 +89,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_open_2",
@@ -106,8 +100,6 @@
       "depicts": "An open folder indicating entry into a container.",
       "purpose": "Show opening a folder or entering a file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "open folder",
         "folder",
@@ -127,8 +119,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_open",
@@ -138,8 +130,6 @@
       "depicts": "An open folder indicating entry into a container.",
       "purpose": "Show opening a folder or entering a file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "open folder",
         "folder",
@@ -159,8 +149,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_upload",
@@ -170,8 +160,6 @@
       "depicts": "A folder paired with an upward upload cue.",
       "purpose": "Show uploading, importing, or adding a folder or grouped file container.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "upload folder",
         "import folder",
@@ -191,8 +179,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:align_arrow_left",
@@ -202,8 +190,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align",
         "arrow",
@@ -220,8 +206,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:align_arrow_right",
@@ -231,8 +217,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "align",
         "arrow",
@@ -249,8 +233,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:barcode_scan",
@@ -260,8 +244,6 @@
       "depicts": "A barcode inside scan corners.",
       "purpose": "Show scanning a barcode, QR-like code, or machine-readable label.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "barcode scan",
         "scan code",
@@ -281,8 +263,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.86,
-      "confidence_band": "high"
+      "routing_score": 0.86,
+      "routing_band": "high"
     },
     {
       "icon_id": "mingcute:direction_arrow",
@@ -292,8 +274,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "direction",
         "arrow"
@@ -308,8 +288,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_certificate",
@@ -319,8 +299,6 @@
       "depicts": "A file paired with a certificate or verified seal.",
       "purpose": "Show a verified file, certified document, or trusted file artifact.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "certified file",
         "verified document",
@@ -340,8 +318,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_export",
@@ -351,8 +329,6 @@
       "depicts": "A file paired with an outward export cue.",
       "purpose": "Show exporting or sending a file out of the current system.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "export file",
         "send file",
@@ -372,8 +348,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_forbid",
@@ -383,8 +359,6 @@
       "depicts": "A file paired with a blocked or forbidden badge.",
       "purpose": "Show a file that is blocked, restricted, or not allowed.",
       "category": "security",
-      "intent": "warn",
-      "domain": "security",
       "semantic_tags": [
         "blocked file",
         "restricted file",
@@ -404,8 +378,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_import",
@@ -415,8 +389,6 @@
       "depicts": "A file paired with an inward import cue.",
       "purpose": "Show importing, bringing in, or adding a file into the current system.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "import file",
         "add file",
@@ -436,8 +408,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file",
@@ -447,8 +419,6 @@
       "depicts": "A generic file or document symbol.",
       "purpose": "Show a file, document, or generic file artifact.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "file",
         "document",
@@ -468,8 +438,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_locked",
@@ -479,8 +449,6 @@
       "depicts": "A file paired with a lock cue.",
       "purpose": "Show a file that is locked, protected, or access-controlled.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "locked file",
         "protected file",
@@ -500,8 +468,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_new",
@@ -511,8 +479,6 @@
       "depicts": "A file paired with a creation cue.",
       "purpose": "Show creating a new file or starting a new document.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new file",
         "create file",
@@ -532,8 +498,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_security",
@@ -543,8 +509,6 @@
       "depicts": "A file paired with a security or shield cue.",
       "purpose": "Show a secure file, protected document, or file with a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "secure file",
         "protected document",
@@ -564,8 +528,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_unknown",
@@ -575,8 +539,6 @@
       "depicts": "A file paired with an unknown or unclear-type cue.",
       "purpose": "Show a file of unknown type, unrecognized format, or unspecified document kind.",
       "category": "status_feedback",
-      "intent": "inform",
-      "domain": "product_status",
       "semantic_tags": [
         "unknown file",
         "unrecognized file",
@@ -596,8 +558,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:file_zip",
@@ -607,8 +569,6 @@
       "depicts": "A file paired with a zipper cue.",
       "purpose": "Show a compressed file, archive, or zipped document.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "compressed file",
         "zip file",
@@ -628,8 +588,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_2",
@@ -639,8 +599,6 @@
       "depicts": "A generic folder or directory symbol.",
       "purpose": "Show a folder, directory, or file container.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "directory",
@@ -660,8 +618,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_3",
@@ -671,8 +629,6 @@
       "depicts": "A generic folder or directory symbol.",
       "purpose": "Show a folder, directory, or file container.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "directory",
@@ -692,8 +648,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_forbid",
@@ -703,8 +659,6 @@
       "depicts": "A folder paired with a blocked or forbidden badge.",
       "purpose": "Show a folder that is blocked, restricted, or not allowed.",
       "category": "security",
-      "intent": "warn",
-      "domain": "security",
       "semantic_tags": [
         "blocked folder",
         "restricted folder",
@@ -724,8 +678,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder",
@@ -735,8 +689,6 @@
       "depicts": "A generic folder or directory symbol.",
       "purpose": "Show a folder, directory, or file container.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "folder",
         "directory",
@@ -756,8 +708,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_locked_2",
@@ -767,8 +719,6 @@
       "depicts": "A folder paired with a lock cue.",
       "purpose": "Show a folder that is locked, protected, or access-controlled.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "locked folder",
         "protected folder",
@@ -788,8 +738,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_locked",
@@ -799,8 +749,6 @@
       "depicts": "A folder paired with a lock cue.",
       "purpose": "Show a folder that is locked, protected, or access-controlled.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "locked folder",
         "protected folder",
@@ -820,8 +768,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_minus",
@@ -831,8 +779,6 @@
       "depicts": "A folder paired with a minus or remove cue.",
       "purpose": "Show removing a folder from the current context or unassigning a folder-like container.",
       "category": "destructive_actions",
-      "intent": "delete",
-      "domain": "ui_controls",
       "semantic_tags": [
         "remove folder",
         "folder minus",
@@ -852,8 +798,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.83,
-      "confidence_band": "medium"
+      "routing_score": 0.83,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_security",
@@ -863,8 +809,6 @@
       "depicts": "A folder paired with a security or shield cue.",
       "purpose": "Show a secure folder, protected directory, or folder with a security safeguard.",
       "category": "security",
-      "intent": "inform",
-      "domain": "security",
       "semantic_tags": [
         "secure folder",
         "protected folder",
@@ -884,8 +828,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:folder_zip",
@@ -895,8 +839,6 @@
       "depicts": "A folder paired with a zipper cue.",
       "purpose": "Show a compressed folder, archive, or zipped directory.",
       "category": "system_control",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "compressed folder",
         "zip folder",
@@ -916,8 +858,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:google_play",
@@ -927,8 +869,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "google",
         "play"
@@ -943,8 +883,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:new_folder",
@@ -954,8 +894,6 @@
       "depicts": "A folder paired with a creation cue.",
       "purpose": "Show creating a new folder or starting a new directory.",
       "category": "system_control",
-      "intent": "act",
-      "domain": "ui_controls",
       "semantic_tags": [
         "new folder",
         "create folder",
@@ -975,8 +913,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.8,
-      "confidence_band": "medium"
+      "routing_score": 0.8,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pause_circle",
@@ -986,8 +924,6 @@
       "depicts": "A pause control inside a circular boundary.",
       "purpose": "Show pausing media playback, a running process, or a timed activity.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "pause",
         "media control",
@@ -1007,8 +943,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:pause",
@@ -1018,8 +954,6 @@
       "depicts": "A pause control with two vertical bars.",
       "purpose": "Show pausing media playback, a running process, or a timed activity.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "pause",
         "media control",
@@ -1039,8 +973,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:play_circle",
@@ -1050,8 +984,6 @@
       "depicts": "A play control inside a circular boundary.",
       "purpose": "Show starting media playback, resuming a running flow, or beginning a timed activity.",
       "category": "media_playback",
-      "intent": "act",
-      "domain": "media",
       "semantic_tags": [
         "play",
         "start playback",
@@ -1071,8 +1003,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:play_football",
@@ -1082,8 +1014,6 @@
       "depicts": "A general interface symbol used for a straightforward control or state cue.",
       "purpose": "Show a general interface control or state cue.",
       "category": "navigation_interface",
-      "intent": "inform",
-      "domain": "ui_controls",
       "semantic_tags": [
         "play",
         "football"
@@ -1098,8 +1028,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.7,
-      "confidence_band": "medium"
+      "routing_score": 0.7,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:play",
@@ -1109,8 +1039,6 @@
       "depicts": "A play triangle for starting playback.",
       "purpose": "Show starting media playback, resuming a running flow, or beginning a timed activity.",
       "category": "media_playback",
-      "intent": "act",
-      "domain": "media",
       "semantic_tags": [
         "play",
         "start playback",
@@ -1130,8 +1058,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:scan_2",
@@ -1141,8 +1069,6 @@
       "depicts": "Scan corners or a framed scan target.",
       "purpose": "Show scanning, visual capture, or inspection of an item or visible surface.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan",
         "capture",
@@ -1162,8 +1088,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:scan",
@@ -1173,8 +1099,6 @@
       "depicts": "Scan corners or a framed scan target.",
       "purpose": "Show scanning, visual capture, or inspection of an item or visible surface.",
       "category": "search_discovery",
-      "intent": "discover",
-      "domain": "ui_controls",
       "semantic_tags": [
         "scan",
         "capture",
@@ -1194,8 +1118,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:skip_previous",
@@ -1205,8 +1129,6 @@
       "depicts": "A media control for jumping to the previous item.",
       "purpose": "Show skipping to the previous track, clip, or item in a media sequence.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "skip previous",
         "previous track",
@@ -1226,8 +1148,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.84,
-      "confidence_band": "medium"
+      "routing_score": 0.84,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:stop_circle",
@@ -1237,8 +1159,6 @@
       "depicts": "A stop control inside a circular boundary.",
       "purpose": "Show stopping media playback, recording, or a running timed activity.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "stop",
         "end playback",
@@ -1258,8 +1178,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     },
     {
       "icon_id": "mingcute:stop",
@@ -1269,8 +1189,6 @@
       "depicts": "A square stop control.",
       "purpose": "Show stopping media playback, recording, or a running timed activity.",
       "category": "media_playback",
-      "intent": "control",
-      "domain": "media",
       "semantic_tags": [
         "stop",
         "end playback",
@@ -1290,8 +1208,8 @@
         "source-name",
         "svg-payload"
       ],
-      "confidence_score": 0.85,
-      "confidence_band": "medium"
+      "routing_score": 0.85,
+      "routing_band": "medium"
     }
   ]
 }
