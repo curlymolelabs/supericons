@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent-First MCP UX Enhancement Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ec;
+      --panel: #fffdf8;
+      --ink: #211a14;
+      --muted: #6c6155;
+      --line: #ddd2c3;
+      --accent: #8d5a2b;
+      --soft: #f2e2ce;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf8f1 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(33, 26, 20, 0.06);
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+      color: var(--ink);
+    }
+    p, li {
+      color: var(--muted);
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fffaf2;
+      padding: 18px;
+    }
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      background: #f5eee4;
+      border-radius: 6px;
+      padding: 1px 6px;
+      color: #5b3819;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <p class="eyebrow">Goal</p>
+      <h1>Make Supericons MCP easy for any agent to use well</h1>
+      <p>The main problem is not whether the server works. The main problem is whether an agent can quickly get to the right icon without having to do too much manual thinking, retrying, and cleanup.</p>
+      <p>Right now the MCP works, but it still asks too much from the agent. The agent often has to guess search words, retry with simpler words, and read raw SVG text when it should be reviewing clear recommendations.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">What We Learned</p>
+      <h2>The meaning data helped, but the experience still feels rough</h2>
+      <p>The SI meaning data already proved useful in the benchmark. It improved the best first result from <strong>1 out of 12</strong> to <strong>11 out of 12</strong> when the retrieval layer used it properly.</p>
+      <p>So the meaning data is not the failure. The gap is that the current MCP still behaves too much like a raw search box and not enough like a recommendation assistant.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">Core Question</p>
+      <h2>Would a weaker agent still do well here?</h2>
+      <p>If an agent is weaker than Kimi, would it still choose good icons without having to manually simplify the request into single-word searches?</p>
+      <p>That is the real test. A strong model can often recover from rough tools. A good MCP should not require that much recovery in the first place.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">North Star</p>
+      <h2>What the final experience should feel like</h2>
+      <p>An agent should be able to handle a request like:</p>
+      <p><strong>"Find the best MingCute icons for these 4 navigation buttons and show previews before implementation."</strong></p>
+      <p>It should do that in one clean pass, without forcing the agent to break the job into brittle keyword fragments like <code>home</code>, <code>add</code>, <code>notification</code>, and <code>user</code>.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">Design Rules</p>
+      <div class="grid">
+        <div class="card">
+          <strong>Fit how agents think</strong>
+          <p>Agents think in jobs like "pick the best icon for Home", not in library token guessing.</p>
+        </div>
+        <div class="card">
+          <strong>Lower the thinking burden</strong>
+          <p>The MCP should do more of the routine work, such as intent cleanup, synonym handling, and ranking.</p>
+        </div>
+        <div class="card">
+          <strong>Fail gracefully</strong>
+          <p>Local MCP should not show raw hosted errors if local data can answer the request.</p>
+        </div>
+        <div class="card">
+          <strong>Preview before action</strong>
+          <p>If the user asks to review first, the tool should return preview-friendly output instead of long raw SVG blocks.</p>
+        </div>
+        <div class="card">
+          <strong>Work for weak and strong agents</strong>
+          <p>The tool should be easy for a weaker agent and simply faster for a stronger one.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Enhancement Plan</p>
+      <h2>Main changes</h2>
+      <ul>
+        <li>Make local MCP search fall back safely instead of surfacing raw hosted errors.</li>
+        <li>Improve multi-word search so natural phrases do not collapse into zero results.</li>
+        <li>Add a new recommendation tool for design tasks, instead of relying only on raw search.</li>
+        <li>Return preview-friendly output so agents can show candidates clearly before implementation.</li>
+        <li>Benchmark the experience for weak, medium, and strong agent behavior.</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow">New Tool Direction</p>
+      <h2>Add a recommendation-first tool</h2>
+      <p>The current MCP is good for exact lookup, but not yet great for "help me choose" tasks.</p>
+      <p>The plan is to add a tool such as <code>recommend_icons</code> that accepts a design task and a list of UI slots, then returns:</p>
+      <ul>
+        <li>best match for each slot</li>
+        <li>good alternatives</li>
+        <li>a short reason for the choice</li>
+        <li>meaning fit notes</li>
+        <li>preview-ready SVG data</li>
+      </ul>
+      <p>This would let agents solve the problem in one or two calls instead of many small search-and-retry steps.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">Success Check</p>
+      <h2>How we will know it worked</h2>
+      <ul>
+        <li>Agents no longer need to manually simplify requests into single-word searches.</li>
+        <li>Local MCP does not show raw hosted <code>502</code> errors when local data is available.</li>
+        <li>Agents can show clear candidate previews before implementation.</li>
+        <li>Weaker agents can still get suitable icon recommendations in a small number of tool calls.</li>
+        <li>The new benchmark shows better real task performance, not only better raw retrieval scores.</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow">Recommended First Slice</p>
+      <h2>Do this in one small vertical slice first</h2>
+      <ol>
+        <li>Make local fallback safe by default.</li>
+        <li>Add the new recommendation tool.</li>
+        <li>Test it on the bottom navigation use case.</li>
+        <li>Improve preview output for that flow.</li>
+      </ol>
+      <p>That gives a visible before-and-after upgrade quickly, without redesigning every tool at once.</p>
+    </section>
+  </main>
+</body>
+</html>
