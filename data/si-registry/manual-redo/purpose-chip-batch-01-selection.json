@@ -1,0 +1,84 @@
+{
+  "batch_id": "purpose-chip-batch-01",
+  "track_id": "purpose-chip",
+  "track_label": "Purpose Icons",
+  "title": "Purpose Icons Manual Redo Batch 01",
+  "review_goal": "Restart the semantic work from the beginning with the first 5 purpose icons. Show the icon, the current record, and a new interpretation-first proposal before continuing.",
+  "record_source_path": "data/si-registry/pilot/purpose-chip/approved-records.json",
+  "visual_source": {
+    "kind": "purpose_visual_inputs",
+    "path": "data/si-registry/pilot/purpose-chip/visual-review-inputs.json"
+  },
+  "items": [
+    {
+      "icon_id": "lucide:binary",
+      "official_source_url": "https://lucide.dev/icons/binary",
+      "depicts_observation": "Two pairs of rounded vertical bit shapes connected by short lines, arranged in a technical binary-style layout.",
+      "popular_reading": "Binary data or low-level digital values.",
+      "plausible_readings": [
+        "bits and bytes",
+        "machine-readable values",
+        "technical code data"
+      ],
+      "context_bias": "Strongest in developer tools, data inspection, code, or systems contexts.",
+      "ambiguity_note": "Outside technical contexts, some users may only read it as numbers or code decoration.",
+      "selection_reason": "Lucide itself tags this icon with words like code, digits, computer, zero, one, and boolean."
+    },
+    {
+      "icon_id": "lucide:blocks",
+      "official_source_url": "https://lucide.dev/icons/blocks",
+      "depicts_observation": "Four small rounded square outlines arranged as modular tiles, with one tile offset at the upper-right.",
+      "popular_reading": "Modules, building blocks, or composable parts.",
+      "plausible_readings": [
+        "plugins or extensions",
+        "stacked components",
+        "structured layout pieces"
+      ],
+      "context_bias": "Strongest in modular systems, integrations, component libraries, or architecture views.",
+      "ambiguity_note": "It can also read as toy blocks or generic shapes if the surrounding product context is weak.",
+      "selection_reason": "Lucide describes it with words like addon, plugin, integration, extension, package, build, and stack."
+    },
+    {
+      "icon_id": "lucide:bot-message-square",
+      "official_source_url": "https://lucide.dev/icons/bot-message-square",
+      "depicts_observation": "A squared chat bubble with a robot-style face, using two short vertical eyes to signal a bot message.",
+      "popular_reading": "Assistant message or bot reply.",
+      "plausible_readings": [
+        "AI chat response",
+        "agent conversation",
+        "automated support reply"
+      ],
+      "context_bias": "Strongest in chat, assistant, support, and agent workflows.",
+      "ambiguity_note": "It could be read more generally as bot chat, not necessarily one specific assistant role.",
+      "selection_reason": "The icon combines a message shape with a bot face, so the reading is mainly conversational AI or bot messaging."
+    },
+    {
+      "icon_id": "lucide:brain-circuit",
+      "official_source_url": "https://lucide.dev/icons/brain-circuit",
+      "depicts_observation": "A half-brain form connected to circuit lines and node dots, combining organic and digital visual cues.",
+      "popular_reading": "AI reasoning, machine intelligence, or neural-style computation.",
+      "plausible_readings": [
+        "smart automation",
+        "cognitive processing",
+        "brain plus circuitry"
+      ],
+      "context_bias": "Strongest in AI, inference, reasoning, automation, or intelligence features.",
+      "ambiguity_note": "It can be read either as AI reasoning or more broadly as intelligent systems.",
+      "selection_reason": "The hybrid of brain and circuit imagery strongly points to intelligence plus computation rather than generic hardware."
+    },
+    {
+      "icon_id": "lucide:circuit-board",
+      "official_source_url": "https://lucide.dev/icons/circuit-board",
+      "depicts_observation": "A rounded board shape with connector nodes and trace-like lines, resembling a circuit board schematic.",
+      "popular_reading": "Compute architecture, hardware logic, or system circuitry.",
+      "plausible_readings": [
+        "electronic board",
+        "technical infrastructure",
+        "low-level compute surface"
+      ],
+      "context_bias": "Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.",
+      "ambiguity_note": "Some users may read it as generic tech rather than one exact hardware object.",
+      "selection_reason": "The visual is clearly a board-and-trace structure, which makes the reading strongly technical and systems-oriented."
+    }
+  ]
+}

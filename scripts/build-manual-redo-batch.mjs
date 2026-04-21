@@ -40,18 +40,11 @@ function asUniqueStrings(values) {
   return [...new Set(values.filter((value) => typeof value === 'string' && value.trim().length > 0).map((value) => value.trim()))];
 }
 
-function toDepictsText(popularReading, currentDepicts) {
-  if (typeof currentDepicts === 'string' && currentDepicts.trim().length > 0) {
-    return currentDepicts.trim();
+function requireNonEmptyString(value, fieldLabel, iconId) {
+  if (typeof value === 'string' && value.trim().length > 0) {
+    return value.trim();
   }
-
-  const normalized = String(popularReading || '')
-    .trim()
-    .replace(/[.]+$/g, '');
-
-  return normalized.length > 0
-    ? `A symbol commonly read as ${normalized.toLowerCase()}.`
-    : 'A symbol with a context-dependent reading.';
+  throw new Error(`Missing required ${fieldLabel} for ${iconId}`);
 }
 
 function resolveSvgLookup(visualSource, visualItems, iconId) {
@@ -82,23 +75,30 @@ const reviewItems = selection.items.map((item, index) => {
     throw new Error(`Missing SVG payload for ${item.icon_id}`);
   }
 
+  const depictsObservation = requireNonEmptyString(item.depicts_observation, 'depicts_observation', item.icon_id);
+  const popularReading = requireNonEmptyString(item.popular_reading, 'popular_reading', item.icon_id);
+  const contextBias = requireNonEmptyString(item.context_bias, 'context_bias', item.icon_id);
+  const ambiguityNote = requireNonEmptyString(item.ambiguity_note, 'ambiguity_note', item.icon_id);
+  const selectionReason = requireNonEmptyString(item.selection_reason, 'selection_reason', item.icon_id);
+
   const proposedInterpretation = {
     icon_id: item.icon_id,
     source_library: currentRecord.source_library,
     source_name: currentRecord.source_name,
     label: currentRecord.label,
-    popular_reading: item.popular_reading,
+    depicts_observation: depictsObservation,
+    popular_reading: popularReading,
     plausible_readings: item.plausible_readings,
-    context_bias: item.context_bias,
-    ambiguity_note: item.ambiguity_note,
+    context_bias: contextBias,
+    ambiguity_note: ambiguityNote,
     search_hints: [
       currentRecord.label,
       ...(item.plausible_readings || []),
-      item.popular_reading
+      popularReading
     ],
     official_source_url: item.official_source_url,
     public_reference_url: item.public_reference_url || null,
-    selection_reason: item.selection_reason
+    selection_reason: selectionReason
   };
 
   const proposedFinalRecord = {
@@ -106,19 +106,19 @@ const reviewItems = selection.items.map((item, index) => {
     source_library: currentRecord.source_library,
     source_name: currentRecord.source_name,
     label: currentRecord.label,
-    depicts: toDepictsText(item.popular_reading, currentRecord.depicts),
-    use_when: item.context_bias,
-    avoid_when: item.ambiguity_note,
+    depicts: depictsObservation,
+    use_when: contextBias,
+    avoid_when: ambiguityNote,
     semantic_tags: asUniqueStrings([
       ...(currentRecord.semantic_tags || []),
       ...((item.plausible_readings || []).map((reading) => reading.replace(/[.]+$/g, ''))),
-      String(item.popular_reading || '').replace(/[.]+$/g, '')
+      popularReading.replace(/[.]+$/g, '')
     ]),
     synonyms: asUniqueStrings([
       ...(currentRecord.synonyms || []),
       currentRecord.label,
       ...((item.plausible_readings || []).map((reading) => reading.replace(/[.]+$/g, ''))),
-      String(item.popular_reading || '').replace(/[.]+$/g, '')
+      popularReading.replace(/[.]+$/g, '')
     ])
   };
 
@@ -167,6 +167,7 @@ const summary = {
   track_label: selection.track_label,
   title: selection.title,
   review_goal: selection.review_goal,
+  process_rule: 'Each icon must include depicts_observation (literal visual read) before final record generation.',
   item_count: reviewItems.length,
   icon_ids: reviewItems.map((item) => item.icon_id),
   output_json_path: path.relative(repoRoot, outputJsonPath).replaceAll(path.sep, '/'),
@@ -194,6 +195,7 @@ const cardsHtml = reviewItems.map((item) => {
           <h2>${escapeHtml(item.current_semantic_record.label)}</h2>
           <p><code>${escapeHtml(item.icon_id)}</code></p>
           <p><strong>Most common reading:</strong> ${escapeHtml(item.proposed_interpretation.popular_reading)}</p>
+          <p><strong>Literal visual read (what the icon shows):</strong> ${escapeHtml(item.proposed_interpretation.depicts_observation)}</p>
           <p><strong>Context where it fits best:</strong> ${escapeHtml(item.proposed_interpretation.context_bias)}</p>
           <p><strong>Ambiguity note:</strong> ${escapeHtml(item.proposed_interpretation.ambiguity_note)}</p>
           <p><strong>Why this reading is strong:</strong> ${escapeHtml(item.proposed_interpretation.selection_reason)}</p>
