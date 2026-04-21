@@ -1,19 +1,44 @@
 {
   "schema_version": "1.0.0",
   "library_id": "lucide",
-  "total_approved_records": 209,
+  "total_approved_records": 801,
   "total_editor_hold_records": 7,
-  "total_reviewed_drafts": 1,
-  "overlap_skipped_count": 3,
+  "total_reviewed_drafts": 1135,
+  "overlap_skipped_count": 8,
   "overlap_skipped_records": [
+    {
+      "batch_id": "lucide-editor-review-batch-03",
+      "icon_id": "lucide:binary",
+      "reason": "already_live_in_another_free_registry_group"
+    },
+    {
+      "batch_id": "lucide-editor-review-batch-03",
+      "icon_id": "lucide:blocks",
+      "reason": "already_live_in_another_free_registry_group"
+    },
     {
       "batch_id": "lucide-editor-review-batch-01",
       "icon_id": "lucide:bot",
       "reason": "already_live_in_another_free_registry_group"
     },
     {
+      "batch_id": "lucide-editor-review-batch-03",
+      "icon_id": "lucide:brain",
+      "reason": "already_live_in_another_free_registry_group"
+    },
+    {
       "batch_id": "lucide-editor-review-batch-01",
       "icon_id": "lucide:lock",
+      "reason": "already_live_in_another_free_registry_group"
+    },
+    {
+      "batch_id": "lucide-editor-review-batch-03",
+      "icon_id": "lucide:network",
+      "reason": "already_live_in_another_free_registry_group"
+    },
+    {
+      "batch_id": "lucide-editor-review-batch-04",
+      "icon_id": "lucide:router",
       "reason": "already_live_in_another_free_registry_group"
     },
     {
@@ -23,34 +48,36 @@
     }
   ],
   "approved_by_category": {
-    "navigation_interface": 74,
-    "status_feedback": 32,
-    "data_controls": 6,
-    "security_auth": 10,
-    "security": 11,
-    "search_discovery": 19,
-    "agent_lifecycle": 2,
-    "engineering_developer_tools": 6,
+    "navigation_interface": 243,
+    "status_feedback": 323,
+    "data_controls": 10,
+    "brand_identity": 44,
+    "security_auth": 13,
+    "security": 23,
+    "search_discovery": 20,
+    "agent_lifecycle": 4,
+    "system_control": 43,
+    "systems_architecture": 8,
+    "engineering_developer_tools": 14,
     "analytics_data": 4,
-    "systems_architecture": 3,
-    "destructive_actions": 5,
-    "system_control": 19,
+    "destructive_actions": 8,
     "media_playback": 8,
-    "communication_social": 6,
-    "message_actions": 2,
-    "brand_identity": 2
+    "communication_social": 30,
+    "message_actions": 5,
+    "configuration": 1
   },
   "approved_by_domain": {
-    "navigation": 52,
-    "product_status": 28,
-    "ui_controls": 35,
-    "security": 21,
-    "ui_shell": 33,
-    "ai_agents": 3,
-    "developer_tools": 18,
-    "media": 8,
-    "communication": 7,
-    "brand_platforms": 2,
+    "navigation": 197,
+    "ui_controls": 284,
+    "product_status": 88,
+    "media": 16,
+    "ui_shell": 62,
+    "brand_platforms": 35,
+    "security": 36,
+    "ai_agents": 5,
+    "developer_tools": 36,
+    "communication": 39,
+    "commerce": 1,
     "analytics": 2
   },
   "batch_summaries": {
@@ -63,6 +90,96 @@
       "approve_for_import": 12,
       "hold_for_editor_review": 4,
       "keep_as_reviewed_draft": 1
+    },
+    "lucide-editor-review-batch-02": {
+      "approve_for_import": 155,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-02": {
+      "approve_for_import": 2,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 48
+    },
+    "lucide-editor-review-batch-03": {
+      "approve_for_import": 208,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-03": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 12
+    },
+    "lucide-editor-review-batch-04": {
+      "approve_for_import": 116,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-04": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 104
+    },
+    "lucide-editor-review-batch-05": {
+      "approve_for_import": 60,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-05": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 160
+    },
+    "lucide-editor-review-batch-06": {
+      "approve_for_import": 12,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-06": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 208
+    },
+    "lucide-editor-review-batch-07": {
+      "approve_for_import": 18,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-07": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 202
+    },
+    "lucide-editor-review-batch-08": {
+      "approve_for_import": 18,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-08": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 202
+    },
+    "lucide-editor-review-batch-09": {
+      "approve_for_import": 4,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-09": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 169
+    },
+    "lucide-editor-review-batch-10": {
+      "approve_for_import": 4,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "lucide-visual-review-batch-10": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 29
     }
   },
   "approved_record_path": "data/si-registry/automation/lucide/approved-records.json",

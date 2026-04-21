@@ -1,0 +1,1501 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-visual-review-batch-10",
+  "source_batch_id": "lucide-batch-10",
+  "library_id": "lucide",
+  "library_label": "Lucide",
+  "purpose": "Resolve the visually ambiguous Lucide icons from lucide-batch-10.",
+  "selected_count": 29,
+  "selected_icon_ids": [
+    "lucide:a_large_small",
+    "lucide:align_center_horizontal",
+    "lucide:align_center_vertical",
+    "lucide:align_end_horizontal",
+    "lucide:align_end_vertical",
+    "lucide:align_horizontal_distribute_center",
+    "lucide:align_horizontal_distribute_end",
+    "lucide:align_horizontal_distribute_start",
+    "lucide:align_horizontal_justify_center",
+    "lucide:align_horizontal_justify_end",
+    "lucide:align_horizontal_justify_start",
+    "lucide:align_horizontal_space_around",
+    "lucide:align_horizontal_space_between",
+    "lucide:align_start_horizontal",
+    "lucide:align_start_vertical",
+    "lucide:align_vertical_distribute_center",
+    "lucide:align_vertical_distribute_end",
+    "lucide:align_vertical_distribute_start",
+    "lucide:align_vertical_justify_center",
+    "lucide:align_vertical_justify_end",
+    "lucide:align_vertical_justify_start",
+    "lucide:align_vertical_space_around",
+    "lucide:align_vertical_space_between",
+    "lucide:circle_small",
+    "lucide:square_round_corner",
+    "lucide:text_align_center",
+    "lucide:text_align_end",
+    "lucide:text_align_justify",
+    "lucide:text_align_start"
+  ],
+  "counts": {
+    "by_family": {
+      "generic_controls": 29
+    },
+    "by_queue": {
+      "needs_visual_review": 29
+    }
+  },
+  "records": [
+    {
+      "icon_id": "lucide:a_large_small",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:a_large_small",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "a_large_small",
+        "source_asset_name": "a-large-small",
+        "label": "A Large Small",
+        "purpose": "Show a large small as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "a",
+          "large",
+          "small"
+        ],
+        "use_when": "Use when the interface refers directly to a large small as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing a large small.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "a",
+          "large",
+          "small"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "a-large-small",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-a-large-small\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m15 16 2.536-7.328a1.02 1.02 1 0 1 1.928 0L22 16\" /> <path d=\"M15.697 14h5.606\" /> <path d=\"m2 16 4.039-9.69a.5.5 0 0 1 .923 0L11 16\" /> <path d=\"M3.304 13h6.392\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_center_horizontal",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_center_horizontal",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_center_horizontal",
+        "source_asset_name": "align-center-horizontal",
+        "label": "Align Center Horizontal",
+        "purpose": "Show align center horizontal as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "center",
+          "horizontal"
+        ],
+        "use_when": "Use when the interface refers directly to align center horizontal as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align center horizontal.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "center",
+          "horizontal"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-center-horizontal",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M208,136H136V120h48a16,16,0,0,0,16-16V64a16,16,0,0,0-16-16H136V32a8,8,0,0,0-16,0V48H72A16,16,0,0,0,56,64v40a16,16,0,0,0,16,16h48v16H48a16,16,0,0,0-16,16v40a16,16,0,0,0,16,16h72v16a8,8,0,0,0,16,0V208h72a16,16,0,0,0,16-16V152A16,16,0,0,0,208,136ZM72,64H184v40H72ZM208,192H48V152H208v40Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_center_vertical",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_center_vertical",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_center_vertical",
+        "source_asset_name": "align-center-vertical",
+        "label": "Align Center Vertical",
+        "purpose": "Show align center vertical as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "center",
+          "vertical"
+        ],
+        "use_when": "Use when the interface refers directly to align center vertical as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align center vertical.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "center",
+          "vertical"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-center-vertical",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M224,120H208V72a16,16,0,0,0-16-16H152a16,16,0,0,0-16,16v48H120V48a16,16,0,0,0-16-16H64A16,16,0,0,0,48,48v72H32a8,8,0,0,0,0,16H48v72a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V136h16v48a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V136h16a8,8,0,0,0,0-16ZM104,208H64V48h40Zm88-24H152V72h40Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_end_horizontal",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_end_horizontal",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_end_horizontal",
+        "source_asset_name": "align-end-horizontal",
+        "label": "Align End Horizontal",
+        "purpose": "Show align end horizontal as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "end",
+          "horizontal"
+        ],
+        "use_when": "Use when the interface refers directly to align end horizontal as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align end horizontal.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "end",
+          "horizontal"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-end-horizontal",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-end-horizontal\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"16\" x=\"4\" y=\"2\" rx=\"2\" /> <rect width=\"6\" height=\"9\" x=\"14\" y=\"9\" rx=\"2\" /> <path d=\"M22 22H2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_end_vertical",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_end_vertical",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_end_vertical",
+        "source_asset_name": "align-end-vertical",
+        "label": "Align End Vertical",
+        "purpose": "Show align end vertical as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "end",
+          "vertical"
+        ],
+        "use_when": "Use when the interface refers directly to align end vertical as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align end vertical.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "end",
+          "vertical"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-end-vertical",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-end-vertical\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"16\" height=\"6\" x=\"2\" y=\"4\" rx=\"2\" /> <rect width=\"9\" height=\"6\" x=\"9\" y=\"14\" rx=\"2\" /> <path d=\"M22 22V2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_distribute_center",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_distribute_center",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_distribute_center",
+        "source_asset_name": "align-horizontal-distribute-center",
+        "label": "Align Horizontal Distribute Center",
+        "purpose": "Show align horizontal distribute center as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "distribute",
+          "center"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal distribute center as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal distribute center.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "distribute",
+          "center"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-distribute-center",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-distribute-center\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"4\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"14\" y=\"7\" rx=\"2\" /> <path d=\"M17 22v-5\" /> <path d=\"M17 7V2\" /> <path d=\"M7 22v-3\" /> <path d=\"M7 5V2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_distribute_end",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_distribute_end",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_distribute_end",
+        "source_asset_name": "align-horizontal-distribute-end",
+        "label": "Align Horizontal Distribute End",
+        "purpose": "Show align horizontal distribute end as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "distribute",
+          "end"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal distribute end as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal distribute end.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "distribute",
+          "end"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-distribute-end",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-distribute-end\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"4\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"14\" y=\"7\" rx=\"2\" /> <path d=\"M10 2v20\" /> <path d=\"M20 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_distribute_start",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_distribute_start",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_distribute_start",
+        "source_asset_name": "align-horizontal-distribute-start",
+        "label": "Align Horizontal Distribute Start",
+        "purpose": "Show align horizontal distribute start as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "distribute",
+          "start"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal distribute start as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal distribute start.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "distribute",
+          "start"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-distribute-start",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-distribute-start\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"4\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"14\" y=\"7\" rx=\"2\" /> <path d=\"M4 2v20\" /> <path d=\"M14 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_justify_center",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_justify_center",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_justify_center",
+        "source_asset_name": "align-horizontal-justify-center",
+        "label": "Align Horizontal Justify Center",
+        "purpose": "Show align horizontal justify center as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "justify",
+          "center"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal justify center as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal justify center.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "justify",
+          "center"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-justify-center",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-justify-center\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"16\" y=\"7\" rx=\"2\" /> <path d=\"M12 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_justify_end",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_justify_end",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_justify_end",
+        "source_asset_name": "align-horizontal-justify-end",
+        "label": "Align Horizontal Justify End",
+        "purpose": "Show align horizontal justify end as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "justify",
+          "end"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal justify end as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal justify end.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "justify",
+          "end"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-justify-end",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-justify-end\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"12\" y=\"7\" rx=\"2\" /> <path d=\"M22 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_justify_start",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_justify_start",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_justify_start",
+        "source_asset_name": "align-horizontal-justify-start",
+        "label": "Align Horizontal Justify Start",
+        "purpose": "Show align horizontal justify start as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "justify",
+          "start"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal justify start as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal justify start.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "justify",
+          "start"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-justify-start",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-justify-start\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"6\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"16\" y=\"7\" rx=\"2\" /> <path d=\"M2 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_space_around",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_space_around",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_space_around",
+        "source_asset_name": "align-horizontal-space-around",
+        "label": "Align Horizontal Space Around",
+        "purpose": "Show align horizontal space around as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "space",
+          "around"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal space around as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal space around.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "space",
+          "around"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-space-around",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-space-around\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"10\" x=\"9\" y=\"7\" rx=\"2\" /> <path d=\"M4 22V2\" /> <path d=\"M20 22V2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_horizontal_space_between",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_horizontal_space_between",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_horizontal_space_between",
+        "source_asset_name": "align-horizontal-space-between",
+        "label": "Align Horizontal Space Between",
+        "purpose": "Show align horizontal space between as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "horizontal",
+          "space",
+          "between"
+        ],
+        "use_when": "Use when the interface refers directly to align horizontal space between as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align horizontal space between.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "horizontal",
+          "space",
+          "between"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-horizontal-space-between",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-horizontal-space-between\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"14\" x=\"3\" y=\"5\" rx=\"2\" /> <rect width=\"6\" height=\"10\" x=\"15\" y=\"7\" rx=\"2\" /> <path d=\"M3 2v20\" /> <path d=\"M21 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_start_horizontal",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_start_horizontal",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_start_horizontal",
+        "source_asset_name": "align-start-horizontal",
+        "label": "Align Start Horizontal",
+        "purpose": "Show align start horizontal as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "start",
+          "horizontal"
+        ],
+        "use_when": "Use when the interface refers directly to align start horizontal as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align start horizontal.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "start",
+          "horizontal"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-start-horizontal",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-start-horizontal\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"6\" height=\"16\" x=\"4\" y=\"6\" rx=\"2\" /> <rect width=\"6\" height=\"9\" x=\"14\" y=\"6\" rx=\"2\" /> <path d=\"M22 2H2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_start_vertical",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_start_vertical",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_start_vertical",
+        "source_asset_name": "align-start-vertical",
+        "label": "Align Start Vertical",
+        "purpose": "Show align start vertical as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "start",
+          "vertical"
+        ],
+        "use_when": "Use when the interface refers directly to align start vertical as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align start vertical.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "start",
+          "vertical"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-start-vertical",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-start-vertical\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"9\" height=\"6\" x=\"6\" y=\"14\" rx=\"2\" /> <rect width=\"16\" height=\"6\" x=\"6\" y=\"4\" rx=\"2\" /> <path d=\"M2 2v20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_distribute_center",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_distribute_center",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_distribute_center",
+        "source_asset_name": "align-vertical-distribute-center",
+        "label": "Align Vertical Distribute Center",
+        "purpose": "Show align vertical distribute center as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "distribute",
+          "center"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical distribute center as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical distribute center.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "distribute",
+          "center"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-distribute-center",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-distribute-center\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M22 17h-3\" /> <path d=\"M22 7h-5\" /> <path d=\"M5 17H2\" /> <path d=\"M7 7H2\" /> <rect x=\"5\" y=\"14\" width=\"14\" height=\"6\" rx=\"2\" /> <rect x=\"7\" y=\"4\" width=\"10\" height=\"6\" rx=\"2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_distribute_end",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_distribute_end",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_distribute_end",
+        "source_asset_name": "align-vertical-distribute-end",
+        "label": "Align Vertical Distribute End",
+        "purpose": "Show align vertical distribute end as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "distribute",
+          "end"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical distribute end as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical distribute end.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "distribute",
+          "end"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-distribute-end",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-distribute-end\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"14\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"4\" rx=\"2\" /> <path d=\"M2 20h20\" /> <path d=\"M2 10h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_distribute_start",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_distribute_start",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_distribute_start",
+        "source_asset_name": "align-vertical-distribute-start",
+        "label": "Align Vertical Distribute Start",
+        "purpose": "Show align vertical distribute start as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "distribute",
+          "start"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical distribute start as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical distribute start.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "distribute",
+          "start"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-distribute-start",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-distribute-start\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"14\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"4\" rx=\"2\" /> <path d=\"M2 14h20\" /> <path d=\"M2 4h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_justify_center",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_justify_center",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_justify_center",
+        "source_asset_name": "align-vertical-justify-center",
+        "label": "Align Vertical Justify Center",
+        "purpose": "Show align vertical justify center as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "justify",
+          "center"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical justify center as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical justify center.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "justify",
+          "center"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-justify-center",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-justify-center\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"16\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"2\" rx=\"2\" /> <path d=\"M2 12h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_justify_end",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_justify_end",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_justify_end",
+        "source_asset_name": "align-vertical-justify-end",
+        "label": "Align Vertical Justify End",
+        "purpose": "Show align vertical justify end as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "justify",
+          "end"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical justify end as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical justify end.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "justify",
+          "end"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-justify-end",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-justify-end\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"12\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"2\" rx=\"2\" /> <path d=\"M2 22h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_justify_start",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_justify_start",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_justify_start",
+        "source_asset_name": "align-vertical-justify-start",
+        "label": "Align Vertical Justify Start",
+        "purpose": "Show align vertical justify start as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "justify",
+          "start"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical justify start as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical justify start.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "justify",
+          "start"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-justify-start",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-justify-start\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"16\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"6\" rx=\"2\" /> <path d=\"M2 2h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_space_around",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_space_around",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_space_around",
+        "source_asset_name": "align-vertical-space-around",
+        "label": "Align Vertical Space Around",
+        "purpose": "Show align vertical space around as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "space",
+          "around"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical space around as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical space around.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "space",
+          "around"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-space-around",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-space-around\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"10\" height=\"6\" x=\"7\" y=\"9\" rx=\"2\" /> <path d=\"M22 20H2\" /> <path d=\"M22 4H2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:align_vertical_space_between",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:align_vertical_space_between",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "align_vertical_space_between",
+        "source_asset_name": "align-vertical-space-between",
+        "label": "Align Vertical Space Between",
+        "purpose": "Show align vertical space between as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "align",
+          "vertical",
+          "space",
+          "between"
+        ],
+        "use_when": "Use when the interface refers directly to align vertical space between as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing align vertical space between.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "align",
+          "vertical",
+          "space",
+          "between"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "align-vertical-space-between",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-align-vertical-space-between\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"14\" height=\"6\" x=\"5\" y=\"15\" rx=\"2\" /> <rect width=\"10\" height=\"6\" x=\"7\" y=\"3\" rx=\"2\" /> <path d=\"M2 21h20\" /> <path d=\"M2 3h20\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:circle_small",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:circle_small",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "circle_small",
+        "source_asset_name": "circle-small",
+        "label": "Circle Small",
+        "purpose": "Show circle small as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "circle",
+          "small"
+        ],
+        "use_when": "Use when the interface refers directly to circle small as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing circle small.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "circle",
+          "small"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "circle-small",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-circle-small\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <circle cx=\"12\" cy=\"12\" r=\"6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:square_round_corner",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:square_round_corner",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "square_round_corner",
+        "source_asset_name": "square-round-corner",
+        "label": "Square Round Corner",
+        "purpose": "Show square round corner as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "square",
+          "round",
+          "corner"
+        ],
+        "use_when": "Use when the interface refers directly to square round corner as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing square round corner.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "square",
+          "round",
+          "corner"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "square-round-corner",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-square-round-corner\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M21 11a8 8 0 0 0-8-8\" /> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:text_align_center",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:text_align_center",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "text_align_center",
+        "source_asset_name": "text-align-center",
+        "label": "Text Align Center",
+        "purpose": "Show text align center as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "text",
+          "align",
+          "center"
+        ],
+        "use_when": "Use when the interface refers directly to text align center as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing text align center.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "text",
+          "align",
+          "center"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "text-align-center",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M32,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H40A8,8,0,0,1,32,64ZM64,96a8,8,0,0,0,0,16H192a8,8,0,0,0,0-16Zm152,40H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm-24,40H64a8,8,0,0,0,0,16H192a8,8,0,0,0,0-16Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:text_align_end",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:text_align_end",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "text_align_end",
+        "source_asset_name": "text-align-end",
+        "label": "Text Align End",
+        "purpose": "Show text align end as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "text",
+          "align",
+          "end"
+        ],
+        "use_when": "Use when the interface refers directly to text align end as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing text align end.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "text",
+          "align",
+          "end"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "text-align-end",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-text-align-end\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M21 5H3\" /> <path d=\"M21 12H9\" /> <path d=\"M21 19H7\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:text_align_justify",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:text_align_justify",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "text_align_justify",
+        "source_asset_name": "text-align-justify",
+        "label": "Text Align Justify",
+        "purpose": "Show text align justify as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "text",
+          "align",
+          "justify"
+        ],
+        "use_when": "Use when the interface refers directly to text align justify as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing text align justify.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "text",
+          "align",
+          "justify"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "text-align-justify",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M32,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H40A8,8,0,0,1,32,64ZM216,96H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,40H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,40H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:text_align_start",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:text_align_start",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "text_align_start",
+        "source_asset_name": "text-align-start",
+        "label": "Text Align Start",
+        "purpose": "Show text align start as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "text",
+          "align",
+          "start"
+        ],
+        "use_when": "Use when the interface refers directly to text align start as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing text align start.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "text",
+          "align",
+          "start"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "text-align-start",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-text-align-start\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M21 5H3\" /> <path d=\"M15 12H3\" /> <path d=\"M17 19H3\" /> </svg>"
+        }
+      }
+    }
+  ]
+}

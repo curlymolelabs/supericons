@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucide Library Rollout Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f3ec;
+      --panel: #fffdf8;
+      --ink: #1f1913;
+      --muted: #6a5f54;
+      --line: #ddd1c2;
+      --accent: #8a5a2b;
+      --soft: #f3e4d2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #fbf8f2 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(31, 25, 19, 0.06);
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1, h2 { margin-top: 0; }
+    p, li { color: var(--muted); }
+    ul, ol { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <p class="eyebrow">P2-L</p>
+      <h1>Lucide Library Rollout</h1>
+      <p>This step moves Lucide from one-batch-at-a-time work into a full-library rollout. The goal is to finish the whole Lucide set instead of stopping after batch 01.</p>
+    </section>
+
+    <section>
+      <h2>What this step builds</h2>
+      <ul>
+        <li>A Lucide next-batch picker</li>
+        <li>A Lucide library runner that keeps staging and resolving batches</li>
+        <li>A safer visual-review fallback so new Lucide batches do not get stuck on unknown file, folder, or debug shapes</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How the rollout works</h2>
+      <ol>
+        <li>Stage the next Lucide batch</li>
+        <li>Clear the strong editor-review icons</li>
+        <li>Clear the visual-review icons</li>
+        <li>Rebuild the approved Lucide records</li>
+        <li>Refresh the shared registry totals</li>
+      </ol>
+      <p>This repeats until the whole Lucide library has been staged and processed.</p>
+    </section>
+
+    <section>
+      <h2>How quality stays safe</h2>
+      <ul>
+        <li>Clear icons move forward</li>
+        <li>Fuzzy icons still go to hold or draft</li>
+        <li>Earlier free records stay protected from duplicate Lucide imports</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How we check it</h2>
+      <ul>
+        <li>Run the Lucide rollout runner</li>
+        <li>Run the main project build</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expected result</h2>
+      <p>All Lucide icons are processed, Lucide approval counts grow far past the first batch, and the main registry totals reflect the finished Lucide rollout.</p>
+    </section>
+  </main>
+</body>
+</html>

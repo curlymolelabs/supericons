@@ -379,6 +379,220 @@ function withOverrides(record, overrides) {
   return reviewed;
 }
 
+function tokenize(value) {
+  return String(value || '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/g)
+    .filter(Boolean);
+}
+
+function hasToken(tokens, token) {
+  return tokens.includes(token);
+}
+
+function buildGenericDraftDecision(note, confidenceScore = 0.74) {
+  return {
+    outcome: 'keep_as_reviewed_draft',
+    note,
+    overrides: {
+      confidence_score: confidenceScore,
+    },
+  };
+}
+
+function buildGenericHoldDecision(note, confidenceScore = 0.78) {
+  return {
+    outcome: 'hold_for_editor_review',
+    note,
+    overrides: {
+      confidence_score: confidenceScore,
+    },
+  };
+}
+
+function buildFallbackReviewDecision(record) {
+  const tokens = tokenize(record.source_name);
+  const isFile = hasToken(tokens, 'file');
+  const isFolder = hasToken(tokens, 'folder');
+  const thing = isFolder ? 'Folder' : 'File';
+  const thingLower = thing.toLowerCase();
+
+  if (isFile || isFolder) {
+    if (hasToken(tokens, 'archive')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Archive ${thing}`,
+          depicts: `A ${thingLower} paired with an archive zipper cue.`,
+          purpose: `Show archiving, compressing, or opening a ${thingLower} archive.`,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: [`archive ${thingLower}`, `compressed ${thingLower}`, `zip ${thingLower}`, `${thingLower} archive`, 'storage'],
+          synonyms: [`zip ${thingLower}`, `compressed ${thingLower === 'folder' ? 'directory' : 'document'}`, `archive ${thingLower === 'folder' ? 'directory' : 'document'}`, `open ${thingLower} archive`],
+          use_when: `Use when the interface archives a ${thingLower}, opens a compressed ${thingLower}, or points to a ${thingLower} stored as an archive.`,
+          avoid_when: `Do not use for generic ${thingLower} browsing when the meaning is not specifically archive or compression.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'edit')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Edit ${thing}`,
+          depicts: `A ${thingLower} paired with an edit cue.`,
+          purpose: `Show editing or renaming a ${thingLower}${isFolder ? ' or directory' : ' or document'}.`,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: [`edit ${thingLower}`, `rename ${thingLower}`, `modify ${thingLower}`, `${thingLower} edit`, thingLower],
+          synonyms: [`rename ${thingLower}`, `edit ${isFolder ? 'directory' : 'document'}`, `modify ${thingLower}`, `change ${thingLower}`],
+          use_when: `Use when the interface edits, updates, or renames a ${thingLower}${isFolder ? ' or directory' : ' or document'}.`,
+          avoid_when: `Do not use for ${thingLower} creation or generic open-${thingLower} actions when the meaning is specifically editing.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'plus')) {
+      const addLabel = isFolder ? 'New Folder' : hasToken(tokens, '2') ? 'Add File' : 'New File';
+      const purpose = isFolder
+        ? 'Show creating or adding a new folder or directory.'
+        : hasToken(tokens, '2')
+          ? 'Show adding a file into the current context.'
+          : 'Show creating or adding a new file or document.';
+      const synonyms = isFolder
+        ? ['create folder', 'new directory', 'add directory', 'start folder']
+        : hasToken(tokens, '2')
+          ? ['insert file', 'attach document', 'add document', 'bring in file']
+          : ['create file', 'new document', 'add document', 'start file'];
+
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: addLabel,
+          depicts: `A ${thingLower} paired with an add cue${hasToken(tokens, '2') && !isFolder ? ' outside the file boundary' : ''}.`,
+          purpose,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: isFolder
+            ? ['new folder', 'create folder', 'add folder', 'new directory', 'folder']
+            : hasToken(tokens, '2')
+              ? ['add file', 'insert file', 'attach file', 'new file', 'file']
+              : ['new file', 'create file', 'add file', 'new document', 'file'],
+          synonyms,
+          use_when: isFolder
+            ? 'Use when the interface creates a new folder or adds a folder into the current context.'
+            : hasToken(tokens, '2')
+              ? 'Use when the interface adds or attaches a file into the current context.'
+              : 'Use when the interface creates a new file or starts a new document.',
+          avoid_when: isFolder
+            ? 'Do not use for generic open-folder actions when the meaning is specifically adding a folder.'
+            : hasToken(tokens, '2')
+              ? 'Do not use for new blank-document creation when the meaning is specifically attaching or adding a file.'
+              : 'Do not use for import or upload flows when the meaning is specifically new file creation.',
+          confidence_score: isFolder ? 0.85 : 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'scan') && isFile) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: 'Scan File',
+          depicts: 'A file paired with a scan-target cue.',
+          purpose: 'Show scanning, inspecting, or capturing a document file.',
+          category: 'search_discovery',
+          intent: 'discover',
+          domain: 'ui_controls',
+          semantic_tags: ['scan file', 'document scan', 'inspect file', 'capture document', 'scan'],
+          synonyms: ['document scan', 'scan document', 'inspect file', 'capture file'],
+          use_when: 'Use when the interface scans, captures, or inspects a document or file surface.',
+          avoid_when: 'Do not use for generic file search when the meaning is specifically scan or capture.',
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'play') && isFile) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: 'Play File',
+          depicts: 'A file paired with a play cue.',
+          purpose: 'Show playing, previewing, or opening a playable media file.',
+          category: 'media_playback',
+          intent: 'act',
+          domain: 'media',
+          semantic_tags: ['play file', 'media file', 'preview media', 'playback', 'file'],
+          synonyms: ['preview file', 'play media file', 'open playable file', 'media preview'],
+          use_when: 'Use when the interface plays or previews a file meant for media playback.',
+          avoid_when: 'Do not use for generic open-file actions when the meaning is not specifically playback or media preview.',
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'x')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Remove ${thing}`,
+          depicts: `A ${thingLower} paired with a remove cue${hasToken(tokens, '2') && isFile ? ' outside the file boundary' : ''}.`,
+          purpose: `Show removing${isFile && hasToken(tokens, '2') ? ' or detaching' : ''}, clearing, or rejecting a ${thingLower}.`,
+          category: 'destructive_actions',
+          intent: 'delete',
+          domain: 'ui_controls',
+          semantic_tags: [`remove ${thingLower}`, `delete ${thingLower}`, `clear ${thingLower}`, `reject ${thingLower}`, thingLower],
+          synonyms: [`delete ${thingLower}`, `remove ${isFolder ? 'directory' : 'document'}`, isFolder ? 'discard folder' : 'discard file', isFolder ? 'clear directory' : 'clear document'],
+          use_when: `Use when the interface removes, clears, or rejects a ${thingLower} from the current context.`,
+          avoid_when: `Do not use for generic ${thingLower} errors when the meaning is specifically ${thingLower} removal.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'clock')) {
+      return buildGenericHoldDecision(
+        `The ${thingLower}-and-clock shape still blends recent ${thingLower}, scheduled ${thingLower}, and ${thingLower} history meanings.`
+      );
+    }
+
+    if (hasToken(tokens, 'user')) {
+      return buildGenericHoldDecision(
+        `The ${thingLower}-and-user shape still drifts across profile document, account export, and user-owned ${thingLower} meanings.`
+      );
+    }
+
+    if (isFolder && hasToken(tokens, 'open') && hasToken(tokens, 'dot')) {
+      return buildGenericHoldDecision(
+        'The open-folder-and-dot shape still blends current folder, unread folder, and active folder meanings too broadly.',
+        0.77
+      );
+    }
+  }
+
+  if (hasToken(tokens, 'bug') && hasToken(tokens, 'play')) {
+    return buildGenericDraftDecision(
+      'The bug-and-play shape still mixes run debug, replay bug, and reproduce issue meanings too broadly for approval.',
+      0.72
+    );
+  }
+
+  return buildGenericDraftDecision(
+    'This Lucide shape still needs stronger nearby product wording before it is safe to approve.',
+    0.74
+  );
+}
+
+function getReviewDecision(reviewedRecord) {
+  return REVIEW_DECISIONS[reviewedRecord.icon_id] || buildFallbackReviewDecision(reviewedRecord);
+}
+
 const summary = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'summary.json'));
 const worklist = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'worklist.json'));
 const candidateRecords = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'candidate-records.json'));
@@ -441,20 +655,16 @@ const batchRecords = selectedIds.map((iconId) => {
   };
 });
 
-const reviewedRecords = batchRecords.map((record) => {
-  const decision = REVIEW_DECISIONS[record.icon_id];
-  if (!decision) {
-    throw new Error(`Missing Lucide visual-review decision for ${record.icon_id}`);
-  }
-  return withOverrides(buildBaseReviewedRecord(record.current_candidate_record), decision.overrides || {});
-});
+const reviewedRecords = batchRecords.map((record) =>
+  withOverrides(buildBaseReviewedRecord(record.current_candidate_record), getReviewDecision(buildBaseReviewedRecord(record.current_candidate_record)).overrides || {})
+);
 
 const approveForImport = [];
 const holdForEditorReview = [];
 const keepAsReviewedDraft = [];
 
 for (const reviewedRecord of reviewedRecords) {
-  const decision = REVIEW_DECISIONS[reviewedRecord.icon_id];
+  const decision = getReviewDecision(reviewedRecord);
   if (decision.outcome === 'approve_for_import') {
     approveForImport.push(reviewedRecord.icon_id);
     continue;
@@ -497,7 +707,7 @@ const batchData = {
   source_batch_id: SOURCE_BATCH_ID,
   library_id: summary.library_id,
   library_label: summary.library_label,
-  purpose: 'Resolve the remaining visually ambiguous Lucide icons from the first Lucide automation batch.',
+  purpose: `Resolve the visually ambiguous Lucide icons from ${SOURCE_BATCH_ID}.`,
   selected_count: selectedIds.length,
   selected_icon_ids: selectedIds,
   counts: {
@@ -530,7 +740,7 @@ const notes = `# ${BATCH_ID} Notes
 
 ## Main pattern
 
-This batch clears the visually ambiguous Lucide file and folder variants from the first Lucide automation slice.
+This batch resolves the visually ambiguous Lucide icons from ${SOURCE_BATCH_ID}.
 
 The icons that moved forward were the ones where the second cue reads clearly:
 

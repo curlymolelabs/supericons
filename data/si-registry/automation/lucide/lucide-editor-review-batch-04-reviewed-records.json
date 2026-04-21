@@ -1,0 +1,3267 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-editor-review-batch-04",
+  "reviewed_records": [
+    {
+      "icon_id": "lucide:rose",
+      "source_library": "lucide",
+      "source_name": "rose",
+      "label": "Rose",
+      "depicts": "A symbol representing rose.",
+      "purpose": "Show rose as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rose"
+      ],
+      "synonyms": [
+        "rose"
+      ],
+      "use_when": "Use when the interface refers directly to rose as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:route",
+      "source_library": "lucide",
+      "source_name": "route",
+      "label": "Route",
+      "depicts": "A symbol representing route.",
+      "purpose": "Show route as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "route"
+      ],
+      "synonyms": [
+        "route"
+      ],
+      "use_when": "Use when the interface refers directly to route as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:router",
+      "source_library": "lucide",
+      "source_name": "router",
+      "label": "Routing",
+      "depicts": "Routing shown as a connected system or branching structure.",
+      "purpose": "Show routing, path selection, or network traffic direction.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "routing",
+        "network path",
+        "traffic direction",
+        "route control",
+        "system path"
+      ],
+      "synonyms": [
+        "routing",
+        "connected system",
+        "system graph",
+        "linked structure"
+      ],
+      "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+      "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:rows_2",
+      "source_library": "lucide",
+      "source_name": "rows_2",
+      "label": "Rows",
+      "depicts": "A symbol representing rows.",
+      "purpose": "Show rows as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rows",
+        "2"
+      ],
+      "synonyms": [
+        "rows",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to rows as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:rows_3",
+      "source_library": "lucide",
+      "source_name": "rows_3",
+      "label": "Rows",
+      "depicts": "A symbol representing rows.",
+      "purpose": "Show rows as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rows",
+        "3"
+      ],
+      "synonyms": [
+        "rows",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to rows as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:rows_4",
+      "source_library": "lucide",
+      "source_name": "rows_4",
+      "label": "Rows",
+      "depicts": "A symbol representing rows.",
+      "purpose": "Show rows as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rows",
+        "4"
+      ],
+      "synonyms": [
+        "rows",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to rows as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:rss",
+      "source_library": "lucide",
+      "source_name": "rss",
+      "label": "RSS",
+      "depicts": "The official RSS brand or product mark.",
+      "purpose": "Show the official RSS brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "rss",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "RSS"
+      ],
+      "use_when": "Use when the interface refers specifically to RSS as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-RSS product icon when the meaning is not specifically RSS.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:ruler",
+      "source_library": "lucide",
+      "source_name": "ruler",
+      "label": "Ruler",
+      "depicts": "A symbol representing ruler.",
+      "purpose": "Show ruler as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "ruler"
+      ],
+      "synonyms": [
+        "ruler"
+      ],
+      "use_when": "Use when the interface refers directly to ruler as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sailboat",
+      "source_library": "lucide",
+      "source_name": "sailboat",
+      "label": "Sailboat",
+      "depicts": "A symbol representing sailboat.",
+      "purpose": "Show sailboat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sailboat"
+      ],
+      "synonyms": [
+        "sailboat"
+      ],
+      "use_when": "Use when the interface refers directly to sailboat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:satellite",
+      "source_library": "lucide",
+      "source_name": "satellite",
+      "label": "Satellite",
+      "depicts": "The official Satellite brand or product mark.",
+      "purpose": "Show the official Satellite brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "satellite",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Satellite"
+      ],
+      "use_when": "Use when the interface refers specifically to Satellite as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Satellite product icon when the meaning is not specifically Satellite.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:save",
+      "source_library": "lucide",
+      "source_name": "save",
+      "label": "Save",
+      "depicts": "A symbol representing save.",
+      "purpose": "Show save as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "save"
+      ],
+      "synonyms": [
+        "save"
+      ],
+      "use_when": "Use when the interface refers directly to save as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:scale",
+      "source_library": "lucide",
+      "source_name": "scale",
+      "label": "Scale",
+      "depicts": "A symbol representing scale.",
+      "purpose": "Show scale as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "scale"
+      ],
+      "synonyms": [
+        "scale"
+      ],
+      "use_when": "Use when the interface refers directly to scale as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:school",
+      "source_library": "lucide",
+      "source_name": "school",
+      "label": "School",
+      "depicts": "A symbol representing school.",
+      "purpose": "Show school as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "school"
+      ],
+      "synonyms": [
+        "school"
+      ],
+      "use_when": "Use when the interface refers directly to school as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:scissors",
+      "source_library": "lucide",
+      "source_name": "scissors",
+      "label": "Scissors",
+      "depicts": "A symbol representing scissors.",
+      "purpose": "Show scissors as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "scissors"
+      ],
+      "synonyms": [
+        "scissors"
+      ],
+      "use_when": "Use when the interface refers directly to scissors as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:scooter",
+      "source_library": "lucide",
+      "source_name": "scooter",
+      "label": "Scooter",
+      "depicts": "A symbol representing scooter.",
+      "purpose": "Show scooter as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "scooter"
+      ],
+      "synonyms": [
+        "scooter"
+      ],
+      "use_when": "Use when the interface refers directly to scooter as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:section",
+      "source_library": "lucide",
+      "source_name": "section",
+      "label": "Section",
+      "depicts": "A symbol representing section.",
+      "purpose": "Show section as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "section"
+      ],
+      "synonyms": [
+        "section"
+      ],
+      "use_when": "Use when the interface refers directly to section as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:share_2",
+      "source_library": "lucide",
+      "source_name": "share_2",
+      "label": "Share",
+      "depicts": "A symbol representing share.",
+      "purpose": "Show share as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "share",
+        "2"
+      ],
+      "synonyms": [
+        "share",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to share as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shell",
+      "source_library": "lucide",
+      "source_name": "shell",
+      "label": "Shell",
+      "depicts": "The official Shell brand or product mark.",
+      "purpose": "Show the official Shell brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "shell",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Shell"
+      ],
+      "use_when": "Use when the interface refers specifically to Shell as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Shell product icon when the meaning is not specifically Shell.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:ship",
+      "source_library": "lucide",
+      "source_name": "ship",
+      "label": "Ship",
+      "depicts": "A symbol representing ship.",
+      "purpose": "Show ship as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "ship"
+      ],
+      "synonyms": [
+        "ship"
+      ],
+      "use_when": "Use when the interface refers directly to ship as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shirt",
+      "source_library": "lucide",
+      "source_name": "shirt",
+      "label": "Shirt",
+      "depicts": "A symbol representing shirt.",
+      "purpose": "Show shirt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "shirt"
+      ],
+      "synonyms": [
+        "shirt"
+      ],
+      "use_when": "Use when the interface refers directly to shirt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shovel",
+      "source_library": "lucide",
+      "source_name": "shovel",
+      "label": "Shovel",
+      "depicts": "A symbol representing shovel.",
+      "purpose": "Show shovel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "shovel"
+      ],
+      "synonyms": [
+        "shovel"
+      ],
+      "use_when": "Use when the interface refers directly to shovel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shuffle",
+      "source_library": "lucide",
+      "source_name": "shuffle",
+      "label": "Shuffle",
+      "depicts": "A symbol representing shuffle.",
+      "purpose": "Show shuffle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "shuffle"
+      ],
+      "synonyms": [
+        "shuffle"
+      ],
+      "use_when": "Use when the interface refers directly to shuffle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:signal",
+      "source_library": "lucide",
+      "source_name": "signal",
+      "label": "Signal",
+      "depicts": "The official Signal brand or product mark.",
+      "purpose": "Show the official Signal brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "signal",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Signal"
+      ],
+      "use_when": "Use when the interface refers specifically to Signal as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Signal product icon when the meaning is not specifically Signal.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:signature",
+      "source_library": "lucide",
+      "source_name": "signature",
+      "label": "Signature",
+      "depicts": "A symbol representing signature.",
+      "purpose": "Show signature as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "signature"
+      ],
+      "synonyms": [
+        "signature"
+      ],
+      "use_when": "Use when the interface refers directly to signature as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:skull",
+      "source_library": "lucide",
+      "source_name": "skull",
+      "label": "Skull",
+      "depicts": "A symbol representing skull.",
+      "purpose": "Show skull as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "skull"
+      ],
+      "synonyms": [
+        "skull"
+      ],
+      "use_when": "Use when the interface refers directly to skull as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:snowflake",
+      "source_library": "lucide",
+      "source_name": "snowflake",
+      "label": "Snowflake",
+      "depicts": "The official Snowflake brand or product mark.",
+      "purpose": "Show the official Snowflake brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "snowflake",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Snowflake"
+      ],
+      "use_when": "Use when the interface refers specifically to Snowflake as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Snowflake product icon when the meaning is not specifically Snowflake.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sofa",
+      "source_library": "lucide",
+      "source_name": "sofa",
+      "label": "Sofa",
+      "depicts": "A symbol representing sofa.",
+      "purpose": "Show sofa as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sofa"
+      ],
+      "synonyms": [
+        "sofa"
+      ],
+      "use_when": "Use when the interface refers directly to sofa as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:solar_panel",
+      "source_library": "lucide",
+      "source_name": "solar_panel",
+      "label": "Solar Panel",
+      "depicts": "A symbol representing solar panel.",
+      "purpose": "Show solar panel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "solar",
+        "panel"
+      ],
+      "synonyms": [
+        "solar",
+        "panel"
+      ],
+      "use_when": "Use when the interface refers directly to solar panel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:space",
+      "source_library": "lucide",
+      "source_name": "space",
+      "label": "Space",
+      "depicts": "A symbol representing space.",
+      "purpose": "Show space as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "space"
+      ],
+      "synonyms": [
+        "space"
+      ],
+      "use_when": "Use when the interface refers directly to space as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:spade",
+      "source_library": "lucide",
+      "source_name": "spade",
+      "label": "Spade",
+      "depicts": "A symbol representing spade.",
+      "purpose": "Show spade as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "spade"
+      ],
+      "synonyms": [
+        "spade"
+      ],
+      "use_when": "Use when the interface refers directly to spade as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sparkles",
+      "source_library": "lucide",
+      "source_name": "sparkles",
+      "label": "Sparkles",
+      "depicts": "A symbol representing sparkles.",
+      "purpose": "Show sparkles as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sparkles"
+      ],
+      "synonyms": [
+        "sparkles"
+      ],
+      "use_when": "Use when the interface refers directly to sparkles as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:speaker",
+      "source_library": "lucide",
+      "source_name": "speaker",
+      "label": "Speaker",
+      "depicts": "A symbol representing speaker.",
+      "purpose": "Show speaker as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "speaker"
+      ],
+      "synonyms": [
+        "speaker"
+      ],
+      "use_when": "Use when the interface refers directly to speaker as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:speech",
+      "source_library": "lucide",
+      "source_name": "speech",
+      "label": "Speech",
+      "depicts": "A symbol representing speech.",
+      "purpose": "Show speech as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "speech"
+      ],
+      "synonyms": [
+        "speech"
+      ],
+      "use_when": "Use when the interface refers directly to speech as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:spotlight",
+      "source_library": "lucide",
+      "source_name": "spotlight",
+      "label": "Spotlight",
+      "depicts": "The official Spotlight brand or product mark.",
+      "purpose": "Show the official Spotlight brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "spotlight",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Spotlight"
+      ],
+      "use_when": "Use when the interface refers specifically to Spotlight as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Spotlight product icon when the meaning is not specifically Spotlight.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square",
+      "source_library": "lucide",
+      "source_name": "square",
+      "label": "Square",
+      "depicts": "The official Square commerce platform brand mark.",
+      "purpose": "Show the official Square commerce platform brand or connected payments service.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "commerce",
+      "semantic_tags": [
+        "square",
+        "brand",
+        "logo",
+        "commerce",
+        "payments platform",
+        "point of sale"
+      ],
+      "synonyms": [
+        "Square",
+        "Square Payments"
+      ],
+      "use_when": "Use when the interface refers specifically to Square as a commerce platform, payments provider, connected service, or official destination.",
+      "avoid_when": "Do not use for generic square shapes, grid cells, or plain geometric controls when the meaning is not specifically Square.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:star",
+      "source_library": "lucide",
+      "source_name": "star",
+      "label": "Favorite",
+      "depicts": "A star symbol used for saved or favored items.",
+      "purpose": "Show a favorite, featured, or starred state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "favorite",
+        "starred",
+        "featured",
+        "saved",
+        "important"
+      ],
+      "synonyms": [
+        "starred item",
+        "favorite",
+        "featured",
+        "marked important"
+      ],
+      "use_when": "Use when the interface marks something as a favorite, featured item, or starred state.",
+      "avoid_when": "Do not use for ratings or success when the meaning is specifically saved or favored.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:star_half",
+      "source_library": "lucide",
+      "source_name": "star_half",
+      "label": "Star Half",
+      "depicts": "A symbol representing star half.",
+      "purpose": "Show star half as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "star",
+        "half"
+      ],
+      "synonyms": [
+        "star",
+        "half"
+      ],
+      "use_when": "Use when the interface refers directly to star half as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:stethoscope",
+      "source_library": "lucide",
+      "source_name": "stethoscope",
+      "label": "Stethoscope",
+      "depicts": "A symbol representing stethoscope.",
+      "purpose": "Show stethoscope as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "stethoscope"
+      ],
+      "synonyms": [
+        "stethoscope"
+      ],
+      "use_when": "Use when the interface refers directly to stethoscope as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sticker",
+      "source_library": "lucide",
+      "source_name": "sticker",
+      "label": "Sticker",
+      "depicts": "A symbol representing sticker.",
+      "purpose": "Show sticker as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sticker"
+      ],
+      "synonyms": [
+        "sticker"
+      ],
+      "use_when": "Use when the interface refers directly to sticker as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:store",
+      "source_library": "lucide",
+      "source_name": "store",
+      "label": "Store",
+      "depicts": "A symbol representing store.",
+      "purpose": "Show store as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "store"
+      ],
+      "synonyms": [
+        "store"
+      ],
+      "use_when": "Use when the interface refers directly to store as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:strikethrough",
+      "source_library": "lucide",
+      "source_name": "strikethrough",
+      "label": "Strikethrough",
+      "depicts": "A symbol representing strikethrough.",
+      "purpose": "Show strikethrough as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "strikethrough"
+      ],
+      "synonyms": [
+        "strikethrough"
+      ],
+      "use_when": "Use when the interface refers directly to strikethrough as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sun",
+      "source_library": "lucide",
+      "source_name": "sun",
+      "label": "Sun",
+      "depicts": "A symbol representing sun.",
+      "purpose": "Show sun as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sun"
+      ],
+      "synonyms": [
+        "sun"
+      ],
+      "use_when": "Use when the interface refers directly to sun as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sunrise",
+      "source_library": "lucide",
+      "source_name": "sunrise",
+      "label": "Sunrise",
+      "depicts": "The official Sunrise brand or product mark.",
+      "purpose": "Show the official Sunrise brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "sunrise",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Sunrise"
+      ],
+      "use_when": "Use when the interface refers specifically to Sunrise as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Sunrise product icon when the meaning is not specifically Sunrise.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sunset",
+      "source_library": "lucide",
+      "source_name": "sunset",
+      "label": "Sunset",
+      "depicts": "A symbol representing sunset.",
+      "purpose": "Show sunset as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sunset"
+      ],
+      "synonyms": [
+        "sunset"
+      ],
+      "use_when": "Use when the interface refers directly to sunset as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sword",
+      "source_library": "lucide",
+      "source_name": "sword",
+      "label": "Sword",
+      "depicts": "A symbol representing sword.",
+      "purpose": "Show sword as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "sword"
+      ],
+      "synonyms": [
+        "sword"
+      ],
+      "use_when": "Use when the interface refers directly to sword as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:table",
+      "source_library": "lucide",
+      "source_name": "table",
+      "label": "Table",
+      "depicts": "A symbol representing table.",
+      "purpose": "Show table as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "table"
+      ],
+      "synonyms": [
+        "table"
+      ],
+      "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:table_2",
+      "source_library": "lucide",
+      "source_name": "table_2",
+      "label": "Table",
+      "depicts": "A symbol representing table.",
+      "purpose": "Show table as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "table",
+        "2"
+      ],
+      "synonyms": [
+        "table",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:tag",
+      "source_library": "lucide",
+      "source_name": "tag",
+      "label": "Tag",
+      "depicts": "A symbol representing tag.",
+      "purpose": "Show tag as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "tag"
+      ],
+      "synonyms": [
+        "tag"
+      ],
+      "use_when": "Use when the interface refers directly to tag as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:target",
+      "source_library": "lucide",
+      "source_name": "target",
+      "label": "Target",
+      "depicts": "The official Target brand or product mark.",
+      "purpose": "Show the official Target brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "target",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Target"
+      ],
+      "use_when": "Use when the interface refers specifically to Target as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Target product icon when the meaning is not specifically Target.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:telescope",
+      "source_library": "lucide",
+      "source_name": "telescope",
+      "label": "Telescope",
+      "depicts": "A symbol representing telescope.",
+      "purpose": "Show telescope as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "telescope"
+      ],
+      "synonyms": [
+        "telescope"
+      ],
+      "use_when": "Use when the interface refers directly to telescope as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:tent",
+      "source_library": "lucide",
+      "source_name": "tent",
+      "label": "Tent",
+      "depicts": "A symbol representing tent.",
+      "purpose": "Show tent as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "tent"
+      ],
+      "synonyms": [
+        "tent"
+      ],
+      "use_when": "Use when the interface refers directly to tent as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:terminal",
+      "source_library": "lucide",
+      "source_name": "terminal",
+      "label": "Terminal",
+      "depicts": "A command-line terminal prompt.",
+      "purpose": "Show command-line tooling, terminal access, or developer shell work.",
+      "category": "engineering_developer_tools",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "terminal",
+        "command line",
+        "shell",
+        "developer tool",
+        "console"
+      ],
+      "synonyms": [
+        "shell",
+        "console",
+        "command line",
+        "terminal session"
+      ],
+      "use_when": "Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+      "avoid_when": "Do not use for chat or generic code views when the meaning is specifically terminal access.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:test_tube",
+      "source_library": "lucide",
+      "source_name": "test_tube",
+      "label": "Test Tube",
+      "depicts": "A symbol representing test tube.",
+      "purpose": "Show test tube as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "test",
+        "tube"
+      ],
+      "synonyms": [
+        "test",
+        "tube"
+      ],
+      "use_when": "Use when the interface refers directly to test tube as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:text",
+      "source_library": "lucide",
+      "source_name": "text",
+      "label": "Text",
+      "depicts": "A symbol representing text.",
+      "purpose": "Show text as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "text"
+      ],
+      "synonyms": [
+        "text"
+      ],
+      "use_when": "Use when the interface refers directly to text as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:thermometer",
+      "source_library": "lucide",
+      "source_name": "thermometer",
+      "label": "Thermometer",
+      "depicts": "A symbol representing thermometer.",
+      "purpose": "Show thermometer as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "thermometer"
+      ],
+      "synonyms": [
+        "thermometer"
+      ],
+      "use_when": "Use when the interface refers directly to thermometer as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:ticket",
+      "source_library": "lucide",
+      "source_name": "ticket",
+      "label": "Ticket",
+      "depicts": "A symbol representing ticket.",
+      "purpose": "Show ticket as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "ticket"
+      ],
+      "synonyms": [
+        "ticket"
+      ],
+      "use_when": "Use when the interface refers directly to ticket as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:tornado",
+      "source_library": "lucide",
+      "source_name": "tornado",
+      "label": "Tornado",
+      "depicts": "A symbol representing tornado.",
+      "purpose": "Show tornado as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "tornado"
+      ],
+      "synonyms": [
+        "tornado"
+      ],
+      "use_when": "Use when the interface refers directly to tornado as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:traffic_cone",
+      "source_library": "lucide",
+      "source_name": "traffic_cone",
+      "label": "Traffic Cone",
+      "depicts": "A symbol representing traffic cone.",
+      "purpose": "Show traffic cone as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "traffic",
+        "cone"
+      ],
+      "synonyms": [
+        "traffic",
+        "cone"
+      ],
+      "use_when": "Use when the interface refers directly to traffic cone as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:train",
+      "source_library": "lucide",
+      "source_name": "train",
+      "label": "Train",
+      "depicts": "A symbol representing train.",
+      "purpose": "Show train as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "train"
+      ],
+      "synonyms": [
+        "train"
+      ],
+      "use_when": "Use when the interface refers directly to train as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:trello",
+      "source_library": "lucide",
+      "source_name": "trello",
+      "label": "Trello",
+      "depicts": "The official Trello brand or product mark.",
+      "purpose": "Show the official Trello brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "trello",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Trello"
+      ],
+      "use_when": "Use when the interface refers specifically to Trello as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Trello product icon when the meaning is not specifically Trello.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:triangle",
+      "source_library": "lucide",
+      "source_name": "triangle",
+      "label": "Triangle",
+      "depicts": "A symbol representing triangle.",
+      "purpose": "Show triangle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "triangle"
+      ],
+      "synonyms": [
+        "triangle"
+      ],
+      "use_when": "Use when the interface refers directly to triangle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:trophy",
+      "source_library": "lucide",
+      "source_name": "trophy",
+      "label": "Achievement",
+      "depicts": "A trophy cup with handles and a base.",
+      "purpose": "Show an achievement, award, milestone, or winning outcome.",
+      "category": "status_feedback",
+      "intent": "confirm",
+      "domain": "product_status",
+      "semantic_tags": [
+        "achievement",
+        "award",
+        "win",
+        "milestone",
+        "reward"
+      ],
+      "synonyms": [
+        "milestone reached",
+        "award",
+        "winner",
+        "achievement unlocked"
+      ],
+      "use_when": "Use when the interface needs to celebrate an achievement, reward, milestone, or top result.",
+      "avoid_when": "Do not use for ordinary completion states where a simple success icon is enough.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:truck",
+      "source_library": "lucide",
+      "source_name": "truck",
+      "label": "Truck",
+      "depicts": "A symbol representing truck.",
+      "purpose": "Show truck as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "truck"
+      ],
+      "synonyms": [
+        "truck"
+      ],
+      "use_when": "Use when the interface refers directly to truck as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:tv_2",
+      "source_library": "lucide",
+      "source_name": "tv_2",
+      "label": "Tv",
+      "depicts": "A symbol representing tv.",
+      "purpose": "Show tv as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "tv",
+        "2"
+      ],
+      "synonyms": [
+        "tv",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to tv as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:twitch",
+      "source_library": "lucide",
+      "source_name": "twitch",
+      "label": "Twitch",
+      "depicts": "The official Twitch brand or product mark.",
+      "purpose": "Show the official Twitch brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "twitch",
+        "brand",
+        "logo",
+        "media"
+      ],
+      "synonyms": [
+        "Twitch"
+      ],
+      "use_when": "Use when the interface refers specifically to Twitch as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Twitch product icon when the meaning is not specifically Twitch.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:umbrella",
+      "source_library": "lucide",
+      "source_name": "umbrella",
+      "label": "Umbrella",
+      "depicts": "A symbol representing umbrella.",
+      "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "umbrella"
+      ],
+      "synonyms": [
+        "umbrella"
+      ],
+      "use_when": "Use when the interface refers directly to umbrella as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:underline",
+      "source_library": "lucide",
+      "source_name": "underline",
+      "label": "Underline",
+      "depicts": "A symbol representing underline.",
+      "purpose": "Show underline as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "underline"
+      ],
+      "synonyms": [
+        "underline"
+      ],
+      "use_when": "Use when the interface refers directly to underline as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:unfold_horizontal",
+      "source_library": "lucide",
+      "source_name": "unfold_horizontal",
+      "label": "Unfold Horizontal",
+      "depicts": "A symbol representing unfold horizontal.",
+      "purpose": "Show unfold horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "unfold",
+        "horizontal"
+      ],
+      "synonyms": [
+        "unfold",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to unfold horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:unfold_vertical",
+      "source_library": "lucide",
+      "source_name": "unfold_vertical",
+      "label": "Unfold Vertical",
+      "depicts": "A symbol representing unfold vertical.",
+      "purpose": "Show unfold vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "unfold",
+        "vertical"
+      ],
+      "synonyms": [
+        "unfold",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to unfold vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:unlink",
+      "source_library": "lucide",
+      "source_name": "unlink",
+      "label": "Unlink",
+      "depicts": "A symbol representing unlink.",
+      "purpose": "Show unlink as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "unlink"
+      ],
+      "synonyms": [
+        "unlink"
+      ],
+      "use_when": "Use when the interface refers directly to unlink as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:unlink_2",
+      "source_library": "lucide",
+      "source_name": "unlink_2",
+      "label": "Unlink",
+      "depicts": "A symbol representing unlink.",
+      "purpose": "Show unlink as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "unlink",
+        "2"
+      ],
+      "synonyms": [
+        "unlink",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to unlink as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:usb",
+      "source_library": "lucide",
+      "source_name": "usb",
+      "label": "Usb",
+      "depicts": "A symbol representing usb.",
+      "purpose": "Show usb as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "usb"
+      ],
+      "synonyms": [
+        "usb"
+      ],
+      "use_when": "Use when the interface refers directly to usb as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:vault",
+      "source_library": "lucide",
+      "source_name": "vault",
+      "label": "Vault",
+      "depicts": "The official Vault brand or product mark.",
+      "purpose": "Show the official Vault brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "vault",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Vault"
+      ],
+      "use_when": "Use when the interface refers specifically to Vault as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Vault product icon when the meaning is not specifically Vault.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:video",
+      "source_library": "lucide",
+      "source_name": "video",
+      "label": "Video",
+      "depicts": "A symbol representing video.",
+      "purpose": "Show video as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "video"
+      ],
+      "synonyms": [
+        "video"
+      ],
+      "use_when": "Use when the interface refers directly to video as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:volleyball",
+      "source_library": "lucide",
+      "source_name": "volleyball",
+      "label": "Volleyball",
+      "depicts": "A symbol representing volleyball.",
+      "purpose": "Show volleyball as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "volleyball"
+      ],
+      "synonyms": [
+        "volleyball"
+      ],
+      "use_when": "Use when the interface refers directly to volleyball as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:volume",
+      "source_library": "lucide",
+      "source_name": "volume",
+      "label": "Volume",
+      "depicts": "A symbol representing volume.",
+      "purpose": "Show volume as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "volume"
+      ],
+      "synonyms": [
+        "volume"
+      ],
+      "use_when": "Use when the interface refers directly to volume as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:volume_off",
+      "source_library": "lucide",
+      "source_name": "volume_off",
+      "label": "Volume Off",
+      "depicts": "A symbol representing volume off.",
+      "purpose": "Show volume off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "volume",
+        "off"
+      ],
+      "synonyms": [
+        "volume",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to volume off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wallet",
+      "source_library": "lucide",
+      "source_name": "wallet",
+      "label": "Wallet",
+      "depicts": "A symbol representing wallet.",
+      "purpose": "Show wallet as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wallet"
+      ],
+      "synonyms": [
+        "wallet"
+      ],
+      "use_when": "Use when the interface refers directly to wallet as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wallet_2",
+      "source_library": "lucide",
+      "source_name": "wallet_2",
+      "label": "Wallet",
+      "depicts": "A symbol representing wallet.",
+      "purpose": "Show wallet as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wallet",
+        "2"
+      ],
+      "synonyms": [
+        "wallet",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to wallet as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:watch",
+      "source_library": "lucide",
+      "source_name": "watch",
+      "label": "Watch",
+      "depicts": "A symbol representing watch.",
+      "purpose": "Show watch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "watch"
+      ],
+      "synonyms": [
+        "watch"
+      ],
+      "use_when": "Use when the interface refers directly to watch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:webhook",
+      "source_library": "lucide",
+      "source_name": "webhook",
+      "label": "Webhook",
+      "depicts": "A hook-like integration symbol for events or callbacks.",
+      "purpose": "Show a webhook, event callback, or trigger sent between systems.",
+      "category": "systems_architecture",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "webhook",
+        "event callback",
+        "trigger",
+        "integration",
+        "system event"
+      ],
+      "synonyms": [
+        "event hook",
+        "callback",
+        "integration trigger",
+        "webhook event"
+      ],
+      "use_when": "Use when the interface refers to webhook setup, event callbacks, or system trigger flows.",
+      "avoid_when": "Do not use for generic links or external navigation when the meaning is specifically webhooks.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wifi",
+      "source_library": "lucide",
+      "source_name": "wifi",
+      "label": "Connection",
+      "depicts": "A wireless signal icon representing network connection.",
+      "purpose": "Show wireless connection status or network availability.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "wifi",
+        "network",
+        "connection",
+        "signal",
+        "online"
+      ],
+      "synonyms": [
+        "wireless",
+        "network signal",
+        "internet connection",
+        "online state"
+      ],
+      "use_when": "Use when the interface shows connection, signal, or wireless network state.",
+      "avoid_when": "Do not use for trust, security, or generic communication when the meaning is specifically connection status.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wifi_off",
+      "source_library": "lucide",
+      "source_name": "wifi_off",
+      "label": "Wifi Off",
+      "depicts": "A symbol representing wifi off.",
+      "purpose": "Show wifi off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wifi",
+        "off"
+      ],
+      "synonyms": [
+        "wifi",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to wifi off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wind",
+      "source_library": "lucide",
+      "source_name": "wind",
+      "label": "Wind",
+      "depicts": "A symbol representing wind.",
+      "purpose": "Show wind as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wind"
+      ],
+      "synonyms": [
+        "wind"
+      ],
+      "use_when": "Use when the interface refers directly to wind as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:wine",
+      "source_library": "lucide",
+      "source_name": "wine",
+      "label": "Wine",
+      "depicts": "The official Wine brand or product mark.",
+      "purpose": "Show the official Wine brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "wine",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Wine"
+      ],
+      "use_when": "Use when the interface refers specifically to Wine as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Wine product icon when the meaning is not specifically Wine.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:youtube",
+      "source_library": "lucide",
+      "source_name": "youtube",
+      "label": "YouTube",
+      "depicts": "The official YouTube brand or product mark.",
+      "purpose": "Show the official YouTube brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "youtube",
+        "brand",
+        "logo",
+        "media"
+      ],
+      "synonyms": [
+        "YouTube"
+      ],
+      "use_when": "Use when the interface refers specifically to YouTube as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-YouTube product icon when the meaning is not specifically YouTube.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:zap",
+      "source_library": "lucide",
+      "source_name": "zap",
+      "label": "ZAP",
+      "depicts": "The official ZAP brand or product mark.",
+      "purpose": "Show the official ZAP brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "zap",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "ZAP"
+      ],
+      "use_when": "Use when the interface refers specifically to ZAP as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-ZAP product icon when the meaning is not specifically ZAP.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:zoom_in",
+      "source_library": "lucide",
+      "source_name": "zoom_in",
+      "label": "Zoom In",
+      "depicts": "A zoom control for scaling content in.",
+      "purpose": "Show zooming in on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "in",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom in",
+        "magnify view",
+        "scale in",
+        "in closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms in on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:zoom_out",
+      "source_library": "lucide",
+      "source_name": "zoom_out",
+      "label": "Zoom Out",
+      "depicts": "A zoom control for scaling content out.",
+      "purpose": "Show zooming out on content or a workspace view.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "zoom",
+        "out",
+        "scale",
+        "view control",
+        "magnify"
+      ],
+      "synonyms": [
+        "zoom out",
+        "shrink view",
+        "scale out",
+        "out closer"
+      ],
+      "use_when": "Use when the interface changes magnification and zooms out on visible content.",
+      "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:align_center",
+      "source_library": "lucide",
+      "source_name": "align_center",
+      "label": "Align Center",
+      "depicts": "A formatting alignment control.",
+      "purpose": "Show text or layout alignment inside a formatted surface.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alignment",
+        "formatting",
+        "layout control",
+        "text layout",
+        "align"
+      ],
+      "synonyms": [
+        "align center",
+        "alignment control",
+        "format text",
+        "layout alignment"
+      ],
+      "use_when": "Use when the interface changes alignment, formatting, or positioning inside text or layout tools.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically formatting or alignment.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:align_justify",
+      "source_library": "lucide",
+      "source_name": "align_justify",
+      "label": "Align Justify",
+      "depicts": "A formatting alignment control.",
+      "purpose": "Show text or layout alignment inside a formatted surface.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alignment",
+        "formatting",
+        "layout control",
+        "text layout",
+        "align"
+      ],
+      "synonyms": [
+        "align justify",
+        "alignment control",
+        "format text",
+        "layout alignment"
+      ],
+      "use_when": "Use when the interface changes alignment, formatting, or positioning inside text or layout tools.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically formatting or alignment.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:badge_info",
+      "source_library": "lucide",
+      "source_name": "badge_info",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "badge",
+        "info",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "badge status",
+        "info status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:bell_off",
+      "source_library": "lucide",
+      "source_name": "bell_off",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "off",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "off status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:bell_ring",
+      "source_library": "lucide",
+      "source_name": "bell_ring",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "ring",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "ring status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_alert",
+      "source_library": "lucide",
+      "source_name": "book_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "book",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "book status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_check",
+      "source_library": "lucide",
+      "source_name": "book_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "book",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "book status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:brick_wall_shield",
+      "source_library": "lucide",
+      "source_name": "brick_wall_shield",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "brick",
+        "wall",
+        "shield",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "brick security",
+        "wall security",
+        "shield security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:check_check",
+      "source_library": "lucide",
+      "source_name": "check_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:check_circle_2",
+      "source_library": "lucide",
+      "source_name": "check_circle_2",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "circle",
+        "2",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status",
+        "circle status",
+        "2 status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:check_square",
+      "source_library": "lucide",
+      "source_name": "check_square",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "square",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status",
+        "square status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:check_square_2",
+      "source_library": "lucide",
+      "source_name": "check_square_2",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "square",
+        "2",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status",
+        "square status",
+        "2 status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_alert",
+      "source_library": "lucide",
+      "source_name": "circle_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "circle",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "circle status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_check_big",
+      "source_library": "lucide",
+      "source_name": "circle_check_big",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "circle",
+        "check",
+        "big",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "circle status",
+        "check status",
+        "big status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:cloud_alert",
+      "source_library": "lucide",
+      "source_name": "cloud_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "cloud",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "cloud status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:concierge_bell",
+      "source_library": "lucide",
+      "source_name": "concierge_bell",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "concierge",
+        "bell",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "concierge status",
+        "bell status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:info",
+      "source_library": "lucide",
+      "source_name": "info",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:laptop_minimal_check",
+      "source_library": "lucide",
+      "source_name": "laptop_minimal_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "laptop",
+        "minimal",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "laptop status",
+        "minimal status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_chevrons_down_up",
+      "source_library": "lucide",
+      "source_name": "list_chevrons_down_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "list",
+        "chevrons",
+        "down"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_chevrons_up_down",
+      "source_library": "lucide",
+      "source_name": "list_chevrons_up_down",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "list",
+        "chevrons",
+        "down"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_minus",
+      "source_library": "lucide",
+      "source_name": "list_minus",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "minus"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "minus menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_music",
+      "source_library": "lucide",
+      "source_name": "list_music",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "music"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "music menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_restart",
+      "source_library": "lucide",
+      "source_name": "list_restart",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "restart"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "restart menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_start",
+      "source_library": "lucide",
+      "source_name": "list_start",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "start"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "start menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_todo",
+      "source_library": "lucide",
+      "source_name": "list_todo",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "todo"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "todo menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_tree",
+      "source_library": "lucide",
+      "source_name": "list_tree",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "tree"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "tree menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:list_video",
+      "source_library": "lucide",
+      "source_name": "list_video",
+      "label": "List View",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show a list layout or switching content into a list view.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "list view",
+        "list",
+        "video"
+      ],
+      "synonyms": [
+        "list view",
+        "list view control",
+        "list menu",
+        "video menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    }
+  ]
+}

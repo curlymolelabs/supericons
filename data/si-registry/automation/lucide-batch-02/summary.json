@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-batch-02",
+  "library_id": "lucide",
+  "library_label": "Lucide",
+  "selected_count": 205,
+  "target_size": 220,
+  "target_min": 180,
+  "target_max": 300,
+  "reference_match_count": 20,
+  "family_counts": {
+    "generic_controls": 20,
+    "status_security": 30,
+    "ui_shell": 16,
+    "messages_mail": 16,
+    "search_discovery": 4,
+    "file_actions": 22,
+    "navigation_motion": 68,
+    "media_controls": 8,
+    "systems_ai": 8,
+    "folder_actions": 13
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 155,
+    "needs_visual_review": 50,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "confidence_band_counts": {
+    "high_confidence": 155,
+    "needs_review": 50,
+    "ambiguous": 0
+  },
+  "worklist_path": "data/si-registry/automation/lucide-batch-02/worklist.json",
+  "candidate_record_path": "data/si-registry/automation/lucide-batch-02/candidate-records.json",
+  "review_queue_path": "data/si-registry/automation/lucide-batch-02/review-queue.json"
+}

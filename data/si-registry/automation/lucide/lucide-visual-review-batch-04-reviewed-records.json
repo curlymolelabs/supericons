@@ -1,0 +1,2902 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-visual-review-batch-04",
+  "reviewed_records": [
+    {
+      "icon_id": "lucide:alarm_clock",
+      "source_library": "lucide",
+      "source_name": "alarm_clock",
+      "label": "Alarm Clock",
+      "depicts": "A symbol representing alarm clock.",
+      "purpose": "Show alarm clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alarm",
+        "clock"
+      ],
+      "synonyms": [
+        "alarm",
+        "clock"
+      ],
+      "use_when": "Use when the interface refers directly to alarm clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:alarm_clock_minus",
+      "source_library": "lucide",
+      "source_name": "alarm_clock_minus",
+      "label": "Alarm Clock Minus",
+      "depicts": "A symbol representing alarm clock minus.",
+      "purpose": "Show alarm clock minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alarm",
+        "clock",
+        "minus"
+      ],
+      "synonyms": [
+        "alarm",
+        "clock",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to alarm clock minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:alarm_clock_off",
+      "source_library": "lucide",
+      "source_name": "alarm_clock_off",
+      "label": "Alarm Clock Off",
+      "depicts": "A symbol representing alarm clock off.",
+      "purpose": "Show alarm clock off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alarm",
+        "clock",
+        "off"
+      ],
+      "synonyms": [
+        "alarm",
+        "clock",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to alarm clock off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:alarm_plus",
+      "source_library": "lucide",
+      "source_name": "alarm_plus",
+      "label": "Alarm Plus",
+      "depicts": "A symbol representing alarm plus.",
+      "purpose": "Show alarm plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alarm",
+        "plus"
+      ],
+      "synonyms": [
+        "alarm",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to alarm plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:archive_restore",
+      "source_library": "lucide",
+      "source_name": "archive_restore",
+      "label": "Archive Restore",
+      "depicts": "A symbol representing archive restore.",
+      "purpose": "Show archive restore as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "archive",
+        "restore"
+      ],
+      "synonyms": [
+        "archive",
+        "restore"
+      ],
+      "use_when": "Use when the interface refers directly to archive restore as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:badge_plus",
+      "source_library": "lucide",
+      "source_name": "badge_plus",
+      "label": "Badge Plus",
+      "depicts": "A symbol representing badge plus.",
+      "purpose": "Show badge plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "badge",
+        "plus"
+      ],
+      "synonyms": [
+        "badge",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to badge plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:badge_x",
+      "source_library": "lucide",
+      "source_name": "badge_x",
+      "label": "Badge X",
+      "depicts": "A symbol representing badge x.",
+      "purpose": "Show badge x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "badge",
+        "x"
+      ],
+      "synonyms": [
+        "badge",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to badge x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:banknote_x",
+      "source_library": "lucide",
+      "source_name": "banknote_x",
+      "label": "Banknote X",
+      "depicts": "A symbol representing banknote x.",
+      "purpose": "Show banknote x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "banknote",
+        "x"
+      ],
+      "synonyms": [
+        "banknote",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to banknote x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:battery_plus",
+      "source_library": "lucide",
+      "source_name": "battery_plus",
+      "label": "Battery Plus",
+      "depicts": "A symbol representing battery plus.",
+      "purpose": "Show battery plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "plus"
+      ],
+      "synonyms": [
+        "battery",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to battery plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_copy",
+      "source_library": "lucide",
+      "source_name": "book_copy",
+      "label": "Book Copy",
+      "depicts": "A symbol representing book copy.",
+      "purpose": "Show book copy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "copy"
+      ],
+      "synonyms": [
+        "book",
+        "copy"
+      ],
+      "use_when": "Use when the interface refers directly to book copy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_open",
+      "source_library": "lucide",
+      "source_name": "book_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "book file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_open_text",
+      "source_library": "lucide",
+      "source_name": "book_open_text",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "open",
+        "text",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "book file",
+        "text file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_plus",
+      "source_library": "lucide",
+      "source_name": "book_plus",
+      "label": "Book Plus",
+      "depicts": "A symbol representing book plus.",
+      "purpose": "Show book plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "plus"
+      ],
+      "synonyms": [
+        "book",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to book plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_user",
+      "source_library": "lucide",
+      "source_name": "book_user",
+      "label": "Book User",
+      "depicts": "A symbol representing book user.",
+      "purpose": "Show book user as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "book",
+        "user"
+      ],
+      "synonyms": [
+        "book",
+        "user"
+      ],
+      "use_when": "Use when the interface refers directly to book user as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_x",
+      "source_library": "lucide",
+      "source_name": "book_x",
+      "label": "Book X",
+      "depicts": "A symbol representing book x.",
+      "purpose": "Show book x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "x"
+      ],
+      "synonyms": [
+        "book",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to book x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:bookmark_minus",
+      "source_library": "lucide",
+      "source_name": "bookmark_minus",
+      "label": "Bookmark Minus",
+      "depicts": "A symbol representing bookmark minus.",
+      "purpose": "Show bookmark minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bookmark",
+        "minus"
+      ],
+      "synonyms": [
+        "bookmark",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to bookmark minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_1",
+      "source_library": "lucide",
+      "source_name": "calendar_1",
+      "label": "Calendar",
+      "depicts": "A symbol representing calendar.",
+      "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "1"
+      ],
+      "synonyms": [
+        "calendar",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to calendar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_cog",
+      "source_library": "lucide",
+      "source_name": "calendar_cog",
+      "label": "Calendar Cog",
+      "depicts": "A symbol representing calendar cog.",
+      "purpose": "Show calendar cog as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "cog"
+      ],
+      "synonyms": [
+        "calendar",
+        "cog"
+      ],
+      "use_when": "Use when the interface refers directly to calendar cog as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_days",
+      "source_library": "lucide",
+      "source_name": "calendar_days",
+      "label": "Calendar Days",
+      "depicts": "A symbol representing calendar days.",
+      "purpose": "Show calendar days as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "days"
+      ],
+      "synonyms": [
+        "calendar",
+        "days"
+      ],
+      "use_when": "Use when the interface refers directly to calendar days as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_fold",
+      "source_library": "lucide",
+      "source_name": "calendar_fold",
+      "label": "Calendar Fold",
+      "depicts": "A symbol representing calendar fold.",
+      "purpose": "Show calendar fold as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "fold"
+      ],
+      "synonyms": [
+        "calendar",
+        "fold"
+      ],
+      "use_when": "Use when the interface refers directly to calendar fold as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_heart",
+      "source_library": "lucide",
+      "source_name": "calendar_heart",
+      "label": "Calendar Heart",
+      "depicts": "A symbol representing calendar heart.",
+      "purpose": "Show calendar heart as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "calendar",
+        "heart"
+      ],
+      "synonyms": [
+        "calendar",
+        "heart"
+      ],
+      "use_when": "Use when the interface refers directly to calendar heart as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_minus",
+      "source_library": "lucide",
+      "source_name": "calendar_minus",
+      "label": "Calendar Minus",
+      "depicts": "A symbol representing calendar minus.",
+      "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "minus"
+      ],
+      "synonyms": [
+        "calendar",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to calendar minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_minus_2",
+      "source_library": "lucide",
+      "source_name": "calendar_minus_2",
+      "label": "Calendar Minus",
+      "depicts": "A symbol representing calendar minus.",
+      "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "minus",
+        "2"
+      ],
+      "synonyms": [
+        "calendar",
+        "minus",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to calendar minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_off",
+      "source_library": "lucide",
+      "source_name": "calendar_off",
+      "label": "Calendar Off",
+      "depicts": "A symbol representing calendar off.",
+      "purpose": "Show calendar off as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "off"
+      ],
+      "synonyms": [
+        "calendar",
+        "off"
+      ],
+      "use_when": "Use when the interface refers directly to calendar off as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_range",
+      "source_library": "lucide",
+      "source_name": "calendar_range",
+      "label": "Calendar Range",
+      "depicts": "A symbol representing calendar range.",
+      "purpose": "Show calendar range as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "range"
+      ],
+      "synonyms": [
+        "calendar",
+        "range"
+      ],
+      "use_when": "Use when the interface refers directly to calendar range as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:calendar_sync",
+      "source_library": "lucide",
+      "source_name": "calendar_sync",
+      "label": "Calendar Sync",
+      "depicts": "A symbol representing calendar sync.",
+      "purpose": "Show calendar sync as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "sync"
+      ],
+      "synonyms": [
+        "calendar",
+        "sync"
+      ],
+      "use_when": "Use when the interface refers directly to calendar sync as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:chevron_first",
+      "source_library": "lucide",
+      "source_name": "chevron_first",
+      "label": "Chevron First",
+      "depicts": "A symbol representing chevron first.",
+      "purpose": "Show chevron first as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chevron",
+        "first"
+      ],
+      "synonyms": [
+        "chevron",
+        "first"
+      ],
+      "use_when": "Use when the interface refers directly to chevron first as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:chevron_last",
+      "source_library": "lucide",
+      "source_name": "chevron_last",
+      "label": "Chevron Last",
+      "depicts": "A symbol representing chevron last.",
+      "purpose": "Show chevron last as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "chevron",
+        "last"
+      ],
+      "synonyms": [
+        "chevron",
+        "last"
+      ],
+      "use_when": "Use when the interface refers directly to chevron last as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_fading_plus",
+      "source_library": "lucide",
+      "source_name": "circle_fading_plus",
+      "label": "Circle Fading Plus",
+      "depicts": "A symbol representing circle fading plus.",
+      "purpose": "Show circle fading plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "circle",
+        "fading",
+        "plus"
+      ],
+      "synonyms": [
+        "circle",
+        "fading",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to circle fading plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_plus",
+      "source_library": "lucide",
+      "source_name": "circle_plus",
+      "label": "Circle Plus",
+      "depicts": "A symbol representing circle plus.",
+      "purpose": "Show circle plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "circle",
+        "plus"
+      ],
+      "synonyms": [
+        "circle",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to circle plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_user",
+      "source_library": "lucide",
+      "source_name": "circle_user",
+      "label": "Circle User",
+      "depicts": "A symbol representing circle user.",
+      "purpose": "Show circle user as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "circle",
+        "user"
+      ],
+      "synonyms": [
+        "circle",
+        "user"
+      ],
+      "use_when": "Use when the interface refers directly to circle user as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:circle_user_round",
+      "source_library": "lucide",
+      "source_name": "circle_user_round",
+      "label": "Circle User Round",
+      "depicts": "A symbol representing circle user round.",
+      "purpose": "Show circle user round as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "circle",
+        "user",
+        "round"
+      ],
+      "synonyms": [
+        "circle",
+        "user",
+        "round"
+      ],
+      "use_when": "Use when the interface refers directly to circle user round as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clipboard_clock",
+      "source_library": "lucide",
+      "source_name": "clipboard_clock",
+      "label": "Clipboard Clock",
+      "depicts": "A symbol representing clipboard clock.",
+      "purpose": "Show clipboard clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard",
+        "clock"
+      ],
+      "synonyms": [
+        "clipboard",
+        "clock"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clipboard_copy",
+      "source_library": "lucide",
+      "source_name": "clipboard_copy",
+      "label": "Clipboard Copy",
+      "depicts": "A symbol representing clipboard copy.",
+      "purpose": "Show clipboard copy as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard",
+        "copy"
+      ],
+      "synonyms": [
+        "clipboard",
+        "copy"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard copy as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clipboard_edit",
+      "source_library": "lucide",
+      "source_name": "clipboard_edit",
+      "label": "Clipboard Edit",
+      "depicts": "A symbol representing clipboard edit.",
+      "purpose": "Show clipboard edit as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard",
+        "edit"
+      ],
+      "synonyms": [
+        "clipboard",
+        "edit"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard edit as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clipboard_plus",
+      "source_library": "lucide",
+      "source_name": "clipboard_plus",
+      "label": "Clipboard Plus",
+      "depicts": "A symbol representing clipboard plus.",
+      "purpose": "Show clipboard plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard",
+        "plus"
+      ],
+      "synonyms": [
+        "clipboard",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clipboard_x",
+      "source_library": "lucide",
+      "source_name": "clipboard_x",
+      "label": "Clipboard X",
+      "depicts": "A symbol representing clipboard x.",
+      "purpose": "Show clipboard x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clipboard",
+        "x"
+      ],
+      "synonyms": [
+        "clipboard",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to clipboard x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_1",
+      "source_library": "lucide",
+      "source_name": "clock_1",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "1"
+      ],
+      "synonyms": [
+        "clock",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_10",
+      "source_library": "lucide",
+      "source_name": "clock_10",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "10"
+      ],
+      "synonyms": [
+        "clock",
+        "10"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_11",
+      "source_library": "lucide",
+      "source_name": "clock_11",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "11"
+      ],
+      "synonyms": [
+        "clock",
+        "11"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_12",
+      "source_library": "lucide",
+      "source_name": "clock_12",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "12"
+      ],
+      "synonyms": [
+        "clock",
+        "12"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_3",
+      "source_library": "lucide",
+      "source_name": "clock_3",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "3"
+      ],
+      "synonyms": [
+        "clock",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_4",
+      "source_library": "lucide",
+      "source_name": "clock_4",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "4"
+      ],
+      "synonyms": [
+        "clock",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_5",
+      "source_library": "lucide",
+      "source_name": "clock_5",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "5"
+      ],
+      "synonyms": [
+        "clock",
+        "5"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_6",
+      "source_library": "lucide",
+      "source_name": "clock_6",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "6"
+      ],
+      "synonyms": [
+        "clock",
+        "6"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_7",
+      "source_library": "lucide",
+      "source_name": "clock_7",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "7"
+      ],
+      "synonyms": [
+        "clock",
+        "7"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_8",
+      "source_library": "lucide",
+      "source_name": "clock_8",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "8"
+      ],
+      "synonyms": [
+        "clock",
+        "8"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_9",
+      "source_library": "lucide",
+      "source_name": "clock_9",
+      "label": "Clock",
+      "depicts": "A symbol representing clock.",
+      "purpose": "Show clock as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "9"
+      ],
+      "synonyms": [
+        "clock",
+        "9"
+      ],
+      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:clock_fading",
+      "source_library": "lucide",
+      "source_name": "clock_fading",
+      "label": "Clock Fading",
+      "depicts": "A symbol representing clock fading.",
+      "purpose": "Show clock fading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "fading"
+      ],
+      "synonyms": [
+        "clock",
+        "fading"
+      ],
+      "use_when": "Use when the interface refers directly to clock fading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:cloud_download",
+      "source_library": "lucide",
+      "source_name": "cloud_download",
+      "label": "Download File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show downloading, exporting, or saving a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "download",
+        "file"
+      ],
+      "synonyms": [
+        "download file",
+        "cloud file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:cloud_upload",
+      "source_library": "lucide",
+      "source_name": "cloud_upload",
+      "label": "Upload File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show uploading, importing, or adding a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "upload",
+        "file"
+      ],
+      "synonyms": [
+        "upload file",
+        "cloud file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:columns_settings",
+      "source_library": "lucide",
+      "source_name": "columns_settings",
+      "label": "Columns Settings",
+      "depicts": "A symbol representing columns settings.",
+      "purpose": "Show columns settings as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "columns",
+        "settings"
+      ],
+      "synonyms": [
+        "columns",
+        "settings"
+      ],
+      "use_when": "Use when the interface refers directly to columns settings as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:copy_minus",
+      "source_library": "lucide",
+      "source_name": "copy_minus",
+      "label": "Copy Minus",
+      "depicts": "A symbol representing copy minus.",
+      "purpose": "Show copy minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy",
+        "minus"
+      ],
+      "synonyms": [
+        "copy",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to copy minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:copy_slash",
+      "source_library": "lucide",
+      "source_name": "copy_slash",
+      "label": "Copy Slash",
+      "depicts": "A symbol representing copy slash.",
+      "purpose": "Show copy slash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy",
+        "slash"
+      ],
+      "synonyms": [
+        "copy",
+        "slash"
+      ],
+      "use_when": "Use when the interface refers directly to copy slash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:diamond_plus",
+      "source_library": "lucide",
+      "source_name": "diamond_plus",
+      "label": "Diamond Plus",
+      "depicts": "A symbol representing diamond plus.",
+      "purpose": "Show diamond plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "diamond",
+        "plus"
+      ],
+      "synonyms": [
+        "diamond",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to diamond plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:door_open",
+      "source_library": "lucide",
+      "source_name": "door_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "door",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "door file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:download_cloud",
+      "source_library": "lucide",
+      "source_name": "download_cloud",
+      "label": "Download File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show downloading, exporting, or saving a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "download",
+        "cloud",
+        "file"
+      ],
+      "synonyms": [
+        "download file",
+        "cloud file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_digit",
+      "source_library": "lucide",
+      "source_name": "file_digit",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "digit"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "digit file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_exclamation_point",
+      "source_library": "lucide",
+      "source_name": "file_exclamation_point",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "exclamation",
+        "point"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "exclamation file",
+        "point file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_headphone",
+      "source_library": "lucide",
+      "source_name": "file_headphone",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "headphone"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "headphone file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_heart",
+      "source_library": "lucide",
+      "source_name": "file_heart",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "heart"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "heart file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_image",
+      "source_library": "lucide",
+      "source_name": "file_image",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "image"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "image file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_input",
+      "source_library": "lucide",
+      "source_name": "file_input",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "input"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "input file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_json",
+      "source_library": "lucide",
+      "source_name": "file_json",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "json"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "json file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_json_2",
+      "source_library": "lucide",
+      "source_name": "file_json_2",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "json",
+        "2"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "json file",
+        "2 file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_line_chart",
+      "source_library": "lucide",
+      "source_name": "file_line_chart",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "line",
+        "chart"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "line file",
+        "chart file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_minus",
+      "source_library": "lucide",
+      "source_name": "file_minus",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "minus"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "minus file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_minus_2",
+      "source_library": "lucide",
+      "source_name": "file_minus_2",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "minus",
+        "2"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "minus file",
+        "2 file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_output",
+      "source_library": "lucide",
+      "source_name": "file_output",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "output"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "output file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_pen",
+      "source_library": "lucide",
+      "source_name": "file_pen",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "pen"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "pen file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_pen_line",
+      "source_library": "lucide",
+      "source_name": "file_pen_line",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "pen",
+        "line"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "pen file",
+        "line file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_pie_chart",
+      "source_library": "lucide",
+      "source_name": "file_pie_chart",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "pie",
+        "chart"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "pie file",
+        "chart file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_question",
+      "source_library": "lucide",
+      "source_name": "file_question",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "question"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "question file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_question_mark",
+      "source_library": "lucide",
+      "source_name": "file_question_mark",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "question",
+        "mark"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "question file",
+        "mark file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_signal",
+      "source_library": "lucide",
+      "source_name": "file_signal",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "signal"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "signal file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_signature",
+      "source_library": "lucide",
+      "source_name": "file_signature",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "signature"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "signature file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_sliders",
+      "source_library": "lucide",
+      "source_name": "file_sliders",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "sliders"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "sliders file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_spreadsheet",
+      "source_library": "lucide",
+      "source_name": "file_spreadsheet",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "spreadsheet"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "spreadsheet file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_stack",
+      "source_library": "lucide",
+      "source_name": "file_stack",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "stack"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "stack file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_symlink",
+      "source_library": "lucide",
+      "source_name": "file_symlink",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "symlink"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "symlink file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_terminal",
+      "source_library": "lucide",
+      "source_name": "file_terminal",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "terminal"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "terminal file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_text",
+      "source_library": "lucide",
+      "source_name": "file_text",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "text"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "text file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_type",
+      "source_library": "lucide",
+      "source_name": "file_type",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "type"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "type file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_type_2",
+      "source_library": "lucide",
+      "source_name": "file_type_2",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "type",
+        "2"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "type file",
+        "2 file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_video",
+      "source_library": "lucide",
+      "source_name": "file_video",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "video"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "video file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_video_2",
+      "source_library": "lucide",
+      "source_name": "file_video_2",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "video",
+        "2"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "video file",
+        "2 file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_video_camera",
+      "source_library": "lucide",
+      "source_name": "file_video_camera",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "video",
+        "camera"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "video file",
+        "camera file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_volume",
+      "source_library": "lucide",
+      "source_name": "file_volume",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "volume"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "volume file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:file_volume_2",
+      "source_library": "lucide",
+      "source_name": "file_volume_2",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "volume",
+        "2"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "volume file",
+        "2 file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:folder_heart",
+      "source_library": "lucide",
+      "source_name": "folder_heart",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "heart"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "heart folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:folder_tree",
+      "source_library": "lucide",
+      "source_name": "folder_tree",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "tree"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "tree folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:funnel_plus",
+      "source_library": "lucide",
+      "source_name": "funnel_plus",
+      "label": "Funnel Plus",
+      "depicts": "A symbol representing funnel plus.",
+      "purpose": "Show funnel plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "funnel",
+        "plus"
+      ],
+      "synonyms": [
+        "funnel",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to funnel plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:funnel_x",
+      "source_library": "lucide",
+      "source_name": "funnel_x",
+      "label": "Funnel X",
+      "depicts": "A symbol representing funnel x.",
+      "purpose": "Show funnel x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "funnel",
+        "x"
+      ],
+      "synonyms": [
+        "funnel",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to funnel x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:git_branch_plus",
+      "source_library": "lucide",
+      "source_name": "git_branch_plus",
+      "label": "Git Branch Plus",
+      "depicts": "A symbol representing git branch plus.",
+      "purpose": "Show git branch plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "git",
+        "branch",
+        "plus"
+      ],
+      "synonyms": [
+        "git",
+        "branch",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to git branch plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:globe_x",
+      "source_library": "lucide",
+      "source_name": "globe_x",
+      "label": "Globe X",
+      "depicts": "A symbol representing globe x.",
+      "purpose": "Show globe x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "globe",
+        "x"
+      ],
+      "synonyms": [
+        "globe",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to globe x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:hard_drive_download",
+      "source_library": "lucide",
+      "source_name": "hard_drive_download",
+      "label": "Download File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show downloading, exporting, or saving a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "hard",
+        "drive",
+        "download",
+        "file"
+      ],
+      "synonyms": [
+        "download file",
+        "hard file",
+        "drive file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:hard_drive_upload",
+      "source_library": "lucide",
+      "source_name": "hard_drive_upload",
+      "label": "Upload File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show uploading, importing, or adding a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "hard",
+        "drive",
+        "upload",
+        "file"
+      ],
+      "synonyms": [
+        "upload file",
+        "hard file",
+        "drive file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:heart_plus",
+      "source_library": "lucide",
+      "source_name": "heart_plus",
+      "label": "Heart Plus",
+      "depicts": "A symbol representing heart plus.",
+      "purpose": "Show heart plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "heart",
+        "plus"
+      ],
+      "synonyms": [
+        "heart",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to heart plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:house_plus",
+      "source_library": "lucide",
+      "source_name": "house_plus",
+      "label": "House Plus",
+      "depicts": "A symbol representing house plus.",
+      "purpose": "Show house plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "house",
+        "plus"
+      ],
+      "synonyms": [
+        "house",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to house plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:image_plus",
+      "source_library": "lucide",
+      "source_name": "image_plus",
+      "label": "Image Plus",
+      "depicts": "A symbol representing image plus.",
+      "purpose": "Show image plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "image",
+        "plus"
+      ],
+      "synonyms": [
+        "image",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to image plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:layers_plus",
+      "source_library": "lucide",
+      "source_name": "layers_plus",
+      "label": "Layers Plus",
+      "depicts": "A symbol representing layers plus.",
+      "purpose": "Show layers plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "layers",
+        "plus"
+      ],
+      "synonyms": [
+        "layers",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to layers plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:layout_panel_top",
+      "source_library": "lucide",
+      "source_name": "layout_panel_top",
+      "label": "Layout Panel Top",
+      "depicts": "A symbol representing layout panel top.",
+      "purpose": "Show layout panel top as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "layout",
+        "panel",
+        "top"
+      ],
+      "synonyms": [
+        "layout",
+        "panel",
+        "top"
+      ],
+      "use_when": "Use when the interface refers directly to layout panel top as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:layout_template",
+      "source_library": "lucide",
+      "source_name": "layout_template",
+      "label": "Layout Template",
+      "depicts": "A symbol representing layout template.",
+      "purpose": "Show layout template as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "layout",
+        "template"
+      ],
+      "synonyms": [
+        "layout",
+        "template"
+      ],
+      "use_when": "Use when the interface refers directly to layout template as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:link_2_off",
+      "source_library": "lucide",
+      "source_name": "link_2_off",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "2",
+        "off",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "2 file",
+        "off file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    }
+  ]
+}

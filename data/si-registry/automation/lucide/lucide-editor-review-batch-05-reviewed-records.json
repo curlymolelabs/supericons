@@ -1,0 +1,1899 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-editor-review-batch-05",
+  "reviewed_records": [
+    {
+      "icon_id": "lucide:map_pin_check",
+      "source_library": "lucide",
+      "source_name": "map_pin_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "map",
+        "pin",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "map status",
+        "pin status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:map_pin_check_inside",
+      "source_library": "lucide",
+      "source_name": "map_pin_check_inside",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "map",
+        "pin",
+        "check",
+        "inside",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "map status",
+        "pin status",
+        "check status",
+        "inside status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_circle_heart",
+      "source_library": "lucide",
+      "source_name": "message_circle_heart",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "circle",
+        "heart",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "circle message",
+        "heart message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_dot",
+      "source_library": "lucide",
+      "source_name": "message_square_dot",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "dot",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "dot message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_heart",
+      "source_library": "lucide",
+      "source_name": "message_square_heart",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "heart",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "heart message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_off",
+      "source_library": "lucide",
+      "source_name": "message_square_off",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "off",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "off message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_quote",
+      "source_library": "lucide",
+      "source_name": "message_square_quote",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "quote",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "quote message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_reply",
+      "source_library": "lucide",
+      "source_name": "message_square_reply",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "reply",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "reply message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_share",
+      "source_library": "lucide",
+      "source_name": "message_square_share",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "share",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "share message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:message_square_text",
+      "source_library": "lucide",
+      "source_name": "message_square_text",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "square",
+        "text",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "square message",
+        "text message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:monitor_check",
+      "source_library": "lucide",
+      "source_name": "monitor_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "monitor",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "monitor status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:more_horizontal",
+      "source_library": "lucide",
+      "source_name": "more_horizontal",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "horizontal"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "horizontal menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:more_vertical",
+      "source_library": "lucide",
+      "source_name": "more_vertical",
+      "label": "More Options",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show an overflow menu with more actions or options.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "more options",
+        "more",
+        "vertical"
+      ],
+      "synonyms": [
+        "more options",
+        "more options control",
+        "more menu",
+        "vertical menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:mouse_pointer_ban",
+      "source_library": "lucide",
+      "source_name": "mouse_pointer_ban",
+      "label": "Blocked",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show that an action, object, or state is blocked, prohibited, or not allowed.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "mouse",
+        "pointer",
+        "ban",
+        "status"
+      ],
+      "synonyms": [
+        "blocked",
+        "mouse status",
+        "pointer status",
+        "ban status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:octagon_alert",
+      "source_library": "lucide",
+      "source_name": "octagon_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "octagon",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "octagon status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:package_check",
+      "source_library": "lucide",
+      "source_name": "package_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "package",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "package status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:panel_left_close",
+      "source_library": "lucide",
+      "source_name": "panel_left_close",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "panel",
+        "close"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:panel_left_open",
+      "source_library": "lucide",
+      "source_name": "panel_left_open",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "panel",
+        "open"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:panel_right_close",
+      "source_library": "lucide",
+      "source_name": "panel_right_close",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "panel",
+        "close"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:panel_right_open",
+      "source_library": "lucide",
+      "source_name": "panel_right_open",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "panel",
+        "open"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:printer_check",
+      "source_library": "lucide",
+      "source_name": "printer_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "printer",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "printer status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:send_horizonal",
+      "source_library": "lucide",
+      "source_name": "send_horizonal",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "horizonal",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "send message",
+        "horizonal message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:send_horizontal",
+      "source_library": "lucide",
+      "source_name": "send_horizontal",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "horizontal",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "send message",
+        "horizontal message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:shield_ellipsis",
+      "source_library": "lucide",
+      "source_name": "shield_ellipsis",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "ellipsis",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "ellipsis security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shield_half",
+      "source_library": "lucide",
+      "source_name": "shield_half",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "half",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "half security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shield_minus",
+      "source_library": "lucide",
+      "source_name": "shield_minus",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "minus",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "minus security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shield_off",
+      "source_library": "lucide",
+      "source_name": "shield_off",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "off",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "off security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shield_question",
+      "source_library": "lucide",
+      "source_name": "shield_question",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "question",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "question security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:shield_question_mark",
+      "source_library": "lucide",
+      "source_name": "shield_question_mark",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "question",
+        "mark",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "question security",
+        "mark security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:sidebar",
+      "source_library": "lucide",
+      "source_name": "sidebar",
+      "label": "Menu",
+      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
+      "category": "navigation_interface",
+      "intent": "control",
+      "domain": "ui_shell",
+      "semantic_tags": [
+        "menu",
+        "sidebar"
+      ],
+      "synonyms": [
+        "menu",
+        "menu control",
+        "sidebar menu"
+      ],
+      "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+      "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.83,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:spell_check",
+      "source_library": "lucide",
+      "source_name": "spell_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "spell",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "spell status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:spell_check_2",
+      "source_library": "lucide",
+      "source_name": "spell_check_2",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "spell",
+        "check",
+        "2",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "spell status",
+        "check status",
+        "2 status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:square_arrow_down_left",
+      "source_library": "lucide",
+      "source_name": "square_arrow_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "square",
+        "arrow",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_down_right",
+      "source_library": "lucide",
+      "source_name": "square_arrow_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_out_down_left",
+      "source_library": "lucide",
+      "source_name": "square_arrow_out_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "square",
+        "arrow",
+        "out",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_out_down_right",
+      "source_library": "lucide",
+      "source_name": "square_arrow_out_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "out",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_out_up_left",
+      "source_library": "lucide",
+      "source_name": "square_arrow_out_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "square",
+        "arrow",
+        "out",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_out_up_right",
+      "source_library": "lucide",
+      "source_name": "square_arrow_out_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "out",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_right_enter",
+      "source_library": "lucide",
+      "source_name": "square_arrow_right_enter",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "enter"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_right_exit",
+      "source_library": "lucide",
+      "source_name": "square_arrow_right_exit",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "exit"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_up_left",
+      "source_library": "lucide",
+      "source_name": "square_arrow_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "square",
+        "arrow",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_arrow_up_right",
+      "source_library": "lucide",
+      "source_name": "square_arrow_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "arrow",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_check",
+      "source_library": "lucide",
+      "source_name": "square_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "square",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "square status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:square_check_big",
+      "source_library": "lucide",
+      "source_name": "square_check_big",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "square",
+        "check",
+        "big",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "square status",
+        "check status",
+        "big status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:square_chevron_down",
+      "source_library": "lucide",
+      "source_name": "square_chevron_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "square",
+        "chevron"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:square_chevron_left",
+      "source_library": "lucide",
+      "source_name": "square_chevron_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "square",
+        "chevron"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_chevron_right",
+      "source_library": "lucide",
+      "source_name": "square_chevron_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "square",
+        "chevron"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:square_chevron_up",
+      "source_library": "lucide",
+      "source_name": "square_chevron_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "square",
+        "chevron"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:ticket_check",
+      "source_library": "lucide",
+      "source_name": "ticket_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "ticket",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "ticket status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:triangle_alert",
+      "source_library": "lucide",
+      "source_name": "triangle_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "triangle",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "triangle status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:undo_2",
+      "source_library": "lucide",
+      "source_name": "undo_2",
+      "label": "Undo",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show undoing the most recent action.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "undo",
+        "2",
+        "control"
+      ],
+      "synonyms": [
+        "undo",
+        "undo control",
+        "2 control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:undo_dot",
+      "source_library": "lucide",
+      "source_name": "undo_dot",
+      "label": "Undo",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show undoing the most recent action.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "undo",
+        "dot",
+        "control"
+      ],
+      "synonyms": [
+        "undo",
+        "undo control",
+        "dot control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:unlock_keyhole",
+      "source_library": "lucide",
+      "source_name": "unlock_keyhole",
+      "label": "Unlocked",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show open access, unlocked state, or released protection.",
+      "category": "security_auth",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "unlock",
+        "keyhole",
+        "security"
+      ],
+      "synonyms": [
+        "unlocked",
+        "secure access",
+        "unlock security",
+        "keyhole security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "lucide:waves_arrow_down",
+      "source_library": "lucide",
+      "source_name": "waves_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "waves",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:waves_arrow_up",
+      "source_library": "lucide",
+      "source_name": "waves_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "waves",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:wind_arrow_down",
+      "source_library": "lucide",
+      "source_name": "wind_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "wind",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:arrows_up_from_line",
+      "source_library": "lucide",
+      "source_name": "arrows_up_from_line",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "arrows",
+        "from",
+        "line"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_down",
+      "source_library": "lucide",
+      "source_name": "book_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "book"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_up",
+      "source_library": "lucide",
+      "source_name": "book_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "book"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "lucide:book_up_2",
+      "source_library": "lucide",
+      "source_name": "book_up_2",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "book",
+        "2"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    }
+  ]
+}
