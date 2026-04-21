@@ -1,0 +1,4943 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-visual-review-batch-03",
+  "reviewed_records": [
+    {
+      "icon_id": "phosphor:arrow_square_in",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_in",
+      "label": "Arrow Square In",
+      "depicts": "A symbol representing arrow square in.",
+      "purpose": "Show arrow square in as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "square",
+        "in"
+      ],
+      "synonyms": [
+        "arrow",
+        "square",
+        "in"
+      ],
+      "use_when": "Use when the interface refers directly to arrow square in as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_out",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_out",
+      "label": "Arrow Square Out",
+      "depicts": "A symbol representing arrow square out.",
+      "purpose": "Show arrow square out as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "square",
+        "out"
+      ],
+      "synonyms": [
+        "arrow",
+        "square",
+        "out"
+      ],
+      "use_when": "Use when the interface refers directly to arrow square out as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_plus",
+      "source_library": "phosphor",
+      "source_name": "battery_plus",
+      "label": "Battery Plus",
+      "depicts": "A symbol representing battery plus.",
+      "purpose": "Show battery plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "plus"
+      ],
+      "synonyms": [
+        "battery",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to battery plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_plus_vertical",
+      "source_library": "phosphor",
+      "source_name": "battery_plus_vertical",
+      "label": "Battery Plus Vertical",
+      "depicts": "A symbol representing battery plus vertical.",
+      "purpose": "Show battery plus vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "plus",
+        "vertical"
+      ],
+      "synonyms": [
+        "battery",
+        "plus",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to battery plus vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bluetooth_x",
+      "source_library": "phosphor",
+      "source_name": "bluetooth_x",
+      "label": "Bluetooth X",
+      "depicts": "A symbol representing bluetooth x.",
+      "purpose": "Show bluetooth x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bluetooth",
+        "x"
+      ],
+      "synonyms": [
+        "bluetooth",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to bluetooth x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:book_bookmark",
+      "source_library": "phosphor",
+      "source_name": "book_bookmark",
+      "label": "Book Bookmark",
+      "depicts": "A symbol representing book bookmark.",
+      "purpose": "Show book bookmark as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "bookmark"
+      ],
+      "synonyms": [
+        "book",
+        "bookmark"
+      ],
+      "use_when": "Use when the interface refers directly to book bookmark as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:book_open",
+      "source_library": "phosphor",
+      "source_name": "book_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "book file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:book_open_text",
+      "source_library": "phosphor",
+      "source_name": "book_open_text",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "open",
+        "text",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "book file",
+        "text file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bookmark_simple",
+      "source_library": "phosphor",
+      "source_name": "bookmark_simple",
+      "label": "Bookmark Simple",
+      "depicts": "A symbol representing bookmark simple.",
+      "purpose": "Show bookmark simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bookmark",
+        "simple"
+      ],
+      "synonyms": [
+        "bookmark",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to bookmark simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_blank",
+      "source_library": "phosphor",
+      "source_name": "calendar_blank",
+      "label": "Calendar Blank",
+      "depicts": "A symbol representing calendar blank.",
+      "purpose": "Show calendar blank as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "blank"
+      ],
+      "synonyms": [
+        "calendar",
+        "blank"
+      ],
+      "use_when": "Use when the interface refers directly to calendar blank as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_dot",
+      "source_library": "phosphor",
+      "source_name": "calendar_dot",
+      "label": "Calendar Dot",
+      "depicts": "A symbol representing calendar dot.",
+      "purpose": "Show calendar dot as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "dot"
+      ],
+      "synonyms": [
+        "calendar",
+        "dot"
+      ],
+      "use_when": "Use when the interface refers directly to calendar dot as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_dots",
+      "source_library": "phosphor",
+      "source_name": "calendar_dots",
+      "label": "Calendar Dots",
+      "depicts": "A symbol representing calendar dots.",
+      "purpose": "Show calendar dots as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "dots"
+      ],
+      "synonyms": [
+        "calendar",
+        "dots"
+      ],
+      "use_when": "Use when the interface refers directly to calendar dots as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_heart",
+      "source_library": "phosphor",
+      "source_name": "calendar_heart",
+      "label": "Calendar Heart",
+      "depicts": "A symbol representing calendar heart.",
+      "purpose": "Show calendar heart as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "calendar",
+        "heart"
+      ],
+      "synonyms": [
+        "calendar",
+        "heart"
+      ],
+      "use_when": "Use when the interface refers directly to calendar heart as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_minus",
+      "source_library": "phosphor",
+      "source_name": "calendar_minus",
+      "label": "Calendar Minus",
+      "depicts": "A symbol representing calendar minus.",
+      "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "minus"
+      ],
+      "synonyms": [
+        "calendar",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to calendar minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_slash",
+      "source_library": "phosphor",
+      "source_name": "calendar_slash",
+      "label": "Calendar Slash",
+      "depicts": "A symbol representing calendar slash.",
+      "purpose": "Show calendar slash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "slash"
+      ],
+      "synonyms": [
+        "calendar",
+        "slash"
+      ],
+      "use_when": "Use when the interface refers directly to calendar slash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_star",
+      "source_library": "phosphor",
+      "source_name": "calendar_star",
+      "label": "Calendar Star",
+      "depicts": "A symbol representing calendar star.",
+      "purpose": "Show calendar star as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "calendar",
+        "star"
+      ],
+      "synonyms": [
+        "calendar",
+        "star"
+      ],
+      "use_when": "Use when the interface refers directly to calendar star as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:camera_plus",
+      "source_library": "phosphor",
+      "source_name": "camera_plus",
+      "label": "Camera Plus",
+      "depicts": "A symbol representing camera plus.",
+      "purpose": "Show camera plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "camera",
+        "plus"
+      ],
+      "synonyms": [
+        "camera",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to camera plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:cell_signal_x",
+      "source_library": "phosphor",
+      "source_name": "cell_signal_x",
+      "label": "Cell Signal X",
+      "depicts": "A symbol representing cell signal x.",
+      "purpose": "Show cell signal x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cell",
+        "signal",
+        "x"
+      ],
+      "synonyms": [
+        "cell",
+        "signal",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to cell signal x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:circles_three_plus",
+      "source_library": "phosphor",
+      "source_name": "circles_three_plus",
+      "label": "Circles Three Plus",
+      "depicts": "A symbol representing circles three plus.",
+      "purpose": "Show circles three plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "circles",
+        "three",
+        "plus"
+      ],
+      "synonyms": [
+        "circles",
+        "three",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to circles three plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:clock_afternoon",
+      "source_library": "phosphor",
+      "source_name": "clock_afternoon",
+      "label": "Clock Afternoon",
+      "depicts": "A symbol representing clock afternoon.",
+      "purpose": "Show clock afternoon as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "afternoon"
+      ],
+      "synonyms": [
+        "clock",
+        "afternoon"
+      ],
+      "use_when": "Use when the interface refers directly to clock afternoon as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:clock_clockwise",
+      "source_library": "phosphor",
+      "source_name": "clock_clockwise",
+      "label": "Clock Clockwise",
+      "depicts": "A symbol representing clock clockwise.",
+      "purpose": "Show clock clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "clockwise"
+      ],
+      "synonyms": [
+        "clock",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to clock clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:clock_countdown",
+      "source_library": "phosphor",
+      "source_name": "clock_countdown",
+      "label": "Clock Countdown",
+      "depicts": "A symbol representing clock countdown.",
+      "purpose": "Show clock countdown as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "countdown"
+      ],
+      "synonyms": [
+        "clock",
+        "countdown"
+      ],
+      "use_when": "Use when the interface refers directly to clock countdown as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:clock_counter_clockwise",
+      "source_library": "phosphor",
+      "source_name": "clock_counter_clockwise",
+      "label": "Clock Counter Clockwise",
+      "depicts": "A symbol representing clock counter clockwise.",
+      "purpose": "Show clock counter clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "counter",
+        "clockwise"
+      ],
+      "synonyms": [
+        "clock",
+        "counter",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to clock counter clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:cloud_x",
+      "source_library": "phosphor",
+      "source_name": "cloud_x",
+      "label": "Cloud X",
+      "depicts": "A symbol representing cloud x.",
+      "purpose": "Show cloud x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "cloud",
+        "x"
+      ],
+      "synonyms": [
+        "cloud",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to cloud x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:copy_simple",
+      "source_library": "phosphor",
+      "source_name": "copy_simple",
+      "label": "Copy Simple",
+      "depicts": "A symbol representing copy simple.",
+      "purpose": "Show copy simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "copy",
+        "simple"
+      ],
+      "synonyms": [
+        "copy",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to copy simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:door_open",
+      "source_library": "phosphor",
+      "source_name": "door_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "door",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "door file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:download_simple",
+      "source_library": "phosphor",
+      "source_name": "download_simple",
+      "label": "Download File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show downloading, exporting, or saving a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "download",
+        "simple",
+        "file"
+      ],
+      "synonyms": [
+        "download file",
+        "simple file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:envelope_open",
+      "source_library": "phosphor",
+      "source_name": "envelope_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "envelope",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "envelope file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:envelope_simple_open",
+      "source_library": "phosphor",
+      "source_name": "envelope_simple_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "envelope",
+        "simple",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "envelope file",
+        "simple file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_png",
+      "source_library": "phosphor",
+      "source_name": "file_png",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "png"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "png file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_ppt",
+      "source_library": "phosphor",
+      "source_name": "file_ppt",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "ppt"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "ppt file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_py",
+      "source_library": "phosphor",
+      "source_name": "file_py",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "py"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "py file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_rs",
+      "source_library": "phosphor",
+      "source_name": "file_rs",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "rs"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "rs file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_sql",
+      "source_library": "phosphor",
+      "source_name": "file_sql",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "sql"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "sql file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_svg",
+      "source_library": "phosphor",
+      "source_name": "file_svg",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "svg"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "svg file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_text",
+      "source_library": "phosphor",
+      "source_name": "file_text",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "text"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "text file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_ts",
+      "source_library": "phosphor",
+      "source_name": "file_ts",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "ts"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "ts file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_tsx",
+      "source_library": "phosphor",
+      "source_name": "file_tsx",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "tsx"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "tsx file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_txt",
+      "source_library": "phosphor",
+      "source_name": "file_txt",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "txt"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "txt file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_video",
+      "source_library": "phosphor",
+      "source_name": "file_video",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "video"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "video file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_vue",
+      "source_library": "phosphor",
+      "source_name": "file_vue",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "vue"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "vue file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_xls",
+      "source_library": "phosphor",
+      "source_name": "file_xls",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "xls"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "xls file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:flow_arrow",
+      "source_library": "phosphor",
+      "source_name": "flow_arrow",
+      "label": "Flow Arrow",
+      "depicts": "A symbol representing flow arrow.",
+      "purpose": "Show flow arrow as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "flow",
+        "arrow"
+      ],
+      "synonyms": [
+        "flow",
+        "arrow"
+      ],
+      "use_when": "Use when the interface refers directly to flow arrow as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:funnel_simple_x",
+      "source_library": "phosphor",
+      "source_name": "funnel_simple_x",
+      "label": "Funnel Simple X",
+      "depicts": "A symbol representing funnel simple x.",
+      "purpose": "Show funnel simple x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "funnel",
+        "simple",
+        "x"
+      ],
+      "synonyms": [
+        "funnel",
+        "simple",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to funnel simple x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:funnel_x",
+      "source_library": "phosphor",
+      "source_name": "funnel_x",
+      "label": "Funnel X",
+      "depicts": "A symbol representing funnel x.",
+      "purpose": "Show funnel x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "funnel",
+        "x"
+      ],
+      "synonyms": [
+        "funnel",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to funnel x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:globe_simple_x",
+      "source_library": "phosphor",
+      "source_name": "globe_simple_x",
+      "label": "Globe Simple X",
+      "depicts": "A symbol representing globe simple x.",
+      "purpose": "Show globe simple x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "globe",
+        "simple",
+        "x"
+      ],
+      "synonyms": [
+        "globe",
+        "simple",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to globe simple x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:globe_x",
+      "source_library": "phosphor",
+      "source_name": "globe_x",
+      "label": "Globe X",
+      "depicts": "A symbol representing globe x.",
+      "purpose": "Show globe x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "globe",
+        "x"
+      ],
+      "synonyms": [
+        "globe",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to globe x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:link_break",
+      "source_library": "phosphor",
+      "source_name": "link_break",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "break",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "break file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:link_simple",
+      "source_library": "phosphor",
+      "source_name": "link_simple",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "simple",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "simple file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:link_simple_break",
+      "source_library": "phosphor",
+      "source_name": "link_simple_break",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "simple",
+        "break",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "simple file",
+        "break file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:link_simple_horizontal",
+      "source_library": "phosphor",
+      "source_name": "link_simple_horizontal",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "simple",
+        "horizontal",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "simple file",
+        "horizontal file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:link_simple_horizontal_break",
+      "source_library": "phosphor",
+      "source_name": "link_simple_horizontal_break",
+      "label": "Linked File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a linked file, connected document, or reference to external file content.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "link",
+        "simple",
+        "horizontal",
+        "break",
+        "file"
+      ],
+      "synonyms": [
+        "linked file",
+        "link file",
+        "simple file",
+        "horizontal file",
+        "break file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:magnifying_glass_plus",
+      "source_library": "phosphor",
+      "source_name": "magnifying_glass_plus",
+      "label": "Magnifying Glass Plus",
+      "depicts": "A symbol representing magnifying glass plus.",
+      "purpose": "Show magnifying glass plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "magnifying",
+        "glass",
+        "plus"
+      ],
+      "synonyms": [
+        "magnifying",
+        "glass",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to magnifying glass plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:map_pin_plus",
+      "source_library": "phosphor",
+      "source_name": "map_pin_plus",
+      "label": "Map Pin Plus",
+      "depicts": "A symbol representing map pin plus.",
+      "purpose": "Show map pin plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "map",
+        "pin",
+        "plus"
+      ],
+      "synonyms": [
+        "map",
+        "pin",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to map pin plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:music_notes_plus",
+      "source_library": "phosphor",
+      "source_name": "music_notes_plus",
+      "label": "Music Notes Plus",
+      "depicts": "A symbol representing music notes plus.",
+      "purpose": "Show music notes plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "media",
+      "semantic_tags": [
+        "music",
+        "notes",
+        "plus"
+      ],
+      "synonyms": [
+        "music",
+        "notes",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to music notes plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:navigation_arrow",
+      "source_library": "phosphor",
+      "source_name": "navigation_arrow",
+      "label": "Navigation Arrow",
+      "depicts": "A symbol representing navigation arrow.",
+      "purpose": "Show navigation arrow as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "navigation",
+        "arrow"
+      ],
+      "synonyms": [
+        "navigation",
+        "arrow"
+      ],
+      "use_when": "Use when the interface refers directly to navigation arrow as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:network_x",
+      "source_library": "phosphor",
+      "source_name": "network_x",
+      "label": "Network X",
+      "depicts": "A symbol representing network x.",
+      "purpose": "Show network x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "network",
+        "x"
+      ],
+      "synonyms": [
+        "network",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to network x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:phone_plus",
+      "source_library": "phosphor",
+      "source_name": "phone_plus",
+      "label": "Phone Plus",
+      "depicts": "A symbol representing phone plus.",
+      "purpose": "Show phone plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "phone",
+        "plus"
+      ],
+      "synonyms": [
+        "phone",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to phone plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:phone_x",
+      "source_library": "phosphor",
+      "source_name": "phone_x",
+      "label": "Phone X",
+      "depicts": "A symbol representing phone x.",
+      "purpose": "Show phone x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "phone",
+        "x"
+      ],
+      "synonyms": [
+        "phone",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to phone x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:plus_circle",
+      "source_library": "phosphor",
+      "source_name": "plus_circle",
+      "label": "Plus Circle",
+      "depicts": "A symbol representing plus circle.",
+      "purpose": "Show plus circle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "plus",
+        "circle"
+      ],
+      "synonyms": [
+        "plus",
+        "circle"
+      ],
+      "use_when": "Use when the interface refers directly to plus circle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:plus_minus",
+      "source_library": "phosphor",
+      "source_name": "plus_minus",
+      "label": "Plus Minus",
+      "depicts": "A symbol representing plus minus.",
+      "purpose": "Show plus minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "plus",
+        "minus"
+      ],
+      "synonyms": [
+        "plus",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to plus minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:plus_square",
+      "source_library": "phosphor",
+      "source_name": "plus_square",
+      "label": "Plus Square",
+      "depicts": "A symbol representing plus square.",
+      "purpose": "Show plus square as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "plus",
+        "square"
+      ],
+      "synonyms": [
+        "plus",
+        "square"
+      ],
+      "use_when": "Use when the interface refers directly to plus square as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:receipt_x",
+      "source_library": "phosphor",
+      "source_name": "receipt_x",
+      "label": "Receipt X",
+      "depicts": "A symbol representing receipt x.",
+      "purpose": "Show receipt x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "receipt",
+        "x"
+      ],
+      "synonyms": [
+        "receipt",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to receipt x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:rows_plus_bottom",
+      "source_library": "phosphor",
+      "source_name": "rows_plus_bottom",
+      "label": "Rows Plus Bottom",
+      "depicts": "A symbol representing rows plus bottom.",
+      "purpose": "Show rows plus bottom as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rows",
+        "plus",
+        "bottom"
+      ],
+      "synonyms": [
+        "rows",
+        "plus",
+        "bottom"
+      ],
+      "use_when": "Use when the interface refers directly to rows plus bottom as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:rows_plus_top",
+      "source_library": "phosphor",
+      "source_name": "rows_plus_top",
+      "label": "Rows Plus Top",
+      "depicts": "A symbol representing rows plus top.",
+      "purpose": "Show rows plus top as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "rows",
+        "plus",
+        "top"
+      ],
+      "synonyms": [
+        "rows",
+        "plus",
+        "top"
+      ],
+      "use_when": "Use when the interface refers directly to rows plus top as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:selection_plus",
+      "source_library": "phosphor",
+      "source_name": "selection_plus",
+      "label": "Selection Plus",
+      "depicts": "A symbol representing selection plus.",
+      "purpose": "Show selection plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "selection",
+        "plus"
+      ],
+      "synonyms": [
+        "selection",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to selection plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:shopping_bag_open",
+      "source_library": "phosphor",
+      "source_name": "shopping_bag_open",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "shopping",
+        "bag",
+        "open",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "shopping file",
+        "bag file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:smiley_x_eyes",
+      "source_library": "phosphor",
+      "source_name": "smiley_x_eyes",
+      "label": "Smiley X Eyes",
+      "depicts": "A symbol representing smiley x eyes.",
+      "purpose": "Show smiley x eyes as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "smiley",
+        "x",
+        "eyes"
+      ],
+      "synonyms": [
+        "smiley",
+        "x",
+        "eyes"
+      ],
+      "use_when": "Use when the interface refers directly to smiley x eyes as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:speaker_simple_x",
+      "source_library": "phosphor",
+      "source_name": "speaker_simple_x",
+      "label": "Speaker Simple X",
+      "depicts": "A symbol representing speaker simple x.",
+      "purpose": "Show speaker simple x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "speaker",
+        "simple",
+        "x"
+      ],
+      "synonyms": [
+        "speaker",
+        "simple",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to speaker simple x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:speaker_x",
+      "source_library": "phosphor",
+      "source_name": "speaker_x",
+      "label": "Speaker X",
+      "depicts": "A symbol representing speaker x.",
+      "purpose": "Show speaker x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "speaker",
+        "x"
+      ],
+      "synonyms": [
+        "speaker",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to speaker x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:stack_plus",
+      "source_library": "phosphor",
+      "source_name": "stack_plus",
+      "label": "Stack Plus",
+      "depicts": "A symbol representing stack plus.",
+      "purpose": "Show stack plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "stack",
+        "plus"
+      ],
+      "synonyms": [
+        "stack",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to stack plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:upload_simple",
+      "source_library": "phosphor",
+      "source_name": "upload_simple",
+      "label": "Upload File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show uploading, importing, or adding a file.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "upload",
+        "simple",
+        "file"
+      ],
+      "synonyms": [
+        "upload file",
+        "simple file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user",
+      "source_library": "phosphor",
+      "source_name": "user",
+      "label": "User",
+      "depicts": "A symbol representing user.",
+      "purpose": "Show user as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user"
+      ],
+      "synonyms": [
+        "user"
+      ],
+      "use_when": "Use when the interface refers directly to user as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_circle",
+      "source_library": "phosphor",
+      "source_name": "user_circle",
+      "label": "User Circle",
+      "depicts": "A symbol representing user circle.",
+      "purpose": "Show user circle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "circle"
+      ],
+      "synonyms": [
+        "user",
+        "circle"
+      ],
+      "use_when": "Use when the interface refers directly to user circle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_circle_dashed",
+      "source_library": "phosphor",
+      "source_name": "user_circle_dashed",
+      "label": "User Circle Dashed",
+      "depicts": "A symbol representing user circle dashed.",
+      "purpose": "Show user circle dashed as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "circle",
+        "dashed"
+      ],
+      "synonyms": [
+        "user",
+        "circle",
+        "dashed"
+      ],
+      "use_when": "Use when the interface refers directly to user circle dashed as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_circle_gear",
+      "source_library": "phosphor",
+      "source_name": "user_circle_gear",
+      "label": "User Circle Gear",
+      "depicts": "A symbol representing user circle gear.",
+      "purpose": "Show user circle gear as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "circle",
+        "gear"
+      ],
+      "synonyms": [
+        "user",
+        "circle",
+        "gear"
+      ],
+      "use_when": "Use when the interface refers directly to user circle gear as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_circle_minus",
+      "source_library": "phosphor",
+      "source_name": "user_circle_minus",
+      "label": "User Circle Minus",
+      "depicts": "A symbol representing user circle minus.",
+      "purpose": "Show user circle minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "circle",
+        "minus"
+      ],
+      "synonyms": [
+        "user",
+        "circle",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to user circle minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_focus",
+      "source_library": "phosphor",
+      "source_name": "user_focus",
+      "label": "User Focus",
+      "depicts": "A symbol representing user focus.",
+      "purpose": "Show user focus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "focus"
+      ],
+      "synonyms": [
+        "user",
+        "focus"
+      ],
+      "use_when": "Use when the interface refers directly to user focus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_gear",
+      "source_library": "phosphor",
+      "source_name": "user_gear",
+      "label": "User Gear",
+      "depicts": "A symbol representing user gear.",
+      "purpose": "Show user gear as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "gear"
+      ],
+      "synonyms": [
+        "user",
+        "gear"
+      ],
+      "use_when": "Use when the interface refers directly to user gear as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_minus",
+      "source_library": "phosphor",
+      "source_name": "user_minus",
+      "label": "User Minus",
+      "depicts": "A symbol representing user minus.",
+      "purpose": "Show user minus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "minus"
+      ],
+      "synonyms": [
+        "user",
+        "minus"
+      ],
+      "use_when": "Use when the interface refers directly to user minus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_rectangle",
+      "source_library": "phosphor",
+      "source_name": "user_rectangle",
+      "label": "User Rectangle",
+      "depicts": "A symbol representing user rectangle.",
+      "purpose": "Show user rectangle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "rectangle"
+      ],
+      "synonyms": [
+        "user",
+        "rectangle"
+      ],
+      "use_when": "Use when the interface refers directly to user rectangle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_sound",
+      "source_library": "phosphor",
+      "source_name": "user_sound",
+      "label": "User Sound",
+      "depicts": "A symbol representing user sound.",
+      "purpose": "Show user sound as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "sound"
+      ],
+      "synonyms": [
+        "user",
+        "sound"
+      ],
+      "use_when": "Use when the interface refers directly to user sound as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_square",
+      "source_library": "phosphor",
+      "source_name": "user_square",
+      "label": "User Square",
+      "depicts": "A symbol representing user square.",
+      "purpose": "Show user square as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "square"
+      ],
+      "synonyms": [
+        "user",
+        "square"
+      ],
+      "use_when": "Use when the interface refers directly to user square as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_switch",
+      "source_library": "phosphor",
+      "source_name": "user_switch",
+      "label": "User Switch",
+      "depicts": "A symbol representing user switch.",
+      "purpose": "Show user switch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "switch"
+      ],
+      "synonyms": [
+        "user",
+        "switch"
+      ],
+      "use_when": "Use when the interface refers directly to user switch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:wifi_x",
+      "source_library": "phosphor",
+      "source_name": "wifi_x",
+      "label": "Wifi X",
+      "depicts": "A symbol representing wifi x.",
+      "purpose": "Show wifi x as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wifi",
+        "x"
+      ],
+      "synonyms": [
+        "wifi",
+        "x"
+      ],
+      "use_when": "Use when the interface refers directly to wifi x as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:x_circle",
+      "source_library": "phosphor",
+      "source_name": "x_circle",
+      "label": "X Circle",
+      "depicts": "A symbol representing x circle.",
+      "purpose": "Show x circle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "x",
+        "circle"
+      ],
+      "synonyms": [
+        "x",
+        "circle"
+      ],
+      "use_when": "Use when the interface refers directly to x circle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:x_logo",
+      "source_library": "phosphor",
+      "source_name": "x_logo",
+      "label": "X Logo",
+      "depicts": "A symbol representing x logo.",
+      "purpose": "Show x logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "x",
+        "logo"
+      ],
+      "synonyms": [
+        "x",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to x logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:x_square",
+      "source_library": "phosphor",
+      "source_name": "x_square",
+      "label": "X Square",
+      "depicts": "A symbol representing x square.",
+      "purpose": "Show x square as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "x",
+        "square"
+      ],
+      "synonyms": [
+        "x",
+        "square"
+      ],
+      "use_when": "Use when the interface refers directly to x square as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:acorn",
+      "source_library": "phosphor",
+      "source_name": "acorn",
+      "label": "Acorn",
+      "depicts": "A symbol representing acorn.",
+      "purpose": "Show acorn as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "acorn"
+      ],
+      "synonyms": [
+        "acorn"
+      ],
+      "use_when": "Use when the interface refers directly to acorn as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:address_book",
+      "source_library": "phosphor",
+      "source_name": "address_book",
+      "label": "Address Book",
+      "depicts": "A symbol representing address book.",
+      "purpose": "Show address book as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "address",
+        "book"
+      ],
+      "synonyms": [
+        "address",
+        "book"
+      ],
+      "use_when": "Use when the interface refers directly to address book as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:address_book_tabs",
+      "source_library": "phosphor",
+      "source_name": "address_book_tabs",
+      "label": "Address Book Tabs",
+      "depicts": "A symbol representing address book tabs.",
+      "purpose": "Show address book tabs as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "address",
+        "book",
+        "tabs"
+      ],
+      "synonyms": [
+        "address",
+        "book",
+        "tabs"
+      ],
+      "use_when": "Use when the interface refers directly to address book tabs as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:air_traffic_control",
+      "source_library": "phosphor",
+      "source_name": "air_traffic_control",
+      "label": "Air Traffic Control",
+      "depicts": "A symbol representing air traffic control.",
+      "purpose": "Show air traffic control as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "air",
+        "traffic",
+        "control"
+      ],
+      "synonyms": [
+        "air",
+        "traffic",
+        "control"
+      ],
+      "use_when": "Use when the interface refers directly to air traffic control as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:airplane_in_flight",
+      "source_library": "phosphor",
+      "source_name": "airplane_in_flight",
+      "label": "Airplane In Flight",
+      "depicts": "A symbol representing airplane in flight.",
+      "purpose": "Show airplane in flight as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "airplane",
+        "in",
+        "flight"
+      ],
+      "synonyms": [
+        "airplane",
+        "in",
+        "flight"
+      ],
+      "use_when": "Use when the interface refers directly to airplane in flight as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:airplane_landing",
+      "source_library": "phosphor",
+      "source_name": "airplane_landing",
+      "label": "Airplane Landing",
+      "depicts": "A symbol representing airplane landing.",
+      "purpose": "Show airplane landing as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "airplane",
+        "landing"
+      ],
+      "synonyms": [
+        "airplane",
+        "landing"
+      ],
+      "use_when": "Use when the interface refers directly to airplane landing as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:airplane_takeoff",
+      "source_library": "phosphor",
+      "source_name": "airplane_takeoff",
+      "label": "Airplane Takeoff",
+      "depicts": "A symbol representing airplane takeoff.",
+      "purpose": "Show airplane takeoff as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "airplane",
+        "takeoff"
+      ],
+      "synonyms": [
+        "airplane",
+        "takeoff"
+      ],
+      "use_when": "Use when the interface refers directly to airplane takeoff as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:airplane_taxiing",
+      "source_library": "phosphor",
+      "source_name": "airplane_taxiing",
+      "label": "Airplane Taxiing",
+      "depicts": "A symbol representing airplane taxiing.",
+      "purpose": "Show airplane taxiing as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "airplane",
+        "taxiing"
+      ],
+      "synonyms": [
+        "airplane",
+        "taxiing"
+      ],
+      "use_when": "Use when the interface refers directly to airplane taxiing as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:airplane_tilt",
+      "source_library": "phosphor",
+      "source_name": "airplane_tilt",
+      "label": "Airplane Tilt",
+      "depicts": "A symbol representing airplane tilt.",
+      "purpose": "Show airplane tilt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "navigation",
+      "semantic_tags": [
+        "airplane",
+        "tilt"
+      ],
+      "synonyms": [
+        "airplane",
+        "tilt"
+      ],
+      "use_when": "Use when the interface refers directly to airplane tilt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:alarm",
+      "source_library": "phosphor",
+      "source_name": "alarm",
+      "label": "Alarm",
+      "depicts": "A symbol representing alarm.",
+      "purpose": "Show alarm as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alarm"
+      ],
+      "synonyms": [
+        "alarm"
+      ],
+      "use_when": "Use when the interface refers directly to alarm as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:alien",
+      "source_library": "phosphor",
+      "source_name": "alien",
+      "label": "Alien",
+      "depicts": "A symbol representing alien.",
+      "purpose": "Show alien as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alien"
+      ],
+      "synonyms": [
+        "alien"
+      ],
+      "use_when": "Use when the interface refers directly to alien as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:amazon_logo",
+      "source_library": "phosphor",
+      "source_name": "amazon_logo",
+      "label": "Amazon Logo",
+      "depicts": "A symbol representing amazon logo.",
+      "purpose": "Show amazon logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "amazon",
+        "logo"
+      ],
+      "synonyms": [
+        "amazon",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to amazon logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:ambulance",
+      "source_library": "phosphor",
+      "source_name": "ambulance",
+      "label": "Ambulance",
+      "depicts": "A symbol representing ambulance.",
+      "purpose": "Show ambulance as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "ambulance"
+      ],
+      "synonyms": [
+        "ambulance"
+      ],
+      "use_when": "Use when the interface refers directly to ambulance as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:anchor_simple",
+      "source_library": "phosphor",
+      "source_name": "anchor_simple",
+      "label": "Anchor Simple",
+      "depicts": "A symbol representing anchor simple.",
+      "purpose": "Show anchor simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "anchor",
+        "simple"
+      ],
+      "synonyms": [
+        "anchor",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to anchor simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:android_logo",
+      "source_library": "phosphor",
+      "source_name": "android_logo",
+      "label": "Android Logo",
+      "depicts": "A symbol representing android logo.",
+      "purpose": "Show android logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "android",
+        "logo"
+      ],
+      "synonyms": [
+        "android",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to android logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:angle",
+      "source_library": "phosphor",
+      "source_name": "angle",
+      "label": "Angle",
+      "depicts": "A symbol representing angle.",
+      "purpose": "Show angle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "angle"
+      ],
+      "synonyms": [
+        "angle"
+      ],
+      "use_when": "Use when the interface refers directly to angle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:angular_logo",
+      "source_library": "phosphor",
+      "source_name": "angular_logo",
+      "label": "Angular Logo",
+      "depicts": "A symbol representing angular logo.",
+      "purpose": "Show angular logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "angular",
+        "logo"
+      ],
+      "synonyms": [
+        "angular",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to angular logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:aperture",
+      "source_library": "phosphor",
+      "source_name": "aperture",
+      "label": "Aperture",
+      "depicts": "A symbol representing aperture.",
+      "purpose": "Show aperture as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "aperture"
+      ],
+      "synonyms": [
+        "aperture"
+      ],
+      "use_when": "Use when the interface refers directly to aperture as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:app_store_logo",
+      "source_library": "phosphor",
+      "source_name": "app_store_logo",
+      "label": "App Store Logo",
+      "depicts": "A symbol representing app store logo.",
+      "purpose": "Show app store logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "app",
+        "store",
+        "logo"
+      ],
+      "synonyms": [
+        "app",
+        "store",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to app store logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:app_window",
+      "source_library": "phosphor",
+      "source_name": "app_window",
+      "label": "App Window",
+      "depicts": "A symbol representing app window.",
+      "purpose": "Show app window as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "app",
+        "window"
+      ],
+      "synonyms": [
+        "app",
+        "window"
+      ],
+      "use_when": "Use when the interface refers directly to app window as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:apple_logo",
+      "source_library": "phosphor",
+      "source_name": "apple_logo",
+      "label": "Apple Logo",
+      "depicts": "A symbol representing apple logo.",
+      "purpose": "Show apple logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "apple",
+        "logo"
+      ],
+      "synonyms": [
+        "apple",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to apple logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:apple_podcasts_logo",
+      "source_library": "phosphor",
+      "source_name": "apple_podcasts_logo",
+      "label": "Apple Podcasts Logo",
+      "depicts": "A symbol representing apple podcasts logo.",
+      "purpose": "Show apple podcasts logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "apple",
+        "podcasts",
+        "logo"
+      ],
+      "synonyms": [
+        "apple",
+        "podcasts",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to apple podcasts logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:approximate_equals",
+      "source_library": "phosphor",
+      "source_name": "approximate_equals",
+      "label": "Approximate Equals",
+      "depicts": "A symbol representing approximate equals.",
+      "purpose": "Show approximate equals as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "approximate",
+        "equals"
+      ],
+      "synonyms": [
+        "approximate",
+        "equals"
+      ],
+      "use_when": "Use when the interface refers directly to approximate equals as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:armchair",
+      "source_library": "phosphor",
+      "source_name": "armchair",
+      "label": "Armchair",
+      "depicts": "A symbol representing armchair.",
+      "purpose": "Show armchair as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "armchair"
+      ],
+      "synonyms": [
+        "armchair"
+      ],
+      "use_when": "Use when the interface refers directly to armchair as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_clockwise",
+      "source_library": "phosphor",
+      "source_name": "arrows_clockwise",
+      "label": "Arrows Clockwise",
+      "depicts": "A symbol representing arrows clockwise.",
+      "purpose": "Show arrows clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "clockwise"
+      ],
+      "synonyms": [
+        "arrows",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrows clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_counter_clockwise",
+      "source_library": "phosphor",
+      "source_name": "arrows_counter_clockwise",
+      "label": "Arrows Counter Clockwise",
+      "depicts": "A symbol representing arrows counter clockwise.",
+      "purpose": "Show arrows counter clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "counter",
+        "clockwise"
+      ],
+      "synonyms": [
+        "arrows",
+        "counter",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrows counter clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_horizontal",
+      "source_library": "phosphor",
+      "source_name": "arrows_horizontal",
+      "label": "Arrows Horizontal",
+      "depicts": "A symbol representing arrows horizontal.",
+      "purpose": "Show arrows horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "horizontal"
+      ],
+      "synonyms": [
+        "arrows",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to arrows horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_in",
+      "source_library": "phosphor",
+      "source_name": "arrows_in",
+      "label": "Arrows In",
+      "depicts": "A symbol representing arrows in.",
+      "purpose": "Show arrows in as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "in"
+      ],
+      "synonyms": [
+        "arrows",
+        "in"
+      ],
+      "use_when": "Use when the interface refers directly to arrows in as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_in_cardinal",
+      "source_library": "phosphor",
+      "source_name": "arrows_in_cardinal",
+      "label": "Arrows In Cardinal",
+      "depicts": "A symbol representing arrows in cardinal.",
+      "purpose": "Show arrows in cardinal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "in",
+        "cardinal"
+      ],
+      "synonyms": [
+        "arrows",
+        "in",
+        "cardinal"
+      ],
+      "use_when": "Use when the interface refers directly to arrows in cardinal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_in_line_horizontal",
+      "source_library": "phosphor",
+      "source_name": "arrows_in_line_horizontal",
+      "label": "Arrows In Line Horizontal",
+      "depicts": "A symbol representing arrows in line horizontal.",
+      "purpose": "Show arrows in line horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "in",
+        "line",
+        "horizontal"
+      ],
+      "synonyms": [
+        "arrows",
+        "in",
+        "line",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to arrows in line horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_in_line_vertical",
+      "source_library": "phosphor",
+      "source_name": "arrows_in_line_vertical",
+      "label": "Arrows In Line Vertical",
+      "depicts": "A symbol representing arrows in line vertical.",
+      "purpose": "Show arrows in line vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "in",
+        "line",
+        "vertical"
+      ],
+      "synonyms": [
+        "arrows",
+        "in",
+        "line",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to arrows in line vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_in_simple",
+      "source_library": "phosphor",
+      "source_name": "arrows_in_simple",
+      "label": "Arrows In Simple",
+      "depicts": "A symbol representing arrows in simple.",
+      "purpose": "Show arrows in simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "in",
+        "simple"
+      ],
+      "synonyms": [
+        "arrows",
+        "in",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to arrows in simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_merge",
+      "source_library": "phosphor",
+      "source_name": "arrows_merge",
+      "label": "Arrows Merge",
+      "depicts": "A symbol representing arrows merge.",
+      "purpose": "Show arrows merge as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "merge"
+      ],
+      "synonyms": [
+        "arrows",
+        "merge"
+      ],
+      "use_when": "Use when the interface refers directly to arrows merge as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_out",
+      "source_library": "phosphor",
+      "source_name": "arrows_out",
+      "label": "Arrows Out",
+      "depicts": "A symbol representing arrows out.",
+      "purpose": "Show arrows out as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "out"
+      ],
+      "synonyms": [
+        "arrows",
+        "out"
+      ],
+      "use_when": "Use when the interface refers directly to arrows out as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_out_cardinal",
+      "source_library": "phosphor",
+      "source_name": "arrows_out_cardinal",
+      "label": "Arrows Out Cardinal",
+      "depicts": "A symbol representing arrows out cardinal.",
+      "purpose": "Show arrows out cardinal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "out",
+        "cardinal"
+      ],
+      "synonyms": [
+        "arrows",
+        "out",
+        "cardinal"
+      ],
+      "use_when": "Use when the interface refers directly to arrows out cardinal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_out_line_horizontal",
+      "source_library": "phosphor",
+      "source_name": "arrows_out_line_horizontal",
+      "label": "Arrows Out Line Horizontal",
+      "depicts": "A symbol representing arrows out line horizontal.",
+      "purpose": "Show arrows out line horizontal as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "out",
+        "line",
+        "horizontal"
+      ],
+      "synonyms": [
+        "arrows",
+        "out",
+        "line",
+        "horizontal"
+      ],
+      "use_when": "Use when the interface refers directly to arrows out line horizontal as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_out_line_vertical",
+      "source_library": "phosphor",
+      "source_name": "arrows_out_line_vertical",
+      "label": "Arrows Out Line Vertical",
+      "depicts": "A symbol representing arrows out line vertical.",
+      "purpose": "Show arrows out line vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "out",
+        "line",
+        "vertical"
+      ],
+      "synonyms": [
+        "arrows",
+        "out",
+        "line",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to arrows out line vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_out_simple",
+      "source_library": "phosphor",
+      "source_name": "arrows_out_simple",
+      "label": "Arrows Out Simple",
+      "depicts": "A symbol representing arrows out simple.",
+      "purpose": "Show arrows out simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "out",
+        "simple"
+      ],
+      "synonyms": [
+        "arrows",
+        "out",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to arrows out simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_split",
+      "source_library": "phosphor",
+      "source_name": "arrows_split",
+      "label": "Arrows Split",
+      "depicts": "A symbol representing arrows split.",
+      "purpose": "Show arrows split as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "split"
+      ],
+      "synonyms": [
+        "arrows",
+        "split"
+      ],
+      "use_when": "Use when the interface refers directly to arrows split as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrows_vertical",
+      "source_library": "phosphor",
+      "source_name": "arrows_vertical",
+      "label": "Arrows Vertical",
+      "depicts": "A symbol representing arrows vertical.",
+      "purpose": "Show arrows vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrows",
+        "vertical"
+      ],
+      "synonyms": [
+        "arrows",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to arrows vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:article",
+      "source_library": "phosphor",
+      "source_name": "article",
+      "label": "Article",
+      "depicts": "A symbol representing article.",
+      "purpose": "Show article as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "article"
+      ],
+      "synonyms": [
+        "article"
+      ],
+      "use_when": "Use when the interface refers directly to article as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:article_medium",
+      "source_library": "phosphor",
+      "source_name": "article_medium",
+      "label": "Article Medium",
+      "depicts": "A symbol representing article medium.",
+      "purpose": "Show article medium as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "article",
+        "medium"
+      ],
+      "synonyms": [
+        "article",
+        "medium"
+      ],
+      "use_when": "Use when the interface refers directly to article medium as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:article_ny_times",
+      "source_library": "phosphor",
+      "source_name": "article_ny_times",
+      "label": "Article Ny Times",
+      "depicts": "A symbol representing article ny times.",
+      "purpose": "Show article ny times as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "article",
+        "ny",
+        "times"
+      ],
+      "synonyms": [
+        "article",
+        "ny",
+        "times"
+      ],
+      "use_when": "Use when the interface refers directly to article ny times as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:asclepius",
+      "source_library": "phosphor",
+      "source_name": "asclepius",
+      "label": "Asclepius",
+      "depicts": "A symbol representing asclepius.",
+      "purpose": "Show asclepius as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "asclepius"
+      ],
+      "synonyms": [
+        "asclepius"
+      ],
+      "use_when": "Use when the interface refers directly to asclepius as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:asterisk_simple",
+      "source_library": "phosphor",
+      "source_name": "asterisk_simple",
+      "label": "Asterisk Simple",
+      "depicts": "A symbol representing asterisk simple.",
+      "purpose": "Show asterisk simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "asterisk",
+        "simple"
+      ],
+      "synonyms": [
+        "asterisk",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to asterisk simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:atom",
+      "source_library": "phosphor",
+      "source_name": "atom",
+      "label": "Atom",
+      "depicts": "A symbol representing atom.",
+      "purpose": "Show atom as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "atom"
+      ],
+      "synonyms": [
+        "atom"
+      ],
+      "use_when": "Use when the interface refers directly to atom as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:avocado",
+      "source_library": "phosphor",
+      "source_name": "avocado",
+      "label": "Avocado",
+      "depicts": "A symbol representing avocado.",
+      "purpose": "Show avocado as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "avocado"
+      ],
+      "synonyms": [
+        "avocado"
+      ],
+      "use_when": "Use when the interface refers directly to avocado as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:backspace",
+      "source_library": "phosphor",
+      "source_name": "backspace",
+      "label": "Backspace",
+      "depicts": "A symbol representing backspace.",
+      "purpose": "Show backspace as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "backspace"
+      ],
+      "synonyms": [
+        "backspace"
+      ],
+      "use_when": "Use when the interface refers directly to backspace as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bag",
+      "source_library": "phosphor",
+      "source_name": "bag",
+      "label": "Bag",
+      "depicts": "A symbol representing bag.",
+      "purpose": "Show bag as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bag"
+      ],
+      "synonyms": [
+        "bag"
+      ],
+      "use_when": "Use when the interface refers directly to bag as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bag_simple",
+      "source_library": "phosphor",
+      "source_name": "bag_simple",
+      "label": "Bag Simple",
+      "depicts": "A symbol representing bag simple.",
+      "purpose": "Show bag simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bag",
+        "simple"
+      ],
+      "synonyms": [
+        "bag",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to bag simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:balloon",
+      "source_library": "phosphor",
+      "source_name": "balloon",
+      "label": "Balloon",
+      "depicts": "A symbol representing balloon.",
+      "purpose": "Show balloon as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "balloon"
+      ],
+      "synonyms": [
+        "balloon"
+      ],
+      "use_when": "Use when the interface refers directly to balloon as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bandaids",
+      "source_library": "phosphor",
+      "source_name": "bandaids",
+      "label": "Bandaids",
+      "depicts": "A symbol representing bandaids.",
+      "purpose": "Show bandaids as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bandaids"
+      ],
+      "synonyms": [
+        "bandaids"
+      ],
+      "use_when": "Use when the interface refers directly to bandaids as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:barn",
+      "source_library": "phosphor",
+      "source_name": "barn",
+      "label": "Barn",
+      "depicts": "A symbol representing barn.",
+      "purpose": "Show barn as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "barn"
+      ],
+      "synonyms": [
+        "barn"
+      ],
+      "use_when": "Use when the interface refers directly to barn as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:barricade",
+      "source_library": "phosphor",
+      "source_name": "barricade",
+      "label": "Barricade",
+      "depicts": "A symbol representing barricade.",
+      "purpose": "Show barricade as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "barricade"
+      ],
+      "synonyms": [
+        "barricade"
+      ],
+      "use_when": "Use when the interface refers directly to barricade as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:baseball_cap",
+      "source_library": "phosphor",
+      "source_name": "baseball_cap",
+      "label": "Baseball Cap",
+      "depicts": "A symbol representing baseball cap.",
+      "purpose": "Show baseball cap as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "baseball",
+        "cap"
+      ],
+      "synonyms": [
+        "baseball",
+        "cap"
+      ],
+      "use_when": "Use when the interface refers directly to baseball cap as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:baseball_helmet",
+      "source_library": "phosphor",
+      "source_name": "baseball_helmet",
+      "label": "Baseball Helmet",
+      "depicts": "A symbol representing baseball helmet.",
+      "purpose": "Show baseball helmet as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "baseball",
+        "helmet"
+      ],
+      "synonyms": [
+        "baseball",
+        "helmet"
+      ],
+      "use_when": "Use when the interface refers directly to baseball helmet as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bathtub",
+      "source_library": "phosphor",
+      "source_name": "bathtub",
+      "label": "Bathtub",
+      "depicts": "A symbol representing bathtub.",
+      "purpose": "Show bathtub as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bathtub"
+      ],
+      "synonyms": [
+        "bathtub"
+      ],
+      "use_when": "Use when the interface refers directly to bathtub as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_charging_vertical",
+      "source_library": "phosphor",
+      "source_name": "battery_charging_vertical",
+      "label": "Battery Charging Vertical",
+      "depicts": "A symbol representing battery charging vertical.",
+      "purpose": "Show battery charging vertical as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "charging",
+        "vertical"
+      ],
+      "synonyms": [
+        "battery",
+        "charging",
+        "vertical"
+      ],
+      "use_when": "Use when the interface refers directly to battery charging vertical as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_empty",
+      "source_library": "phosphor",
+      "source_name": "battery_empty",
+      "label": "Battery Empty",
+      "depicts": "A symbol representing battery empty.",
+      "purpose": "Show battery empty as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "empty"
+      ],
+      "synonyms": [
+        "battery",
+        "empty"
+      ],
+      "use_when": "Use when the interface refers directly to battery empty as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_full",
+      "source_library": "phosphor",
+      "source_name": "battery_full",
+      "label": "Battery Full",
+      "depicts": "A symbol representing battery full.",
+      "purpose": "Show battery full as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "full"
+      ],
+      "synonyms": [
+        "battery",
+        "full"
+      ],
+      "use_when": "Use when the interface refers directly to battery full as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_high",
+      "source_library": "phosphor",
+      "source_name": "battery_high",
+      "label": "Battery High",
+      "depicts": "A symbol representing battery high.",
+      "purpose": "Show battery high as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "high"
+      ],
+      "synonyms": [
+        "battery",
+        "high"
+      ],
+      "use_when": "Use when the interface refers directly to battery high as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_low",
+      "source_library": "phosphor",
+      "source_name": "battery_low",
+      "label": "Battery Low",
+      "depicts": "A symbol representing battery low.",
+      "purpose": "Show battery low as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "low"
+      ],
+      "synonyms": [
+        "battery",
+        "low"
+      ],
+      "use_when": "Use when the interface refers directly to battery low as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_medium",
+      "source_library": "phosphor",
+      "source_name": "battery_medium",
+      "label": "Battery Medium",
+      "depicts": "A symbol representing battery medium.",
+      "purpose": "Show battery medium as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "medium"
+      ],
+      "synonyms": [
+        "battery",
+        "medium"
+      ],
+      "use_when": "Use when the interface refers directly to battery medium as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_vertical_empty",
+      "source_library": "phosphor",
+      "source_name": "battery_vertical_empty",
+      "label": "Battery Vertical Empty",
+      "depicts": "A symbol representing battery vertical empty.",
+      "purpose": "Show battery vertical empty as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "vertical",
+        "empty"
+      ],
+      "synonyms": [
+        "battery",
+        "vertical",
+        "empty"
+      ],
+      "use_when": "Use when the interface refers directly to battery vertical empty as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_vertical_full",
+      "source_library": "phosphor",
+      "source_name": "battery_vertical_full",
+      "label": "Battery Vertical Full",
+      "depicts": "A symbol representing battery vertical full.",
+      "purpose": "Show battery vertical full as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "vertical",
+        "full"
+      ],
+      "synonyms": [
+        "battery",
+        "vertical",
+        "full"
+      ],
+      "use_when": "Use when the interface refers directly to battery vertical full as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_vertical_high",
+      "source_library": "phosphor",
+      "source_name": "battery_vertical_high",
+      "label": "Battery Vertical High",
+      "depicts": "A symbol representing battery vertical high.",
+      "purpose": "Show battery vertical high as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "vertical",
+        "high"
+      ],
+      "synonyms": [
+        "battery",
+        "vertical",
+        "high"
+      ],
+      "use_when": "Use when the interface refers directly to battery vertical high as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_vertical_low",
+      "source_library": "phosphor",
+      "source_name": "battery_vertical_low",
+      "label": "Battery Vertical Low",
+      "depicts": "A symbol representing battery vertical low.",
+      "purpose": "Show battery vertical low as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "vertical",
+        "low"
+      ],
+      "synonyms": [
+        "battery",
+        "vertical",
+        "low"
+      ],
+      "use_when": "Use when the interface refers directly to battery vertical low as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:battery_vertical_medium",
+      "source_library": "phosphor",
+      "source_name": "battery_vertical_medium",
+      "label": "Battery Vertical Medium",
+      "depicts": "A symbol representing battery vertical medium.",
+      "purpose": "Show battery vertical medium as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "battery",
+        "vertical",
+        "medium"
+      ],
+      "synonyms": [
+        "battery",
+        "vertical",
+        "medium"
+      ],
+      "use_when": "Use when the interface refers directly to battery vertical medium as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:beach_ball",
+      "source_library": "phosphor",
+      "source_name": "beach_ball",
+      "label": "Beach Ball",
+      "depicts": "A symbol representing beach ball.",
+      "purpose": "Show beach ball as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "beach",
+        "ball"
+      ],
+      "synonyms": [
+        "beach",
+        "ball"
+      ],
+      "use_when": "Use when the interface refers directly to beach ball as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:beanie",
+      "source_library": "phosphor",
+      "source_name": "beanie",
+      "label": "Beanie",
+      "depicts": "A symbol representing beanie.",
+      "purpose": "Show beanie as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "beanie"
+      ],
+      "synonyms": [
+        "beanie"
+      ],
+      "use_when": "Use when the interface refers directly to beanie as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:beer_bottle",
+      "source_library": "phosphor",
+      "source_name": "beer_bottle",
+      "label": "Beer Bottle",
+      "depicts": "A symbol representing beer bottle.",
+      "purpose": "Show beer bottle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "beer",
+        "bottle"
+      ],
+      "synonyms": [
+        "beer",
+        "bottle"
+      ],
+      "use_when": "Use when the interface refers directly to beer bottle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:beer_stein",
+      "source_library": "phosphor",
+      "source_name": "beer_stein",
+      "label": "Beer Stein",
+      "depicts": "A symbol representing beer stein.",
+      "purpose": "Show beer stein as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "beer",
+        "stein"
+      ],
+      "synonyms": [
+        "beer",
+        "stein"
+      ],
+      "use_when": "Use when the interface refers directly to beer stein as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:behance_logo",
+      "source_library": "phosphor",
+      "source_name": "behance_logo",
+      "label": "Behance Logo",
+      "depicts": "A symbol representing behance logo.",
+      "purpose": "Show behance logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "behance",
+        "logo"
+      ],
+      "synonyms": [
+        "behance",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to behance logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:belt",
+      "source_library": "phosphor",
+      "source_name": "belt",
+      "label": "Belt",
+      "depicts": "A symbol representing belt.",
+      "purpose": "Show belt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "belt"
+      ],
+      "synonyms": [
+        "belt"
+      ],
+      "use_when": "Use when the interface refers directly to belt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bezier_curve",
+      "source_library": "phosphor",
+      "source_name": "bezier_curve",
+      "label": "Bezier Curve",
+      "depicts": "A symbol representing bezier curve.",
+      "purpose": "Show bezier curve as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bezier",
+        "curve"
+      ],
+      "synonyms": [
+        "bezier",
+        "curve"
+      ],
+      "use_when": "Use when the interface refers directly to bezier curve as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bicycle",
+      "source_library": "phosphor",
+      "source_name": "bicycle",
+      "label": "Bicycle",
+      "depicts": "A symbol representing bicycle.",
+      "purpose": "Show bicycle as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bicycle"
+      ],
+      "synonyms": [
+        "bicycle"
+      ],
+      "use_when": "Use when the interface refers directly to bicycle as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:binoculars",
+      "source_library": "phosphor",
+      "source_name": "binoculars",
+      "label": "Binoculars",
+      "depicts": "A symbol representing binoculars.",
+      "purpose": "Show binoculars as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "binoculars"
+      ],
+      "synonyms": [
+        "binoculars"
+      ],
+      "use_when": "Use when the interface refers directly to binoculars as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:biohazard",
+      "source_library": "phosphor",
+      "source_name": "biohazard",
+      "label": "Biohazard",
+      "depicts": "A symbol representing biohazard.",
+      "purpose": "Show biohazard as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "biohazard"
+      ],
+      "synonyms": [
+        "biohazard"
+      ],
+      "use_when": "Use when the interface refers directly to biohazard as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bluetooth_connected",
+      "source_library": "phosphor",
+      "source_name": "bluetooth_connected",
+      "label": "Bluetooth Connected",
+      "depicts": "A symbol representing bluetooth connected.",
+      "purpose": "Show bluetooth connected as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bluetooth",
+        "connected"
+      ],
+      "synonyms": [
+        "bluetooth",
+        "connected"
+      ],
+      "use_when": "Use when the interface refers directly to bluetooth connected as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bluetooth_slash",
+      "source_library": "phosphor",
+      "source_name": "bluetooth_slash",
+      "label": "Bluetooth Slash",
+      "depicts": "A symbol representing bluetooth slash.",
+      "purpose": "Show bluetooth slash as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bluetooth",
+        "slash"
+      ],
+      "synonyms": [
+        "bluetooth",
+        "slash"
+      ],
+      "use_when": "Use when the interface refers directly to bluetooth slash as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bookmarks_simple",
+      "source_library": "phosphor",
+      "source_name": "bookmarks_simple",
+      "label": "Bookmarks Simple",
+      "depicts": "A symbol representing bookmarks simple.",
+      "purpose": "Show bookmarks simple as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bookmarks",
+        "simple"
+      ],
+      "synonyms": [
+        "bookmarks",
+        "simple"
+      ],
+      "use_when": "Use when the interface refers directly to bookmarks simple as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:books",
+      "source_library": "phosphor",
+      "source_name": "books",
+      "label": "Books",
+      "depicts": "A symbol representing books.",
+      "purpose": "Show books as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "books"
+      ],
+      "synonyms": [
+        "books"
+      ],
+      "use_when": "Use when the interface refers directly to books as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:boot",
+      "source_library": "phosphor",
+      "source_name": "boot",
+      "label": "Boot",
+      "depicts": "A symbol representing boot.",
+      "purpose": "Show boot as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "boot"
+      ],
+      "synonyms": [
+        "boot"
+      ],
+      "use_when": "Use when the interface refers directly to boot as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:boules",
+      "source_library": "phosphor",
+      "source_name": "boules",
+      "label": "Boules",
+      "depicts": "A symbol representing boules.",
+      "purpose": "Show boules as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "boules"
+      ],
+      "synonyms": [
+        "boules"
+      ],
+      "use_when": "Use when the interface refers directly to boules as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bounding_box",
+      "source_library": "phosphor",
+      "source_name": "bounding_box",
+      "label": "Bounding Box",
+      "depicts": "A symbol representing bounding box.",
+      "purpose": "Show bounding box as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bounding",
+        "box"
+      ],
+      "synonyms": [
+        "bounding",
+        "box"
+      ],
+      "use_when": "Use when the interface refers directly to bounding box as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bowl_food",
+      "source_library": "phosphor",
+      "source_name": "bowl_food",
+      "label": "Bowl Food",
+      "depicts": "A symbol representing bowl food.",
+      "purpose": "Show bowl food as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bowl",
+        "food"
+      ],
+      "synonyms": [
+        "bowl",
+        "food"
+      ],
+      "use_when": "Use when the interface refers directly to bowl food as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bowl_steam",
+      "source_library": "phosphor",
+      "source_name": "bowl_steam",
+      "label": "Bowl Steam",
+      "depicts": "A symbol representing bowl steam.",
+      "purpose": "Show bowl steam as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bowl",
+        "steam"
+      ],
+      "synonyms": [
+        "bowl",
+        "steam"
+      ],
+      "use_when": "Use when the interface refers directly to bowl steam as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bowling_ball",
+      "source_library": "phosphor",
+      "source_name": "bowling_ball",
+      "label": "Bowling Ball",
+      "depicts": "A symbol representing bowling ball.",
+      "purpose": "Show bowling ball as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bowling",
+        "ball"
+      ],
+      "synonyms": [
+        "bowling",
+        "ball"
+      ],
+      "use_when": "Use when the interface refers directly to bowling ball as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:boxing_glove",
+      "source_library": "phosphor",
+      "source_name": "boxing_glove",
+      "label": "Boxing Glove",
+      "depicts": "A symbol representing boxing glove.",
+      "purpose": "Show boxing glove as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "boxing",
+        "glove"
+      ],
+      "synonyms": [
+        "boxing",
+        "glove"
+      ],
+      "use_when": "Use when the interface refers directly to boxing glove as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:brackets_curly",
+      "source_library": "phosphor",
+      "source_name": "brackets_curly",
+      "label": "Brackets Curly",
+      "depicts": "A symbol representing brackets curly.",
+      "purpose": "Show brackets curly as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "brackets",
+        "curly"
+      ],
+      "synonyms": [
+        "brackets",
+        "curly"
+      ],
+      "use_when": "Use when the interface refers directly to brackets curly as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:brackets_round",
+      "source_library": "phosphor",
+      "source_name": "brackets_round",
+      "label": "Brackets Round",
+      "depicts": "A symbol representing brackets round.",
+      "purpose": "Show brackets round as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "brackets",
+        "round"
+      ],
+      "synonyms": [
+        "brackets",
+        "round"
+      ],
+      "use_when": "Use when the interface refers directly to brackets round as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:brackets_square",
+      "source_library": "phosphor",
+      "source_name": "brackets_square",
+      "label": "Brackets Square",
+      "depicts": "A symbol representing brackets square.",
+      "purpose": "Show brackets square as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "brackets",
+        "square"
+      ],
+      "synonyms": [
+        "brackets",
+        "square"
+      ],
+      "use_when": "Use when the interface refers directly to brackets square as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    }
+  ]
+}

@@ -1,0 +1,1898 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-editor-review-batch-03",
+  "reviewed_records": [
+    {
+      "icon_id": "phosphor:watch",
+      "source_library": "phosphor",
+      "source_name": "watch",
+      "label": "Watch",
+      "depicts": "A symbol representing watch.",
+      "purpose": "Show watch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "watch"
+      ],
+      "synonyms": [
+        "watch"
+      ],
+      "use_when": "Use when the interface refers directly to watch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:wheelchair",
+      "source_library": "phosphor",
+      "source_name": "wheelchair",
+      "label": "Wheelchair",
+      "depicts": "A symbol representing wheelchair.",
+      "purpose": "Show wheelchair as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wheelchair"
+      ],
+      "synonyms": [
+        "wheelchair"
+      ],
+      "use_when": "Use when the interface refers directly to wheelchair as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:wind",
+      "source_library": "phosphor",
+      "source_name": "wind",
+      "label": "Wind",
+      "depicts": "A symbol representing wind.",
+      "purpose": "Show wind as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "wind"
+      ],
+      "synonyms": [
+        "wind"
+      ],
+      "use_when": "Use when the interface refers directly to wind as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:wine",
+      "source_library": "phosphor",
+      "source_name": "wine",
+      "label": "Wine",
+      "depicts": "The official Wine brand or product mark.",
+      "purpose": "Show the official Wine brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "wine",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Wine"
+      ],
+      "use_when": "Use when the interface refers specifically to Wine as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Wine product icon when the meaning is not specifically Wine.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:yarn",
+      "source_library": "phosphor",
+      "source_name": "yarn",
+      "label": "Yarn",
+      "depicts": "The official Yarn brand or product mark.",
+      "purpose": "Show the official Yarn brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "yarn",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "Yarn"
+      ],
+      "use_when": "Use when the interface refers specifically to Yarn as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use as a generic action, status, or non-Yarn product icon when the meaning is not specifically Yarn.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:align_bottom",
+      "source_library": "phosphor",
+      "source_name": "align_bottom",
+      "label": "Align Bottom",
+      "depicts": "A formatting alignment control.",
+      "purpose": "Show text or layout alignment inside a formatted surface.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alignment",
+        "formatting",
+        "layout control",
+        "text layout",
+        "align"
+      ],
+      "synonyms": [
+        "align bottom",
+        "alignment control",
+        "format text",
+        "layout alignment"
+      ],
+      "use_when": "Use when the interface changes alignment, formatting, or positioning inside text or layout tools.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically formatting or alignment.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:align_top",
+      "source_library": "phosphor",
+      "source_name": "align_top",
+      "label": "Align Top",
+      "depicts": "A formatting alignment control.",
+      "purpose": "Show text or layout alignment inside a formatted surface.",
+      "category": "data_controls",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "alignment",
+        "formatting",
+        "layout control",
+        "text layout",
+        "align"
+      ],
+      "synonyms": [
+        "align top",
+        "alignment control",
+        "format text",
+        "layout alignment"
+      ],
+      "use_when": "Use when the interface changes alignment, formatting, or positioning inside text or layout tools.",
+      "avoid_when": "Do not use for navigation arrows when the meaning is specifically formatting or alignment.",
+      "evidence_sources": [
+        "source-name",
+        "approved-reference",
+        "svg-payload"
+      ],
+      "confidence_score": 0.9,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_fat_lines_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_fat_lines_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "fat",
+        "lines"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_fat_lines_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_fat_lines_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "arrow",
+        "fat",
+        "lines"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_fat_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_fat_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "fat"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_fat_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_fat_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "arrow",
+        "fat"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_down",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "arrow",
+        "line"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_down_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "line",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_down_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "line",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "line"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "line"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "arrow",
+        "line"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_up_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "line",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_line_up_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_line_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "line",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_down",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "arrow",
+        "square"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_down_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "square",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_down_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "square",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "square"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "square"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "arrow",
+        "square"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_up_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "square",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_square_up_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_square_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "square",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_down_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "u",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_down_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "u",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_left_down",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_left_down",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "u",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_left_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_left_up",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "u",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_right_down",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_right_down",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "u",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_right_up",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_right_up",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "u",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_up_left",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "arrow",
+        "u",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:arrow_u_up_right",
+      "source_library": "phosphor",
+      "source_name": "arrow_u_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "arrow",
+        "u",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:bell_simple_ringing",
+      "source_library": "phosphor",
+      "source_name": "bell_simple_ringing",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "simple",
+        "ringing",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "simple status",
+        "ringing status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bell_simple_slash",
+      "source_library": "phosphor",
+      "source_name": "bell_simple_slash",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "simple",
+        "slash",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "simple status",
+        "slash status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bell_simple_z",
+      "source_library": "phosphor",
+      "source_name": "bell_simple_z",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "simple",
+        "z",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "simple status",
+        "z status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:bell_slash",
+      "source_library": "phosphor",
+      "source_name": "bell_slash",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "bell",
+        "slash",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "bell status",
+        "slash status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:box_arrow_down",
+      "source_library": "phosphor",
+      "source_name": "box_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "box",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:box_arrow_up",
+      "source_library": "phosphor",
+      "source_name": "box_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "box",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:call_bell",
+      "source_library": "phosphor",
+      "source_name": "call_bell",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "call",
+        "bell",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "call status",
+        "bell status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:check_fat",
+      "source_library": "phosphor",
+      "source_name": "check_fat",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "fat",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status",
+        "fat status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:check_square_offset",
+      "source_library": "phosphor",
+      "source_name": "check_square_offset",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "check",
+        "square",
+        "offset",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "check status",
+        "square status",
+        "offset status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:cloud_arrow_down",
+      "source_library": "phosphor",
+      "source_name": "cloud_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "cloud",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:cloud_arrow_up",
+      "source_library": "phosphor",
+      "source_name": "cloud_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "cloud",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:cloud_warning",
+      "source_library": "phosphor",
+      "source_name": "cloud_warning",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "cloud",
+        "warning",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "cloud status",
+        "warning status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:columns_plus_left",
+      "source_library": "phosphor",
+      "source_name": "columns_plus_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "columns",
+        "plus"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:columns_plus_right",
+      "source_library": "phosphor",
+      "source_name": "columns_plus_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "columns",
+        "plus"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:hand_arrow_down",
+      "source_library": "phosphor",
+      "source_name": "hand_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "hand",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:hand_arrow_up",
+      "source_library": "phosphor",
+      "source_name": "hand_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "hand",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:monitor_arrow_up",
+      "source_library": "phosphor",
+      "source_name": "monitor_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "monitor",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:seal_check",
+      "source_library": "phosphor",
+      "source_name": "seal_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "seal",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "seal status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:seal_warning",
+      "source_library": "phosphor",
+      "source_name": "seal_warning",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "seal",
+        "warning",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "seal status",
+        "warning status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:shield_slash",
+      "source_library": "phosphor",
+      "source_name": "shield_slash",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "shield",
+        "slash",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "shield security",
+        "slash security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:tray_arrow_down",
+      "source_library": "phosphor",
+      "source_name": "tray_arrow_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "tray",
+        "arrow"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:tray_arrow_up",
+      "source_library": "phosphor",
+      "source_name": "tray_arrow_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "tray",
+        "arrow"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:warning_circle",
+      "source_library": "phosphor",
+      "source_name": "warning_circle",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "warning",
+        "circle",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "warning status",
+        "circle status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:warning_diamond",
+      "source_library": "phosphor",
+      "source_name": "warning_diamond",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "warning",
+        "diamond",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "warning status",
+        "diamond status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:warning_octagon",
+      "source_library": "phosphor",
+      "source_name": "warning_octagon",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "warning",
+        "octagon",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "warning status",
+        "octagon status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    }
+  ]
+}

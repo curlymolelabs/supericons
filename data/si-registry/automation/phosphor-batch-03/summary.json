@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-batch-03",
+  "library_id": "phosphor",
+  "library_label": "Phosphor",
+  "selected_count": 240,
+  "target_size": 240,
+  "target_min": 200,
+  "target_max": 320,
+  "reference_match_count": 7,
+  "family_counts": {
+    "generic_controls": 170,
+    "navigation_motion": 43,
+    "status_security": 14,
+    "file_actions": 13
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 60,
+    "needs_visual_review": 180,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "confidence_band_counts": {
+    "high_confidence": 60,
+    "needs_review": 180,
+    "ambiguous": 0
+  },
+  "worklist_path": "data/si-registry/automation/phosphor-batch-03/worklist.json",
+  "candidate_record_path": "data/si-registry/automation/phosphor-batch-03/candidate-records.json",
+  "review_queue_path": "data/si-registry/automation/phosphor-batch-03/review-queue.json"
+}

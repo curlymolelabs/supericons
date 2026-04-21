@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-editor-review-batch-01",
+  "source_batch_id": "phosphor-batch-01",
+  "reviewed_count": 168,
+  "approve_for_import": 168,
+  "hold_for_editor_review": 0,
+  "keep_as_reviewed_draft": 0,
+  "by_category": {
+    "status_feedback": 31,
+    "system_control": 12,
+    "engineering_developer_tools": 5,
+    "security": 14,
+    "destructive_actions": 4,
+    "navigation_interface": 80,
+    "security_auth": 5,
+    "analytics_data": 1,
+    "media_playback": 8,
+    "brand_identity": 2,
+    "data_controls": 4,
+    "agent_lifecycle": 2
+  },
+  "by_domain": {
+    "product_status": 23,
+    "ui_controls": 27,
+    "developer_tools": 6,
+    "security": 19,
+    "ui_shell": 21,
+    "navigation": 60,
+    "media": 8,
+    "brand_platforms": 1,
+    "communication": 1,
+    "ai_agents": 2
+  }
+}

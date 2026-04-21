@@ -1,0 +1,1111 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-visual-review-batch-01",
+  "reviewed_records": [
+    {
+      "icon_id": "phosphor:book_open_user",
+      "source_library": "phosphor",
+      "source_name": "book_open_user",
+      "label": "Open File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show opening a file or entering a document view.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "book",
+        "open",
+        "user",
+        "file"
+      ],
+      "synonyms": [
+        "open file",
+        "book file",
+        "user file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:calendar_plus",
+      "source_library": "phosphor",
+      "source_name": "calendar_plus",
+      "label": "Calendar Plus",
+      "depicts": "A symbol representing calendar plus.",
+      "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "plus"
+      ],
+      "synonyms": [
+        "calendar",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to calendar plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:clock_user",
+      "source_library": "phosphor",
+      "source_name": "clock_user",
+      "label": "Clock User",
+      "depicts": "A symbol representing clock user.",
+      "purpose": "Show clock user as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "clock",
+        "user"
+      ],
+      "synonyms": [
+        "clock",
+        "user"
+      ],
+      "use_when": "Use when the interface refers directly to clock user as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple_plus",
+      "source_library": "phosphor",
+      "source_name": "folder_simple_plus",
+      "label": "New Folder",
+      "depicts": "A folder paired with an add cue.",
+      "purpose": "Show creating or adding a new folder or directory.",
+      "category": "system_control",
+      "intent": "act",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "new folder",
+        "create folder",
+        "add folder",
+        "new directory",
+        "folder"
+      ],
+      "synonyms": [
+        "create folder",
+        "new directory",
+        "add directory",
+        "start folder"
+      ],
+      "use_when": "Use when the interface creates a new folder or adds a folder into the current context.",
+      "avoid_when": "Do not use for generic open-folder actions when the meaning is specifically adding a folder.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple_user",
+      "source_library": "phosphor",
+      "source_name": "folder_simple_user",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "simple",
+        "user"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "simple folder",
+        "user folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.78,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_user",
+      "source_library": "phosphor",
+      "source_name": "folder_user",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "user"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "user folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.78,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:play_pause",
+      "source_library": "phosphor",
+      "source_name": "play_pause",
+      "label": "Play Pause",
+      "depicts": "A symbol representing play pause.",
+      "purpose": "Show play pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "play",
+        "pause"
+      ],
+      "synonyms": [
+        "play",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to play pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_circle_plus",
+      "source_library": "phosphor",
+      "source_name": "user_circle_plus",
+      "label": "User Circle Plus",
+      "depicts": "A symbol representing user circle plus.",
+      "purpose": "Show user circle plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "circle",
+        "plus"
+      ],
+      "synonyms": [
+        "user",
+        "circle",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to user circle plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:user_plus",
+      "source_library": "phosphor",
+      "source_name": "user_plus",
+      "label": "User Plus",
+      "depicts": "A symbol representing user plus.",
+      "purpose": "Show user plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "plus"
+      ],
+      "synonyms": [
+        "user",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to user plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_clockwise",
+      "source_library": "phosphor",
+      "source_name": "arrow_clockwise",
+      "label": "Arrow Clockwise",
+      "depicts": "A symbol representing arrow clockwise.",
+      "purpose": "Show arrow clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "clockwise"
+      ],
+      "synonyms": [
+        "arrow",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrow clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:arrow_counter_clockwise",
+      "source_library": "phosphor",
+      "source_name": "arrow_counter_clockwise",
+      "label": "Arrow Counter Clockwise",
+      "depicts": "A symbol representing arrow counter clockwise.",
+      "purpose": "Show arrow counter clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "counter",
+        "clockwise"
+      ],
+      "synonyms": [
+        "arrow",
+        "counter",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrow counter clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_audio",
+      "source_library": "phosphor",
+      "source_name": "file_audio",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "audio"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "audio file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_c",
+      "source_library": "phosphor",
+      "source_name": "file_c",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "c"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "c file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_c_sharp",
+      "source_library": "phosphor",
+      "source_name": "file_c_sharp",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "c",
+        "sharp"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "c file",
+        "sharp file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_cloud",
+      "source_library": "phosphor",
+      "source_name": "file_cloud",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "cloud"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "cloud file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_cpp",
+      "source_library": "phosphor",
+      "source_name": "file_cpp",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "cpp"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "cpp file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_css",
+      "source_library": "phosphor",
+      "source_name": "file_css",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "css"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "css file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_csv",
+      "source_library": "phosphor",
+      "source_name": "file_csv",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "csv"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "csv file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_dashed",
+      "source_library": "phosphor",
+      "source_name": "file_dashed",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "dashed"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "dashed file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_doc",
+      "source_library": "phosphor",
+      "source_name": "file_doc",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "doc"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "doc file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_html",
+      "source_library": "phosphor",
+      "source_name": "file_html",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "html"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "html file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_image",
+      "source_library": "phosphor",
+      "source_name": "file_image",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "image"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "image file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_ini",
+      "source_library": "phosphor",
+      "source_name": "file_ini",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "ini"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "ini file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_jpg",
+      "source_library": "phosphor",
+      "source_name": "file_jpg",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "jpg"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "jpg file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_js",
+      "source_library": "phosphor",
+      "source_name": "file_js",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "js"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "js file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_jsx",
+      "source_library": "phosphor",
+      "source_name": "file_jsx",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "jsx"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "jsx file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_magnifying_glass",
+      "source_library": "phosphor",
+      "source_name": "file_magnifying_glass",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "magnifying",
+        "glass"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "magnifying file",
+        "glass file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_md",
+      "source_library": "phosphor",
+      "source_name": "file_md",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "md"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "md file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_minus",
+      "source_library": "phosphor",
+      "source_name": "file_minus",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "minus"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "minus file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:file_pdf",
+      "source_library": "phosphor",
+      "source_name": "file_pdf",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "pdf"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "pdf file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_dashed",
+      "source_library": "phosphor",
+      "source_name": "folder_dashed",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "dashed"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "dashed folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple",
+      "source_library": "phosphor",
+      "source_name": "folder_simple",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "simple"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "simple folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple_dashed",
+      "source_library": "phosphor",
+      "source_name": "folder_simple_dashed",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "simple",
+        "dashed"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "simple folder",
+        "dashed folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple_minus",
+      "source_library": "phosphor",
+      "source_name": "folder_simple_minus",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "simple",
+        "minus"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "simple folder",
+        "minus folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:folder_simple_star",
+      "source_library": "phosphor",
+      "source_name": "folder_simple_star",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "simple",
+        "star"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "simple folder",
+        "star folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:google_play_logo",
+      "source_library": "phosphor",
+      "source_name": "google_play_logo",
+      "label": "Google Play Logo",
+      "depicts": "A symbol representing google play logo.",
+      "purpose": "Show google play logo as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "google",
+        "play",
+        "logo"
+      ],
+      "synonyms": [
+        "google",
+        "play",
+        "logo"
+      ],
+      "use_when": "Use when the interface refers directly to google play logo as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:monitor_play",
+      "source_library": "phosphor",
+      "source_name": "monitor_play",
+      "label": "Monitor Play",
+      "depicts": "A symbol representing monitor play.",
+      "purpose": "Show monitor play as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "monitor",
+        "play"
+      ],
+      "synonyms": [
+        "monitor",
+        "play"
+      ],
+      "use_when": "Use when the interface refers directly to monitor play as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:phone_pause",
+      "source_library": "phosphor",
+      "source_name": "phone_pause",
+      "label": "Phone Pause",
+      "depicts": "A symbol representing phone pause.",
+      "purpose": "Show phone pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "phone",
+        "pause"
+      ],
+      "synonyms": [
+        "phone",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to phone pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:scan_smiley",
+      "source_library": "phosphor",
+      "source_name": "scan_smiley",
+      "label": "Scan Smiley",
+      "depicts": "A symbol representing scan smiley.",
+      "purpose": "Show scan smiley as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "scan",
+        "smiley"
+      ],
+      "synonyms": [
+        "scan",
+        "smiley"
+      ],
+      "use_when": "Use when the interface refers directly to scan smiley as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    }
+  ]
+}

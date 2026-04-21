@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "phosphor-editor-review-batch-06",
+  "reviewed_records": [
+    {
+      "icon_id": "phosphor:paper_plane_right",
+      "source_library": "phosphor",
+      "source_name": "paper_plane_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "paper",
+        "plane"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "phosphor:phone_transfer",
+      "source_library": "phosphor",
+      "source_name": "phone_transfer",
+      "label": "Phone Transfer",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show a system control action or a reversible interface action.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "phone",
+        "transfer",
+        "control"
+      ],
+      "synonyms": [
+        "phone transfer",
+        "phone control",
+        "transfer control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "phosphor:swap",
+      "source_library": "phosphor",
+      "source_name": "swap",
+      "label": "Swap",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show a system control action or a reversible interface action.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "swap",
+        "control"
+      ],
+      "synonyms": [
+        "swap",
+        "swap control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    }
+  ]
+}
