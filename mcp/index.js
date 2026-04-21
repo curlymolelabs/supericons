@@ -356,20 +356,23 @@ const allIcons = [...freeIcons, ...premiumIcons];
 // Auth State (resolved at startup)
 // ============================================================
 let authState = { authenticated: false, isPro: false, purchasedSlugs: [], userId: null, error: null };
+const shouldLogStartupAuth = process.env.SUPERICONS_MCP_LOG_STARTUP === '1';
 
 async function initAuth() {
   authState = await validateApiKey();
-  if (authState.error) {
-    console.error(`[SuperIcons] Auth: ${authState.error}`);
-  } else if (authState.isPro) {
-    console.error(`[SuperIcons] Auth: Pro (${freeIcons.length} free + ${premiumIcons.length} premium icons)`);
-  } else if (authState.purchasedSlugs.length > 0) {
-    const purchasedCount = premiumIcons.filter(i => authState.purchasedSlugs.includes(i.lib)).length;
-    console.error(`[SuperIcons] Auth: Pack buyer (${freeIcons.length} free + ${purchasedCount} purchased premium icons)`);
-  } else if (authState.authenticated) {
-    console.error(`[SuperIcons] Auth: Free tier (${freeIcons.length} free icons, ${premiumIcons.length} premium locked)`);
-  } else {
-    console.error(`[SuperIcons] Auth: Anonymous (${freeIcons.length} free icons)`);
+  if (shouldLogStartupAuth) {
+    if (authState.error) {
+      console.error(`[SuperIcons] Auth: ${authState.error}`);
+    } else if (authState.isPro) {
+      console.error(`[SuperIcons] Auth: Pro (${freeIcons.length} free + ${premiumIcons.length} premium icons)`);
+    } else if (authState.purchasedSlugs.length > 0) {
+      const purchasedCount = premiumIcons.filter(i => authState.purchasedSlugs.includes(i.lib)).length;
+      console.error(`[SuperIcons] Auth: Pack buyer (${freeIcons.length} free + ${purchasedCount} purchased premium icons)`);
+    } else if (authState.authenticated) {
+      console.error(`[SuperIcons] Auth: Free tier (${freeIcons.length} free icons, ${premiumIcons.length} premium locked)`);
+    } else {
+      console.error(`[SuperIcons] Auth: Anonymous (${freeIcons.length} free icons)`);
+    }
   }
 }
 
