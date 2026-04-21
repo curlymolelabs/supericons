@@ -1,0 +1,482 @@
+[
+  {
+    "order": 1,
+    "icon_id": "lucide:binary",
+    "svg": "<svg class=\"lucide lucide-binary\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect x=\"14\" y=\"14\" width=\"4\" height=\"6\" rx=\"2\" /> <rect x=\"6\" y=\"4\" width=\"4\" height=\"6\" rx=\"2\" /> <path d=\"M6 20h4\" /> <path d=\"M14 10h4\" /> <path d=\"M6 14h2v6\" /> <path d=\"M14 4h2v6\" /> </svg>",
+    "current_semantic_record": {
+      "icon_id": "lucide:binary",
+      "source_group": "free",
+      "source_library": "lucide",
+      "source_name": "binary",
+      "label": "Binary Data",
+      "purpose": "Show binary data, machine-level encoding, or low-level computational representation.",
+      "category": "engineering_developer_tools",
+      "semantic_tags": [
+        "binary",
+        "bits",
+        "encoding",
+        "machine data",
+        "low-level compute"
+      ],
+      "use_when": "Use when the product needs to represent binary data, encoded output, or low-level machine-facing computation.",
+      "avoid_when": "Do not use for general AI, agent behavior, or modular workflow concepts where the abstract bit pattern would be misleading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "Abstract bit-like shapes arranged as machine-level binary marks.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "visual_inspection",
+        "editorial_judgment"
+      ],
+      "synonyms": [
+        "binary code",
+        "bit data",
+        "machine encoding",
+        "low-level data"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "lucide:binary",
+      "source_library": "lucide",
+      "source_name": "binary",
+      "label": "Binary Data",
+      "popular_reading": "Binary data or low-level digital values.",
+      "plausible_readings": [
+        "bits and bytes",
+        "machine-readable values",
+        "technical code data"
+      ],
+      "context_bias": "Strongest in developer tools, data inspection, code, or systems contexts.",
+      "ambiguity_note": "Outside technical contexts, some users may only read it as numbers or code decoration.",
+      "search_hints": [
+        "Binary Data",
+        "bits and bytes",
+        "machine-readable values",
+        "technical code data",
+        "Binary data or low-level digital values."
+      ],
+      "official_source_url": "https://lucide.dev/icons/binary",
+      "public_reference_url": null,
+      "selection_reason": "Lucide itself tags this icon with words like code, digits, computer, zero, one, and boolean."
+    },
+    "proposed_final_record": {
+      "icon_id": "lucide:binary",
+      "source_library": "lucide",
+      "source_name": "binary",
+      "label": "Binary Data",
+      "depicts": "Abstract bit-like shapes arranged as machine-level binary marks.",
+      "use_when": "Strongest in developer tools, data inspection, code, or systems contexts.",
+      "avoid_when": "Outside technical contexts, some users may only read it as numbers or code decoration.",
+      "semantic_tags": [
+        "binary",
+        "bits",
+        "encoding",
+        "machine data",
+        "low-level compute",
+        "bits and bytes",
+        "machine-readable values",
+        "technical code data",
+        "Binary data or low-level digital values"
+      ],
+      "synonyms": [
+        "binary code",
+        "bit data",
+        "machine encoding",
+        "low-level data",
+        "Binary Data",
+        "bits and bytes",
+        "machine-readable values",
+        "technical code data",
+        "Binary data or low-level digital values"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "lucide:blocks",
+    "svg": "<svg class=\"lucide lucide-blocks\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2\" /> <rect x=\"14\" y=\"2\" width=\"8\" height=\"8\" rx=\"1\" /> </svg>",
+    "current_semantic_record": {
+      "icon_id": "lucide:blocks",
+      "source_group": "free",
+      "source_library": "lucide",
+      "source_name": "blocks",
+      "label": "Modules",
+      "purpose": "Show modular building blocks, composable components, or system pieces that fit together.",
+      "category": "systems_architecture",
+      "semantic_tags": [
+        "modules",
+        "components",
+        "blocks",
+        "composable",
+        "building blocks"
+      ],
+      "use_when": "Use when the interface refers to modular components, system blocks, or composable units that make up a larger whole.",
+      "avoid_when": "Do not use for storage, files, or AI agent behavior where the block motif is too generic.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A large rounded block with a smaller detached block above it.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "visual_inspection",
+        "editorial_judgment"
+      ],
+      "synonyms": [
+        "components",
+        "modules",
+        "building blocks",
+        "composable pieces"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "lucide:blocks",
+      "source_library": "lucide",
+      "source_name": "blocks",
+      "label": "Modules",
+      "popular_reading": "Modules, building blocks, or composable parts.",
+      "plausible_readings": [
+        "plugins or extensions",
+        "stacked components",
+        "structured layout pieces"
+      ],
+      "context_bias": "Strongest in modular systems, integrations, component libraries, or architecture views.",
+      "ambiguity_note": "It can also read as toy blocks or generic shapes if the surrounding product context is weak.",
+      "search_hints": [
+        "Modules",
+        "plugins or extensions",
+        "stacked components",
+        "structured layout pieces",
+        "Modules, building blocks, or composable parts."
+      ],
+      "official_source_url": "https://lucide.dev/icons/blocks",
+      "public_reference_url": null,
+      "selection_reason": "Lucide describes it with words like addon, plugin, integration, extension, package, build, and stack."
+    },
+    "proposed_final_record": {
+      "icon_id": "lucide:blocks",
+      "source_library": "lucide",
+      "source_name": "blocks",
+      "label": "Modules",
+      "depicts": "A large rounded block with a smaller detached block above it.",
+      "use_when": "Strongest in modular systems, integrations, component libraries, or architecture views.",
+      "avoid_when": "It can also read as toy blocks or generic shapes if the surrounding product context is weak.",
+      "semantic_tags": [
+        "modules",
+        "components",
+        "blocks",
+        "composable",
+        "building blocks",
+        "plugins or extensions",
+        "stacked components",
+        "structured layout pieces",
+        "Modules, building blocks, or composable parts"
+      ],
+      "synonyms": [
+        "components",
+        "modules",
+        "building blocks",
+        "composable pieces",
+        "Modules",
+        "plugins or extensions",
+        "stacked components",
+        "structured layout pieces",
+        "Modules, building blocks, or composable parts"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "lucide:bot-message-square",
+    "svg": "<svg class=\"lucide lucide-bot-message-square\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 6V2H8\" /> <path d=\"M15 11v2\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"M20 16a2 2 0 0 1-2 2H8.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 4 20.286V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z\" /> <path d=\"M9 11v2\" /> </svg>",
+    "current_semantic_record": {
+      "icon_id": "lucide:bot-message-square",
+      "source_group": "free",
+      "source_library": "lucide",
+      "source_name": "bot-message-square",
+      "label": "Assistant Message",
+      "purpose": "Show that a message or reply came from an AI assistant or automated agent.",
+      "category": "agent_lifecycle",
+      "semantic_tags": [
+        "assistant",
+        "bot",
+        "agent",
+        "chat",
+        "reply"
+      ],
+      "use_when": "Use when labeling assistant-authored replies, agent chat threads, or bot conversation surfaces.",
+      "avoid_when": "Do not use for human-to-human chat, generic messaging, or broad AI branding with no message context.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A robot-like chat bubble with a message panel.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "visual_inspection",
+        "editorial_judgment"
+      ],
+      "synonyms": [
+        "assistant reply",
+        "bot message",
+        "agent response",
+        "ai chat"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "lucide:bot-message-square",
+      "source_library": "lucide",
+      "source_name": "bot-message-square",
+      "label": "Assistant Message",
+      "popular_reading": "Assistant message or bot reply.",
+      "plausible_readings": [
+        "AI chat response",
+        "agent conversation",
+        "automated support reply"
+      ],
+      "context_bias": "Strongest in chat, assistant, support, and agent workflows.",
+      "ambiguity_note": "It could be read more generally as bot chat, not necessarily one specific assistant role.",
+      "search_hints": [
+        "Assistant Message",
+        "AI chat response",
+        "agent conversation",
+        "automated support reply",
+        "Assistant message or bot reply."
+      ],
+      "official_source_url": "https://lucide.dev/icons/bot-message-square",
+      "public_reference_url": null,
+      "selection_reason": "The icon combines a message shape with a bot face, so the reading is mainly conversational AI or bot messaging."
+    },
+    "proposed_final_record": {
+      "icon_id": "lucide:bot-message-square",
+      "source_library": "lucide",
+      "source_name": "bot-message-square",
+      "label": "Assistant Message",
+      "depicts": "A robot-like chat bubble with a message panel.",
+      "use_when": "Strongest in chat, assistant, support, and agent workflows.",
+      "avoid_when": "It could be read more generally as bot chat, not necessarily one specific assistant role.",
+      "semantic_tags": [
+        "assistant",
+        "bot",
+        "agent",
+        "chat",
+        "reply",
+        "AI chat response",
+        "agent conversation",
+        "automated support reply",
+        "Assistant message or bot reply"
+      ],
+      "synonyms": [
+        "assistant reply",
+        "bot message",
+        "agent response",
+        "ai chat",
+        "Assistant Message",
+        "AI chat response",
+        "agent conversation",
+        "automated support reply",
+        "Assistant message or bot reply"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "lucide:brain-circuit",
+    "svg": "<svg class=\"lucide lucide-brain-circuit\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z\" /> <path d=\"M9 13a4.5 4.5 0 0 0 3-4\" /> <path d=\"M6.003 5.125A3 3 0 0 0 6.401 6.5\" /> <path d=\"M3.477 10.896a4 4 0 0 1 .585-.396\" /> <path d=\"M6 18a4 4 0 0 1-1.967-.516\" /> <path d=\"M12 13h4\" /> <path d=\"M12 18h6a2 2 0 0 1 2 2v1\" /> <path d=\"M12 8h8\" /> <path d=\"M16 8V5a2 2 0 0 1 2-2\" /> <circle cx=\"16\" cy=\"13\" r=\".5\" /> <circle cx=\"18\" cy=\"3\" r=\".5\" /> <circle cx=\"20\" cy=\"21\" r=\".5\" /> <circle cx=\"20\" cy=\"8\" r=\".5\" /> </svg>",
+    "current_semantic_record": {
+      "icon_id": "lucide:brain-circuit",
+      "source_group": "free",
+      "source_library": "lucide",
+      "source_name": "brain-circuit",
+      "label": "AI Reasoning",
+      "purpose": "Show AI reasoning, model cognition, or an intelligent processing step.",
+      "category": "agent_lifecycle",
+      "semantic_tags": [
+        "reasoning",
+        "ai",
+        "model",
+        "cognition",
+        "intelligence"
+      ],
+      "use_when": "Use when the product needs to communicate AI reasoning, inference, or an intelligence-heavy processing stage.",
+      "avoid_when": "Do not use for human psychology, learning content, or generic settings with no AI meaning.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A brain shape with circuit-style nodes and branches.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "visual_inspection",
+        "editorial_judgment"
+      ],
+      "synonyms": [
+        "ai thinking",
+        "model reasoning",
+        "neural processing",
+        "cognitive step"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "lucide:brain-circuit",
+      "source_library": "lucide",
+      "source_name": "brain-circuit",
+      "label": "AI Reasoning",
+      "popular_reading": "AI reasoning, machine intelligence, or neural-style computation.",
+      "plausible_readings": [
+        "smart automation",
+        "cognitive processing",
+        "brain plus circuitry"
+      ],
+      "context_bias": "Strongest in AI, inference, reasoning, automation, or intelligence features.",
+      "ambiguity_note": "It can be read either as AI reasoning or more broadly as intelligent systems.",
+      "search_hints": [
+        "AI Reasoning",
+        "smart automation",
+        "cognitive processing",
+        "brain plus circuitry",
+        "AI reasoning, machine intelligence, or neural-style computation."
+      ],
+      "official_source_url": "https://lucide.dev/icons/brain-circuit",
+      "public_reference_url": null,
+      "selection_reason": "The hybrid of brain and circuit imagery strongly points to intelligence plus computation rather than generic hardware."
+    },
+    "proposed_final_record": {
+      "icon_id": "lucide:brain-circuit",
+      "source_library": "lucide",
+      "source_name": "brain-circuit",
+      "label": "AI Reasoning",
+      "depicts": "A brain shape with circuit-style nodes and branches.",
+      "use_when": "Strongest in AI, inference, reasoning, automation, or intelligence features.",
+      "avoid_when": "It can be read either as AI reasoning or more broadly as intelligent systems.",
+      "semantic_tags": [
+        "reasoning",
+        "ai",
+        "model",
+        "cognition",
+        "intelligence",
+        "smart automation",
+        "cognitive processing",
+        "brain plus circuitry",
+        "AI reasoning, machine intelligence, or neural-style computation"
+      ],
+      "synonyms": [
+        "ai thinking",
+        "model reasoning",
+        "neural processing",
+        "cognitive step",
+        "AI Reasoning",
+        "smart automation",
+        "cognitive processing",
+        "brain plus circuitry",
+        "AI reasoning, machine intelligence, or neural-style computation"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "lucide:circuit-board",
+    "svg": "<svg class=\"lucide lucide-circuit-board\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M11 9h4a2 2 0 0 0 2-2V3\" /> <circle cx=\"9\" cy=\"9\" r=\"2\" /> <path d=\"M7 21v-4a2 2 0 0 1 2-2h4\" /> <circle cx=\"15\" cy=\"15\" r=\"2\" /> </svg>",
+    "current_semantic_record": {
+      "icon_id": "lucide:circuit-board",
+      "source_group": "free",
+      "source_library": "lucide",
+      "source_name": "circuit-board",
+      "label": "Compute Architecture",
+      "purpose": "Show compute architecture, system infrastructure, or low-level processing logic.",
+      "category": "systems_architecture",
+      "semantic_tags": [
+        "circuit board",
+        "compute",
+        "infrastructure",
+        "architecture",
+        "system logic"
+      ],
+      "use_when": "Use when the product refers to compute infrastructure, technical architecture, backend processing, or system-level logic.",
+      "avoid_when": "Do not use for generic AI reasoning, workflow orchestration, or simple settings where the board metaphor would feel too infrastructure-heavy.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A rounded square board with circuit nodes and traces.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "visual_inspection",
+        "editorial_judgment"
+      ],
+      "synonyms": [
+        "compute architecture",
+        "system infrastructure",
+        "technical architecture",
+        "processing system"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "lucide:circuit-board",
+      "source_library": "lucide",
+      "source_name": "circuit-board",
+      "label": "Compute Architecture",
+      "popular_reading": "Compute architecture, hardware logic, or system circuitry.",
+      "plausible_readings": [
+        "electronic board",
+        "technical infrastructure",
+        "low-level compute surface"
+      ],
+      "context_bias": "Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.",
+      "ambiguity_note": "Some users may read it as generic tech rather than one exact hardware object.",
+      "search_hints": [
+        "Compute Architecture",
+        "electronic board",
+        "technical infrastructure",
+        "low-level compute surface",
+        "Compute architecture, hardware logic, or system circuitry."
+      ],
+      "official_source_url": "https://lucide.dev/icons/circuit-board",
+      "public_reference_url": null,
+      "selection_reason": "The visual is clearly a board-and-trace structure, which makes the reading strongly technical and systems-oriented."
+    },
+    "proposed_final_record": {
+      "icon_id": "lucide:circuit-board",
+      "source_library": "lucide",
+      "source_name": "circuit-board",
+      "label": "Compute Architecture",
+      "depicts": "A rounded square board with circuit nodes and traces.",
+      "use_when": "Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.",
+      "avoid_when": "Some users may read it as generic tech rather than one exact hardware object.",
+      "semantic_tags": [
+        "circuit board",
+        "compute",
+        "infrastructure",
+        "architecture",
+        "system logic",
+        "electronic board",
+        "technical infrastructure",
+        "low-level compute surface",
+        "Compute architecture, hardware logic, or system circuitry"
+      ],
+      "synonyms": [
+        "compute architecture",
+        "system infrastructure",
+        "technical architecture",
+        "processing system",
+        "Compute Architecture",
+        "electronic board",
+        "technical infrastructure",
+        "low-level compute surface",
+        "Compute architecture, hardware logic, or system circuitry"
+      ]
+    }
+  }
+]

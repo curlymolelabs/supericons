@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Purpose Icons Manual Redo Batch 01</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #f6f0e6;
+      --paper: #fffdf9;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #e7dac7;
+      --accent: #9a3412;
+      --accent-soft: #fde7d2;
+      --shadow: 0 16px 44px rgba(30,24,18,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #fbf6ee 0%, var(--bg) 100%);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+    .hero, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      padding: 26px;
+      margin-bottom: 20px;
+    }
+    .eyebrow {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    h1, h2, h3 { margin-top: 0; }
+    h1 { color: var(--accent); font-size: clamp(2rem, 4vw, 2.8rem); }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .summary-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.78);
+    }
+    .summary-box strong {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .card {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .top {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .icon-panel, .reading-panel, .json-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.82);
+    }
+    .icon-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      min-height: 240px;
+    }
+    .icon-wrap {
+      width: 160px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff7eb 0%, #fff 100%);
+    }
+    .icon-wrap svg {
+      width: 108px;
+      height: 108px;
+    }
+    .reading-panel {
+      padding: 18px;
+    }
+    .order {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background: #f5ecdf;
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+    .evidence {
+      padding-left: 20px;
+      margin-top: 12px;
+    }
+    a { color: var(--accent); }
+    .json-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .json-panel-wide {
+      grid-column: 1 / -1;
+    }
+    .json-panel {
+      padding: 16px;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .top, .json-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Manual Restart Batch</div>
+      <h1>Purpose Icons Manual Redo Batch 01</h1>
+      <p>Restart the semantic work from the beginning with the first 5 purpose icons. Show the icon, the current record, and a new interpretation-first proposal before continuing.</p>
+      <div class="summary">
+        <div class="summary-box"><strong>5</strong>icons in this batch</div>
+        <div class="summary-box"><strong>Purpose Icons</strong>restart stage</div>
+        <div class="summary-box"><strong>3 views</strong>current, rich review, and lean final</div>
+        <div class="summary-box"><strong>Paused</strong>after this batch for your review</div>
+      </div>
+    </section>
+    
+    <article class="card" id="lucide:binary">
+      <div class="top">
+        <div class="icon-panel">
+          <div class="icon-wrap"><svg class="lucide lucide-binary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect x="14" y="14" width="4" height="6" rx="2" /> <rect x="6" y="4" width="4" height="6" rx="2" /> <path d="M6 20h4" /> <path d="M14 10h4" /> <path d="M6 14h2v6" /> <path d="M14 4h2v6" /> </svg></div>
+        </div>
+        <div class="reading-panel">
+          <div class="order">Item 1</div>
+          <h2>Binary Data</h2>
+          <p><code>lucide:binary</code></p>
+          <p><strong>Most common reading:</strong> Binary data or low-level digital values.</p>
+          <p><strong>Context where it fits best:</strong> Strongest in developer tools, data inspection, code, or systems contexts.</p>
+          <p><strong>Ambiguity note:</strong> Outside technical contexts, some users may only read it as numbers or code decoration.</p>
+          <p><strong>Why this reading is strong:</strong> Lucide itself tags this icon with words like code, digits, computer, zero, one, and boolean.</p>
+          <p><strong>Other plausible readings:</strong></p>
+          <ul><li>bits and bytes</li><li>machine-readable values</li><li>technical code data</li></ul>
+          <ul class="evidence">
+            <li><strong>Official source:</strong> <a href="https://lucide.dev/icons/binary">https://lucide.dev/icons/binary</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="json-grid">
+        <section class="json-panel">
+          <h3>Current Record</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:binary&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;binary&quot;,
+  &quot;label&quot;: &quot;Binary Data&quot;,
+  &quot;purpose&quot;: &quot;Show binary data, machine-level encoding, or low-level computational representation.&quot;,
+  &quot;category&quot;: &quot;engineering_developer_tools&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;binary&quot;,
+    &quot;bits&quot;,
+    &quot;encoding&quot;,
+    &quot;machine data&quot;,
+    &quot;low-level compute&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to represent binary data, encoded output, or low-level machine-facing computation.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for general AI, agent behavior, or modular workflow concepts where the abstract bit pattern would be misleading.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;Abstract bit-like shapes arranged as machine-level binary marks.&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;binary code&quot;,
+    &quot;bit data&quot;,
+    &quot;machine encoding&quot;,
+    &quot;low-level data&quot;
+  ]
+}</code></pre>
+        </section>
+        <section class="json-panel">
+          <h3>Rich Review Notes (Internal)</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:binary&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;binary&quot;,
+  &quot;label&quot;: &quot;Binary Data&quot;,
+  &quot;popular_reading&quot;: &quot;Binary data or low-level digital values.&quot;,
+  &quot;plausible_readings&quot;: [
+    &quot;bits and bytes&quot;,
+    &quot;machine-readable values&quot;,
+    &quot;technical code data&quot;
+  ],
+  &quot;context_bias&quot;: &quot;Strongest in developer tools, data inspection, code, or systems contexts.&quot;,
+  &quot;ambiguity_note&quot;: &quot;Outside technical contexts, some users may only read it as numbers or code decoration.&quot;,
+  &quot;search_hints&quot;: [
+    &quot;Binary Data&quot;,
+    &quot;bits and bytes&quot;,
+    &quot;machine-readable values&quot;,
+    &quot;technical code data&quot;,
+    &quot;Binary data or low-level digital values.&quot;
+  ],
+  &quot;official_source_url&quot;: &quot;https://lucide.dev/icons/binary&quot;,
+  &quot;public_reference_url&quot;: null,
+  &quot;selection_reason&quot;: &quot;Lucide itself tags this icon with words like code, digits, computer, zero, one, and boolean.&quot;
+}</code></pre>
+        </section>
+        <section class="json-panel json-panel-wide">
+          <h3>Final Public Record Candidate</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:binary&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;binary&quot;,
+  &quot;label&quot;: &quot;Binary Data&quot;,
+  &quot;depicts&quot;: &quot;Abstract bit-like shapes arranged as machine-level binary marks.&quot;,
+  &quot;use_when&quot;: &quot;Strongest in developer tools, data inspection, code, or systems contexts.&quot;,
+  &quot;avoid_when&quot;: &quot;Outside technical contexts, some users may only read it as numbers or code decoration.&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;binary&quot;,
+    &quot;bits&quot;,
+    &quot;encoding&quot;,
+    &quot;machine data&quot;,
+    &quot;low-level compute&quot;,
+    &quot;bits and bytes&quot;,
+    &quot;machine-readable values&quot;,
+    &quot;technical code data&quot;,
+    &quot;Binary data or low-level digital values&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;binary code&quot;,
+    &quot;bit data&quot;,
+    &quot;machine encoding&quot;,
+    &quot;low-level data&quot;,
+    &quot;Binary Data&quot;,
+    &quot;bits and bytes&quot;,
+    &quot;machine-readable values&quot;,
+    &quot;technical code data&quot;,
+    &quot;Binary data or low-level digital values&quot;
+  ]
+}</code></pre>
+        </section>
+      </div>
+    </article>
+  
+
+    <article class="card" id="lucide:blocks">
+      <div class="top">
+        <div class="icon-panel">
+          <div class="icon-wrap"><svg class="lucide lucide-blocks" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2" /> <rect x="14" y="2" width="8" height="8" rx="1" /> </svg></div>
+        </div>
+        <div class="reading-panel">
+          <div class="order">Item 2</div>
+          <h2>Modules</h2>
+          <p><code>lucide:blocks</code></p>
+          <p><strong>Most common reading:</strong> Modules, building blocks, or composable parts.</p>
+          <p><strong>Context where it fits best:</strong> Strongest in modular systems, integrations, component libraries, or architecture views.</p>
+          <p><strong>Ambiguity note:</strong> It can also read as toy blocks or generic shapes if the surrounding product context is weak.</p>
+          <p><strong>Why this reading is strong:</strong> Lucide describes it with words like addon, plugin, integration, extension, package, build, and stack.</p>
+          <p><strong>Other plausible readings:</strong></p>
+          <ul><li>plugins or extensions</li><li>stacked components</li><li>structured layout pieces</li></ul>
+          <ul class="evidence">
+            <li><strong>Official source:</strong> <a href="https://lucide.dev/icons/blocks">https://lucide.dev/icons/blocks</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="json-grid">
+        <section class="json-panel">
+          <h3>Current Record</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:blocks&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;blocks&quot;,
+  &quot;label&quot;: &quot;Modules&quot;,
+  &quot;purpose&quot;: &quot;Show modular building blocks, composable components, or system pieces that fit together.&quot;,
+  &quot;category&quot;: &quot;systems_architecture&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;modules&quot;,
+    &quot;components&quot;,
+    &quot;blocks&quot;,
+    &quot;composable&quot;,
+    &quot;building blocks&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the interface refers to modular components, system blocks, or composable units that make up a larger whole.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for storage, files, or AI agent behavior where the block motif is too generic.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A large rounded block with a smaller detached block above it.&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;components&quot;,
+    &quot;modules&quot;,
+    &quot;building blocks&quot;,
+    &quot;composable pieces&quot;
+  ]
+}</code></pre>
+        </section>
+        <section class="json-panel">
+          <h3>Rich Review Notes (Internal)</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:blocks&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;blocks&quot;,
+  &quot;label&quot;: &quot;Modules&quot;,
+  &quot;popular_reading&quot;: &quot;Modules, building blocks, or composable parts.&quot;,
+  &quot;plausible_readings&quot;: [
+    &quot;plugins or extensions&quot;,
+    &quot;stacked components&quot;,
+    &quot;structured layout pieces&quot;
+  ],
+  &quot;context_bias&quot;: &quot;Strongest in modular systems, integrations, component libraries, or architecture views.&quot;,
+  &quot;ambiguity_note&quot;: &quot;It can also read as toy blocks or generic shapes if the surrounding product context is weak.&quot;,
+  &quot;search_hints&quot;: [
+    &quot;Modules&quot;,
+    &quot;plugins or extensions&quot;,
+    &quot;stacked components&quot;,
+    &quot;structured layout pieces&quot;,
+    &quot;Modules, building blocks, or composable parts.&quot;
+  ],
+  &quot;official_source_url&quot;: &quot;https://lucide.dev/icons/blocks&quot;,
+  &quot;public_reference_url&quot;: null,
+  &quot;selection_reason&quot;: &quot;Lucide describes it with words like addon, plugin, integration, extension, package, build, and stack.&quot;
+}</code></pre>
+        </section>
+        <section class="json-panel json-panel-wide">
+          <h3>Final Public Record Candidate</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:blocks&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;blocks&quot;,
+  &quot;label&quot;: &quot;Modules&quot;,
+  &quot;depicts&quot;: &quot;A large rounded block with a smaller detached block above it.&quot;,
+  &quot;use_when&quot;: &quot;Strongest in modular systems, integrations, component libraries, or architecture views.&quot;,
+  &quot;avoid_when&quot;: &quot;It can also read as toy blocks or generic shapes if the surrounding product context is weak.&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;modules&quot;,
+    &quot;components&quot;,
+    &quot;blocks&quot;,
+    &quot;composable&quot;,
+    &quot;building blocks&quot;,
+    &quot;plugins or extensions&quot;,
+    &quot;stacked components&quot;,
+    &quot;structured layout pieces&quot;,
+    &quot;Modules, building blocks, or composable parts&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;components&quot;,
+    &quot;modules&quot;,
+    &quot;building blocks&quot;,
+    &quot;composable pieces&quot;,
+    &quot;Modules&quot;,
+    &quot;plugins or extensions&quot;,
+    &quot;stacked components&quot;,
+    &quot;structured layout pieces&quot;,
+    &quot;Modules, building blocks, or composable parts&quot;
+  ]
+}</code></pre>
+        </section>
+      </div>
+    </article>
+  
+
+    <article class="card" id="lucide:bot-message-square">
+      <div class="top">
+        <div class="icon-panel">
+          <div class="icon-wrap"><svg class="lucide lucide-bot-message-square" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 6V2H8" /> <path d="M15 11v2" /> <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="M20 16a2 2 0 0 1-2 2H8.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 4 20.286V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" /> <path d="M9 11v2" /> </svg></div>
+        </div>
+        <div class="reading-panel">
+          <div class="order">Item 3</div>
+          <h2>Assistant Message</h2>
+          <p><code>lucide:bot-message-square</code></p>
+          <p><strong>Most common reading:</strong> Assistant message or bot reply.</p>
+          <p><strong>Context where it fits best:</strong> Strongest in chat, assistant, support, and agent workflows.</p>
+          <p><strong>Ambiguity note:</strong> It could be read more generally as bot chat, not necessarily one specific assistant role.</p>
+          <p><strong>Why this reading is strong:</strong> The icon combines a message shape with a bot face, so the reading is mainly conversational AI or bot messaging.</p>
+          <p><strong>Other plausible readings:</strong></p>
+          <ul><li>AI chat response</li><li>agent conversation</li><li>automated support reply</li></ul>
+          <ul class="evidence">
+            <li><strong>Official source:</strong> <a href="https://lucide.dev/icons/bot-message-square">https://lucide.dev/icons/bot-message-square</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="json-grid">
+        <section class="json-panel">
+          <h3>Current Record</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:bot-message-square&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;bot-message-square&quot;,
+  &quot;label&quot;: &quot;Assistant Message&quot;,
+  &quot;purpose&quot;: &quot;Show that a message or reply came from an AI assistant or automated agent.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;assistant&quot;,
+    &quot;bot&quot;,
+    &quot;agent&quot;,
+    &quot;chat&quot;,
+    &quot;reply&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when labeling assistant-authored replies, agent chat threads, or bot conversation surfaces.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for human-to-human chat, generic messaging, or broad AI branding with no message context.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A robot-like chat bubble with a message panel.&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;assistant reply&quot;,
+    &quot;bot message&quot;,
+    &quot;agent response&quot;,
+    &quot;ai chat&quot;
+  ]
+}</code></pre>
+        </section>
+        <section class="json-panel">
+          <h3>Rich Review Notes (Internal)</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:bot-message-square&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;bot-message-square&quot;,
+  &quot;label&quot;: &quot;Assistant Message&quot;,
+  &quot;popular_reading&quot;: &quot;Assistant message or bot reply.&quot;,
+  &quot;plausible_readings&quot;: [
+    &quot;AI chat response&quot;,
+    &quot;agent conversation&quot;,
+    &quot;automated support reply&quot;
+  ],
+  &quot;context_bias&quot;: &quot;Strongest in chat, assistant, support, and agent workflows.&quot;,
+  &quot;ambiguity_note&quot;: &quot;It could be read more generally as bot chat, not necessarily one specific assistant role.&quot;,
+  &quot;search_hints&quot;: [
+    &quot;Assistant Message&quot;,
+    &quot;AI chat response&quot;,
+    &quot;agent conversation&quot;,
+    &quot;automated support reply&quot;,
+    &quot;Assistant message or bot reply.&quot;
+  ],
+  &quot;official_source_url&quot;: &quot;https://lucide.dev/icons/bot-message-square&quot;,
+  &quot;public_reference_url&quot;: null,
+  &quot;selection_reason&quot;: &quot;The icon combines a message shape with a bot face, so the reading is mainly conversational AI or bot messaging.&quot;
+}</code></pre>
+        </section>
+        <section class="json-panel json-panel-wide">
+          <h3>Final Public Record Candidate</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:bot-message-square&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;bot-message-square&quot;,
+  &quot;label&quot;: &quot;Assistant Message&quot;,
+  &quot;depicts&quot;: &quot;A robot-like chat bubble with a message panel.&quot;,
+  &quot;use_when&quot;: &quot;Strongest in chat, assistant, support, and agent workflows.&quot;,
+  &quot;avoid_when&quot;: &quot;It could be read more generally as bot chat, not necessarily one specific assistant role.&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;assistant&quot;,
+    &quot;bot&quot;,
+    &quot;agent&quot;,
+    &quot;chat&quot;,
+    &quot;reply&quot;,
+    &quot;AI chat response&quot;,
+    &quot;agent conversation&quot;,
+    &quot;automated support reply&quot;,
+    &quot;Assistant message or bot reply&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;assistant reply&quot;,
+    &quot;bot message&quot;,
+    &quot;agent response&quot;,
+    &quot;ai chat&quot;,
+    &quot;Assistant Message&quot;,
+    &quot;AI chat response&quot;,
+    &quot;agent conversation&quot;,
+    &quot;automated support reply&quot;,
+    &quot;Assistant message or bot reply&quot;
+  ]
+}</code></pre>
+        </section>
+      </div>
+    </article>
+  
+
+    <article class="card" id="lucide:brain-circuit">
+      <div class="top">
+        <div class="icon-panel">
+          <div class="icon-wrap"><svg class="lucide lucide-brain-circuit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /> <path d="M9 13a4.5 4.5 0 0 0 3-4" /> <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /> <path d="M3.477 10.896a4 4 0 0 1 .585-.396" /> <path d="M6 18a4 4 0 0 1-1.967-.516" /> <path d="M12 13h4" /> <path d="M12 18h6a2 2 0 0 1 2 2v1" /> <path d="M12 8h8" /> <path d="M16 8V5a2 2 0 0 1 2-2" /> <circle cx="16" cy="13" r=".5" /> <circle cx="18" cy="3" r=".5" /> <circle cx="20" cy="21" r=".5" /> <circle cx="20" cy="8" r=".5" /> </svg></div>
+        </div>
+        <div class="reading-panel">
+          <div class="order">Item 4</div>
+          <h2>AI Reasoning</h2>
+          <p><code>lucide:brain-circuit</code></p>
+          <p><strong>Most common reading:</strong> AI reasoning, machine intelligence, or neural-style computation.</p>
+          <p><strong>Context where it fits best:</strong> Strongest in AI, inference, reasoning, automation, or intelligence features.</p>
+          <p><strong>Ambiguity note:</strong> It can be read either as AI reasoning or more broadly as intelligent systems.</p>
+          <p><strong>Why this reading is strong:</strong> The hybrid of brain and circuit imagery strongly points to intelligence plus computation rather than generic hardware.</p>
+          <p><strong>Other plausible readings:</strong></p>
+          <ul><li>smart automation</li><li>cognitive processing</li><li>brain plus circuitry</li></ul>
+          <ul class="evidence">
+            <li><strong>Official source:</strong> <a href="https://lucide.dev/icons/brain-circuit">https://lucide.dev/icons/brain-circuit</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="json-grid">
+        <section class="json-panel">
+          <h3>Current Record</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:brain-circuit&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;brain-circuit&quot;,
+  &quot;label&quot;: &quot;AI Reasoning&quot;,
+  &quot;purpose&quot;: &quot;Show AI reasoning, model cognition, or an intelligent processing step.&quot;,
+  &quot;category&quot;: &quot;agent_lifecycle&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;reasoning&quot;,
+    &quot;ai&quot;,
+    &quot;model&quot;,
+    &quot;cognition&quot;,
+    &quot;intelligence&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product needs to communicate AI reasoning, inference, or an intelligence-heavy processing stage.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for human psychology, learning content, or generic settings with no AI meaning.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A brain shape with circuit-style nodes and branches.&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;ai thinking&quot;,
+    &quot;model reasoning&quot;,
+    &quot;neural processing&quot;,
+    &quot;cognitive step&quot;
+  ]
+}</code></pre>
+        </section>
+        <section class="json-panel">
+          <h3>Rich Review Notes (Internal)</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:brain-circuit&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;brain-circuit&quot;,
+  &quot;label&quot;: &quot;AI Reasoning&quot;,
+  &quot;popular_reading&quot;: &quot;AI reasoning, machine intelligence, or neural-style computation.&quot;,
+  &quot;plausible_readings&quot;: [
+    &quot;smart automation&quot;,
+    &quot;cognitive processing&quot;,
+    &quot;brain plus circuitry&quot;
+  ],
+  &quot;context_bias&quot;: &quot;Strongest in AI, inference, reasoning, automation, or intelligence features.&quot;,
+  &quot;ambiguity_note&quot;: &quot;It can be read either as AI reasoning or more broadly as intelligent systems.&quot;,
+  &quot;search_hints&quot;: [
+    &quot;AI Reasoning&quot;,
+    &quot;smart automation&quot;,
+    &quot;cognitive processing&quot;,
+    &quot;brain plus circuitry&quot;,
+    &quot;AI reasoning, machine intelligence, or neural-style computation.&quot;
+  ],
+  &quot;official_source_url&quot;: &quot;https://lucide.dev/icons/brain-circuit&quot;,
+  &quot;public_reference_url&quot;: null,
+  &quot;selection_reason&quot;: &quot;The hybrid of brain and circuit imagery strongly points to intelligence plus computation rather than generic hardware.&quot;
+}</code></pre>
+        </section>
+        <section class="json-panel json-panel-wide">
+          <h3>Final Public Record Candidate</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:brain-circuit&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;brain-circuit&quot;,
+  &quot;label&quot;: &quot;AI Reasoning&quot;,
+  &quot;depicts&quot;: &quot;A brain shape with circuit-style nodes and branches.&quot;,
+  &quot;use_when&quot;: &quot;Strongest in AI, inference, reasoning, automation, or intelligence features.&quot;,
+  &quot;avoid_when&quot;: &quot;It can be read either as AI reasoning or more broadly as intelligent systems.&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;reasoning&quot;,
+    &quot;ai&quot;,
+    &quot;model&quot;,
+    &quot;cognition&quot;,
+    &quot;intelligence&quot;,
+    &quot;smart automation&quot;,
+    &quot;cognitive processing&quot;,
+    &quot;brain plus circuitry&quot;,
+    &quot;AI reasoning, machine intelligence, or neural-style computation&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;ai thinking&quot;,
+    &quot;model reasoning&quot;,
+    &quot;neural processing&quot;,
+    &quot;cognitive step&quot;,
+    &quot;AI Reasoning&quot;,
+    &quot;smart automation&quot;,
+    &quot;cognitive processing&quot;,
+    &quot;brain plus circuitry&quot;,
+    &quot;AI reasoning, machine intelligence, or neural-style computation&quot;
+  ]
+}</code></pre>
+        </section>
+      </div>
+    </article>
+  
+
+    <article class="card" id="lucide:circuit-board">
+      <div class="top">
+        <div class="icon-panel">
+          <div class="icon-wrap"><svg class="lucide lucide-circuit-board" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="18" x="3" y="3" rx="2" /> <path d="M11 9h4a2 2 0 0 0 2-2V3" /> <circle cx="9" cy="9" r="2" /> <path d="M7 21v-4a2 2 0 0 1 2-2h4" /> <circle cx="15" cy="15" r="2" /> </svg></div>
+        </div>
+        <div class="reading-panel">
+          <div class="order">Item 5</div>
+          <h2>Compute Architecture</h2>
+          <p><code>lucide:circuit-board</code></p>
+          <p><strong>Most common reading:</strong> Compute architecture, hardware logic, or system circuitry.</p>
+          <p><strong>Context where it fits best:</strong> Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.</p>
+          <p><strong>Ambiguity note:</strong> Some users may read it as generic tech rather than one exact hardware object.</p>
+          <p><strong>Why this reading is strong:</strong> The visual is clearly a board-and-trace structure, which makes the reading strongly technical and systems-oriented.</p>
+          <p><strong>Other plausible readings:</strong></p>
+          <ul><li>electronic board</li><li>technical infrastructure</li><li>low-level compute surface</li></ul>
+          <ul class="evidence">
+            <li><strong>Official source:</strong> <a href="https://lucide.dev/icons/circuit-board">https://lucide.dev/icons/circuit-board</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="json-grid">
+        <section class="json-panel">
+          <h3>Current Record</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:circuit-board&quot;,
+  &quot;source_group&quot;: &quot;free&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;circuit-board&quot;,
+  &quot;label&quot;: &quot;Compute Architecture&quot;,
+  &quot;purpose&quot;: &quot;Show compute architecture, system infrastructure, or low-level processing logic.&quot;,
+  &quot;category&quot;: &quot;systems_architecture&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;circuit board&quot;,
+    &quot;compute&quot;,
+    &quot;infrastructure&quot;,
+    &quot;architecture&quot;,
+    &quot;system logic&quot;
+  ],
+  &quot;use_when&quot;: &quot;Use when the product refers to compute infrastructure, technical architecture, backend processing, or system-level logic.&quot;,
+  &quot;avoid_when&quot;: &quot;Do not use for generic AI reasoning, workflow orchestration, or simple settings where the board metaphor would feel too infrastructure-heavy.&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;status&quot;: &quot;reviewed&quot;,
+  &quot;access_tier&quot;: &quot;public_open_record&quot;,
+  &quot;projection_policy&quot;: &quot;future_public_record&quot;,
+  &quot;is_premium&quot;: false,
+  &quot;depicts&quot;: &quot;A rounded square board with circuit nodes and traces.&quot;,
+  &quot;review_state&quot;: &quot;human_reviewed&quot;,
+  &quot;evidence&quot;: [
+    &quot;source_name&quot;,
+    &quot;visual_inspection&quot;,
+    &quot;editorial_judgment&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;compute architecture&quot;,
+    &quot;system infrastructure&quot;,
+    &quot;technical architecture&quot;,
+    &quot;processing system&quot;
+  ]
+}</code></pre>
+        </section>
+        <section class="json-panel">
+          <h3>Rich Review Notes (Internal)</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:circuit-board&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;circuit-board&quot;,
+  &quot;label&quot;: &quot;Compute Architecture&quot;,
+  &quot;popular_reading&quot;: &quot;Compute architecture, hardware logic, or system circuitry.&quot;,
+  &quot;plausible_readings&quot;: [
+    &quot;electronic board&quot;,
+    &quot;technical infrastructure&quot;,
+    &quot;low-level compute surface&quot;
+  ],
+  &quot;context_bias&quot;: &quot;Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.&quot;,
+  &quot;ambiguity_note&quot;: &quot;Some users may read it as generic tech rather than one exact hardware object.&quot;,
+  &quot;search_hints&quot;: [
+    &quot;Compute Architecture&quot;,
+    &quot;electronic board&quot;,
+    &quot;technical infrastructure&quot;,
+    &quot;low-level compute surface&quot;,
+    &quot;Compute architecture, hardware logic, or system circuitry.&quot;
+  ],
+  &quot;official_source_url&quot;: &quot;https://lucide.dev/icons/circuit-board&quot;,
+  &quot;public_reference_url&quot;: null,
+  &quot;selection_reason&quot;: &quot;The visual is clearly a board-and-trace structure, which makes the reading strongly technical and systems-oriented.&quot;
+}</code></pre>
+        </section>
+        <section class="json-panel json-panel-wide">
+          <h3>Final Public Record Candidate</h3>
+          <pre><code>{
+  &quot;icon_id&quot;: &quot;lucide:circuit-board&quot;,
+  &quot;source_library&quot;: &quot;lucide&quot;,
+  &quot;source_name&quot;: &quot;circuit-board&quot;,
+  &quot;label&quot;: &quot;Compute Architecture&quot;,
+  &quot;depicts&quot;: &quot;A rounded square board with circuit nodes and traces.&quot;,
+  &quot;use_when&quot;: &quot;Strongest in hardware, systems, architecture, developer tooling, or infrastructure views.&quot;,
+  &quot;avoid_when&quot;: &quot;Some users may read it as generic tech rather than one exact hardware object.&quot;,
+  &quot;semantic_tags&quot;: [
+    &quot;circuit board&quot;,
+    &quot;compute&quot;,
+    &quot;infrastructure&quot;,
+    &quot;architecture&quot;,
+    &quot;system logic&quot;,
+    &quot;electronic board&quot;,
+    &quot;technical infrastructure&quot;,
+    &quot;low-level compute surface&quot;,
+    &quot;Compute architecture, hardware logic, or system circuitry&quot;
+  ],
+  &quot;synonyms&quot;: [
+    &quot;compute architecture&quot;,
+    &quot;system infrastructure&quot;,
+    &quot;technical architecture&quot;,
+    &quot;processing system&quot;,
+    &quot;Compute Architecture&quot;,
+    &quot;electronic board&quot;,
+    &quot;technical infrastructure&quot;,
+    &quot;low-level compute surface&quot;,
+    &quot;Compute architecture, hardware logic, or system circuitry&quot;
+  ]
+}</code></pre>
+        </section>
+      </div>
+    </article>
+  
+  </main>
+</body>
+</html>
