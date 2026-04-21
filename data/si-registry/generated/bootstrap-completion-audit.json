@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-21T12:03:42.501Z",
+  "library_id": "bootstrap",
+  "library_label": "Bootstrap",
+  "library_order": 7,
+  "verdict": {
+    "status": "operationally_complete_with_follow_up",
+    "message": "The library is fully processed in the pipeline, but it still carries quality follow-up work.",
+    "recommended_next_step": "Keep the library closed for rollout sequencing, but schedule a later quality pass for holds and drafts."
+  },
+  "coverage": {
+    "source_total_icons": 1373,
+    "approved_records": 529,
+    "hold_records": 0,
+    "reviewed_drafts": 844,
+    "overlap_skipped": 0,
+    "processed_total": 1373,
+    "processed_matches_source_total": true
+  },
+  "projection": {
+    "public_registry_records": 529,
+    "prior_public_records_outside_library_rollout": 0,
+    "expected_public_registry_records": 529,
+    "matches_expected_public_registry_count": true
+  },
+  "quality_signals": {
+    "approved_ratio": 0.3853,
+    "hold_ratio": 0,
+    "draft_ratio": 0.6147,
+    "batch_count": 12,
+    "top_categories": [
+      {
+        "key": "navigation_interface",
+        "count": 178
+      },
+      {
+        "key": "status_feedback",
+        "count": 167
+      },
+      {
+        "key": "brand_identity",
+        "count": 77
+      },
+      {
+        "key": "data_controls",
+        "count": 24
+      },
+      {
+        "key": "system_control",
+        "count": 17
+      },
+      {
+        "key": "security",
+        "count": 16
+      },
+      {
+        "key": "analytics_data",
+        "count": 10
+      },
+      {
+        "key": "media_playback",
+        "count": 10
+      },
+      {
+        "key": "engineering_developer_tools",
+        "count": 9
+      },
+      {
+        "key": "message_actions",
+        "count": 6
+      },
+      {
+        "key": "destructive_actions",
+        "count": 5
+      },
+      {
+        "key": "agent_lifecycle",
+        "count": 3
+      },
+      {
+        "key": "security_auth",
+        "count": 3
+      },
+      {
+        "key": "search_discovery",
+        "count": 2
+      },
+      {
+        "key": "systems_architecture",
+        "count": 2
+      }
+    ],
+    "top_domains": [
+      {
+        "key": "ui_controls",
+        "count": 166
+      },
+      {
+        "key": "navigation",
+        "count": 140
+      },
+      {
+        "key": "brand_platforms",
+        "count": 50
+      },
+      {
+        "key": "ui_shell",
+        "count": 44
+      },
+      {
+        "key": "product_status",
+        "count": 43
+      },
+      {
+        "key": "developer_tools",
+        "count": 23
+      },
+      {
+        "key": "communication",
+        "count": 19
+      },
+      {
+        "key": "security",
+        "count": 19
+      },
+      {
+        "key": "media",
+        "count": 16
+      },
+      {
+        "key": "ai_agents",
+        "count": 6
+      },
+      {
+        "key": "commerce",
+        "count": 3
+      }
+    ]
+  },
+  "metadata_safety": {
+    "records_checked": 529,
+    "banned_field_hit_count": 0,
+    "banned_field_hits": []
+  },
+  "gaps": [
+    "844 icons are still kept as reviewed drafts, so the semantics are not fully approved yet."
+  ],
+  "manual_spotcheck": {
+    "approved_examples": [
+      "bootstrap:airplane",
+      "bootstrap:align_bottom",
+      "bootstrap:align_center",
+      "bootstrap:align_top",
+      "bootstrap:alipay",
+      "bootstrap:amd",
+      "bootstrap:android",
+      "bootstrap:anthropic"
+    ],
+    "hold_examples": [],
+    "draft_examples": [
+      "bootstrap:bookmark_plus",
+      "bootstrap:bookmark_x",
+      "bootstrap:collection_play",
+      "bootstrap:file_bar_graph",
+      "bootstrap:file_binary",
+      "bootstrap:file_break",
+      "bootstrap:file_diff",
+      "bootstrap:file_earmark"
+    ]
+  },
+  "report_paths": {
+    "json": "data/si-registry/generated/bootstrap-completion-audit.json",
+    "markdown": "docs/superpowers/plans/2026-04-21-bootstrap-completion-audit-report.md",
+    "html": "docs/superpowers/plans/2026-04-21-bootstrap-completion-audit-report.html"
+  }
+}

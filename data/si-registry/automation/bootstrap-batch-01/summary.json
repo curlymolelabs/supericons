@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "bootstrap-batch-01",
+  "library_id": "bootstrap",
+  "library_label": "Bootstrap",
+  "selected_count": 211,
+  "target_size": 240,
+  "target_min": 200,
+  "target_max": 320,
+  "reference_match_count": 170,
+  "family_counts": {
+    "status_security": 36,
+    "generic_controls": 24,
+    "systems_ai": 15,
+    "navigation_motion": 72,
+    "file_actions": 26,
+    "folder_actions": 6,
+    "ui_shell": 18,
+    "media_controls": 10,
+    "search_discovery": 4
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 188,
+    "needs_visual_review": 23,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "confidence_band_counts": {
+    "high_confidence": 188,
+    "needs_review": 23,
+    "ambiguous": 0
+  },
+  "worklist_path": "data/si-registry/automation/bootstrap-batch-01/worklist.json",
+  "candidate_record_path": "data/si-registry/automation/bootstrap-batch-01/candidate-records.json",
+  "review_queue_path": "data/si-registry/automation/bootstrap-batch-01/review-queue.json"
+}

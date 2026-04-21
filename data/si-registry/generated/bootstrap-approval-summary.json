@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0.0",
+  "library_id": "bootstrap",
+  "total_approved_records": 529,
+  "total_editor_hold_records": 0,
+  "total_reviewed_drafts": 844,
+  "overlap_skipped_count": 0,
+  "overlap_skipped_records": [],
+  "approved_by_category": {
+    "status_feedback": 167,
+    "data_controls": 24,
+    "brand_identity": 77,
+    "navigation_interface": 178,
+    "security": 16,
+    "engineering_developer_tools": 9,
+    "analytics_data": 10,
+    "system_control": 17,
+    "media_playback": 10,
+    "destructive_actions": 5,
+    "agent_lifecycle": 3,
+    "security_auth": 3,
+    "systems_architecture": 2,
+    "search_discovery": 2,
+    "message_actions": 6
+  },
+  "approved_by_domain": {
+    "navigation": 140,
+    "ui_controls": 166,
+    "brand_platforms": 50,
+    "ui_shell": 44,
+    "ai_agents": 6,
+    "product_status": 43,
+    "security": 19,
+    "media": 16,
+    "developer_tools": 23,
+    "communication": 19,
+    "commerce": 3
+  },
+  "batch_summaries": {
+    "bootstrap-editor-review-batch-01": {
+      "approve_for_import": 188,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-01": {
+      "approve_for_import": 3,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 20
+    },
+    "bootstrap-editor-review-batch-02": {
+      "approve_for_import": 236,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-02": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 4
+    },
+    "bootstrap-editor-review-batch-03": {
+      "approve_for_import": 57,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-03": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 183
+    },
+    "bootstrap-editor-review-batch-04": {
+      "approve_for_import": 19,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-04": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 221
+    },
+    "bootstrap-editor-review-batch-05": {
+      "approve_for_import": 11,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-05": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 229
+    },
+    "bootstrap-editor-review-batch-06": {
+      "approve_for_import": 15,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "bootstrap-visual-review-batch-06": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 187
+    }
+  },
+  "approved_record_path": "data/si-registry/automation/bootstrap/approved-records.json",
+  "editor_hold_queue_path": "data/si-registry/automation/bootstrap/editor-hold-queue.json"
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "bootstrap-visual-review-batch-02",
+  "reviewed_records": [
+    {
+      "icon_id": "bootstrap:calendar_plus",
+      "source_library": "bootstrap",
+      "source_name": "calendar_plus",
+      "label": "Calendar Plus",
+      "depicts": "A symbol representing calendar plus.",
+      "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "plus"
+      ],
+      "synonyms": [
+        "calendar",
+        "plus"
+      ],
+      "use_when": "Use when the interface refers directly to calendar plus as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "bootstrap:arrow_clockwise",
+      "source_library": "bootstrap",
+      "source_name": "arrow_clockwise",
+      "label": "Arrow Clockwise",
+      "depicts": "A symbol representing arrow clockwise.",
+      "purpose": "Show arrow clockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "clockwise"
+      ],
+      "synonyms": [
+        "arrow",
+        "clockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrow clockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "bootstrap:arrow_counterclockwise",
+      "source_library": "bootstrap",
+      "source_name": "arrow_counterclockwise",
+      "label": "Arrow Counterclockwise",
+      "depicts": "A symbol representing arrow counterclockwise.",
+      "purpose": "Show arrow counterclockwise as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "counterclockwise"
+      ],
+      "synonyms": [
+        "arrow",
+        "counterclockwise"
+      ],
+      "use_when": "Use when the interface refers directly to arrow counterclockwise as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "bootstrap:arrow_repeat",
+      "source_library": "bootstrap",
+      "source_name": "arrow_repeat",
+      "label": "Arrow Repeat",
+      "depicts": "A symbol representing arrow repeat.",
+      "purpose": "Show arrow repeat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "repeat"
+      ],
+      "synonyms": [
+        "arrow",
+        "repeat"
+      ],
+      "use_when": "Use when the interface refers directly to arrow repeat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    }
+  ]
+}
