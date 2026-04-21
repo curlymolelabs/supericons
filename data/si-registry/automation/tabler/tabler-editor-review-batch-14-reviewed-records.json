@@ -1,0 +1,340 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-editor-review-batch-14",
+  "reviewed_records": [
+    {
+      "icon_id": "tabler:devices_up",
+      "source_library": "tabler",
+      "source_name": "devices_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "devices"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:drag_drop",
+      "source_library": "tabler",
+      "source_name": "drag_drop",
+      "label": "Drag Handle",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show that an item can be dragged, moved, or reordered.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "drag",
+        "drop",
+        "control"
+      ],
+      "synonyms": [
+        "drag handle",
+        "drag control",
+        "drop control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:drag_drop_2",
+      "source_library": "tabler",
+      "source_name": "drag_drop_2",
+      "label": "Drag Handle",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show that an item can be dragged, moved, or reordered.",
+      "category": "system_control",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "drag",
+        "drop",
+        "2",
+        "control"
+      ],
+      "synonyms": [
+        "drag handle",
+        "drag control",
+        "drop control",
+        "2 control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:droplet_down",
+      "source_library": "tabler",
+      "source_name": "droplet_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "droplet"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:droplet_up",
+      "source_library": "tabler",
+      "source_name": "droplet_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "droplet"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:flag_down",
+      "source_library": "tabler",
+      "source_name": "flag_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "flag"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:flag_up",
+      "source_library": "tabler",
+      "source_name": "flag_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "flag"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:float_left",
+      "source_library": "tabler",
+      "source_name": "float_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "float"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:float_right",
+      "source_library": "tabler",
+      "source_name": "float_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "float"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:fold_down",
+      "source_library": "tabler",
+      "source_name": "fold_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "fold"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:fold_up",
+      "source_library": "tabler",
+      "source_name": "fold_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "fold"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    }
+  ]
+}

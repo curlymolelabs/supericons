@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-batch-02",
+  "library_id": "tabler",
+  "library_label": "Tabler",
+  "selected_count": 240,
+  "target_size": 240,
+  "target_min": 200,
+  "target_max": 320,
+  "reference_match_count": 138,
+  "family_counts": {
+    "status_security": 36,
+    "search_discovery": 20,
+    "generic_controls": 24,
+    "ui_shell": 18,
+    "navigation_motion": 72,
+    "systems_ai": 24,
+    "media_controls": 10,
+    "file_actions": 20,
+    "folder_actions": 1,
+    "messages_mail": 15
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 207,
+    "needs_visual_review": 33,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "confidence_band_counts": {
+    "high_confidence": 207,
+    "needs_review": 33,
+    "ambiguous": 0
+  },
+  "worklist_path": "data/si-registry/automation/tabler-batch-02/worklist.json",
+  "candidate_record_path": "data/si-registry/automation/tabler-batch-02/candidate-records.json",
+  "review_queue_path": "data/si-registry/automation/tabler-batch-02/review-queue.json"
+}

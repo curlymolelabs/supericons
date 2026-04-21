@@ -1,0 +1,474 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import publicIconIndex from '../public/icon-index.json' with { type: 'json' };
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.join(__dirname, '..');
+const automationRoot = path.join(repoRoot, 'data', 'si-registry', 'automation');
+const libraryDir = path.join(automationRoot, 'tabler');
+const generatedDir = path.join(repoRoot, 'data', 'si-registry', 'generated');
+
+const BATCH_ID = process.argv[2] || 'tabler-visual-review-batch-01';
+const SOURCE_BATCH_ID = process.argv[3] || 'tabler-batch-01';
+const existingBatchPath = path.join(libraryDir, `${BATCH_ID}.json`);
+
+const REVIEW_DECISIONS = Object.freeze({});
+
+async function readJson(filePath) {
+  return JSON.parse(await fs.readFile(filePath, 'utf8'));
+}
+
+async function readJsonOrDefault(filePath, fallbackValue) {
+  try {
+    return await readJson(filePath);
+  } catch (error) {
+    if (error?.code === 'ENOENT') {
+      return fallbackValue;
+    }
+    throw error;
+  }
+}
+
+async function writeJson(filePath, value) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  await fs.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+}
+
+async function writeText(filePath, value) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  await fs.writeFile(filePath, value, 'utf8');
+}
+
+function countBy(values, selector) {
+  return values.reduce((counts, value) => {
+    const key = selector(value);
+    counts[key] = (counts[key] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+function normalizeEvidenceSources(values) {
+  return [...new Set((values || []).map((value) => String(value).replaceAll('_', '-')))];
+}
+
+function getDecisionIconIds(batches, excludedBatchId) {
+  const resolved = new Set();
+  for (const [batchId, batchDecision] of Object.entries(batches || {})) {
+    if (batchId === excludedBatchId) continue;
+    for (const key of ['approve_for_import', 'hold_for_editor_review', 'keep_as_reviewed_draft']) {
+      for (const entry of batchDecision[key] || []) {
+        resolved.add(typeof entry === 'string' ? entry : entry.icon_id);
+      }
+    }
+  }
+  return resolved;
+}
+
+function buildBaseReviewedRecord(candidateRecord) {
+  const confidenceScore = candidateRecord.confidence ?? 0.8;
+  return {
+    icon_id: candidateRecord.icon_id,
+    source_library: candidateRecord.source_library,
+    source_name: candidateRecord.source_name,
+    label: candidateRecord.label,
+    depicts: candidateRecord.depicts,
+    purpose: candidateRecord.purpose,
+    category: candidateRecord.category,
+    intent: candidateRecord.intent,
+    domain: candidateRecord.domain,
+    semantic_tags: candidateRecord.semantic_tags,
+    synonyms: candidateRecord.synonyms || [],
+    use_when: candidateRecord.use_when,
+    avoid_when: candidateRecord.avoid_when,
+    evidence_sources: normalizeEvidenceSources(candidateRecord.evidence || ['source_name', 'svg_payload']),
+    confidence_score: confidenceScore,
+    confidence_band: confidenceScore >= 0.86 ? 'high' : 'medium',
+  };
+}
+
+function withOverrides(record, overrides) {
+  const reviewed = { ...record, ...overrides };
+  const confidenceScore = overrides.confidence_score ?? record.confidence_score;
+  reviewed.confidence_score = confidenceScore;
+  reviewed.confidence_band = confidenceScore >= 0.86 ? 'high' : 'medium';
+  return reviewed;
+}
+
+function tokenize(value) {
+  return String(value || '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/g)
+    .filter(Boolean);
+}
+
+function hasToken(tokens, token) {
+  return tokens.includes(token);
+}
+
+function buildGenericDraftDecision(note, confidenceScore = 0.74) {
+  return {
+    outcome: 'keep_as_reviewed_draft',
+    note,
+    overrides: {
+      confidence_score: confidenceScore,
+    },
+  };
+}
+
+function buildGenericHoldDecision(note, confidenceScore = 0.78) {
+  return {
+    outcome: 'hold_for_editor_review',
+    note,
+    overrides: {
+      confidence_score: confidenceScore,
+    },
+  };
+}
+
+function buildFallbackReviewDecision(record) {
+  const tokens = tokenize(record.source_name);
+  const isFile = hasToken(tokens, 'file');
+  const isFolder = hasToken(tokens, 'folder');
+  const thing = isFolder ? 'Folder' : 'File';
+  const thingLower = thing.toLowerCase();
+
+  if (isFile || isFolder) {
+    if (hasToken(tokens, 'archive')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Archive ${thing}`,
+          depicts: `A ${thingLower} paired with an archive cue.`,
+          purpose: `Show archiving, compressing, or opening a ${thingLower} archive.`,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: [`archive ${thingLower}`, `compressed ${thingLower}`, `zip ${thingLower}`, `${thingLower} archive`, 'storage'],
+          synonyms: [`zip ${thingLower}`, `compressed ${thingLower === 'folder' ? 'directory' : 'document'}`, `archive ${thingLower === 'folder' ? 'directory' : 'document'}`, `open ${thingLower} archive`],
+          use_when: `Use when the interface archives a ${thingLower}, opens a compressed ${thingLower}, or points to a ${thingLower} stored as an archive.`,
+          avoid_when: `Do not use for generic ${thingLower} browsing when the meaning is not specifically archive or compression.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'edit')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Edit ${thing}`,
+          depicts: `A ${thingLower} paired with an edit cue.`,
+          purpose: `Show editing or renaming a ${thingLower}${isFolder ? ' or directory' : ' or document'}.`,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: [`edit ${thingLower}`, `rename ${thingLower}`, `modify ${thingLower}`, `${thingLower} edit`, thingLower],
+          synonyms: [`rename ${thingLower}`, `edit ${isFolder ? 'directory' : 'document'}`, `modify ${thingLower}`, `change ${thingLower}`],
+          use_when: `Use when the interface edits, updates, or renames a ${thingLower}${isFolder ? ' or directory' : ' or document'}.`,
+          avoid_when: `Do not use for ${thingLower} creation or generic open-${thingLower} actions when the meaning is specifically editing.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'plus')) {
+      const addLabel = isFolder ? 'New Folder' : hasToken(tokens, '2') ? 'Add File' : 'New File';
+      const purpose = isFolder
+        ? 'Show creating or adding a new folder or directory.'
+        : hasToken(tokens, '2')
+          ? 'Show adding a file into the current context.'
+          : 'Show creating or adding a new file or document.';
+      const synonyms = isFolder
+        ? ['create folder', 'new directory', 'add directory', 'start folder']
+        : hasToken(tokens, '2')
+          ? ['insert file', 'attach document', 'add document', 'bring in file']
+          : ['create file', 'new document', 'add document', 'start file'];
+
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: addLabel,
+          depicts: `A ${thingLower} paired with an add cue${hasToken(tokens, '2') && !isFolder ? ' outside the file boundary' : ''}.`,
+          purpose,
+          category: 'system_control',
+          intent: 'act',
+          domain: 'ui_controls',
+          semantic_tags: isFolder
+            ? ['new folder', 'create folder', 'add folder', 'new directory', 'folder']
+            : hasToken(tokens, '2')
+              ? ['add file', 'insert file', 'attach file', 'new file', 'file']
+              : ['new file', 'create file', 'add file', 'new document', 'file'],
+          synonyms,
+          use_when: isFolder
+            ? 'Use when the interface creates a new folder or adds a folder into the current context.'
+            : hasToken(tokens, '2')
+              ? 'Use when the interface adds or attaches a file into the current context.'
+              : 'Use when the interface creates a new file or starts a new document.',
+          avoid_when: isFolder
+            ? 'Do not use for generic open-folder actions when the meaning is specifically adding a folder.'
+            : hasToken(tokens, '2')
+              ? 'Do not use for new blank-document creation when the meaning is specifically attaching or adding a file.'
+              : 'Do not use for import or upload flows when the meaning is specifically new file creation.',
+          confidence_score: isFolder ? 0.85 : 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'scan') && isFile) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: 'Scan File',
+          depicts: 'A file paired with a scan cue.',
+          purpose: 'Show scanning, inspecting, or capturing a document file.',
+          category: 'search_discovery',
+          intent: 'discover',
+          domain: 'ui_controls',
+          semantic_tags: ['scan file', 'document scan', 'inspect file', 'capture document', 'scan'],
+          synonyms: ['document scan', 'scan document', 'inspect file', 'capture file'],
+          use_when: 'Use when the interface scans, captures, or inspects a document or file surface.',
+          avoid_when: 'Do not use for generic file search when the meaning is specifically scan or capture.',
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'play') && isFile) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: 'Play File',
+          depicts: 'A file paired with a play cue.',
+          purpose: 'Show playing, previewing, or opening a playable media file.',
+          category: 'media_playback',
+          intent: 'act',
+          domain: 'media',
+          semantic_tags: ['play file', 'media file', 'preview media', 'playback', 'file'],
+          synonyms: ['preview file', 'play media file', 'open playable file', 'media preview'],
+          use_when: 'Use when the interface plays or previews a file meant for media playback.',
+          avoid_when: 'Do not use for generic open-file actions when the meaning is not specifically playback or media preview.',
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'x')) {
+      return {
+        outcome: 'approve_for_import',
+        overrides: {
+          label: `Remove ${thing}`,
+          depicts: `A ${thingLower} paired with a remove cue${hasToken(tokens, '2') && isFile ? ' outside the file boundary' : ''}.`,
+          purpose: `Show removing${isFile && hasToken(tokens, '2') ? ' or detaching' : ''}, clearing, or rejecting a ${thingLower}.`,
+          category: 'destructive_actions',
+          intent: 'delete',
+          domain: 'ui_controls',
+          semantic_tags: [`remove ${thingLower}`, `delete ${thingLower}`, `clear ${thingLower}`, `reject ${thingLower}`, thingLower],
+          synonyms: [`delete ${thingLower}`, `remove ${isFolder ? 'directory' : 'document'}`, isFolder ? 'discard folder' : 'discard file', isFolder ? 'clear directory' : 'clear document'],
+          use_when: `Use when the interface removes, clears, or rejects a ${thingLower} from the current context.`,
+          avoid_when: `Do not use for generic ${thingLower} errors when the meaning is specifically ${thingLower} removal.`,
+          confidence_score: 0.84,
+        },
+      };
+    }
+
+    if (hasToken(tokens, 'clock')) {
+      return buildGenericHoldDecision(
+        `The ${thingLower}-and-clock shape still blends recent ${thingLower}, scheduled ${thingLower}, and ${thingLower} history meanings.`
+      );
+    }
+
+    if (hasToken(tokens, 'user')) {
+      return buildGenericHoldDecision(
+        `The ${thingLower}-and-user shape still drifts across profile document, account export, and user-owned ${thingLower} meanings.`
+      );
+    }
+  }
+
+  if (hasToken(tokens, 'bug') && hasToken(tokens, 'play')) {
+    return buildGenericDraftDecision(
+      'The bug-and-play shape still mixes run debug, replay bug, and reproduce issue meanings too broadly for approval.',
+      0.72
+    );
+  }
+
+  return buildGenericDraftDecision(
+    'This Tabler shape still needs stronger nearby product wording before it is safe to approve.',
+    0.74
+  );
+}
+
+function getReviewDecision(reviewedRecord) {
+  return REVIEW_DECISIONS[reviewedRecord.icon_id] || buildFallbackReviewDecision(reviewedRecord);
+}
+
+const summary = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'summary.json'));
+const worklist = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'worklist.json'));
+const candidateRecords = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'candidate-records.json'));
+const reviewQueue = await readJson(path.join(automationRoot, SOURCE_BATCH_ID, 'review-queue.json'));
+const existingDecisions = await readJsonOrDefault(path.join(libraryDir, 'promotion-decisions.json'), {
+  schema_version: '1.0.0',
+  batches: {},
+});
+const existingBatch = await readJsonOrDefault(existingBatchPath, { selected_icon_ids: [], records: [] });
+
+const worklistById = new Map(worklist.map((record) => [record.icon_id, record]));
+const candidateById = new Map(candidateRecords.map((record) => [record.icon_id, record]));
+const iconIndexById = new Map((publicIconIndex.icons || []).map((icon) => [icon.id, icon]));
+const existingRecordsById = new Map((existingBatch.records || []).map((record) => [record.icon_id, record]));
+const resolvedOtherBatchIds = getDecisionIconIds(existingDecisions.batches, BATCH_ID);
+const liveSelectedIds = reviewQueue
+  .filter((item) => item.queue_outcome === 'needs_visual_review' && !resolvedOtherBatchIds.has(item.candidate_icon_id))
+  .map((item) => item.candidate_icon_id);
+const selectedIds = Array.isArray(existingBatch.selected_icon_ids) && existingBatch.selected_icon_ids.length >= liveSelectedIds.length
+  ? existingBatch.selected_icon_ids
+  : liveSelectedIds;
+
+const batchRecords = selectedIds.map((iconId) => {
+  const savedRecord = existingRecordsById.get(iconId);
+  if (savedRecord && !candidateById.has(iconId)) {
+    return savedRecord;
+  }
+
+  const worklistItem = worklistById.get(iconId);
+  const candidateRecord = candidateById.get(iconId);
+  const queueItem = reviewQueue.find((item) => item.candidate_icon_id === iconId);
+
+  if (!worklistItem || !candidateRecord || !queueItem) {
+    throw new Error(`Missing Tabler staged data for ${iconId}`);
+  }
+
+  if (queueItem.queue_outcome !== 'needs_visual_review') {
+    throw new Error(`Selected icon is not in the Tabler visual-review queue: ${iconId}`);
+  }
+
+  const sourceIcon = iconIndexById.get(candidateRecord.source_asset_name);
+  if (!sourceIcon?.svg) {
+    throw new Error(`Missing Tabler SVG payload for ${iconId}`);
+  }
+
+  return {
+    icon_id: iconId,
+    family_key: worklistItem.family_key,
+    selection_score: worklistItem.selection_score,
+    approved_reference_icon_id: worklistItem.approved_reference_icon_id,
+    queue_outcome: queueItem.queue_outcome,
+    current_candidate_record: candidateRecord,
+    visual_review_input: {
+      source_asset_name: candidateRecord.source_asset_name,
+      visual_payload_status: 'svg_available',
+      renderable_icon_payload: {
+        svg: sourceIcon.svg,
+      },
+    },
+  };
+});
+
+const reviewedRecords = batchRecords.map((record) => {
+  const baseRecord = buildBaseReviewedRecord(record.current_candidate_record);
+  const decision = getReviewDecision(baseRecord);
+  return withOverrides(baseRecord, decision.overrides || {});
+});
+
+const approveForImport = [];
+const holdForEditorReview = [];
+const keepAsReviewedDraft = [];
+
+for (const reviewedRecord of reviewedRecords) {
+  const decision = getReviewDecision(reviewedRecord);
+  if (decision.outcome === 'approve_for_import') {
+    approveForImport.push(reviewedRecord.icon_id);
+    continue;
+  }
+
+  if (decision.outcome === 'hold_for_editor_review') {
+    holdForEditorReview.push({
+      icon_id: reviewedRecord.icon_id,
+      note: decision.note,
+    });
+    continue;
+  }
+
+  if (decision.outcome === 'keep_as_reviewed_draft') {
+    keepAsReviewedDraft.push({
+      icon_id: reviewedRecord.icon_id,
+      note: decision.note,
+    });
+    continue;
+  }
+
+  throw new Error(`Unsupported Tabler review outcome for ${reviewedRecord.icon_id}`);
+}
+
+const promotionDecisions = {
+  ...existingDecisions,
+  batches: {
+    ...(existingDecisions.batches || {}),
+    [BATCH_ID]: {
+      approve_for_import: approveForImport,
+      hold_for_editor_review: holdForEditorReview,
+      keep_as_reviewed_draft: keepAsReviewedDraft,
+    },
+  },
+};
+
+const batchData = {
+  schema_version: '1.0.0',
+  batch_id: BATCH_ID,
+  source_batch_id: SOURCE_BATCH_ID,
+  library_id: summary.library_id,
+  library_label: summary.library_label,
+  purpose: `Resolve the visually ambiguous Tabler icons from ${SOURCE_BATCH_ID}.`,
+  selected_count: selectedIds.length,
+  selected_icon_ids: selectedIds,
+  counts: {
+    by_family: countBy(batchRecords, (record) => record.family_key),
+    by_queue: countBy(batchRecords, (record) => record.queue_outcome),
+  },
+  records: batchRecords,
+};
+
+const summaryPayload = {
+  schema_version: '1.0.0',
+  batch_id: BATCH_ID,
+  source_batch_id: SOURCE_BATCH_ID,
+  total_icons: reviewedRecords.length,
+  approved_for_import_count: approveForImport.length,
+  hold_for_editor_review_count: holdForEditorReview.length,
+  reviewed_draft_count: keepAsReviewedDraft.length,
+  by_family: countBy(batchRecords, (record) => record.family_key),
+  by_category: countBy(reviewedRecords, (record) => record.category),
+};
+
+const notes = `# ${BATCH_ID} Notes
+
+## Outcome
+
+- Total reviewed: ${reviewedRecords.length}
+- Approved for import: ${approveForImport.length}
+- Hold for editor review: ${holdForEditorReview.length}
+- Keep as reviewed draft: ${keepAsReviewedDraft.length}
+
+## Main pattern
+
+This batch resolves the visually ambiguous Tabler icons from ${SOURCE_BATCH_ID}.
+
+The icons that moved forward were the ones where the second cue reads clearly from the shape itself.
+
+The icons that stayed conservative are the ones where the extra cue still depends too much on nearby product wording.
+`;
+
+await writeJson(existingBatchPath, batchData);
+await writeJson(path.join(libraryDir, `${BATCH_ID}-reviewed-records.json`), {
+  schema_version: '1.0.0',
+  batch_id: BATCH_ID,
+  reviewed_records: reviewedRecords,
+});
+await writeJson(path.join(libraryDir, 'promotion-decisions.json'), promotionDecisions);
+await writeJson(path.join(generatedDir, `${BATCH_ID}-summary.json`), summaryPayload);
+await writeText(path.join(libraryDir, `${BATCH_ID}-notes.md`), notes);
+
+console.log(
+  `build-tabler-visual-review-batch: batch=${reviewedRecords.length}, approved=${approveForImport.length}, hold=${holdForEditorReview.length}, draft=${keepAsReviewedDraft.length}`
+);

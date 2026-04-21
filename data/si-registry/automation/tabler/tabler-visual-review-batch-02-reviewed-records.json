@@ -1,0 +1,925 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-visual-review-batch-02",
+  "reviewed_records": [
+    {
+      "icon_id": "tabler:calendar_pause",
+      "source_library": "tabler",
+      "source_name": "calendar_pause",
+      "label": "Calendar Pause",
+      "depicts": "A symbol representing calendar pause.",
+      "purpose": "Show calendar pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "calendar",
+        "pause"
+      ],
+      "synonyms": [
+        "calendar",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to calendar pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:clock_pause",
+      "source_library": "tabler",
+      "source_name": "clock_pause",
+      "label": "Clock Pause",
+      "depicts": "A symbol representing clock pause.",
+      "purpose": "Show clock pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "pause"
+      ],
+      "synonyms": [
+        "clock",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to clock pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:clock_play",
+      "source_library": "tabler",
+      "source_name": "clock_play",
+      "label": "Clock Play",
+      "depicts": "A symbol representing clock play.",
+      "purpose": "Show clock play as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "play"
+      ],
+      "synonyms": [
+        "clock",
+        "play"
+      ],
+      "use_when": "Use when the interface refers directly to clock play as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:clock_stop",
+      "source_library": "tabler",
+      "source_name": "clock_stop",
+      "label": "Clock Stop",
+      "depicts": "A symbol representing clock stop.",
+      "purpose": "Show clock stop as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "clock",
+        "stop"
+      ],
+      "synonyms": [
+        "clock",
+        "stop"
+      ],
+      "use_when": "Use when the interface refers directly to clock stop as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_settings",
+      "source_library": "tabler",
+      "source_name": "file_settings",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "settings"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "settings file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:folder_pause",
+      "source_library": "tabler",
+      "source_name": "folder_pause",
+      "label": "Folder",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a folder, container, or directory-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "folder",
+        "pause"
+      ],
+      "synonyms": [
+        "folder",
+        "folder folder",
+        "pause folder"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:settings_pause",
+      "source_library": "tabler",
+      "source_name": "settings_pause",
+      "label": "Settings Pause",
+      "depicts": "A symbol representing settings pause.",
+      "purpose": "Show settings pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "settings",
+        "pause"
+      ],
+      "synonyms": [
+        "settings",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to settings pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:user_pause",
+      "source_library": "tabler",
+      "source_name": "user_pause",
+      "label": "User Pause",
+      "depicts": "A symbol representing user pause.",
+      "purpose": "Show user pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "user",
+        "pause"
+      ],
+      "synonyms": [
+        "user",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to user pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:adjustments_pause",
+      "source_library": "tabler",
+      "source_name": "adjustments_pause",
+      "label": "Adjustments Pause",
+      "depicts": "A symbol representing adjustments pause.",
+      "purpose": "Show adjustments pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "adjustments",
+        "pause"
+      ],
+      "synonyms": [
+        "adjustments",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to adjustments pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:archery_arrow",
+      "source_library": "tabler",
+      "source_name": "archery_arrow",
+      "label": "Archery Arrow",
+      "depicts": "A symbol representing archery arrow.",
+      "purpose": "Show archery arrow as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "archery",
+        "arrow"
+      ],
+      "synonyms": [
+        "archery",
+        "arrow"
+      ],
+      "use_when": "Use when the interface refers directly to archery arrow as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:arrow_autofit_content",
+      "source_library": "tabler",
+      "source_name": "arrow_autofit_content",
+      "label": "Arrow Autofit Content",
+      "depicts": "A symbol representing arrow autofit content.",
+      "purpose": "Show arrow autofit content as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "autofit",
+        "content"
+      ],
+      "synonyms": [
+        "arrow",
+        "autofit",
+        "content"
+      ],
+      "use_when": "Use when the interface refers directly to arrow autofit content as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:arrow_autofit_height",
+      "source_library": "tabler",
+      "source_name": "arrow_autofit_height",
+      "label": "Arrow Autofit Height",
+      "depicts": "A symbol representing arrow autofit height.",
+      "purpose": "Show arrow autofit height as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "autofit",
+        "height"
+      ],
+      "synonyms": [
+        "arrow",
+        "autofit",
+        "height"
+      ],
+      "use_when": "Use when the interface refers directly to arrow autofit height as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:arrow_autofit_width",
+      "source_library": "tabler",
+      "source_name": "arrow_autofit_width",
+      "label": "Arrow Autofit Width",
+      "depicts": "A symbol representing arrow autofit width.",
+      "purpose": "Show arrow autofit width as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "autofit",
+        "width"
+      ],
+      "synonyms": [
+        "arrow",
+        "autofit",
+        "width"
+      ],
+      "use_when": "Use when the interface refers directly to arrow autofit width as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:arrow_bar_both",
+      "source_library": "tabler",
+      "source_name": "arrow_bar_both",
+      "label": "Arrow Bar Both",
+      "depicts": "A symbol representing arrow bar both.",
+      "purpose": "Show arrow bar both as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "arrow",
+        "bar",
+        "both"
+      ],
+      "synonyms": [
+        "arrow",
+        "bar",
+        "both"
+      ],
+      "use_when": "Use when the interface refers directly to arrow bar both as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:basket_pause",
+      "source_library": "tabler",
+      "source_name": "basket_pause",
+      "label": "Basket Pause",
+      "depicts": "A symbol representing basket pause.",
+      "purpose": "Show basket pause as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "basket",
+        "pause"
+      ],
+      "synonyms": [
+        "basket",
+        "pause"
+      ],
+      "use_when": "Use when the interface refers directly to basket pause as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:brand_google_play",
+      "source_library": "tabler",
+      "source_name": "brand_google_play",
+      "label": "Brand Google Play",
+      "depicts": "A symbol representing brand google play.",
+      "purpose": "Show brand google play as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "brand",
+        "google",
+        "play"
+      ],
+      "synonyms": [
+        "brand",
+        "google",
+        "play"
+      ],
+      "use_when": "Use when the interface refers directly to brand google play as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:bus_stop",
+      "source_library": "tabler",
+      "source_name": "bus_stop",
+      "label": "Bus Stop",
+      "depicts": "A symbol representing bus stop.",
+      "purpose": "Show bus stop as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "bus",
+        "stop"
+      ],
+      "synonyms": [
+        "bus",
+        "stop"
+      ],
+      "use_when": "Use when the interface refers directly to bus stop as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_3d",
+      "source_library": "tabler",
+      "source_name": "file_3d",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "3d"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "3d file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_analytics",
+      "source_library": "tabler",
+      "source_name": "file_analytics",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "analytics"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "analytics file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_barcode",
+      "source_library": "tabler",
+      "source_name": "file_barcode",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "barcode"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "barcode file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_bitcoin",
+      "source_library": "tabler",
+      "source_name": "file_bitcoin",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "bitcoin"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "bitcoin file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_broken",
+      "source_library": "tabler",
+      "source_name": "file_broken",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "broken"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "broken file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_chart",
+      "source_library": "tabler",
+      "source_name": "file_chart",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "chart"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "chart file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_cv",
+      "source_library": "tabler",
+      "source_name": "file_cv",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "cv"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "cv file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_delta",
+      "source_library": "tabler",
+      "source_name": "file_delta",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "delta"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "delta file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_description",
+      "source_library": "tabler",
+      "source_name": "file_description",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "description"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "description file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_diff",
+      "source_library": "tabler",
+      "source_name": "file_diff",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "diff"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "diff file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_digit",
+      "source_library": "tabler",
+      "source_name": "file_digit",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "digit"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "digit file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_dislike",
+      "source_library": "tabler",
+      "source_name": "file_dislike",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "dislike"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "dislike file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_dollar",
+      "source_library": "tabler",
+      "source_name": "file_dollar",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "dollar"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "dollar file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_dots",
+      "source_library": "tabler",
+      "source_name": "file_dots",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "dots"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "dots file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_euro",
+      "source_library": "tabler",
+      "source_name": "file_euro",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "euro"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "euro file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:file_excel",
+      "source_library": "tabler",
+      "source_name": "file_excel",
+      "label": "File",
+      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "purpose": "Show a file, document, or file-related action.",
+      "category": "system_control",
+      "intent": "inform",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "file",
+        "excel"
+      ],
+      "synonyms": [
+        "file",
+        "file file",
+        "excel file"
+      ],
+      "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+      "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.74,
+      "confidence_band": "medium"
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-visual-review-batch-22",
+  "source_batch_id": "tabler-batch-22",
+  "library_id": "tabler",
+  "library_label": "Tabler",
+  "purpose": "Resolve the visually ambiguous Tabler icons from tabler-batch-22.",
+  "selected_count": 4,
+  "selected_icon_ids": [
+    "tabler:number_97_small",
+    "tabler:number_98_small",
+    "tabler:number_99_small",
+    "tabler:selector"
+  ],
+  "counts": {
+    "by_family": {
+      "generic_controls": 4
+    },
+    "by_queue": {
+      "needs_visual_review": 4
+    }
+  },
+  "records": [
+    {
+      "icon_id": "tabler:number_97_small",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:number_97_small",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "number_97_small",
+        "source_asset_name": "number-97-small",
+        "label": "Number Small",
+        "purpose": "Show number small as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "number",
+          "97",
+          "small"
+        ],
+        "use_when": "Use when the interface refers directly to number small as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing number small.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "number",
+          "97",
+          "small"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "number-97-small",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-number-97-small\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 8h4l-2 8\" /> <path d=\"M6 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:number_98_small",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:number_98_small",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "number_98_small",
+        "source_asset_name": "number-98-small",
+        "label": "Number Small",
+        "purpose": "Show number small as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "number",
+          "98",
+          "small"
+        ],
+        "use_when": "Use when the interface refers directly to number small as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing number small.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "number",
+          "98",
+          "small"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "number-98-small",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-number-98-small\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M16 12h-1a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1\" /> <path d=\"M6 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:number_99_small",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:number_99_small",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "number_99_small",
+        "source_asset_name": "number-99-small",
+        "label": "Number Small",
+        "purpose": "Show number small as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "number",
+          "99",
+          "small"
+        ],
+        "use_when": "Use when the interface refers directly to number small as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing number small.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "number",
+          "99",
+          "small"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "number-99-small",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-number-99-small\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3\" /> <path d=\"M6 15a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:selector",
+      "family_key": "generic_controls",
+      "selection_score": -1,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:selector",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "selector",
+        "source_asset_name": "selector",
+        "label": "Selector",
+        "purpose": "Show selector as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "selector"
+        ],
+        "use_when": "Use when the interface refers directly to selector as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing selector.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "selector"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "selector",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-selector\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M8 9l4 -4l4 4\" /> <path d=\"M16 15l-4 4l-4 -4\" /> </svg>"
+        }
+      }
+    }
+  ]
+}

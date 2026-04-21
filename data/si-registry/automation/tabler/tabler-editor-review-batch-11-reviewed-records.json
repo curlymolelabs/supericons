@@ -1,0 +1,671 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-editor-review-batch-11",
+  "reviewed_records": [
+    {
+      "icon_id": "tabler:brightness_down",
+      "source_library": "tabler",
+      "source_name": "brightness_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "brightness"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:brightness_up",
+      "source_library": "tabler",
+      "source_name": "brightness_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "brightness"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:camera_down",
+      "source_library": "tabler",
+      "source_name": "camera_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "camera"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:camera_up",
+      "source_library": "tabler",
+      "source_name": "camera_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "camera"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:caret_down",
+      "source_library": "tabler",
+      "source_name": "caret_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "caret"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:caret_left",
+      "source_library": "tabler",
+      "source_name": "caret_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "caret"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:caret_left_right",
+      "source_library": "tabler",
+      "source_name": "caret_left_right",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "caret",
+        "right"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:caret_right",
+      "source_library": "tabler",
+      "source_name": "caret_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "caret"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:caret_up",
+      "source_library": "tabler",
+      "source_name": "caret_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "caret"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:caret_up_down",
+      "source_library": "tabler",
+      "source_name": "caret_up_down",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "caret",
+        "down"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:chevrons_down_left",
+      "source_library": "tabler",
+      "source_name": "chevrons_down_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "chevrons",
+        "down"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:chevrons_down_right",
+      "source_library": "tabler",
+      "source_name": "chevrons_down_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "chevrons",
+        "down"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:chevrons_up_left",
+      "source_library": "tabler",
+      "source_name": "chevrons_up_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "chevrons",
+        "up"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:chevrons_up_right",
+      "source_library": "tabler",
+      "source_name": "chevrons_up_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "chevrons",
+        "up"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:circle_caret_down",
+      "source_library": "tabler",
+      "source_name": "circle_caret_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "circle",
+        "caret"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:circle_caret_left",
+      "source_library": "tabler",
+      "source_name": "circle_caret_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "circle",
+        "caret"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:circle_caret_right",
+      "source_library": "tabler",
+      "source_name": "circle_caret_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "circle",
+        "caret"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:circle_caret_up",
+      "source_library": "tabler",
+      "source_name": "circle_caret_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "circle",
+        "caret"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:circle_chevrons_down",
+      "source_library": "tabler",
+      "source_name": "circle_chevrons_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "circle",
+        "chevrons"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:circle_chevrons_left",
+      "source_library": "tabler",
+      "source_name": "circle_chevrons_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "circle",
+        "chevrons"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:circle_chevrons_right",
+      "source_library": "tabler",
+      "source_name": "circle_chevrons_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "circle",
+        "chevrons"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    }
+  ]
+}

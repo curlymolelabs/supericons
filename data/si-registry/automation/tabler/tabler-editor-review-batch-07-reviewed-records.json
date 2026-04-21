@@ -1,0 +1,1551 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-editor-review-batch-07",
+  "reviewed_records": [
+    {
+      "icon_id": "tabler:cube_send",
+      "source_library": "tabler",
+      "source_name": "cube_send",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "cube",
+        "send",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "cube message",
+        "send message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:droplet_check",
+      "source_library": "tabler",
+      "source_name": "droplet_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "droplet",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "droplet status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:droplet_code",
+      "source_library": "tabler",
+      "source_name": "droplet_code",
+      "label": "Code",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+      "category": "engineering_developer_tools",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "droplet",
+        "code",
+        "engineering developer tools"
+      ],
+      "synonyms": [
+        "code",
+        "droplet tool",
+        "code tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:firewall_check",
+      "source_library": "tabler",
+      "source_name": "firewall_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "firewall",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "firewall status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:flag_check",
+      "source_library": "tabler",
+      "source_name": "flag_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "flag",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "flag status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:heart_check",
+      "source_library": "tabler",
+      "source_name": "heart_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "heart",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "heart status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:history_toggle",
+      "source_library": "tabler",
+      "source_name": "history_toggle",
+      "label": "Enabled Toggle",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show that a setting, control, or feature is switched on or enabled.",
+      "category": "status_feedback",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "history",
+        "toggle",
+        "control"
+      ],
+      "synonyms": [
+        "enabled toggle",
+        "history control",
+        "toggle control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:info_hexagon",
+      "source_library": "tabler",
+      "source_name": "info_hexagon",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "hexagon",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status",
+        "hexagon status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:info_octagon",
+      "source_library": "tabler",
+      "source_name": "info_octagon",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "octagon",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status",
+        "octagon status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:info_square",
+      "source_library": "tabler",
+      "source_name": "info_square",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "square",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status",
+        "square status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:info_square_rounded",
+      "source_library": "tabler",
+      "source_name": "info_square_rounded",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "square",
+        "rounded",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status",
+        "square status",
+        "rounded status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:info_triangle",
+      "source_library": "tabler",
+      "source_name": "info_triangle",
+      "label": "Info",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show additional information, explanation, or a helpful details state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "info",
+        "triangle",
+        "status"
+      ],
+      "synonyms": [
+        "info",
+        "info status",
+        "triangle status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:input_check",
+      "source_library": "tabler",
+      "source_name": "input_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "input",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "input status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:letter_case_toggle",
+      "source_library": "tabler",
+      "source_name": "letter_case_toggle",
+      "label": "Enabled Toggle",
+      "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+      "purpose": "Show that a setting, control, or feature is switched on or enabled.",
+      "category": "status_feedback",
+      "intent": "control",
+      "domain": "ui_controls",
+      "semantic_tags": [
+        "letter",
+        "case",
+        "toggle",
+        "control"
+      ],
+      "synonyms": [
+        "enabled toggle",
+        "letter control",
+        "case control",
+        "toggle control"
+      ],
+      "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+      "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:location_check",
+      "source_library": "tabler",
+      "source_name": "location_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "location",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "location status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:map_check",
+      "source_library": "tabler",
+      "source_name": "map_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "map",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "map status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:map_shield",
+      "source_library": "tabler",
+      "source_name": "map_shield",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "map",
+        "shield",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "map security",
+        "shield security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:message_circle_minus",
+      "source_library": "tabler",
+      "source_name": "message_circle_minus",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "circle",
+        "minus",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "circle message",
+        "minus message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_circle_pin",
+      "source_library": "tabler",
+      "source_name": "message_circle_pin",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "circle",
+        "pin",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "circle message",
+        "pin message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_circle_share",
+      "source_library": "tabler",
+      "source_name": "message_circle_share",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "circle",
+        "share",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "circle message",
+        "share message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_circle_star",
+      "source_library": "tabler",
+      "source_name": "message_circle_star",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "circle",
+        "star",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "circle message",
+        "star message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_cog",
+      "source_library": "tabler",
+      "source_name": "message_cog",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "cog",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "cog message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_dollar",
+      "source_library": "tabler",
+      "source_name": "message_dollar",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "dollar",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "dollar message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_dots",
+      "source_library": "tabler",
+      "source_name": "message_dots",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "dots",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "dots message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_exclamation",
+      "source_library": "tabler",
+      "source_name": "message_exclamation",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "exclamation",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "exclamation message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_heart",
+      "source_library": "tabler",
+      "source_name": "message_heart",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "heart",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "heart message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_language",
+      "source_library": "tabler",
+      "source_name": "message_language",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "language",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "language message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_minus",
+      "source_library": "tabler",
+      "source_name": "message_minus",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "minus",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "minus message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_off",
+      "source_library": "tabler",
+      "source_name": "message_off",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "off",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "off message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_pin",
+      "source_library": "tabler",
+      "source_name": "message_pin",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "pin",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "pin message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_question",
+      "source_library": "tabler",
+      "source_name": "message_question",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "question",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "question message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_reply",
+      "source_library": "tabler",
+      "source_name": "message_reply",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "reply",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "reply message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_report",
+      "source_library": "tabler",
+      "source_name": "message_report",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "report",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "report message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_share",
+      "source_library": "tabler",
+      "source_name": "message_share",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "share",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "share message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:message_star",
+      "source_library": "tabler",
+      "source_name": "message_star",
+      "label": "Message",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show messages, conversation, or a communication surface.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "message",
+        "star",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "message message",
+        "star message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:mood_check",
+      "source_library": "tabler",
+      "source_name": "mood_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "mood",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "mood status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:music_check",
+      "source_library": "tabler",
+      "source_name": "music_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "music",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "music status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:music_code",
+      "source_library": "tabler",
+      "source_name": "music_code",
+      "label": "Code",
+      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+      "category": "engineering_developer_tools",
+      "intent": "inform",
+      "domain": "developer_tools",
+      "semantic_tags": [
+        "music",
+        "code",
+        "engineering developer tools"
+      ],
+      "synonyms": [
+        "code",
+        "music tool",
+        "code tool"
+      ],
+      "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+      "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:navigation_check",
+      "source_library": "tabler",
+      "source_name": "navigation_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "navigation",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "navigation status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:pencil_check",
+      "source_library": "tabler",
+      "source_name": "pencil_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "pencil",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "pencil status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:phone_check",
+      "source_library": "tabler",
+      "source_name": "phone_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "phone",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "phone status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:photo_check",
+      "source_library": "tabler",
+      "source_name": "photo_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "photo",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "photo status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:photo_shield",
+      "source_library": "tabler",
+      "source_name": "photo_shield",
+      "label": "Protection",
+      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "purpose": "Show protection, defense, or a security safeguard.",
+      "category": "security",
+      "intent": "inform",
+      "domain": "security",
+      "semantic_tags": [
+        "photo",
+        "shield",
+        "security"
+      ],
+      "synonyms": [
+        "protection",
+        "secure access",
+        "photo security",
+        "shield security"
+      ],
+      "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+      "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:pointer_check",
+      "source_library": "tabler",
+      "source_name": "pointer_check",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "pointer",
+        "check",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "pointer status",
+        "check status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:progress_alert",
+      "source_library": "tabler",
+      "source_name": "progress_alert",
+      "label": "Warning",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a warning, caution, or state that needs attention.",
+      "category": "status_feedback",
+      "intent": "warn",
+      "domain": "product_status",
+      "semantic_tags": [
+        "progress",
+        "alert",
+        "status"
+      ],
+      "synonyms": [
+        "warning",
+        "progress status",
+        "alert status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:record_mail",
+      "source_library": "tabler",
+      "source_name": "record_mail",
+      "label": "Mail",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show mail, email communication, or an email-related action.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "record",
+        "mail",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "record message",
+        "mail message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:record_mail_off",
+      "source_library": "tabler",
+      "source_name": "record_mail_off",
+      "label": "Mail",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show mail, email communication, or an email-related action.",
+      "category": "communication_social",
+      "intent": "inform",
+      "domain": "communication",
+      "semantic_tags": [
+        "record",
+        "mail",
+        "off",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "record message",
+        "mail message",
+        "off message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:rosette_discount_check_off",
+      "source_library": "tabler",
+      "source_name": "rosette_discount_check_off",
+      "label": "Confirmed",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show a confirmed, completed, or accepted state.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "rosette",
+        "discount",
+        "check",
+        "off",
+        "status"
+      ],
+      "synonyms": [
+        "confirmed",
+        "rosette status",
+        "discount status",
+        "check status",
+        "off status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:school_bell",
+      "source_library": "tabler",
+      "source_name": "school_bell",
+      "label": "Notification",
+      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "purpose": "Show notifications, alerts, or attention for incoming events.",
+      "category": "status_feedback",
+      "intent": "inform",
+      "domain": "product_status",
+      "semantic_tags": [
+        "school",
+        "bell",
+        "status"
+      ],
+      "synonyms": [
+        "notification",
+        "school status",
+        "bell status"
+      ],
+      "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+      "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.85,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:send_2",
+      "source_library": "tabler",
+      "source_name": "send_2",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "2",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "send message",
+        "2 message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:send_off",
+      "source_library": "tabler",
+      "source_name": "send_off",
+      "label": "Send",
+      "depicts": "A message or mail symbol used for communication and message flow.",
+      "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+      "category": "message_actions",
+      "intent": "act",
+      "domain": "communication",
+      "semantic_tags": [
+        "send",
+        "off",
+        "communication"
+      ],
+      "synonyms": [
+        "message",
+        "mail",
+        "send",
+        "send message",
+        "off message"
+      ],
+      "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+      "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.84,
+      "confidence_band": "medium"
+    }
+  ]
+}

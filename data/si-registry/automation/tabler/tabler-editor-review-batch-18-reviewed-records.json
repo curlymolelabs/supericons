@@ -1,0 +1,513 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-editor-review-batch-18",
+  "reviewed_records": [
+    {
+      "icon_id": "tabler:pointer_down",
+      "source_library": "tabler",
+      "source_name": "pointer_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "pointer"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:pointer_up",
+      "source_library": "tabler",
+      "source_name": "pointer_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "pointer"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:progress_down",
+      "source_library": "tabler",
+      "source_name": "progress_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "progress"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:radius_bottom_left",
+      "source_library": "tabler",
+      "source_name": "radius_bottom_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "radius",
+        "bottom"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:radius_bottom_right",
+      "source_library": "tabler",
+      "source_name": "radius_bottom_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "radius",
+        "bottom"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:radius_top_left",
+      "source_library": "tabler",
+      "source_name": "radius_top_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "radius",
+        "top"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:radius_top_right",
+      "source_library": "tabler",
+      "source_name": "radius_top_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "radius",
+        "top"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:ripple_down",
+      "source_library": "tabler",
+      "source_name": "ripple_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "ripple"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:ripple_up",
+      "source_library": "tabler",
+      "source_name": "ripple_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "ripple"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:route_alt_left",
+      "source_library": "tabler",
+      "source_name": "route_alt_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "route",
+        "alt"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:route_alt_right",
+      "source_library": "tabler",
+      "source_name": "route_alt_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "route",
+        "alt"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:s_turn_down",
+      "source_library": "tabler",
+      "source_name": "s_turn_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "s",
+        "turn"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:s_turn_left",
+      "source_library": "tabler",
+      "source_name": "s_turn_left",
+      "label": "Back",
+      "depicts": "A left-facing arrow or backward navigation cue.",
+      "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "back",
+        "previous",
+        "left",
+        "navigation",
+        "s",
+        "turn"
+      ],
+      "synonyms": [
+        "go back",
+        "previous screen",
+        "return",
+        "back navigation"
+      ],
+      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:s_turn_right",
+      "source_library": "tabler",
+      "source_name": "s_turn_right",
+      "label": "Forward",
+      "depicts": "A right-facing arrow or forward navigation cue.",
+      "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "forward",
+        "next",
+        "right",
+        "navigation",
+        "s",
+        "turn"
+      ],
+      "synonyms": [
+        "go forward",
+        "next screen",
+        "continue",
+        "forward navigation"
+      ],
+      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.86,
+      "confidence_band": "high"
+    },
+    {
+      "icon_id": "tabler:s_turn_up",
+      "source_library": "tabler",
+      "source_name": "s_turn_up",
+      "label": "Move Up",
+      "depicts": "An upward arrow or movement cue.",
+      "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "up",
+        "move",
+        "navigation",
+        "s",
+        "turn"
+      ],
+      "synonyms": [
+        "move up",
+        "go up",
+        "higher position"
+      ],
+      "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    },
+    {
+      "icon_id": "tabler:shopping_cart_down",
+      "source_library": "tabler",
+      "source_name": "shopping_cart_down",
+      "label": "Move Down",
+      "depicts": "A downward arrow or movement cue.",
+      "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+      "category": "navigation_interface",
+      "intent": "navigate",
+      "domain": "navigation",
+      "semantic_tags": [
+        "down",
+        "move",
+        "navigation",
+        "shopping",
+        "cart"
+      ],
+      "synonyms": [
+        "move down",
+        "go down",
+        "lower position"
+      ],
+      "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+      "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+      "evidence_sources": [
+        "source-name",
+        "svg-payload"
+      ],
+      "confidence_score": 0.82,
+      "confidence_band": "medium"
+    }
+  ]
+}

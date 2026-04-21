@@ -1,0 +1,2950 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "tabler-visual-review-batch-04",
+  "source_batch_id": "tabler-batch-04",
+  "library_id": "tabler",
+  "library_label": "Tabler",
+  "purpose": "Resolve the visually ambiguous Tabler icons from tabler-batch-04.",
+  "selected_count": 59,
+  "selected_icon_ids": [
+    "tabler:bookmark_plus",
+    "tabler:calendar_clock",
+    "tabler:calendar_plus",
+    "tabler:calendar_user",
+    "tabler:clock_edit",
+    "tabler:clock_plus",
+    "tabler:clock_x",
+    "tabler:arrow_rotary_straight",
+    "tabler:arrow_zig_zag",
+    "tabler:error_404",
+    "tabler:error_404_off",
+    "tabler:face_id_error",
+    "tabler:file_text",
+    "tabler:file_text_spark",
+    "tabler:file_time",
+    "tabler:file_type_bmp",
+    "tabler:file_type_css",
+    "tabler:file_type_csv",
+    "tabler:file_type_doc",
+    "tabler:file_type_docx",
+    "tabler:file_type_html",
+    "tabler:file_type_jpg",
+    "tabler:file_type_js",
+    "tabler:file_type_jsx",
+    "tabler:file_type_pdf",
+    "tabler:file_type_php",
+    "tabler:file_type_png",
+    "tabler:file_type_ppt",
+    "tabler:file_type_rs",
+    "tabler:file_type_sql",
+    "tabler:file_type_svg",
+    "tabler:file_type_ts",
+    "tabler:file_type_tsx",
+    "tabler:file_type_txt",
+    "tabler:file_type_vue",
+    "tabler:file_type_xls",
+    "tabler:file_type_xml",
+    "tabler:file_type_zip",
+    "tabler:flag_pause",
+    "tabler:hand_stop",
+    "tabler:heart_pause",
+    "tabler:location_pause",
+    "tabler:map_pause",
+    "tabler:map_pin_pause",
+    "tabler:navigation_pause",
+    "tabler:object_scan",
+    "tabler:pencil_pause",
+    "tabler:phone_pause",
+    "tabler:photo_pause",
+    "tabler:photo_scan",
+    "tabler:route_scan",
+    "tabler:scan_position",
+    "tabler:scan_traces",
+    "tabler:target_arrow",
+    "tabler:text_scan_2",
+    "tabler:view_360_arrow",
+    "tabler:zoom_scan",
+    "tabler:layout_align_left",
+    "tabler:layout_align_right"
+  ],
+  "counts": {
+    "by_family": {
+      "generic_controls": 7,
+      "navigation_motion": 6,
+      "status_security": 3,
+      "file_actions": 26,
+      "media_controls": 10,
+      "search_discovery": 7
+    },
+    "by_queue": {
+      "needs_visual_review": 59
+    }
+  },
+  "records": [
+    {
+      "icon_id": "tabler:bookmark_plus",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:bookmark_plus",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "bookmark_plus",
+        "source_asset_name": "bookmark-plus",
+        "label": "Bookmark Plus",
+        "purpose": "Show bookmark plus as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "bookmark",
+          "plus"
+        ],
+        "use_when": "Use when the interface refers directly to bookmark plus as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing bookmark plus.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "bookmark",
+          "plus"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "bookmark-plus",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bookmark-plus\" viewBox=\"0 0 16 16\"> <path d=\"M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z\"/> <path d=\"M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:calendar_clock",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:calendar_clock",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "calendar_clock",
+        "source_asset_name": "calendar-clock",
+        "label": "Calendar Clock",
+        "purpose": "Show calendar clock as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "calendar",
+          "clock"
+        ],
+        "use_when": "Use when the interface refers directly to calendar clock as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing calendar clock.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "calendar",
+          "clock"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "calendar-clock",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-calendar-clock\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h10\" /> <path d=\"M14 18a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M18 16.5v1.5l.5 .5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:calendar_plus",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:calendar_plus",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "calendar_plus",
+        "source_asset_name": "calendar-plus",
+        "label": "Calendar Plus",
+        "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "calendar",
+          "plus"
+        ],
+        "use_when": "Use when the interface refers directly to calendar plus as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing calendar plus.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "calendar",
+          "plus"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "calendar-plus",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M13 21H5C3.89543 21 3 20.1046 3 19V10H21V13M15 4V2M15 4V6M15 4H10.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M3 10V6C3 4.89543 3.89543 4 5 4H7\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M7 2V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M21 10V6C21 4.89543 20.1046 4 19 4H18.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M15.9922 19H18.9922M22 19H18.9922M18.9922 19V16M18.9922 19V22\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:calendar_user",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:calendar_user",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "calendar_user",
+        "source_asset_name": "calendar-user",
+        "label": "Calendar User",
+        "purpose": "Show calendar user as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "calendar",
+          "user"
+        ],
+        "use_when": "Use when the interface refers directly to calendar user as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing calendar user.",
+        "intent": "inform",
+        "domain": "communication",
+        "synonyms": [
+          "calendar",
+          "user"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "calendar-user",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-calendar-user\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M12 21h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4.5\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M17 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /> <path d=\"M22 22a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:clock_edit",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:clock_edit",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "clock_edit",
+        "source_asset_name": "clock-edit",
+        "label": "Clock Edit",
+        "purpose": "Show clock edit as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "clock",
+          "edit"
+        ],
+        "use_when": "Use when the interface refers directly to clock edit as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing clock edit.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "clock",
+          "edit"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "clock-edit",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clock-edit\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M21 12a9 9 0 1 0 -9.972 8.948c.32 .034 .644 .052 .972 .052\" /> <path d=\"M12 7v5l2 2\" /> <path d=\"M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:clock_plus",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:clock_plus",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "clock_plus",
+        "source_asset_name": "clock-plus",
+        "label": "Clock Plus",
+        "purpose": "Show clock plus as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "clock",
+          "plus"
+        ],
+        "use_when": "Use when the interface refers directly to clock plus as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing clock plus.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "clock",
+          "plus"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "clock-plus",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clock-plus\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M20.984 12.535a9 9 0 1 0 -8.468 8.45\" /> <path d=\"M16 19h6\" /> <path d=\"M19 16v6\" /> <path d=\"M12 7v5l3 3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:clock_x",
+      "family_key": "generic_controls",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:clock_x",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "clock_x",
+        "source_asset_name": "clock-x",
+        "label": "Clock X",
+        "purpose": "Show clock x as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "clock",
+          "x"
+        ],
+        "use_when": "Use when the interface refers directly to clock x as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing clock x.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "clock",
+          "x"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "clock-x",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-clock-x\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M20.926 13.15a9 9 0 1 0 -7.835 7.784\" /> <path d=\"M12 7v5l2 2\" /> <path d=\"M22 22l-5 -5\" /> <path d=\"M17 22l5 -5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:arrow_rotary_straight",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:arrow_rotary_straight",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "arrow_rotary_straight",
+        "source_asset_name": "arrow-rotary-straight",
+        "label": "Arrow Rotary Straight",
+        "purpose": "Show arrow rotary straight as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "rotary",
+          "straight"
+        ],
+        "use_when": "Use when the interface refers directly to arrow rotary straight as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow rotary straight.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "rotary",
+          "straight"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-rotary-straight",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-arrow-rotary-straight\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M10 13a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M13 16v5\" /> <path d=\"M13 3v7\" /> <path d=\"M9 7l4 -4l4 4\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:arrow_zig_zag",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:arrow_zig_zag",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "arrow_zig_zag",
+        "source_asset_name": "arrow-zig-zag",
+        "label": "Arrow Zig Zag",
+        "purpose": "Show arrow zig zag as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "zig",
+          "zag"
+        ],
+        "use_when": "Use when the interface refers directly to arrow zig zag as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow zig zag.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "zig",
+          "zag"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-zig-zag",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-arrow-zig-zag\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M6 20v-10l10 6v-12\" /> <path d=\"M13 7l3 -3l3 3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:error_404",
+      "family_key": "status_security",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:error_404",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "error_404",
+        "source_asset_name": "error-404",
+        "label": "Error",
+        "purpose": "Show error as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "error",
+          "404"
+        ],
+        "use_when": "Use when the interface refers directly to error as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing error.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "error",
+          "404"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "error-404",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-error-404\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 8v3a1 1 0 0 0 1 1h3\" /> <path d=\"M7 8v8\" /> <path d=\"M17 8v3a1 1 0 0 0 1 1h3\" /> <path d=\"M21 8v8\" /> <path d=\"M10 10v4a2 2 0 1 0 4 0v-4a2 2 0 1 0 -4 0\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:error_404_off",
+      "family_key": "status_security",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:error_404_off",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "error_404_off",
+        "source_asset_name": "error-404-off",
+        "label": "Error Off",
+        "purpose": "Show error off as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "error",
+          "404",
+          "off"
+        ],
+        "use_when": "Use when the interface refers directly to error off as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing error off.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "error",
+          "404",
+          "off"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "error-404-off",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-error-404-off\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M3 8v3a1 1 0 0 0 1 1h3\" /> <path d=\"M7 8v8\" /> <path d=\"M17 8v3a1 1 0 0 0 1 1h3\" /> <path d=\"M21 8v8\" /> <path d=\"M10 10v4a2 2 0 1 0 4 0m0 -4a2 2 0 0 0 -2 -2\" /> <path d=\"M3 3l18 18\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:face_id_error",
+      "family_key": "status_security",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:face_id_error",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "face_id_error",
+        "source_asset_name": "face-id-error",
+        "label": "Face Id Error",
+        "purpose": "Show face id error as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "face",
+          "id",
+          "error"
+        ],
+        "use_when": "Use when the interface refers directly to face id error as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing face id error.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "face",
+          "id",
+          "error"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "face-id-error",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-face-id-error\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M9 10h.01\" /> <path d=\"M15 10h.01\" /> <path d=\"M9.5 15.05a3.5 3.5 0 0 1 5 0\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_text",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_text",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_text",
+        "source_asset_name": "file-text",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "text"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "text file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-text",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-file-text\" viewBox=\"0 0 16 16\"> <path d=\"M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5M5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1z\"/> <path d=\"M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_text_spark",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_text_spark",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_text_spark",
+        "source_asset_name": "file-text-spark",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "text",
+          "spark"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "text file",
+          "spark file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-text-spark",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-text-spark\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M12 21h-5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v3.5\" /> <path d=\"M9 9h1\" /> <path d=\"M9 13h6\" /> <path d=\"M9 17h3\" /> <path d=\"M19 22.5a4.75 4.75 0 0 1 3.5 -3.5a4.75 4.75 0 0 1 -3.5 -3.5a4.75 4.75 0 0 1 -3.5 3.5a4.75 4.75 0 0 1 3.5 3.5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_time",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_time",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_time",
+        "source_asset_name": "file-time",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "time"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "time file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-time",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-time\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2\" /> <path d=\"M8 14a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M12 12.496v1.504l1 1\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_bmp",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_bmp",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_bmp",
+        "source_asset_name": "file-type-bmp",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "bmp"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "bmp file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-bmp",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-bmp\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M18 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M4 21h1.5a1.5 1.5 0 0 0 0 -3h-1.5h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M10 21v-6l2.5 3l2.5 -3v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_css",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_css",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_css",
+        "source_asset_name": "file-type-css",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "css"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "css file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-css",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-css\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M8 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0\" /> <path d=\"M11 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M17 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_csv",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_csv",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_csv",
+        "source_asset_name": "file-type-csv",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "csv"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "csv file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-csv",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-csv\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M7 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0\" /> <path d=\"M10 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M16 15l2 6l2 -6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_doc",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_doc",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_doc",
+        "source_asset_name": "file-type-doc",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "doc"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "doc file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-doc",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-doc\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M5 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1\" /> <path d=\"M20 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0\" /> <path d=\"M12.5 15a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1 -3 0v-3a1.5 1.5 0 0 1 1.5 -1.5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_docx",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_docx",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_docx",
+        "source_asset_name": "file-type-docx",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "docx"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "docx file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-docx",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-docx\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M2 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1\" /> <path d=\"M17 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0\" /> <path d=\"M9.5 15a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1 -3 0v-3a1.5 1.5 0 0 1 1.5 -1.5\" /> <path d=\"M19.5 15l3 6\" /> <path d=\"M19.5 21l3 -6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_html",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_html",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_html",
+        "source_asset_name": "file-type-html",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "html"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "html file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-html",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-html\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M2 21v-6\" /> <path d=\"M5 15v6\" /> <path d=\"M2 18h3\" /> <path d=\"M20 15v6h2\" /> <path d=\"M13 21v-6l2 3l2 -3v6\" /> <path d=\"M7.5 15h3\" /> <path d=\"M9 15v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_jpg",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_jpg",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_jpg",
+        "source_asset_name": "file-type-jpg",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "jpg"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "jpg file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-jpg",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-jpg\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M11 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M20 15h-1a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h1v-3\" /> <path d=\"M5 15h3v4.5a1.5 1.5 0 0 1 -3 0\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_js",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_js",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_js",
+        "source_asset_name": "file-type-js",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "js"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "js file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-js",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-js\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M3 15h3v4.5a1.5 1.5 0 0 1 -3 0\" /> <path d=\"M9 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-1\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_jsx",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_jsx",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_jsx",
+        "source_asset_name": "file-type-jsx",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "jsx"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "jsx file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-jsx",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-jsx\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4 15h3v4.5a1.5 1.5 0 0 1 -3 0\" /> <path d=\"M10 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M16 15l4 6\" /> <path d=\"M16 21l4 -6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_pdf",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_pdf",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_pdf",
+        "source_asset_name": "file-type-pdf",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "pdf"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "pdf file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-pdf",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M17 18h2\" /> <path d=\"M20 15h-3v6\" /> <path d=\"M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_php",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_php",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_php",
+        "source_asset_name": "file-type-php",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "php"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "php file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-php",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-php\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M17 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M11 21v-6\" /> <path d=\"M14 15v6\" /> <path d=\"M11 18h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_png",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_png",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_png",
+        "source_asset_name": "file-type-png",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "png"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "png file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-png",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-png\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M20 15h-1a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h1v-3\" /> <path d=\"M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M11 21v-6l3 6v-6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_ppt",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_ppt",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_ppt",
+        "source_asset_name": "file-type-ppt",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "ppt"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "ppt file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-ppt",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-ppt\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M11 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M16.5 15h3\" /> <path d=\"M18 15v6\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_rs",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_rs",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_rs",
+        "source_asset_name": "file-type-rs",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "rs"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "rs file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-rs",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-rs\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M9 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-1\" /> <path d=\"M3 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6m3 0l-2 -3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_sql",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_sql",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_sql",
+        "source_asset_name": "file-type-sql",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "sql"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "sql file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-sql",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-sql\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M18 15v6h2\" /> <path d=\"M13 15a2 2 0 0 1 2 2v2a2 2 0 1 1 -4 0v-2a2 2 0 0 1 2 -2\" /> <path d=\"M14 20l1.5 1.5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_svg",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_svg",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_svg",
+        "source_asset_name": "file-type-svg",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "svg"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "svg file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-svg",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-svg\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M10 15l2 6l2 -6\" /> <path d=\"M20 15h-1a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h1v-3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_ts",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_ts",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_ts",
+        "source_asset_name": "file-type-ts",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "ts"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "ts file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-ts",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-ts\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-1\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M9 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M3.5 15h3\" /> <path d=\"M5 15v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_tsx",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_tsx",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_tsx",
+        "source_asset_name": "file-type-tsx",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "tsx"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "tsx file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-tsx",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-tsx\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M16 15l4 6\" /> <path d=\"M16 21l4 -6\" /> <path d=\"M10 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M4.5 15h3\" /> <path d=\"M6 15v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_txt",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_txt",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_txt",
+        "source_asset_name": "file-type-txt",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "txt"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "txt file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-txt",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-txt\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M16.5 15h3\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4.5 15h3\" /> <path d=\"M6 15v6\" /> <path d=\"M18 15v6\" /> <path d=\"M10 15l4 6\" /> <path d=\"M10 21l4 -6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_vue",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_vue",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_vue",
+        "source_asset_name": "file-type-vue",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "vue"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "vue file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-vue",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-vue\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4 15l2 6l2 -6\" /> <path d=\"M11 15v4.5a1.5 1.5 0 0 0 3 0v-4.5\" /> <path d=\"M20 15h-3v6h3\" /> <path d=\"M17 18h2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_xls",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_xls",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_xls",
+        "source_asset_name": "file-type-xls",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "xls"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "xls file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-xls",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-xls\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4 15l4 6\" /> <path d=\"M4 21l4 -6\" /> <path d=\"M17 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75\" /> <path d=\"M11 15v6h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_xml",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_xml",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_xml",
+        "source_asset_name": "file-type-xml",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "xml"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "xml file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-xml",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-xml\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M4 15l4 6\" /> <path d=\"M4 21l4 -6\" /> <path d=\"M19 15v6h3\" /> <path d=\"M11 21v-6l2.5 3l2.5 -3v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:file_type_zip",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:file_type_zip",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "file_type_zip",
+        "source_asset_name": "file-type-zip",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "type",
+          "zip"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "type file",
+          "zip file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-type-zip",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-file-type-zip\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M14 3v4a1 1 0 0 0 1 1h4\" /> <path d=\"M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4\" /> <path d=\"M16 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6\" /> <path d=\"M12 15v6\" /> <path d=\"M5 15h3l-3 6h3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:flag_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:flag_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "flag_pause",
+        "source_asset_name": "flag-pause",
+        "label": "Flag Pause",
+        "purpose": "Show flag pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "flag",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to flag pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing flag pause.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "flag",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "flag-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-flag-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M13.536 15.029a4.987 4.987 0 0 1 -1.536 -1.029a5 5 0 0 0 -7 0v-9a5 5 0 0 1 7 0a5 5 0 0 0 7 0v8.5\" /> <path d=\"M5 21v-7\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:hand_stop",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:hand_stop",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "hand_stop",
+        "source_asset_name": "hand-stop",
+        "label": "Hand Stop",
+        "purpose": "Show hand stop as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "hand",
+          "stop"
+        ],
+        "use_when": "Use when the interface refers directly to hand stop as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing hand stop.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "hand",
+          "stop"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "hand-stop",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-hand-stop\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5\" /> <path d=\"M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5\" /> <path d=\"M14 5.5a1.5 1.5 0 0 1 3 0v6.5\" /> <path d=\"M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:heart_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:heart_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "heart_pause",
+        "source_asset_name": "heart-pause",
+        "label": "Heart Pause",
+        "purpose": "Show heart pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "heart",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to heart pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing heart pause.",
+        "intent": "inform",
+        "domain": "communication",
+        "synonyms": [
+          "heart",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "heart-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-heart-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M19.5 12.572l-.784 .777m-5.725 5.67l-.991 .981l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:location_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:location_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "location_pause",
+        "source_asset_name": "location-pause",
+        "label": "Location Pause",
+        "purpose": "Show location pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "location",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to location pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing location pause.",
+        "intent": "inform",
+        "domain": "navigation",
+        "synonyms": [
+          "location",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "location-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-location-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M13.02 20.04l-3.02 -6.04l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.634 10.062\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:map_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:map_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "map_pause",
+        "source_asset_name": "map-pause",
+        "label": "Map Pause",
+        "purpose": "Show map pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "map",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to map pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing map pause.",
+        "intent": "inform",
+        "domain": "navigation",
+        "synonyms": [
+          "map",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "map-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-map-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M13 19l-4 -2l-6 3v-13l6 -3l6 3l6 -3v9\" /> <path d=\"M9 4v13\" /> <path d=\"M15 7v6.5\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:map_pin_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:map_pin_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "map_pin_pause",
+        "source_asset_name": "map-pin-pause",
+        "label": "Map Pin Pause",
+        "purpose": "Show map pin pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "map",
+          "pin",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to map pin pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing map pin pause.",
+        "intent": "inform",
+        "domain": "navigation",
+        "synonyms": [
+          "map",
+          "pin",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "map-pin-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-map-pin-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M13.414 20.9a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 13.337 -3.413\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:navigation_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:navigation_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "navigation_pause",
+        "source_asset_name": "navigation-pause",
+        "label": "Navigation Pause",
+        "purpose": "Show navigation pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "navigation",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to navigation pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing navigation pause.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "navigation",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "navigation-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-navigation-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M16.666 13.114l-4.666 -10.114l-7.97 17.275c-.07 .2 -.017 .424 .135 .572c.15 .148 .374 .193 .57 .116l7.265 -2.463l1.056 .358\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:object_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:object_scan",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "object_scan",
+        "source_asset_name": "object-scan",
+        "label": "Object Scan",
+        "purpose": "Show object scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "object",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to object scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing object scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "object",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "object-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-object-scan\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M8 10a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2l0 -4\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:pencil_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:pencil_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "pencil_pause",
+        "source_asset_name": "pencil-pause",
+        "label": "Pencil Pause",
+        "purpose": "Show pencil pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "pencil",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to pencil pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing pencil pause.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "pencil",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "pencil-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-pencil-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4\" /> <path d=\"M13.5 6.5l4 4\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:phone_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:phone_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "phone_pause",
+        "source_asset_name": "phone-pause",
+        "label": "Phone Pause",
+        "purpose": "Show phone pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "phone",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to phone pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing phone pause.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "phone",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "phone-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M214.36,166.46l-47.1-21.11-.12-.06a16,16,0,0,0-15.18,1.4,8.12,8.12,0,0,0-.75.56L126.87,168c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L89.54,41.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,24,88c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,214.36,166.46ZM168,216A128.14,128.14,0,0,1,40,88,40.2,40.2,0,0,1,74.87,48a.61.61,0,0,0,0,.12l21,47L75.2,119.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,6.92,6.92,0,0,0,.74-.57L160.89,160l47,21.06h0s.08,0,.11,0A40.21,40.21,0,0,1,168,216Zm24-112V48a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm-40,0V48a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:photo_pause",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:photo_pause",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "photo_pause",
+        "source_asset_name": "photo-pause",
+        "label": "Photo Pause",
+        "purpose": "Show photo pause as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "photo",
+          "pause"
+        ],
+        "use_when": "Use when the interface refers directly to photo pause as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing photo pause.",
+        "intent": "inform",
+        "domain": "media",
+        "synonyms": [
+          "photo",
+          "pause"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "photo-pause",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-photo-pause\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M15 8h.01\" /> <path d=\"M13 21h-7a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v7\" /> <path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l3 3\" /> <path d=\"M14 14l1 -1c.928 -.893 2.072 -.893 3 0\" /> <path d=\"M17 17v5\" /> <path d=\"M21 17v5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:photo_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:photo_scan",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "photo_scan",
+        "source_asset_name": "photo-scan",
+        "label": "Photo Scan",
+        "purpose": "Show photo scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "photo",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to photo scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing photo scan.",
+        "intent": "inform",
+        "domain": "media",
+        "synonyms": [
+          "photo",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "photo-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-photo-scan\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M15 8h.01\" /> <path d=\"M6 13l2.644 -2.644a1.21 1.21 0 0 1 1.712 0l3.644 3.644\" /> <path d=\"M13 13l1.644 -1.644a1.21 1.21 0 0 1 1.712 0l1.644 1.644\" /> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:route_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:route_scan",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "route_scan",
+        "source_asset_name": "route-scan",
+        "label": "Route Scan",
+        "purpose": "Show route scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "route",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to route scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing route scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "route",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "route-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-route-scan\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 12v-3h3\" /> <path d=\"M14 9h3v3\" /> <path d=\"M7 9l4.414 4.414a2 2 0 0 1 .586 1.414v2.172\" /> <path d=\"M17 9l-4.414 4.414a2 2 0 0 0 -.586 1.414v2.172\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:scan_position",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:scan_position",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "scan_position",
+        "source_asset_name": "scan-position",
+        "label": "Scan Position",
+        "purpose": "Show scan position as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "scan",
+          "position"
+        ],
+        "use_when": "Use when the interface refers directly to scan position as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing scan position.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "scan",
+          "position"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "scan-position",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-scan-position\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 7v-1a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 17v1a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v1\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-1\" /> <path d=\"M12 17l3 -8l-8 3l3.5 1.5l1.5 3.5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:scan_traces",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:scan_traces",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "scan_traces",
+        "source_asset_name": "scan-traces",
+        "label": "Scan Traces",
+        "purpose": "Show scan traces as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "scan",
+          "traces"
+        ],
+        "use_when": "Use when the interface refers directly to scan traces as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing scan traces.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "scan",
+          "traces"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "scan-traces",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-scan-traces\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M11 12h6\" /> <path d=\"M8 8h5\" /> <path d=\"M9 16h5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:target_arrow",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:target_arrow",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "target_arrow",
+        "source_asset_name": "target-arrow",
+        "label": "Target Arrow",
+        "purpose": "Show target arrow as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "target",
+          "arrow"
+        ],
+        "use_when": "Use when the interface refers directly to target arrow as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing target arrow.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "target",
+          "arrow"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "target-arrow",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-target-arrow\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M12 7a5 5 0 1 0 5 5\" /> <path d=\"M13 3.055a9 9 0 1 0 7.941 7.945\" /> <path d=\"M15 6v3h3l3 -3h-3v-3l-3 3\" /> <path d=\"M15 9l-3 3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:text_scan_2",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:text_scan_2",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "text_scan_2",
+        "source_asset_name": "text-scan-2",
+        "label": "Text Scan",
+        "purpose": "Show text scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "text",
+          "scan",
+          "2"
+        ],
+        "use_when": "Use when the interface refers directly to text scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing text scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "text",
+          "scan",
+          "2"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "text-scan-2",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-text-scan-2\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M8 12h8\" /> <path d=\"M8 9h6\" /> <path d=\"M8 15h4\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:view_360_arrow",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:view_360_arrow",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "view_360_arrow",
+        "source_asset_name": "view-360-arrow",
+        "label": "View Arrow",
+        "purpose": "Show view arrow as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "view",
+          "360",
+          "arrow"
+        ],
+        "use_when": "Use when the interface refers directly to view arrow as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing view arrow.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "view",
+          "360",
+          "arrow"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "view-360-arrow",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-view-360-arrow\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M17 15.328c2.414 -.718 4 -1.94 4 -3.328c0 -2.21 -4.03 -4 -9 -4s-9 1.79 -9 4s4.03 4 9 4\" /> <path d=\"M9 13l3 3l-3 3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:zoom_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:zoom_scan",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "zoom_scan",
+        "source_asset_name": "zoom-scan",
+        "label": "Zoom Scan",
+        "purpose": "Show zoom scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "zoom",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to zoom scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing zoom scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "zoom",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "zoom-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-zoom-scan\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 8v-2a2 2 0 0 1 2 -2h2\" /> <path d=\"M4 16v2a2 2 0 0 0 2 2h2\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v2\" /> <path d=\"M16 20h2a2 2 0 0 0 2 -2v-2\" /> <path d=\"M8 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M16 16l-2.5 -2.5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:layout_align_left",
+      "family_key": "navigation_motion",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:layout_align_left",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "layout_align_left",
+        "source_asset_name": "layout-align-left",
+        "label": "Layout Align Left",
+        "purpose": "Show layout align left as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "layout",
+          "align",
+          "left"
+        ],
+        "use_when": "Use when the interface refers directly to layout align left as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing layout align left.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "layout",
+          "align",
+          "left"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "layout-align-left",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-layout-align-left\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M4 4l0 16\" /> <path d=\"M8 11a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "tabler:layout_align_right",
+      "family_key": "navigation_motion",
+      "selection_score": 2,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "tabler:layout_align_right",
+        "source_group": "free",
+        "source_library": "tabler",
+        "source_name": "layout_align_right",
+        "source_asset_name": "layout-align-right",
+        "label": "Layout Align Right",
+        "purpose": "Show layout align right as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "layout",
+          "align",
+          "right"
+        ],
+        "use_when": "Use when the interface refers directly to layout align right as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing layout align right.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "layout",
+          "align",
+          "right"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "layout-align-right",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-layout-align-right\" > <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/> <path d=\"M20 4l0 16\" /> <path d=\"M4 11a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -2\" /> </svg>"
+        }
+      }
+    }
+  ]
+}
