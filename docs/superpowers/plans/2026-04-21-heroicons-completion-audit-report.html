@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heroicons Completion Audit</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f2ea;
+      --card: #fffaf2;
+      --ink: #1f1b16;
+      --muted: #6c6257;
+      --line: #decdb8;
+      --accent: #b85c10;
+      --good: #216a3a;
+      --warn: #8a5b00;
+      --bad: #a12626;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #f3ecdf 0%, #faf6ef 100%);
+      color: var(--ink);
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    h1, h2, h3 { margin: 0 0 14px; line-height: 1.15; }
+    p { line-height: 1.6; }
+    .hero, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(75, 49, 16, 0.08);
+    }
+    .hero { margin-bottom: 22px; }
+    .hero p { max-width: 68ch; }
+    .pill {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: #f8e7d5;
+      color: var(--accent);
+    }
+    .status-good { color: var(--good); }
+    .status-warn { color: var(--warn); }
+    .status-bad { color: var(--bad); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 22px 0;
+    }
+    .metric {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .metric .label {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .metric .value {
+      font-size: 34px;
+      font-weight: 700;
+    }
+    .section {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin: 8px 0; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f5ecdf;
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+    .two-up {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="pill">Post-Library Audit</div>
+      <h1>Heroicons Completion Audit</h1>
+      <p>This page checks whether the Heroicons rollout is really safe to close. It looks at the official library size, how many icons were approved, how many are still on hold or draft status, and whether the public registry matches the approved records.</p>
+      <p><strong>Current result:</strong> <span class="status-warn">The library is fully processed in the pipeline, but it still carries quality follow-up work.</span></p>
+    </section>
+
+    <section class="grid">
+      <article class="metric">
+        <div class="label">Official Library Size</div>
+        <div class="value">324</div>
+      </article>
+      <article class="metric">
+        <div class="label">Approved</div>
+        <div class="value">175</div>
+      </article>
+      <article class="metric">
+        <div class="label">Hold</div>
+        <div class="value">0</div>
+      </article>
+      <article class="metric">
+        <div class="label">Draft</div>
+        <div class="value">149</div>
+      </article>
+      <article class="metric">
+        <div class="label">Overlap Skipped</div>
+        <div class="value">0</div>
+      </article>
+      <article class="metric">
+        <div class="label">Public Registry Records</div>
+        <div class="value">176</div>
+      </article>
+    </section>
+
+    <section class="section two-up">
+      <article class="card">
+        <h2>What Passed</h2>
+        <ul>
+          <li>The processed total is <strong>324</strong> and it matches the official library size.</li>
+          <li>The public registry count matches the expected total for this library.</li>
+          <li>175 records were checked for sensitive workflow fields.</li>
+          <li>No sensitive workflow fields were found in the audited records.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>What Still Needs Attention</h2>
+        <ul><li>149 icons are still kept as reviewed drafts, so the semantics are not fully approved yet.</li></ul>
+      </article>
+    </section>
+
+    <section class="section two-up">
+      <article class="card">
+        <h2>Most Common Approved Categories</h2>
+        <ul><li><strong>navigation_interface</strong>: 87</li><li><strong>status_feedback</strong>: 62</li><li><strong>media_playback</strong>: 6</li><li><strong>system_control</strong>: 5</li><li><strong>security</strong>: 4</li></ul>
+      </article>
+      <article class="card">
+        <h2>Most Common Approved Domains</h2>
+        <ul><li><strong>navigation</strong>: 82</li><li><strong>ui_controls</strong>: 47</li><li><strong>product_status</strong>: 19</li><li><strong>media</strong>: 8</li><li><strong>ui_shell</strong>: 6</li></ul>
+      </article>
+    </section>
+
+    <section class="section two-up">
+      <article class="card">
+        <h2>Good Icons To Spot-Check</h2>
+        <ul><li><code>heroicons:archive_box_arrow_down</code></li><li><code>heroicons:arrow_down</code></li><li><code>heroicons:arrow_down_circle</code></li><li><code>heroicons:arrow_down_left</code></li><li><code>heroicons:arrow_down_on_square</code></li><li><code>heroicons:arrow_down_on_square_stack</code></li><li><code>heroicons:arrow_down_right</code></li><li><code>heroicons:arrow_down_tray</code></li></ul>
+      </article>
+      <article class="card">
+        <h2>Icons That Still Need Human Attention</h2>
+        <h3>Hold Queue</h3>
+        <ul><li>None</li></ul>
+        <h3 style="margin-top:18px;">Draft Queue</h3>
+        <ul><li><code>heroicons:archive_box_x_mark</code></li><li><code>heroicons:play_pause</code></li><li><code>heroicons:user_plus</code></li><li><code>heroicons:archive_box</code></li><li><code>heroicons:arrow_path</code></li><li><code>heroicons:arrow_path_rounded_square</code></li><li><code>heroicons:book_open</code></li><li><code>heroicons:bookmark_slash</code></li></ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

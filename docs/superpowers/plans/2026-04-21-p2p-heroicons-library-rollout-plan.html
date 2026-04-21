@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heroicons Library Rollout Plan</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f7f2e8;
+      color: #1f1a15;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    section {
+      background: #fffaf1;
+      border: 1px solid #dfcfbb;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 32px rgba(83, 58, 25, 0.08);
+    }
+    h1, h2 {
+      margin: 0 0 14px;
+      line-height: 1.15;
+    }
+    p, li {
+      line-height: 1.65;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    code {
+      background: #f3eadb;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Heroicons Library Rollout Plan</h1>
+      <p>This step moves the semantic rollout to the Heroicons library. The goal is to process the whole library, rebuild the shared registry, and only treat the library as closed after it passes the new audit gate.</p>
+    </section>
+
+    <section>
+      <h2>What this will add</h2>
+      <ul>
+        <li>A Heroicons batch selector</li>
+        <li>Heroicons review builders</li>
+        <li>A Heroicons approval builder and checker</li>
+        <li>A full Heroicons runner that keeps going until the library is done</li>
+        <li>A final audit report for the completed library</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How the rollout works</h2>
+      <ul>
+        <li>Stage the next Heroicons batch</li>
+        <li>Clear the editor-review queue</li>
+        <li>Clear the visual-review queue</li>
+        <li>Rebuild the approved Heroicons records</li>
+        <li>Rebuild the shared registry</li>
+        <li>Repeat until the whole library is covered</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How we stay safe</h2>
+      <ul>
+        <li>High-confidence editor items can move through quickly.</li>
+        <li>Visual items only move forward when the icon shape really says what we think it says.</li>
+        <li>Unclear icons stay on hold or draft instead of being forced into approval.</li>
+        <li>The final audit makes sure the totals line up and the public registry is still clean.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

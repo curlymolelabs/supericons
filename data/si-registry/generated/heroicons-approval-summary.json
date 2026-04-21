@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "library_id": "heroicons",
+  "total_approved_records": 175,
+  "total_editor_hold_records": 0,
+  "total_reviewed_drafts": 149,
+  "overlap_skipped_count": 0,
+  "overlap_skipped_records": [],
+  "approved_by_category": {
+    "navigation_interface": 87,
+    "status_feedback": 62,
+    "engineering_developer_tools": 3,
+    "system_control": 5,
+    "destructive_actions": 2,
+    "brand_identity": 3,
+    "security_auth": 1,
+    "security": 4,
+    "media_playback": 6,
+    "systems_architecture": 2
+  },
+  "approved_by_domain": {
+    "navigation": 82,
+    "product_status": 19,
+    "ui_controls": 47,
+    "media": 8,
+    "ui_shell": 6,
+    "developer_tools": 5,
+    "brand_platforms": 3,
+    "security": 5
+  },
+  "batch_summaries": {
+    "heroicons-editor-review-batch-01": {
+      "approve_for_import": 173,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "heroicons-visual-review-batch-01": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 67
+    },
+    "heroicons-editor-review-batch-02": {
+      "approve_for_import": 2,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "heroicons-visual-review-batch-02": {
+      "approve_for_import": 0,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 82
+    }
+  },
+  "approved_record_path": "data/si-registry/automation/heroicons/approved-records.json",
+  "editor_hold_queue_path": "data/si-registry/automation/heroicons/editor-hold-queue.json"
+}

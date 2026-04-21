@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-21T11:11:18.050Z",
+  "library_id": "heroicons",
+  "library_label": "Heroicons",
+  "library_order": 6,
+  "verdict": {
+    "status": "operationally_complete_with_follow_up",
+    "message": "The library is fully processed in the pipeline, but it still carries quality follow-up work.",
+    "recommended_next_step": "Keep the library closed for rollout sequencing, but schedule a later quality pass for holds and drafts."
+  },
+  "coverage": {
+    "source_total_icons": 324,
+    "approved_records": 175,
+    "hold_records": 0,
+    "reviewed_drafts": 149,
+    "overlap_skipped": 0,
+    "processed_total": 324,
+    "processed_matches_source_total": true
+  },
+  "projection": {
+    "public_registry_records": 176,
+    "prior_public_records_outside_library_rollout": 1,
+    "expected_public_registry_records": 176,
+    "matches_expected_public_registry_count": true
+  },
+  "quality_signals": {
+    "approved_ratio": 0.5401,
+    "hold_ratio": 0,
+    "draft_ratio": 0.4599,
+    "batch_count": 4,
+    "top_categories": [
+      {
+        "key": "navigation_interface",
+        "count": 87
+      },
+      {
+        "key": "status_feedback",
+        "count": 62
+      },
+      {
+        "key": "media_playback",
+        "count": 6
+      },
+      {
+        "key": "system_control",
+        "count": 5
+      },
+      {
+        "key": "security",
+        "count": 4
+      },
+      {
+        "key": "brand_identity",
+        "count": 3
+      },
+      {
+        "key": "engineering_developer_tools",
+        "count": 3
+      },
+      {
+        "key": "destructive_actions",
+        "count": 2
+      },
+      {
+        "key": "systems_architecture",
+        "count": 2
+      },
+      {
+        "key": "security_auth",
+        "count": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "key": "navigation",
+        "count": 82
+      },
+      {
+        "key": "ui_controls",
+        "count": 47
+      },
+      {
+        "key": "product_status",
+        "count": 19
+      },
+      {
+        "key": "media",
+        "count": 8
+      },
+      {
+        "key": "ui_shell",
+        "count": 6
+      },
+      {
+        "key": "developer_tools",
+        "count": 5
+      },
+      {
+        "key": "security",
+        "count": 5
+      },
+      {
+        "key": "brand_platforms",
+        "count": 3
+      }
+    ]
+  },
+  "metadata_safety": {
+    "records_checked": 175,
+    "banned_field_hit_count": 0,
+    "banned_field_hits": []
+  },
+  "gaps": [
+    "149 icons are still kept as reviewed drafts, so the semantics are not fully approved yet."
+  ],
+  "manual_spotcheck": {
+    "approved_examples": [
+      "heroicons:archive_box_arrow_down",
+      "heroicons:arrow_down",
+      "heroicons:arrow_down_circle",
+      "heroicons:arrow_down_left",
+      "heroicons:arrow_down_on_square",
+      "heroicons:arrow_down_on_square_stack",
+      "heroicons:arrow_down_right",
+      "heroicons:arrow_down_tray"
+    ],
+    "hold_examples": [],
+    "draft_examples": [
+      "heroicons:archive_box_x_mark",
+      "heroicons:play_pause",
+      "heroicons:user_plus",
+      "heroicons:archive_box",
+      "heroicons:arrow_path",
+      "heroicons:arrow_path_rounded_square",
+      "heroicons:book_open",
+      "heroicons:bookmark_slash"
+    ]
+  },
+  "report_paths": {
+    "json": "data/si-registry/generated/heroicons-completion-audit.json",
+    "markdown": "docs/superpowers/plans/2026-04-21-heroicons-completion-audit-report.md",
+    "html": "docs/superpowers/plans/2026-04-21-heroicons-completion-audit-report.html"
+  }
+}
