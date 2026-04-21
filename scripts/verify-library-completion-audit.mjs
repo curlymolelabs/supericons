@@ -43,13 +43,13 @@ assert(await exists(htmlPath), `Missing HTML audit report for ${libraryId}`);
 
 if (report.coverage.hold_records > 0 || report.coverage.reviewed_drafts > 0) {
   assert(
-    report.verdict.status === 'operationally_complete_with_follow_up',
+    report.verdict.status === 'incomplete_needs_follow_up',
     `${libraryId} audit should mark follow-up when hold or draft records remain`
   );
 } else {
   assert(
-    report.verdict.status === 'operationally_complete_clean',
-    `${libraryId} audit should be clean when no hold or draft records remain`
+    report.verdict.status === 'fully_approved_complete',
+    `${libraryId} audit should mark full approval when no hold or draft records remain`
   );
 }
 

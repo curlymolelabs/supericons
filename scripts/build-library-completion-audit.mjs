@@ -156,16 +156,16 @@ function buildVerdict({ coverageMatches, projectionMatches, holdCount, draftCoun
 
   if (holdCount > 0 || draftCount > 0) {
     return {
-      status: 'operationally_complete_with_follow_up',
-      message: 'The library is fully processed in the pipeline, but it still carries quality follow-up work.',
-      recommended_next_step: 'Keep the library closed for rollout sequencing, but schedule a later quality pass for holds and drafts.',
+      status: 'incomplete_needs_follow_up',
+      message: 'Every icon has been processed, but the library is still incomplete because some icons remain on hold or draft status.',
+      recommended_next_step: 'Keep working through the remaining hold and draft icons until every icon is approved or escalated.',
     };
   }
 
   return {
-    status: 'operationally_complete_clean',
-    message: 'The library is fully processed and has no remaining hold or draft backlog.',
-    recommended_next_step: 'Move to the next library in the rollout order.',
+    status: 'fully_approved_complete',
+    message: 'The library now meets the stricter completion standard: every icon is approved and the public registry matches the full library size.',
+    recommended_next_step: 'Move to the next incomplete library or the next library in the rollout order.',
   };
 }
 

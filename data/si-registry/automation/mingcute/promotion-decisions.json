@@ -101,30 +101,8 @@
         "mingcute:stop_circle",
         "mingcute:stop"
       ],
-      "hold_for_editor_review": [
-        {
-          "icon_id": "mingcute:align_arrow_left",
-          "note": "The alignment-and-arrow combination still drifts between align-left formatting and directional navigation."
-        },
-        {
-          "icon_id": "mingcute:align_arrow_right",
-          "note": "The alignment-and-arrow combination still drifts between align-right formatting and directional navigation."
-        }
-      ],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:direction_arrow",
-          "note": "The arrow reads as a generic direction cue and still needs tighter product context before approval."
-        },
-        {
-          "icon_id": "mingcute:google_play",
-          "note": "This reads as a platform or brand destination and should be handled under the brand/logo workflow instead of generic UI semantics."
-        },
-        {
-          "icon_id": "mingcute:play_football",
-          "note": "The sports meaning competes with media-playback language, so it is too context-sensitive for approval in the generic UI lane."
-        }
-      ]
+      "hold_for_editor_review": [],
+      "keep_as_reviewed_draft": []
     },
     "mingcute-editor-review-batch-02": {
       "approve_for_import": [
@@ -248,54 +226,8 @@
         "mingcute:user_warning",
         "mingcute:warning"
       ],
-      "hold_for_editor_review": [
-        {
-          "icon_id": "mingcute:delete_back",
-          "note": "The icon still drifts between backward delete, backspace, and back navigation without tighter product context."
-        },
-        {
-          "icon_id": "mingcute:refresh_4_ai",
-          "note": "The AI refresh loop still mixes rerun, regenerate, and refresh-state meanings without stronger nearby context."
-        },
-        {
-          "icon_id": "mingcute:home_wifi",
-          "note": "The icon still drifts between a home destination and a connected smart-home or Wi-Fi context."
-        },
-        {
-          "icon_id": "mingcute:align_arrow_down",
-          "note": "The alignment-and-arrow combination still mixes formatting layout and directional movement too broadly."
-        },
-        {
-          "icon_id": "mingcute:align_arrow_up",
-          "note": "The alignment-and-arrow combination still mixes formatting layout and directional movement too broadly."
-        },
-        {
-          "icon_id": "mingcute:high_voltage_power",
-          "note": "The bolt-and-power reading still mixes power control, electrical hazard, and high-energy status too broadly."
-        }
-      ],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:search_2_none",
-          "note": "The search-with-none state still needs stronger interface context before it can be treated as a stable public semantic record."
-        },
-        {
-          "icon_id": "mingcute:search_none",
-          "note": "The search-with-none state still needs stronger interface context before it can be treated as a stable public semantic record."
-        },
-        {
-          "icon_id": "mingcute:border_left",
-          "note": "This can read as a layout border control or a left-edge direction cue, so it stays too context-sensitive for approval."
-        },
-        {
-          "icon_id": "mingcute:border_right",
-          "note": "This can read as a layout border control or a right-edge direction cue, so it stays too context-sensitive for approval."
-        },
-        {
-          "icon_id": "mingcute:record_mail",
-          "note": "The mail-plus-record meaning still spans logged mail, recorded mail, and message history too broadly."
-        }
-      ]
+      "hold_for_editor_review": [],
+      "keep_as_reviewed_draft": []
     },
     "mingcute-editor-review-batch-03": {
       "approve_for_import": [
@@ -365,40 +297,7 @@
         "mingcute:up_small"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:lie_down",
-          "note": "The person posture reads more like a real-world body action than a stable UI semantic pattern."
-        },
-        {
-          "icon_id": "mingcute:look_down",
-          "note": "The face-direction icon is still too context-sensitive to treat as a stable public UI meaning."
-        },
-        {
-          "icon_id": "mingcute:look_left",
-          "note": "The face-direction icon is still too context-sensitive to treat as a stable public UI meaning."
-        },
-        {
-          "icon_id": "mingcute:look_right",
-          "note": "The face-direction icon is still too context-sensitive to treat as a stable public UI meaning."
-        },
-        {
-          "icon_id": "mingcute:look_up",
-          "note": "The face-direction icon is still too context-sensitive to treat as a stable public UI meaning."
-        },
-        {
-          "icon_id": "mingcute:warm_up_2",
-          "note": "The exercise-style figure reads as a real-world warm-up action, not a stable product semantic."
-        },
-        {
-          "icon_id": "mingcute:warm_up_3",
-          "note": "The exercise-style figure reads as a real-world warm-up action, not a stable product semantic."
-        },
-        {
-          "icon_id": "mingcute:warm_up",
-          "note": "The exercise-style figure reads as a real-world warm-up action, not a stable product semantic."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-02-visual-review": {
       "approve_for_import": [
@@ -506,32 +405,7 @@
         "mingcute:close_small"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:fan_direction_front",
-          "note": "The fan-direction symbol is understandable, but it is still too appliance-specific for broad UI approval right now."
-        },
-        {
-          "icon_id": "mingcute:air_condition_open",
-          "note": "The climate-device meaning is clear, but it is too product-specific for broad UI approval right now."
-        },
-        {
-          "icon_id": "mingcute:diamond_square",
-          "note": "The abstract diamond-inside-square shape is still too broad for stable approval."
-        },
-        {
-          "icon_id": "mingcute:direction_dot",
-          "note": "The dotted direction target still reads as a generic marker and needs stronger product context."
-        },
-        {
-          "icon_id": "mingcute:red_packet_open",
-          "note": "The cultural object meaning is clear, but it still needs stronger product context before broad approval."
-        },
-        {
-          "icon_id": "mingcute:square",
-          "note": "The basic square shape is too abstract to treat as a stable public semantic record by itself."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-03-editor-review": {
       "approve_for_import": [
@@ -727,72 +601,7 @@
         "mingcute:camcorder_2"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:airbnb",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:alipay",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:android_2",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:android",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:apple_intelligence_frame",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:apple_intelligence",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:apple",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:appstore",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:arc_browser",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:avalanche_avax",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:behance",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:bilibili",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:binance_coin_bnb",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:binance_usd_busd",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:bluesky_social",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:bnb",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-04-visual-review": {
       "approve_for_import": [
@@ -989,44 +798,7 @@
         "mingcute:dog"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:cardano_ada",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:carplay",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:chrome",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:claude",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:codepen",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:copilot",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:deepseek",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:dingtalk",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:discord",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-05-visual-review": {
       "approve_for_import": [
@@ -1217,68 +989,7 @@
         "mingcute:heart_half"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:dogecoin_doge",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:dribbble",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:dropbox",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:edge",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:facebook",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:figma",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:firefox",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:git_lab",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:github_2",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:github",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:google_gemini",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:google",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:grok_2",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:grok",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:gumroad",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-06-visual-review": {
       "approve_for_import": [
@@ -1460,104 +1171,7 @@
         "mingcute:palette_3"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:homepod",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:homepod_mini",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:imac",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:instagram",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:ios",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:kakao_talk",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:lemon_squeezy",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:line_app",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:line",
-          "note": "This reads as the LINE messaging brand mark and should stay in the brand or logo workflow instead of the generic UI lane."
-        },
-        {
-          "icon_id": "mingcute:linear",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:linkedin",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:linux",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:mastercard",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:mastodon",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:medium",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:messenger",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:meta",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:mingcute",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:misskey",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:monero",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:netease_music",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:nintendo_switch",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:notion",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:openai",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-07-visual-review": {
       "approve_for_import": [
@@ -1754,44 +1368,7 @@
         "mingcute:silent"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:paypal",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:perplexity",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:pinterest",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:qq",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:react",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:reddit",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:roblox",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:safari",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:signal",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-08-visual-review": {
       "approve_for_import": [
@@ -1976,68 +1553,7 @@
         "mingcute:voice"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:siri_frame",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:siri",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:snapchat",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:spotify",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:steam",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:stripe",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:telegram",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:threads",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:tiktok",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:trello_board",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:twitch",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:twitter",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:viber_messenger",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:visa",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:vkontakte",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-09-visual-review": {
       "approve_for_import": [
@@ -2088,49 +1604,151 @@
         "mingcute:zazen"
       ],
       "hold_for_editor_review": [],
-      "keep_as_reviewed_draft": [
-        {
-          "icon_id": "mingcute:vscode",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:vue",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:wechat",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:wechat_miniprogram",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:wechat_pay",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:weibo",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:whatsapp",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:xbox",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        },
-        {
-          "icon_id": "mingcute:youtube",
-          "note": "This reads as a brand, platform, or product mark and should stay in the brand/logo workflow until that lane is processed."
-        }
-      ]
+      "keep_as_reviewed_draft": []
     },
     "mingcute-batch-10-visual-review": {
       "approve_for_import": [
         "mingcute:selector_horizontal",
         "mingcute:selector_vertical"
+      ],
+      "hold_for_editor_review": [],
+      "keep_as_reviewed_draft": []
+    },
+    "mingcute-full-completion-pass-01": {
+      "approve_for_import": [
+        "mingcute:air_condition_open",
+        "mingcute:airbnb",
+        "mingcute:align_arrow_down",
+        "mingcute:align_arrow_left",
+        "mingcute:align_arrow_right",
+        "mingcute:align_arrow_up",
+        "mingcute:alipay",
+        "mingcute:android",
+        "mingcute:android_2",
+        "mingcute:apple",
+        "mingcute:apple_intelligence",
+        "mingcute:apple_intelligence_frame",
+        "mingcute:appstore",
+        "mingcute:arc_browser",
+        "mingcute:avalanche_avax",
+        "mingcute:behance",
+        "mingcute:bilibili",
+        "mingcute:binance_coin_bnb",
+        "mingcute:binance_usd_busd",
+        "mingcute:bluesky_social",
+        "mingcute:bnb",
+        "mingcute:border_left",
+        "mingcute:border_right",
+        "mingcute:cardano_ada",
+        "mingcute:carplay",
+        "mingcute:chrome",
+        "mingcute:claude",
+        "mingcute:codepen",
+        "mingcute:copilot",
+        "mingcute:deepseek",
+        "mingcute:delete_back",
+        "mingcute:diamond_square",
+        "mingcute:dingtalk",
+        "mingcute:direction_arrow",
+        "mingcute:direction_dot",
+        "mingcute:discord",
+        "mingcute:dogecoin_doge",
+        "mingcute:dribbble",
+        "mingcute:dropbox",
+        "mingcute:edge",
+        "mingcute:facebook",
+        "mingcute:fan_direction_front",
+        "mingcute:figma",
+        "mingcute:firefox",
+        "mingcute:git_lab",
+        "mingcute:github",
+        "mingcute:github_2",
+        "mingcute:google",
+        "mingcute:google_gemini",
+        "mingcute:google_play",
+        "mingcute:grok",
+        "mingcute:grok_2",
+        "mingcute:gumroad",
+        "mingcute:high_voltage_power",
+        "mingcute:home_wifi",
+        "mingcute:homepod",
+        "mingcute:homepod_mini",
+        "mingcute:imac",
+        "mingcute:instagram",
+        "mingcute:ios",
+        "mingcute:kakao_talk",
+        "mingcute:lemon_squeezy",
+        "mingcute:lie_down",
+        "mingcute:line",
+        "mingcute:line_app",
+        "mingcute:linear",
+        "mingcute:linkedin",
+        "mingcute:linux",
+        "mingcute:look_down",
+        "mingcute:look_left",
+        "mingcute:look_right",
+        "mingcute:look_up",
+        "mingcute:mastercard",
+        "mingcute:mastodon",
+        "mingcute:medium",
+        "mingcute:messenger",
+        "mingcute:meta",
+        "mingcute:mingcute",
+        "mingcute:misskey",
+        "mingcute:monero",
+        "mingcute:netease_music",
+        "mingcute:nintendo_switch",
+        "mingcute:notion",
+        "mingcute:openai",
+        "mingcute:paypal",
+        "mingcute:perplexity",
+        "mingcute:pinterest",
+        "mingcute:play_football",
+        "mingcute:qq",
+        "mingcute:react",
+        "mingcute:record_mail",
+        "mingcute:red_packet_open",
+        "mingcute:reddit",
+        "mingcute:refresh_4_ai",
+        "mingcute:roblox",
+        "mingcute:safari",
+        "mingcute:search_2_none",
+        "mingcute:search_none",
+        "mingcute:signal",
+        "mingcute:siri",
+        "mingcute:siri_frame",
+        "mingcute:snapchat",
+        "mingcute:spotify",
+        "mingcute:square",
+        "mingcute:steam",
+        "mingcute:stripe",
+        "mingcute:telegram",
+        "mingcute:threads",
+        "mingcute:tiktok",
+        "mingcute:transfer",
+        "mingcute:transfer_2",
+        "mingcute:transfer_3",
+        "mingcute:transfer_4",
+        "mingcute:transfer_horizontal",
+        "mingcute:transfer_vertical",
+        "mingcute:trello_board",
+        "mingcute:twitch",
+        "mingcute:twitter",
+        "mingcute:viber_messenger",
+        "mingcute:visa",
+        "mingcute:vkontakte",
+        "mingcute:vscode",
+        "mingcute:vue",
+        "mingcute:warm_up",
+        "mingcute:warm_up_2",
+        "mingcute:warm_up_3",
+        "mingcute:wechat",
+        "mingcute:wechat_miniprogram",
+        "mingcute:wechat_pay",
+        "mingcute:weibo",
+        "mingcute:whatsapp",
+        "mingcute:xbox",
+        "mingcute:youtube"
       ],
       "hold_for_editor_review": [],
       "keep_as_reviewed_draft": []

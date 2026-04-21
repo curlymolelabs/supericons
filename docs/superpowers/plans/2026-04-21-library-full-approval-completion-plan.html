@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Full Library Completion Plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fffaf5;
+      --panel: #ffffff;
+      --text: #241a14;
+      --muted: #6b5a4f;
+      --line: #ead9cb;
+      --accent: #c4571c;
+      --soft: #fff0e4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(180deg, #fff7f0 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    h1, h2 { line-height: 1.2; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 18px;
+      box-shadow: 0 14px 34px rgba(106, 61, 26, 0.08);
+    }
+    .lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.84rem;
+      letter-spacing: 0.02em;
+    }
+    ul { padding-left: 20px; }
+    li + li { margin-top: 8px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .tile {
+      background: #fffdfb;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .tile strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="badge">New completion standard</span>
+    <h1>How we will fully finish a library</h1>
+    <p class="lead">
+      From now on, a library is only complete when every icon in that library has approved semantic metadata, or when the last truly unresolved icons have been brought to you for a final decision.
+    </p>
+
+    <section class="card">
+      <h2>What changes now</h2>
+      <ul>
+        <li>We will stop treating “processed” as the same thing as “complete.”</li>
+        <li>A library is only fully complete when approved count equals the full library size.</li>
+        <li>Drafts and holds now count as unfinished work, not as a completed milestone.</li>
+        <li>If an icon still cannot be resolved after deeper review, it must be brought to you instead of being quietly left behind.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>The new workflow</h2>
+      <div class="grid">
+        <div class="tile">
+          <strong>1. Reopen the queue</strong>
+          We gather every hold and every draft for the library into one live completion queue.
+        </div>
+        <div class="tile">
+          <strong>2. Put each icon in the right lane</strong>
+          Brand icons, UI controls, real-world objects, people, and abstract shapes should not all be forced into one generic UI bucket.
+        </div>
+        <div class="tile">
+          <strong>3. Inspect the real shape</strong>
+          We use the actual SVG or rendered icon, not just the file name.
+        </div>
+        <div class="tile">
+          <strong>4. Rewrite until it fits</strong>
+          If the first wording is weak, we improve the label, purpose, use-when, avoid-when, tags, and domain until the icon becomes suitable.
+        </div>
+        <div class="tile">
+          <strong>5. Escalate only when truly needed</strong>
+          If the icon is still honestly unclear after real review, we bring that small set to you.
+        </div>
+        <div class="tile">
+          <strong>6. Rebuild and verify</strong>
+          We rebuild the registry, rerun checks, and only close the library when the unresolved count reaches zero.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>MingCute is first</h2>
+      <p>
+        MingCute is the first library that is still incomplete under the stricter standard.
+      </p>
+      <ul>
+        <li>Approved now: <strong>1529</strong></li>
+        <li>Still on hold: <strong>8</strong></li>
+        <li>Still in draft: <strong>119</strong></li>
+        <li>Missing from the decision path: <strong>6</strong></li>
+        <li>Total unresolved: <strong>133</strong></li>
+      </ul>
+      <p>
+        Most of the unresolved MingCute icons are not random. They cluster into a few clear buckets.
+      </p>
+      <ul>
+        <li><strong>98 brand and platform icons</strong> that belong in a brand lane, not a generic UI lane</li>
+        <li><strong>13 UI controls</strong> that need tighter wording</li>
+        <li><strong>8 human action or posture icons</strong> that need honest real-world meanings</li>
+        <li><strong>3 domain-specific objects</strong> like appliances or special objects</li>
+        <li><strong>2 abstract shapes</strong> that may still need your final call</li>
+        <li><strong>6 transfer icons</strong> that were missed by the old decision path and still need proper records</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Execution order for MingCute</h2>
+      <ul>
+        <li>First, convert the brand and platform icons into proper approved brand records.</li>
+        <li>Next, tighten the ambiguous UI controls using the real icon shape.</li>
+        <li>Then, resolve the human action and domain-specific icons with more honest meanings.</li>
+        <li>Only after real review fails do we bring a small final set to you.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Definition of done</h2>
+      <p>
+        MingCute is only truly done when all <strong>1662</strong> icons are approved and the unresolved count reaches zero.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

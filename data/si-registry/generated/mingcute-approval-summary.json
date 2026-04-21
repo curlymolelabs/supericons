@@ -1,36 +1,38 @@
 {
   "schema_version": "1.0.0",
   "library_id": "mingcute",
-  "total_approved_records": 1529,
-  "total_editor_hold_records": 8,
-  "total_reviewed_drafts": 119,
+  "total_approved_records": 1662,
+  "total_editor_hold_records": 0,
+  "total_reviewed_drafts": 0,
   "approved_by_category": {
-    "status_feedback": 1177,
-    "system_control": 70,
-    "agent_lifecycle": 47,
-    "data_controls": 36,
-    "navigation_interface": 110,
-    "search_discovery": 12,
+    "status_feedback": 1188,
+    "system_control": 74,
+    "agent_lifecycle": 48,
+    "brand_identity": 98,
+    "data_controls": 48,
+    "navigation_interface": 113,
+    "search_discovery": 14,
     "engineering_developer_tools": 4,
     "destructive_actions": 5,
     "media_playback": 21,
-    "security": 16,
-    "communication_social": 16,
+    "security": 17,
+    "communication_social": 17,
     "security_auth": 6,
     "message_actions": 4,
     "systems_architecture": 3,
     "analytics_data": 2
   },
   "approved_by_domain": {
-    "ui_controls": 1199,
-    "ai_agents": 50,
-    "navigation": 68,
+    "ui_controls": 1217,
+    "ai_agents": 51,
+    "brand_platforms": 98,
+    "navigation": 70,
     "media": 40,
-    "product_status": 39,
-    "ui_shell": 56,
+    "product_status": 48,
+    "ui_shell": 59,
     "developer_tools": 8,
-    "communication": 45,
-    "security": 22,
+    "communication": 46,
+    "security": 23,
     "analytics": 2
   },
   "batch_summaries": {
@@ -41,23 +43,23 @@
     },
     "mingcute-visual-review-batch-01": {
       "approve_for_import": 36,
-      "hold_for_editor_review": 2,
-      "keep_as_reviewed_draft": 3
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-editor-review-batch-02": {
       "approve_for_import": 119,
-      "hold_for_editor_review": 6,
-      "keep_as_reviewed_draft": 5
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-editor-review-batch-03": {
       "approve_for_import": 64,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 8
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-02-visual-review": {
       "approve_for_import": 102,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 6
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-03-editor-review": {
       "approve_for_import": 13,
@@ -67,40 +69,45 @@
     "mingcute-batch-03-visual-review": {
       "approve_for_import": 171,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 16
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-04-visual-review": {
       "approve_for_import": 191,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 9
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-05-visual-review": {
       "approve_for_import": 185,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 15
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-06-visual-review": {
       "approve_for_import": 176,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 24
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-07-visual-review": {
       "approve_for_import": 191,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 9
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-08-visual-review": {
       "approve_for_import": 179,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 15
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-09-visual-review": {
       "approve_for_import": 45,
       "hold_for_editor_review": 0,
-      "keep_as_reviewed_draft": 9
+      "keep_as_reviewed_draft": 0
     },
     "mingcute-batch-10-visual-review": {
       "approve_for_import": 2,
+      "hold_for_editor_review": 0,
+      "keep_as_reviewed_draft": 0
+    },
+    "mingcute-full-completion-pass-01": {
+      "approve_for_import": 133,
       "hold_for_editor_review": 0,
       "keep_as_reviewed_draft": 0
     }
