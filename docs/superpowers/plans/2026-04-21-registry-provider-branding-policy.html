@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registry Provider Branding Policy</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #111318;
+        --panel: #191d24;
+        --text: #eef2f7;
+        --muted: #b7c1cc;
+        --line: #2a313c;
+        --accent: #ff7a1a;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(180deg, #0f1116 0%, #161a22 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 48px 20px 72px;
+      }
+
+      section {
+        background: rgba(25, 29, 36, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 24px;
+        margin-top: 18px;
+      }
+
+      h1, h2 {
+        margin: 0 0 12px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+        color: var(--accent);
+      }
+
+      p, li {
+        color: var(--muted);
+      }
+
+      ul {
+        margin: 10px 0 0;
+        padding-left: 20px;
+      }
+
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Registry Provider Branding Policy</h1>
+        <p>
+          This rule keeps the public registry clean. Supericons should be clearly shown as the
+          provider of the registry, but that branding should live in the registry summary and docs,
+          not inside every single icon record.
+        </p>
+      </section>
+
+      <section>
+        <h2>What goes at the top level</h2>
+        <p>
+          The registry summary can show who runs the registry. That is the right place for fields
+          like the provider name, the short namespace, and the main website.
+        </p>
+        <ul>
+          <li><code>provider.name</code></li>
+          <li><code>provider.namespace</code></li>
+          <li><code>provider.homepage</code></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What stays out of each icon record</h2>
+        <p>
+          Third-party icon records should stay focused on the icon itself. They should describe the
+          icon meaning, when to use it, and which library it came from. They should not repeat
+          Supericons branding on every item.
+        </p>
+        <ul>
+          <li>Do not add a Supericons homepage to every third-party icon record.</li>
+          <li>Do not add repeated provider fields to every third-party icon record.</li>
+          <li>Keep the source library honest, such as <code>heroicons</code> or <code>lucide</code>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>When the <code>si:</code> prefix is allowed</h2>
+        <p>
+          The <code>si:</code> prefix is allowed for icons that truly belong to Supericons. That is
+          a source label, not an ad. It should not be copied onto icons that really came from
+          another library.
+        </p>
+      </section>
+
+      <section>
+        <h2>Why this is the better pattern</h2>
+        <ul>
+          <li>It keeps public records smaller and easier for agents to read.</li>
+          <li>It keeps the original library source clear.</li>
+          <li>It avoids turning every icon record into a branding block.</li>
+          <li>It still leaves room for real Supericons-native icons later.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

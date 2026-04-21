@@ -45,6 +45,7 @@ const importedRecordGroups = await Promise.all((registryManifest.importSources |
 const sourceRecords = [...sourceRecordGroups.flat(), ...importedRecordGroups.flat()];
 const projections = buildRegistryProjections(sourceRecords, {
   schemaVersion: registryManifest.schemaVersion,
+  provider: registryManifest.provider,
 });
 
 const outputFiles = [
