@@ -1,0 +1,860 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lucide-visual-review-batch-01",
+  "source_batch_id": "lucide-batch-01",
+  "library_id": "lucide",
+  "library_label": "Lucide",
+  "purpose": "Resolve the remaining visually ambiguous Lucide icons from the first Lucide automation batch.",
+  "selected_count": 17,
+  "selected_icon_ids": [
+    "lucide:file_archive",
+    "lucide:file_clock",
+    "lucide:file_edit",
+    "lucide:file_play",
+    "lucide:file_plus",
+    "lucide:file_plus_2",
+    "lucide:file_scan",
+    "lucide:file_user",
+    "lucide:file_x",
+    "lucide:file_x_2",
+    "lucide:folder_archive",
+    "lucide:folder_clock",
+    "lucide:folder_edit",
+    "lucide:folder_open_dot",
+    "lucide:folder_plus",
+    "lucide:folder_x",
+    "lucide:bug_play"
+  ],
+  "counts": {
+    "by_family": {
+      "file_actions": 10,
+      "folder_actions": 6,
+      "media_controls": 1
+    },
+    "by_queue": {
+      "needs_visual_review": 17
+    }
+  },
+  "records": [
+    {
+      "icon_id": "lucide:file_archive",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_archive",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_archive",
+        "source_asset_name": "file-archive",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "archive"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "archive file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-archive",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H112V200h8a8,8,0,0,0,0-16h-8V168h8a8,8,0,0,0,0-16h-8V136h8a8,8,0,0,0,0-16h-8v-8a8,8,0,0,0-16,0v8H88a8,8,0,0,0,0,16h8v16H88a8,8,0,0,0,0,16h8v16H88a8,8,0,0,0,0,16h8v16H56V40h88V88a8,8,0,0,0,8,8h48V216Z\"/></svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_clock",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_clock",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_clock",
+        "source_asset_name": "file-clock",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "clock"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "clock file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-clock",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M8 14v2.2l1.6 1\" /> <circle cx=\"8\" cy=\"16\" r=\"6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_edit",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_edit",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_edit",
+        "source_asset_name": "file-edit",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "edit"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "edit file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-edit",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-edit\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_play",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_play",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_play",
+        "source_asset_name": "file-play",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "play"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "play file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-play",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-file-play\" viewBox=\"0 0 16 16\"> <path d=\"M6 10.117V5.883a.5.5 0 0 1 .757-.429l3.528 2.117a.5.5 0 0 1 0 .858l-3.528 2.117a.5.5 0 0 1-.757-.43z\"/> <path d=\"M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_plus",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_plus",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_plus",
+        "source_asset_name": "file-plus",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "plus"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "plus file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-plus",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-file-plus\" viewBox=\"0 0 16 16\"> <path d=\"M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5z\"/> <path d=\"M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_plus_2",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_plus_2",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_plus_2",
+        "source_asset_name": "file-plus-2",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "plus",
+          "2"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "plus file",
+          "2 file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-plus-2",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-plus-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M11.35 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5.35\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M14 19h6\" /> <path d=\"M17 16v6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_scan",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_scan",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_scan",
+        "source_asset_name": "file-scan",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "scan file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-scan\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M20 10V8a2.4 2.4 0 0 0-.706-1.704l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.35\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M16 14a2 2 0 0 0-2 2\" /> <path d=\"M16 22a2 2 0 0 1-2-2\" /> <path d=\"M20 14a2 2 0 0 1 2 2\" /> <path d=\"M20 22a2 2 0 0 0 2-2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_user",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_user",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_user",
+        "source_asset_name": "file-user",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "user"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "user file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-user",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-user\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M16 22a4 4 0 0 0-8 0\" /> <circle cx=\"12\" cy=\"15\" r=\"3\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_x",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_x",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_x",
+        "source_asset_name": "file-x",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "x"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "x file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-x",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-file-x\" viewBox=\"0 0 16 16\"> <path d=\"M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708\"/> <path d=\"M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:file_x_2",
+      "family_key": "file_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:file_x_2",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "file_x_2",
+        "source_asset_name": "file-x-2",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "x",
+          "2"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "x file",
+          "2 file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-x-2",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-file-x-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M11 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"m15 17 5 5\" /> <path d=\"m20 17-5 5\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_archive",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_archive",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_archive",
+        "source_asset_name": "folder-archive",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "archive"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "archive folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-archive",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-folder-archive\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <circle cx=\"15\" cy=\"19\" r=\"2\" /> <path d=\"M20.9 19.8A2 2 0 0 0 22 18V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h5.1\" /> <path d=\"M15 11v-1\" /> <path d=\"M15 17v-2\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_clock",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_clock",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_clock",
+        "source_asset_name": "folder-clock",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "clock"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "clock folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-clock",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-folder-clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M16 14v2.2l1.6 1\" /> <path d=\"M7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2\" /> <circle cx=\"16\" cy=\"16\" r=\"6\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_edit",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_edit",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_edit",
+        "source_asset_name": "folder-edit",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "edit"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "edit folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-edit",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-folder-edit\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M2 11.5V5a2 2 0 0 1 2-2h3.9c.7 0 1.3.3 1.7.9l.8 1.2c.4.6 1 .9 1.7.9H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9.5\" /> <path d=\"M11.378 13.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_open_dot",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_open_dot",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_open_dot",
+        "source_asset_name": "folder-open-dot",
+        "label": "Open Folder",
+        "purpose": "Show opening a folder or entering a file container.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "open",
+          "dot"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "act",
+        "domain": "ui_controls",
+        "synonyms": [
+          "open folder",
+          "folder folder",
+          "dot folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-open-dot",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-folder-open-dot\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"m6 14 1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H18a2 2 0 0 1 2 2v2\" /> <circle cx=\"14\" cy=\"15\" r=\"1\" /> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_plus",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_plus",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_plus",
+        "source_asset_name": "folder-plus",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "plus"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "plus folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-plus",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M18 6H20M22 6H20M20 6V4M20 6V8\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M21.4 20H2.6C2.26863 20 2 19.7314 2 19.4V11H21.4C21.7314 11 22 11.2686 22 11.6V19.4C22 19.7314 21.7314 20 21.4 20Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 11V4.6C2 4.26863 2.26863 4 2.6 4H8.77805C8.92127 4 9.05977 4.05124 9.16852 4.14445L12.3315 6.85555C12.4402 6.94876 12.5787 7 12.722 7H14\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:folder_x",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:folder_x",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "folder_x",
+        "source_asset_name": "folder-x",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "x"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "x folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-x",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-folder-x\" viewBox=\"0 0 16 16\"> <path d=\"M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z\"/> <path d=\"M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293z\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "lucide:bug_play",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "lucide:bug_play",
+        "source_group": "free",
+        "source_library": "lucide",
+        "source_name": "bug_play",
+        "source_asset_name": "bug-play",
+        "label": "Bug Play",
+        "purpose": "Show bug play as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "bug",
+          "play"
+        ],
+        "use_when": "Use when the interface refers directly to bug play as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing bug play.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "bug",
+          "play"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "bug-play",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg class=\"lucide lucide-bug-play\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M10 19.655A6 6 0 0 1 6 14v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 3.97\" /> <path d=\"M14 15.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997a1 1 0 0 1-1.517-.86z\" /> <path d=\"M14.12 3.88 16 2\" /> <path d=\"M21 5a4 4 0 0 1-3.55 3.97\" /> <path d=\"M3 21a4 4 0 0 1 3.81-4\" /> <path d=\"M3 5a4 4 0 0 0 3.55 3.97\" /> <path d=\"M6 13H2\" /> <path d=\"m8 2 1.88 1.88\" /> <path d=\"M9 7.13V6a3 3 0 1 1 6 0v1.13\" /> </svg>"
+        }
+      }
+    }
+  ]
+}

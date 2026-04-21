@@ -219,6 +219,46 @@
         }
       ],
       "keep_as_reviewed_draft": []
+    },
+    "lucide-visual-review-batch-01": {
+      "approve_for_import": [
+        "lucide:file_archive",
+        "lucide:file_edit",
+        "lucide:file_play",
+        "lucide:file_plus",
+        "lucide:file_plus_2",
+        "lucide:file_scan",
+        "lucide:file_x",
+        "lucide:file_x_2",
+        "lucide:folder_archive",
+        "lucide:folder_edit",
+        "lucide:folder_plus",
+        "lucide:folder_x"
+      ],
+      "hold_for_editor_review": [
+        {
+          "icon_id": "lucide:file_clock",
+          "note": "The file-and-clock shape still blends recent file, scheduled file, and time-limited file meanings."
+        },
+        {
+          "icon_id": "lucide:file_user",
+          "note": "The file-and-user shape still drifts between profile document, account export, and user-owned file meanings."
+        },
+        {
+          "icon_id": "lucide:folder_clock",
+          "note": "The folder-and-clock shape still blends recent folder, scheduled folder, and folder history meanings."
+        },
+        {
+          "icon_id": "lucide:folder_open_dot",
+          "note": "The open-folder-and-dot shape still blends current folder, unread folder, and active folder meanings too broadly."
+        }
+      ],
+      "keep_as_reviewed_draft": [
+        {
+          "icon_id": "lucide:bug_play",
+          "note": "The bug-and-play shape still mixes run debug, replay bug, and reproduce issue meanings too broadly for approval."
+        }
+      ]
     }
   }
 }

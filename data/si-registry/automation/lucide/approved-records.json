@@ -3437,6 +3437,44 @@
     ]
   },
   {
+    "icon_id": "lucide:file_archive",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_archive",
+    "label": "Archive File",
+    "purpose": "Show archiving, compressing, or opening a file archive.",
+    "category": "system_control",
+    "semantic_tags": [
+      "archive file",
+      "compressed file",
+      "zip file",
+      "file archive",
+      "storage"
+    ],
+    "use_when": "Use when the interface archives a file, opens a compressed file, or points to a file stored as an archive.",
+    "avoid_when": "Do not use for generic file browsing when the meaning is not specifically archive or compression.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with an archive zipper cue.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "zip file",
+      "compressed document",
+      "archive document",
+      "open archive"
+    ]
+  },
+  {
     "icon_id": "lucide:file_check",
     "source_group": "free",
     "source_library": "lucide",
@@ -3586,6 +3624,44 @@
       "file tool",
       "code tool",
       "2 tool"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_edit",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_edit",
+    "label": "Edit File",
+    "purpose": "Show editing or updating a file or document.",
+    "category": "system_control",
+    "semantic_tags": [
+      "edit file",
+      "update file",
+      "modify document",
+      "file edit",
+      "document"
+    ],
+    "use_when": "Use when the interface edits, updates, or renames a file or document.",
+    "avoid_when": "Do not use for file creation or generic open-file actions when the meaning is specifically editing.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with an edit cue.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "update file",
+      "edit document",
+      "modify file",
+      "change document"
     ]
   },
   {
@@ -3745,6 +3821,158 @@
     ]
   },
   {
+    "icon_id": "lucide:file_play",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_play",
+    "label": "Play File",
+    "purpose": "Show playing, previewing, or opening a playable media file.",
+    "category": "media_playback",
+    "semantic_tags": [
+      "play file",
+      "media file",
+      "preview media",
+      "playback",
+      "file"
+    ],
+    "use_when": "Use when the interface plays or previews a file meant for media playback.",
+    "avoid_when": "Do not use for generic open-file actions when the meaning is not specifically playback or media preview.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with a play cue.",
+    "intent": "act",
+    "domain": "media",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "preview file",
+      "play media file",
+      "open playable file",
+      "media preview"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_plus",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_plus",
+    "label": "New File",
+    "purpose": "Show creating or adding a new file or document.",
+    "category": "system_control",
+    "semantic_tags": [
+      "new file",
+      "create file",
+      "add file",
+      "new document",
+      "file"
+    ],
+    "use_when": "Use when the interface creates a new file or starts a new document.",
+    "avoid_when": "Do not use for import or upload flows when the meaning is specifically new file creation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with an add cue inside the file boundary.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "create file",
+      "new document",
+      "add document",
+      "start file"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_plus_2",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_plus_2",
+    "label": "Add File",
+    "purpose": "Show adding a file into the current context.",
+    "category": "system_control",
+    "semantic_tags": [
+      "add file",
+      "insert file",
+      "attach file",
+      "new file",
+      "file"
+    ],
+    "use_when": "Use when the interface adds or attaches a file into the current context.",
+    "avoid_when": "Do not use for new blank-document creation when the meaning is specifically attaching or adding a file.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with an add cue outside the file boundary.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "insert file",
+      "attach document",
+      "add document",
+      "bring in file"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_scan",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_scan",
+    "label": "Scan File",
+    "purpose": "Show scanning, inspecting, or capturing a document file.",
+    "category": "search_discovery",
+    "semantic_tags": [
+      "scan file",
+      "document scan",
+      "inspect file",
+      "capture document",
+      "scan"
+    ],
+    "use_when": "Use when the interface scans, captures, or inspects a document or file surface.",
+    "avoid_when": "Do not use for generic file search when the meaning is specifically scan or capture.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with a scan-target cue.",
+    "intent": "discover",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "document scan",
+      "scan document",
+      "inspect file",
+      "capture file"
+    ]
+  },
+  {
     "icon_id": "lucide:file_search",
     "source_group": "free",
     "source_library": "lucide",
@@ -3858,6 +4086,82 @@
       "warning file",
       "file caution",
       "attention needed"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_x",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_x",
+    "label": "Remove File",
+    "purpose": "Show removing, clearing, or rejecting a file.",
+    "category": "destructive_actions",
+    "semantic_tags": [
+      "remove file",
+      "delete file",
+      "clear file",
+      "reject file",
+      "file"
+    ],
+    "use_when": "Use when the interface removes, clears, or rejects a file from the current context.",
+    "avoid_when": "Do not use for generic error or blocked-file states when the meaning is specifically removing a file.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with a remove cue.",
+    "intent": "delete",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "delete file",
+      "remove document",
+      "clear document",
+      "discard file"
+    ]
+  },
+  {
+    "icon_id": "lucide:file_x_2",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "file_x_2",
+    "label": "Remove File",
+    "purpose": "Show removing or detaching a file from the current context.",
+    "category": "destructive_actions",
+    "semantic_tags": [
+      "remove file",
+      "delete file",
+      "detach file",
+      "clear file",
+      "file"
+    ],
+    "use_when": "Use when the interface removes or detaches a file from the current context.",
+    "avoid_when": "Do not use for generic blocked-file states when the meaning is specifically file removal.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A file paired with an external remove cue.",
+    "intent": "delete",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "delete file",
+      "detach document",
+      "remove document",
+      "discard file"
     ]
   },
   {
@@ -3978,6 +4282,44 @@
     ]
   },
   {
+    "icon_id": "lucide:folder_archive",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "folder_archive",
+    "label": "Archive Folder",
+    "purpose": "Show archiving, compressing, or opening a folder archive.",
+    "category": "system_control",
+    "semantic_tags": [
+      "archive folder",
+      "compressed folder",
+      "zip folder",
+      "folder archive",
+      "storage"
+    ],
+    "use_when": "Use when the interface archives a folder, opens a compressed folder, or points to a folder stored as an archive.",
+    "avoid_when": "Do not use for generic folder browsing when the meaning is not specifically archive or compression.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A folder paired with an archive zipper cue.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "zip folder",
+      "compressed directory",
+      "archive directory",
+      "open folder archive"
+    ]
+  },
+  {
     "icon_id": "lucide:folder_check",
     "source_group": "free",
     "source_library": "lucide",
@@ -4049,6 +4391,44 @@
       "code",
       "folder tool",
       "code tool"
+    ]
+  },
+  {
+    "icon_id": "lucide:folder_edit",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "folder_edit",
+    "label": "Edit Folder",
+    "purpose": "Show editing or renaming a folder or directory.",
+    "category": "system_control",
+    "semantic_tags": [
+      "edit folder",
+      "rename folder",
+      "modify directory",
+      "folder edit",
+      "folder"
+    ],
+    "use_when": "Use when the interface edits, updates, or renames a folder or directory.",
+    "avoid_when": "Do not use for folder creation or generic open-folder actions when the meaning is specifically editing.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A folder paired with an edit cue.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "rename folder",
+      "edit directory",
+      "modify folder",
+      "change folder"
     ]
   },
   {
@@ -4208,6 +4588,44 @@
     ]
   },
   {
+    "icon_id": "lucide:folder_plus",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "folder_plus",
+    "label": "New Folder",
+    "purpose": "Show creating or adding a new folder or directory.",
+    "category": "system_control",
+    "semantic_tags": [
+      "new folder",
+      "create folder",
+      "add folder",
+      "new directory",
+      "folder"
+    ],
+    "use_when": "Use when the interface creates a new folder or adds a folder into the current context.",
+    "avoid_when": "Do not use for generic open-folder actions when the meaning is specifically adding a folder.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A folder paired with an add cue.",
+    "intent": "act",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "create folder",
+      "new directory",
+      "add directory",
+      "start folder"
+    ]
+  },
+  {
     "icon_id": "lucide:folder_search",
     "source_group": "free",
     "source_library": "lucide",
@@ -4282,6 +4700,44 @@
       "find folder",
       "lookup folder",
       "folder lookup"
+    ]
+  },
+  {
+    "icon_id": "lucide:folder_x",
+    "source_group": "free",
+    "source_library": "lucide",
+    "source_name": "folder_x",
+    "label": "Remove Folder",
+    "purpose": "Show removing, clearing, or rejecting a folder.",
+    "category": "destructive_actions",
+    "semantic_tags": [
+      "remove folder",
+      "delete folder",
+      "clear folder",
+      "reject folder",
+      "folder"
+    ],
+    "use_when": "Use when the interface removes, clears, or rejects a folder from the current context.",
+    "avoid_when": "Do not use for generic folder errors when the meaning is specifically folder removal.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A folder paired with a remove cue.",
+    "intent": "delete",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "delete folder",
+      "remove directory",
+      "discard folder",
+      "clear directory"
     ]
   },
   {
