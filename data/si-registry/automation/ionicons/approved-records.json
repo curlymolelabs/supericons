@@ -1,0 +1,3507 @@
+[
+  {
+    "icon_id": "ionicons:alert_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "alert_circle_outline",
+    "label": "Warning",
+    "purpose": "Show a warning, caution, or state that needs attention.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "alert",
+      "circle",
+      "outline",
+      "status"
+    ],
+    "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+    "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A status or attention symbol used to communicate state clearly.",
+    "intent": "warn",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "warning",
+      "alert status",
+      "circle status",
+      "outline status"
+    ]
+  },
+  {
+    "icon_id": "ionicons:alert_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "alert_outline",
+    "label": "Warning",
+    "purpose": "Show a warning, caution, or state that needs attention.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "alert",
+      "outline",
+      "status"
+    ],
+    "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+    "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A status or attention symbol used to communicate state clearly.",
+    "intent": "warn",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "warning",
+      "alert status",
+      "outline status"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_back_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_back_circle_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_down_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_down_circle_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "arrow",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_down_left_box_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_down_left_box_outline",
+    "label": "Back",
+    "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "left",
+      "navigation",
+      "arrow",
+      "down",
+      "box",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+    "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-facing arrow or backward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go back",
+      "previous screen",
+      "return",
+      "back navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_down_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_down_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "arrow",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_down_right_box_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_down_right_box_outline",
+    "label": "Forward",
+    "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "right",
+      "navigation",
+      "arrow",
+      "down",
+      "box",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+    "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-facing arrow or forward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go forward",
+      "next screen",
+      "continue",
+      "forward navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_forward_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_forward_circle_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_redo_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_redo_circle_outline",
+    "label": "Redo",
+    "purpose": "Show redoing an action that was previously undone.",
+    "category": "system_control",
+    "semantic_tags": [
+      "arrow",
+      "redo",
+      "circle",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "redo",
+      "arrow control",
+      "redo control",
+      "circle control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_redo_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_redo_outline",
+    "label": "Redo",
+    "purpose": "Show redoing an action that was previously undone.",
+    "category": "system_control",
+    "semantic_tags": [
+      "arrow",
+      "redo",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "redo",
+      "arrow control",
+      "redo control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_undo_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_undo_circle_outline",
+    "label": "Undo",
+    "purpose": "Show undoing the most recent action.",
+    "category": "system_control",
+    "semantic_tags": [
+      "arrow",
+      "undo",
+      "circle",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "undo",
+      "arrow control",
+      "undo control",
+      "circle control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_undo_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_undo_outline",
+    "label": "Undo",
+    "purpose": "Show undoing the most recent action.",
+    "category": "system_control",
+    "semantic_tags": [
+      "arrow",
+      "undo",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "undo",
+      "arrow control",
+      "undo control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_up_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_up_circle_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "arrow",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_up_left_box_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_up_left_box_outline",
+    "label": "Back",
+    "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "left",
+      "navigation",
+      "arrow",
+      "up",
+      "box",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+    "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-facing arrow or backward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go back",
+      "previous screen",
+      "return",
+      "back navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_up_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_up_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "arrow",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:arrow_up_right_box_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "arrow_up_right_box_outline",
+    "label": "Forward",
+    "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "right",
+      "navigation",
+      "arrow",
+      "up",
+      "box",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+    "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-facing arrow or forward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go forward",
+      "next screen",
+      "continue",
+      "forward navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:bag_check_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "bag_check_outline",
+    "label": "Confirmed",
+    "purpose": "Show a confirmed, completed, or accepted state.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "bag",
+      "check",
+      "outline",
+      "status"
+    ],
+    "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+    "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A status or attention symbol used to communicate state clearly.",
+    "intent": "inform",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "confirmed",
+      "bag status",
+      "check status",
+      "outline status"
+    ]
+  },
+  {
+    "icon_id": "ionicons:ban_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "ban_outline",
+    "label": "Blocked",
+    "purpose": "Show that an action, object, or state is blocked, prohibited, or not allowed.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "ban",
+      "outline",
+      "status"
+    ],
+    "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+    "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A status or attention symbol used to communicate state clearly.",
+    "intent": "inform",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "blocked",
+      "ban status",
+      "outline status"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_back_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_back_circle_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_down_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_down_circle_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "caret",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_down_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_down_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "caret",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_forward_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_forward_circle_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_up_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_up_circle_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "caret",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:caret_up_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "caret_up_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "caret",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_back_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_back_circle_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_down_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_down_circle_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "chevron",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_down_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_down_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "chevron",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_forward_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_forward_circle_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_up_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_up_circle_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "chevron",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:chevron_up_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "chevron_up_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "chevron",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:code_download_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "code_download_outline",
+    "label": "Code",
+    "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "code",
+      "download",
+      "outline",
+      "engineering developer tools"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "code",
+      "code tool",
+      "download tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:code_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "code_outline",
+    "label": "Code",
+    "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "code",
+      "outline",
+      "engineering developer tools"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "code",
+      "code tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:code_slash_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "code_slash_outline",
+    "label": "Code",
+    "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "code",
+      "slash",
+      "outline",
+      "engineering developer tools"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "code",
+      "code tool",
+      "slash tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:code_working_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "code_working_outline",
+    "label": "Code",
+    "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "code",
+      "working",
+      "outline",
+      "engineering developer tools"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "code",
+      "code tool",
+      "working tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:color_filter_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "color_filter_outline",
+    "label": "Filter",
+    "purpose": "Show filtering or refinement of results, content, or data.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "filter",
+      "refine",
+      "narrow",
+      "results",
+      "data control"
+    ],
+    "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
+    "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A funnel-shaped control used to narrow visible results.",
+    "intent": "refine",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "filter results",
+      "refine list",
+      "apply filters",
+      "narrow results"
+    ]
+  },
+  {
+    "icon_id": "ionicons:document_lock_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "document_lock_outline",
+    "label": "Lock",
+    "purpose": "Show locked access, protected content, or a secured state.",
+    "category": "security",
+    "semantic_tags": [
+      "lock",
+      "secure",
+      "protected",
+      "restricted",
+      "access"
+    ],
+    "use_when": "Use when content, actions, or settings are locked or require protection.",
+    "avoid_when": "Do not use for generic privacy copy unless the interface truly represents restricted access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A closed padlock.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "locked",
+      "secure access",
+      "protected",
+      "restricted"
+    ]
+  },
+  {
+    "icon_id": "ionicons:eye_off_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "eye_off_outline",
+    "label": "Visible",
+    "purpose": "Show a visible, reveal, or preview state.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "visible",
+      "view",
+      "preview",
+      "reveal",
+      "eye"
+    ],
+    "use_when": "Use when the interface reveals content or shows that something is visible.",
+    "avoid_when": "Do not use for analytics or read-tracking when the meaning is specifically visibility or preview.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An eye symbol for visible or reveal state.",
+    "intent": "inform",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "show",
+      "preview",
+      "reveal",
+      "visible state"
+    ]
+  },
+  {
+    "icon_id": "ionicons:eye_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "eye_outline",
+    "label": "Visible",
+    "purpose": "Show a visible, reveal, or preview state.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "visible",
+      "view",
+      "preview",
+      "reveal",
+      "eye"
+    ],
+    "use_when": "Use when the interface reveals content or shows that something is visible.",
+    "avoid_when": "Do not use for analytics or read-tracking when the meaning is specifically visibility or preview.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An eye symbol for visible or reveal state.",
+    "intent": "inform",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "show",
+      "preview",
+      "reveal",
+      "visible state"
+    ]
+  },
+  {
+    "icon_id": "ionicons:filter_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "filter_circle_outline",
+    "label": "Filter",
+    "purpose": "Show filtering or refinement of results, content, or data.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "filter",
+      "refine",
+      "narrow",
+      "results",
+      "data control"
+    ],
+    "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
+    "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A funnel-shaped control used to narrow visible results.",
+    "intent": "refine",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "filter results",
+      "refine list",
+      "apply filters",
+      "narrow results"
+    ]
+  },
+  {
+    "icon_id": "ionicons:filter_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "filter_outline",
+    "label": "Filter",
+    "purpose": "Show filtering or refinement of results, content, or data.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "filter",
+      "refine",
+      "narrow",
+      "results",
+      "data control"
+    ],
+    "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
+    "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A funnel-shaped control used to narrow visible results.",
+    "intent": "refine",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "filter results",
+      "refine list",
+      "apply filters",
+      "narrow results"
+    ]
+  },
+  {
+    "icon_id": "ionicons:grid_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "grid_outline",
+    "label": "Grid View",
+    "purpose": "Show a grid layout or switching content into a grid view.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "grid view",
+      "grid",
+      "outline"
+    ],
+    "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+    "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+    "intent": "control",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.83,
+    "synonyms": [
+      "grid view",
+      "grid view control",
+      "grid menu",
+      "outline menu"
+    ]
+  },
+  {
+    "icon_id": "ionicons:hand_left_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "hand_left_outline",
+    "label": "Back",
+    "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "left",
+      "navigation",
+      "hand",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
+    "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-facing arrow or backward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go back",
+      "previous screen",
+      "return",
+      "back navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:hand_right_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "hand_right_outline",
+    "label": "Forward",
+    "purpose": "Show a forward action or a move to the next screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "right",
+      "navigation",
+      "hand",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
+    "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-facing arrow or forward navigation cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "go forward",
+      "next screen",
+      "continue",
+      "forward navigation"
+    ]
+  },
+  {
+    "icon_id": "ionicons:home_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "home_outline",
+    "label": "Go Home",
+    "purpose": "Show the home destination, root view, or primary landing area of the product.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "home",
+      "root",
+      "dashboard",
+      "landing",
+      "main destination"
+    ],
+    "use_when": "Use when the user can return to the home screen, dashboard, or main landing area.",
+    "avoid_when": "Do not use for literal housing, addresses, or storage locations unless the UI truly means home as a place.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A simple house silhouette with a doorway.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "go home",
+      "home page",
+      "root screen",
+      "main dashboard"
+    ]
+  },
+  {
+    "icon_id": "ionicons:key_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "key_outline",
+    "label": "Access Key",
+    "purpose": "Show credentials, access keys, or a key-based access concept.",
+    "category": "security_auth",
+    "semantic_tags": [
+      "key",
+      "credentials",
+      "access",
+      "auth",
+      "secret"
+    ],
+    "use_when": "Use when the interface refers to keys, credentials, or key-based access.",
+    "avoid_when": "Do not use for generic security state when the meaning is specifically a key or credential.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A key symbol for access or credentials.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "access key",
+      "credentials",
+      "auth key",
+      "secret"
+    ]
+  },
+  {
+    "icon_id": "ionicons:list_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "list_circle_outline",
+    "label": "List View",
+    "purpose": "Show a list layout or switching content into a list view.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "list view",
+      "list",
+      "circle",
+      "outline"
+    ],
+    "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+    "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+    "intent": "control",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.83,
+    "synonyms": [
+      "list view",
+      "list view control",
+      "list menu",
+      "circle menu",
+      "outline menu"
+    ]
+  },
+  {
+    "icon_id": "ionicons:list_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "list_outline",
+    "label": "List View",
+    "purpose": "Show a list layout or switching content into a list view.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "list view",
+      "list",
+      "outline"
+    ],
+    "use_when": "Use when the interface opens, switches, or focuses a main layout, navigation entry, or shell surface.",
+    "avoid_when": "Do not use for settings or unrelated status when the meaning is specifically shell or layout control.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+    "intent": "control",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.83,
+    "synonyms": [
+      "list view",
+      "list view control",
+      "list menu",
+      "outline menu"
+    ]
+  },
+  {
+    "icon_id": "ionicons:lock_closed_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "lock_closed_outline",
+    "label": "Lock",
+    "purpose": "Show locked access, protected content, or a secured state.",
+    "category": "security",
+    "semantic_tags": [
+      "lock",
+      "secure",
+      "protected",
+      "restricted",
+      "access"
+    ],
+    "use_when": "Use when content, actions, or settings are locked or require protection.",
+    "avoid_when": "Do not use for generic privacy copy unless the interface truly represents restricted access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A closed padlock.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "locked",
+      "secure access",
+      "protected",
+      "restricted"
+    ]
+  },
+  {
+    "icon_id": "ionicons:lock_open_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "lock_open_outline",
+    "label": "Locked",
+    "purpose": "Show locked access, secured content, or protected state.",
+    "category": "security_auth",
+    "semantic_tags": [
+      "lock",
+      "open",
+      "outline",
+      "security"
+    ],
+    "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+    "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "locked",
+      "secure access",
+      "lock security",
+      "open security",
+      "outline security"
+    ]
+  },
+  {
+    "icon_id": "ionicons:mail_open_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "mail_open_outline",
+    "label": "Mail",
+    "purpose": "Show mail, email communication, or an email-related action.",
+    "category": "communication_social",
+    "semantic_tags": [
+      "mail",
+      "open",
+      "outline",
+      "communication"
+    ],
+    "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+    "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A message or mail symbol used for communication and message flow.",
+    "intent": "inform",
+    "domain": "communication",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "message",
+      "mail",
+      "send",
+      "mail message",
+      "open message",
+      "outline message"
+    ]
+  },
+  {
+    "icon_id": "ionicons:mail_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "mail_outline",
+    "label": "Mail",
+    "purpose": "Show mail, email communication, or an email-related action.",
+    "category": "communication_social",
+    "semantic_tags": [
+      "mail",
+      "outline",
+      "communication"
+    ],
+    "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+    "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A message or mail symbol used for communication and message flow.",
+    "intent": "inform",
+    "domain": "communication",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "message",
+      "mail",
+      "send",
+      "mail message",
+      "outline message"
+    ]
+  },
+  {
+    "icon_id": "ionicons:mail_unread_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "mail_unread_outline",
+    "label": "Mail",
+    "purpose": "Show mail, email communication, or an email-related action.",
+    "category": "communication_social",
+    "semantic_tags": [
+      "mail",
+      "unread",
+      "outline",
+      "communication"
+    ],
+    "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+    "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A message or mail symbol used for communication and message flow.",
+    "intent": "inform",
+    "domain": "communication",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "message",
+      "mail",
+      "send",
+      "mail message",
+      "unread message",
+      "outline message"
+    ]
+  },
+  {
+    "icon_id": "ionicons:menu_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "menu_outline",
+    "label": "Menu",
+    "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "menu",
+      "navigation",
+      "drawer",
+      "sidebar",
+      "more"
+    ],
+    "use_when": "Use when the interface opens a main menu, drawer, or navigation panel.",
+    "avoid_when": "Do not use for overflow actions when the meaning is specifically the main navigation menu.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A stacked-line menu or drawer entry icon.",
+    "intent": "control",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "main menu",
+      "navigation drawer",
+      "open menu",
+      "sidebar menu"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_back_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_back_circle_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_forward_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_forward_circle_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_skip_back_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_skip_back_circle_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_skip_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_skip_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_skip_forward_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_skip_forward_circle_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:play_skip_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "play_skip_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:power_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "power_outline",
+    "label": "Power",
+    "purpose": "Show powering on, powering off, or the main power state of a feature or system.",
+    "category": "system_control",
+    "semantic_tags": [
+      "power",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "power",
+      "power control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:qr_code_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "qr_code_outline",
+    "label": "Code",
+    "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "qr",
+      "code",
+      "outline",
+      "engineering developer tools"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "code",
+      "qr tool",
+      "code tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:refresh_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "refresh_circle_outline",
+    "label": "Refresh",
+    "purpose": "Show refreshing or reloading the current view, results, or content state.",
+    "category": "system_control",
+    "semantic_tags": [
+      "refresh",
+      "reload",
+      "update",
+      "refetch",
+      "reload view"
+    ],
+    "use_when": "Use when the user or system is refreshing a page, refetching results, or reloading the current content state.",
+    "avoid_when": "Do not use for undo, long-running sync status, or retry-after-error flows when those meanings need a more specific icon.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Two curved arrows forming a circular refresh loop.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "reload",
+      "refresh view",
+      "update results",
+      "refetch content"
+    ]
+  },
+  {
+    "icon_id": "ionicons:refresh_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "refresh_outline",
+    "label": "Refresh",
+    "purpose": "Show refreshing or reloading the current view, results, or content state.",
+    "category": "system_control",
+    "semantic_tags": [
+      "refresh",
+      "reload",
+      "update",
+      "refetch",
+      "reload view"
+    ],
+    "use_when": "Use when the user or system is refreshing a page, refetching results, or reloading the current content state.",
+    "avoid_when": "Do not use for undo, long-running sync status, or retry-after-error flows when those meanings need a more specific icon.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Two curved arrows forming a circular refresh loop.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "reload",
+      "refresh view",
+      "update results",
+      "refetch content"
+    ]
+  },
+  {
+    "icon_id": "ionicons:return_down_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "return_down_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:return_down_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "return_down_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:return_up_back_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "return_up_back_outline",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "ionicons:return_up_forward_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "return_up_forward_outline",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "intent": "navigate",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "ionicons:search_circle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "search_circle_outline",
+    "label": "Search",
+    "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
+    "category": "search_discovery",
+    "semantic_tags": [
+      "search",
+      "find",
+      "lookup",
+      "query",
+      "discovery"
+    ],
+    "use_when": "Use when the interface opens search, triggers lookup, or signals that users can find content.",
+    "avoid_when": "Do not use for analytics inspection or AI-specific search when a more specialized icon communicates the meaning better.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A magnifying glass.",
+    "intent": "discover",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "find",
+      "search content",
+      "lookup",
+      "query"
+    ]
+  },
+  {
+    "icon_id": "ionicons:search_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "search_outline",
+    "label": "Search",
+    "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
+    "category": "search_discovery",
+    "semantic_tags": [
+      "search",
+      "find",
+      "lookup",
+      "query",
+      "discovery"
+    ],
+    "use_when": "Use when the interface opens search, triggers lookup, or signals that users can find content.",
+    "avoid_when": "Do not use for analytics inspection or AI-specific search when a more specialized icon communicates the meaning better.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A magnifying glass.",
+    "intent": "discover",
+    "domain": "ui_shell",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "find",
+      "search content",
+      "lookup",
+      "query"
+    ]
+  },
+  {
+    "icon_id": "ionicons:send_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "send_outline",
+    "label": "Send",
+    "purpose": "Show an outbound send, submit, or dispatch action for messages, content, or requests.",
+    "category": "message_actions",
+    "semantic_tags": [
+      "send",
+      "outline",
+      "communication"
+    ],
+    "use_when": "Use when the interface refers to communication, message handling, email, or sending content out.",
+    "avoid_when": "Do not use for generic navigation when the meaning is specifically communication or message action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A message or mail symbol used for communication and message flow.",
+    "intent": "act",
+    "domain": "communication",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "message",
+      "mail",
+      "send",
+      "send message",
+      "outline message"
+    ]
+  },
+  {
+    "icon_id": "ionicons:server_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "server_outline",
+    "label": "Server Control",
+    "purpose": "Show server-side control, configuration, or backend operation.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "server",
+      "outline",
+      "systems architecture"
+    ],
+    "use_when": "Use when the interface refers to developer work, technical structure, or AI-assisted system behavior.",
+    "avoid_when": "Do not use for everyday consumer actions when the meaning is specifically technical or AI-system oriented.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+    "intent": "inform",
+    "domain": "developer_tools",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.84,
+    "synonyms": [
+      "server control",
+      "server tool",
+      "outline tool"
+    ]
+  },
+  {
+    "icon_id": "ionicons:shield_checkmark_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "shield_checkmark_outline",
+    "label": "Protection",
+    "purpose": "Show protection, defense, or a security safeguard.",
+    "category": "security",
+    "semantic_tags": [
+      "shield",
+      "checkmark",
+      "outline",
+      "security"
+    ],
+    "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+    "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "protection",
+      "secure access",
+      "shield security",
+      "checkmark security",
+      "outline security"
+    ]
+  },
+  {
+    "icon_id": "ionicons:shield_half_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "shield_half_outline",
+    "label": "Protection",
+    "purpose": "Show protection, defense, or a security safeguard.",
+    "category": "security",
+    "semantic_tags": [
+      "shield",
+      "half",
+      "outline",
+      "security"
+    ],
+    "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+    "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "protection",
+      "secure access",
+      "shield security",
+      "half security",
+      "outline security"
+    ]
+  },
+  {
+    "icon_id": "ionicons:shield_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "shield_outline",
+    "label": "Protection",
+    "purpose": "Show protection, defense, or a security safeguard.",
+    "category": "security",
+    "semantic_tags": [
+      "shield",
+      "outline",
+      "security"
+    ],
+    "use_when": "Use when the interface refers to protection, authentication, access control, or secure credentials.",
+    "avoid_when": "Do not use for simple status or navigation when the meaning is specifically security or access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+    "intent": "inform",
+    "domain": "security",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.86,
+    "synonyms": [
+      "protection",
+      "secure access",
+      "shield security",
+      "outline security"
+    ]
+  },
+  {
+    "icon_id": "ionicons:swap_horizontal_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "swap_horizontal_outline",
+    "label": "Swap Horizontal Outline",
+    "purpose": "Show a system control action or a reversible interface action.",
+    "category": "system_control",
+    "semantic_tags": [
+      "swap",
+      "horizontal",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "swap horizontal outline",
+      "swap control",
+      "horizontal control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:swap_vertical_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "swap_vertical_outline",
+    "label": "Swap Vertical Outline",
+    "purpose": "Show a system control action or a reversible interface action.",
+    "category": "system_control",
+    "semantic_tags": [
+      "swap",
+      "vertical",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "swap vertical outline",
+      "swap control",
+      "vertical control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:thumbs_down_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "thumbs_down_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "thumbs",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:thumbs_up_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "thumbs_up_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "thumbs",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:toggle_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "toggle_outline",
+    "label": "Enabled Toggle",
+    "purpose": "Show that a setting, control, or feature is switched on or enabled.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "toggle",
+      "outline",
+      "control"
+    ],
+    "use_when": "Use when the interface applies a direct control action or changes a local system state.",
+    "avoid_when": "Do not use for navigation or passive status when the meaning is an active control action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control symbol used for state changes, refresh, or interaction handling.",
+    "intent": "control",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "enabled toggle",
+      "toggle control",
+      "outline control"
+    ]
+  },
+  {
+    "icon_id": "ionicons:trash_bin_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "trash_bin_outline",
+    "label": "Delete",
+    "purpose": "Show delete, discard, or remove actions for content or items.",
+    "category": "destructive_actions",
+    "semantic_tags": [
+      "delete",
+      "trash",
+      "discard",
+      "remove",
+      "destructive"
+    ],
+    "use_when": "Use when the user can delete, discard, or remove an item from the current context.",
+    "avoid_when": "Do not use for archive, close, or hide when the action is reversible or not truly destructive.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A trash bin used for discard or deletion.",
+    "intent": "delete",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "delete item",
+      "remove",
+      "discard",
+      "trash"
+    ]
+  },
+  {
+    "icon_id": "ionicons:trash_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "trash_outline",
+    "label": "Delete",
+    "purpose": "Show delete, discard, or remove actions for content or items.",
+    "category": "destructive_actions",
+    "semantic_tags": [
+      "delete",
+      "trash",
+      "discard",
+      "remove",
+      "destructive"
+    ],
+    "use_when": "Use when the user can delete, discard, or remove an item from the current context.",
+    "avoid_when": "Do not use for archive, close, or hide when the action is reversible or not truly destructive.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A trash bin used for discard or deletion.",
+    "intent": "delete",
+    "domain": "ui_controls",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "svg_payload"
+    ],
+    "confidence": 0.9,
+    "synonyms": [
+      "delete item",
+      "remove",
+      "discard",
+      "trash"
+    ]
+  },
+  {
+    "icon_id": "ionicons:trending_down_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "trending_down_outline",
+    "label": "Move Down",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move",
+      "navigation",
+      "trending",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or decline when the meaning is not actual downward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move down",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:trending_up_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "trending_up_outline",
+    "label": "Move Up",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move",
+      "navigation",
+      "trending",
+      "outline"
+    ],
+    "use_when": "Use when the interface moves upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not actual upward movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow or movement cue.",
+    "intent": "navigate",
+    "domain": "navigation",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.82,
+    "synonyms": [
+      "move up",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "ionicons:warning_outline",
+    "source_group": "free",
+    "source_library": "ionicons",
+    "source_name": "warning_outline",
+    "label": "Warning",
+    "purpose": "Show a warning, caution, or state that needs attention.",
+    "category": "status_feedback",
+    "semantic_tags": [
+      "warning",
+      "outline",
+      "status"
+    ],
+    "use_when": "Use when the interface needs to communicate status, visibility, or attention-related feedback.",
+    "avoid_when": "Do not use for navigation or setup controls when the meaning is status feedback.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A status or attention symbol used to communicate state clearly.",
+    "intent": "warn",
+    "domain": "product_status",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "svg_payload"
+    ],
+    "confidence": 0.85,
+    "synonyms": [
+      "warning",
+      "warning status",
+      "outline status"
+    ]
+  }
+]

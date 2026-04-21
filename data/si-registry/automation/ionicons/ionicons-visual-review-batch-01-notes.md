@@ -1,0 +1,16 @@
+# ionicons-visual-review-batch-01 Notes
+
+## Outcome
+
+- Total reviewed: 157
+- Approved for import: 0
+- Hold for editor review: 0
+- Keep as reviewed draft: 157
+
+## Main pattern
+
+This batch resolves the visually ambiguous Ionicons icons from ionicons-batch-01.
+
+The icons that moved forward were the ones where the second cue reads clearly from the shape itself.
+
+The icons that stayed conservative are the ones where the extra cue still depends too much on nearby product wording.
