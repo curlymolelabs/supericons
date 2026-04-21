@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-21T13:52:56.446Z",
+  "library_id": "iconoir",
+  "library_label": "Iconoir",
+  "library_order": 8,
+  "verdict": {
+    "status": "operationally_complete_with_follow_up",
+    "message": "The library is fully processed in the pipeline, but it still carries quality follow-up work.",
+    "recommended_next_step": "Keep the library closed for rollout sequencing, but schedule a later quality pass for holds and drafts."
+  },
+  "coverage": {
+    "source_total_icons": 1383,
+    "approved_records": 534,
+    "hold_records": 0,
+    "reviewed_drafts": 849,
+    "overlap_skipped": 0,
+    "processed_total": 1383,
+    "processed_matches_source_total": true
+  },
+  "projection": {
+    "public_registry_records": 534,
+    "prior_public_records_outside_library_rollout": 0,
+    "expected_public_registry_records": 534,
+    "matches_expected_public_registry_count": true
+  },
+  "quality_signals": {
+    "approved_ratio": 0.3861,
+    "hold_ratio": 0,
+    "draft_ratio": 0.6139,
+    "batch_count": 12,
+    "top_categories": [
+      {
+        "key": "status_feedback",
+        "count": 182
+      },
+      {
+        "key": "navigation_interface",
+        "count": 176
+      },
+      {
+        "key": "brand_identity",
+        "count": 48
+      },
+      {
+        "key": "system_control",
+        "count": 27
+      },
+      {
+        "key": "security",
+        "count": 24
+      },
+      {
+        "key": "data_controls",
+        "count": 15
+      },
+      {
+        "key": "analytics_data",
+        "count": 14
+      },
+      {
+        "key": "search_discovery",
+        "count": 9
+      },
+      {
+        "key": "communication_social",
+        "count": 8
+      },
+      {
+        "key": "engineering_developer_tools",
+        "count": 8
+      },
+      {
+        "key": "message_actions",
+        "count": 7
+      },
+      {
+        "key": "security_auth",
+        "count": 7
+      },
+      {
+        "key": "systems_architecture",
+        "count": 3
+      },
+      {
+        "key": "destructive_actions",
+        "count": 2
+      },
+      {
+        "key": "media_playback",
+        "count": 2
+      },
+      {
+        "key": "agent_lifecycle",
+        "count": 1
+      },
+      {
+        "key": "configuration",
+        "count": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "key": "ui_controls",
+        "count": 156
+      },
+      {
+        "key": "navigation",
+        "count": 135
+      },
+      {
+        "key": "product_status",
+        "count": 62
+      },
+      {
+        "key": "ui_shell",
+        "count": 55
+      },
+      {
+        "key": "brand_platforms",
+        "count": 32
+      },
+      {
+        "key": "security",
+        "count": 31
+      },
+      {
+        "key": "developer_tools",
+        "count": 29
+      },
+      {
+        "key": "communication",
+        "count": 24
+      },
+      {
+        "key": "media",
+        "count": 7
+      },
+      {
+        "key": "commerce",
+        "count": 2
+      },
+      {
+        "key": "ai_agents",
+        "count": 1
+      }
+    ]
+  },
+  "metadata_safety": {
+    "records_checked": 534,
+    "banned_field_hit_count": 0,
+    "banned_field_hits": []
+  },
+  "gaps": [
+    "849 icons are still kept as reviewed drafts, so the semantics are not fully approved yet."
+  ],
+  "manual_spotcheck": {
+    "approved_examples": [
+      "iconoir:airplane",
+      "iconoir:airplay",
+      "iconoir:album",
+      "iconoir:album_list",
+      "iconoir:align_center",
+      "iconoir:align_justify",
+      "iconoir:align_left",
+      "iconoir:align_right"
+    ],
+    "hold_examples": [],
+    "draft_examples": [
+      "iconoir:folder_settings",
+      "iconoir:user_scan",
+      "iconoir:arrow_archery",
+      "iconoir:arrow_enlarge_tag",
+      "iconoir:arrow_reduce_tag",
+      "iconoir:arrow_separate",
+      "iconoir:arrow_separate_vertical",
+      "iconoir:arrow_union"
+    ]
+  },
+  "report_paths": {
+    "json": "data/si-registry/generated/iconoir-completion-audit.json",
+    "markdown": "docs/superpowers/plans/2026-04-21-iconoir-completion-audit-report.md",
+    "html": "docs/superpowers/plans/2026-04-21-iconoir-completion-audit-report.html"
+  }
+}

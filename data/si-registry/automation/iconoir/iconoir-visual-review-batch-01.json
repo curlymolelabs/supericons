@@ -1,0 +1,1054 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "iconoir-visual-review-batch-01",
+  "source_batch_id": "iconoir-batch-01",
+  "library_id": "iconoir",
+  "library_label": "Iconoir",
+  "purpose": "Resolve the visually ambiguous Iconoir icons from iconoir-batch-01.",
+  "selected_count": 21,
+  "selected_icon_ids": [
+    "iconoir:folder_settings",
+    "iconoir:user_scan",
+    "iconoir:arrow_archery",
+    "iconoir:arrow_enlarge_tag",
+    "iconoir:arrow_reduce_tag",
+    "iconoir:arrow_separate",
+    "iconoir:arrow_separate_vertical",
+    "iconoir:arrow_union",
+    "iconoir:arrow_union_vertical",
+    "iconoir:bus_stop",
+    "iconoir:chat_plus_in",
+    "iconoir:cube_scan",
+    "iconoir:file_not_found",
+    "iconoir:fingerprint_scan",
+    "iconoir:iris_scan",
+    "iconoir:media_image_folder",
+    "iconoir:media_video_folder",
+    "iconoir:pause_window",
+    "iconoir:playlist_play",
+    "iconoir:scan_barcode",
+    "iconoir:voice_scan"
+  ],
+  "counts": {
+    "by_family": {
+      "folder_actions": 3,
+      "search_discovery": 6,
+      "navigation_motion": 7,
+      "media_controls": 3,
+      "messages_mail": 1,
+      "file_actions": 1
+    },
+    "by_queue": {
+      "needs_visual_review": 21
+    }
+  },
+  "records": [
+    {
+      "icon_id": "iconoir:folder_settings",
+      "family_key": "folder_actions",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:folder_settings",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "folder_settings",
+        "source_asset_name": "folder-settings",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "folder",
+          "settings"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "folder folder",
+          "settings folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "folder-settings",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M2.6 4H8.77805C8.92127 4 9.05977 4.05124 9.16852 4.14445L12.3315 6.85555C12.4402 6.94876 12.5787 7 12.722 7H21.4C21.7314 7 22 7.26863 22 7.6V10.4C22 10.7314 21.7314 11 21.4 11H2.6C2.26863 11 2 10.7314 2 10.4V4.6C2 4.26863 2.26863 4 2.6 4Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M22 10L22 14\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 10V19.4C2 19.7314 2.26863 20 2.6 20H13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M19 21C20.1046 21 21 20.1046 21 19C21 17.8954 20.1046 17 19 17C18.6357 17 18.2942 17.0974 18 17.2676C17.4022 17.6134 17 18.2597 17 19C17 19.7403 17.4022 20.3866 18 20.7324C18.2942 20.9026 18.6357 21 19 21Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M19 22C20.6569 22 22 20.6569 22 19C22 17.3431 20.6569 16 19 16C17.3431 16 16 17.3431 16 19C16 20.6569 17.3431 22 19 22Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"0.3 2\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:user_scan",
+      "family_key": "search_discovery",
+      "selection_score": 6,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:user_scan",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "user_scan",
+        "source_asset_name": "user-scan",
+        "label": "User Scan",
+        "purpose": "Show user scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "user",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to user scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing user scan.",
+        "intent": "inform",
+        "domain": "communication",
+        "synonyms": [
+          "user",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "user-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M6 3H3V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M7 18V17C7 14.2386 9.23858 12 12 12V12C14.7614 12 17 14.2386 17 17V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_archery",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_archery",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_archery",
+        "source_asset_name": "arrow-archery",
+        "label": "Arrow Archery",
+        "purpose": "Show arrow archery as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "archery"
+        ],
+        "use_when": "Use when the interface refers directly to arrow archery as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow archery.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "archery"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-archery",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M8.61096 15.8891L20.6318 3.86829M8.61096 15.8891H5.78253L2.9541 18.7175H5.78253V21.546L8.61096 18.7175V15.8891ZM20.6318 3.86829H17.8033M20.6318 3.86829V6.69671\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_enlarge_tag",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_enlarge_tag",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_enlarge_tag",
+        "source_asset_name": "arrow-enlarge-tag",
+        "label": "Arrow Enlarge Tag",
+        "purpose": "Show arrow enlarge tag as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "enlarge",
+          "tag"
+        ],
+        "use_when": "Use when the interface refers directly to arrow enlarge tag as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow enlarge tag.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "enlarge",
+          "tag"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-enlarge-tag",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M8.5 9.5L6 12L8.5 14.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M15.5 9.5L18 12L15.5 14.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 15V9C2 6.79086 3.79086 5 6 5H18C20.2091 5 22 6.79086 22 9V15C22 17.2091 20.2091 19 18 19H6C3.79086 19 2 17.2091 2 15Z\" stroke=\"currentColor\" stroke-width=\"1.5\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_reduce_tag",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_reduce_tag",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_reduce_tag",
+        "source_asset_name": "arrow-reduce-tag",
+        "label": "Arrow Reduce Tag",
+        "purpose": "Show arrow reduce tag as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "reduce",
+          "tag"
+        ],
+        "use_when": "Use when the interface refers directly to arrow reduce tag as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow reduce tag.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "reduce",
+          "tag"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-reduce-tag",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M7 9.5L9.5 12L7 14.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M16.5 9.5L14 12L16.5 14.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 5H18C20.2091 5 22 6.79086 22 9V15C22 17.2091 20.2091 19 18 19H6C3.79086 19 2 17.2091 2 15V9C2 6.79086 3.79086 5 6 5Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_separate",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_separate",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_separate",
+        "source_asset_name": "arrow-separate",
+        "label": "Arrow Separate",
+        "purpose": "Show arrow separate as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "separate"
+        ],
+        "use_when": "Use when the interface refers directly to arrow separate as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow separate.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "separate"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-separate",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M8 7L3 12L8 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M16 7L21 12L16 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_separate_vertical",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_separate_vertical",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_separate_vertical",
+        "source_asset_name": "arrow-separate-vertical",
+        "label": "Arrow Separate Vertical",
+        "purpose": "Show arrow separate vertical as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "separate",
+          "vertical"
+        ],
+        "use_when": "Use when the interface refers directly to arrow separate vertical as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow separate vertical.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "separate",
+          "vertical"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-separate-vertical",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M17 8L12 3L7 8\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M17 16L12 21L7 16\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_union",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_union",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_union",
+        "source_asset_name": "arrow-union",
+        "label": "Arrow Union",
+        "purpose": "Show arrow union as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "union"
+        ],
+        "use_when": "Use when the interface refers directly to arrow union as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow union.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "union"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-union",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M20 7L15 12L20 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M4 7L9 12L4 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:arrow_union_vertical",
+      "family_key": "navigation_motion",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:arrow_union_vertical",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "arrow_union_vertical",
+        "source_asset_name": "arrow-union-vertical",
+        "label": "Arrow Union Vertical",
+        "purpose": "Show arrow union vertical as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "arrow",
+          "union",
+          "vertical"
+        ],
+        "use_when": "Use when the interface refers directly to arrow union vertical as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing arrow union vertical.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "arrow",
+          "union",
+          "vertical"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "arrow-union-vertical",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M17 4L12 9L7 4\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M17 20L12 15L7 20\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:bus_stop",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:bus_stop",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "bus_stop",
+        "source_asset_name": "bus-stop",
+        "label": "Bus Stop",
+        "purpose": "Show bus stop as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "bus",
+          "stop"
+        ],
+        "use_when": "Use when the interface refers directly to bus stop as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing bus stop.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "bus",
+          "stop"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "bus-stop",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M16 16.01L16.01 15.9989\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 16.01L6.01 15.9989\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M20 22V15V8M20 8H18L18 2H22V8H20Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M16 20H2.6C2.26863 20 2 19.7314 2 19.4V12.6C2 12.2686 2.26863 12 2.6 12H16\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M14 8H6M14 2H6C3.79086 2 2 3.79086 2 6V8\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M3.5 20V21.9C3.5 22.2314 3.76863 22.5 4.1 22.5H6.9C7.23137 22.5 7.5 22.2314 7.5 21.9V20\" stroke=\"currentColor\" stroke-linecap=\"round\"/> <path d=\"M14.5 20V21.9C14.5 22.2314 14.7686 22.5 15.1 22.5H16\" stroke=\"currentColor\" stroke-linecap=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:chat_plus_in",
+      "family_key": "messages_mail",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:chat_plus_in",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "chat_plus_in",
+        "source_asset_name": "chat-plus-in",
+        "label": "Chat Plus In",
+        "purpose": "Show chat plus in as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "chat",
+          "plus",
+          "in"
+        ],
+        "use_when": "Use when the interface refers directly to chat plus in as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing chat plus in.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "chat",
+          "plus",
+          "in"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "chat-plus-in",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M9 12H12M15 12H12M12 12V9M12 12V15\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:cube_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:cube_scan",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "cube_scan",
+        "source_asset_name": "cube-scan",
+        "label": "Cube Scan",
+        "purpose": "Show cube scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "cube",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to cube scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing cube scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "cube",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "cube-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M6 3H3V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M12.5145 17.6913L16.5145 15.2913C16.8157 15.1106 17 14.7851 17 14.4338V10.5662C17 10.2149 16.8157 9.88942 16.5145 9.7087L12.5145 7.3087C12.1978 7.11869 11.8022 7.11869 11.4855 7.3087L7.4855 9.7087C7.1843 9.88942 7 10.2149 7 10.5662V14.4338C7 14.7851 7.1843 15.1106 7.4855 15.2913L11.4855 17.6913C11.8022 17.8813 12.1978 17.8813 12.5145 17.6913Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M7.5 10.5L12 12.9995M12 12.9995C12 12.9995 15.7637 10.9492 16.5 10.5M12 12.9995V17.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:file_not_found",
+      "family_key": "file_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:file_not_found",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "file_not_found",
+        "source_asset_name": "file-not-found",
+        "label": "File",
+        "purpose": "Show a file, document, or file-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "file",
+          "not",
+          "found"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "file",
+          "file file",
+          "not file",
+          "found file"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "file-not-found",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M12 8L12 12\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M12 16.01L12.01 15.9989\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M9 3H4V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M4 11V13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M20 11V13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M15 3H20V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M9 21H4V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M15 21H20V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:fingerprint_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:fingerprint_scan",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "fingerprint_scan",
+        "source_asset_name": "fingerprint-scan",
+        "label": "Fingerprint Scan",
+        "purpose": "Show fingerprint scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "fingerprint",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to fingerprint scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing fingerprint scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "fingerprint",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "fingerprint-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M7 16V11.3615C7 10.8518 7.10026 10.3624 7.28451 9.90769M17 16V12.8154M9.22222 7.73446C10.0167 7.27055 10.9721 7 12 7C14.2795 7 16.2027 8.33062 16.8046 10.15\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M10 17V14.8235M14 17V11.8529C14 10.8296 13.1046 10 12 10C10.8954 10 10 10.8296 10 11.8529V12.6471\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 3H3V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:iris_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:iris_scan",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "iris_scan",
+        "source_asset_name": "iris-scan",
+        "label": "Iris Scan",
+        "purpose": "Show iris scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "iris",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to iris scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing iris scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "iris",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "iris-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M6 3H3V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M21 12C19.1114 14.991 15.7183 18 12 18C8.2817 18 4.88856 14.991 3 12C5.29855 9.15825 7.99163 6 12 6C16.0084 6 18.7015 9.1582 21 12Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:media_image_folder",
+      "family_key": "folder_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:media_image_folder",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "media_image_folder",
+        "source_asset_name": "media-image-folder",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "media",
+          "image",
+          "folder"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "media folder",
+          "image folder",
+          "folder folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "media-image-folder",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M22 12.6V20.4C22 20.7314 21.7314 21 21.4 21H13.6C13.2686 21 13 20.7314 13 20.4V12.6C13 12.2686 13.2686 12 13.6 12H21.4C21.7314 12 22 12.2686 22 12.6Z\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M19.5 14.51L19.51 14.4989\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M13 18.2L16.5 17L22 19\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 10V3.6C2 3.26863 2.26863 3 2.6 3H8.77805C8.92127 3 9.05977 3.05124 9.16852 3.14445L12.3315 5.85555C12.4402 5.94876 12.5787 6 12.722 6H21.4C21.7314 6 22 6.26863 22 6.6V9M2 10V18.4C2 18.7314 2.26863 19 2.6 19H10M2 10H10\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:media_video_folder",
+      "family_key": "folder_actions",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:media_video_folder",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "media_video_folder",
+        "source_asset_name": "media-video-folder",
+        "label": "Folder",
+        "purpose": "Show a folder, container, or directory-related action.",
+        "category": "system_control",
+        "semantic_tags": [
+          "media",
+          "video",
+          "folder"
+        ],
+        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
+        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A file or folder symbol paired with an action or state cue.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "folder",
+          "media folder",
+          "video folder",
+          "folder folder"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.8
+      },
+      "visual_review_input": {
+        "source_asset_name": "media-video-folder",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M22 12.6V20.4C22 20.7314 21.7314 21 21.4 21H13.6C13.2686 21 13 20.7314 13 20.4V12.6C13 12.2686 13.2686 12 13.6 12H21.4C21.7314 12 22 12.2686 22 12.6Z\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M16.918 14.5737C16.5184 14.324 16 14.6113 16 15.0825V17.9175C16 18.3887 16.5184 18.676 16.918 18.4263L19.1859 17.0088C19.5619 16.7738 19.5619 16.2262 19.1859 15.9912L16.918 14.5737Z\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 10V3.6C2 3.26863 2.26863 3 2.6 3H8.77805C8.92127 3 9.05977 3.05124 9.16852 3.14445L12.3315 5.85555C12.4402 5.94876 12.5787 6 12.722 6H21.4C21.7314 6 22 6.26863 22 6.6V9M2 10V18.4C2 18.7314 2.26863 19 2.6 19H10M2 10H10\" stroke=\"currentColor\"  stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:pause_window",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:pause_window",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "pause_window",
+        "source_asset_name": "pause-window",
+        "label": "Pause Window",
+        "purpose": "Show pause window as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "pause",
+          "window"
+        ],
+        "use_when": "Use when the interface refers directly to pause window as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing pause window.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "pause",
+          "window"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "pause-window",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M16 21H4C2.89543 21 2 20.1046 2 19V5C2 3.89543 2.89543 3 4 3H20C21.1046 3 22 3.89543 22 5V14\" stroke=\"currentColor\" stroke-linecap=\"round\"/> <path d=\"M19 17L19 22\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M22 17L22 22\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 7L22 7\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M5 5.01L5.01 4.99889\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M8 5.01L8.01 4.99889\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M11 5.01L11.01 4.99889\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:playlist_play",
+      "family_key": "media_controls",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:playlist_play",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "playlist_play",
+        "source_asset_name": "playlist-play",
+        "label": "Playlist Play",
+        "purpose": "Show playlist play as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "playlist",
+          "play"
+        ],
+        "use_when": "Use when the interface refers directly to playlist play as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing playlist play.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "playlist",
+          "play"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "playlist-play",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M22 17.5L18.5 20V15L22 17.5Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 5L20 5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 11L20 11\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 17L14 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:scan_barcode",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:scan_barcode",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "scan_barcode",
+        "source_asset_name": "scan-barcode",
+        "label": "Scan Barcode",
+        "purpose": "Show scan barcode as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "scan",
+          "barcode"
+        ],
+        "use_when": "Use when the interface refers directly to scan barcode as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing scan barcode.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "scan",
+          "barcode"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "scan-barcode",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M10 12L10 6L11 6\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M10 12L11 12L11 6\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M10 18L10 15L11 15\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M11 15L11 18H10\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M7 6L7 12\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M7 15L7 18\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M14 6L14 12\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M14 15L14 18\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M17 6L17 12\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M17 15L17 18\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 3H3V6\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M2 12H12L22 12\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\"   stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    },
+    {
+      "icon_id": "iconoir:voice_scan",
+      "family_key": "search_discovery",
+      "selection_score": 3,
+      "approved_reference_icon_id": null,
+      "queue_outcome": "needs_visual_review",
+      "current_candidate_record": {
+        "icon_id": "iconoir:voice_scan",
+        "source_group": "free",
+        "source_library": "iconoir",
+        "source_name": "voice_scan",
+        "source_asset_name": "voice-scan",
+        "label": "Voice Scan",
+        "purpose": "Show voice scan as a direct object, concept, or themed surface cue.",
+        "category": "status_feedback",
+        "semantic_tags": [
+          "voice",
+          "scan"
+        ],
+        "use_when": "Use when the interface refers directly to voice scan as an object, concept, or themed surface cue.",
+        "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+        "version": "1.0.0",
+        "status": "draft",
+        "access_tier": "private_operational_enrichment",
+        "projection_policy": "internal_only",
+        "is_premium": false,
+        "depicts": "A symbol representing voice scan.",
+        "intent": "inform",
+        "domain": "ui_controls",
+        "synonyms": [
+          "voice",
+          "scan"
+        ],
+        "evidence": [
+          "source_name",
+          "svg_payload"
+        ],
+        "confidence": 0.7
+      },
+      "visual_review_input": {
+        "source_asset_name": "voice-scan",
+        "visual_payload_status": "svg_available",
+        "renderable_icon_payload": {
+          "svg": "<svg width=\"24\" height=\"24\" stroke-width=\"1.5\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M12 6L12 18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M9 9L9 15\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 11L18 13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 11L6 13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M15 7L15 17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 3H3V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 3H21V6\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M6 21H3V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> <path d=\"M18 21H21V18\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/> </svg>"
+        }
+      }
+    }
+  ]
+}

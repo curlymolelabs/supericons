@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "iconoir-batch-04",
+  "library_id": "iconoir",
+  "library_label": "Iconoir",
+  "selected_count": 240,
+  "target_size": 240,
+  "target_min": 200,
+  "target_max": 320,
+  "reference_match_count": 0,
+  "family_counts": {
+    "generic_controls": 218,
+    "navigation_motion": 22
+  },
+  "review_queue_counts": {
+    "ready_for_editor_review": 24,
+    "needs_visual_review": 216,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  },
+  "confidence_band_counts": {
+    "high_confidence": 24,
+    "needs_review": 216,
+    "ambiguous": 0
+  },
+  "worklist_path": "data/si-registry/automation/iconoir-batch-04/worklist.json",
+  "candidate_record_path": "data/si-registry/automation/iconoir-batch-04/candidate-records.json",
+  "review_queue_path": "data/si-registry/automation/iconoir-batch-04/review-queue.json"
+}
