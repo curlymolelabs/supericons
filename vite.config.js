@@ -48,6 +48,43 @@ function excludePremiumAssets() {
   };
 }
 
+function manualChunks(id) {
+  const normalizedId = id.replaceAll('\\', '/');
+
+  if (normalizedId.includes('/node_modules/')) {
+    if (normalizedId.includes('/@resvg/') || normalizedId.includes('/vectortracer') || normalizedId.includes('/vite-plugin-wasm/')) {
+      return 'graphics-runtime';
+    }
+    return 'vendor';
+  }
+
+  if (normalizedId.endsWith('/store.js')) {
+    return 'store-shell';
+  }
+
+  if (
+    normalizedId.endsWith('/docs-pages.js')
+    || normalizedId.includes('/lib/docs-')
+    || normalizedId.endsWith('/lib/view-route-policy.js')
+  ) {
+    return 'docs-shell';
+  }
+
+  if (normalizedId.endsWith('/auth.js')) {
+    return 'auth-shell';
+  }
+
+  if (
+    normalizedId.endsWith('/material-export.js')
+    || normalizedId.endsWith('/landing-effects.js')
+    || normalizedId.endsWith('/sidebar-icons.js')
+  ) {
+    return 'ui-extras';
+  }
+
+  return null;
+}
+
 export default defineConfig({
   server: {
     port: 5173,
@@ -56,6 +93,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     target: 'esnext',
+    rollupOptions: {
+      output: {
+        manualChunks,
+      },
+    },
   },
   plugins: [wasm(), excludePremiumAssets()],
 });

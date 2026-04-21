@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "simpleicons-batch-17",
+  "library_id": "simpleicons",
+  "library_label": "Simple Icons",
+  "target_size": 200,
+  "target_min": 180,
+  "target_max": 220,
+  "score_threshold": 0,
+  "phase_id": "standard",
+  "phase_description": "Continue the Simple Icons brand rollout with the current balanced family caps.",
+  "exclude_automation_batches": [
+    "simpleicons-batch-01",
+    "simpleicons-batch-02",
+    "simpleicons-batch-03",
+    "simpleicons-batch-04",
+    "simpleicons-batch-05",
+    "simpleicons-batch-06",
+    "simpleicons-batch-07",
+    "simpleicons-batch-08",
+    "simpleicons-batch-09",
+    "simpleicons-batch-10",
+    "simpleicons-batch-11",
+    "simpleicons-batch-12",
+    "simpleicons-batch-13",
+    "simpleicons-batch-14",
+    "simpleicons-batch-15",
+    "simpleicons-batch-16"
+  ],
+  "family_caps": {
+    "ai_agents": 30,
+    "analytics": 25,
+    "brand_platforms": 180,
+    "commerce": 35,
+    "communication": 35,
+    "developer_tools": 35,
+    "media": 25,
+    "navigation": 10,
+    "product_status": 10,
+    "security": 20,
+    "ui_shell": 20
+  },
+  "preview_selected_count": 200,
+  "preview_queue_counts": {
+    "ready_for_editor_review": 200,
+    "needs_visual_review": 0,
+    "escalate_to_stronger_review": 0,
+    "blocked_for_manual_judgment": 0
+  }
+}

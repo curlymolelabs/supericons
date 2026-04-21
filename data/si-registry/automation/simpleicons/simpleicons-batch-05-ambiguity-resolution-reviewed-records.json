@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "simpleicons-batch-05-ambiguity-resolution",
+  "reviewed_records": [
+    {
+      "icon_id": "simpleicons:vk",
+      "source_library": "simpleicons",
+      "source_name": "vk",
+      "label": "VK",
+      "depicts": "The official VK brand or product mark.",
+      "purpose": "Show the official VK brand or product mark.",
+      "category": "brand_identity",
+      "intent": "inform",
+      "domain": "brand_platforms",
+      "semantic_tags": [
+        "vk",
+        "brand",
+        "logo",
+        "brand platforms"
+      ],
+      "synonyms": [
+        "VK"
+      ],
+      "use_when": "Use when the interface refers specifically to VK as a brand, login provider, connected service, supported platform, payment method, or official destination.",
+      "avoid_when": "Do not use for generic letters, initials, acronyms, symbols, or plain word fragments when the meaning is not specifically VK.",
+      "evidence_sources": [
+        "source_name",
+        "svg_payload",
+        "simple_icons_metadata",
+        "official_source",
+        "brand_guidelines"
+      ],
+      "confidence_score": 0.87,
+      "confidence_band": "high"
+    }
+  ]
+}
