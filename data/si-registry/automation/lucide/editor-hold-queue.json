@@ -1,0 +1,41 @@
+[
+  {
+    "batch_id": "lucide-editor-review-batch-01",
+    "icon_id": "lucide:calendar_x",
+    "source_library": "lucide",
+    "source_name": "calendar_x",
+    "label": "Calendar X",
+    "depicts": "A symbol representing calendar x.",
+    "purpose": "Show calendar x as a direct object, concept, or themed surface cue.",
+    "category": "status_feedback",
+    "confidence_score": 0.9,
+    "confidence_band": "high",
+    "why_not_approved_yet": "The calendar-plus-x shape still drifts between remove event, blocked date, and disabled calendar without stronger nearby product context."
+  },
+  {
+    "batch_id": "lucide-editor-review-batch-01",
+    "icon_id": "lucide:clock_arrow_down",
+    "source_library": "lucide",
+    "source_name": "clock_arrow_down",
+    "label": "Move Down",
+    "depicts": "A downward arrow or movement cue.",
+    "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
+    "category": "navigation_interface",
+    "confidence_score": 0.82,
+    "confidence_band": "medium",
+    "why_not_approved_yet": "The clock-and-arrow reading still mixes postpone, slow down, and move earlier or later too broadly."
+  },
+  {
+    "batch_id": "lucide-editor-review-batch-01",
+    "icon_id": "lucide:clock_arrow_up",
+    "source_library": "lucide",
+    "source_name": "clock_arrow_up",
+    "label": "Move Up",
+    "depicts": "An upward arrow or movement cue.",
+    "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
+    "category": "navigation_interface",
+    "confidence_score": 0.82,
+    "confidence_band": "medium",
+    "why_not_approved_yet": "The clock-and-arrow reading still mixes reschedule, speed up, and move earlier or later too broadly."
+  }
+]
