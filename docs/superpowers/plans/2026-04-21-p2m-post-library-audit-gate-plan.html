@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post-Library Audit Gate Plan</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f7f2e8;
+      color: #1f1a15;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    section {
+      background: #fffaf1;
+      border: 1px solid #dfcfbb;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 32px rgba(83, 58, 25, 0.08);
+    }
+    h1, h2 {
+      margin: 0 0 14px;
+      line-height: 1.15;
+    }
+    p, li {
+      line-height: 1.65;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    code {
+      background: #f3eadb;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Post-Library Audit Gate Plan</h1>
+      <p>This step adds one shared audit check that runs after a whole icon library is marked complete. The point is to stop guessing. We want one clear answer about whether the library is fully counted, safely published, and ready to close.</p>
+    </section>
+
+    <section>
+      <h2>What the audit must check</h2>
+      <ul>
+        <li>Does the final total match the official size of the library?</li>
+        <li>Does the public registry show the same number of approved records?</li>
+        <li>Did any private workflow fields leak into the records?</li>
+        <li>How many icons are approved, on hold, or still draft-level?</li>
+        <li>Is the library fully clean, or only complete with follow-up work still left?</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What this step will produce</h2>
+      <ul>
+        <li>A reusable JSON audit report</li>
+        <li>A technical Markdown report</li>
+        <li>A simple HTML report for easy review</li>
+        <li>The first real audit run for Lucide</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How we judge the result</h2>
+      <ul>
+        <li>If the totals do not match, that is a blocker.</li>
+        <li>If the public registry count does not match the approved count, that is a blocker.</li>
+        <li>If private workflow fields leaked into the records, that is a blocker.</li>
+        <li>If some icons are still on hold or still draft-level, that is not a blocker, but it must be called out clearly as follow-up work.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What success looks like</h2>
+      <p>After this step, every finished library can close with the same audit standard. That means we can say whether a library is fully clean or only finished at the pipeline level, with no mixed messages.</p>
+    </section>
+  </main>
+</body>
+</html>
