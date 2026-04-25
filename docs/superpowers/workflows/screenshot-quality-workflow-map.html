@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screenshot Quality Workflow Map</title>
+    <style>
+      :root {
+        --bg: #f7f4ec;
+        --paper: #fffdf8;
+        --ink: #1f2933;
+        --muted: #5b6875;
+        --line: #d7cfc2;
+        --accent: #0f766e;
+        --accent-soft: #d9f3ef;
+        --warn: #92400e;
+        --warn-soft: #fef3c7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background:
+          radial-gradient(circle at top right, #efe6d7 0, transparent 24%),
+          linear-gradient(180deg, #f8f5ee 0%, var(--bg) 100%);
+        color: var(--ink);
+      }
+
+      main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        margin-top: 28px;
+      }
+
+      p,
+      li {
+        font-size: 1.03rem;
+        line-height: 1.6;
+      }
+
+      .hero,
+      .panel,
+      .prompt-box,
+      .step-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(54, 41, 28, 0.06);
+      }
+
+      .hero {
+        padding: 28px;
+      }
+
+      .hero p {
+        max-width: 70ch;
+      }
+
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .badge {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .flow {
+        display: grid;
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .step-card {
+        padding: 20px;
+        position: relative;
+      }
+
+      .step-number {
+        display: inline-block;
+        min-width: 38px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      .command,
+      .path {
+        display: block;
+        background: #f5f1e8;
+        border: 1px solid #eadfcf;
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.93rem;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .note,
+      .warning {
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-top: 14px;
+      }
+
+      .note {
+        background: var(--accent-soft);
+      }
+
+      .warning {
+        background: var(--warn-soft);
+        color: var(--warn);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+
+      th,
+      td {
+        border-top: 1px solid var(--line);
+        padding: 12px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        font-size: 0.95rem;
+      }
+
+      .prompt-box {
+        padding: 22px;
+        margin-top: 20px;
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.93rem;
+        line-height: 1.55;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <h1>Screenshot Quality Workflow Map</h1>
+        <p>
+          This page shows the exact step-by-step process for the new screenshot
+          quality workflow in plain language. The goal is simple: let the
+          programs handle the repeatable work, and let the agent only do the
+          human part, which is writing a better visual description in the
+          <code>depicts</code> field. There is one main workflow and four common
+          run modes built on top of it.
+        </p>
+        <div class="badges">
+          <span class="badge">Programs choose the batch</span>
+          <span class="badge">Agent writes depicts only</span>
+          <span class="badge">Programs check quality and promotion</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Run Modes</h2>
+        <div class="panel">
+          <table>
+            <thead>
+              <tr>
+                <th>Run mode</th>
+                <th>What it is for</th>
+                <th>Prompt file</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Status and capture</td>
+                <td>Check counts and render screenshots if needed.</td>
+                <td><code>docs/superpowers/workflows/screenshot-quality-prompts/01-status-and-capture.md</code></td>
+              </tr>
+              <tr>
+                <td>Review only</td>
+                <td>Select a batch, write <code>depicts</code>, finalize, audit, and stop for QA.</td>
+                <td><code>docs/superpowers/workflows/screenshot-quality-prompts/02-review-only.md</code></td>
+              </tr>
+              <tr>
+                <td>Promotion only</td>
+                <td>Take an approved final-records file and promote it live.</td>
+                <td><code>docs/superpowers/workflows/screenshot-quality-prompts/03-promotion-only.md</code></td>
+              </tr>
+              <tr>
+                <td>Full cycle</td>
+                <td>Run review, audit, approval, promotion, and final verification in one flow.</td>
+                <td><code>docs/superpowers/workflows/screenshot-quality-prompts/04-full-cycle.md</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>Who Does What</h2>
+        <div class="grid two">
+          <div class="panel">
+            <h3>The programs do this</h3>
+            <ul>
+              <li>Check what is already live, pending, or untouched.</li>
+              <li>Pick the next icons in order.</li>
+              <li>Build the agent packet with screenshot paths.</li>
+              <li>Turn depicts-only output into full public records.</li>
+              <li>Run rule checks before promotion.</li>
+              <li>Promote approved records into the live public registry.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>The agent does this</h3>
+            <ul>
+              <li>Open the screenshots for each selected icon.</li>
+              <li>Write one shared visual description for line and fill styles.</li>
+              <li>Return only <code>icon_id</code> and <code>depicts</code>.</li>
+              <li>Pause for review before anything is promoted live.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Exact Workflow</h2>
+        <div class="flow">
+          <article class="step-card">
+            <div class="step-number">Step 1</div>
+            <h3>Check the current state</h3>
+            <p>
+              First, ask the program what is already finished, what is reviewed
+              but not live yet, and what still needs work.
+            </p>
+            <div class="command">npm run screenshot-quality -- status --library mingcute --json</div>
+            <div class="note">
+              Program used: <strong>scripts/screenshot-quality-workflow.mjs</strong>
+              with the <strong>status</strong> command.
+            </div>
+            <div class="warning">
+              Safe places to change: <code>--library</code>. This lets the same
+              workflow run on another library later.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 2</div>
+            <h3>Capture screenshots if they are missing</h3>
+            <p>
+              If the screenshot folder is not ready yet, use the screenshot
+              program to render the icon PNG files from the source icon catalog.
+            </p>
+            <div class="command">npm run capture:icon-screenshots -- --library mingcute</div>
+            <div class="note">
+              Program used: <strong>scripts/capture-icon-screenshots.mjs</strong>.
+              It reads the screenshot mapping file and writes PNG files into the
+              output screenshot folder.
+            </div>
+            <div class="warning">
+              Safe places to change: <code>--library</code>,
+              <code>--limit</code>, <code>--width</code>, and
+              <code>--height</code>. Use <code>--dry-run</code> if you only want
+              to preview what will be rendered.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 3</div>
+            <h3>Let the program choose the next batch</h3>
+            <p>
+              Do not let the agent decide which icons come next. The program
+              picks the next untouched icons in source order and writes a packet
+              file for the agent.
+            </p>
+            <div class="command">npm run screenshot-quality -- select --library mingcute --size 100 --batch-id mingcute-screenshot-batch-034</div>
+            <div class="path">Output: data/si-registry/manual-redo/mingcute-screenshot-batch-034-packet.json</div>
+            <div class="note">
+              Program used: <strong>scripts/screenshot-quality-workflow.mjs</strong>
+              with the <strong>select</strong> command.
+            </div>
+            <div class="warning">
+              Safe places to change: <code>--size</code> for icons per batch and
+              <code>--batch-id</code> for the batch name. This is the main batch
+              size control point.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 4</div>
+            <h3>Give the packet to the agent</h3>
+            <p>
+              The agent reads the packet, looks at the screenshot files, and
+              writes a depicts-only JSON file. The agent should not edit the
+              other public fields.
+            </p>
+            <div class="path">Input file: data/si-registry/manual-redo/mingcute-screenshot-batch-034-packet.json</div>
+            <div class="path">Expected agent output: data/si-registry/manual-redo/mingcute-screenshot-batch-034-agent-depicts.json</div>
+            <div class="note">
+              Human rule: one semantic record per icon. Line and fill are
+              usually one shared <code>depicts</code>, not two separate ones.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 5</div>
+            <h3>Turn depicts-only output into full final records</h3>
+            <p>
+              After the agent returns the depicts-only file, the program merges
+              those new descriptions back into the live public record shape while
+              keeping the other public fields unchanged.
+            </p>
+            <div class="command">npm run screenshot-quality -- finalize-review --library mingcute --batch-id mingcute-screenshot-batch-034 --agent-output data/si-registry/manual-redo/mingcute-screenshot-batch-034-agent-depicts.json</div>
+            <div class="path">Output: data/si-registry/manual-redo/mingcute-screenshot-batch-034-final-records.json</div>
+            <div class="note">
+              Program used: <strong>scripts/screenshot-quality-workflow.mjs</strong>
+              with the <strong>finalize-review</strong> command.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 6</div>
+            <h3>Run the automatic quality check</h3>
+            <p>
+              The program checks for common mistakes such as copy-paste wording,
+              missing visible details like an off slash, or generic phrases that
+              are too vague.
+            </p>
+            <div class="command">npm run screenshot-quality -- audit-quality --final-records data/si-registry/manual-redo/mingcute-screenshot-batch-034-final-records.json</div>
+            <div class="note">
+              Program used: <strong>scripts/screenshot-quality-workflow.mjs</strong>
+              with the <strong>audit-quality</strong> command.
+            </div>
+            <div class="warning">
+              This step should pass before promotion. If it fails, fix the
+              batch, do not push it live.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 7</div>
+            <h3>Review the final records before promotion</h3>
+            <p>
+              Pause here and inspect the final records JSON. This is the human
+              review stop. Nothing should be promoted live before this check.
+            </p>
+            <div class="path">Review file: data/si-registry/manual-redo/mingcute-screenshot-batch-034-final-records.json</div>
+            <div class="note">
+              Human checkpoint: this is where we check whether the new
+              descriptions are actually good, not just rule-clean.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 8</div>
+            <h3>Promote only after approval</h3>
+            <p>
+              Once the batch is approved, the promotion command merges the new
+              public fields into the approved records file, rebuilds the live
+              registry, and confirms that the live registry now matches the final
+              records.
+            </p>
+            <div class="command">npm run screenshot-quality -- promote --library mingcute --final-records data/si-registry/manual-redo/mingcute-screenshot-batch-034-final-records.json</div>
+            <div class="note">
+              Program used: <strong>scripts/screenshot-quality-workflow.mjs</strong>
+              with the <strong>promote</strong> command.
+            </div>
+            <div class="warning">
+              Avoid <code>--allow-quality-issues</code> unless there is a very
+              clear manual exception and we consciously accept the risk.
+            </div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">Step 9</div>
+            <h3>Verify the workflow stays clean</h3>
+            <p>
+              After promotion, run the repo-level workflow checker. This confirms
+              there are no broken final-record files, no bad overlap state, and
+              no missing required record structure.
+            </p>
+            <div class="command">npm run verify:screenshot-quality-workflow</div>
+            <div class="note">
+              Program used: <strong>scripts/verify-screenshot-quality-workflow.mjs</strong>.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>What We Can Safely Change</h2>
+        <div class="panel">
+          <table>
+            <thead>
+              <tr>
+                <th>Thing we may change</th>
+                <th>Where to change it</th>
+                <th>What it affects</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Library name</td>
+                <td><code>--library</code></td>
+                <td>Chooses which screenshot folder, mapping, and approved records file the programs use.</td>
+              </tr>
+              <tr>
+                <td>Icons per batch</td>
+                <td><code>--size</code> on the <code>select</code> command</td>
+                <td>Controls how many icons the agent processes in one review cycle.</td>
+              </tr>
+              <tr>
+                <td>Batch name</td>
+                <td><code>--batch-id</code></td>
+                <td>Changes the packet and final-record file names for that run.</td>
+              </tr>
+              <tr>
+                <td>Screenshot preview count</td>
+                <td><code>--limit</code> on screenshot capture</td>
+                <td>Lets us test a small number of renders before running a full library capture.</td>
+              </tr>
+              <tr>
+                <td>Screenshot size</td>
+                <td><code>--width</code> and <code>--height</code></td>
+                <td>Changes the PNG output size used by the renderer.</td>
+              </tr>
+              <tr>
+                <td>Whether to only preview work</td>
+                <td><code>--dry-run</code></td>
+                <td>Shows what the program would do without writing the final files.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>Program Map</h2>
+        <div class="panel">
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Main program</th>
+                <th>Plain meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Status</td>
+                <td><code>scripts/screenshot-quality-workflow.mjs status</code></td>
+                <td>Shows what is done, waiting, or untouched.</td>
+              </tr>
+              <tr>
+                <td>Capture</td>
+                <td><code>scripts/capture-icon-screenshots.mjs</code></td>
+                <td>Builds screenshot PNG files from the mapped icon source files.</td>
+              </tr>
+              <tr>
+                <td>Select</td>
+                <td><code>scripts/screenshot-quality-workflow.mjs select</code></td>
+                <td>Picks the next clean batch and writes the agent packet.</td>
+              </tr>
+              <tr>
+                <td>Finalize review</td>
+                <td><code>scripts/screenshot-quality-workflow.mjs finalize-review</code></td>
+                <td>Turns depicts-only agent output into full public final records.</td>
+              </tr>
+              <tr>
+                <td>Quality audit</td>
+                <td><code>scripts/screenshot-quality-workflow.mjs audit-quality</code></td>
+                <td>Checks for obvious wording problems before promotion.</td>
+              </tr>
+              <tr>
+                <td>Promote</td>
+                <td><code>scripts/screenshot-quality-workflow.mjs promote</code></td>
+                <td>Merges approved public fields into the approved records source and rebuilds live output.</td>
+              </tr>
+              <tr>
+                <td>Workflow verify</td>
+                <td><code>scripts/verify-screenshot-quality-workflow.mjs</code></td>
+                <td>Makes sure the workflow files are in a clean, safe state.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>Prompt Set</h2>
+        <div class="prompt-box">
+<pre>The reusable prompt set now lives in:
+
+docs/superpowers/workflows/screenshot-quality-prompts/
+
+Use:
+
+01-status-and-capture.md
+02-review-only.md
+03-promotion-only.md
+04-full-cycle.md
+
+The prompts are universal templates. Reuse the same structure and swap only:
+
+- library
+- batch size
+- batch id
+- packet path
+- agent output path
+- final-records path</pre>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
