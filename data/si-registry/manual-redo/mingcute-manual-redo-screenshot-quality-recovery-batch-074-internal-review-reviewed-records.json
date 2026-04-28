@@ -1,0 +1,405 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:paint",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_paint_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:paint",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "paint",
+      "label": "Paint",
+      "purpose": "Show paint as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "paint"
+      ],
+      "use_when": "Use when the interface refers directly to paint as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing paint.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "paint"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:paint",
+      "source_library": "mingcute",
+      "source_name": "paint",
+      "label": "Paint",
+      "depicts_observation": "Paint bucket outline with one tilted handle and one drip falling at right",
+      "popular_reading": "Paint bucket",
+      "plausible_readings": [
+        "paint icon",
+        "bucket paint",
+        "art bucket"
+      ],
+      "context_bias": "Use when the interface wants a tilted paint bucket with a single drip falling on the right side.",
+      "ambiguity_note": "Do not use for the paint roller when the main body should be one horizontal roller bar.",
+      "search_hints": [
+        "Paint",
+        "paint icon",
+        "bucket paint",
+        "art bucket",
+        "Paint bucket"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/paint_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a tipped bucket with a droplet hanging from the right side."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:paint",
+      "source_library": "mingcute",
+      "source_name": "paint",
+      "label": "Paint",
+      "depicts": "Paint bucket outline with one tilted handle and one drip falling at right",
+      "use_when": "Use when the interface wants a tilted paint bucket with a single drip falling on the right side.",
+      "avoid_when": "Do not use for the paint roller when the main body should be one horizontal roller bar.",
+      "semantic_tags": [
+        "art bucket",
+        "bucket paint",
+        "paint",
+        "paint icon"
+      ],
+      "synonyms": [
+        "art bucket",
+        "bucket paint",
+        "paint",
+        "paint icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:paint_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_paint_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:paint_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "paint_2",
+      "label": "Paint",
+      "purpose": "Show paint as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "paint",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to paint as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing paint.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "paint",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:paint_2",
+      "source_library": "mingcute",
+      "source_name": "paint_2",
+      "label": "Paint",
+      "depicts_observation": "Paint roller with one horizontal bar above one lower handle stem",
+      "popular_reading": "Paint roller",
+      "plausible_readings": [
+        "paint icon",
+        "roller tool",
+        "wall roller"
+      ],
+      "context_bias": "Use when the interface wants a paint roller tool with a horizontal roller bar and a lower handle.",
+      "ambiguity_note": "Do not use for the paint bucket when the tool should not tip or drip at the right side.",
+      "search_hints": [
+        "Paint",
+        "paint icon",
+        "roller tool",
+        "wall roller",
+        "Paint roller"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/paint_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces the bucket with a roller bar linked to one short lower handle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:paint_2",
+      "source_library": "mingcute",
+      "source_name": "paint_2",
+      "label": "Paint",
+      "depicts": "Paint roller with one horizontal bar above one lower handle stem",
+      "use_when": "Use when the interface wants a paint roller tool with a horizontal roller bar and a lower handle.",
+      "avoid_when": "Do not use for the paint bucket when the tool should not tip or drip at the right side.",
+      "semantic_tags": [
+        "2",
+        "paint",
+        "paint icon",
+        "roller tool",
+        "wall roller"
+      ],
+      "synonyms": [
+        "2",
+        "paint",
+        "paint icon",
+        "roller tool",
+        "wall roller"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:paper",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_paper_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:paper",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "paper",
+      "label": "Paper",
+      "purpose": "Show paper as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "paper"
+      ],
+      "use_when": "Use when the interface refers directly to paper as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing paper.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "paper"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:paper",
+      "source_library": "mingcute",
+      "source_name": "paper",
+      "label": "Paper",
+      "depicts_observation": "Curled paper sheet with two upper text bars and one lower fold block",
+      "popular_reading": "Curled paper sheet",
+      "plausible_readings": [
+        "paper icon",
+        "document sheet",
+        "page curl"
+      ],
+      "context_bias": "Use when the interface wants a document page with a curled lower corner and text bars above.",
+      "ambiguity_note": "Do not use for the wavy receipt page when both side edges should bend inward and outward.",
+      "search_hints": [
+        "Paper",
+        "paper icon",
+        "document sheet",
+        "page curl",
+        "Curled paper sheet"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/paper_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps a page curl block at the lower edge under the two upper text bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:paper",
+      "source_library": "mingcute",
+      "source_name": "paper",
+      "label": "Paper",
+      "depicts": "Curled paper sheet with two upper text bars and one lower fold block",
+      "use_when": "Use when the interface wants a document page with a curled lower corner and text bars above.",
+      "avoid_when": "Do not use for the wavy receipt page when both side edges should bend inward and outward.",
+      "semantic_tags": [
+        "document sheet",
+        "page curl",
+        "paper",
+        "paper icon"
+      ],
+      "synonyms": [
+        "document sheet",
+        "page curl",
+        "paper",
+        "paper icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:paper_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_paper_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:paper_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "paper_2",
+      "label": "Paper",
+      "purpose": "Show paper as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "paper",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to paper as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing paper.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "paper",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:paper_2",
+      "source_library": "mingcute",
+      "source_name": "paper_2",
+      "label": "Paper",
+      "depicts_observation": "Wavy paper sheet with two upper text bars inside curved side edges",
+      "popular_reading": "Wavy paper sheet",
+      "plausible_readings": [
+        "paper icon",
+        "receipt page",
+        "document sheet"
+      ],
+      "context_bias": "Use when the interface wants a paper sheet whose side edges wave inward and outward.",
+      "ambiguity_note": "Do not use for the curled paper page when a folded lower corner block should remain visible.",
+      "search_hints": [
+        "Paper",
+        "paper icon",
+        "receipt page",
+        "document sheet",
+        "Wavy paper sheet"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/paper_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot bends both side edges of the page and removes the folded corner block."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:paper_2",
+      "source_library": "mingcute",
+      "source_name": "paper_2",
+      "label": "Paper",
+      "depicts": "Wavy paper sheet with two upper text bars inside curved side edges",
+      "use_when": "Use when the interface wants a paper sheet whose side edges wave inward and outward.",
+      "avoid_when": "Do not use for the curled paper page when a folded lower corner block should remain visible.",
+      "semantic_tags": [
+        "2",
+        "document sheet",
+        "paper",
+        "paper icon",
+        "receipt page"
+      ],
+      "synonyms": [
+        "2",
+        "document sheet",
+        "paper",
+        "paper icon",
+        "receipt page"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:pen",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_pen_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:pen",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "pen",
+      "label": "Pen",
+      "purpose": "Show pen as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "pen"
+      ],
+      "use_when": "Use when the interface refers directly to pen as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing pen.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "pen"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:pen",
+      "source_library": "mingcute",
+      "source_name": "pen",
+      "label": "Pen",
+      "depicts_observation": "Fountain pen nib frame with one centered hole and one top cap line",
+      "popular_reading": "Fountain pen nib",
+      "plausible_readings": [
+        "pen icon",
+        "nib icon",
+        "writing nib"
+      ],
+      "context_bias": "Use when the interface wants a fountain pen nib shape rather than a full pen body.",
+      "ambiguity_note": "Do not use for the full pen or pencil icons when a long writing body should remain visible.",
+      "search_hints": [
+        "Pen",
+        "pen icon",
+        "nib icon",
+        "writing nib",
+        "Fountain pen nib"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/pen_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot focuses on the nib frame with one centered hole and a short cap line above."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:pen",
+      "source_library": "mingcute",
+      "source_name": "pen",
+      "label": "Pen",
+      "depicts": "Fountain pen nib frame with one centered hole and one top cap line",
+      "use_when": "Use when the interface wants a fountain pen nib shape rather than a full pen body.",
+      "avoid_when": "Do not use for the full pen or pencil icons when a long writing body should remain visible.",
+      "semantic_tags": [
+        "nib icon",
+        "pen",
+        "pen icon",
+        "writing nib"
+      ],
+      "synonyms": [
+        "nib icon",
+        "pen",
+        "pen icon",
+        "writing nib"
+      ]
+    }
+  }
+]

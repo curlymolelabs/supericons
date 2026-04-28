@@ -1,0 +1,125 @@
+[
+  {
+    "icon_id": "mingcute:gift_2",
+    "source_library": "mingcute",
+    "source_name": "gift_2",
+    "label": "Gift",
+    "depicts": "Square gift box with a centered ribbon cross and one bow above",
+    "use_when": "Use when the interface wants a squarer wrapped present with the ribbon cross centered on the front.",
+    "avoid_when": "Do not use for the taller gift box when the body should feel more vertical than square.",
+    "semantic_tags": [
+      "2",
+      "gift",
+      "gift icon",
+      "present box",
+      "wrapped box"
+    ],
+    "synonyms": [
+      "2",
+      "gift",
+      "gift icon",
+      "present box",
+      "wrapped box"
+    ]
+  },
+  {
+    "icon_id": "mingcute:git_branch",
+    "source_library": "mingcute",
+    "source_name": "git_branch",
+    "label": "Git Branch",
+    "depicts": "Three node branch graph with one left stem and one right split line",
+    "use_when": "Use when the interface wants a three node branch diagram with one stem splitting to the right.",
+    "avoid_when": "Do not use for the two node branch when only one curve should connect the bottom node to the top node.",
+    "semantic_tags": [
+      "branch",
+      "branch nodes",
+      "code branch",
+      "git",
+      "git graph"
+    ],
+    "synonyms": [
+      "branch",
+      "branch nodes",
+      "code branch",
+      "git",
+      "git branch",
+      "git graph"
+    ]
+  },
+  {
+    "icon_id": "mingcute:git_branch_2",
+    "source_library": "mingcute",
+    "source_name": "git_branch_2",
+    "label": "Git Branch",
+    "depicts": "Two node branch graph with one left stem and one right curve",
+    "use_when": "Use when the interface wants a simpler two node branch diagram with one curved connection.",
+    "avoid_when": "Do not use for the three node branch when a third node should appear at the upper left.",
+    "semantic_tags": [
+      "2",
+      "branch",
+      "branch nodes",
+      "code branch",
+      "git",
+      "git graph"
+    ],
+    "synonyms": [
+      "2",
+      "branch",
+      "branch nodes",
+      "code branch",
+      "git",
+      "git branch",
+      "git graph"
+    ]
+  },
+  {
+    "icon_id": "mingcute:git_merge",
+    "source_library": "mingcute",
+    "source_name": "git_merge",
+    "label": "Git Merge",
+    "depicts": "Three node merge graph with one left stem and one right joining line",
+    "use_when": "Use when the interface wants a three node merge diagram where one branch joins into the right node.",
+    "avoid_when": "Do not use for the two node merge when the upper node should not split into a third point.",
+    "semantic_tags": [
+      "code merge",
+      "git",
+      "git graph",
+      "merge",
+      "merge nodes"
+    ],
+    "synonyms": [
+      "code merge",
+      "git",
+      "git graph",
+      "git merge",
+      "merge",
+      "merge nodes"
+    ]
+  },
+  {
+    "icon_id": "mingcute:git_merge_2",
+    "source_library": "mingcute",
+    "source_name": "git_merge_2",
+    "label": "Git Merge",
+    "depicts": "Two node merge graph with one left stem and one right downward curve",
+    "use_when": "Use when the interface wants a compact merge mark made from two nodes and one downward joining curve.",
+    "avoid_when": "Do not use for the three node merge when a lower left node should remain visible.",
+    "semantic_tags": [
+      "2",
+      "code merge",
+      "git",
+      "git graph",
+      "merge",
+      "merge nodes"
+    ],
+    "synonyms": [
+      "2",
+      "code merge",
+      "git",
+      "git graph",
+      "git merge",
+      "merge",
+      "merge nodes"
+    ]
+  }
+]

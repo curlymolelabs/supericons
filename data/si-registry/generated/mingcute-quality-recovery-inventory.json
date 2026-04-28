@@ -1,30 +1,14 @@
 {
   "library": "mingcute",
   "approved_records_path": "data/si-registry/automation/mingcute/approved-records.json",
-  "generated_at": "2026-04-28T18:49:09.175Z",
+  "generated_at": "2026-04-28T19:01:32.344Z",
   "total_records": 1662,
-  "issue_count": 187,
-  "blocker_count": 187,
+  "issue_count": 87,
+  "blocker_count": 87,
   "counts_by_code": {
-    "duplicate_depicts_modifier_family": 187
+    "duplicate_depicts_modifier_family": 87
   },
   "family_counts": [
-    {
-      "family": "magic",
-      "blocker_icons": 3
-    },
-    {
-      "family": "pencil",
-      "blocker_icons": 3
-    },
-    {
-      "family": "presentation",
-      "blocker_icons": 3
-    },
-    {
-      "family": "rows",
-      "blocker_icons": 3
-    },
     {
       "family": "scissors",
       "blocker_icons": 3
@@ -44,182 +28,6 @@
     {
       "family": "vector_bezier",
       "blocker_icons": 3
-    },
-    {
-      "family": "fullscreen_exit",
-      "blocker_icons": 2
-    },
-    {
-      "family": "game",
-      "blocker_icons": 2
-    },
-    {
-      "family": "gift",
-      "blocker_icons": 2
-    },
-    {
-      "family": "git_branch",
-      "blocker_icons": 2
-    },
-    {
-      "family": "git_merge",
-      "blocker_icons": 2
-    },
-    {
-      "family": "github",
-      "blocker_icons": 2
-    },
-    {
-      "family": "globe",
-      "blocker_icons": 2
-    },
-    {
-      "family": "grok",
-      "blocker_icons": 2
-    },
-    {
-      "family": "group",
-      "blocker_icons": 2
-    },
-    {
-      "family": "hair",
-      "blocker_icons": 2
-    },
-    {
-      "family": "hat",
-      "blocker_icons": 2
-    },
-    {
-      "family": "heartbeat",
-      "blocker_icons": 2
-    },
-    {
-      "family": "hemisphere",
-      "blocker_icons": 2
-    },
-    {
-      "family": "hexagons",
-      "blocker_icons": 2
-    },
-    {
-      "family": "history",
-      "blocker_icons": 2
-    },
-    {
-      "family": "home",
-      "blocker_icons": 2
-    },
-    {
-      "family": "horn",
-      "blocker_icons": 2
-    },
-    {
-      "family": "house",
-      "blocker_icons": 2
-    },
-    {
-      "family": "ice_cream",
-      "blocker_icons": 2
-    },
-    {
-      "family": "inbox",
-      "blocker_icons": 2
-    },
-    {
-      "family": "keyboard",
-      "blocker_icons": 2
-    },
-    {
-      "family": "lantern",
-      "blocker_icons": 2
-    },
-    {
-      "family": "laptop",
-      "blocker_icons": 2
-    },
-    {
-      "family": "list_check",
-      "blocker_icons": 2
-    },
-    {
-      "family": "magic_hat",
-      "blocker_icons": 2
-    },
-    {
-      "family": "message",
-      "blocker_icons": 2
-    },
-    {
-      "family": "mic",
-      "blocker_icons": 2
-    },
-    {
-      "family": "mountain",
-      "blocker_icons": 2
-    },
-    {
-      "family": "news",
-      "blocker_icons": 2
-    },
-    {
-      "family": "notebook",
-      "blocker_icons": 2
-    },
-    {
-      "family": "package",
-      "blocker_icons": 2
-    },
-    {
-      "family": "paint",
-      "blocker_icons": 2
-    },
-    {
-      "family": "paper",
-      "blocker_icons": 2
-    },
-    {
-      "family": "pen",
-      "blocker_icons": 2
-    },
-    {
-      "family": "photo_album",
-      "blocker_icons": 2
-    },
-    {
-      "family": "pic",
-      "blocker_icons": 2
-    },
-    {
-      "family": "pin",
-      "blocker_icons": 2
-    },
-    {
-      "family": "pinwheel",
-      "blocker_icons": 2
-    },
-    {
-      "family": "playlist",
-      "blocker_icons": 2
-    },
-    {
-      "family": "plugin",
-      "blocker_icons": 2
-    },
-    {
-      "family": "qrcode",
-      "blocker_icons": 2
-    },
-    {
-      "family": "question",
-      "blocker_icons": 2
-    },
-    {
-      "family": "radar",
-      "blocker_icons": 2
-    },
-    {
-      "family": "rocket",
-      "blocker_icons": 2
     },
     {
       "family": "rss",
@@ -367,1606 +175,6 @@
     }
   ],
   "blocker_icons": [
-    {
-      "icon_id": "mingcute:fullscreen_exit",
-      "source_name": "fullscreen_exit",
-      "label": "Exit Full Screen",
-      "family": "fullscreen_exit",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the fullscreen_exit family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:fullscreen_exit_2",
-      "source_name": "fullscreen_exit_2",
-      "label": "Exit Full Screen",
-      "family": "fullscreen_exit",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the fullscreen_exit family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:game_1",
-      "source_name": "game_1",
-      "label": "Game",
-      "family": "game",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the game family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:game_2",
-      "source_name": "game_2",
-      "label": "Game",
-      "family": "game",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the game family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:gift",
-      "source_name": "gift",
-      "label": "Gift",
-      "family": "gift",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the gift family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:gift_2",
-      "source_name": "gift_2",
-      "label": "Gift",
-      "family": "gift",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the gift family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:git_branch",
-      "source_name": "git_branch",
-      "label": "Git Branch",
-      "family": "git_branch",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the git_branch family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:git_branch_2",
-      "source_name": "git_branch_2",
-      "label": "Git Branch",
-      "family": "git_branch",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the git_branch family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:git_merge",
-      "source_name": "git_merge",
-      "label": "Git Merge",
-      "family": "git_merge",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the git_merge family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:git_merge_2",
-      "source_name": "git_merge_2",
-      "label": "Git Merge",
-      "family": "git_merge",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the git_merge family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:github",
-      "source_name": "github",
-      "label": "GitHub",
-      "family": "github",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the github family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:github_2",
-      "source_name": "github_2",
-      "label": "Github",
-      "family": "github",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the github family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:globe",
-      "source_name": "globe",
-      "label": "Globe",
-      "family": "globe",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the globe family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:globe_2",
-      "source_name": "globe_2",
-      "label": "Globe",
-      "family": "globe",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the globe family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:grok",
-      "source_name": "grok",
-      "label": "Grok",
-      "family": "grok",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the grok family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:grok_2",
-      "source_name": "grok_2",
-      "label": "Grok",
-      "family": "grok",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the grok family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:group_2",
-      "source_name": "group_2",
-      "label": "Group",
-      "family": "group",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the group family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:group_3",
-      "source_name": "group_3",
-      "label": "Group",
-      "family": "group",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the group family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hair",
-      "source_name": "hair",
-      "label": "Hair",
-      "family": "hair",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hair family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hair_2",
-      "source_name": "hair_2",
-      "label": "Hair",
-      "family": "hair",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hair family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hat",
-      "source_name": "hat",
-      "label": "Hat",
-      "family": "hat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hat_2",
-      "source_name": "hat_2",
-      "label": "Hat",
-      "family": "hat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:heartbeat",
-      "source_name": "heartbeat",
-      "label": "Heartbeat",
-      "family": "heartbeat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the heartbeat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:heartbeat_2",
-      "source_name": "heartbeat_2",
-      "label": "Heartbeat",
-      "family": "heartbeat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the heartbeat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hemisphere",
-      "source_name": "hemisphere",
-      "label": "Hemisphere",
-      "family": "hemisphere",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hemisphere family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hemisphere_2",
-      "source_name": "hemisphere_2",
-      "label": "Hemisphere",
-      "family": "hemisphere",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hemisphere family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hexagons",
-      "source_name": "hexagons",
-      "label": "Hexagons",
-      "family": "hexagons",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hexagons family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:hexagons_2",
-      "source_name": "hexagons_2",
-      "label": "Hexagons",
-      "family": "hexagons",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the hexagons family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:history",
-      "source_name": "history",
-      "label": "History",
-      "family": "history",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the history family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:history_2",
-      "source_name": "history_2",
-      "label": "History",
-      "family": "history",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the history family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:home_6",
-      "source_name": "home_6",
-      "label": "Home",
-      "family": "home",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the home family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:home_7",
-      "source_name": "home_7",
-      "label": "Home",
-      "family": "home",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the home family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:horn",
-      "source_name": "horn",
-      "label": "Horn",
-      "family": "horn",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the horn family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:horn_2",
-      "source_name": "horn_2",
-      "label": "Horn",
-      "family": "horn",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the horn family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:house",
-      "source_name": "house",
-      "label": "House",
-      "family": "house",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the house family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:house_2",
-      "source_name": "house_2",
-      "label": "House",
-      "family": "house",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the house family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:ice_cream",
-      "source_name": "ice_cream",
-      "label": "Ice Cream",
-      "family": "ice_cream",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the ice_cream family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:ice_cream_2",
-      "source_name": "ice_cream_2",
-      "label": "Ice Cream",
-      "family": "ice_cream",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the ice_cream family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:inbox",
-      "source_name": "inbox",
-      "label": "Inbox",
-      "family": "inbox",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the inbox family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:inbox_2",
-      "source_name": "inbox_2",
-      "label": "Inbox",
-      "family": "inbox",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the inbox family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:keyboard",
-      "source_name": "keyboard",
-      "label": "Keyboard",
-      "family": "keyboard",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the keyboard family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:keyboard_2",
-      "source_name": "keyboard_2",
-      "label": "Keyboard",
-      "family": "keyboard",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the keyboard family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:lantern",
-      "source_name": "lantern",
-      "label": "Lantern",
-      "family": "lantern",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the lantern family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:lantern_2",
-      "source_name": "lantern_2",
-      "label": "Lantern",
-      "family": "lantern",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the lantern family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:laptop",
-      "source_name": "laptop",
-      "label": "Laptop",
-      "family": "laptop",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the laptop family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:laptop_2",
-      "source_name": "laptop_2",
-      "label": "Laptop",
-      "family": "laptop",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the laptop family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:list_check_2",
-      "source_name": "list_check_2",
-      "label": "Checklist View",
-      "family": "list_check",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the list_check family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:list_check_3",
-      "source_name": "list_check_3",
-      "label": "Checklist View",
-      "family": "list_check",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the list_check family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:magic_1",
-      "source_name": "magic_1",
-      "label": "Magic",
-      "family": "magic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the magic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:magic_2",
-      "source_name": "magic_2",
-      "label": "Magic",
-      "family": "magic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the magic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:magic_3",
-      "source_name": "magic_3",
-      "label": "Magic",
-      "family": "magic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the magic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:magic_hat",
-      "source_name": "magic_hat",
-      "label": "Magic Hat",
-      "family": "magic_hat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the magic_hat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:magic_hat_2",
-      "source_name": "magic_hat_2",
-      "label": "Magic Hat",
-      "family": "magic_hat",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the magic_hat family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:message_3_ai",
-      "source_name": "message_3_ai",
-      "label": "Assistant Message",
-      "family": "message",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the message family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:message_4_ai",
-      "source_name": "message_4_ai",
-      "label": "Assistant Message",
-      "family": "message",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the message family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:mic",
-      "source_name": "mic",
-      "label": "Mic",
-      "family": "mic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the mic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:mic_2",
-      "source_name": "mic_2",
-      "label": "Mic",
-      "family": "mic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the mic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:mountain",
-      "source_name": "mountain",
-      "label": "Mountain",
-      "family": "mountain",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the mountain family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:mountain_2",
-      "source_name": "mountain_2",
-      "label": "Mountain",
-      "family": "mountain",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the mountain family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:news",
-      "source_name": "news",
-      "label": "News",
-      "family": "news",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the news family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:news_2",
-      "source_name": "news_2",
-      "label": "News",
-      "family": "news",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the news family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:notebook",
-      "source_name": "notebook",
-      "label": "Notebook",
-      "family": "notebook",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the notebook family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:notebook_2",
-      "source_name": "notebook_2",
-      "label": "Notebook",
-      "family": "notebook",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the notebook family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:package",
-      "source_name": "package",
-      "label": "Package",
-      "family": "package",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the package family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:package_2",
-      "source_name": "package_2",
-      "label": "Package",
-      "family": "package",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the package family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:paint",
-      "source_name": "paint",
-      "label": "Paint",
-      "family": "paint",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the paint family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:paint_2",
-      "source_name": "paint_2",
-      "label": "Paint",
-      "family": "paint",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the paint family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:paper",
-      "source_name": "paper",
-      "label": "Paper",
-      "family": "paper",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the paper family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:paper_2",
-      "source_name": "paper_2",
-      "label": "Paper",
-      "family": "paper",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the paper family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pen",
-      "source_name": "pen",
-      "label": "Pen",
-      "family": "pen",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pen family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pen_2",
-      "source_name": "pen_2",
-      "label": "Pen",
-      "family": "pen",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pen family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pencil",
-      "source_name": "pencil",
-      "label": "Pencil",
-      "family": "pencil",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pencil family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pencil_2",
-      "source_name": "pencil_2",
-      "label": "Pencil",
-      "family": "pencil",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pencil family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pencil_3",
-      "source_name": "pencil_3",
-      "label": "Pencil",
-      "family": "pencil",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pencil family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:photo_album",
-      "source_name": "photo_album",
-      "label": "Photo Album",
-      "family": "photo_album",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the photo_album family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:photo_album_2",
-      "source_name": "photo_album_2",
-      "label": "Photo Album",
-      "family": "photo_album",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the photo_album family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pic",
-      "source_name": "pic",
-      "label": "Pic",
-      "family": "pic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pic_2",
-      "source_name": "pic_2",
-      "label": "Pic",
-      "family": "pic",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pic family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pin",
-      "source_name": "pin",
-      "label": "Pin",
-      "family": "pin",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pin family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pin_2",
-      "source_name": "pin_2",
-      "label": "Pin",
-      "family": "pin",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pin family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pinwheel",
-      "source_name": "pinwheel",
-      "label": "Pinwheel",
-      "family": "pinwheel",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pinwheel family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:pinwheel_2",
-      "source_name": "pinwheel_2",
-      "label": "Pinwheel",
-      "family": "pinwheel",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the pinwheel family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:playlist",
-      "source_name": "playlist",
-      "label": "Playlist",
-      "family": "playlist",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the playlist family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:playlist_2",
-      "source_name": "playlist_2",
-      "label": "Playlist",
-      "family": "playlist",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the playlist family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:plugin",
-      "source_name": "plugin",
-      "label": "Plugin",
-      "family": "plugin",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the plugin family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:plugin_2",
-      "source_name": "plugin_2",
-      "label": "Plugin",
-      "family": "plugin",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the plugin family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:presentation_1",
-      "source_name": "presentation_1",
-      "label": "Presentation",
-      "family": "presentation",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the presentation family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:presentation_2",
-      "source_name": "presentation_2",
-      "label": "Presentation",
-      "family": "presentation",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the presentation family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:presentation_3",
-      "source_name": "presentation_3",
-      "label": "Presentation",
-      "family": "presentation",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the presentation family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:qrcode",
-      "source_name": "qrcode",
-      "label": "Qrcode",
-      "family": "qrcode",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the qrcode family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:qrcode_2",
-      "source_name": "qrcode_2",
-      "label": "Qrcode",
-      "family": "qrcode",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the qrcode family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:question",
-      "source_name": "question",
-      "label": "Help",
-      "family": "question",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the question family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:question_2",
-      "source_name": "question_2",
-      "label": "Help",
-      "family": "question",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the question family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:radar",
-      "source_name": "radar",
-      "label": "Radar",
-      "family": "radar",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the radar family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:radar_2",
-      "source_name": "radar_2",
-      "label": "Radar",
-      "family": "radar",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the radar family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:rocket",
-      "source_name": "rocket",
-      "label": "Rocket",
-      "family": "rocket",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the rocket family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:rocket_2",
-      "source_name": "rocket_2",
-      "label": "Rocket",
-      "family": "rocket",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the rocket family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:rows_2",
-      "source_name": "rows_2",
-      "label": "Rows",
-      "family": "rows",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the rows family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:rows_3",
-      "source_name": "rows_3",
-      "label": "Rows",
-      "family": "rows",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the rows family"
-        }
-      ]
-    },
-    {
-      "icon_id": "mingcute:rows_4",
-      "source_name": "rows_4",
-      "label": "Rows",
-      "family": "rows",
-      "issue_codes": [
-        "duplicate_depicts_modifier_family"
-      ],
-      "issues": [
-        {
-          "severity": "blocker",
-          "code": "duplicate_depicts_modifier_family",
-          "message": "depicts is repeated across modifier variants in the rows family"
-        }
-      ]
-    },
     {
       "icon_id": "mingcute:rss",
       "source_name": "rss",
@@ -3362,226 +1570,226 @@
   ],
   "next_batch_candidates": [
     {
-      "icon_id": "mingcute:fullscreen_exit",
-      "source_name": "fullscreen_exit",
-      "label": "Exit Full Screen",
-      "family": "fullscreen_exit",
+      "icon_id": "mingcute:rss",
+      "source_name": "rss",
+      "label": "Rss",
+      "family": "rss",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:fullscreen_exit_2",
-      "source_name": "fullscreen_exit_2",
-      "label": "Exit Full Screen",
-      "family": "fullscreen_exit",
+      "icon_id": "mingcute:rss_2",
+      "source_name": "rss_2",
+      "label": "Rss",
+      "family": "rss",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:game_1",
-      "source_name": "game_1",
-      "label": "Game",
-      "family": "game",
+      "icon_id": "mingcute:sandglass",
+      "source_name": "sandglass",
+      "label": "Sandglass",
+      "family": "sandglass",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:game_2",
-      "source_name": "game_2",
-      "label": "Game",
-      "family": "game",
+      "icon_id": "mingcute:sandglass_2",
+      "source_name": "sandglass_2",
+      "label": "Sandglass",
+      "family": "sandglass",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:gift",
-      "source_name": "gift",
-      "label": "Gift",
-      "family": "gift",
+      "icon_id": "mingcute:save",
+      "source_name": "save",
+      "label": "Save",
+      "family": "save",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:gift_2",
-      "source_name": "gift_2",
-      "label": "Gift",
-      "family": "gift",
+      "icon_id": "mingcute:save_2",
+      "source_name": "save_2",
+      "label": "Save",
+      "family": "save",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:git_branch",
-      "source_name": "git_branch",
-      "label": "Git Branch",
-      "family": "git_branch",
+      "icon_id": "mingcute:scan",
+      "source_name": "scan",
+      "label": "Scan",
+      "family": "scan",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:git_branch_2",
-      "source_name": "git_branch_2",
-      "label": "Git Branch",
-      "family": "git_branch",
+      "icon_id": "mingcute:scan_2",
+      "source_name": "scan_2",
+      "label": "Scan",
+      "family": "scan",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:git_merge",
-      "source_name": "git_merge",
-      "label": "Git Merge",
-      "family": "git_merge",
+      "icon_id": "mingcute:scissors",
+      "source_name": "scissors",
+      "label": "Scissors",
+      "family": "scissors",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:git_merge_2",
-      "source_name": "git_merge_2",
-      "label": "Git Merge",
-      "family": "git_merge",
+      "icon_id": "mingcute:scissors_2",
+      "source_name": "scissors_2",
+      "label": "Scissors",
+      "family": "scissors",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:github",
-      "source_name": "github",
-      "label": "GitHub",
-      "family": "github",
+      "icon_id": "mingcute:scissors_3",
+      "source_name": "scissors_3",
+      "label": "Scissors",
+      "family": "scissors",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:github_2",
-      "source_name": "github_2",
-      "label": "Github",
-      "family": "github",
+      "icon_id": "mingcute:server",
+      "source_name": "server",
+      "label": "Server",
+      "family": "server",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:globe",
-      "source_name": "globe",
-      "label": "Globe",
-      "family": "globe",
+      "icon_id": "mingcute:server_2",
+      "source_name": "server_2",
+      "label": "Server",
+      "family": "server",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:globe_2",
-      "source_name": "globe_2",
-      "label": "Globe",
-      "family": "globe",
+      "icon_id": "mingcute:settings_6",
+      "source_name": "settings_6",
+      "label": "Settings",
+      "family": "settings",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:grok",
-      "source_name": "grok",
-      "label": "Grok",
-      "family": "grok",
+      "icon_id": "mingcute:settings_7",
+      "source_name": "settings_7",
+      "label": "Settings",
+      "family": "settings",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:grok_2",
-      "source_name": "grok_2",
-      "label": "Grok",
-      "family": "grok",
+      "icon_id": "mingcute:share_2",
+      "source_name": "share_2",
+      "label": "Share",
+      "family": "share",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:group_2",
-      "source_name": "group_2",
-      "label": "Group",
-      "family": "group",
+      "icon_id": "mingcute:share_3",
+      "source_name": "share_3",
+      "label": "Share",
+      "family": "share",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:group_3",
-      "source_name": "group_3",
-      "label": "Group",
-      "family": "group",
+      "icon_id": "mingcute:shoe",
+      "source_name": "shoe",
+      "label": "Shoe",
+      "family": "shoe",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:hair",
-      "source_name": "hair",
-      "label": "Hair",
-      "family": "hair",
+      "icon_id": "mingcute:shoe_2",
+      "source_name": "shoe_2",
+      "label": "Shoe",
+      "family": "shoe",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:hair_2",
-      "source_name": "hair_2",
-      "label": "Hair",
-      "family": "hair",
+      "icon_id": "mingcute:shopping_bag_1",
+      "source_name": "shopping_bag_1",
+      "label": "Shopping Bag",
+      "family": "shopping_bag",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:hat",
-      "source_name": "hat",
-      "label": "Hat",
-      "family": "hat",
+      "icon_id": "mingcute:shopping_bag_2",
+      "source_name": "shopping_bag_2",
+      "label": "Shopping Bag",
+      "family": "shopping_bag",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:hat_2",
-      "source_name": "hat_2",
-      "label": "Hat",
-      "family": "hat",
+      "icon_id": "mingcute:shopping_bag_3",
+      "source_name": "shopping_bag_3",
+      "label": "Shopping Bag",
+      "family": "shopping_bag",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:heartbeat",
-      "source_name": "heartbeat",
-      "label": "Heartbeat",
-      "family": "heartbeat",
+      "icon_id": "mingcute:shopping_cart_1",
+      "source_name": "shopping_cart_1",
+      "label": "Shopping Cart",
+      "family": "shopping_cart",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:heartbeat_2",
-      "source_name": "heartbeat_2",
-      "label": "Heartbeat",
-      "family": "heartbeat",
+      "icon_id": "mingcute:shopping_cart_2",
+      "source_name": "shopping_cart_2",
+      "label": "Shopping Cart",
+      "family": "shopping_cart",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]
     },
     {
-      "icon_id": "mingcute:hemisphere",
-      "source_name": "hemisphere",
-      "label": "Hemisphere",
-      "family": "hemisphere",
+      "icon_id": "mingcute:shuffle",
+      "source_name": "shuffle",
+      "label": "Shuffle",
+      "family": "shuffle",
       "issue_codes": [
         "duplicate_depicts_modifier_family"
       ]

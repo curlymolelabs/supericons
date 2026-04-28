@@ -1,0 +1,413 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:plugin_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_plugin_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:plugin_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "plugin_2",
+      "label": "Plugin",
+      "purpose": "Show plugin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "plugin",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to plugin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing plugin.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "plugin",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:plugin_2",
+      "source_library": "mingcute",
+      "source_name": "plugin_2",
+      "label": "Plugin",
+      "depicts_observation": "Angled connector block with one cable shape entering from the lower left and one plug head facing right",
+      "popular_reading": "Angled plugin connector",
+      "plausible_readings": [
+        "plugin icon",
+        "plug connector",
+        "extension module"
+      ],
+      "context_bias": "Use when the interface wants a more dynamic connector piece with an obvious cable feed and angled head.",
+      "ambiguity_note": "Do not use for the centered plugin block when the shape should stay symmetrical with two top prongs.",
+      "search_hints": [
+        "Plugin",
+        "plugin icon",
+        "plug connector",
+        "extension module",
+        "Angled plugin connector"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/plugin_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot tilts the connector and adds a visible cable style segment feeding into the plug body."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:plugin_2",
+      "source_library": "mingcute",
+      "source_name": "plugin_2",
+      "label": "Plugin",
+      "depicts": "Angled connector block with one cable shape entering from the lower left and one plug head facing right",
+      "use_when": "Use when the interface wants a more dynamic connector piece with an obvious cable feed and angled head.",
+      "avoid_when": "Do not use for the centered plugin block when the shape should stay symmetrical with two top prongs.",
+      "semantic_tags": [
+        "2",
+        "extension module",
+        "plug connector",
+        "plugin",
+        "plugin icon"
+      ],
+      "synonyms": [
+        "2",
+        "extension module",
+        "plug connector",
+        "plugin",
+        "plugin icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:presentation_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_presentation_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:presentation_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "presentation_1",
+      "label": "Presentation",
+      "purpose": "Show presentation as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "presentation",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to presentation as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing presentation.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "presentation",
+        "1"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:presentation_1",
+      "source_library": "mingcute",
+      "source_name": "presentation_1",
+      "label": "Presentation",
+      "depicts_observation": "Presentation screen on one stand showing four vertical bars growing from left to right",
+      "popular_reading": "Bar chart presentation screen",
+      "plausible_readings": [
+        "presentation board",
+        "slide screen",
+        "chart screen"
+      ],
+      "context_bias": "Use when the interface wants a presentation screen that clearly shows vertical bar columns on the slide.",
+      "ambiguity_note": "Do not use for the presentation with a diagonal chart path when the slide should read as bars instead of a trend line.",
+      "search_hints": [
+        "Presentation",
+        "presentation board",
+        "slide screen",
+        "chart screen",
+        "Bar chart presentation screen"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/presentation_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a board on a stand with four distinct vertical bars inside the frame."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:presentation_1",
+      "source_library": "mingcute",
+      "source_name": "presentation_1",
+      "label": "Presentation",
+      "depicts": "Presentation screen on one stand showing four vertical bars growing from left to right",
+      "use_when": "Use when the interface wants a presentation screen that clearly shows vertical bar columns on the slide.",
+      "avoid_when": "Do not use for the presentation with a diagonal chart path when the slide should read as bars instead of a trend line.",
+      "semantic_tags": [
+        "1",
+        "chart screen",
+        "presentation",
+        "presentation board",
+        "slide screen"
+      ],
+      "synonyms": [
+        "1",
+        "chart screen",
+        "presentation",
+        "presentation board",
+        "slide screen"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:presentation_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_presentation_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:presentation_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "presentation_2",
+      "label": "Presentation",
+      "purpose": "Show presentation as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "presentation",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to presentation as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing presentation.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "presentation",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:presentation_2",
+      "source_library": "mingcute",
+      "source_name": "presentation_2",
+      "label": "Presentation",
+      "depicts_observation": "Presentation screen on one stand showing one rising diagonal chart path across the slide",
+      "popular_reading": "Trend line presentation screen",
+      "plausible_readings": [
+        "presentation board",
+        "slide screen",
+        "chart screen"
+      ],
+      "context_bias": "Use when the interface wants a presentation screen focused on a rising trend or line chart path.",
+      "ambiguity_note": "Do not use for the bar chart presentation when the slide should be read as separate vertical columns.",
+      "search_hints": [
+        "Presentation",
+        "presentation board",
+        "slide screen",
+        "chart screen",
+        "Trend line presentation screen"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/presentation_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces the bar pattern with one connected chart path climbing across the screen."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:presentation_2",
+      "source_library": "mingcute",
+      "source_name": "presentation_2",
+      "label": "Presentation",
+      "depicts": "Presentation screen on one stand showing one rising diagonal chart path across the slide",
+      "use_when": "Use when the interface wants a presentation screen focused on a rising trend or line chart path.",
+      "avoid_when": "Do not use for the bar chart presentation when the slide should be read as separate vertical columns.",
+      "semantic_tags": [
+        "2",
+        "chart screen",
+        "presentation",
+        "presentation board",
+        "slide screen"
+      ],
+      "synonyms": [
+        "2",
+        "chart screen",
+        "presentation",
+        "presentation board",
+        "slide screen"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:presentation_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_presentation_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:presentation_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "presentation_3",
+      "label": "Presentation",
+      "purpose": "Show presentation as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "presentation",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to presentation as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing presentation.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "presentation",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:presentation_3",
+      "source_library": "mingcute",
+      "source_name": "presentation_3",
+      "label": "Presentation",
+      "depicts_observation": "Blank hanging presentation screen above one tripod style stand with no chart marks inside",
+      "popular_reading": "Blank projector screen",
+      "plausible_readings": [
+        "presentation board",
+        "projector screen",
+        "blank slide"
+      ],
+      "context_bias": "Use when the interface wants a plain presentation screen shape without any chart content inside it.",
+      "ambiguity_note": "Do not use for the chart screens when the slide should contain bars or a rising chart path.",
+      "search_hints": [
+        "Presentation",
+        "presentation board",
+        "projector screen",
+        "blank slide",
+        "Blank projector screen"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/presentation_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot strips the inner chart marks and leaves a hanging screen frame above a stand."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:presentation_3",
+      "source_library": "mingcute",
+      "source_name": "presentation_3",
+      "label": "Presentation",
+      "depicts": "Blank hanging presentation screen above one tripod style stand with no chart marks inside",
+      "use_when": "Use when the interface wants a plain presentation screen shape without any chart content inside it.",
+      "avoid_when": "Do not use for the chart screens when the slide should contain bars or a rising chart path.",
+      "semantic_tags": [
+        "3",
+        "blank slide",
+        "presentation",
+        "presentation board",
+        "projector screen"
+      ],
+      "synonyms": [
+        "3",
+        "blank slide",
+        "presentation",
+        "presentation board",
+        "projector screen"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:qrcode",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_qrcode_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:qrcode",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "qrcode",
+      "label": "Qrcode",
+      "purpose": "Show qrcode as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "qrcode"
+      ],
+      "use_when": "Use when the interface refers directly to qrcode as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing qrcode.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "qrcode"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:qrcode",
+      "source_library": "mingcute",
+      "source_name": "qrcode",
+      "label": "Qrcode",
+      "depicts_observation": "Square QR code with three large finder boxes at the top left top right and bottom left corners",
+      "popular_reading": "Classic QR code grid",
+      "plausible_readings": [
+        "qr code",
+        "scan code",
+        "matrix code"
+      ],
+      "context_bias": "Use when the interface wants a classic QR code pattern with the usual three large corner finder boxes.",
+      "ambiguity_note": "Do not use for the stylized QR code when the corner blocks should look more open and simplified.",
+      "search_hints": [
+        "Qrcode",
+        "qr code",
+        "scan code",
+        "matrix code",
+        "Classic QR code grid"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/qrcode_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot follows the standard QR layout with three prominent corner boxes and dense inner code blocks."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:qrcode",
+      "source_library": "mingcute",
+      "source_name": "qrcode",
+      "label": "Qrcode",
+      "depicts": "Square QR code with three large finder boxes at the top left top right and bottom left corners",
+      "use_when": "Use when the interface wants a classic QR code pattern with the usual three large corner finder boxes.",
+      "avoid_when": "Do not use for the stylized QR code when the corner blocks should look more open and simplified.",
+      "semantic_tags": [
+        "matrix code",
+        "qr code",
+        "qrcode",
+        "scan code"
+      ],
+      "synonyms": [
+        "matrix code",
+        "qr code",
+        "qrcode",
+        "scan code"
+      ]
+    }
+  }
+]

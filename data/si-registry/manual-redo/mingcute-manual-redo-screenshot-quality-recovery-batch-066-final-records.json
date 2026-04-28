@@ -1,0 +1,113 @@
+[
+  {
+    "icon_id": "mingcute:hemisphere_2",
+    "source_library": "mingcute",
+    "source_name": "hemisphere_2",
+    "label": "Hemisphere",
+    "depicts": "Side hemisphere shell with one vertical inner curve centered inside the form",
+    "use_when": "Use when the interface wants a vertical half sphere seen from the side with one inner dividing curve.",
+    "avoid_when": "Do not use for the bowl hemisphere when the opening rim should lie across the top.",
+    "semantic_tags": [
+      "2",
+      "half sphere",
+      "hemisphere",
+      "hemisphere shape",
+      "side shell"
+    ],
+    "synonyms": [
+      "2",
+      "half sphere",
+      "hemisphere",
+      "hemisphere shape",
+      "side shell"
+    ]
+  },
+  {
+    "icon_id": "mingcute:hexagons",
+    "source_library": "mingcute",
+    "source_name": "hexagons",
+    "label": "Hexagons",
+    "depicts": "Three separate hexagon shapes with one top cell above two lower cells",
+    "use_when": "Use when the interface wants three detached hexagon cells arranged in a triangle.",
+    "avoid_when": "Do not use for the joined hexagon cluster when the cells should share borders.",
+    "semantic_tags": [
+      "hex cells",
+      "hexagon grid",
+      "hexagons",
+      "honeycomb cells"
+    ],
+    "synonyms": [
+      "hex cells",
+      "hexagon grid",
+      "hexagons",
+      "honeycomb cells"
+    ]
+  },
+  {
+    "icon_id": "mingcute:hexagons_2",
+    "source_library": "mingcute",
+    "source_name": "hexagons_2",
+    "label": "Hexagons",
+    "depicts": "Three joined hexagon shapes with one top cell touching two lower cells",
+    "use_when": "Use when the interface wants a honeycomb style cluster where the hexagons share borders.",
+    "avoid_when": "Do not use for the separated hexagon cells when visible gaps should remain between the shapes.",
+    "semantic_tags": [
+      "2",
+      "hex cells",
+      "hexagon grid",
+      "hexagons",
+      "honeycomb cluster"
+    ],
+    "synonyms": [
+      "2",
+      "hex cells",
+      "hexagon grid",
+      "hexagons",
+      "honeycomb cluster"
+    ]
+  },
+  {
+    "icon_id": "mingcute:history",
+    "source_library": "mingcute",
+    "source_name": "history",
+    "label": "History",
+    "depicts": "Clock ring with one curved outer arrow and one centered hand inside",
+    "use_when": "Use when the interface wants history shown as a clock face with one outer return arrow.",
+    "avoid_when": "Do not use for the rewind clock when the arrow should sit at the upper left and the inner ticks should show.",
+    "semantic_tags": [
+      "clock arrow",
+      "history",
+      "history icon",
+      "recent time"
+    ],
+    "synonyms": [
+      "clock arrow",
+      "history",
+      "history icon",
+      "recent time"
+    ]
+  },
+  {
+    "icon_id": "mingcute:history_2",
+    "source_library": "mingcute",
+    "source_name": "history_2",
+    "label": "History",
+    "depicts": "Open clock ring with one upper left arrow and three inner tick marks",
+    "use_when": "Use when the interface wants history shown as an open clock ring with a top left arrow.",
+    "avoid_when": "Do not use for the closed history clock when a centered hand should appear inside the ring.",
+    "semantic_tags": [
+      "2",
+      "clock arrow",
+      "history",
+      "history icon",
+      "recent time"
+    ],
+    "synonyms": [
+      "2",
+      "clock arrow",
+      "history",
+      "history icon",
+      "recent time"
+    ]
+  }
+]

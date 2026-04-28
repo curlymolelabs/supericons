@@ -1,0 +1,123 @@
+[
+  {
+    "icon_id": "mingcute:fullscreen_exit",
+    "source_library": "mingcute",
+    "source_name": "fullscreen_exit",
+    "label": "Exit Full Screen",
+    "depicts": "Four inward corner marks framing centered empty space inside an open square",
+    "use_when": "Use when the interface wants exit fullscreen shown by inward corner brackets instead of arrows.",
+    "avoid_when": "Do not use for the inward arrows variant when arrowheads should point toward the center.",
+    "semantic_tags": [
+      "collapse",
+      "crop corners",
+      "exit full screen",
+      "leave immersive",
+      "restore view",
+      "shrink frame",
+      "view control"
+    ],
+    "synonyms": [
+      "crop corners",
+      "exit full screen",
+      "exit immersive mode",
+      "leave full screen",
+      "restore window",
+      "shrink frame",
+      "shrink view"
+    ]
+  },
+  {
+    "icon_id": "mingcute:fullscreen_exit_2",
+    "source_library": "mingcute",
+    "source_name": "fullscreen_exit_2",
+    "label": "Exit Full Screen",
+    "depicts": "Two diagonal arrow marks pointing inward toward upper left and lower right corners",
+    "use_when": "Use when the interface wants exit fullscreen shown by inward diagonal arrows instead of bracket corners.",
+    "avoid_when": "Do not use for the corner bracket variant when no arrowheads should appear.",
+    "semantic_tags": [
+      "collapse",
+      "collapse arrows",
+      "exit full screen",
+      "leave immersive",
+      "restore view",
+      "shrink arrows",
+      "view control"
+    ],
+    "synonyms": [
+      "collapse arrows",
+      "exit full screen",
+      "exit immersive mode",
+      "leave full screen",
+      "restore window",
+      "shrink arrows",
+      "shrink view"
+    ]
+  },
+  {
+    "icon_id": "mingcute:game_1",
+    "source_library": "mingcute",
+    "source_name": "game_1",
+    "label": "Game",
+    "depicts": "Oval gamepad body with one centered dot button and one plus pad inside",
+    "use_when": "Use when the interface wants a rounded oval controller with one dot button and one plus pad.",
+    "avoid_when": "Do not use for the wavy controller when the outer body should curve like a console gamepad shell.",
+    "semantic_tags": [
+      "1",
+      "controller icon",
+      "game",
+      "game controller",
+      "video game pad"
+    ],
+    "synonyms": [
+      "1",
+      "controller icon",
+      "game",
+      "game controller",
+      "video game pad"
+    ]
+  },
+  {
+    "icon_id": "mingcute:game_2",
+    "source_library": "mingcute",
+    "source_name": "game_2",
+    "label": "Game",
+    "depicts": "Wavy gamepad body with one centered dot button and one plus pad inside",
+    "use_when": "Use when the interface wants a controller with a wavy outer shell and the same inner button layout.",
+    "avoid_when": "Do not use for the oval gamepad when the body should stay smooth and rounded.",
+    "semantic_tags": [
+      "2",
+      "console pad",
+      "controller icon",
+      "game",
+      "game controller"
+    ],
+    "synonyms": [
+      "2",
+      "console pad",
+      "controller icon",
+      "game",
+      "game controller"
+    ]
+  },
+  {
+    "icon_id": "mingcute:gift",
+    "source_library": "mingcute",
+    "source_name": "gift",
+    "label": "Gift",
+    "depicts": "Tall gift box shape with a centered ribbon cross and one bow mark above",
+    "use_when": "Use when the interface wants a tall wrapped present with a vertical ribbon crossing the front.",
+    "avoid_when": "Do not use for the squarer gift box when the proportions should be wider and more even.",
+    "semantic_tags": [
+      "gift",
+      "gift icon",
+      "present box",
+      "wrapped box"
+    ],
+    "synonyms": [
+      "gift",
+      "gift icon",
+      "present box",
+      "wrapped box"
+    ]
+  }
+]

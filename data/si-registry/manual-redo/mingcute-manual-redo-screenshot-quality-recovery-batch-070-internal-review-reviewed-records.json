@@ -1,0 +1,437 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:laptop_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_laptop_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:laptop_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "laptop_2",
+      "label": "Laptop",
+      "purpose": "Show laptop as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "laptop",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to laptop as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing laptop.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "laptop",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:laptop_2",
+      "source_library": "mingcute",
+      "source_name": "laptop_2",
+      "label": "Laptop",
+      "depicts_observation": "Laptop screen frame above one curved lower base line",
+      "popular_reading": "Curved base laptop",
+      "plausible_readings": [
+        "laptop icon",
+        "computer screen",
+        "device laptop"
+      ],
+      "context_bias": "Use when the interface wants a laptop with a curved lower base under the open screen frame.",
+      "ambiguity_note": "Do not use for the straight base laptop when the platform should stay flat and level.",
+      "search_hints": [
+        "Laptop",
+        "laptop icon",
+        "computer screen",
+        "device laptop",
+        "Curved base laptop"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/laptop_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot bows the lower laptop base into a curved platform under the screen."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:laptop_2",
+      "source_library": "mingcute",
+      "source_name": "laptop_2",
+      "label": "Laptop",
+      "depicts": "Laptop screen frame above one curved lower base line",
+      "use_when": "Use when the interface wants a laptop with a curved lower base under the open screen frame.",
+      "avoid_when": "Do not use for the straight base laptop when the platform should stay flat and level.",
+      "semantic_tags": [
+        "2",
+        "computer screen",
+        "device laptop",
+        "laptop",
+        "laptop icon"
+      ],
+      "synonyms": [
+        "2",
+        "computer screen",
+        "device laptop",
+        "laptop",
+        "laptop icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:list_check_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_list_check_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:list_check_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "list_check_2",
+      "label": "Checklist View",
+      "purpose": "Show a checklist view, checked list layout, or task list surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "checklist view",
+        "task list",
+        "checked list",
+        "list layout",
+        "view"
+      ],
+      "use_when": "Use when the interface switches to or labels a checklist or task-list view.",
+      "avoid_when": "Do not use for a single completed item when the meaning is specifically a full list view.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A list view paired with check indicators.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "task list view",
+        "checklist layout",
+        "checked list view",
+        "list with checks"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:list_check_2",
+      "source_library": "mingcute",
+      "source_name": "list_check_2",
+      "label": "Checklist View",
+      "depicts_observation": "Three left check marks aligned beside three horizontal list bars",
+      "popular_reading": "Checked list bars",
+      "plausible_readings": [
+        "checklist icon",
+        "task list",
+        "checked rows"
+      ],
+      "context_bias": "Use when the interface wants a checklist with check marks aligned to the left of text bars.",
+      "ambiguity_note": "Do not use for the square list checks when each row should begin with a square box.",
+      "search_hints": [
+        "Checklist View",
+        "checklist icon",
+        "task list",
+        "checked rows",
+        "Checked list bars"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/list_check_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot pairs three check marks on the left with three matching horizontal bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:list_check_2",
+      "source_library": "mingcute",
+      "source_name": "list_check_2",
+      "label": "Checklist View",
+      "depicts": "Three left check marks aligned beside three horizontal list bars",
+      "use_when": "Use when the interface wants a checklist with check marks aligned to the left of text bars.",
+      "avoid_when": "Do not use for the square list checks when each row should begin with a square box.",
+      "semantic_tags": [
+        "checked list",
+        "checked rows",
+        "checklist icon",
+        "checklist view",
+        "list layout",
+        "task list",
+        "view"
+      ],
+      "synonyms": [
+        "checked list view",
+        "checked rows",
+        "checklist icon",
+        "checklist layout",
+        "checklist view",
+        "list with checks",
+        "task list",
+        "task list view"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:list_check_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_list_check_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:list_check_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "list_check_3",
+      "label": "Checklist View",
+      "purpose": "Show a checklist view, checked list layout, or task list surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "checklist view",
+        "task list",
+        "checked list",
+        "list layout",
+        "view"
+      ],
+      "use_when": "Use when the interface switches to or labels a checklist or task-list view.",
+      "avoid_when": "Do not use for a single completed item when the meaning is specifically a full list view.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A list view paired with check indicators.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "task list view",
+        "checklist layout",
+        "checked list view",
+        "list with checks"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:list_check_3",
+      "source_library": "mingcute",
+      "source_name": "list_check_3",
+      "label": "Checklist View",
+      "depicts_observation": "Two square check boxes aligned left beside four horizontal list bars",
+      "popular_reading": "Square checklist rows",
+      "plausible_readings": [
+        "checklist icon",
+        "task list",
+        "checked rows"
+      ],
+      "context_bias": "Use when the interface wants a checklist using square boxes beside horizontal list bars.",
+      "ambiguity_note": "Do not use for the three check mark list when the left side should show check marks instead of boxes.",
+      "search_hints": [
+        "Checklist View",
+        "checklist icon",
+        "task list",
+        "checked rows",
+        "Square checklist rows"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/list_check_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot swaps the check marks for square boxes and varies the bar lengths on the right."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:list_check_3",
+      "source_library": "mingcute",
+      "source_name": "list_check_3",
+      "label": "Checklist View",
+      "depicts": "Two square check boxes aligned left beside four horizontal list bars",
+      "use_when": "Use when the interface wants a checklist using square boxes beside horizontal list bars.",
+      "avoid_when": "Do not use for the three check mark list when the left side should show check marks instead of boxes.",
+      "semantic_tags": [
+        "checked list",
+        "checked rows",
+        "checklist icon",
+        "checklist view",
+        "list layout",
+        "task list",
+        "view"
+      ],
+      "synonyms": [
+        "checked list view",
+        "checked rows",
+        "checklist icon",
+        "checklist layout",
+        "checklist view",
+        "list with checks",
+        "task list",
+        "task list view"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:magic_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_magic_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:magic_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "magic_1",
+      "label": "Magic",
+      "purpose": "Show magic as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "magic",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to magic as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing magic.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "magic",
+        "1"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:magic_1",
+      "source_library": "mingcute",
+      "source_name": "magic_1",
+      "label": "Magic",
+      "depicts_observation": "Star outline with one diagonal wand line crossing the lower right edge",
+      "popular_reading": "Star wand",
+      "plausible_readings": [
+        "magic icon",
+        "wand star",
+        "spell mark"
+      ],
+      "context_bias": "Use when the interface wants a magic star outline crossed by one wand line.",
+      "ambiguity_note": "Do not use for the spark wand when the main star shape should break into short sparkle rays.",
+      "search_hints": [
+        "Magic",
+        "magic icon",
+        "wand star",
+        "spell mark",
+        "Star wand"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/magic_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a large star outline with one wand line leaning across the lower right."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:magic_1",
+      "source_library": "mingcute",
+      "source_name": "magic_1",
+      "label": "Magic",
+      "depicts": "Star outline with one diagonal wand line crossing the lower right edge",
+      "use_when": "Use when the interface wants a magic star outline crossed by one wand line.",
+      "avoid_when": "Do not use for the spark wand when the main star shape should break into short sparkle rays.",
+      "semantic_tags": [
+        "1",
+        "magic",
+        "magic icon",
+        "spell mark",
+        "wand star"
+      ],
+      "synonyms": [
+        "1",
+        "magic",
+        "magic icon",
+        "spell mark",
+        "wand star"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:magic_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_magic_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:magic_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "magic_2",
+      "label": "Magic",
+      "purpose": "Show magic as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "magic",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to magic as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing magic.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "magic",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:magic_2",
+      "source_library": "mingcute",
+      "source_name": "magic_2",
+      "label": "Magic",
+      "depicts_observation": "Sparkle burst with short rays above one diagonal wand line",
+      "popular_reading": "Spark wand",
+      "plausible_readings": [
+        "magic icon",
+        "wand sparkle",
+        "spell mark"
+      ],
+      "context_bias": "Use when the interface wants a wand line with a burst of short sparkle rays at the top.",
+      "ambiguity_note": "Do not use for the star wand when the sparkle should remain a burst rather than a full star outline.",
+      "search_hints": [
+        "Magic",
+        "magic icon",
+        "wand sparkle",
+        "spell mark",
+        "Spark wand"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/magic_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces the star outline with short sparkle rays radiating above the wand."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:magic_2",
+      "source_library": "mingcute",
+      "source_name": "magic_2",
+      "label": "Magic",
+      "depicts": "Sparkle burst with short rays above one diagonal wand line",
+      "use_when": "Use when the interface wants a wand line with a burst of short sparkle rays at the top.",
+      "avoid_when": "Do not use for the star wand when the sparkle should remain a burst rather than a full star outline.",
+      "semantic_tags": [
+        "2",
+        "magic",
+        "magic icon",
+        "spell mark",
+        "wand sparkle"
+      ],
+      "synonyms": [
+        "2",
+        "magic",
+        "magic icon",
+        "spell mark",
+        "wand sparkle"
+      ]
+    }
+  }
+]

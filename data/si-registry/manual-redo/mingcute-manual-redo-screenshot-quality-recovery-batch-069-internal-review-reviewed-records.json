@@ -1,0 +1,405 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:keyboard",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_keyboard_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:keyboard",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "keyboard",
+      "label": "Keyboard",
+      "purpose": "Show keyboard as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "keyboard"
+      ],
+      "use_when": "Use when the interface refers directly to keyboard as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing keyboard.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "keyboard"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:keyboard",
+      "source_library": "mingcute",
+      "source_name": "keyboard",
+      "label": "Keyboard",
+      "depicts_observation": "Keyboard panel with six upper key dots above one long lower bar",
+      "popular_reading": "Key dot keyboard",
+      "plausible_readings": [
+        "keyboard icon",
+        "typing keys",
+        "device keyboard"
+      ],
+      "context_bias": "Use when the interface wants a keyboard panel with dot keys above one long bottom bar.",
+      "ambiguity_note": "Do not use for the wired keyboard when the top should grow one cable curl and the keys become lines.",
+      "search_hints": [
+        "Keyboard",
+        "keyboard icon",
+        "typing keys",
+        "device keyboard",
+        "Key dot keyboard"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/keyboard_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot arranges six small key dots over one long bar inside the keyboard frame."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:keyboard",
+      "source_library": "mingcute",
+      "source_name": "keyboard",
+      "label": "Keyboard",
+      "depicts": "Keyboard panel with six upper key dots above one long lower bar",
+      "use_when": "Use when the interface wants a keyboard panel with dot keys above one long bottom bar.",
+      "avoid_when": "Do not use for the wired keyboard when the top should grow one cable curl and the keys become lines.",
+      "semantic_tags": [
+        "device keyboard",
+        "keyboard",
+        "keyboard icon",
+        "typing keys"
+      ],
+      "synonyms": [
+        "device keyboard",
+        "keyboard",
+        "keyboard icon",
+        "typing keys"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:keyboard_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_keyboard_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:keyboard_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "keyboard_2",
+      "label": "Keyboard",
+      "purpose": "Show keyboard as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "keyboard",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to keyboard as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing keyboard.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "keyboard",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:keyboard_2",
+      "source_library": "mingcute",
+      "source_name": "keyboard_2",
+      "label": "Keyboard",
+      "depicts_observation": "Keyboard panel with two horizontal key bars and one cable curl above",
+      "popular_reading": "Wired keyboard",
+      "plausible_readings": [
+        "keyboard icon",
+        "typing keys",
+        "device keyboard"
+      ],
+      "context_bias": "Use when the interface wants a keyboard panel with line keys and a small cable curl above it.",
+      "ambiguity_note": "Do not use for the key dot keyboard when the upper keys should remain dot shaped.",
+      "search_hints": [
+        "Keyboard",
+        "keyboard icon",
+        "typing keys",
+        "device keyboard",
+        "Wired keyboard"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/keyboard_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces the dot keys with bars and adds one short cable curl on the top edge."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:keyboard_2",
+      "source_library": "mingcute",
+      "source_name": "keyboard_2",
+      "label": "Keyboard",
+      "depicts": "Keyboard panel with two horizontal key bars and one cable curl above",
+      "use_when": "Use when the interface wants a keyboard panel with line keys and a small cable curl above it.",
+      "avoid_when": "Do not use for the key dot keyboard when the upper keys should remain dot shaped.",
+      "semantic_tags": [
+        "2",
+        "device keyboard",
+        "keyboard",
+        "keyboard icon",
+        "typing keys"
+      ],
+      "synonyms": [
+        "2",
+        "device keyboard",
+        "keyboard",
+        "keyboard icon",
+        "typing keys"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:lantern",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_lantern_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:lantern",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "lantern",
+      "label": "Lantern",
+      "purpose": "Show lantern as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "lantern"
+      ],
+      "use_when": "Use when the interface refers directly to lantern as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing lantern.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "lantern"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:lantern",
+      "source_library": "mingcute",
+      "source_name": "lantern",
+      "label": "Lantern",
+      "depicts_observation": "Round lantern frame with one centered inner leaf and two lower tassel lines",
+      "popular_reading": "Round lantern",
+      "plausible_readings": [
+        "lantern icon",
+        "festival lantern",
+        "hanging lantern"
+      ],
+      "context_bias": "Use when the interface wants a rounded lantern with an inner leaf form and tassels below.",
+      "ambiguity_note": "Do not use for the tall lantern when the body should stretch into vertical bars.",
+      "search_hints": [
+        "Lantern",
+        "lantern icon",
+        "festival lantern",
+        "hanging lantern",
+        "Round lantern"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/lantern_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot forms the lantern from a rounded outer frame around one centered inner leaf."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:lantern",
+      "source_library": "mingcute",
+      "source_name": "lantern",
+      "label": "Lantern",
+      "depicts": "Round lantern frame with one centered inner leaf and two lower tassel lines",
+      "use_when": "Use when the interface wants a rounded lantern with an inner leaf form and tassels below.",
+      "avoid_when": "Do not use for the tall lantern when the body should stretch into vertical bars.",
+      "semantic_tags": [
+        "festival lantern",
+        "hanging lantern",
+        "lantern",
+        "lantern icon"
+      ],
+      "synonyms": [
+        "festival lantern",
+        "hanging lantern",
+        "lantern",
+        "lantern icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:lantern_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_lantern_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:lantern_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "lantern_2",
+      "label": "Lantern",
+      "purpose": "Show lantern as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "lantern",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to lantern as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing lantern.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "lantern",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:lantern_2",
+      "source_library": "mingcute",
+      "source_name": "lantern_2",
+      "label": "Lantern",
+      "depicts_observation": "Tall lantern frame with three vertical bars and two lower tassel lines",
+      "popular_reading": "Tall lantern",
+      "plausible_readings": [
+        "lantern icon",
+        "festival lantern",
+        "hanging lantern"
+      ],
+      "context_bias": "Use when the interface wants a vertical lantern built from tall inner bar segments.",
+      "ambiguity_note": "Do not use for the round lantern when the body should wrap around one leaf shaped center.",
+      "search_hints": [
+        "Lantern",
+        "lantern icon",
+        "festival lantern",
+        "hanging lantern",
+        "Tall lantern"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/lantern_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot stretches the lantern into a tall body with parallel vertical bar segments."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:lantern_2",
+      "source_library": "mingcute",
+      "source_name": "lantern_2",
+      "label": "Lantern",
+      "depicts": "Tall lantern frame with three vertical bars and two lower tassel lines",
+      "use_when": "Use when the interface wants a vertical lantern built from tall inner bar segments.",
+      "avoid_when": "Do not use for the round lantern when the body should wrap around one leaf shaped center.",
+      "semantic_tags": [
+        "2",
+        "festival lantern",
+        "hanging lantern",
+        "lantern",
+        "lantern icon"
+      ],
+      "synonyms": [
+        "2",
+        "festival lantern",
+        "hanging lantern",
+        "lantern",
+        "lantern icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:laptop",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_laptop_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:laptop",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "laptop",
+      "label": "Laptop",
+      "purpose": "Show laptop as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "laptop"
+      ],
+      "use_when": "Use when the interface refers directly to laptop as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing laptop.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "laptop"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:laptop",
+      "source_library": "mingcute",
+      "source_name": "laptop",
+      "label": "Laptop",
+      "depicts_observation": "Laptop screen frame above one straight base line",
+      "popular_reading": "Straight base laptop",
+      "plausible_readings": [
+        "laptop icon",
+        "computer screen",
+        "device laptop"
+      ],
+      "context_bias": "Use when the interface wants a laptop with a flat base line under the open screen frame.",
+      "ambiguity_note": "Do not use for the curved base laptop when the lower platform should bow upward.",
+      "search_hints": [
+        "Laptop",
+        "laptop icon",
+        "computer screen",
+        "device laptop",
+        "Straight base laptop"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/laptop_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a simple open screen resting on one straight base line."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:laptop",
+      "source_library": "mingcute",
+      "source_name": "laptop",
+      "label": "Laptop",
+      "depicts": "Laptop screen frame above one straight base line",
+      "use_when": "Use when the interface wants a laptop with a flat base line under the open screen frame.",
+      "avoid_when": "Do not use for the curved base laptop when the lower platform should bow upward.",
+      "semantic_tags": [
+        "computer screen",
+        "device laptop",
+        "laptop",
+        "laptop icon"
+      ],
+      "synonyms": [
+        "computer screen",
+        "device laptop",
+        "laptop",
+        "laptop icon"
+      ]
+    }
+  }
+]

@@ -1,0 +1,115 @@
+[
+  {
+    "icon_id": "mingcute:rocket",
+    "source_library": "mingcute",
+    "source_name": "rocket",
+    "label": "Rocket",
+    "depicts": "Rocket body viewed from the side with one round window one nose cone and fins spread around the lower body",
+    "use_when": "Use when the interface wants a fuller side view rocket body with a visible window and lower fins.",
+    "avoid_when": "Do not use for the steeper launch rocket when the whole body should lean sharply toward the upper right.",
+    "semantic_tags": [
+      "launch vehicle",
+      "rocket",
+      "rocket icon",
+      "space ship"
+    ],
+    "synonyms": [
+      "launch vehicle",
+      "rocket",
+      "rocket icon",
+      "space ship"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rocket_2",
+    "source_library": "mingcute",
+    "source_name": "rocket_2",
+    "label": "Rocket",
+    "depicts": "Rocket body angled sharply toward the upper right with a long pointed nose and trailing lower fins",
+    "use_when": "Use when the interface wants a rocket posed like an upward launch rather than a flatter side profile.",
+    "avoid_when": "Do not use for the broader side view rocket when the body should sit more horizontally with a fuller rear section.",
+    "semantic_tags": [
+      "2",
+      "launch vehicle",
+      "rocket",
+      "rocket icon",
+      "space ship"
+    ],
+    "synonyms": [
+      "2",
+      "launch vehicle",
+      "rocket",
+      "rocket icon",
+      "space ship"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rows_2",
+    "source_library": "mingcute",
+    "source_name": "rows_2",
+    "label": "Rows",
+    "depicts": "One outer frame split into two stacked horizontal rows by one middle divider line",
+    "use_when": "Use when the interface wants two stacked rows contained inside one shared outer frame.",
+    "avoid_when": "Do not use for the separate row cards when the two rows should sit apart with a visible gap between them.",
+    "semantic_tags": [
+      "2",
+      "rows",
+      "rows layout",
+      "split panel",
+      "two row grid"
+    ],
+    "synonyms": [
+      "2",
+      "rows",
+      "rows layout",
+      "split panel",
+      "two row grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rows_3",
+    "source_library": "mingcute",
+    "source_name": "rows_3",
+    "label": "Rows",
+    "depicts": "Two separate horizontal panels stacked with one open gap between them",
+    "use_when": "Use when the interface wants two stacked row panels that stay visually separate from each other.",
+    "avoid_when": "Do not use for the shared frame rows when both rows should live inside one combined outer border.",
+    "semantic_tags": [
+      "3",
+      "rows",
+      "rows layout",
+      "stacked cards",
+      "two row grid"
+    ],
+    "synonyms": [
+      "3",
+      "rows",
+      "rows layout",
+      "stacked cards",
+      "two row grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rows_4",
+    "source_library": "mingcute",
+    "source_name": "rows_4",
+    "label": "Rows",
+    "depicts": "One outer frame split into three stacked horizontal rows with two divider lines",
+    "use_when": "Use when the interface wants three stacked rows inside one shared frame instead of two.",
+    "avoid_when": "Do not use for the two row variants when the layout should stop at two stacked sections.",
+    "semantic_tags": [
+      "4",
+      "rows",
+      "rows layout",
+      "stacked sections",
+      "three row grid"
+    ],
+    "synonyms": [
+      "4",
+      "rows",
+      "rows layout",
+      "stacked sections",
+      "three row grid"
+    ]
+  }
+]
