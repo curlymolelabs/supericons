@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-076",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 076",
+  "review_goal": "Differentiate photo album, picture, and pin variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:photo_album_2",
+      "screenshot_file_name": "mingcute_photo_album_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/photo_album_2_line.svg",
+      "depicts_observation": "Photo album cover with one top binding strip above one mountain picture panel",
+      "popular_reading": "Bound photo album",
+      "plausible_readings": ["photo album", "image cover", "gallery book"],
+      "context_bias": "Use when the interface wants a bound album cover capped by a short strip above the image panel.",
+      "ambiguity_note": "Do not use for the stacked photo album when a second back sheet should sit behind the front panel.",
+      "selection_reason": "The screenshot replaces the rear sheet with a top binding strip above the picture panel."
+    },
+    {
+      "icon_id": "mingcute:pic",
+      "screenshot_file_name": "mingcute_pic_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/pic_line.svg",
+      "depicts_observation": "Picture frame with one sun dot above two mountain peaks inside",
+      "popular_reading": "Mountain picture frame",
+      "plausible_readings": ["image icon", "photo frame", "picture panel"],
+      "context_bias": "Use when the interface wants a picture frame showing two mountain peaks and one sun dot.",
+      "ambiguity_note": "Do not use for the simpler picture frame when only one main peak should dominate the image panel.",
+      "selection_reason": "The screenshot shows a framed landscape with a sun dot and two distinct mountain peaks."
+    },
+    {
+      "icon_id": "mingcute:pic_2",
+      "screenshot_file_name": "mingcute_pic_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/pic_2_line.svg",
+      "depicts_observation": "Picture frame with one sun dot above one main mountain peak inside",
+      "popular_reading": "Single peak picture frame",
+      "plausible_readings": ["image icon", "photo frame", "picture panel"],
+      "context_bias": "Use when the interface wants a simpler picture frame with one dominant mountain peak.",
+      "ambiguity_note": "Do not use for the two peak picture when the inner landscape should split into two mountains.",
+      "selection_reason": "The screenshot simplifies the landscape to one main mountain peak beneath the sun dot."
+    },
+    {
+      "icon_id": "mingcute:pin",
+      "screenshot_file_name": "mingcute_pin_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/pin_line.svg",
+      "depicts_observation": "Folded pushpin flag with one diagonal shaft crossing the lower left side",
+      "popular_reading": "Folded pushpin",
+      "plausible_readings": ["pin icon", "thumb pin", "attach pin"],
+      "context_bias": "Use when the interface wants a folded or flag like pushpin shape crossed by a diagonal shaft.",
+      "ambiguity_note": "Do not use for the bell pushpin when the top should widen into a bell cap above a straight stem.",
+      "selection_reason": "The screenshot shows a folded banner like pin shape pierced by one diagonal shaft."
+    },
+    {
+      "icon_id": "mingcute:pin_2",
+      "screenshot_file_name": "mingcute_pin_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/pin_2_line.svg",
+      "depicts_observation": "Bell pushpin cap above one straight centered stem below",
+      "popular_reading": "Bell pushpin",
+      "plausible_readings": ["pin icon", "thumb pin", "attach pin"],
+      "context_bias": "Use when the interface wants a classic pushpin with a bell cap and a straight stem below.",
+      "ambiguity_note": "Do not use for the folded pushpin when the shaft should cross diagonally through a flag shape.",
+      "selection_reason": "The screenshot turns the pin into a bell cap with one straight centered stem."
+    }
+  ]
+}

@@ -29,14 +29,44 @@ const STRUCTURAL_FIELDS = [
   'is_premium',
 ];
 
+function parseArgs(argv) {
+  const options = {};
+  for (let index = 0; index < argv.length; index += 1) {
+    const token = argv[index];
+    if (!token.startsWith('--')) continue;
+    const key = token.slice(2);
+    const next = argv[index + 1];
+    if (!next || next.startsWith('--')) {
+      options[key] = true;
+    } else {
+      options[key] = next;
+      index += 1;
+    }
+  }
+  return options;
+}
+
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
 }
 
-function main() {
-  const library = 'mingcute';
+function listScreenshotLibraries() {
+  const screenshotRoot = path.join(repoRoot, 'output', 'icon_screenshot');
+  if (!fs.existsSync(screenshotRoot)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(screenshotRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((library) => fs.existsSync(path.join(screenshotRoot, library, 'screenshot-mapping.json')))
+    .sort();
+}
+
+function verifyLibrary(library) {
   const snapshot = loadScreenshotQualityState({ repoRoot, library });
   const manualRedoDir = path.join(repoRoot, 'data', 'si-registry', 'manual-redo');
   const finalFiles = fs
@@ -45,8 +75,7 @@ function main() {
     .sort();
   const liveRecords = snapshot.liveRecords.filter((record) => record.source_library === library);
   const liveById = new Map(liveRecords.map((record) => [record.icon_id, record]));
-  const approvedRecords = readJson(path.join(repoRoot, 'data', 'si-registry', 'automation', library, 'approved-records.json'));
-  const approvedBySourceName = new Map(approvedRecords.map((record) => [record.source_name, record]));
+  const approvedRecords = snapshot.approvedRecords;
   const pendingPublicByIcon = new Map();
 
   for (const fileName of finalFiles) {
@@ -77,33 +106,58 @@ function main() {
         );
       }
     }
-
-    // Quality audit is intentionally a per-batch promotion gate. The repo-level
-    // verifier checks workflow invariants without re-blocking historical artifacts
-    // when the audit rules become stricter over time.
   }
 
-  for (const completed of snapshot.state.completed_live) {
+  for (const completed of snapshot.reviewState.completed_live) {
     assert(
       completed.reviewed_files.length > 0,
-      `${completed.icon_id} is completed_live without a matching artifact`
+      `${library}: ${completed.icon_id} is completed_live without a matching artifact`
     );
   }
 
   for (const record of approvedRecords) {
     if (record.source_library !== library) continue;
     for (const field of STRUCTURAL_FIELDS) {
-      assert(field in record, `${record.icon_id} missing structural field ${field}`);
+      assert(field in record, `${library}: ${record.icon_id} missing structural field ${field}`);
     }
   }
 
-  const untouched = new Set(snapshot.state.untouched.map((item) => item.icon_id));
-  for (const pending of snapshot.state.reviewed_pending) {
-    assert(!untouched.has(pending.icon_id), `${pending.icon_id} appears in both reviewed_pending and untouched`);
+  const untouched = new Set(snapshot.reviewState.untouched.map((item) => item.icon_id));
+  for (const pending of snapshot.reviewState.reviewed_pending) {
+    assert(!untouched.has(pending.icon_id), `${library}: ${pending.icon_id} appears in both reviewed_pending and untouched`);
   }
 
+  if (
+    snapshot.reviewState.reviewed_pending.length === 0 &&
+    snapshot.reviewState.untouched.length === 0
+  ) {
+    assert(
+      snapshot.completionState.unresolved_unmapped_count === 0,
+      `${library}: mapped review work is exhausted, but ${snapshot.completionState.unresolved_unmapped_count} unresolved unmapped concepts remain`
+    );
+    assert(
+      snapshot.completionState.move_to_next_library_allowed === true,
+      `${library}: library_complete should unlock the next library`
+    );
+  }
+
+  return {
+    library,
+    finalFileCount: finalFiles.length,
+  };
+}
+
+function main() {
+  const options = parseArgs(process.argv.slice(2));
+  const libraries = options.library ? [options.library] : listScreenshotLibraries();
+
+  assert(libraries.length > 0, 'No screenshot-mapped libraries found to verify.');
+
+  const results = libraries.map((library) => verifyLibrary(library));
+  const totalFinalFiles = results.reduce((sum, result) => sum + result.finalFileCount, 0);
+
   console.log(
-    `verify-screenshot-quality-workflow: ok (${finalFiles.length} recognized final-records files checked)`
+    `verify-screenshot-quality-workflow: ok (${libraries.length} libraries checked, ${totalFinalFiles} recognized final-records files checked)`
   );
 }
 

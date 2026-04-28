@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-069",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 069",
+  "review_goal": "Differentiate keyboard, lantern, and laptop variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:keyboard",
+      "screenshot_file_name": "mingcute_keyboard_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/keyboard_line.svg",
+      "depicts_observation": "Keyboard panel with six upper key dots above one long lower bar",
+      "popular_reading": "Key dot keyboard",
+      "plausible_readings": ["keyboard icon", "typing keys", "device keyboard"],
+      "context_bias": "Use when the interface wants a keyboard panel with dot keys above one long bottom bar.",
+      "ambiguity_note": "Do not use for the wired keyboard when the top should grow one cable curl and the keys become lines.",
+      "selection_reason": "The screenshot arranges six small key dots over one long bar inside the keyboard frame."
+    },
+    {
+      "icon_id": "mingcute:keyboard_2",
+      "screenshot_file_name": "mingcute_keyboard_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/keyboard_2_line.svg",
+      "depicts_observation": "Keyboard panel with two horizontal key bars and one cable curl above",
+      "popular_reading": "Wired keyboard",
+      "plausible_readings": ["keyboard icon", "typing keys", "device keyboard"],
+      "context_bias": "Use when the interface wants a keyboard panel with line keys and a small cable curl above it.",
+      "ambiguity_note": "Do not use for the key dot keyboard when the upper keys should remain dot shaped.",
+      "selection_reason": "The screenshot replaces the dot keys with bars and adds one short cable curl on the top edge."
+    },
+    {
+      "icon_id": "mingcute:lantern",
+      "screenshot_file_name": "mingcute_lantern_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/lantern_line.svg",
+      "depicts_observation": "Round lantern frame with one centered inner leaf and two lower tassel lines",
+      "popular_reading": "Round lantern",
+      "plausible_readings": ["lantern icon", "festival lantern", "hanging lantern"],
+      "context_bias": "Use when the interface wants a rounded lantern with an inner leaf form and tassels below.",
+      "ambiguity_note": "Do not use for the tall lantern when the body should stretch into vertical bars.",
+      "selection_reason": "The screenshot forms the lantern from a rounded outer frame around one centered inner leaf."
+    },
+    {
+      "icon_id": "mingcute:lantern_2",
+      "screenshot_file_name": "mingcute_lantern_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/lantern_2_line.svg",
+      "depicts_observation": "Tall lantern frame with three vertical bars and two lower tassel lines",
+      "popular_reading": "Tall lantern",
+      "plausible_readings": ["lantern icon", "festival lantern", "hanging lantern"],
+      "context_bias": "Use when the interface wants a vertical lantern built from tall inner bar segments.",
+      "ambiguity_note": "Do not use for the round lantern when the body should wrap around one leaf shaped center.",
+      "selection_reason": "The screenshot stretches the lantern into a tall body with parallel vertical bar segments."
+    },
+    {
+      "icon_id": "mingcute:laptop",
+      "screenshot_file_name": "mingcute_laptop_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/laptop_line.svg",
+      "depicts_observation": "Laptop screen frame above one straight base line platform",
+      "popular_reading": "Straight base laptop",
+      "plausible_readings": ["laptop icon", "computer screen", "device laptop"],
+      "context_bias": "Use when the interface wants a laptop with a flat base line under the open screen frame.",
+      "ambiguity_note": "Do not use for the curved base laptop when the lower platform should bow upward.",
+      "selection_reason": "The screenshot shows a simple open screen resting on one straight base line."
+    }
+  ]
+}

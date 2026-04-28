@@ -1,6 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+import {
+  loadAndValidateDeterministicManualRedoSelection,
+  resolveVisualPreview,
+  validateDeterministicDepictsObservation,
+} from '../lib/si-registry/manual-redo-determinism.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..');
@@ -40,6 +46,11 @@ function asUniqueStrings(values) {
   return [...new Set(values.filter((value) => typeof value === 'string' && value.trim().length > 0).map((value) => value.trim()))];
 }
 
+const LIST_FIELD_WORD_LIMITS = Object.freeze({
+  semantic_tags: 4,
+  synonyms: 5,
+});
+
 function requireNonEmptyString(value, fieldLabel, iconId) {
   if (typeof value === 'string' && value.trim().length > 0) {
     return value.trim();
@@ -47,20 +58,42 @@ function requireNonEmptyString(value, fieldLabel, iconId) {
   throw new Error(`Missing required ${fieldLabel} for ${iconId}`);
 }
 
-function resolveSvgLookup(visualSource, visualItems, iconId) {
-  if (visualSource.kind === 'purpose_visual_inputs') {
-    const visual = visualItems.find((entry) => (entry.icon_id || entry.candidate_icon_id) === iconId);
-    return visual?.source_svg || visual?.renderable_icon_payload?.svg || null;
-  }
-  throw new Error(`Unsupported visual source kind: ${visualSource.kind}`);
+function normalizeListValue(value) {
+  return String(value || '')
+    .trim()
+    .replace(/[.]+$/g, '')
+    .replace(/\s+/g, ' ');
 }
 
-const selection = await readJson(selectionPath);
+function toPublicListValue(value, field) {
+  const normalized = normalizeListValue(value);
+  if (!normalized) return null;
+  if (/[,;:!?]/.test(normalized)) return null;
+
+  const words = normalized.split(' ').filter(Boolean);
+  if (words.length > (LIST_FIELD_WORD_LIMITS[field] || 5)) return null;
+  if (words.length >= 4 && /\b(and|or)\b/i.test(normalized)) return null;
+
+  return normalized.toLowerCase();
+}
+
+function buildDeterministicPhraseList(values, field) {
+  const normalizedMap = new Map();
+
+  for (const value of values) {
+    const normalized = toPublicListValue(value, field);
+    if (!normalized) continue;
+    if (!normalizedMap.has(normalized)) {
+      normalizedMap.set(normalized, normalized);
+    }
+  }
+
+  return [...normalizedMap.values()].sort((left, right) => left.localeCompare(right));
+}
+
+const { selection, currentRecords, visualItems } =
+  await loadAndValidateDeterministicManualRedoSelection(selectionPath, repoRoot);
 const batchSlug = batchId.startsWith(`${selection.track_id}-`) ? batchId.slice(`${selection.track_id}-`.length) : batchId;
-const recordSourcePath = path.join(repoRoot, selection.record_source_path);
-const visualSourcePath = path.join(repoRoot, selection.visual_source.path);
-const currentRecords = await readJson(recordSourcePath);
-const visualItems = await readJson(visualSourcePath);
 
 const currentRecordById = new Map(currentRecords.map((record) => [record.icon_id, record]));
 
@@ -70,16 +103,17 @@ const reviewItems = selection.items.map((item, index) => {
     throw new Error(`Missing current record for ${item.icon_id}`);
   }
 
-  const svg = resolveSvgLookup(selection.visual_source, visualItems, item.icon_id);
-  if (!svg) {
-    throw new Error(`Missing SVG payload for ${item.icon_id}`);
+  const visualPreview = resolveVisualPreview(selection.visual_source, visualItems, item.icon_id, repoRoot, item);
+  if (!visualPreview) {
+    throw new Error(`Missing visual source for ${item.icon_id}`);
   }
 
-  const depictsObservation = requireNonEmptyString(item.depicts_observation, 'depicts_observation', item.icon_id);
+  const depictsObservation = validateDeterministicDepictsObservation(item.depicts_observation, item.icon_id, currentRecord);
   const popularReading = requireNonEmptyString(item.popular_reading, 'popular_reading', item.icon_id);
   const contextBias = requireNonEmptyString(item.context_bias, 'context_bias', item.icon_id);
   const ambiguityNote = requireNonEmptyString(item.ambiguity_note, 'ambiguity_note', item.icon_id);
   const selectionReason = requireNonEmptyString(item.selection_reason, 'selection_reason', item.icon_id);
+  const plausibleReadings = asUniqueStrings(item.plausible_readings || []);
 
   const proposedInterpretation = {
     icon_id: item.icon_id,
@@ -88,12 +122,12 @@ const reviewItems = selection.items.map((item, index) => {
     label: currentRecord.label,
     depicts_observation: depictsObservation,
     popular_reading: popularReading,
-    plausible_readings: item.plausible_readings,
+    plausible_readings: plausibleReadings,
     context_bias: contextBias,
     ambiguity_note: ambiguityNote,
     search_hints: [
       currentRecord.label,
-      ...(item.plausible_readings || []),
+      ...plausibleReadings,
       popularReading
     ],
     official_source_url: item.official_source_url,
@@ -109,23 +143,22 @@ const reviewItems = selection.items.map((item, index) => {
     depicts: depictsObservation,
     use_when: contextBias,
     avoid_when: ambiguityNote,
-    semantic_tags: asUniqueStrings([
+    semantic_tags: buildDeterministicPhraseList([
       ...(currentRecord.semantic_tags || []),
-      ...((item.plausible_readings || []).map((reading) => reading.replace(/[.]+$/g, ''))),
-      popularReading.replace(/[.]+$/g, '')
-    ]),
-    synonyms: asUniqueStrings([
+      ...plausibleReadings
+    ], 'semantic_tags'),
+    synonyms: buildDeterministicPhraseList([
       ...(currentRecord.synonyms || []),
       currentRecord.label,
-      ...((item.plausible_readings || []).map((reading) => reading.replace(/[.]+$/g, ''))),
-      popularReading.replace(/[.]+$/g, '')
-    ])
+      ...plausibleReadings
+    ], 'synonyms')
   };
 
   return {
     order: index + 1,
     icon_id: item.icon_id,
-    svg,
+    svg: visualPreview.kind === 'svg' ? visualPreview.svg : undefined,
+    screenshot_path: visualPreview.kind === 'image' ? visualPreview.relative_path : undefined,
     current_semantic_record: currentRecord,
     proposed_interpretation: proposedInterpretation,
     proposed_final_record: proposedFinalRecord
@@ -137,7 +170,7 @@ const outputJsonPath = path.join(
   'data',
   'si-registry',
   'manual-redo',
-  `${selection.track_id}-manual-redo-${batchSlug}-reviewed-records.json`
+  `${selection.track_id}-manual-redo-${batchSlug}-internal-review-reviewed-records.json`
 );
 const outputFinalJsonPath = path.join(
   repoRoot,
@@ -158,7 +191,7 @@ const outputHtmlPath = path.join(
   'docs',
   'superpowers',
   'plans',
-  `${today}-${selection.track_id}-manual-redo-${batchSlug}-review.html`
+  `${today}-${selection.track_id}-manual-redo-${batchSlug}-internal-review.html`
 );
 
 const summary = {
@@ -167,7 +200,10 @@ const summary = {
   track_label: selection.track_label,
   title: selection.title,
   review_goal: selection.review_goal,
+  review_policy_snapshot: selection.review_policy_snapshot,
+  internal_review_only: true,
   process_rule: 'Each icon must include depicts_observation (literal visual read) before final record generation.',
+  final_schema_rule: 'Final semantic_tags and synonyms are lowercased, de-duplicated, sorted, and filtered to short phrase values only.',
   item_count: reviewItems.length,
   icon_ids: reviewItems.map((item) => item.icon_id),
   output_json_path: path.relative(repoRoot, outputJsonPath).replaceAll(path.sep, '/'),
@@ -179,6 +215,9 @@ const cardsHtml = reviewItems.map((item) => {
   const currentJson = JSON.stringify(item.current_semantic_record, null, 2);
   const proposedJson = JSON.stringify(item.proposed_interpretation, null, 2);
   const finalJson = JSON.stringify(item.proposed_final_record, null, 2);
+  const visualHtml = item.screenshot_path
+    ? `<img src="${escapeHtml(pathToFileURL(path.join(repoRoot, item.screenshot_path)).href)}" alt="${escapeHtml(item.icon_id)} preview">`
+    : item.svg;
   const plausibleList = item.proposed_interpretation.plausible_readings.map((reading) => `<li>${escapeHtml(reading)}</li>`).join('');
   const publicReference = item.proposed_interpretation.public_reference_url
     ? `<li><strong>Public reference:</strong> <a href="${escapeHtml(item.proposed_interpretation.public_reference_url)}">${escapeHtml(item.proposed_interpretation.public_reference_url)}</a></li>`
@@ -188,7 +227,7 @@ const cardsHtml = reviewItems.map((item) => {
     <article class="card" id="${escapeHtml(item.icon_id)}">
       <div class="top">
         <div class="icon-panel">
-          <div class="icon-wrap">${item.svg}</div>
+          <div class="icon-wrap">${visualHtml}</div>
         </div>
         <div class="reading-panel">
           <div class="order">Item ${item.order}</div>
@@ -333,6 +372,13 @@ const html = `<!doctype html>
       width: 108px;
       height: 108px;
     }
+    .icon-wrap img {
+      max-width: 108px;
+      max-height: 108px;
+      width: auto;
+      height: auto;
+      display: block;
+    }
     .reading-panel {
       padding: 18px;
     }
@@ -388,7 +434,7 @@ const html = `<!doctype html>
       <h1>${escapeHtml(selection.title)}</h1>
       <p>${escapeHtml(selection.review_goal)}</p>
       <div class="summary">
-        <div class="summary-box"><strong>${reviewItems.length}</strong>icons in this batch</div>
+        <div class="summary-box"><strong>${reviewItems.length}</strong>icons in this policy-sized batch</div>
         <div class="summary-box"><strong>${escapeHtml(selection.track_label)}</strong>restart stage</div>
         <div class="summary-box"><strong>3 views</strong>current, rich review, and lean final</div>
         <div class="summary-box"><strong>Paused</strong>after this batch for your review</div>
@@ -404,4 +450,6 @@ await writeJson(outputFinalJsonPath, reviewItems.map((item) => item.proposed_fin
 await writeJson(outputSummaryPath, summary);
 await writeText(outputHtmlPath, html);
 
-console.log(`build-manual-redo-batch: wrote ${path.relative(repoRoot, outputJsonPath)}, ${path.relative(repoRoot, outputSummaryPath)}, ${path.relative(repoRoot, outputHtmlPath)}`);
+console.log(
+  `build-manual-redo-batch: wrote ${path.relative(repoRoot, outputJsonPath)}, ${path.relative(repoRoot, outputSummaryPath)}, ${path.relative(repoRoot, outputHtmlPath)}`
+);

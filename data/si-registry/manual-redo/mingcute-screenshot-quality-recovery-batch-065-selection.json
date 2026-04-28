@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-065",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 065",
+  "review_goal": "Differentiate hat, heartbeat, and hemisphere variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:hat",
+      "screenshot_file_name": "mingcute_hat_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hat_line.svg",
+      "depicts_observation": "Fedora hat silhouette with one centered crown crease above a wide brim",
+      "popular_reading": "Fedora hat",
+      "plausible_readings": ["hat icon", "fashion hat", "brim hat"],
+      "context_bias": "Use when the interface wants a brimmed fedora style hat with a centered crown shape.",
+      "ambiguity_note": "Do not use for the baseball cap when the brim should project forward from one side.",
+      "selection_reason": "The screenshot shows a full brim hat with a centered crown and no side visor."
+    },
+    {
+      "icon_id": "mingcute:hat_2",
+      "screenshot_file_name": "mingcute_hat_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hat_2_line.svg",
+      "depicts_observation": "Baseball cap silhouette with one visor extending left and one top button",
+      "popular_reading": "Baseball cap",
+      "plausible_readings": ["hat icon", "cap icon", "sports cap"],
+      "context_bias": "Use when the interface wants a baseball cap with a side visor and panel seams.",
+      "ambiguity_note": "Do not use for the fedora hat when the brim should wrap evenly around the base.",
+      "selection_reason": "The screenshot angles the hat into a cap with a left visor and one button on top."
+    },
+    {
+      "icon_id": "mingcute:heartbeat",
+      "screenshot_file_name": "mingcute_heartbeat_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/heartbeat_line.svg",
+      "depicts_observation": "Heartbeat line trace with one tall peak centered between flat segments",
+      "popular_reading": "Heartbeat trace",
+      "plausible_readings": ["pulse line", "heart monitor", "ecg trace"],
+      "context_bias": "Use when the interface wants a raw heartbeat trace without any enclosing heart shape.",
+      "ambiguity_note": "Do not use for the heart outline pulse when the trace should run inside a heart border.",
+      "selection_reason": "The screenshot is only the pulse trace with no surrounding symbol around it."
+    },
+    {
+      "icon_id": "mingcute:heartbeat_2",
+      "screenshot_file_name": "mingcute_heartbeat_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/heartbeat_2_line.svg",
+      "depicts_observation": "Heart outline with one heartbeat line trace crossing the center",
+      "popular_reading": "Heart pulse icon",
+      "plausible_readings": ["pulse heart", "heartbeat icon", "health heart"],
+      "context_bias": "Use when the interface wants a heartbeat trace enclosed inside a heart outline.",
+      "ambiguity_note": "Do not use for the plain heartbeat line when no heart border should appear.",
+      "selection_reason": "The screenshot wraps the pulse trace inside a clear heart outline."
+    },
+    {
+      "icon_id": "mingcute:hemisphere",
+      "screenshot_file_name": "mingcute_hemisphere_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/shape/hemisphere_line.svg",
+      "depicts_observation": "Half sphere bowl shape with one oval rim above a lower curved shell",
+      "popular_reading": "Bowl hemisphere",
+      "plausible_readings": ["hemisphere shape", "half sphere", "bowl form"],
+      "context_bias": "Use when the interface wants a horizontal half sphere or bowl viewed from the front.",
+      "ambiguity_note": "Do not use for the side hemisphere when the half sphere should stand upright on its side.",
+      "selection_reason": "The screenshot shows a bowl like half sphere with the rim ellipse above the lower shell."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-073",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 073",
+  "review_goal": "Differentiate news, notebook, package, and paint variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:news_2",
+      "screenshot_file_name": "mingcute_news_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/news_2_line.svg",
+      "depicts_observation": "Stacked page sheets with two centered text bars on the front sheet",
+      "popular_reading": "Stacked news sheets",
+      "plausible_readings": ["news icon", "paper stack", "article pages"],
+      "context_bias": "Use when the interface wants multiple news sheets stacked behind one front page.",
+      "ambiguity_note": "Do not use for the single front page when only one sheet and one side spine should appear.",
+      "selection_reason": "The screenshot adds a second page behind the front sheet while keeping the two centered bars."
+    },
+    {
+      "icon_id": "mingcute:notebook",
+      "screenshot_file_name": "mingcute_notebook_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/notebook_line.svg",
+      "depicts_observation": "Closed notebook cover with one left spine bar inside a rounded rectangle",
+      "popular_reading": "Closed notebook",
+      "plausible_readings": ["notebook icon", "book cover", "journal icon"],
+      "context_bias": "Use when the interface wants a closed notebook cover with a narrow spine bar on the left.",
+      "ambiguity_note": "Do not use for the bookmarked notebook when a ribbon tab should hang from the top center.",
+      "selection_reason": "The screenshot shows a simple closed notebook cover with one vertical spine bar."
+    },
+    {
+      "icon_id": "mingcute:notebook_2",
+      "screenshot_file_name": "mingcute_notebook_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/notebook_2_line.svg",
+      "depicts_observation": "Closed notebook cover with one centered ribbon tab hanging from the top",
+      "popular_reading": "Bookmarked notebook",
+      "plausible_readings": ["notebook icon", "book cover", "journal icon"],
+      "context_bias": "Use when the interface wants a closed notebook marked by a ribbon tab hanging inside the cover.",
+      "ambiguity_note": "Do not use for the plain notebook when only the left spine bar should remain visible.",
+      "selection_reason": "The screenshot replaces the spine emphasis with a ribbon tab centered near the top."
+    },
+    {
+      "icon_id": "mingcute:package",
+      "screenshot_file_name": "mingcute_package_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/package_line.svg",
+      "depicts_observation": "Open box frame with one lifted top flap and one centered front dot",
+      "popular_reading": "Open package box",
+      "plausible_readings": ["package icon", "parcel box", "shipping box"],
+      "context_bias": "Use when the interface wants an open parcel box with one top flap lifted above the front face.",
+      "ambiguity_note": "Do not use for the closed cube package when all outer edges should join into one sealed box.",
+      "selection_reason": "The screenshot opens the box top and shows one small front dot on the lower face."
+    },
+    {
+      "icon_id": "mingcute:package_2",
+      "screenshot_file_name": "mingcute_package_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/package_2_line.svg",
+      "depicts_observation": "Closed parcel cube with one top seam and one right edge panel",
+      "popular_reading": "Closed parcel cube",
+      "plausible_readings": ["package icon", "parcel box", "shipping cube"],
+      "context_bias": "Use when the interface wants a sealed package cube shown with top seam lines and a right side panel.",
+      "ambiguity_note": "Do not use for the open package when a flap should lift upward from the top edge.",
+      "selection_reason": "The screenshot closes the package into a cube with visible top seam lines and one side panel."
+    }
+  ]
+}

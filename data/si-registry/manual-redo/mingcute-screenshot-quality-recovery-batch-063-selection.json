@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-063",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 063",
+  "review_goal": "Differentiate github, globe, and grok variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:github",
+      "screenshot_file_name": "mingcute_github_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/github_line.svg",
+      "depicts_observation": "Cat head silhouette with two ears above two narrow lower tail lines",
+      "popular_reading": "Github cat silhouette",
+      "plausible_readings": ["cat logo", "github mark", "octocat icon"],
+      "context_bias": "Use when the interface wants the standalone cat silhouette without any outer ring around it.",
+      "ambiguity_note": "Do not use for the circled github mark when the cat should sit inside a border.",
+      "selection_reason": "The screenshot shows the cat face and tail lines alone with no enclosing circle."
+    },
+    {
+      "icon_id": "mingcute:github_2",
+      "screenshot_file_name": "mingcute_github_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/github_2_line.svg",
+      "depicts_observation": "Cat head silhouette centered inside one circular border ring",
+      "popular_reading": "Circled github mark",
+      "plausible_readings": ["cat logo", "github mark", "octocat icon"],
+      "context_bias": "Use when the interface wants the cat silhouette enclosed inside a full circular border.",
+      "ambiguity_note": "Do not use for the plain github silhouette when no outer ring should appear.",
+      "selection_reason": "The screenshot wraps the same cat silhouette inside a clean circle frame."
+    },
+    {
+      "icon_id": "mingcute:globe",
+      "screenshot_file_name": "mingcute_globe_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/globe_line.svg",
+      "depicts_observation": "Desk globe ring on a stand with one right arc around a centered circle",
+      "popular_reading": "Desk globe",
+      "plausible_readings": ["globe icon", "school globe", "world stand"],
+      "context_bias": "Use when the interface wants a classroom desk globe sitting on a small stand base.",
+      "ambiguity_note": "Do not use for the world globe grid when latitude and longitude lines should cross inside the sphere.",
+      "selection_reason": "The screenshot shows a globe on a stand with one sweeping right arc and no inner map grid."
+    },
+    {
+      "icon_id": "mingcute:globe_2",
+      "screenshot_file_name": "mingcute_globe_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/globe_2_line.svg",
+      "depicts_observation": "World globe ring with one vertical curve and two crossing latitude arcs inside",
+      "popular_reading": "World globe grid",
+      "plausible_readings": ["globe icon", "earth grid", "world sphere"],
+      "context_bias": "Use when the interface wants a world globe with inner latitude and longitude curves.",
+      "ambiguity_note": "Do not use for the desk globe when the lower stand and side support arc should remain visible.",
+      "selection_reason": "The screenshot fills the globe with crossing inner curves and removes the desk stand."
+    },
+    {
+      "icon_id": "mingcute:grok",
+      "screenshot_file_name": "mingcute_grok_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/grok_line.svg",
+      "depicts_observation": "Square outline frame with one diagonal slash line rising inside",
+      "popular_reading": "Square slash mark",
+      "plausible_readings": ["logo mark", "grok icon", "slash square"],
+      "context_bias": "Use when the interface wants a square frame containing a simple diagonal slash line.",
+      "ambiguity_note": "Do not use for the circular grok mark when the outer shape should curve into a ring.",
+      "selection_reason": "The screenshot is built from a square border with a single slash line across the inside."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-064",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 064",
+  "review_goal": "Differentiate grok, group, and hair variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:grok_2",
+      "screenshot_file_name": "mingcute_grok_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/grok_2_line.svg",
+      "depicts_observation": "Circular swirl ring with one diagonal slash line cutting across the center",
+      "popular_reading": "Circular grok mark",
+      "plausible_readings": ["logo mark", "grok icon", "slash ring"],
+      "context_bias": "Use when the interface wants a curved circular mark cut by a diagonal slash line.",
+      "ambiguity_note": "Do not use for the square grok mark when the outer border should stay box shaped.",
+      "selection_reason": "The screenshot turns the grok symbol into a broken ring shape crossed by one slash."
+    },
+    {
+      "icon_id": "mingcute:group_2",
+      "screenshot_file_name": "mingcute_group_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/user/group_2_line.svg",
+      "depicts_observation": "Two person busts with one large head left and one smaller head right",
+      "popular_reading": "Two person group",
+      "plausible_readings": ["group icon", "people icon", "team pair"],
+      "context_bias": "Use when the interface wants a two person group with one main bust and one secondary bust.",
+      "ambiguity_note": "Do not use for the three person group when a third head should appear above the center.",
+      "selection_reason": "The screenshot shows two heads and two bust shapes with the larger person on the left."
+    },
+    {
+      "icon_id": "mingcute:group_3",
+      "screenshot_file_name": "mingcute_group_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/user/group_3_line.svg",
+      "depicts_observation": "Three person busts with one centered head above two smaller side heads",
+      "popular_reading": "Three person group",
+      "plausible_readings": ["group icon", "people icon", "team trio"],
+      "context_bias": "Use when the interface wants a three person group with one centered main figure and two side figures.",
+      "ambiguity_note": "Do not use for the two person group when only one side companion should appear.",
+      "selection_reason": "The screenshot adds a third centered head above the left and right companion heads."
+    },
+    {
+      "icon_id": "mingcute:hair",
+      "screenshot_file_name": "mingcute_hair_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hair_line.svg",
+      "depicts_observation": "Rounded hair silhouette with one centered face opening and two lower locks",
+      "popular_reading": "Hair silhouette",
+      "plausible_readings": ["hair icon", "hairstyle icon", "head hair"],
+      "context_bias": "Use when the interface wants a broad hairstyle framing a centered face opening.",
+      "ambiguity_note": "Do not use for the single hair lock icon when the shape should not frame a full face opening.",
+      "selection_reason": "The screenshot outlines a full hairstyle wrapping around a centered face space."
+    },
+    {
+      "icon_id": "mingcute:hair_2",
+      "screenshot_file_name": "mingcute_hair_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hair_2_line.svg",
+      "depicts_observation": "Single curved hair lock with one inner loop centered inside the outline",
+      "popular_reading": "Hair lock",
+      "plausible_readings": ["hair icon", "strand icon", "hairstyle lock"],
+      "context_bias": "Use when the interface wants a single hair strand or lock instead of a full hairstyle silhouette.",
+      "ambiguity_note": "Do not use for the full hair silhouette when the icon should frame a face opening.",
+      "selection_reason": "The screenshot reduces the hairstyle to one curved lock with a looped inner opening."
+    }
+  ]
+}

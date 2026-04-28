@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-066",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 066",
+  "review_goal": "Differentiate hemisphere, hexagons, and history variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:hemisphere_2",
+      "screenshot_file_name": "mingcute_hemisphere_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/shape/hemisphere_2_line.svg",
+      "depicts_observation": "Side hemisphere shell with one vertical inner curve centered inside the form",
+      "popular_reading": "Side hemisphere",
+      "plausible_readings": ["hemisphere shape", "half sphere", "side shell"],
+      "context_bias": "Use when the interface wants a vertical half sphere seen from the side with one inner dividing curve.",
+      "ambiguity_note": "Do not use for the bowl hemisphere when the opening rim should lie across the top.",
+      "selection_reason": "The screenshot turns the hemisphere upright and marks the inner curve down the middle."
+    },
+    {
+      "icon_id": "mingcute:hexagons",
+      "screenshot_file_name": "mingcute_hexagons_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/hexagons_line.svg",
+      "depicts_observation": "Three separate hexagon cells with one top cell above two lower cells",
+      "popular_reading": "Three hexagon cells",
+      "plausible_readings": ["hexagon grid", "honeycomb cells", "hex cells"],
+      "context_bias": "Use when the interface wants three detached hexagon cells arranged in a triangle.",
+      "ambiguity_note": "Do not use for the joined hexagon cluster when the cells should share borders.",
+      "selection_reason": "The screenshot spaces the hexagons apart with one above and two below."
+    },
+    {
+      "icon_id": "mingcute:hexagons_2",
+      "screenshot_file_name": "mingcute_hexagons_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/hexagons_2_line.svg",
+      "depicts_observation": "Three joined hexagon cells with one top cell touching two lower cells",
+      "popular_reading": "Joined hexagon cluster",
+      "plausible_readings": ["hexagon grid", "honeycomb cluster", "hex cells"],
+      "context_bias": "Use when the interface wants a honeycomb style cluster where the hexagons share borders.",
+      "ambiguity_note": "Do not use for the separated hexagon cells when visible gaps should remain between the shapes.",
+      "selection_reason": "The screenshot connects the three hexagons into one clustered honeycomb shape."
+    },
+    {
+      "icon_id": "mingcute:history",
+      "screenshot_file_name": "mingcute_history_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/history_line.svg",
+      "depicts_observation": "Clock ring with one curved outer arrow and one centered hand inside",
+      "popular_reading": "History clock",
+      "plausible_readings": ["history icon", "clock arrow", "recent time"],
+      "context_bias": "Use when the interface wants history shown as a clock face with one outer return arrow.",
+      "ambiguity_note": "Do not use for the rewind clock when the arrow should sit at the upper left and the inner ticks should show.",
+      "selection_reason": "The screenshot combines a clock hand with one outer circular arrow around the ring."
+    },
+    {
+      "icon_id": "mingcute:history_2",
+      "screenshot_file_name": "mingcute_history_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/history_2_line.svg",
+      "depicts_observation": "Open clock ring with one upper left arrow and three inner tick marks",
+      "popular_reading": "Rewind clock",
+      "plausible_readings": ["history icon", "clock arrow", "recent time"],
+      "context_bias": "Use when the interface wants history shown as an open clock ring with a top left arrow.",
+      "ambiguity_note": "Do not use for the closed history clock when a centered hand should appear inside the ring.",
+      "selection_reason": "The screenshot opens the ring and adds an arrowhead at the upper left plus three inner ticks."
+    }
+  ]
+}

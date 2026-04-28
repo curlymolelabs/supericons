@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-070",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 070",
+  "review_goal": "Differentiate laptop, list check, and magic variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:laptop_2",
+      "screenshot_file_name": "mingcute_laptop_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/laptop_2_line.svg",
+      "depicts_observation": "Laptop screen frame above one curved lower base platform",
+      "popular_reading": "Curved base laptop",
+      "plausible_readings": ["laptop icon", "computer screen", "device laptop"],
+      "context_bias": "Use when the interface wants a laptop with a curved lower base under the open screen frame.",
+      "ambiguity_note": "Do not use for the straight base laptop when the platform should stay flat and level.",
+      "selection_reason": "The screenshot bows the lower laptop base into a curved platform under the screen."
+    },
+    {
+      "icon_id": "mingcute:list_check_2",
+      "screenshot_file_name": "mingcute_list_check_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/list_check_2_line.svg",
+      "depicts_observation": "Three left check marks aligned beside three horizontal list bars",
+      "popular_reading": "Checked list bars",
+      "plausible_readings": ["checklist icon", "task list", "checked rows"],
+      "context_bias": "Use when the interface wants a checklist with check marks aligned to the left of text bars.",
+      "ambiguity_note": "Do not use for the square list checks when each row should begin with a square box.",
+      "selection_reason": "The screenshot pairs three check marks on the left with three matching horizontal bars."
+    },
+    {
+      "icon_id": "mingcute:list_check_3",
+      "screenshot_file_name": "mingcute_list_check_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/list_check_3_line.svg",
+      "depicts_observation": "Two square check boxes aligned left beside four horizontal list bars",
+      "popular_reading": "Square checklist rows",
+      "plausible_readings": ["checklist icon", "task list", "checked rows"],
+      "context_bias": "Use when the interface wants a checklist using square boxes beside horizontal list bars.",
+      "ambiguity_note": "Do not use for the three check mark list when the left side should show check marks instead of boxes.",
+      "selection_reason": "The screenshot swaps the check marks for square boxes and varies the bar lengths on the right."
+    },
+    {
+      "icon_id": "mingcute:magic_1",
+      "screenshot_file_name": "mingcute_magic_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/magic_1_line.svg",
+      "depicts_observation": "Star outline with one diagonal wand line crossing the lower right edge",
+      "popular_reading": "Star wand",
+      "plausible_readings": ["magic icon", "wand star", "spell mark"],
+      "context_bias": "Use when the interface wants a magic star outline crossed by one wand line.",
+      "ambiguity_note": "Do not use for the spark wand when the main star shape should break into short sparkle rays.",
+      "selection_reason": "The screenshot shows a large star outline with one wand line leaning across the lower right."
+    },
+    {
+      "icon_id": "mingcute:magic_2",
+      "screenshot_file_name": "mingcute_magic_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/magic_2_line.svg",
+      "depicts_observation": "Sparkle burst with short rays above one diagonal wand line",
+      "popular_reading": "Spark wand",
+      "plausible_readings": ["magic icon", "wand sparkle", "spell mark"],
+      "context_bias": "Use when the interface wants a wand line with a burst of short sparkle rays at the top.",
+      "ambiguity_note": "Do not use for the star wand when the sparkle should remain a burst rather than a full star outline.",
+      "selection_reason": "The screenshot replaces the star outline with short sparkle rays radiating above the wand."
+    }
+  ]
+}
