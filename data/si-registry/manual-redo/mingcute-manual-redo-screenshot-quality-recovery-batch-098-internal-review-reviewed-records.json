@@ -1,0 +1,423 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:watch",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_watch_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:watch",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "watch",
+      "label": "Watch",
+      "purpose": "Show watch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ],
+      "use_when": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+      "avoid_when": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "Round watch face inside one tall body with straight strap blocks attached above and below",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:watch",
+      "source_library": "mingcute",
+      "source_name": "watch",
+      "label": "Watch",
+      "depicts_observation": "Round watch face inside one tall body with straight strap blocks attached above and below",
+      "popular_reading": "Tall body wristwatch",
+      "plausible_readings": [
+        "watch icon",
+        "wristwatch",
+        "timepiece"
+      ],
+      "context_bias": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+      "ambiguity_note": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
+      "search_hints": [
+        "Watch",
+        "watch icon",
+        "wristwatch",
+        "timepiece",
+        "Tall body wristwatch"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/watch_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot encloses the watch face inside one tall body instead of showing separate top and bottom tabs."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:watch",
+      "source_library": "mingcute",
+      "source_name": "watch",
+      "label": "Watch",
+      "depicts": "Round watch face inside one tall body with straight strap blocks attached above and below",
+      "use_when": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+      "avoid_when": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
+      "semantic_tags": [
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ],
+      "synonyms": [
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:watch_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_watch_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:watch_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "watch_2",
+      "label": "Watch",
+      "purpose": "Show watch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "2",
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ],
+      "use_when": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+      "avoid_when": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "2",
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:watch_2",
+      "source_library": "mingcute",
+      "source_name": "watch_2",
+      "label": "Watch",
+      "depicts_observation": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
+      "popular_reading": "Tabbed wristwatch",
+      "plausible_readings": [
+        "watch icon",
+        "wristwatch",
+        "timepiece"
+      ],
+      "context_bias": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+      "ambiguity_note": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
+      "search_hints": [
+        "Watch",
+        "watch icon",
+        "wristwatch",
+        "timepiece",
+        "Tabbed wristwatch"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/watch_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot separates the tabs from the face more clearly than the tall body watch variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:watch_2",
+      "source_library": "mingcute",
+      "source_name": "watch_2",
+      "label": "Watch",
+      "depicts": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
+      "use_when": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+      "avoid_when": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
+      "semantic_tags": [
+        "2",
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ],
+      "synonyms": [
+        "2",
+        "timepiece",
+        "watch",
+        "watch icon",
+        "wristwatch"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:wineglass",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_wineglass_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:wineglass",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "wineglass",
+      "label": "Wineglass",
+      "purpose": "Show wineglass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "drink stemware",
+        "goblet glass",
+        "wineglass",
+        "wineglass icon"
+      ],
+      "use_when": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+      "avoid_when": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "Wine glass with one rounded bowl on a thin stem above one short base line",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "drink stemware",
+        "goblet glass",
+        "wineglass",
+        "wineglass icon"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:wineglass",
+      "source_library": "mingcute",
+      "source_name": "wineglass",
+      "label": "Wineglass",
+      "depicts_observation": "Wine glass with one rounded bowl on a thin stem above one short base line",
+      "popular_reading": "Rounded wine glass",
+      "plausible_readings": [
+        "wineglass icon",
+        "goblet glass",
+        "drink stemware"
+      ],
+      "context_bias": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+      "ambiguity_note": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
+      "search_hints": [
+        "Wineglass",
+        "wineglass icon",
+        "goblet glass",
+        "drink stemware",
+        "Rounded wine glass"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/food/wineglass_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses a rounded bowl instead of the sharper V shaped cocktail glass."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:wineglass",
+      "source_library": "mingcute",
+      "source_name": "wineglass",
+      "label": "Wineglass",
+      "depicts": "Wine glass with one rounded bowl on a thin stem above one short base line",
+      "use_when": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+      "avoid_when": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
+      "semantic_tags": [
+        "drink stemware",
+        "goblet glass",
+        "wineglass",
+        "wineglass icon"
+      ],
+      "synonyms": [
+        "drink stemware",
+        "goblet glass",
+        "wineglass",
+        "wineglass icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:world",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_world_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:world",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "world",
+      "label": "World",
+      "purpose": "Show world as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "world"
+      ],
+      "use_when": "Use when the interface refers directly to world as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing world.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "world"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:world",
+      "source_library": "mingcute",
+      "source_name": "world",
+      "label": "World",
+      "depicts_observation": "Round world circle crossed by three horizontal latitude bands from top to bottom",
+      "popular_reading": "Striped world globe",
+      "plausible_readings": [
+        "world icon",
+        "globe bands",
+        "planet mark"
+      ],
+      "context_bias": "Use when the interface wants the world to read as a globe built from horizontal latitude style bands.",
+      "ambiguity_note": "Do not use for the world map globe when continent shapes should appear inside the circle.",
+      "search_hints": [
+        "World",
+        "world icon",
+        "globe bands",
+        "planet mark",
+        "Striped world globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/world_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot divides the globe into horizontal bands instead of drawing continent shapes."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:world",
+      "source_library": "mingcute",
+      "source_name": "world",
+      "label": "World",
+      "depicts": "Round world circle crossed by three horizontal latitude bands from top to bottom",
+      "use_when": "Use when the interface wants the world to read as a globe built from horizontal latitude style bands.",
+      "avoid_when": "Do not use for the world map globe when continent shapes should appear inside the circle.",
+      "semantic_tags": [
+        "globe bands",
+        "planet mark",
+        "world",
+        "world icon"
+      ],
+      "synonyms": [
+        "globe bands",
+        "planet mark",
+        "world",
+        "world icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:world_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_world_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:world_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "world_2",
+      "label": "World",
+      "purpose": "Show world as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "world",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to world as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing world.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "world",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:world_2",
+      "source_library": "mingcute",
+      "source_name": "world_2",
+      "label": "World",
+      "depicts_observation": "Round world circle containing two continent shapes and one small island shape inside",
+      "popular_reading": "World map globe",
+      "plausible_readings": [
+        "world icon",
+        "earth globe",
+        "planet map"
+      ],
+      "context_bias": "Use when the interface wants the world to read as a globe with continent land shapes inside the circle.",
+      "ambiguity_note": "Do not use for the striped globe when the planet should not reduce to horizontal latitude bands alone.",
+      "search_hints": [
+        "World",
+        "world icon",
+        "earth globe",
+        "planet map",
+        "World map globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/world_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot fills the globe with land shapes instead of only horizontal bands."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:world_2",
+      "source_library": "mingcute",
+      "source_name": "world_2",
+      "label": "World",
+      "depicts": "Round world circle containing two continent shapes and one small island shape inside",
+      "use_when": "Use when the interface wants the world to read as a globe with continent land shapes inside the circle.",
+      "avoid_when": "Do not use for the striped globe when the planet should not reduce to horizontal latitude bands alone.",
+      "semantic_tags": [
+        "2",
+        "earth globe",
+        "planet map",
+        "world",
+        "world icon"
+      ],
+      "synonyms": [
+        "2",
+        "earth globe",
+        "planet map",
+        "world",
+        "world icon"
+      ]
+    }
+  }
+]

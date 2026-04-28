@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-089",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 089",
+  "review_goal": "Differentiate suitcase, sun, and t shirt variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:suitcase_2",
+      "screenshot_file_name": "mingcute_suitcase_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/suitcase_2_line.svg",
+      "depicts_observation": "Briefcase body with one top handle and two horizontal bands across the front panel",
+      "popular_reading": "Briefcase suitcase",
+      "plausible_readings": ["suitcase icon", "briefcase", "travel case"],
+      "context_bias": "Use when the interface wants the luggage to feel flatter and more like a briefcase with front bands.",
+      "ambiguity_note": "Do not use for the taller suitcase when the case should not be framed by two vertical side rails.",
+      "selection_reason": "The screenshot is wider and flatter with horizontal front bands instead of the upright travel case proportions."
+    },
+    {
+      "icon_id": "mingcute:sun",
+      "screenshot_file_name": "mingcute_sun_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/sun_line.svg",
+      "depicts_observation": "Round sun circle with short rays spaced evenly around the outer rim",
+      "popular_reading": "Classic sun with rays",
+      "plausible_readings": ["sun icon", "daylight symbol", "weather sun"],
+      "context_bias": "Use when the interface wants the standard sun symbol with a central disk and evenly spaced rays.",
+      "ambiguity_note": "Do not use for the wrapped sun when a sweeping ring line should cut through the disk from the left side.",
+      "selection_reason": "The screenshot uses the classic disk and ray pattern without the extra wrapping line of the second sun variant."
+    },
+    {
+      "icon_id": "mingcute:sun_2",
+      "screenshot_file_name": "mingcute_sun_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/sun_2_line.svg",
+      "depicts_observation": "Round sun disk crossed by one sweeping ring line that wraps through the left side",
+      "popular_reading": "Wrapped sun disk",
+      "plausible_readings": ["sun icon", "orbital sun", "weather sun"],
+      "context_bias": "Use when the interface wants the sun to feel more stylized with a ring line sweeping through the disk.",
+      "ambiguity_note": "Do not use for the classic sun when the icon should only rely on short rays around a plain center disk.",
+      "selection_reason": "The screenshot adds the wrapping ring line and drops the simple ray pattern of the first sun variant."
+    },
+    {
+      "icon_id": "mingcute:t_shirt",
+      "screenshot_file_name": "mingcute_t_shirt_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/t_shirt_line.svg",
+      "depicts_observation": "T shirt silhouette with short sleeves and side panels and one rounded collar opening",
+      "popular_reading": "Paneled t shirt",
+      "plausible_readings": ["t shirt icon", "shirt silhouette", "clothing top"],
+      "context_bias": "Use when the interface wants a fuller shirt body with extra side panel detail built into the silhouette.",
+      "ambiguity_note": "Do not use for the plainer tee when the shirt should not emphasize extra side panels or outer seam structure.",
+      "selection_reason": "The screenshot shows a more structured shirt body with side panel detail instead of the plainer tee outline."
+    },
+    {
+      "icon_id": "mingcute:t_shirt_2",
+      "screenshot_file_name": "mingcute_t_shirt_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/t_shirt_2_line.svg",
+      "depicts_observation": "Plain t shirt silhouette with short sleeves and one simple crew neck opening",
+      "popular_reading": "Plain tee shirt",
+      "plausible_readings": ["t shirt icon", "shirt silhouette", "clothing top"],
+      "context_bias": "Use when the interface wants the simplest tee outline without extra side panel structure or shaping.",
+      "ambiguity_note": "Do not use for the paneled shirt when the body should show more structure around the sides and shoulders.",
+      "selection_reason": "The screenshot keeps the tee simpler and more uniform than the more structured paneled t shirt variant."
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:video_camera",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_video_camera_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:video_camera",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "video_camera",
+      "label": "Video Camera",
+      "purpose": "Show video camera as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "video",
+        "camera"
+      ],
+      "use_when": "Use when the interface refers directly to video camera as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing video camera.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "video",
+        "camera"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:video_camera",
+      "source_library": "mingcute",
+      "source_name": "video_camera",
+      "label": "Video Camera",
+      "depicts_observation": "Video camera body with two top circles and one side lens block on the right",
+      "popular_reading": "Camera with twin reels",
+      "plausible_readings": [
+        "video camera icon",
+        "film camera",
+        "recording device"
+      ],
+      "context_bias": "Use when the interface wants the camera to feel like a classic film body with two circles on top.",
+      "ambiguity_note": "Do not use for the simpler video camera when the top of the body should stay flat without twin circles.",
+      "search_hints": [
+        "Video Camera",
+        "video camera icon",
+        "film camera",
+        "recording device",
+        "Camera with twin reels"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/video_camera_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds the two top circles that make it read like a classic twin reel camera."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:video_camera",
+      "source_library": "mingcute",
+      "source_name": "video_camera",
+      "label": "Video Camera",
+      "depicts": "Video camera body with two top circles and one side lens block on the right",
+      "use_when": "Use when the interface wants the camera to feel like a classic film body with two circles on top.",
+      "avoid_when": "Do not use for the simpler video camera when the top of the body should stay flat without twin circles.",
+      "semantic_tags": [
+        "camera",
+        "film camera",
+        "recording device",
+        "video",
+        "video camera icon"
+      ],
+      "synonyms": [
+        "camera",
+        "film camera",
+        "recording device",
+        "video",
+        "video camera",
+        "video camera icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:video_camera_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_video_camera_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:video_camera_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "video_camera_2",
+      "label": "Video Camera",
+      "purpose": "Show video camera as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "video",
+        "camera",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to video camera as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing video camera.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "video",
+        "camera",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:video_camera_2",
+      "source_library": "mingcute",
+      "source_name": "video_camera_2",
+      "label": "Video Camera",
+      "depicts_observation": "Video camera body with one flat top block and one side lens block on the right",
+      "popular_reading": "Simple video camera",
+      "plausible_readings": [
+        "video camera icon",
+        "camcorder",
+        "recording device"
+      ],
+      "context_bias": "Use when the interface wants a simpler camera body without the twin circles of a film style recorder.",
+      "ambiguity_note": "Do not use for the twin reel camera when the top of the body should show two round circles.",
+      "search_hints": [
+        "Video Camera",
+        "video camera icon",
+        "camcorder",
+        "recording device",
+        "Simple video camera"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/video_camera_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps the top of the camera flat instead of adding the two round reel circles."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:video_camera_2",
+      "source_library": "mingcute",
+      "source_name": "video_camera_2",
+      "label": "Video Camera",
+      "depicts": "Video camera body with one flat top block and one side lens block on the right",
+      "use_when": "Use when the interface wants a simpler camera body without the twin circles of a film style recorder.",
+      "avoid_when": "Do not use for the twin reel camera when the top of the body should show two round circles.",
+      "semantic_tags": [
+        "2",
+        "camcorder",
+        "camera",
+        "recording device",
+        "video",
+        "video camera icon"
+      ],
+      "synonyms": [
+        "2",
+        "camcorder",
+        "camera",
+        "recording device",
+        "video",
+        "video camera",
+        "video camera icon"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:voice",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_voice_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:voice",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "voice",
+      "label": "Voice",
+      "purpose": "Show voice as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "voice"
+      ],
+      "use_when": "Use when the interface refers directly to voice as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing voice.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "voice"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:voice",
+      "source_library": "mingcute",
+      "source_name": "voice",
+      "label": "Voice",
+      "depicts_observation": "Five vertical bars centered around one tallest middle bar with shorter bars outside",
+      "popular_reading": "Centered voice waveform",
+      "plausible_readings": [
+        "voice icon",
+        "audio bars",
+        "sound waveform"
+      ],
+      "context_bias": "Use when the interface wants the voice cue to read as a balanced centered waveform.",
+      "ambiguity_note": "Do not use for the rising bar voice mark when the bars should climb unevenly from left to right.",
+      "search_hints": [
+        "Voice",
+        "voice icon",
+        "audio bars",
+        "sound waveform",
+        "Centered voice waveform"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/voice_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot places the tallest bar in the middle and balances the shorter bars around it."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:voice",
+      "source_library": "mingcute",
+      "source_name": "voice",
+      "label": "Voice",
+      "depicts": "Five vertical bars centered around one tallest middle bar with shorter bars outside",
+      "use_when": "Use when the interface wants the voice cue to read as a balanced centered waveform.",
+      "avoid_when": "Do not use for the rising bar voice mark when the bars should climb unevenly from left to right.",
+      "semantic_tags": [
+        "audio bars",
+        "sound waveform",
+        "voice",
+        "voice icon"
+      ],
+      "synonyms": [
+        "audio bars",
+        "sound waveform",
+        "voice",
+        "voice icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:voice_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_voice_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:voice_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "voice_2",
+      "label": "Voice",
+      "purpose": "Show voice as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "voice",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to voice as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing voice.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "voice",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:voice_2",
+      "source_library": "mingcute",
+      "source_name": "voice_2",
+      "label": "Voice",
+      "depicts_observation": "Five vertical bars rising unevenly from left to right with the tallest bar near the right edge",
+      "popular_reading": "Rising voice bars",
+      "plausible_readings": [
+        "voice icon",
+        "audio bars",
+        "sound waveform"
+      ],
+      "context_bias": "Use when the interface wants the voice cue to read like an uneven equalizer that rises across the row.",
+      "ambiguity_note": "Do not use for the centered waveform when the tallest bar should sit in the middle of a balanced pattern.",
+      "search_hints": [
+        "Voice",
+        "voice icon",
+        "audio bars",
+        "sound waveform",
+        "Rising voice bars"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/voice_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot climbs toward the right instead of centering the tallest bar in the middle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:voice_2",
+      "source_library": "mingcute",
+      "source_name": "voice_2",
+      "label": "Voice",
+      "depicts": "Five vertical bars rising unevenly from left to right with the tallest bar near the right edge",
+      "use_when": "Use when the interface wants the voice cue to read like an uneven equalizer that rises across the row.",
+      "avoid_when": "Do not use for the centered waveform when the tallest bar should sit in the middle of a balanced pattern.",
+      "semantic_tags": [
+        "2",
+        "audio bars",
+        "sound waveform",
+        "voice",
+        "voice icon"
+      ],
+      "synonyms": [
+        "2",
+        "audio bars",
+        "sound waveform",
+        "voice",
+        "voice icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:wardrobe",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_wardrobe_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:wardrobe",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "wardrobe",
+      "label": "Wardrobe",
+      "purpose": "Show wardrobe as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "wardrobe"
+      ],
+      "use_when": "Use when the interface refers directly to wardrobe as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing wardrobe.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "wardrobe"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:wardrobe",
+      "source_library": "mingcute",
+      "source_name": "wardrobe",
+      "label": "Wardrobe",
+      "depicts_observation": "Wardrobe body split into two tall doors with one small dot on each door",
+      "popular_reading": "Two door wardrobe",
+      "plausible_readings": [
+        "wardrobe icon",
+        "closet cabinet",
+        "storage doors"
+      ],
+      "context_bias": "Use when the interface wants the wardrobe to read as two full height cabinet doors.",
+      "ambiguity_note": "Do not use for the mixed wardrobe when one side should break into stacked shelf panels instead of two tall doors.",
+      "search_hints": [
+        "Wardrobe",
+        "wardrobe icon",
+        "closet cabinet",
+        "storage doors",
+        "Two door wardrobe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/wardrobe_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the simpler wardrobe with two equal doors and one dot on each side."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:wardrobe",
+      "source_library": "mingcute",
+      "source_name": "wardrobe",
+      "label": "Wardrobe",
+      "depicts": "Wardrobe body split into two tall doors with one small dot on each door",
+      "use_when": "Use when the interface wants the wardrobe to read as two full height cabinet doors.",
+      "avoid_when": "Do not use for the mixed wardrobe when one side should break into stacked shelf panels instead of two tall doors.",
+      "semantic_tags": [
+        "closet cabinet",
+        "storage doors",
+        "wardrobe",
+        "wardrobe icon"
+      ],
+      "synonyms": [
+        "closet cabinet",
+        "storage doors",
+        "wardrobe",
+        "wardrobe icon"
+      ]
+    }
+  }
+]

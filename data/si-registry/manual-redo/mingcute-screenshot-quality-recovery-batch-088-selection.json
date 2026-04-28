@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-088",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 088",
+  "review_goal": "Differentiate stopwatch, store, and suitcase variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:stopwatch",
+      "screenshot_file_name": "mingcute_stopwatch_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/stopwatch_line.svg",
+      "depicts_observation": "Round stopwatch face with one vertical hand and one small side knob at the upper right",
+      "popular_reading": "Simple stopwatch",
+      "plausible_readings": ["stopwatch icon", "timer watch", "timekeeper"],
+      "context_bias": "Use when the interface wants a clean stopwatch face with a straight hand and minimal top hardware.",
+      "ambiguity_note": "Do not use for the stopwatch with the angled hand and extra top loop around the crown.",
+      "selection_reason": "The screenshot keeps the hand vertical and the upper hardware simpler than the other stopwatch variant."
+    },
+    {
+      "icon_id": "mingcute:stopwatch_2",
+      "screenshot_file_name": "mingcute_stopwatch_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/stopwatch_2_line.svg",
+      "depicts_observation": "Round stopwatch face with one angled hand and one top loop and one small side button",
+      "popular_reading": "Stopwatch with loop crown",
+      "plausible_readings": ["stopwatch icon", "timer watch", "timekeeper"],
+      "context_bias": "Use when the interface wants the stopwatch to show a more active angled hand and a pronounced top loop crown.",
+      "ambiguity_note": "Do not use for the plainer stopwatch when the face should not rely on the large top loop or angled hand.",
+      "selection_reason": "The screenshot adds the top loop crown and angled hand that make it more detailed than the first stopwatch variant."
+    },
+    {
+      "icon_id": "mingcute:store",
+      "screenshot_file_name": "mingcute_store_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/store_line.svg",
+      "depicts_observation": "Storefront awning above one open boxy counter with no door in the base",
+      "popular_reading": "Open storefront awning",
+      "plausible_readings": ["store icon", "shop front", "retail stand"],
+      "context_bias": "Use when the interface wants a shop front that reads more like an open counter under an awning.",
+      "ambiguity_note": "Do not use for the full store building when the base should show a centered door under the awning.",
+      "selection_reason": "The screenshot leaves the lower base open like a counter instead of drawing a door in the middle."
+    },
+    {
+      "icon_id": "mingcute:store_2",
+      "screenshot_file_name": "mingcute_store_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/store_2_line.svg",
+      "depicts_observation": "Storefront awning above one square building face with one centered door in the base",
+      "popular_reading": "Store building with door",
+      "plausible_readings": ["store icon", "shop front", "retail building"],
+      "context_bias": "Use when the interface wants a fuller retail building with a clear door beneath the awning.",
+      "ambiguity_note": "Do not use for the open counter storefront when the base should not stay empty under the awning.",
+      "selection_reason": "The screenshot anchors the store with a centered door and fuller building body under the awning."
+    },
+    {
+      "icon_id": "mingcute:suitcase",
+      "screenshot_file_name": "mingcute_suitcase_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/suitcase_line.svg",
+      "depicts_observation": "Tall suitcase with one top handle and two vertical side rails framing the body",
+      "popular_reading": "Tall travel suitcase",
+      "plausible_readings": ["suitcase icon", "travel luggage", "bag case"],
+      "context_bias": "Use when the interface wants luggage to read as a taller travel case with upright side rails.",
+      "ambiguity_note": "Do not use for the briefcase style suitcase when the front should be crossed by two horizontal bands instead of side rails.",
+      "selection_reason": "The screenshot draws the suitcase taller with vertical side rails rather than wide horizontal front bands."
+    }
+  ]
+}

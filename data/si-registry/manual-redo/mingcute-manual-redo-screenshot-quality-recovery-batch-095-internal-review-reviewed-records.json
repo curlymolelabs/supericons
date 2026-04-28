@@ -1,0 +1,424 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:umbrella",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_umbrella_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:umbrella",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "umbrella",
+      "label": "Umbrella",
+      "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "umbrella"
+      ],
+      "use_when": "Use when the interface refers directly to umbrella as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing umbrella.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "umbrella"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:umbrella",
+      "source_library": "mingcute",
+      "source_name": "umbrella",
+      "label": "Umbrella",
+      "depicts_observation": "Half circle umbrella canopy above one straight shaft ending in one curved hook handle",
+      "popular_reading": "Rain umbrella with hook",
+      "plausible_readings": [
+        "umbrella icon",
+        "rain canopy",
+        "weather cover"
+      ],
+      "context_bias": "Use when the interface wants a classic rain umbrella with a vertical shaft and hooked handle.",
+      "ambiguity_note": "Do not use for the leaning beach umbrella when the canopy should sit on an angled pole over a base.",
+      "search_hints": [
+        "Umbrella",
+        "umbrella icon",
+        "rain canopy",
+        "weather cover",
+        "Rain umbrella with hook"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/umbrella_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the straight shaft and hook handle of a rain umbrella rather than a leaning beach umbrella stand."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:umbrella",
+      "source_library": "mingcute",
+      "source_name": "umbrella",
+      "label": "Umbrella",
+      "depicts": "Half circle umbrella canopy above one straight shaft ending in one curved hook handle",
+      "use_when": "Use when the interface wants a classic rain umbrella with a vertical shaft and hooked handle.",
+      "avoid_when": "Do not use for the leaning beach umbrella when the canopy should sit on an angled pole over a base.",
+      "semantic_tags": [
+        "rain canopy",
+        "umbrella",
+        "umbrella icon",
+        "weather cover"
+      ],
+      "synonyms": [
+        "rain canopy",
+        "umbrella",
+        "umbrella icon",
+        "weather cover"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:umbrella_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_umbrella_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:umbrella_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "umbrella_2",
+      "label": "Umbrella",
+      "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "umbrella",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to umbrella as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing umbrella.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "umbrella",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:umbrella_2",
+      "source_library": "mingcute",
+      "source_name": "umbrella_2",
+      "label": "Umbrella",
+      "depicts_observation": "Leaning beach umbrella canopy above one angled pole and one low ground base",
+      "popular_reading": "Beach umbrella stand",
+      "plausible_readings": [
+        "umbrella icon",
+        "beach shade",
+        "outdoor canopy"
+      ],
+      "context_bias": "Use when the interface wants an umbrella fixed to the ground at an angle instead of a handheld rain umbrella.",
+      "ambiguity_note": "Do not use for the hook handled umbrella when the canopy should not sit on a low base with a leaning pole.",
+      "search_hints": [
+        "Umbrella",
+        "umbrella icon",
+        "beach shade",
+        "outdoor canopy",
+        "Beach umbrella stand"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/umbrella_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot plants the canopy on an angled pole and base instead of hanging it from a hook handle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:umbrella_2",
+      "source_library": "mingcute",
+      "source_name": "umbrella_2",
+      "label": "Umbrella",
+      "depicts": "Leaning beach umbrella canopy above one angled pole and one low ground base",
+      "use_when": "Use when the interface wants an umbrella fixed to the ground at an angle instead of a handheld rain umbrella.",
+      "avoid_when": "Do not use for the hook handled umbrella when the canopy should not sit on a low base with a leaning pole.",
+      "semantic_tags": [
+        "2",
+        "beach shade",
+        "outdoor canopy",
+        "umbrella",
+        "umbrella icon"
+      ],
+      "synonyms": [
+        "2",
+        "beach shade",
+        "outdoor canopy",
+        "umbrella",
+        "umbrella icon"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:vector_bezier",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_vector_bezier_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:vector_bezier",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier",
+      "label": "Vector Bezier",
+      "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "vector",
+        "bezier"
+      ],
+      "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing vector bezier.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "vector",
+        "bezier"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:vector_bezier",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier",
+      "label": "Vector Bezier",
+      "depicts_observation": "Bezier path with one top bar linking two top nodes and two lower branch nodes",
+      "popular_reading": "Branched bezier path",
+      "plausible_readings": [
+        "vector bezier icon",
+        "path nodes",
+        "curve handles"
+      ],
+      "context_bias": "Use when the interface wants the bezier cue to branch downward from a top handle bar into two lower nodes.",
+      "ambiguity_note": "Do not use for the S path bezier or the square node frame when the icon should not reduce to one loose curve or one closed box.",
+      "search_hints": [
+        "Vector Bezier",
+        "vector bezier icon",
+        "path nodes",
+        "curve handles",
+        "Branched bezier path"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/vector_bezier_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the only bezier variant with a top handle bar and two lower branching node paths."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:vector_bezier",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier",
+      "label": "Vector Bezier",
+      "depicts": "Bezier path with one top bar linking two top nodes and two lower branch nodes",
+      "use_when": "Use when the interface wants the bezier cue to branch downward from a top handle bar into two lower nodes.",
+      "avoid_when": "Do not use for the S path bezier or the square node frame when the icon should not reduce to one loose curve or one closed box.",
+      "semantic_tags": [
+        "bezier",
+        "curve handles",
+        "path nodes",
+        "vector",
+        "vector bezier icon"
+      ],
+      "synonyms": [
+        "bezier",
+        "curve handles",
+        "path nodes",
+        "vector",
+        "vector bezier",
+        "vector bezier icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:vector_bezier_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_vector_bezier_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:vector_bezier_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_2",
+      "label": "Vector Bezier",
+      "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "vector",
+        "bezier",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing vector bezier.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "vector",
+        "bezier",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:vector_bezier_2",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_2",
+      "label": "Vector Bezier",
+      "depicts_observation": "Curved bezier path linking four square nodes across one loose S shaped line",
+      "popular_reading": "S curve bezier path",
+      "plausible_readings": [
+        "vector bezier icon",
+        "path nodes",
+        "curve handles"
+      ],
+      "context_bias": "Use when the interface wants the bezier cue to read as one flowing curve through several nodes.",
+      "ambiguity_note": "Do not use for the branched top bar bezier or the closed square node frame when the path should stay one loose curve.",
+      "search_hints": [
+        "Vector Bezier",
+        "vector bezier icon",
+        "path nodes",
+        "curve handles",
+        "S curve bezier path"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/vector_bezier_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses one flowing S style curve through four nodes instead of a branch or a closed square frame."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:vector_bezier_2",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_2",
+      "label": "Vector Bezier",
+      "depicts": "Curved bezier path linking four square nodes across one loose S shaped line",
+      "use_when": "Use when the interface wants the bezier cue to read as one flowing curve through several nodes.",
+      "avoid_when": "Do not use for the branched top bar bezier or the closed square node frame when the path should stay one loose curve.",
+      "semantic_tags": [
+        "2",
+        "bezier",
+        "curve handles",
+        "path nodes",
+        "vector",
+        "vector bezier icon"
+      ],
+      "synonyms": [
+        "2",
+        "bezier",
+        "curve handles",
+        "path nodes",
+        "vector",
+        "vector bezier",
+        "vector bezier icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:vector_bezier_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_vector_bezier_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:vector_bezier_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_3",
+      "label": "Vector Bezier",
+      "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "vector",
+        "bezier",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing vector bezier.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "vector",
+        "bezier",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:vector_bezier_3",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_3",
+      "label": "Vector Bezier",
+      "depicts_observation": "Square outline built from four corner nodes connected by four straight segments",
+      "popular_reading": "Square node frame",
+      "plausible_readings": [
+        "vector bezier icon",
+        "node square",
+        "path frame"
+      ],
+      "context_bias": "Use when the interface wants the bezier cue to read as a closed square frame anchored by four corner nodes.",
+      "ambiguity_note": "Do not use for the branched bezier or the S curve bezier when the icon should not open into branches or flowing curves.",
+      "search_hints": [
+        "Vector Bezier",
+        "vector bezier icon",
+        "node square",
+        "path frame",
+        "Square node frame"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/vector_bezier_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot closes the nodes into a square frame instead of branching them or linking them with one loose curve."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:vector_bezier_3",
+      "source_library": "mingcute",
+      "source_name": "vector_bezier_3",
+      "label": "Vector Bezier",
+      "depicts": "Square outline built from four corner nodes connected by four straight segments",
+      "use_when": "Use when the interface wants the bezier cue to read as a closed square frame anchored by four corner nodes.",
+      "avoid_when": "Do not use for the branched bezier or the S curve bezier when the icon should not open into branches or flowing curves.",
+      "semantic_tags": [
+        "3",
+        "bezier",
+        "node square",
+        "path frame",
+        "vector",
+        "vector bezier icon"
+      ],
+      "synonyms": [
+        "3",
+        "bezier",
+        "node square",
+        "path frame",
+        "vector",
+        "vector bezier",
+        "vector bezier icon"
+      ]
+    }
+  }
+]

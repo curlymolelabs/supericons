@@ -1,0 +1,432 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:toggle_right",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_toggle_right_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:toggle_right",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "toggle_right",
+      "label": "Enabled Toggle",
+      "purpose": "Show that a setting, control, or feature is switched on or enabled.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "toggle",
+        "enabled",
+        "on",
+        "active",
+        "switch"
+      ],
+      "use_when": "Use when the interface shows an enabled setting or active on-state.",
+      "avoid_when": "Do not use for generic success or approval when the meaning is not a toggle state.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A toggle switch in the on position.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "enabled",
+        "switch on",
+        "active toggle",
+        "toggle on"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:toggle_right",
+      "source_library": "mingcute",
+      "source_name": "toggle_right",
+      "label": "Enabled Toggle",
+      "depicts_observation": "Toggle track with one large right circle fused into one short capsule on the left",
+      "popular_reading": "Toggle right fused knob",
+      "plausible_readings": [
+        "toggle icon",
+        "right switch",
+        "switch control"
+      ],
+      "context_bias": "Use when the interface wants the right toggle drawn as a fused shape with the knob swelling out from the track.",
+      "ambiguity_note": "Do not use for the capsule toggle when the switch should stay a full outline with the knob parked inside.",
+      "search_hints": [
+        "Enabled Toggle",
+        "toggle icon",
+        "right switch",
+        "switch control",
+        "Toggle right fused knob"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/toggle_right_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot merges the right knob into the track instead of placing it inside a full capsule outline."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:toggle_right",
+      "source_library": "mingcute",
+      "source_name": "toggle_right",
+      "label": "Enabled Toggle",
+      "depicts": "Toggle track with one large right circle fused into one short capsule on the left",
+      "use_when": "Use when the interface wants the right toggle drawn as a fused shape with the knob swelling out from the track.",
+      "avoid_when": "Do not use for the capsule toggle when the switch should stay a full outline with the knob parked inside.",
+      "semantic_tags": [
+        "active",
+        "enabled",
+        "on",
+        "right switch",
+        "switch",
+        "switch control",
+        "toggle",
+        "toggle icon"
+      ],
+      "synonyms": [
+        "active toggle",
+        "enabled",
+        "enabled toggle",
+        "right switch",
+        "switch control",
+        "switch on",
+        "toggle icon",
+        "toggle on"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:toggle_right_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_toggle_right_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:toggle_right_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "toggle_right_2",
+      "label": "Enabled Toggle",
+      "purpose": "Show that a setting, control, or feature is switched on or enabled.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "toggle",
+        "enabled",
+        "on",
+        "active",
+        "switch"
+      ],
+      "use_when": "Use when the interface shows an enabled setting or active on-state.",
+      "avoid_when": "Do not use for generic success or approval when the meaning is not a toggle state.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A toggle switch in the on position.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "enabled",
+        "switch on",
+        "active toggle",
+        "toggle on"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:toggle_right_2",
+      "source_library": "mingcute",
+      "source_name": "toggle_right_2",
+      "label": "Enabled Toggle",
+      "depicts_observation": "Long capsule outline with one inner circle knob parked on the right side",
+      "popular_reading": "Toggle right capsule",
+      "plausible_readings": [
+        "toggle icon",
+        "right switch",
+        "switch control"
+      ],
+      "context_bias": "Use when the interface wants the right toggle to keep the full capsule outline with the knob sitting inside it.",
+      "ambiguity_note": "Do not use for the fused right toggle when the knob should not bulge out as part of the outer track shape.",
+      "search_hints": [
+        "Enabled Toggle",
+        "toggle icon",
+        "right switch",
+        "switch control",
+        "Toggle right capsule"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/toggle_right_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps a full capsule around the switch and places the knob inside on the right."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:toggle_right_2",
+      "source_library": "mingcute",
+      "source_name": "toggle_right_2",
+      "label": "Enabled Toggle",
+      "depicts": "Long capsule outline with one inner circle knob parked on the right side",
+      "use_when": "Use when the interface wants the right toggle to keep the full capsule outline with the knob sitting inside it.",
+      "avoid_when": "Do not use for the fused right toggle when the knob should not bulge out as part of the outer track shape.",
+      "semantic_tags": [
+        "active",
+        "enabled",
+        "on",
+        "right switch",
+        "switch",
+        "switch control",
+        "toggle",
+        "toggle icon"
+      ],
+      "synonyms": [
+        "active toggle",
+        "enabled",
+        "enabled toggle",
+        "right switch",
+        "switch control",
+        "switch on",
+        "toggle icon",
+        "toggle on"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:tornado",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_tornado_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:tornado",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "tornado",
+      "label": "Tornado",
+      "purpose": "Show tornado as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "tornado"
+      ],
+      "use_when": "Use when the interface refers directly to tornado as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing tornado.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "tornado"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:tornado",
+      "source_library": "mingcute",
+      "source_name": "tornado",
+      "label": "Tornado",
+      "depicts_observation": "Spiral funnel body with one wide top ring narrowing into one pointed lower stem",
+      "popular_reading": "Spiral tornado funnel",
+      "plausible_readings": [
+        "tornado icon",
+        "storm funnel",
+        "cyclone spiral"
+      ],
+      "context_bias": "Use when the interface wants the tornado to read as a spinning funnel body rather than stacked straight bars.",
+      "ambiguity_note": "Do not use for the bar tornado when the weather cue should taper through horizontal bars instead of one spiral funnel.",
+      "search_hints": [
+        "Tornado",
+        "tornado icon",
+        "storm funnel",
+        "cyclone spiral",
+        "Spiral tornado funnel"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/tornado_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot forms a cone like spiral funnel instead of a stack of separate horizontal bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:tornado",
+      "source_library": "mingcute",
+      "source_name": "tornado",
+      "label": "Tornado",
+      "depicts": "Spiral funnel body with one wide top ring narrowing into one pointed lower stem",
+      "use_when": "Use when the interface wants the tornado to read as a spinning funnel body rather than stacked straight bars.",
+      "avoid_when": "Do not use for the bar tornado when the weather cue should taper through horizontal bars instead of one spiral funnel.",
+      "semantic_tags": [
+        "cyclone spiral",
+        "storm funnel",
+        "tornado",
+        "tornado icon"
+      ],
+      "synonyms": [
+        "cyclone spiral",
+        "storm funnel",
+        "tornado",
+        "tornado icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:tornado_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_tornado_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:tornado_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "tornado_2",
+      "label": "Tornado",
+      "purpose": "Show tornado as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "tornado",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to tornado as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing tornado.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "tornado",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:tornado_2",
+      "source_library": "mingcute",
+      "source_name": "tornado_2",
+      "label": "Tornado",
+      "depicts_observation": "Stack of five descending horizontal bars tapering from long at top to short at bottom",
+      "popular_reading": "Bar stack tornado",
+      "plausible_readings": [
+        "tornado icon",
+        "storm bars",
+        "wind funnel"
+      ],
+      "context_bias": "Use when the interface wants the tornado simplified into horizontal bars that taper downward.",
+      "ambiguity_note": "Do not use for the spiral funnel when the storm cue should not curl into one rounded cone body.",
+      "search_hints": [
+        "Tornado",
+        "tornado icon",
+        "storm bars",
+        "wind funnel",
+        "Bar stack tornado"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/tornado_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot reduces the tornado to a descending stack of bars instead of a spiral funnel form."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:tornado_2",
+      "source_library": "mingcute",
+      "source_name": "tornado_2",
+      "label": "Tornado",
+      "depicts": "Stack of five descending horizontal bars tapering from long at top to short at bottom",
+      "use_when": "Use when the interface wants the tornado simplified into horizontal bars that taper downward.",
+      "avoid_when": "Do not use for the spiral funnel when the storm cue should not curl into one rounded cone body.",
+      "semantic_tags": [
+        "2",
+        "storm bars",
+        "tornado",
+        "tornado icon",
+        "wind funnel"
+      ],
+      "synonyms": [
+        "2",
+        "storm bars",
+        "tornado",
+        "tornado icon",
+        "wind funnel"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:translate",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_translate_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:translate",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "translate",
+      "label": "Translate",
+      "purpose": "Show translate as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "translate"
+      ],
+      "use_when": "Use when the interface refers directly to translate as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing translate.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "translate"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:translate",
+      "source_library": "mingcute",
+      "source_name": "translate",
+      "label": "Translate",
+      "depicts_observation": "Open square frame with two short bars on the left and one small plus cross near the lower right",
+      "popular_reading": "Translate frame with plus",
+      "plausible_readings": [
+        "translate icon",
+        "language frame",
+        "add translation"
+      ],
+      "context_bias": "Use when the interface wants the translation cue to read as a framed text area with a small add mark.",
+      "ambiguity_note": "Do not use for the letter based translate mark when the icon should center on one slanted A shape and stroke group.",
+      "search_hints": [
+        "Translate",
+        "translate icon",
+        "language frame",
+        "add translation",
+        "Translate frame with plus"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/translate_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses a framed layout with a plus cross rather than the letter style translation symbol."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:translate",
+      "source_library": "mingcute",
+      "source_name": "translate",
+      "label": "Translate",
+      "depicts": "Open square frame with two short bars on the left and one small plus cross near the lower right",
+      "use_when": "Use when the interface wants the translation cue to read as a framed text area with a small add mark.",
+      "avoid_when": "Do not use for the letter based translate mark when the icon should center on one slanted A shape and stroke group.",
+      "semantic_tags": [
+        "add translation",
+        "language frame",
+        "translate",
+        "translate icon"
+      ],
+      "synonyms": [
+        "add translation",
+        "language frame",
+        "translate",
+        "translate icon"
+      ]
+    }
+  }
+]

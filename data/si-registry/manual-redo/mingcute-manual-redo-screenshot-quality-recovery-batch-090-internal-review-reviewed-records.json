@@ -1,0 +1,409 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:table",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_table_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:table",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "table",
+      "label": "Table",
+      "purpose": "Show table as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "table"
+      ],
+      "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing table.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "table"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:table",
+      "source_library": "mingcute",
+      "source_name": "table",
+      "label": "Table",
+      "depicts_observation": "Square table grid with one middle divider and two horizontal dividers making six cells",
+      "popular_reading": "Two column table grid",
+      "plausible_readings": [
+        "table icon",
+        "grid layout",
+        "spreadsheet cells"
+      ],
+      "context_bias": "Use when the interface wants a simple six cell table split into two columns and three rows.",
+      "ambiguity_note": "Do not use for the mixed panel table or the nine cell table when the grid should not add a third column.",
+      "search_hints": [
+        "Table",
+        "table icon",
+        "grid layout",
+        "spreadsheet cells",
+        "Two column table grid"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/table_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the table with only two columns rather than the uneven panel layout or the full three column grid."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:table",
+      "source_library": "mingcute",
+      "source_name": "table",
+      "label": "Table",
+      "depicts": "Square table grid with one middle divider and two horizontal dividers making six cells",
+      "use_when": "Use when the interface wants a simple six cell table split into two columns and three rows.",
+      "avoid_when": "Do not use for the mixed panel table or the nine cell table when the grid should not add a third column.",
+      "semantic_tags": [
+        "grid layout",
+        "spreadsheet cells",
+        "table",
+        "table icon"
+      ],
+      "synonyms": [
+        "grid layout",
+        "spreadsheet cells",
+        "table",
+        "table icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:table_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_table_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:table_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "table_2",
+      "label": "Table",
+      "purpose": "Show table as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "table",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing table.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "table",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:table_2",
+      "source_library": "mingcute",
+      "source_name": "table_2",
+      "label": "Table",
+      "depicts_observation": "Square table grid with one narrow left column and one full width top row and one large lower right panel",
+      "popular_reading": "Mixed panel table",
+      "plausible_readings": [
+        "table icon",
+        "panel grid",
+        "layout cells"
+      ],
+      "context_bias": "Use when the interface wants the table to mix one left side column with one large block on the lower right.",
+      "ambiguity_note": "Do not use for the even six cell table or the even nine cell table when the layout should not feature one oversized lower panel.",
+      "search_hints": [
+        "Table",
+        "table icon",
+        "panel grid",
+        "layout cells",
+        "Mixed panel table"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/table_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the only table variant with the uneven left column and large lower right panel."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:table_2",
+      "source_library": "mingcute",
+      "source_name": "table_2",
+      "label": "Table",
+      "depicts": "Square table grid with one narrow left column and one full width top row and one large lower right panel",
+      "use_when": "Use when the interface wants the table to mix one left side column with one large block on the lower right.",
+      "avoid_when": "Do not use for the even six cell table or the even nine cell table when the layout should not feature one oversized lower panel.",
+      "semantic_tags": [
+        "2",
+        "layout cells",
+        "panel grid",
+        "table",
+        "table icon"
+      ],
+      "synonyms": [
+        "2",
+        "layout cells",
+        "panel grid",
+        "table",
+        "table icon"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:table_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_table_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:table_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "table_3",
+      "label": "Table",
+      "purpose": "Show table as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "table",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing table.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "table",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:table_3",
+      "source_library": "mingcute",
+      "source_name": "table_3",
+      "label": "Table",
+      "depicts_observation": "Square table grid with two vertical dividers and two horizontal dividers making nine cells",
+      "popular_reading": "Three column table grid",
+      "plausible_readings": [
+        "table icon",
+        "grid layout",
+        "spreadsheet cells"
+      ],
+      "context_bias": "Use when the interface wants the fullest even table grid with three columns and three rows.",
+      "ambiguity_note": "Do not use for the six cell table or the uneven panel table when the layout should stay a uniform nine cell grid.",
+      "search_hints": [
+        "Table",
+        "table icon",
+        "grid layout",
+        "spreadsheet cells",
+        "Three column table grid"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/table_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot expands the table into an even three by three grid rather than two columns or a mixed panel arrangement."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:table_3",
+      "source_library": "mingcute",
+      "source_name": "table_3",
+      "label": "Table",
+      "depicts": "Square table grid with two vertical dividers and two horizontal dividers making nine cells",
+      "use_when": "Use when the interface wants the fullest even table grid with three columns and three rows.",
+      "avoid_when": "Do not use for the six cell table or the uneven panel table when the layout should stay a uniform nine cell grid.",
+      "semantic_tags": [
+        "3",
+        "grid layout",
+        "spreadsheet cells",
+        "table",
+        "table icon"
+      ],
+      "synonyms": [
+        "3",
+        "grid layout",
+        "spreadsheet cells",
+        "table",
+        "table icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:tag",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_tag_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:tag",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "tag",
+      "label": "Tag",
+      "purpose": "Show tag as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "tag"
+      ],
+      "use_when": "Use when the interface refers directly to tag as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing tag.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "tag"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:tag",
+      "source_library": "mingcute",
+      "source_name": "tag",
+      "label": "Tag",
+      "depicts_observation": "Price tag shape with one corner hole and one single outline around the body",
+      "popular_reading": "Single price tag",
+      "plausible_readings": [
+        "tag icon",
+        "price label",
+        "sale tag"
+      ],
+      "context_bias": "Use when the interface wants the cleanest price tag silhouette with only one visible outline.",
+      "ambiguity_note": "Do not use for the doubled tag when a second offset outline should appear behind the front tag body.",
+      "search_hints": [
+        "Tag",
+        "tag icon",
+        "price label",
+        "sale tag",
+        "Single price tag"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/tag_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows only one tag outline rather than the stacked double tag effect of the second variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:tag",
+      "source_library": "mingcute",
+      "source_name": "tag",
+      "label": "Tag",
+      "depicts": "Price tag shape with one corner hole and one single outline around the body",
+      "use_when": "Use when the interface wants the cleanest price tag silhouette with only one visible outline.",
+      "avoid_when": "Do not use for the doubled tag when a second offset outline should appear behind the front tag body.",
+      "semantic_tags": [
+        "price label",
+        "sale tag",
+        "tag",
+        "tag icon"
+      ],
+      "synonyms": [
+        "price label",
+        "sale tag",
+        "tag",
+        "tag icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:tag_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_tag_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:tag_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "tag_2",
+      "label": "Tag",
+      "purpose": "Show tag as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "tag",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to tag as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing tag.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "tag",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:tag_2",
+      "source_library": "mingcute",
+      "source_name": "tag_2",
+      "label": "Tag",
+      "depicts_observation": "Price tag shape with one corner hole and one second offset tag outline behind it",
+      "popular_reading": "Double price tag",
+      "plausible_readings": [
+        "tag icon",
+        "price labels",
+        "sale tag"
+      ],
+      "context_bias": "Use when the interface wants the tag to read as stacked labels instead of a single front tag.",
+      "ambiguity_note": "Do not use for the single tag when the mark should not show a second offset outline behind the front shape.",
+      "search_hints": [
+        "Tag",
+        "tag icon",
+        "price labels",
+        "sale tag",
+        "Double price tag"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/tag_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds a second trailing tag outline that clearly separates it from the single tag variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:tag_2",
+      "source_library": "mingcute",
+      "source_name": "tag_2",
+      "label": "Tag",
+      "depicts": "Price tag shape with one corner hole and one second offset tag outline behind it",
+      "use_when": "Use when the interface wants the tag to read as stacked labels instead of a single front tag.",
+      "avoid_when": "Do not use for the single tag when the mark should not show a second offset outline behind the front shape.",
+      "semantic_tags": [
+        "2",
+        "price labels",
+        "sale tag",
+        "tag",
+        "tag icon"
+      ],
+      "synonyms": [
+        "2",
+        "price labels",
+        "sale tag",
+        "tag",
+        "tag icon"
+      ]
+    }
+  }
+]

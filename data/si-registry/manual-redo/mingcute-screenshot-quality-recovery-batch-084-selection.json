@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-084",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 084",
+  "review_goal": "Differentiate share, shoe, and shopping bag variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:share_2",
+      "screenshot_file_name": "mingcute_share_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/share_2_line.svg",
+      "depicts_observation": "Three round nodes linked by two diagonal connector lines in a branching network",
+      "popular_reading": "Connected share nodes",
+      "plausible_readings": ["share icon", "network share", "branching nodes"],
+      "context_bias": "Use when the interface wants share to feel like connected points spreading through a small network.",
+      "ambiguity_note": "Do not use for the arrow leaving a square when the share action should read like sending outward from a box.",
+      "selection_reason": "The screenshot builds share from linked nodes instead of an arrow exiting a square frame."
+    },
+    {
+      "icon_id": "mingcute:share_3",
+      "screenshot_file_name": "mingcute_share_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/share_3_line.svg",
+      "depicts_observation": "Open square frame with one arrow launching upward from the upper right corner",
+      "popular_reading": "Share out of box",
+      "plausible_readings": ["share icon", "export arrow", "send outward"],
+      "context_bias": "Use when the interface wants share to feel like pushing content out of a container or window.",
+      "ambiguity_note": "Do not use for the connected node share when the mark should not resemble a branching network diagram.",
+      "selection_reason": "The screenshot centers on a square and outward arrow instead of three linked share nodes."
+    },
+    {
+      "icon_id": "mingcute:shoe",
+      "screenshot_file_name": "mingcute_shoe_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/shoe_line.svg",
+      "depicts_observation": "Low sneaker profile with a pointed toe and lace bumps and a flat sole trailing behind",
+      "popular_reading": "Sneaker shoe",
+      "plausible_readings": ["shoe icon", "sneaker", "casual footwear"],
+      "context_bias": "Use when the interface wants a casual sneaker silhouette instead of formal or heeled footwear.",
+      "ambiguity_note": "Do not use for the high heel pump when the shoe should not rise on a thin back heel.",
+      "selection_reason": "The screenshot reads as a lace up sneaker rather than a dress shoe with a lifted heel."
+    },
+    {
+      "icon_id": "mingcute:shoe_2",
+      "screenshot_file_name": "mingcute_shoe_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/shoe_2_line.svg",
+      "depicts_observation": "High heel silhouette with a curved top opening and pointed toe and thin raised heel",
+      "popular_reading": "High heel shoe",
+      "plausible_readings": ["shoe icon", "pump heel", "formal footwear"],
+      "context_bias": "Use when the interface wants elegant heeled footwear instead of a low casual sneaker silhouette.",
+      "ambiguity_note": "Do not use for the sneaker when the shoe should not show laces or a long flat sole.",
+      "selection_reason": "The screenshot shows the distinct lifted heel and pointed pump shape instead of a sneaker body."
+    },
+    {
+      "icon_id": "mingcute:shopping_bag_1",
+      "screenshot_file_name": "mingcute_shopping_bag_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/shopping_bag_1_line.svg",
+      "depicts_observation": "Simple upright shopping bag with a flat base and straight sides and one rounded carry handle",
+      "popular_reading": "Basic shopping bag",
+      "plausible_readings": ["shopping bag icon", "retail bag", "store bag"],
+      "context_bias": "Use when the interface wants the plainest bag silhouette with no flap or decorative inner opening.",
+      "ambiguity_note": "Do not use for the bag variants with a smile like inner cutout or a folded top flap across the opening.",
+      "selection_reason": "The screenshot is the clean straight sided shopping bag without extra top detail beyond the handle."
+    }
+  ]
+}

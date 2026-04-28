@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-081",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 081",
+  "review_goal": "Differentiate rss, sandglass, and save variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:rss",
+      "screenshot_file_name": "mingcute_rss_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/rss_line.svg",
+      "depicts_observation": "Rounded square tile holding one lower dot with two broadcast arcs rising inside the frame",
+      "popular_reading": "RSS in a square tile",
+      "plausible_readings": ["rss icon", "feed tile", "broadcast badge"],
+      "context_bias": "Use when the interface wants the RSS mark contained inside a rounded square badge or app style tile.",
+      "ambiguity_note": "Do not use for the loose RSS signal when the dot and arcs should appear without any outer frame.",
+      "selection_reason": "The screenshot encloses the RSS signal inside a rounded square instead of leaving the arcs free in open space."
+    },
+    {
+      "icon_id": "mingcute:rss_2",
+      "screenshot_file_name": "mingcute_rss_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/rss_2_line.svg",
+      "depicts_observation": "One lower dot with two broadcast arcs floating freely without any outer square frame",
+      "popular_reading": "Open RSS signal",
+      "plausible_readings": ["rss icon", "feed signal", "broadcast mark"],
+      "context_bias": "Use when the interface wants a bare RSS signal with no container around the dot and arcs.",
+      "ambiguity_note": "Do not use for the RSS tile when the same signal should sit inside a rounded square badge.",
+      "selection_reason": "The screenshot removes the surrounding tile and leaves only the dot with the two expanding arcs."
+    },
+    {
+      "icon_id": "mingcute:sandglass",
+      "screenshot_file_name": "mingcute_sandglass_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/sandglass_line.svg",
+      "depicts_observation": "Angular hourglass with flat top and bottom caps and two straight triangular chambers touching at the waist",
+      "popular_reading": "Sharp hourglass",
+      "plausible_readings": ["hourglass icon", "sand timer", "timer glass"],
+      "context_bias": "Use when the interface wants a geometric hourglass with crisp flat ends and a narrow center pinch.",
+      "ambiguity_note": "Do not use for the softer hourglass variant when the sides should bow outward in a more rounded shape.",
+      "selection_reason": "The screenshot reads as a sharper hourglass built from straighter triangular chambers rather than curved sides."
+    },
+    {
+      "icon_id": "mingcute:sandglass_2",
+      "screenshot_file_name": "mingcute_sandglass_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/sandglass_2_line.svg",
+      "depicts_observation": "Hourglass with rounded outer sides that curve inward toward a pinched middle",
+      "popular_reading": "Rounded hourglass",
+      "plausible_readings": ["hourglass icon", "sand timer", "timer glass"],
+      "context_bias": "Use when the interface wants an hourglass silhouette with softer bowed sides instead of a rigid angular frame.",
+      "ambiguity_note": "Do not use for the straighter hourglass when the chambers should look more triangular with flatter end caps.",
+      "selection_reason": "The screenshot smooths the hourglass into curved sides instead of the harder angular silhouette in the first variant."
+    },
+    {
+      "icon_id": "mingcute:save",
+      "screenshot_file_name": "mingcute_save_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/save_line.svg",
+      "depicts_observation": "Document page with one folded corner and a large check mark centered inside the page",
+      "popular_reading": "Saved document check",
+      "plausible_readings": ["save icon", "approved file", "checked page"],
+      "context_bias": "Use when the interface wants save to feel like a confirmed document or completed file action.",
+      "ambiguity_note": "Do not use for the floppy disk variant when the save concept should reference storage media instead of a checked page.",
+      "selection_reason": "The screenshot shows a paper page with a check mark rather than a floppy disk body."
+    }
+  ]
+}

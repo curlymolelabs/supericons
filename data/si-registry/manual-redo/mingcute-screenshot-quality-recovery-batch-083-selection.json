@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-083",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 083",
+  "review_goal": "Differentiate scissors, server, and settings variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:scissors_3",
+      "screenshot_file_name": "mingcute_scissors_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/scissors_3_line.svg",
+      "depicts_observation": "Sideways scissors with two finger loops on the left and two cutting blades crossing toward the right",
+      "popular_reading": "Horizontal scissors",
+      "plausible_readings": ["scissors icon", "cut tool", "shears"],
+      "context_bias": "Use when the interface wants the scissors laid out horizontally rather than standing upright or tilted.",
+      "ambiguity_note": "Do not use for the upright or rotated scissors when the handles should not sit clearly to the left of the blades.",
+      "selection_reason": "The screenshot flips the scissors into a left to right cutting pose instead of an upward pointing pose."
+    },
+    {
+      "icon_id": "mingcute:server",
+      "screenshot_file_name": "mingcute_server_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/server_line.svg",
+      "depicts_observation": "Rectangular server rack with two horizontal bays and two small status dots in the lower bay",
+      "popular_reading": "Stacked server rack",
+      "plausible_readings": ["server icon", "rack unit", "data box"],
+      "context_bias": "Use when the interface wants a clear stacked rack server with shelf like horizontal divisions.",
+      "ambiguity_note": "Do not use for the rounded server appliance when the machine should not taper or soften around the top corners.",
+      "selection_reason": "The screenshot reads as a straight rectangular rack with shelf lines and bottom status lights."
+    },
+    {
+      "icon_id": "mingcute:server_2",
+      "screenshot_file_name": "mingcute_server_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/server_2_line.svg",
+      "depicts_observation": "Rounded server body with a tapered top shell and two small status lights near the lower center",
+      "popular_reading": "Rounded server unit",
+      "plausible_readings": ["server icon", "appliance", "network box"],
+      "context_bias": "Use when the interface wants a softer standalone server body instead of a flat rectangular rack with shelf dividers.",
+      "ambiguity_note": "Do not use for the rack server when the machine should be drawn as two stacked rectangular bays.",
+      "selection_reason": "The screenshot swaps the rack shelves for one rounded appliance body with a softer top profile."
+    },
+    {
+      "icon_id": "mingcute:settings_6",
+      "screenshot_file_name": "mingcute_settings_6_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/settings_6_line.svg",
+      "depicts_observation": "Three horizontal slider bars with one round knob on each bar instead of a gear wheel",
+      "popular_reading": "Adjustment sliders",
+      "plausible_readings": ["settings icon", "controls", "tuning sliders"],
+      "context_bias": "Use when the interface wants settings to read as adjustable controls rather than a gear mechanism.",
+      "ambiguity_note": "Do not use for the gear wheel when the settings cue should be toothed and circular instead of linear sliders.",
+      "selection_reason": "The screenshot turns settings into three slider controls instead of a toothed gear."
+    },
+    {
+      "icon_id": "mingcute:settings_7",
+      "screenshot_file_name": "mingcute_settings_7_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/settings_7_line.svg",
+      "depicts_observation": "Circular gear wheel with a center hub and short teeth spaced around the outer rim",
+      "popular_reading": "Gear settings",
+      "plausible_readings": ["settings icon", "gear", "cog wheel"],
+      "context_bias": "Use when the interface wants the familiar gear symbol rather than slider based tuning controls.",
+      "ambiguity_note": "Do not use for the slider settings when the cue should not be a round toothed wheel.",
+      "selection_reason": "The screenshot is a compact gear with teeth around the rim instead of three horizontal slider bars."
+    }
+  ]
+}

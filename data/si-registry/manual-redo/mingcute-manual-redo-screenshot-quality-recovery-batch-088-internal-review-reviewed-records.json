@@ -1,0 +1,405 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:stopwatch",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_stopwatch_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:stopwatch",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "stopwatch",
+      "label": "Stopwatch",
+      "purpose": "Show stopwatch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "stopwatch"
+      ],
+      "use_when": "Use when the interface refers directly to stopwatch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing stopwatch.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "stopwatch"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:stopwatch",
+      "source_library": "mingcute",
+      "source_name": "stopwatch",
+      "label": "Stopwatch",
+      "depicts_observation": "Round stopwatch face with one vertical hand and one small side knob at the upper right",
+      "popular_reading": "Simple stopwatch",
+      "plausible_readings": [
+        "stopwatch icon",
+        "timer watch",
+        "timekeeper"
+      ],
+      "context_bias": "Use when the interface wants a clean stopwatch face with a straight hand and minimal top hardware.",
+      "ambiguity_note": "Do not use for the stopwatch with the angled hand and extra top loop around the crown.",
+      "search_hints": [
+        "Stopwatch",
+        "stopwatch icon",
+        "timer watch",
+        "timekeeper",
+        "Simple stopwatch"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/stopwatch_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps the hand vertical and the upper hardware simpler than the other stopwatch variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:stopwatch",
+      "source_library": "mingcute",
+      "source_name": "stopwatch",
+      "label": "Stopwatch",
+      "depicts": "Round stopwatch face with one vertical hand and one small side knob at the upper right",
+      "use_when": "Use when the interface wants a clean stopwatch face with a straight hand and minimal top hardware.",
+      "avoid_when": "Do not use for the stopwatch with the angled hand and extra top loop around the crown.",
+      "semantic_tags": [
+        "stopwatch",
+        "stopwatch icon",
+        "timekeeper",
+        "timer watch"
+      ],
+      "synonyms": [
+        "stopwatch",
+        "stopwatch icon",
+        "timekeeper",
+        "timer watch"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:stopwatch_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_stopwatch_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:stopwatch_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "stopwatch_2",
+      "label": "Stopwatch",
+      "purpose": "Show stopwatch as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "stopwatch",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to stopwatch as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing stopwatch.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "stopwatch",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:stopwatch_2",
+      "source_library": "mingcute",
+      "source_name": "stopwatch_2",
+      "label": "Stopwatch",
+      "depicts_observation": "Round stopwatch face with one angled hand and one top loop and one small side button",
+      "popular_reading": "Stopwatch with loop crown",
+      "plausible_readings": [
+        "stopwatch icon",
+        "timer watch",
+        "timekeeper"
+      ],
+      "context_bias": "Use when the interface wants the stopwatch to show a more active angled hand and a pronounced top loop crown.",
+      "ambiguity_note": "Do not use for the plainer stopwatch when the face should not rely on the large top loop or angled hand.",
+      "search_hints": [
+        "Stopwatch",
+        "stopwatch icon",
+        "timer watch",
+        "timekeeper",
+        "Stopwatch with loop crown"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/stopwatch_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds the top loop crown and angled hand that make it more detailed than the first stopwatch variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:stopwatch_2",
+      "source_library": "mingcute",
+      "source_name": "stopwatch_2",
+      "label": "Stopwatch",
+      "depicts": "Round stopwatch face with one angled hand and one top loop and one small side button",
+      "use_when": "Use when the interface wants the stopwatch to show a more active angled hand and a pronounced top loop crown.",
+      "avoid_when": "Do not use for the plainer stopwatch when the face should not rely on the large top loop or angled hand.",
+      "semantic_tags": [
+        "2",
+        "stopwatch",
+        "stopwatch icon",
+        "timekeeper",
+        "timer watch"
+      ],
+      "synonyms": [
+        "2",
+        "stopwatch",
+        "stopwatch icon",
+        "timekeeper",
+        "timer watch"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:store",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_store_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:store",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "store",
+      "label": "Store",
+      "purpose": "Show store as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "store"
+      ],
+      "use_when": "Use when the interface refers directly to store as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing store.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "store"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:store",
+      "source_library": "mingcute",
+      "source_name": "store",
+      "label": "Store",
+      "depicts_observation": "Storefront awning above one open boxy counter with no door in the base",
+      "popular_reading": "Open storefront awning",
+      "plausible_readings": [
+        "store icon",
+        "shop front",
+        "retail stand"
+      ],
+      "context_bias": "Use when the interface wants a shop front that reads more like an open counter under an awning.",
+      "ambiguity_note": "Do not use for the full store building when the base should show a centered door under the awning.",
+      "search_hints": [
+        "Store",
+        "store icon",
+        "shop front",
+        "retail stand",
+        "Open storefront awning"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/store_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot leaves the lower base open like a counter instead of drawing a door in the middle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:store",
+      "source_library": "mingcute",
+      "source_name": "store",
+      "label": "Store",
+      "depicts": "Storefront awning above one open boxy counter with no door in the base",
+      "use_when": "Use when the interface wants a shop front that reads more like an open counter under an awning.",
+      "avoid_when": "Do not use for the full store building when the base should show a centered door under the awning.",
+      "semantic_tags": [
+        "retail stand",
+        "shop front",
+        "store",
+        "store icon"
+      ],
+      "synonyms": [
+        "retail stand",
+        "shop front",
+        "store",
+        "store icon"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:store_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_store_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:store_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "store_2",
+      "label": "Store",
+      "purpose": "Show store as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "store",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to store as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing store.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "store",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:store_2",
+      "source_library": "mingcute",
+      "source_name": "store_2",
+      "label": "Store",
+      "depicts_observation": "Storefront awning above one square building face with one centered door in the base",
+      "popular_reading": "Store building with door",
+      "plausible_readings": [
+        "store icon",
+        "shop front",
+        "retail building"
+      ],
+      "context_bias": "Use when the interface wants a fuller retail building with a clear door beneath the awning.",
+      "ambiguity_note": "Do not use for the open counter storefront when the base should not stay empty under the awning.",
+      "search_hints": [
+        "Store",
+        "store icon",
+        "shop front",
+        "retail building",
+        "Store building with door"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/store_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot anchors the store with a centered door and fuller building body under the awning."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:store_2",
+      "source_library": "mingcute",
+      "source_name": "store_2",
+      "label": "Store",
+      "depicts": "Storefront awning above one square building face with one centered door in the base",
+      "use_when": "Use when the interface wants a fuller retail building with a clear door beneath the awning.",
+      "avoid_when": "Do not use for the open counter storefront when the base should not stay empty under the awning.",
+      "semantic_tags": [
+        "2",
+        "retail building",
+        "shop front",
+        "store",
+        "store icon"
+      ],
+      "synonyms": [
+        "2",
+        "retail building",
+        "shop front",
+        "store",
+        "store icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:suitcase",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_suitcase_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:suitcase",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "suitcase",
+      "label": "Suitcase",
+      "purpose": "Show suitcase as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "suitcase"
+      ],
+      "use_when": "Use when the interface refers directly to suitcase as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing suitcase.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "suitcase"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:suitcase",
+      "source_library": "mingcute",
+      "source_name": "suitcase",
+      "label": "Suitcase",
+      "depicts_observation": "Tall suitcase with one top handle and two vertical side rails framing the body",
+      "popular_reading": "Tall travel suitcase",
+      "plausible_readings": [
+        "suitcase icon",
+        "travel luggage",
+        "bag case"
+      ],
+      "context_bias": "Use when the interface wants luggage to read as a taller travel case with upright side rails.",
+      "ambiguity_note": "Do not use for the briefcase style suitcase when the front should be crossed by two horizontal bands instead of side rails.",
+      "search_hints": [
+        "Suitcase",
+        "suitcase icon",
+        "travel luggage",
+        "bag case",
+        "Tall travel suitcase"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/suitcase_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot draws the suitcase taller with vertical side rails rather than wide horizontal front bands."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:suitcase",
+      "source_library": "mingcute",
+      "source_name": "suitcase",
+      "label": "Suitcase",
+      "depicts": "Tall suitcase with one top handle and two vertical side rails framing the body",
+      "use_when": "Use when the interface wants luggage to read as a taller travel case with upright side rails.",
+      "avoid_when": "Do not use for the briefcase style suitcase when the front should be crossed by two horizontal bands instead of side rails.",
+      "semantic_tags": [
+        "bag case",
+        "suitcase",
+        "suitcase icon",
+        "travel luggage"
+      ],
+      "synonyms": [
+        "bag case",
+        "suitcase",
+        "suitcase icon",
+        "travel luggage"
+      ]
+    }
+  }
+]

@@ -1,0 +1,419 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:suitcase_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_suitcase_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:suitcase_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "suitcase_2",
+      "label": "Suitcase",
+      "purpose": "Show suitcase as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "suitcase",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to suitcase as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing suitcase.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "suitcase",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:suitcase_2",
+      "source_library": "mingcute",
+      "source_name": "suitcase_2",
+      "label": "Suitcase",
+      "depicts_observation": "Briefcase body with one top handle and two horizontal bands across the front panel",
+      "popular_reading": "Briefcase suitcase",
+      "plausible_readings": [
+        "suitcase icon",
+        "briefcase",
+        "travel case"
+      ],
+      "context_bias": "Use when the interface wants the luggage to feel flatter and more like a briefcase with front bands.",
+      "ambiguity_note": "Do not use for the taller suitcase when the case should not be framed by two vertical side rails.",
+      "search_hints": [
+        "Suitcase",
+        "suitcase icon",
+        "briefcase",
+        "travel case",
+        "Briefcase suitcase"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/suitcase_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is wider and flatter with horizontal front bands instead of the upright travel case proportions."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:suitcase_2",
+      "source_library": "mingcute",
+      "source_name": "suitcase_2",
+      "label": "Suitcase",
+      "depicts": "Briefcase body with one top handle and two horizontal bands across the front panel",
+      "use_when": "Use when the interface wants the luggage to feel flatter and more like a briefcase with front bands.",
+      "avoid_when": "Do not use for the taller suitcase when the case should not be framed by two vertical side rails.",
+      "semantic_tags": [
+        "2",
+        "briefcase",
+        "suitcase",
+        "suitcase icon",
+        "travel case"
+      ],
+      "synonyms": [
+        "2",
+        "briefcase",
+        "suitcase",
+        "suitcase icon",
+        "travel case"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:sun",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_sun_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:sun",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "sun",
+      "label": "Sun",
+      "purpose": "Show sun as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "sun"
+      ],
+      "use_when": "Use when the interface refers directly to sun as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing sun.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "sun"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:sun",
+      "source_library": "mingcute",
+      "source_name": "sun",
+      "label": "Sun",
+      "depicts_observation": "Round sun circle with short rays spaced evenly around the outer rim",
+      "popular_reading": "Classic sun with rays",
+      "plausible_readings": [
+        "sun icon",
+        "daylight symbol",
+        "weather sun"
+      ],
+      "context_bias": "Use when the interface wants the standard sun symbol with a central disk and evenly spaced rays.",
+      "ambiguity_note": "Do not use for the wrapped sun when a sweeping ring line should cut through the disk from the left side.",
+      "search_hints": [
+        "Sun",
+        "sun icon",
+        "daylight symbol",
+        "weather sun",
+        "Classic sun with rays"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/sun_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses the classic disk and ray pattern without the extra wrapping line of the second sun variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:sun",
+      "source_library": "mingcute",
+      "source_name": "sun",
+      "label": "Sun",
+      "depicts": "Round sun circle with short rays spaced evenly around the outer rim",
+      "use_when": "Use when the interface wants the standard sun symbol with a central disk and evenly spaced rays.",
+      "avoid_when": "Do not use for the wrapped sun when a sweeping ring line should cut through the disk from the left side.",
+      "semantic_tags": [
+        "daylight symbol",
+        "sun",
+        "sun icon",
+        "weather sun"
+      ],
+      "synonyms": [
+        "daylight symbol",
+        "sun",
+        "sun icon",
+        "weather sun"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:sun_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_sun_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:sun_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "sun_2",
+      "label": "Sun",
+      "purpose": "Show sun as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "sun",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to sun as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing sun.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "sun",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:sun_2",
+      "source_library": "mingcute",
+      "source_name": "sun_2",
+      "label": "Sun",
+      "depicts_observation": "Round sun disk crossed by one sweeping ring line that wraps through the left side",
+      "popular_reading": "Wrapped sun disk",
+      "plausible_readings": [
+        "sun icon",
+        "orbital sun",
+        "weather sun"
+      ],
+      "context_bias": "Use when the interface wants the sun to feel more stylized with a ring line sweeping through the disk.",
+      "ambiguity_note": "Do not use for the classic sun when the icon should only rely on short rays around a plain center disk.",
+      "search_hints": [
+        "Sun",
+        "sun icon",
+        "orbital sun",
+        "weather sun",
+        "Wrapped sun disk"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/sun_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds the wrapping ring line and drops the simple ray pattern of the first sun variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:sun_2",
+      "source_library": "mingcute",
+      "source_name": "sun_2",
+      "label": "Sun",
+      "depicts": "Round sun disk crossed by one sweeping ring line that wraps through the left side",
+      "use_when": "Use when the interface wants the sun to feel more stylized with a ring line sweeping through the disk.",
+      "avoid_when": "Do not use for the classic sun when the icon should only rely on short rays around a plain center disk.",
+      "semantic_tags": [
+        "2",
+        "orbital sun",
+        "sun",
+        "sun icon",
+        "weather sun"
+      ],
+      "synonyms": [
+        "2",
+        "orbital sun",
+        "sun",
+        "sun icon",
+        "weather sun"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:t_shirt",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_t_shirt_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:t_shirt",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "t_shirt",
+      "label": "T Shirt",
+      "purpose": "Show t shirt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "t",
+        "shirt"
+      ],
+      "use_when": "Use when the interface refers directly to t shirt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing t shirt.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "t",
+        "shirt"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:t_shirt",
+      "source_library": "mingcute",
+      "source_name": "t_shirt",
+      "label": "T Shirt",
+      "depicts_observation": "T shirt silhouette with short sleeves and side panels and one rounded collar opening",
+      "popular_reading": "Paneled t shirt",
+      "plausible_readings": [
+        "t shirt icon",
+        "shirt silhouette",
+        "clothing top"
+      ],
+      "context_bias": "Use when the interface wants a fuller shirt body with extra side panel detail built into the silhouette.",
+      "ambiguity_note": "Do not use for the plainer tee when the shirt should not emphasize extra side panels or outer seam structure.",
+      "search_hints": [
+        "T Shirt",
+        "t shirt icon",
+        "shirt silhouette",
+        "clothing top",
+        "Paneled t shirt"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/t_shirt_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a more structured shirt body with side panel detail instead of the plainer tee outline."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:t_shirt",
+      "source_library": "mingcute",
+      "source_name": "t_shirt",
+      "label": "T Shirt",
+      "depicts": "T shirt silhouette with short sleeves and side panels and one rounded collar opening",
+      "use_when": "Use when the interface wants a fuller shirt body with extra side panel detail built into the silhouette.",
+      "avoid_when": "Do not use for the plainer tee when the shirt should not emphasize extra side panels or outer seam structure.",
+      "semantic_tags": [
+        "clothing top",
+        "shirt",
+        "shirt silhouette",
+        "t",
+        "t shirt icon"
+      ],
+      "synonyms": [
+        "clothing top",
+        "shirt",
+        "shirt silhouette",
+        "t",
+        "t shirt",
+        "t shirt icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:t_shirt_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_t_shirt_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:t_shirt_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "t_shirt_2",
+      "label": "T Shirt",
+      "purpose": "Show t shirt as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "t",
+        "shirt",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to t shirt as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing t shirt.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "t",
+        "shirt",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:t_shirt_2",
+      "source_library": "mingcute",
+      "source_name": "t_shirt_2",
+      "label": "T Shirt",
+      "depicts_observation": "Plain t shirt silhouette with short sleeves and one simple crew neck opening",
+      "popular_reading": "Plain tee shirt",
+      "plausible_readings": [
+        "t shirt icon",
+        "shirt silhouette",
+        "clothing top"
+      ],
+      "context_bias": "Use when the interface wants the simplest tee outline without extra side panel structure or shaping.",
+      "ambiguity_note": "Do not use for the paneled shirt when the body should show more structure around the sides and shoulders.",
+      "search_hints": [
+        "T Shirt",
+        "t shirt icon",
+        "shirt silhouette",
+        "clothing top",
+        "Plain tee shirt"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/t_shirt_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps the tee simpler and more uniform than the more structured paneled t shirt variant."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:t_shirt_2",
+      "source_library": "mingcute",
+      "source_name": "t_shirt_2",
+      "label": "T Shirt",
+      "depicts": "Plain t shirt silhouette with short sleeves and one simple crew neck opening",
+      "use_when": "Use when the interface wants the simplest tee outline without extra side panel structure or shaping.",
+      "avoid_when": "Do not use for the paneled shirt when the body should show more structure around the sides and shoulders.",
+      "semantic_tags": [
+        "2",
+        "clothing top",
+        "shirt",
+        "shirt silhouette",
+        "t",
+        "t shirt icon"
+      ],
+      "synonyms": [
+        "2",
+        "clothing top",
+        "shirt",
+        "shirt silhouette",
+        "t",
+        "t shirt",
+        "t shirt icon"
+      ]
+    }
+  }
+]

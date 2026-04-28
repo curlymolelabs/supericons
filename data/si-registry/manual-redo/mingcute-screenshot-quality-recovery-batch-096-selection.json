@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-096",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 096",
+  "review_goal": "Differentiate video camera, voice, and wardrobe variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:video_camera",
+      "screenshot_file_name": "mingcute_video_camera_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/video_camera_line.svg",
+      "depicts_observation": "Video camera body with two top circles and one side lens block on the right",
+      "popular_reading": "Camera with twin reels",
+      "plausible_readings": ["video camera icon", "film camera", "recording device"],
+      "context_bias": "Use when the interface wants the camera to feel like a classic film body with two circles on top.",
+      "ambiguity_note": "Do not use for the simpler video camera when the top of the body should stay flat without twin circles.",
+      "selection_reason": "The screenshot adds the two top circles that make it read like a classic twin reel camera."
+    },
+    {
+      "icon_id": "mingcute:video_camera_2",
+      "screenshot_file_name": "mingcute_video_camera_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/video_camera_2_line.svg",
+      "depicts_observation": "Video camera body with one flat top block and one side lens block on the right",
+      "popular_reading": "Simple video camera",
+      "plausible_readings": ["video camera icon", "camcorder", "recording device"],
+      "context_bias": "Use when the interface wants a simpler camera body without the twin circles of a film style recorder.",
+      "ambiguity_note": "Do not use for the twin reel camera when the top of the body should show two round circles.",
+      "selection_reason": "The screenshot keeps the top of the camera flat instead of adding the two round reel circles."
+    },
+    {
+      "icon_id": "mingcute:voice",
+      "screenshot_file_name": "mingcute_voice_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/voice_line.svg",
+      "depicts_observation": "Five vertical bars centered around one tallest middle bar with shorter bars outside",
+      "popular_reading": "Centered voice waveform",
+      "plausible_readings": ["voice icon", "audio bars", "sound waveform"],
+      "context_bias": "Use when the interface wants the voice cue to read as a balanced centered waveform.",
+      "ambiguity_note": "Do not use for the rising bar voice mark when the bars should climb unevenly from left to right.",
+      "selection_reason": "The screenshot places the tallest bar in the middle and balances the shorter bars around it."
+    },
+    {
+      "icon_id": "mingcute:voice_2",
+      "screenshot_file_name": "mingcute_voice_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/voice_2_line.svg",
+      "depicts_observation": "Five vertical bars rising unevenly from left to right with the tallest bar near the right edge",
+      "popular_reading": "Rising voice bars",
+      "plausible_readings": ["voice icon", "audio bars", "sound waveform"],
+      "context_bias": "Use when the interface wants the voice cue to read like an uneven equalizer that rises across the row.",
+      "ambiguity_note": "Do not use for the centered waveform when the tallest bar should sit in the middle of a balanced pattern.",
+      "selection_reason": "The screenshot climbs toward the right instead of centering the tallest bar in the middle."
+    },
+    {
+      "icon_id": "mingcute:wardrobe",
+      "screenshot_file_name": "mingcute_wardrobe_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/wardrobe_line.svg",
+      "depicts_observation": "Wardrobe body split into two tall doors with one small dot on each door",
+      "popular_reading": "Two door wardrobe",
+      "plausible_readings": ["wardrobe icon", "closet cabinet", "storage doors"],
+      "context_bias": "Use when the interface wants the wardrobe to read as two full height cabinet doors.",
+      "ambiguity_note": "Do not use for the mixed wardrobe when one side should break into stacked shelf panels instead of two tall doors.",
+      "selection_reason": "The screenshot is the simpler wardrobe with two equal doors and one dot on each side."
+    }
+  ]
+}

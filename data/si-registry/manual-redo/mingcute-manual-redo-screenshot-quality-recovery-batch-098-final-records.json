@@ -1,0 +1,111 @@
+[
+  {
+    "icon_id": "mingcute:watch",
+    "source_library": "mingcute",
+    "source_name": "watch",
+    "label": "Watch",
+    "depicts": "Round watch face inside one tall body with straight strap blocks attached above and below",
+    "use_when": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+    "avoid_when": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
+    "semantic_tags": [
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
+    ],
+    "synonyms": [
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
+    ]
+  },
+  {
+    "icon_id": "mingcute:watch_2",
+    "source_library": "mingcute",
+    "source_name": "watch_2",
+    "label": "Watch",
+    "depicts": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
+    "use_when": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+    "avoid_when": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
+    "semantic_tags": [
+      "2",
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
+    ],
+    "synonyms": [
+      "2",
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
+    ]
+  },
+  {
+    "icon_id": "mingcute:wineglass",
+    "source_library": "mingcute",
+    "source_name": "wineglass",
+    "label": "Wineglass",
+    "depicts": "Wine glass with one rounded bowl on a thin stem above one short base line",
+    "use_when": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+    "avoid_when": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
+    "semantic_tags": [
+      "drink stemware",
+      "goblet glass",
+      "wineglass",
+      "wineglass icon"
+    ],
+    "synonyms": [
+      "drink stemware",
+      "goblet glass",
+      "wineglass",
+      "wineglass icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:world",
+    "source_library": "mingcute",
+    "source_name": "world",
+    "label": "World",
+    "depicts": "Round world circle crossed by three horizontal latitude bands from top to bottom",
+    "use_when": "Use when the interface wants the world to read as a globe built from horizontal latitude style bands.",
+    "avoid_when": "Do not use for the world map globe when continent shapes should appear inside the circle.",
+    "semantic_tags": [
+      "globe bands",
+      "planet mark",
+      "world",
+      "world icon"
+    ],
+    "synonyms": [
+      "globe bands",
+      "planet mark",
+      "world",
+      "world icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:world_2",
+    "source_library": "mingcute",
+    "source_name": "world_2",
+    "label": "World",
+    "depicts": "Round world circle containing two continent shapes and one small island shape inside",
+    "use_when": "Use when the interface wants the world to read as a globe with continent land shapes inside the circle.",
+    "avoid_when": "Do not use for the striped globe when the planet should not reduce to horizontal latitude bands alone.",
+    "semantic_tags": [
+      "2",
+      "earth globe",
+      "planet map",
+      "world",
+      "world icon"
+    ],
+    "synonyms": [
+      "2",
+      "earth globe",
+      "planet map",
+      "world",
+      "world icon"
+    ]
+  }
+]

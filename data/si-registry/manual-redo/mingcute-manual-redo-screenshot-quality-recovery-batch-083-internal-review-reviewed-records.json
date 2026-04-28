@@ -1,0 +1,439 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:scissors_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_scissors_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:scissors_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "scissors_3",
+      "label": "Scissors",
+      "purpose": "Show scissors as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "scissors",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to scissors as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing scissors.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "scissors",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:scissors_3",
+      "source_library": "mingcute",
+      "source_name": "scissors_3",
+      "label": "Scissors",
+      "depicts_observation": "Sideways scissors with two finger loops on the left and two cutting blades crossing toward the right",
+      "popular_reading": "Horizontal scissors",
+      "plausible_readings": [
+        "scissors icon",
+        "cut tool",
+        "shears"
+      ],
+      "context_bias": "Use when the interface wants the scissors laid out horizontally rather than standing upright or tilted.",
+      "ambiguity_note": "Do not use for the upright or rotated scissors when the handles should not sit clearly to the left of the blades.",
+      "search_hints": [
+        "Scissors",
+        "scissors icon",
+        "cut tool",
+        "shears",
+        "Horizontal scissors"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/scissors_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot flips the scissors into a left to right cutting pose instead of an upward pointing pose."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:scissors_3",
+      "source_library": "mingcute",
+      "source_name": "scissors_3",
+      "label": "Scissors",
+      "depicts": "Sideways scissors with two finger loops on the left and two cutting blades crossing toward the right",
+      "use_when": "Use when the interface wants the scissors laid out horizontally rather than standing upright or tilted.",
+      "avoid_when": "Do not use for the upright or rotated scissors when the handles should not sit clearly to the left of the blades.",
+      "semantic_tags": [
+        "3",
+        "cut tool",
+        "scissors",
+        "scissors icon",
+        "shears"
+      ],
+      "synonyms": [
+        "3",
+        "cut tool",
+        "scissors",
+        "scissors icon",
+        "shears"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:server",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_server_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:server",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "server",
+      "label": "Server",
+      "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
+      "category": "systems_architecture",
+      "semantic_tags": [
+        "server",
+        "backend",
+        "infrastructure",
+        "hosted service",
+        "systems"
+      ],
+      "use_when": "Use when the interface refers to server infrastructure, backend systems, or hosted services.",
+      "avoid_when": "Do not use for generic storage or file containers when the meaning is specifically server infrastructure.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A stacked server or infrastructure unit.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "backend server",
+        "hosted service",
+        "infrastructure",
+        "server stack"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:server",
+      "source_library": "mingcute",
+      "source_name": "server",
+      "label": "Server",
+      "depicts_observation": "Rectangular server rack with two horizontal bays and two small status dots in the lower bay",
+      "popular_reading": "Stacked server rack",
+      "plausible_readings": [
+        "server icon",
+        "rack unit",
+        "data box"
+      ],
+      "context_bias": "Use when the interface wants a clear stacked rack server with shelf like horizontal divisions.",
+      "ambiguity_note": "Do not use for the rounded server appliance when the machine should not taper or soften around the top corners.",
+      "search_hints": [
+        "Server",
+        "server icon",
+        "rack unit",
+        "data box",
+        "Stacked server rack"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/server_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot reads as a straight rectangular rack with shelf lines and bottom status lights."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:server",
+      "source_library": "mingcute",
+      "source_name": "server",
+      "label": "Server",
+      "depicts": "Rectangular server rack with two horizontal bays and two small status dots in the lower bay",
+      "use_when": "Use when the interface wants a clear stacked rack server with shelf like horizontal divisions.",
+      "avoid_when": "Do not use for the rounded server appliance when the machine should not taper or soften around the top corners.",
+      "semantic_tags": [
+        "backend",
+        "data box",
+        "hosted service",
+        "infrastructure",
+        "rack unit",
+        "server",
+        "server icon",
+        "systems"
+      ],
+      "synonyms": [
+        "backend server",
+        "data box",
+        "hosted service",
+        "infrastructure",
+        "rack unit",
+        "server",
+        "server icon",
+        "server stack"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:server_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_server_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:server_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "server_2",
+      "label": "Server",
+      "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
+      "category": "systems_architecture",
+      "semantic_tags": [
+        "server",
+        "backend",
+        "infrastructure",
+        "hosted service",
+        "systems"
+      ],
+      "use_when": "Use when the interface refers to server infrastructure, backend systems, or hosted services.",
+      "avoid_when": "Do not use for generic storage or file containers when the meaning is specifically server infrastructure.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A stacked server or infrastructure unit.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "backend server",
+        "hosted service",
+        "infrastructure",
+        "server stack"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:server_2",
+      "source_library": "mingcute",
+      "source_name": "server_2",
+      "label": "Server",
+      "depicts_observation": "Rounded server body with a tapered top shell and two small status lights near the lower center",
+      "popular_reading": "Rounded server unit",
+      "plausible_readings": [
+        "server icon",
+        "appliance",
+        "network box"
+      ],
+      "context_bias": "Use when the interface wants a softer standalone server body instead of a flat rectangular rack with shelf dividers.",
+      "ambiguity_note": "Do not use for the rack server when the machine should be drawn as two stacked rectangular bays.",
+      "search_hints": [
+        "Server",
+        "server icon",
+        "appliance",
+        "network box",
+        "Rounded server unit"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/server_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot swaps the rack shelves for one rounded appliance body with a softer top profile."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:server_2",
+      "source_library": "mingcute",
+      "source_name": "server_2",
+      "label": "Server",
+      "depicts": "Rounded server body with a tapered top shell and two small status lights near the lower center",
+      "use_when": "Use when the interface wants a softer standalone server body instead of a flat rectangular rack with shelf dividers.",
+      "avoid_when": "Do not use for the rack server when the machine should be drawn as two stacked rectangular bays.",
+      "semantic_tags": [
+        "appliance",
+        "backend",
+        "hosted service",
+        "infrastructure",
+        "network box",
+        "server",
+        "server icon",
+        "systems"
+      ],
+      "synonyms": [
+        "appliance",
+        "backend server",
+        "hosted service",
+        "infrastructure",
+        "network box",
+        "server",
+        "server icon",
+        "server stack"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:settings_6",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_settings_6_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:settings_6",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "settings_6",
+      "label": "Settings",
+      "purpose": "Show settings as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "settings",
+        "6"
+      ],
+      "use_when": "Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing settings.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "settings",
+        "6"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:settings_6",
+      "source_library": "mingcute",
+      "source_name": "settings_6",
+      "label": "Settings",
+      "depicts_observation": "Three horizontal slider bars with one round knob on each bar instead of a gear wheel",
+      "popular_reading": "Adjustment sliders",
+      "plausible_readings": [
+        "settings icon",
+        "controls",
+        "tuning sliders"
+      ],
+      "context_bias": "Use when the interface wants settings to read as adjustable controls rather than a gear mechanism.",
+      "ambiguity_note": "Do not use for the gear wheel when the settings cue should be toothed and circular instead of linear sliders.",
+      "search_hints": [
+        "Settings",
+        "settings icon",
+        "controls",
+        "tuning sliders",
+        "Adjustment sliders"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/settings_6_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot turns settings into three slider controls instead of a toothed gear."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:settings_6",
+      "source_library": "mingcute",
+      "source_name": "settings_6",
+      "label": "Settings",
+      "depicts": "Three horizontal slider bars with one round knob on each bar instead of a gear wheel",
+      "use_when": "Use when the interface wants settings to read as adjustable controls rather than a gear mechanism.",
+      "avoid_when": "Do not use for the gear wheel when the settings cue should be toothed and circular instead of linear sliders.",
+      "semantic_tags": [
+        "6",
+        "controls",
+        "settings",
+        "settings icon",
+        "tuning sliders"
+      ],
+      "synonyms": [
+        "6",
+        "controls",
+        "settings",
+        "settings icon",
+        "tuning sliders"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:settings_7",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_settings_7_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:settings_7",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "settings_7",
+      "label": "Settings",
+      "purpose": "Show settings as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "settings",
+        "7"
+      ],
+      "use_when": "Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing settings.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "settings",
+        "7"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:settings_7",
+      "source_library": "mingcute",
+      "source_name": "settings_7",
+      "label": "Settings",
+      "depicts_observation": "Circular gear wheel with a center hub and short teeth spaced around the outer rim",
+      "popular_reading": "Gear settings",
+      "plausible_readings": [
+        "settings icon",
+        "gear",
+        "cog wheel"
+      ],
+      "context_bias": "Use when the interface wants the familiar gear symbol rather than slider based tuning controls.",
+      "ambiguity_note": "Do not use for the slider settings when the cue should not be a round toothed wheel.",
+      "search_hints": [
+        "Settings",
+        "settings icon",
+        "gear",
+        "cog wheel",
+        "Gear settings"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/settings_7_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is a compact gear with teeth around the rim instead of three horizontal slider bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:settings_7",
+      "source_library": "mingcute",
+      "source_name": "settings_7",
+      "label": "Settings",
+      "depicts": "Circular gear wheel with a center hub and short teeth spaced around the outer rim",
+      "use_when": "Use when the interface wants the familiar gear symbol rather than slider based tuning controls.",
+      "avoid_when": "Do not use for the slider settings when the cue should not be a round toothed wheel.",
+      "semantic_tags": [
+        "7",
+        "cog wheel",
+        "gear",
+        "settings",
+        "settings icon"
+      ],
+      "synonyms": [
+        "7",
+        "cog wheel",
+        "gear",
+        "settings",
+        "settings icon"
+      ]
+    }
+  }
+]

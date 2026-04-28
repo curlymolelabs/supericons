@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-091",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 091",
+  "review_goal": "Differentiate task, telescope, and thumb down variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:task",
+      "screenshot_file_name": "mingcute_task_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/task_line.svg",
+      "depicts_observation": "Clipboard panel with one top clip and one large check mark in the center",
+      "popular_reading": "Task clipboard check",
+      "plausible_readings": ["task icon", "checked clipboard", "completed task"],
+      "context_bias": "Use when the interface wants the task cue to read as a completed clipboard item with a check mark.",
+      "ambiguity_note": "Do not use for the list clipboard when the panel should show horizontal task lines instead of one big check mark.",
+      "selection_reason": "The screenshot centers the clipboard on a large check mark rather than list bars."
+    },
+    {
+      "icon_id": "mingcute:task_2",
+      "screenshot_file_name": "mingcute_task_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/task_2_line.svg",
+      "depicts_observation": "Clipboard panel with one top clip and three horizontal list bars down the center",
+      "popular_reading": "Task clipboard list",
+      "plausible_readings": ["task icon", "clipboard list", "task notes"],
+      "context_bias": "Use when the interface wants the task cue to read as a list of items on a clipboard.",
+      "ambiguity_note": "Do not use for the checked clipboard when the panel should not be dominated by one large check mark.",
+      "selection_reason": "The screenshot fills the clipboard with list bars instead of one big completion check."
+    },
+    {
+      "icon_id": "mingcute:telescope",
+      "screenshot_file_name": "mingcute_telescope_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/telescope_line.svg",
+      "depicts_observation": "Long telescope body tilted on one tripod stand with the eyepiece pointing toward the upper right",
+      "popular_reading": "Tripod telescope",
+      "plausible_readings": ["telescope icon", "spyglass stand", "stargazing scope"],
+      "context_bias": "Use when the interface wants an observing scope mounted on a stand rather than a handheld viewing tool.",
+      "ambiguity_note": "Do not use for the binoculars when the viewing tool should split into two barrels with two eyepieces.",
+      "selection_reason": "The screenshot shows one long scope mounted on a stand instead of two short binocular barrels."
+    },
+    {
+      "icon_id": "mingcute:telescope_2",
+      "screenshot_file_name": "mingcute_telescope_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/telescope_2_line.svg",
+      "depicts_observation": "Pair of binocular barrels joined at the center with two round eyepieces at the lower ends",
+      "popular_reading": "Binocular viewing tool",
+      "plausible_readings": ["binoculars icon", "viewing scope", "field glasses"],
+      "context_bias": "Use when the interface wants a dual barrel handheld viewing tool instead of a mounted telescope.",
+      "ambiguity_note": "Do not use for the tripod telescope when the sighting tool should not be one long angled tube on a stand.",
+      "selection_reason": "The screenshot splits the viewing tool into two joined barrels rather than one mounted scope."
+    },
+    {
+      "icon_id": "mingcute:thumb_down",
+      "screenshot_file_name": "mingcute_thumb_down_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/thumb_down_line.svg",
+      "depicts_observation": "Thumb silhouette pointing downward with one rounded back and one short cuff nub on the left",
+      "popular_reading": "Rounded thumbs down",
+      "plausible_readings": ["thumb down icon", "dislike hand", "negative vote"],
+      "context_bias": "Use when the interface wants a compact rounded thumbs down shape without a long separate wrist block.",
+      "ambiguity_note": "Do not use for the more structured thumbs down hand when the wrist and palm should look more segmented.",
+      "selection_reason": "The screenshot reads as the rounder compact thumbs down instead of the more segmented hand silhouette."
+    }
+  ]
+}

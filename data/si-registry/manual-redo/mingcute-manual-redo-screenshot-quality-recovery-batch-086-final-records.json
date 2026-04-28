@@ -1,0 +1,113 @@
+[
+  {
+    "icon_id": "mingcute:shuffle_2",
+    "source_library": "mingcute",
+    "source_name": "shuffle_2",
+    "label": "Shuffle",
+    "depicts": "Two separated path arrows bending around each other in opposite lanes without crossing into an X",
+    "use_when": "Use when the interface wants shuffle to read as two separate arrow lanes rather than one crossed X shape.",
+    "avoid_when": "Do not use for the crossed shuffle when both path arrows should intersect at the center before exiting rightward.",
+    "semantic_tags": [
+      "2",
+      "mixed playback",
+      "parallel arrows",
+      "shuffle",
+      "shuffle icon"
+    ],
+    "synonyms": [
+      "2",
+      "mixed playback",
+      "parallel arrows",
+      "shuffle",
+      "shuffle icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:signature",
+    "source_library": "mingcute",
+    "source_name": "signature",
+    "label": "Signature",
+    "depicts": "Handwritten signature line making one tall zigzag stroke and one short tail at the lower right",
+    "use_when": "Use when the interface wants a freehand signature drawn as one loose handwritten stroke with no extra frame.",
+    "avoid_when": "Do not use for the signature mark with the diagonal line and curved ring stroke around it.",
+    "semantic_tags": [
+      "handwriting stroke",
+      "signature",
+      "signature icon",
+      "signed mark"
+    ],
+    "synonyms": [
+      "handwriting stroke",
+      "signature",
+      "signature icon",
+      "signed mark"
+    ]
+  },
+  {
+    "icon_id": "mingcute:signature_2",
+    "source_library": "mingcute",
+    "source_name": "signature_2",
+    "label": "Signature",
+    "depicts": "Diagonal signature line crossing through one curved ring stroke with a short tail below",
+    "use_when": "Use when the interface wants the signature to feel more structured with a diagonal line and curved ring around it.",
+    "avoid_when": "Do not use for the looser signature squiggle when the mark should not include the wrapped ring stroke.",
+    "semantic_tags": [
+      "2",
+      "handwriting line",
+      "signature",
+      "signature icon",
+      "signed mark"
+    ],
+    "synonyms": [
+      "2",
+      "handwriting line",
+      "signature",
+      "signature icon",
+      "signed mark"
+    ]
+  },
+  {
+    "icon_id": "mingcute:snowstorm",
+    "source_library": "mingcute",
+    "source_name": "snowstorm",
+    "label": "Snowstorm",
+    "depicts": "Two horizontal wind bars pushing toward two small snowflake stars on the right side",
+    "use_when": "Use when the interface wants snowstorm to read like blowing wind carrying snow across the screen.",
+    "avoid_when": "Do not use for the cloud snowstorm when the weather cue should start from a cloud outline with snow falling below it.",
+    "semantic_tags": [
+      "blowing snow",
+      "snowstorm",
+      "snowstorm icon",
+      "winter gust"
+    ],
+    "synonyms": [
+      "blowing snow",
+      "snowstorm",
+      "snowstorm icon",
+      "winter gust"
+    ]
+  },
+  {
+    "icon_id": "mingcute:snowstorm_2",
+    "source_library": "mingcute",
+    "source_name": "snowstorm_2",
+    "label": "Snowstorm",
+    "depicts": "Cloud outline with four small snowflake stars hanging below the lower edge",
+    "use_when": "Use when the interface wants snowstorm to read as a cloud releasing snow instead of wind bars pushing flakes sideways.",
+    "avoid_when": "Do not use for the blowing snow variant when the weather cue should not start from a cloud outline.",
+    "semantic_tags": [
+      "2",
+      "snow cloud",
+      "snowstorm",
+      "snowstorm icon",
+      "winter weather"
+    ],
+    "synonyms": [
+      "2",
+      "snow cloud",
+      "snowstorm",
+      "snowstorm icon",
+      "winter weather"
+    ]
+  }
+]

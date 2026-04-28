@@ -40582,23 +40582,29 @@
     "purpose": "Show rss as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "rss"
+      "broadcast badge",
+      "feed tile",
+      "rss",
+      "rss icon"
     ],
-    "use_when": "Use when the interface refers directly to rss as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the RSS mark contained inside a rounded square badge or app style tile.",
+    "avoid_when": "Do not use for the loose RSS signal when the dot and arcs should appear without any outer frame.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing rss.",
+    "depicts": "Rounded square tile holding one lower dot with two broadcast arcs rising inside the frame",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "rss"
+      "broadcast badge",
+      "feed tile",
+      "rss",
+      "rss icon"
     ]
   },
   {
@@ -40610,25 +40616,31 @@
     "purpose": "Show rss as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "broadcast mark",
+      "feed signal",
       "rss",
-      "2"
+      "rss icon"
     ],
-    "use_when": "Use when the interface refers directly to rss as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a bare RSS signal with no container around the dot and arcs.",
+    "avoid_when": "Do not use for the RSS tile when the same signal should sit inside a rounded square badge.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing rss.",
+    "depicts": "One lower dot with two broadcast arcs floating freely without any outer square frame",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "broadcast mark",
+      "feed signal",
       "rss",
-      "2"
+      "rss icon"
     ]
   },
   {
@@ -41131,23 +41143,29 @@
     "purpose": "Show sandglass as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "sandglass"
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
     ],
-    "use_when": "Use when the interface refers directly to sandglass as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a geometric hourglass with crisp flat ends and a narrow center pinch.",
+    "avoid_when": "Do not use for the softer hourglass variant when the sides should bow outward in a more rounded shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sandglass.",
+    "depicts": "Angular hourglass with flat top and bottom caps and two straight triangular chambers touching at the waist",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "sandglass"
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
     ]
   },
   {
@@ -41159,25 +41177,31 @@
     "purpose": "Show sandglass as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "hourglass icon",
+      "sand timer",
       "sandglass",
-      "2"
+      "timer glass"
     ],
-    "use_when": "Use when the interface refers directly to sandglass as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants an hourglass silhouette with softer bowed sides instead of a rigid angular frame.",
+    "avoid_when": "Do not use for the straighter hourglass when the chambers should look more triangular with flatter end caps.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sandglass.",
+    "depicts": "Hourglass with rounded outer sides that curve inward toward a pinched middle",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "hourglass icon",
+      "sand timer",
       "sandglass",
-      "2"
+      "timer glass"
     ]
   },
   {
@@ -41217,23 +41241,29 @@
     "purpose": "Show save as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "save"
+      "approved file",
+      "checked page",
+      "save",
+      "save icon"
     ],
-    "use_when": "Use when the interface refers directly to save as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants save to feel like a confirmed document or completed file action.",
+    "avoid_when": "Do not use for the floppy disk variant when the save concept should reference storage media instead of a checked page.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing save.",
+    "depicts": "Document page with one folded corner and a large check mark centered inside the page",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "save"
+      "approved file",
+      "checked page",
+      "save",
+      "save icon"
     ]
   },
   {
@@ -41245,25 +41275,31 @@
     "purpose": "Show save as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "diskette",
       "save",
-      "2"
+      "save icon",
+      "storage disk"
     ],
-    "use_when": "Use when the interface refers directly to save as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the classic floppy disk metaphor instead of a document confirmation symbol.",
+    "avoid_when": "Do not use for the checked page variant when the save state should read like a completed file rather than disk media.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing save.",
+    "depicts": "Floppy disk with one top notch window and one lower rectangular label area",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "diskette",
       "save",
-      "2"
+      "save icon",
+      "storage disk"
     ]
   },
   {
@@ -41303,29 +41339,36 @@
     "purpose": "Show scanning, visual capture, or inspection of an item or visible surface.",
     "category": "search_discovery",
     "semantic_tags": [
-      "scan",
       "capture",
+      "crop frame",
+      "focus brackets",
       "inspect",
-      "visual scan",
-      "lookup"
+      "lookup",
+      "scan",
+      "scan icon",
+      "visual scan"
     ],
-    "use_when": "Use when the interface scans, inspects, or visually captures an item or visible surface.",
-    "avoid_when": "Do not use for generic search when the meaning is specifically scan or capture.",
+    "use_when": "Use when the interface wants a camera style scan frame built only from corner brackets.",
+    "avoid_when": "Do not use for the circular scan variant when the mark should look like a ring with a sweeping diagonal segment.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "Scan corners or a framed scan target.",
+    "depicts": "Four open corner brackets forming one square scan frame with no center mark",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "scan item",
       "capture scan",
+      "crop frame",
+      "focus brackets",
       "inspect visually",
+      "scan",
+      "scan icon",
+      "scan item",
       "scan target"
     ]
   },
@@ -41338,29 +41381,36 @@
     "purpose": "Show scanning, visual capture, or inspection of an item or visible surface.",
     "category": "search_discovery",
     "semantic_tags": [
-      "scan",
       "capture",
       "inspect",
-      "visual scan",
-      "lookup"
+      "lookup",
+      "radar sweep",
+      "scan",
+      "scan icon",
+      "scan ring",
+      "visual scan"
     ],
-    "use_when": "Use when the interface scans, inspects, or visually captures an item or visible surface.",
-    "avoid_when": "Do not use for generic search when the meaning is specifically scan or capture.",
+    "use_when": "Use when the interface wants scanning to feel like a circular sweep instead of corner brackets around a frame.",
+    "avoid_when": "Do not use for the corner frame scan when the mark should be four separated brackets with an empty center.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "Scan corners or a framed scan target.",
+    "depicts": "Open circular ring with a diagonal sweep cutting across the upper right side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "scan item",
       "capture scan",
       "inspect visually",
+      "radar sweep",
+      "scan",
+      "scan icon",
+      "scan item",
+      "scan ring",
       "scan target"
     ]
   },
@@ -41485,23 +41535,29 @@
     "purpose": "Show scissors as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "scissors"
+      "cut tool",
+      "scissors",
+      "scissors icon",
+      "shears"
     ],
-    "use_when": "Use when the interface refers directly to scissors as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the familiar vertical scissors pose with loops at the bottom and blades above.",
+    "avoid_when": "Do not use for the sideways or rotated scissors when the tool should not read as the standard upright cutting pose.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing scissors.",
+    "depicts": "Open scissors with two round finger loops below and crossing blades pointing upward",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "scissors"
+      "cut tool",
+      "scissors",
+      "scissors icon",
+      "shears"
     ]
   },
   {
@@ -41513,25 +41569,31 @@
     "purpose": "Show scissors as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "cut tool",
       "scissors",
-      "2"
+      "scissors icon",
+      "shears"
     ],
-    "use_when": "Use when the interface refers directly to scissors as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a more dynamic rotated scissors silhouette instead of the straight upright tool pose.",
+    "avoid_when": "Do not use for the classic upright scissors or the sideways scissors where the cutting tool should face in a more stable orientation.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing scissors.",
+    "depicts": "Rotated scissors with one handle loop hanging lower left and one blade shooting upward past the crossing point",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "cut tool",
       "scissors",
-      "2"
+      "scissors icon",
+      "shears"
     ]
   },
   {
@@ -41543,25 +41605,31 @@
     "purpose": "Show scissors as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "3",
+      "cut tool",
       "scissors",
-      "3"
+      "scissors icon",
+      "shears"
     ],
-    "use_when": "Use when the interface refers directly to scissors as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the scissors laid out horizontally rather than standing upright or tilted.",
+    "avoid_when": "Do not use for the upright or rotated scissors when the handles should not sit clearly to the left of the blades.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing scissors.",
+    "depicts": "Sideways scissors with two finger loops on the left and two cutting blades crossing toward the right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "3",
+      "cut tool",
       "scissors",
-      "3"
+      "scissors icon",
+      "shears"
     ]
   },
   {
@@ -42358,20 +42426,23 @@
     "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
     "category": "systems_architecture",
     "semantic_tags": [
-      "server",
       "backend",
-      "infrastructure",
+      "data box",
       "hosted service",
+      "infrastructure",
+      "rack unit",
+      "server",
+      "server icon",
       "systems"
     ],
-    "use_when": "Use when the interface refers to server infrastructure, backend systems, or hosted services.",
-    "avoid_when": "Do not use for generic storage or file containers when the meaning is specifically server infrastructure.",
+    "use_when": "Use when the interface wants a clear stacked rack server with shelf like horizontal divisions.",
+    "avoid_when": "Do not use for the rounded server appliance when the machine should not taper or soften around the top corners.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A stacked server or infrastructure unit.",
+    "depicts": "Rectangular server rack with two horizontal bays and two small status dots in the lower bay",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -42379,8 +42450,12 @@
     ],
     "synonyms": [
       "backend server",
+      "data box",
       "hosted service",
       "infrastructure",
+      "rack unit",
+      "server",
+      "server icon",
       "server stack"
     ]
   },
@@ -42393,29 +42468,36 @@
     "purpose": "Show server infrastructure, backend systems, or hosted technical services.",
     "category": "systems_architecture",
     "semantic_tags": [
-      "server",
+      "appliance",
       "backend",
-      "infrastructure",
       "hosted service",
+      "infrastructure",
+      "network box",
+      "server",
+      "server icon",
       "systems"
     ],
-    "use_when": "Use when the interface refers to server infrastructure, backend systems, or hosted services.",
-    "avoid_when": "Do not use for generic storage or file containers when the meaning is specifically server infrastructure.",
+    "use_when": "Use when the interface wants a softer standalone server body instead of a flat rectangular rack with shelf dividers.",
+    "avoid_when": "Do not use for the rack server when the machine should be drawn as two stacked rectangular bays.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A stacked server or infrastructure unit.",
+    "depicts": "Rounded server body with a tapered top shell and two small status lights near the lower center",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "appliance",
       "backend server",
       "hosted service",
       "infrastructure",
+      "network box",
+      "server",
+      "server icon",
       "server stack"
     ]
   },
@@ -42636,25 +42718,31 @@
     "purpose": "Show settings as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "6",
+      "controls",
       "settings",
-      "6"
+      "settings icon",
+      "tuning sliders"
     ],
-    "use_when": "Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants settings to read as adjustable controls rather than a gear mechanism.",
+    "avoid_when": "Do not use for the gear wheel when the settings cue should be toothed and circular instead of linear sliders.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing settings.",
+    "depicts": "Three horizontal slider bars with one round knob on each bar instead of a gear wheel",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "6",
+      "controls",
       "settings",
-      "6"
+      "settings icon",
+      "tuning sliders"
     ]
   },
   {
@@ -42666,25 +42754,31 @@
     "purpose": "Show settings as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "7",
+      "cog wheel",
+      "gear",
       "settings",
-      "7"
+      "settings icon"
     ],
-    "use_when": "Use when the interface refers directly to settings as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the familiar gear symbol rather than slider based tuning controls.",
+    "avoid_when": "Do not use for the slider settings when the cue should not be a round toothed wheel.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing settings.",
+    "depicts": "Circular gear wheel with a center hub and short teeth spaced around the outer rim",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "7",
+      "cog wheel",
+      "gear",
       "settings",
-      "7"
+      "settings icon"
     ]
   },
   {
@@ -42724,25 +42818,31 @@
     "purpose": "Show share as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "branching nodes",
+      "network share",
       "share",
-      "2"
+      "share icon"
     ],
-    "use_when": "Use when the interface refers directly to share as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants share to feel like connected points spreading through a small network.",
+    "avoid_when": "Do not use for the arrow leaving a square when the share action should read like sending outward from a box.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing share.",
+    "depicts": "Three round nodes linked by two diagonal connector lines in a branching network",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "branching nodes",
+      "network share",
       "share",
-      "2"
+      "share icon"
     ]
   },
   {
@@ -42754,25 +42854,31 @@
     "purpose": "Show share as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "3",
+      "export arrow",
+      "send outward",
       "share",
-      "3"
+      "share icon"
     ],
-    "use_when": "Use when the interface refers directly to share as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants share to feel like pushing content out of a container or window.",
+    "avoid_when": "Do not use for the connected node share when the mark should not resemble a branching network diagram.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing share.",
+    "depicts": "Open square frame with one arrow launching upward from the upper right corner",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "3",
+      "export arrow",
+      "send outward",
       "share",
-      "3"
+      "share icon"
     ]
   },
   {
@@ -42946,23 +43052,29 @@
     "purpose": "Show shoe as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shoe"
+      "casual footwear",
+      "shoe",
+      "shoe icon",
+      "sneaker"
     ],
-    "use_when": "Use when the interface refers directly to shoe as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a casual sneaker silhouette instead of formal or heeled footwear.",
+    "avoid_when": "Do not use for the high heel pump when the shoe should not rise on a thin back heel.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shoe.",
+    "depicts": "Low sneaker profile with a pointed toe and lace bumps and a flat sole trailing behind",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shoe"
+      "casual footwear",
+      "shoe",
+      "shoe icon",
+      "sneaker"
     ]
   },
   {
@@ -42974,25 +43086,31 @@
     "purpose": "Show shoe as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "formal footwear",
+      "pump heel",
       "shoe",
-      "2"
+      "shoe icon"
     ],
-    "use_when": "Use when the interface refers directly to shoe as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants elegant heeled footwear instead of a low casual sneaker silhouette.",
+    "avoid_when": "Do not use for the sneaker when the shoe should not show laces or a long flat sole.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shoe.",
+    "depicts": "High heel silhouette with a curved top opening and pointed toe and thin raised heel",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "formal footwear",
+      "pump heel",
       "shoe",
-      "2"
+      "shoe icon"
     ]
   },
   {
@@ -43032,27 +43150,34 @@
     "purpose": "Show shopping bag as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shopping",
+      "1",
       "bag",
-      "1"
+      "retail bag",
+      "shopping",
+      "shopping bag icon",
+      "store bag"
     ],
-    "use_when": "Use when the interface refers directly to shopping bag as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the plainest bag silhouette with no flap or decorative inner opening.",
+    "avoid_when": "Do not use for the bag variants with a smile like inner cutout or a folded top flap across the opening.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shopping bag.",
+    "depicts": "Simple upright shopping bag with a flat base and straight sides and one rounded carry handle",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shopping",
+      "1",
       "bag",
-      "1"
+      "retail bag",
+      "shopping",
+      "shopping bag",
+      "shopping bag icon",
+      "store bag"
     ]
   },
   {
@@ -43064,27 +43189,34 @@
     "purpose": "Show shopping bag as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shopping",
+      "2",
       "bag",
-      "2"
+      "retail bag",
+      "shopping",
+      "shopping bag icon",
+      "store bag"
     ],
-    "use_when": "Use when the interface refers directly to shopping bag as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a friendly shopping bag marked by the curved inner opening beneath the handle.",
+    "avoid_when": "Do not use for the plain bag or the folded flap bag when the opening detail should not be the main distinguishing feature.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shopping bag.",
+    "depicts": "Shopping bag with one rounded smile shaped inner cutout hanging below the top handle",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shopping",
+      "2",
       "bag",
-      "2"
+      "retail bag",
+      "shopping",
+      "shopping bag",
+      "shopping bag icon",
+      "store bag"
     ]
   },
   {
@@ -43096,27 +43228,34 @@
     "purpose": "Show shopping bag as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shopping",
+      "3",
       "bag",
-      "3"
+      "gift bag",
+      "retail bag",
+      "shopping",
+      "shopping bag icon"
     ],
-    "use_when": "Use when the interface refers directly to shopping bag as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the bag to look more boxed in at the top with a visible flap over the opening.",
+    "avoid_when": "Do not use for the plain bag or the smile opening bag when the top edge should not look capped by a folded flap.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shopping bag.",
+    "depicts": "Shopping bag with a folded top flap or lid drawn across the opening above the smile shaped inner cutout",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shopping",
+      "3",
       "bag",
-      "3"
+      "gift bag",
+      "retail bag",
+      "shopping",
+      "shopping bag",
+      "shopping bag icon"
     ]
   },
   {
@@ -43128,27 +43267,34 @@
     "purpose": "Show shopping cart as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shopping",
+      "1",
+      "basket cart",
       "cart",
-      "1"
+      "retail cart",
+      "shopping",
+      "shopping cart icon"
     ],
-    "use_when": "Use when the interface refers directly to shopping cart as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the cart to read as a simple rectangular wire basket with an extended rear handle.",
+    "avoid_when": "Do not use for the slanted cart variant when the basket front should angle downward and the handle should sit more compactly.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shopping cart.",
+    "depicts": "Wire shopping cart with a long rear handle and a rectangular basket and two small wheels under the base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shopping",
+      "1",
+      "basket cart",
       "cart",
-      "1"
+      "retail cart",
+      "shopping",
+      "shopping cart",
+      "shopping cart icon"
     ]
   },
   {
@@ -43160,27 +43306,34 @@
     "purpose": "Show shopping cart as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shopping",
+      "2",
+      "basket cart",
       "cart",
-      "2"
+      "retail cart",
+      "shopping",
+      "shopping cart icon"
     ],
-    "use_when": "Use when the interface refers directly to shopping cart as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a tighter cart silhouette with a more angled basket front.",
+    "avoid_when": "Do not use for the rectangular cart when the basket should look flatter and the rear handle should extend farther back.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shopping cart.",
+    "depicts": "Shopping cart with a slanted front basket wall and compact handle and two small wheels under a shorter base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shopping",
+      "2",
+      "basket cart",
       "cart",
-      "2"
+      "retail cart",
+      "shopping",
+      "shopping cart",
+      "shopping cart icon"
     ]
   },
   {
@@ -43334,23 +43487,29 @@
     "purpose": "Show shuffle as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "shuffle"
+      "cross paths",
+      "mixed playback",
+      "shuffle",
+      "shuffle icon"
     ],
-    "use_when": "Use when the interface refers directly to shuffle as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants shuffle to read as two paths crossing through each other before exiting rightward.",
+    "avoid_when": "Do not use for the split path shuffle when the arrows should run in separate parallel lanes instead of crossing as an X.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shuffle.",
+    "depicts": "Two crossing path arrows forming one X shape with both arrowheads pointing outward on the right side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "shuffle"
+      "cross paths",
+      "mixed playback",
+      "shuffle",
+      "shuffle icon"
     ]
   },
   {
@@ -43362,25 +43521,31 @@
     "purpose": "Show shuffle as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "mixed playback",
+      "parallel arrows",
       "shuffle",
-      "2"
+      "shuffle icon"
     ],
-    "use_when": "Use when the interface refers directly to shuffle as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants shuffle to read as two separate arrow lanes rather than one crossed X shape.",
+    "avoid_when": "Do not use for the crossed shuffle when both path arrows should intersect at the center before exiting rightward.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing shuffle.",
+    "depicts": "Two separated path arrows bending around each other in opposite lanes without crossing into an X",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "mixed playback",
+      "parallel arrows",
       "shuffle",
-      "2"
+      "shuffle icon"
     ]
   },
   {
@@ -43454,23 +43619,29 @@
     "purpose": "Show signature as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "signature"
+      "handwriting stroke",
+      "signature",
+      "signature icon",
+      "signed mark"
     ],
-    "use_when": "Use when the interface refers directly to signature as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a freehand signature drawn as one loose handwritten stroke with no extra frame.",
+    "avoid_when": "Do not use for the signature mark with the diagonal line and curved ring stroke around it.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing signature.",
+    "depicts": "Handwritten signature line making one tall zigzag stroke and one short tail at the lower right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "signature"
+      "handwriting stroke",
+      "signature",
+      "signature icon",
+      "signed mark"
     ]
   },
   {
@@ -43482,25 +43653,31 @@
     "purpose": "Show signature as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "handwriting line",
       "signature",
-      "2"
+      "signature icon",
+      "signed mark"
     ],
-    "use_when": "Use when the interface refers directly to signature as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the signature to feel more structured with a diagonal line and curved ring around it.",
+    "avoid_when": "Do not use for the looser signature squiggle when the mark should not include the wrapped ring stroke.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing signature.",
+    "depicts": "Diagonal signature line crossing through one curved ring stroke with a short tail below",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "handwriting line",
       "signature",
-      "2"
+      "signature icon",
+      "signed mark"
     ]
   },
   {
@@ -44053,23 +44230,29 @@
     "purpose": "Show snowstorm as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "snowstorm"
+      "blowing snow",
+      "snowstorm",
+      "snowstorm icon",
+      "winter gust"
     ],
-    "use_when": "Use when the interface refers directly to snowstorm as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants snowstorm to read like blowing wind carrying snow across the screen.",
+    "avoid_when": "Do not use for the cloud snowstorm when the weather cue should start from a cloud outline with snow falling below it.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing snowstorm.",
+    "depicts": "Two horizontal wind bars pushing toward two small snowflake stars on the right side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "snowstorm"
+      "blowing snow",
+      "snowstorm",
+      "snowstorm icon",
+      "winter gust"
     ]
   },
   {
@@ -44081,25 +44264,31 @@
     "purpose": "Show snowstorm as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "snow cloud",
       "snowstorm",
-      "2"
+      "snowstorm icon",
+      "winter weather"
     ],
-    "use_when": "Use when the interface refers directly to snowstorm as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants snowstorm to read as a cloud releasing snow instead of wind bars pushing flakes sideways.",
+    "avoid_when": "Do not use for the blowing snow variant when the weather cue should not start from a cloud outline.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing snowstorm.",
+    "depicts": "Cloud outline with four small snowflake stars hanging below the lower edge",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "snow cloud",
       "snowstorm",
-      "2"
+      "snowstorm icon",
+      "winter weather"
     ]
   },
   {
@@ -44387,25 +44576,32 @@
     "purpose": "Show soup pot as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "cooking pot",
+      "pot",
       "soup",
-      "pot"
+      "soup pot icon",
+      "stirring pot"
     ],
-    "use_when": "Use when the interface refers directly to soup pot as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the pot to read as active cooking with a spoon and steam visible.",
+    "avoid_when": "Do not use for the lidded pot when the cookware should look closed with side handles and no spoon inside.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing soup pot.",
+    "depicts": "Cooking pot body with one spoon inside and two steam curls rising above the rim",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "cooking pot",
+      "pot",
       "soup",
-      "pot"
+      "soup pot",
+      "soup pot icon",
+      "stirring pot"
     ]
   },
   {
@@ -44417,27 +44613,34 @@
     "purpose": "Show soup pot as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "soup",
+      "2",
+      "cooking pot",
+      "covered pot",
       "pot",
-      "2"
+      "soup",
+      "soup pot icon"
     ],
-    "use_when": "Use when the interface refers directly to soup pot as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a closed pot silhouette without the spoon and steam of active stirring.",
+    "avoid_when": "Do not use for the stirred soup pot when the cookware should not show a spoon rising from the open bowl.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing soup pot.",
+    "depicts": "Cooking pot with a fitted lid and two side handles around a wide rounded body",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "soup",
+      "2",
+      "cooking pot",
+      "covered pot",
       "pot",
-      "2"
+      "soup",
+      "soup pot",
+      "soup pot icon"
     ]
   },
   {
@@ -44565,23 +44768,29 @@
     "purpose": "Show sparkles as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "sparkles"
+      "shining stars",
+      "sparkles",
+      "sparkles icon",
+      "twinkle marks"
     ],
-    "use_when": "Use when the interface refers directly to sparkles as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants sparkles to read as a large diamond star paired with one smaller companion star.",
+    "avoid_when": "Do not use for the sparkle variants with an extra dot accent or with a full ring of short rays around the center.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sparkles.",
+    "depicts": "One large diamond star with one smaller diamond star at the lower left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "sparkles"
+      "shining stars",
+      "sparkles",
+      "sparkles icon",
+      "twinkle marks"
     ]
   },
   {
@@ -44593,25 +44802,31 @@
     "purpose": "Show sparkles as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "shining stars",
       "sparkles",
-      "2"
+      "sparkles icon",
+      "twinkle marks"
     ],
-    "use_when": "Use when the interface refers directly to sparkles as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the sparkle group to include one extra dot accent beside the large and small stars.",
+    "avoid_when": "Do not use for the plain two star sparkle or the central star with short rays around it.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sparkles.",
+    "depicts": "One large diamond star with one small diamond star and one small dot at the upper left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "shining stars",
       "sparkles",
-      "2"
+      "sparkles icon",
+      "twinkle marks"
     ]
   },
   {
@@ -44623,25 +44838,31 @@
     "purpose": "Show sparkles as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "3",
+      "radiant star",
       "sparkles",
-      "3"
+      "sparkles icon",
+      "twinkle burst"
     ],
-    "use_when": "Use when the interface refers directly to sparkles as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the sparkle to feel radiant with a full ring of short rays around the center star.",
+    "avoid_when": "Do not use for the simpler sparkle pairs when the mark should not reduce to only two stars or two stars plus one dot.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sparkles.",
+    "depicts": "Diamond star centered inside eight short rays around the outer rim",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "3",
+      "radiant star",
       "sparkles",
-      "3"
+      "sparkles icon",
+      "twinkle burst"
     ]
   },
   {
@@ -45409,23 +45630,29 @@
     "purpose": "Show stopwatch as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "stopwatch"
+      "stopwatch",
+      "stopwatch icon",
+      "timekeeper",
+      "timer watch"
     ],
-    "use_when": "Use when the interface refers directly to stopwatch as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a clean stopwatch face with a straight hand and minimal top hardware.",
+    "avoid_when": "Do not use for the stopwatch with the angled hand and extra top loop around the crown.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing stopwatch.",
+    "depicts": "Round stopwatch face with one vertical hand and one small side knob at the upper right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "stopwatch"
+      "stopwatch",
+      "stopwatch icon",
+      "timekeeper",
+      "timer watch"
     ]
   },
   {
@@ -45437,25 +45664,31 @@
     "purpose": "Show stopwatch as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
       "stopwatch",
-      "2"
+      "stopwatch icon",
+      "timekeeper",
+      "timer watch"
     ],
-    "use_when": "Use when the interface refers directly to stopwatch as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the stopwatch to show a more active angled hand and a pronounced top loop crown.",
+    "avoid_when": "Do not use for the plainer stopwatch when the face should not rely on the large top loop or angled hand.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing stopwatch.",
+    "depicts": "Round stopwatch face with one angled hand and one top loop and one small side button",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
       "stopwatch",
-      "2"
+      "stopwatch icon",
+      "timekeeper",
+      "timer watch"
     ]
   },
   {
@@ -45527,23 +45760,29 @@
     "purpose": "Show store as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "store"
+      "retail stand",
+      "shop front",
+      "store",
+      "store icon"
     ],
-    "use_when": "Use when the interface refers directly to store as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a shop front that reads more like an open counter under an awning.",
+    "avoid_when": "Do not use for the full store building when the base should show a centered door under the awning.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing store.",
+    "depicts": "Storefront awning above one open boxy counter with no door in the base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "store"
+      "retail stand",
+      "shop front",
+      "store",
+      "store icon"
     ]
   },
   {
@@ -45555,25 +45794,31 @@
     "purpose": "Show store as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "retail building",
+      "shop front",
       "store",
-      "2"
+      "store icon"
     ],
-    "use_when": "Use when the interface refers directly to store as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a fuller retail building with a clear door beneath the awning.",
+    "avoid_when": "Do not use for the open counter storefront when the base should not stay empty under the awning.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing store.",
+    "depicts": "Storefront awning above one square building face with one centered door in the base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "retail building",
+      "shop front",
       "store",
-      "2"
+      "store icon"
     ]
   },
   {
@@ -45763,23 +46008,29 @@
     "purpose": "Show suitcase as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "suitcase"
+      "bag case",
+      "suitcase",
+      "suitcase icon",
+      "travel luggage"
     ],
-    "use_when": "Use when the interface refers directly to suitcase as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants luggage to read as a taller travel case with upright side rails.",
+    "avoid_when": "Do not use for the briefcase style suitcase when the front should be crossed by two horizontal bands instead of side rails.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing suitcase.",
+    "depicts": "Tall suitcase with one top handle and two vertical side rails framing the body",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "suitcase"
+      "bag case",
+      "suitcase",
+      "suitcase icon",
+      "travel luggage"
     ]
   },
   {
@@ -45791,25 +46042,31 @@
     "purpose": "Show suitcase as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "briefcase",
       "suitcase",
-      "2"
+      "suitcase icon",
+      "travel case"
     ],
-    "use_when": "Use when the interface refers directly to suitcase as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the luggage to feel flatter and more like a briefcase with front bands.",
+    "avoid_when": "Do not use for the taller suitcase when the case should not be framed by two vertical side rails.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing suitcase.",
+    "depicts": "Briefcase body with one top handle and two horizontal bands across the front panel",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "briefcase",
       "suitcase",
-      "2"
+      "suitcase icon",
+      "travel case"
     ]
   },
   {
@@ -45821,23 +46078,29 @@
     "purpose": "Show sun as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "sun"
+      "daylight symbol",
+      "sun",
+      "sun icon",
+      "weather sun"
     ],
-    "use_when": "Use when the interface refers directly to sun as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the standard sun symbol with a central disk and evenly spaced rays.",
+    "avoid_when": "Do not use for the wrapped sun when a sweeping ring line should cut through the disk from the left side.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sun.",
+    "depicts": "Round sun circle with short rays spaced evenly around the outer rim",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "sun"
+      "daylight symbol",
+      "sun",
+      "sun icon",
+      "weather sun"
     ]
   },
   {
@@ -45849,25 +46112,31 @@
     "purpose": "Show sun as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "orbital sun",
       "sun",
-      "2"
+      "sun icon",
+      "weather sun"
     ],
-    "use_when": "Use when the interface refers directly to sun as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the sun to feel more stylized with a ring line sweeping through the disk.",
+    "avoid_when": "Do not use for the classic sun when the icon should only rely on short rays around a plain center disk.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing sun.",
+    "depicts": "Round sun disk crossed by one sweeping ring line that wraps through the left side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "orbital sun",
       "sun",
-      "2"
+      "sun icon",
+      "weather sun"
     ]
   },
   {
@@ -46253,25 +46522,32 @@
     "purpose": "Show t shirt as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "clothing top",
+      "shirt",
+      "shirt silhouette",
       "t",
-      "shirt"
+      "t shirt icon"
     ],
-    "use_when": "Use when the interface refers directly to t shirt as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a fuller shirt body with extra side panel detail built into the silhouette.",
+    "avoid_when": "Do not use for the plainer tee when the shirt should not emphasize extra side panels or outer seam structure.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing t shirt.",
+    "depicts": "T shirt silhouette with short sleeves and side panels and one rounded collar opening",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "clothing top",
+      "shirt",
+      "shirt silhouette",
       "t",
-      "shirt"
+      "t shirt",
+      "t shirt icon"
     ]
   },
   {
@@ -46283,27 +46559,34 @@
     "purpose": "Show t shirt as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "t",
+      "2",
+      "clothing top",
       "shirt",
-      "2"
+      "shirt silhouette",
+      "t",
+      "t shirt icon"
     ],
-    "use_when": "Use when the interface refers directly to t shirt as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the simplest tee outline without extra side panel structure or shaping.",
+    "avoid_when": "Do not use for the paneled shirt when the body should show more structure around the sides and shoulders.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing t shirt.",
+    "depicts": "Plain t shirt silhouette with short sleeves and one simple crew neck opening",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "t",
+      "2",
+      "clothing top",
       "shirt",
-      "2"
+      "shirt silhouette",
+      "t",
+      "t shirt",
+      "t shirt icon"
     ]
   },
   {
@@ -46315,23 +46598,29 @@
     "purpose": "Show table as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "table"
+      "grid layout",
+      "spreadsheet cells",
+      "table",
+      "table icon"
     ],
-    "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a simple six cell table split into two columns and three rows.",
+    "avoid_when": "Do not use for the mixed panel table or the nine cell table when the grid should not add a third column.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing table.",
+    "depicts": "Square table grid with one middle divider and two horizontal dividers making six cells",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "table"
+      "grid layout",
+      "spreadsheet cells",
+      "table",
+      "table icon"
     ]
   },
   {
@@ -46343,25 +46632,31 @@
     "purpose": "Show table as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "layout cells",
+      "panel grid",
       "table",
-      "2"
+      "table icon"
     ],
-    "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the table to mix one left side column with one large block on the lower right.",
+    "avoid_when": "Do not use for the even six cell table or the even nine cell table when the layout should not feature one oversized lower panel.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing table.",
+    "depicts": "Square table grid with one narrow left column and one full width top row and one large lower right panel",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "layout cells",
+      "panel grid",
       "table",
-      "2"
+      "table icon"
     ]
   },
   {
@@ -46373,25 +46668,31 @@
     "purpose": "Show table as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "3",
+      "grid layout",
+      "spreadsheet cells",
       "table",
-      "3"
+      "table icon"
     ],
-    "use_when": "Use when the interface refers directly to table as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the fullest even table grid with three columns and three rows.",
+    "avoid_when": "Do not use for the six cell table or the uneven panel table when the layout should stay a uniform nine cell grid.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing table.",
+    "depicts": "Square table grid with two vertical dividers and two horizontal dividers making nine cells",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "3",
+      "grid layout",
+      "spreadsheet cells",
       "table",
-      "3"
+      "table icon"
     ]
   },
   {
@@ -46403,23 +46704,29 @@
     "purpose": "Show tag as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "tag"
+      "price label",
+      "sale tag",
+      "tag",
+      "tag icon"
     ],
-    "use_when": "Use when the interface refers directly to tag as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the cleanest price tag silhouette with only one visible outline.",
+    "avoid_when": "Do not use for the doubled tag when a second offset outline should appear behind the front tag body.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tag.",
+    "depicts": "Price tag shape with one corner hole and one single outline around the body",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "tag"
+      "price label",
+      "sale tag",
+      "tag",
+      "tag icon"
     ]
   },
   {
@@ -46431,25 +46738,31 @@
     "purpose": "Show tag as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "price labels",
+      "sale tag",
       "tag",
-      "2"
+      "tag icon"
     ],
-    "use_when": "Use when the interface refers directly to tag as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the tag to read as stacked labels instead of a single front tag.",
+    "avoid_when": "Do not use for the single tag when the mark should not show a second offset outline behind the front shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tag.",
+    "depicts": "Price tag shape with one corner hole and one second offset tag outline behind it",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "price labels",
+      "sale tag",
       "tag",
-      "2"
+      "tag icon"
     ]
   },
   {
@@ -46605,23 +46918,29 @@
     "purpose": "Show task as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "task"
+      "checked clipboard",
+      "completed task",
+      "task",
+      "task icon"
     ],
-    "use_when": "Use when the interface refers directly to task as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the task cue to read as a completed clipboard item with a check mark.",
+    "avoid_when": "Do not use for the list clipboard when the panel should show horizontal task lines instead of one big check mark.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing task.",
+    "depicts": "Clipboard panel with one top clip and one large check mark in the center",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "task"
+      "checked clipboard",
+      "completed task",
+      "task",
+      "task icon"
     ]
   },
   {
@@ -46633,25 +46952,31 @@
     "purpose": "Show task as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "clipboard list",
       "task",
-      "2"
+      "task icon",
+      "task notes"
     ],
-    "use_when": "Use when the interface refers directly to task as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the task cue to read as a list of items on a clipboard.",
+    "avoid_when": "Do not use for the checked clipboard when the panel should not be dominated by one large check mark.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing task.",
+    "depicts": "Clipboard panel with one top clip and three horizontal list bars down the center",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "clipboard list",
       "task",
-      "2"
+      "task icon",
+      "task notes"
     ]
   },
   {
@@ -46753,23 +47078,29 @@
     "purpose": "Show telescope as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "telescope"
+      "spyglass stand",
+      "stargazing scope",
+      "telescope",
+      "telescope icon"
     ],
-    "use_when": "Use when the interface refers directly to telescope as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants an observing scope mounted on a stand rather than a handheld viewing tool.",
+    "avoid_when": "Do not use for the binoculars when the viewing tool should split into two barrels with two eyepieces.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing telescope.",
+    "depicts": "Long telescope body tilted on one tripod stand with the eyepiece pointing toward the upper right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "telescope"
+      "spyglass stand",
+      "stargazing scope",
+      "telescope",
+      "telescope icon"
     ]
   },
   {
@@ -46781,25 +47112,31 @@
     "purpose": "Show telescope as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "binoculars icon",
+      "field glasses",
       "telescope",
-      "2"
+      "viewing scope"
     ],
-    "use_when": "Use when the interface refers directly to telescope as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a dual barrel handheld viewing tool instead of a mounted telescope.",
+    "avoid_when": "Do not use for the tripod telescope when the sighting tool should not be one long angled tube on a stand.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing telescope.",
+    "depicts": "Pair of binocular barrels joined at the center with two round eyepieces at the lower ends",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "binoculars icon",
+      "field glasses",
       "telescope",
-      "2"
+      "viewing scope"
     ]
   },
   {
@@ -47506,19 +47843,22 @@
     "category": "status_feedback",
     "semantic_tags": [
       "disapproval",
-      "negative feedback",
       "dislike",
+      "dislike hand",
+      "negative feedback",
+      "negative vote",
       "rejected",
+      "thumb down icon",
       "thumbs down"
     ],
-    "use_when": "Use when the interface shows negative feedback, disapproval, or a disliked state.",
-    "avoid_when": "Do not use for generic confirmation or warning when the meaning is specifically feedback sentiment.",
+    "use_when": "Use when the interface wants a compact rounded thumbs down shape without a long separate wrist block.",
+    "avoid_when": "Do not use for the more structured thumbs down hand when the wrist and palm should look more segmented.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A thumbs-down disapproval gesture.",
+    "depicts": "Thumb silhouette pointing downward with one rounded back and one short cuff nub on the left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -47526,10 +47866,14 @@
       "svg_payload"
     ],
     "synonyms": [
+      "disapproval",
+      "dislike hand",
       "disliked",
+      "downvote",
       "negative",
+      "negative vote",
       "rejected",
-      "downvote"
+      "thumb down icon"
     ]
   },
   {
@@ -47542,29 +47886,36 @@
     "category": "status_feedback",
     "semantic_tags": [
       "disapproval",
-      "negative feedback",
       "dislike",
+      "dislike hand",
+      "negative feedback",
+      "negative vote",
       "rejected",
+      "thumb down icon",
       "thumbs down"
     ],
-    "use_when": "Use when the interface shows negative feedback, disapproval, or a disliked state.",
-    "avoid_when": "Do not use for spatial movement or navigation when the meaning is sentiment or feedback.",
+    "use_when": "Use when the interface wants a more structured thumbs down hand with a clearer wrist and palm block.",
+    "avoid_when": "Do not use for the rounder thumbs down when the hand should not collapse into one compact curved silhouette.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A thumbs-down disapproval gesture.",
+    "depicts": "Thumb silhouette pointing downward with one squared wrist panel and one straighter finger block above it",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "disapproval",
+      "dislike hand",
       "disliked",
-      "rejected",
+      "downvote",
       "negative response",
-      "downvote"
+      "negative vote",
+      "rejected",
+      "thumb down icon"
     ]
   },
   {
@@ -47577,19 +47928,22 @@
     "category": "status_feedback",
     "semantic_tags": [
       "approval",
-      "positive feedback",
-      "like",
       "endorsed",
+      "like",
+      "like hand",
+      "positive feedback",
+      "positive vote",
+      "thumb up icon",
       "thumbs up"
     ],
-    "use_when": "Use when the interface shows positive feedback, approval, or a liked state.",
-    "avoid_when": "Do not use for generic confirmation or warning when the meaning is specifically feedback sentiment.",
+    "use_when": "Use when the interface wants the like cue to read as a compact rounded thumbs up shape.",
+    "avoid_when": "Do not use for the more structured thumbs up hand when the wrist and palm should look more segmented.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A thumbs-up approval gesture.",
+    "depicts": "Thumb silhouette pointing upward with one rounded back and one short cuff nub on the left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -47597,10 +47951,14 @@
       "svg_payload"
     ],
     "synonyms": [
+      "approval",
+      "approved",
+      "endorsement",
+      "like hand",
       "liked",
       "positive",
-      "approved",
-      "endorsement"
+      "positive vote",
+      "thumb up icon"
     ]
   },
   {
@@ -47613,29 +47971,36 @@
     "category": "status_feedback",
     "semantic_tags": [
       "approval",
-      "positive feedback",
-      "like",
       "endorsed",
+      "like",
+      "like hand",
+      "positive feedback",
+      "positive vote",
+      "thumb up icon",
       "thumbs up"
     ],
-    "use_when": "Use when the interface shows positive feedback, approval, or a liked state.",
-    "avoid_when": "Do not use for spatial movement or navigation when the meaning is sentiment or feedback.",
+    "use_when": "Use when the interface wants a more structured thumbs up hand with a clearer wrist block and palm edge.",
+    "avoid_when": "Do not use for the rounded thumbs up when the hand should not collapse into a softer compact silhouette.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A thumbs-up approval gesture.",
+    "depicts": "Thumb silhouette pointing upward with one squared wrist panel and one straighter finger block below it",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "liked",
+      "approval",
       "approved",
+      "endorsement",
+      "like hand",
+      "liked",
       "positive response",
-      "endorsement"
+      "positive vote",
+      "thumb up icon"
     ]
   },
   {
@@ -47853,20 +48218,23 @@
     "purpose": "Show that a setting, control, or feature is switched off or disabled.",
     "category": "status_feedback",
     "semantic_tags": [
-      "toggle",
       "disabled",
-      "off",
       "inactive",
-      "switch"
+      "left switch",
+      "off",
+      "switch",
+      "switch control",
+      "toggle",
+      "toggle icon"
     ],
-    "use_when": "Use when the interface shows a disabled setting or inactive off-state.",
-    "avoid_when": "Do not use for blocked errors or canceled actions when the meaning is specifically a toggle state.",
+    "use_when": "Use when the interface wants the left toggle drawn as a fused shape with the knob swelling out from the track.",
+    "avoid_when": "Do not use for the capsule toggle when the switch should stay a full outline with the knob parked inside.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A toggle switch in the off position.",
+    "depicts": "Toggle track with one large left circle fused into one short capsule on the right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -47874,8 +48242,12 @@
     ],
     "synonyms": [
       "disabled",
-      "switch off",
+      "disabled toggle",
       "inactive toggle",
+      "left switch",
+      "switch control",
+      "switch off",
+      "toggle icon",
       "toggle off"
     ]
   },
@@ -47888,20 +48260,23 @@
     "purpose": "Show that a setting, control, or feature is switched off or disabled.",
     "category": "status_feedback",
     "semantic_tags": [
-      "toggle",
       "disabled",
-      "off",
       "inactive",
-      "switch"
+      "left switch",
+      "off",
+      "switch",
+      "switch control",
+      "toggle",
+      "toggle icon"
     ],
-    "use_when": "Use when the interface shows a disabled setting or inactive off-state.",
-    "avoid_when": "Do not use for blocked errors or canceled actions when the meaning is specifically a toggle state.",
+    "use_when": "Use when the interface wants the left toggle to keep the full capsule outline with the knob sitting inside it.",
+    "avoid_when": "Do not use for the fused left toggle when the knob should not bulge out as part of the outer track shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A toggle switch in the off position.",
+    "depicts": "Long capsule outline with one inner circle knob parked on the left side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -47909,8 +48284,12 @@
     ],
     "synonyms": [
       "disabled",
-      "switch off",
+      "disabled toggle",
       "inactive toggle",
+      "left switch",
+      "switch control",
+      "switch off",
+      "toggle icon",
       "toggle off"
     ]
   },
@@ -47923,20 +48302,23 @@
     "purpose": "Show that a setting, control, or feature is switched on or enabled.",
     "category": "status_feedback",
     "semantic_tags": [
-      "toggle",
+      "active",
       "enabled",
       "on",
-      "active",
-      "switch"
+      "right switch",
+      "switch",
+      "switch control",
+      "toggle",
+      "toggle icon"
     ],
-    "use_when": "Use when the interface shows an enabled setting or active on-state.",
-    "avoid_when": "Do not use for generic success or approval when the meaning is not a toggle state.",
+    "use_when": "Use when the interface wants the right toggle drawn as a fused shape with the knob swelling out from the track.",
+    "avoid_when": "Do not use for the capsule toggle when the switch should stay a full outline with the knob parked inside.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A toggle switch in the on position.",
+    "depicts": "Toggle track with one large right circle fused into one short capsule on the left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
@@ -47944,9 +48326,13 @@
       "svg_payload"
     ],
     "synonyms": [
-      "enabled",
-      "switch on",
       "active toggle",
+      "enabled",
+      "enabled toggle",
+      "right switch",
+      "switch control",
+      "switch on",
+      "toggle icon",
       "toggle on"
     ]
   },
@@ -47959,29 +48345,36 @@
     "purpose": "Show that a setting, control, or feature is switched on or enabled.",
     "category": "status_feedback",
     "semantic_tags": [
-      "toggle",
+      "active",
       "enabled",
       "on",
-      "active",
-      "switch"
+      "right switch",
+      "switch",
+      "switch control",
+      "toggle",
+      "toggle icon"
     ],
-    "use_when": "Use when the interface shows an enabled setting or active on-state.",
-    "avoid_when": "Do not use for generic success or approval when the meaning is not a toggle state.",
+    "use_when": "Use when the interface wants the right toggle to keep the full capsule outline with the knob sitting inside it.",
+    "avoid_when": "Do not use for the fused right toggle when the knob should not bulge out as part of the outer track shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A toggle switch in the on position.",
+    "depicts": "Long capsule outline with one inner circle knob parked on the right side",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "enabled",
-      "switch on",
       "active toggle",
+      "enabled",
+      "enabled toggle",
+      "right switch",
+      "switch control",
+      "switch on",
+      "toggle icon",
       "toggle on"
     ]
   },
@@ -48080,23 +48473,29 @@
     "purpose": "Show tornado as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "tornado"
+      "cyclone spiral",
+      "storm funnel",
+      "tornado",
+      "tornado icon"
     ],
-    "use_when": "Use when the interface refers directly to tornado as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the tornado to read as a spinning funnel body rather than stacked straight bars.",
+    "avoid_when": "Do not use for the bar tornado when the weather cue should taper through horizontal bars instead of one spiral funnel.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tornado.",
+    "depicts": "Spiral funnel body with one wide top ring narrowing into one pointed lower stem",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "tornado"
+      "cyclone spiral",
+      "storm funnel",
+      "tornado",
+      "tornado icon"
     ]
   },
   {
@@ -48108,25 +48507,31 @@
     "purpose": "Show tornado as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "storm bars",
       "tornado",
-      "2"
+      "tornado icon",
+      "wind funnel"
     ],
-    "use_when": "Use when the interface refers directly to tornado as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the tornado simplified into horizontal bars that taper downward.",
+    "avoid_when": "Do not use for the spiral funnel when the storm cue should not curl into one rounded cone body.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tornado.",
+    "depicts": "Stack of five descending horizontal bars tapering from long at top to short at bottom",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "storm bars",
       "tornado",
-      "2"
+      "tornado icon",
+      "wind funnel"
     ]
   },
   {
@@ -48698,23 +49103,29 @@
     "purpose": "Show translate as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "translate"
+      "add translation",
+      "language frame",
+      "translate",
+      "translate icon"
     ],
-    "use_when": "Use when the interface refers directly to translate as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the translation cue to read as a framed text area with a small add mark.",
+    "avoid_when": "Do not use for the letter based translate mark when the icon should center on one slanted A shape and stroke group.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing translate.",
+    "depicts": "Open square frame with two short bars on the left and one small plus cross near the lower right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "translate"
+      "add translation",
+      "language frame",
+      "translate",
+      "translate icon"
     ]
   },
   {
@@ -48726,25 +49137,31 @@
     "purpose": "Show translate as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "language mark",
       "translate",
-      "2"
+      "translate icon",
+      "translation symbol"
     ],
-    "use_when": "Use when the interface refers directly to translate as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants translation to read as a language symbol built from letters and character strokes.",
+    "avoid_when": "Do not use for the framed translate icon when the mark should not rely on a plus cross inside an open square frame.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing translate.",
+    "depicts": "Letter A shape under one short top bar with one crossing character stroke on the left",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "language mark",
       "translate",
-      "2"
+      "translate icon",
+      "translation symbol"
     ]
   },
   {
@@ -49243,25 +49660,31 @@
     "purpose": "Show tv as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "1",
+      "display set",
+      "monitor screen",
       "tv",
-      "1"
+      "tv icon"
     ],
-    "use_when": "Use when the interface refers directly to tv as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the television to read as a clean flat screen resting on one short stand.",
+    "avoid_when": "Do not use for the antenna television when the screen should show two prongs rising from the top edge.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tv.",
+    "depicts": "Rectangular screen with one short center stand under the lower edge",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "1",
+      "display set",
+      "monitor screen",
       "tv",
-      "1"
+      "tv icon"
     ]
   },
   {
@@ -49273,25 +49696,31 @@
     "purpose": "Show tv as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "display set",
+      "retro television",
       "tv",
-      "2"
+      "tv icon"
     ],
-    "use_when": "Use when the interface refers directly to tv as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the television to feel more like a classic set with antenna prongs on top.",
+    "avoid_when": "Do not use for the flat screen stand when the display should not have prongs growing from the top edge.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing tv.",
+    "depicts": "Rectangular screen with two antenna prongs rising from the top edge",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "display set",
+      "retro television",
       "tv",
-      "2"
+      "tv icon"
     ]
   },
   {
@@ -49484,23 +49913,29 @@
     "purpose": "Show ufo as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "ufo"
+      "alien craft",
+      "saucer ship",
+      "ufo",
+      "ufo icon"
     ],
-    "use_when": "Use when the interface refers directly to ufo as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a clean front facing saucer without tilt or beam dots below it.",
+    "avoid_when": "Do not use for the tilted ufo when the craft should angle to one side and trail small beam dots below.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing ufo.",
+    "depicts": "Flying saucer with one round dome on top of one flat oval base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "ufo"
+      "alien craft",
+      "saucer ship",
+      "ufo",
+      "ufo icon"
     ]
   },
   {
@@ -49512,25 +49947,31 @@
     "purpose": "Show ufo as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "alien craft",
+      "saucer ship",
       "ufo",
-      "2"
+      "ufo icon"
     ],
-    "use_when": "Use when the interface refers directly to ufo as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the ufo to feel in motion with a tilted body and beam dots below.",
+    "avoid_when": "Do not use for the upright saucer when the craft should face front and avoid the falling beam dots.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing ufo.",
+    "depicts": "Tilted flying saucer with one round dome and three small beam dots falling below",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "alien craft",
+      "saucer ship",
       "ufo",
-      "2"
+      "ufo icon"
     ]
   },
   {
@@ -49542,23 +49983,29 @@
     "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "umbrella"
+      "rain canopy",
+      "umbrella",
+      "umbrella icon",
+      "weather cover"
     ],
-    "use_when": "Use when the interface refers directly to umbrella as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a classic rain umbrella with a vertical shaft and hooked handle.",
+    "avoid_when": "Do not use for the leaning beach umbrella when the canopy should sit on an angled pole over a base.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing umbrella.",
+    "depicts": "Half circle umbrella canopy above one straight shaft ending in one curved hook handle",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "umbrella"
+      "rain canopy",
+      "umbrella",
+      "umbrella icon",
+      "weather cover"
     ]
   },
   {
@@ -49570,25 +50017,31 @@
     "purpose": "Show umbrella as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "beach shade",
+      "outdoor canopy",
       "umbrella",
-      "2"
+      "umbrella icon"
     ],
-    "use_when": "Use when the interface refers directly to umbrella as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants an umbrella fixed to the ground at an angle instead of a handheld rain umbrella.",
+    "avoid_when": "Do not use for the hook handled umbrella when the canopy should not sit on a low base with a leaning pole.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing umbrella.",
+    "depicts": "Leaning beach umbrella canopy above one angled pole and one low ground base",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "beach shade",
+      "outdoor canopy",
       "umbrella",
-      "2"
+      "umbrella icon"
     ]
   },
   {
@@ -51131,25 +51584,32 @@
     "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "bezier",
+      "curve handles",
+      "path nodes",
       "vector",
-      "bezier"
+      "vector bezier icon"
     ],
-    "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the bezier cue to branch downward from a top handle bar into two lower nodes.",
+    "avoid_when": "Do not use for the S path bezier or the square node frame when the icon should not reduce to one loose curve or one closed box.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing vector bezier.",
+    "depicts": "Bezier path with one top bar linking two top nodes and two lower branch nodes",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "bezier",
+      "curve handles",
+      "path nodes",
       "vector",
-      "bezier"
+      "vector bezier",
+      "vector bezier icon"
     ]
   },
   {
@@ -51161,27 +51621,34 @@
     "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "vector",
+      "2",
       "bezier",
-      "2"
+      "curve handles",
+      "path nodes",
+      "vector",
+      "vector bezier icon"
     ],
-    "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the bezier cue to read as one flowing curve through several nodes.",
+    "avoid_when": "Do not use for the branched top bar bezier or the closed square node frame when the path should stay one loose curve.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing vector bezier.",
+    "depicts": "Curved bezier path linking four square nodes across one loose S shaped line",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "vector",
+      "2",
       "bezier",
-      "2"
+      "curve handles",
+      "path nodes",
+      "vector",
+      "vector bezier",
+      "vector bezier icon"
     ]
   },
   {
@@ -51193,27 +51660,34 @@
     "purpose": "Show vector bezier as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "vector",
+      "3",
       "bezier",
-      "3"
+      "node square",
+      "path frame",
+      "vector",
+      "vector bezier icon"
     ],
-    "use_when": "Use when the interface refers directly to vector bezier as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the bezier cue to read as a closed square frame anchored by four corner nodes.",
+    "avoid_when": "Do not use for the branched bezier or the S curve bezier when the icon should not open into branches or flowing curves.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing vector bezier.",
+    "depicts": "Square outline built from four corner nodes connected by four straight segments",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "vector",
+      "3",
       "bezier",
-      "3"
+      "node square",
+      "path frame",
+      "vector",
+      "vector bezier",
+      "vector bezier icon"
     ]
   },
   {
@@ -51434,25 +51908,32 @@
     "purpose": "Show video camera as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "camera",
+      "film camera",
+      "recording device",
       "video",
-      "camera"
+      "video camera icon"
     ],
-    "use_when": "Use when the interface refers directly to video camera as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the camera to feel like a classic film body with two circles on top.",
+    "avoid_when": "Do not use for the simpler video camera when the top of the body should stay flat without twin circles.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing video camera.",
+    "depicts": "Video camera body with two top circles and one side lens block on the right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "camera",
+      "film camera",
+      "recording device",
       "video",
-      "camera"
+      "video camera",
+      "video camera icon"
     ]
   },
   {
@@ -51464,27 +51945,34 @@
     "purpose": "Show video camera as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "video",
+      "2",
+      "camcorder",
       "camera",
-      "2"
+      "recording device",
+      "video",
+      "video camera icon"
     ],
-    "use_when": "Use when the interface refers directly to video camera as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a simpler camera body without the twin circles of a film style recorder.",
+    "avoid_when": "Do not use for the twin reel camera when the top of the body should show two round circles.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing video camera.",
+    "depicts": "Video camera body with one flat top block and one side lens block on the right",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "video",
+      "2",
+      "camcorder",
       "camera",
-      "2"
+      "recording device",
+      "video",
+      "video camera",
+      "video camera icon"
     ]
   },
   {
@@ -51793,23 +52281,29 @@
     "purpose": "Show voice as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "voice"
+      "audio bars",
+      "sound waveform",
+      "voice",
+      "voice icon"
     ],
-    "use_when": "Use when the interface refers directly to voice as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the voice cue to read as a balanced centered waveform.",
+    "avoid_when": "Do not use for the rising bar voice mark when the bars should climb unevenly from left to right.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing voice.",
+    "depicts": "Five vertical bars centered around one tallest middle bar with shorter bars outside",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "voice"
+      "audio bars",
+      "sound waveform",
+      "voice",
+      "voice icon"
     ]
   },
   {
@@ -51821,25 +52315,31 @@
     "purpose": "Show voice as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "audio bars",
+      "sound waveform",
       "voice",
-      "2"
+      "voice icon"
     ],
-    "use_when": "Use when the interface refers directly to voice as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the voice cue to read like an uneven equalizer that rises across the row.",
+    "avoid_when": "Do not use for the centered waveform when the tallest bar should sit in the middle of a balanced pattern.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing voice.",
+    "depicts": "Five vertical bars rising unevenly from left to right with the tallest bar near the right edge",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "audio bars",
+      "sound waveform",
       "voice",
-      "2"
+      "voice icon"
     ]
   },
   {
@@ -52237,23 +52737,29 @@
     "purpose": "Show wardrobe as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "wardrobe"
+      "closet cabinet",
+      "storage doors",
+      "wardrobe",
+      "wardrobe icon"
     ],
-    "use_when": "Use when the interface refers directly to wardrobe as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the wardrobe to read as two full height cabinet doors.",
+    "avoid_when": "Do not use for the mixed wardrobe when one side should break into stacked shelf panels instead of two tall doors.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing wardrobe.",
+    "depicts": "Wardrobe body split into two tall doors with one small dot on each door",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "wardrobe"
+      "closet cabinet",
+      "storage doors",
+      "wardrobe",
+      "wardrobe icon"
     ]
   },
   {
@@ -52265,25 +52771,31 @@
     "purpose": "Show wardrobe as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "closet cabinet",
+      "storage panels",
       "wardrobe",
-      "2"
+      "wardrobe icon"
     ],
-    "use_when": "Use when the interface refers directly to wardrobe as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the wardrobe to mix shelf style panels on one side with one tall door on the other.",
+    "avoid_when": "Do not use for the two door wardrobe when both sides should stay full height doors with matching dots.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing wardrobe.",
+    "depicts": "Wardrobe body with one left stack of panels and one tall right door",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "closet cabinet",
+      "storage panels",
       "wardrobe",
-      "2"
+      "wardrobe icon"
     ]
   },
   {
@@ -52496,23 +53008,29 @@
     "purpose": "Show watch as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "watch"
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
     ],
-    "use_when": "Use when the interface refers directly to watch as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+    "avoid_when": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing watch.",
+    "depicts": "Round watch face inside one tall body with straight strap blocks attached above and below",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "watch"
+      "timepiece",
+      "watch",
+      "watch icon",
+      "wristwatch"
     ]
   },
   {
@@ -52524,25 +53042,31 @@
     "purpose": "Show watch as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "timepiece",
       "watch",
-      "2"
+      "watch icon",
+      "wristwatch"
     ],
-    "use_when": "Use when the interface refers directly to watch as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+    "avoid_when": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing watch.",
+    "depicts": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "timepiece",
       "watch",
-      "2"
+      "watch icon",
+      "wristwatch"
     ]
   },
   {
@@ -53191,23 +53715,29 @@
     "purpose": "Show wineglass as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "wineglass"
+      "drink stemware",
+      "goblet glass",
+      "wineglass",
+      "wineglass icon"
     ],
-    "use_when": "Use when the interface refers directly to wineglass as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+    "avoid_when": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing wineglass.",
+    "depicts": "Wine glass with one rounded bowl on a thin stem above one short base line",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "wineglass"
+      "drink stemware",
+      "goblet glass",
+      "wineglass",
+      "wineglass icon"
     ]
   },
   {
@@ -53219,25 +53749,31 @@
     "purpose": "Show wineglass as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "cocktail glass",
+      "drink stemware",
       "wineglass",
-      "2"
+      "wineglass icon"
     ],
-    "use_when": "Use when the interface refers directly to wineglass as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants a sharper martini style glass instead of a rounded goblet bowl.",
+    "avoid_when": "Do not use for the rounded wine glass when the bowl should not bulge into one curved goblet shape.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing wineglass.",
+    "depicts": "Wine glass with one wide V shaped bowl on a thin stem above one short base line",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "cocktail glass",
+      "drink stemware",
       "wineglass",
-      "2"
+      "wineglass icon"
     ]
   },
   {
@@ -53277,23 +53813,29 @@
     "purpose": "Show world as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
-      "world"
+      "globe bands",
+      "planet mark",
+      "world",
+      "world icon"
     ],
-    "use_when": "Use when the interface refers directly to world as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the world to read as a globe built from horizontal latitude style bands.",
+    "avoid_when": "Do not use for the world map globe when continent shapes should appear inside the circle.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing world.",
+    "depicts": "Round world circle crossed by three horizontal latitude bands from top to bottom",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
-      "world"
+      "globe bands",
+      "planet mark",
+      "world",
+      "world icon"
     ]
   },
   {
@@ -53305,25 +53847,31 @@
     "purpose": "Show world as a direct object, concept, or themed surface cue.",
     "category": "status_feedback",
     "semantic_tags": [
+      "2",
+      "earth globe",
+      "planet map",
       "world",
-      "2"
+      "world icon"
     ],
-    "use_when": "Use when the interface refers directly to world as an object, concept, or themed surface cue.",
-    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+    "use_when": "Use when the interface wants the world to read as a globe with continent land shapes inside the circle.",
+    "avoid_when": "Do not use for the striped globe when the planet should not reduce to horizontal latitude bands alone.",
     "version": "1.0.0",
     "status": "reviewed",
     "access_tier": "public_open_record",
     "projection_policy": "future_public_record",
     "is_premium": false,
-    "depicts": "A symbol representing world.",
+    "depicts": "Round world circle containing two continent shapes and one small island shape inside",
     "review_state": "human_reviewed",
     "evidence": [
       "source_name",
       "svg_payload"
     ],
     "synonyms": [
+      "2",
+      "earth globe",
+      "planet map",
       "world",
-      "2"
+      "world icon"
     ]
   },
   {

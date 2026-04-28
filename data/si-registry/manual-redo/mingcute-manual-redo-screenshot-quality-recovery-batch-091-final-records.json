@@ -1,0 +1,119 @@
+[
+  {
+    "icon_id": "mingcute:task",
+    "source_library": "mingcute",
+    "source_name": "task",
+    "label": "Task",
+    "depicts": "Clipboard panel with one top clip and one large check mark in the center",
+    "use_when": "Use when the interface wants the task cue to read as a completed clipboard item with a check mark.",
+    "avoid_when": "Do not use for the list clipboard when the panel should show horizontal task lines instead of one big check mark.",
+    "semantic_tags": [
+      "checked clipboard",
+      "completed task",
+      "task",
+      "task icon"
+    ],
+    "synonyms": [
+      "checked clipboard",
+      "completed task",
+      "task",
+      "task icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:task_2",
+    "source_library": "mingcute",
+    "source_name": "task_2",
+    "label": "Task",
+    "depicts": "Clipboard panel with one top clip and three horizontal list bars down the center",
+    "use_when": "Use when the interface wants the task cue to read as a list of items on a clipboard.",
+    "avoid_when": "Do not use for the checked clipboard when the panel should not be dominated by one large check mark.",
+    "semantic_tags": [
+      "2",
+      "clipboard list",
+      "task",
+      "task icon",
+      "task notes"
+    ],
+    "synonyms": [
+      "2",
+      "clipboard list",
+      "task",
+      "task icon",
+      "task notes"
+    ]
+  },
+  {
+    "icon_id": "mingcute:telescope",
+    "source_library": "mingcute",
+    "source_name": "telescope",
+    "label": "Telescope",
+    "depicts": "Long telescope body tilted on one tripod stand with the eyepiece pointing toward the upper right",
+    "use_when": "Use when the interface wants an observing scope mounted on a stand rather than a handheld viewing tool.",
+    "avoid_when": "Do not use for the binoculars when the viewing tool should split into two barrels with two eyepieces.",
+    "semantic_tags": [
+      "spyglass stand",
+      "stargazing scope",
+      "telescope",
+      "telescope icon"
+    ],
+    "synonyms": [
+      "spyglass stand",
+      "stargazing scope",
+      "telescope",
+      "telescope icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:telescope_2",
+    "source_library": "mingcute",
+    "source_name": "telescope_2",
+    "label": "Telescope",
+    "depicts": "Pair of binocular barrels joined at the center with two round eyepieces at the lower ends",
+    "use_when": "Use when the interface wants a dual barrel handheld viewing tool instead of a mounted telescope.",
+    "avoid_when": "Do not use for the tripod telescope when the sighting tool should not be one long angled tube on a stand.",
+    "semantic_tags": [
+      "2",
+      "binoculars icon",
+      "field glasses",
+      "telescope",
+      "viewing scope"
+    ],
+    "synonyms": [
+      "2",
+      "binoculars icon",
+      "field glasses",
+      "telescope",
+      "viewing scope"
+    ]
+  },
+  {
+    "icon_id": "mingcute:thumb_down",
+    "source_library": "mingcute",
+    "source_name": "thumb_down",
+    "label": "Disapproval",
+    "depicts": "Thumb silhouette pointing downward with one rounded back and one short cuff nub on the left",
+    "use_when": "Use when the interface wants a compact rounded thumbs down shape without a long separate wrist block.",
+    "avoid_when": "Do not use for the more structured thumbs down hand when the wrist and palm should look more segmented.",
+    "semantic_tags": [
+      "disapproval",
+      "dislike",
+      "dislike hand",
+      "negative feedback",
+      "negative vote",
+      "rejected",
+      "thumb down icon",
+      "thumbs down"
+    ],
+    "synonyms": [
+      "disapproval",
+      "dislike hand",
+      "disliked",
+      "downvote",
+      "negative",
+      "negative vote",
+      "rejected",
+      "thumb down icon"
+    ]
+  }
+]

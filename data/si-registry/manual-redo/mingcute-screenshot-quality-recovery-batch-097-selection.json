@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-097",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 097",
+  "review_goal": "Differentiate wardrobe, watch, and wineglass variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:wardrobe_2",
+      "screenshot_file_name": "mingcute_wardrobe_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/wardrobe_2_line.svg",
+      "depicts_observation": "Wardrobe body with one left stack of panels and one tall right door",
+      "popular_reading": "Panel and door wardrobe",
+      "plausible_readings": ["wardrobe icon", "closet cabinet", "storage panels"],
+      "context_bias": "Use when the interface wants the wardrobe to mix shelf style panels on one side with one tall door on the other.",
+      "ambiguity_note": "Do not use for the two door wardrobe when both sides should stay full height doors with matching dots.",
+      "selection_reason": "The screenshot breaks one side into stacked panels instead of keeping two equal tall doors."
+    },
+    {
+      "icon_id": "mingcute:watch",
+      "screenshot_file_name": "mingcute_watch_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/watch_line.svg",
+      "depicts_observation": "Round watch face inside one tall body with straight strap blocks attached above and below",
+      "popular_reading": "Tall body wristwatch",
+      "plausible_readings": ["watch icon", "wristwatch", "timepiece"],
+      "context_bias": "Use when the interface wants the watch to read as one tall body with the face enclosed by straight strap blocks.",
+      "ambiguity_note": "Do not use for the watch with separate tabs when the face should not float between detached top and bottom pieces.",
+      "selection_reason": "The screenshot encloses the watch face inside one tall body instead of showing separate top and bottom tabs."
+    },
+    {
+      "icon_id": "mingcute:watch_2",
+      "screenshot_file_name": "mingcute_watch_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/watch_2_line.svg",
+      "depicts_observation": "Round watch face with one separate top tab and one separate bottom tab outside the circle",
+      "popular_reading": "Tabbed wristwatch",
+      "plausible_readings": ["watch icon", "wristwatch", "timepiece"],
+      "context_bias": "Use when the interface wants the watch to show more distinct tabs above and below the round face.",
+      "ambiguity_note": "Do not use for the tall body watch when the face should not be enclosed inside one continuous case body.",
+      "selection_reason": "The screenshot separates the tabs from the face more clearly than the tall body watch variant."
+    },
+    {
+      "icon_id": "mingcute:wineglass",
+      "screenshot_file_name": "mingcute_wineglass_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/food/wineglass_line.svg",
+      "depicts_observation": "Wine glass with one rounded bowl on a thin stem above one short base line",
+      "popular_reading": "Rounded wine glass",
+      "plausible_readings": ["wineglass icon", "goblet glass", "drink stemware"],
+      "context_bias": "Use when the interface wants a classic rounded wine glass bowl on a stem.",
+      "ambiguity_note": "Do not use for the martini glass when the bowl should not sharpen into one wide V shape.",
+      "selection_reason": "The screenshot uses a rounded bowl instead of the sharper V shaped cocktail glass."
+    },
+    {
+      "icon_id": "mingcute:wineglass_2",
+      "screenshot_file_name": "mingcute_wineglass_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/food/wineglass_2_line.svg",
+      "depicts_observation": "Wine glass with one wide V shaped bowl on a thin stem above one short base line",
+      "popular_reading": "V shaped martini glass",
+      "plausible_readings": ["wineglass icon", "cocktail glass", "drink stemware"],
+      "context_bias": "Use when the interface wants a sharper martini style glass instead of a rounded goblet bowl.",
+      "ambiguity_note": "Do not use for the rounded wine glass when the bowl should not bulge into one curved goblet shape.",
+      "selection_reason": "The screenshot sharpens the bowl into a V shape instead of keeping it rounded."
+    }
+  ]
+}

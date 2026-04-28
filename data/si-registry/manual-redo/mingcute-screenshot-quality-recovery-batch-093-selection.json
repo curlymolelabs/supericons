@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-093",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 093",
+  "review_goal": "Differentiate toggle, tornado, and translate variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:toggle_right",
+      "screenshot_file_name": "mingcute_toggle_right_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/toggle_right_line.svg",
+      "depicts_observation": "Toggle track with one large right circle fused into one short capsule on the left",
+      "popular_reading": "Toggle right fused knob",
+      "plausible_readings": ["toggle icon", "right switch", "switch control"],
+      "context_bias": "Use when the interface wants the right toggle drawn as a fused shape with the knob swelling out from the track.",
+      "ambiguity_note": "Do not use for the capsule toggle when the switch should stay a full outline with the knob parked inside.",
+      "selection_reason": "The screenshot merges the right knob into the track instead of placing it inside a full capsule outline."
+    },
+    {
+      "icon_id": "mingcute:toggle_right_2",
+      "screenshot_file_name": "mingcute_toggle_right_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/toggle_right_2_line.svg",
+      "depicts_observation": "Long capsule outline with one inner circle knob parked on the right side",
+      "popular_reading": "Toggle right capsule",
+      "plausible_readings": ["toggle icon", "right switch", "switch control"],
+      "context_bias": "Use when the interface wants the right toggle to keep the full capsule outline with the knob sitting inside it.",
+      "ambiguity_note": "Do not use for the fused right toggle when the knob should not bulge out as part of the outer track shape.",
+      "selection_reason": "The screenshot keeps a full capsule around the switch and places the knob inside on the right."
+    },
+    {
+      "icon_id": "mingcute:tornado",
+      "screenshot_file_name": "mingcute_tornado_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/tornado_line.svg",
+      "depicts_observation": "Spiral funnel body with one wide top ring narrowing into one pointed lower stem",
+      "popular_reading": "Spiral tornado funnel",
+      "plausible_readings": ["tornado icon", "storm funnel", "cyclone spiral"],
+      "context_bias": "Use when the interface wants the tornado to read as a spinning funnel body rather than stacked straight bars.",
+      "ambiguity_note": "Do not use for the bar tornado when the weather cue should taper through horizontal bars instead of one spiral funnel.",
+      "selection_reason": "The screenshot forms a cone like spiral funnel instead of a stack of separate horizontal bars."
+    },
+    {
+      "icon_id": "mingcute:tornado_2",
+      "screenshot_file_name": "mingcute_tornado_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/tornado_2_line.svg",
+      "depicts_observation": "Stack of five descending horizontal bars tapering from long at top to short at bottom",
+      "popular_reading": "Bar stack tornado",
+      "plausible_readings": ["tornado icon", "storm bars", "wind funnel"],
+      "context_bias": "Use when the interface wants the tornado simplified into horizontal bars that taper downward.",
+      "ambiguity_note": "Do not use for the spiral funnel when the storm cue should not curl into one rounded cone body.",
+      "selection_reason": "The screenshot reduces the tornado to a descending stack of bars instead of a spiral funnel form."
+    },
+    {
+      "icon_id": "mingcute:translate",
+      "screenshot_file_name": "mingcute_translate_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/translate_line.svg",
+      "depicts_observation": "Open square frame with two short bars on the left and one small plus cross near the lower right",
+      "popular_reading": "Translate frame with plus",
+      "plausible_readings": ["translate icon", "language frame", "add translation"],
+      "context_bias": "Use when the interface wants the translation cue to read as a framed text area with a small add mark.",
+      "ambiguity_note": "Do not use for the letter based translate mark when the icon should center on one slanted A shape and stroke group.",
+      "selection_reason": "The screenshot uses a framed layout with a plus cross rather than the letter style translation symbol."
+    }
+  ]
+}

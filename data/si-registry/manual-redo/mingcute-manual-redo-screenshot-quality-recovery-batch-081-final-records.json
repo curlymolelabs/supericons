@@ -1,0 +1,111 @@
+[
+  {
+    "icon_id": "mingcute:rss",
+    "source_library": "mingcute",
+    "source_name": "rss",
+    "label": "Rss",
+    "depicts": "Rounded square tile holding one lower dot with two broadcast arcs rising inside the frame",
+    "use_when": "Use when the interface wants the RSS mark contained inside a rounded square badge or app style tile.",
+    "avoid_when": "Do not use for the loose RSS signal when the dot and arcs should appear without any outer frame.",
+    "semantic_tags": [
+      "broadcast badge",
+      "feed tile",
+      "rss",
+      "rss icon"
+    ],
+    "synonyms": [
+      "broadcast badge",
+      "feed tile",
+      "rss",
+      "rss icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rss_2",
+    "source_library": "mingcute",
+    "source_name": "rss_2",
+    "label": "Rss",
+    "depicts": "One lower dot with two broadcast arcs floating freely without any outer square frame",
+    "use_when": "Use when the interface wants a bare RSS signal with no container around the dot and arcs.",
+    "avoid_when": "Do not use for the RSS tile when the same signal should sit inside a rounded square badge.",
+    "semantic_tags": [
+      "2",
+      "broadcast mark",
+      "feed signal",
+      "rss",
+      "rss icon"
+    ],
+    "synonyms": [
+      "2",
+      "broadcast mark",
+      "feed signal",
+      "rss",
+      "rss icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:sandglass",
+    "source_library": "mingcute",
+    "source_name": "sandglass",
+    "label": "Sandglass",
+    "depicts": "Angular hourglass with flat top and bottom caps and two straight triangular chambers touching at the waist",
+    "use_when": "Use when the interface wants a geometric hourglass with crisp flat ends and a narrow center pinch.",
+    "avoid_when": "Do not use for the softer hourglass variant when the sides should bow outward in a more rounded shape.",
+    "semantic_tags": [
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
+    ],
+    "synonyms": [
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
+    ]
+  },
+  {
+    "icon_id": "mingcute:sandglass_2",
+    "source_library": "mingcute",
+    "source_name": "sandglass_2",
+    "label": "Sandglass",
+    "depicts": "Hourglass with rounded outer sides that curve inward toward a pinched middle",
+    "use_when": "Use when the interface wants an hourglass silhouette with softer bowed sides instead of a rigid angular frame.",
+    "avoid_when": "Do not use for the straighter hourglass when the chambers should look more triangular with flatter end caps.",
+    "semantic_tags": [
+      "2",
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
+    ],
+    "synonyms": [
+      "2",
+      "hourglass icon",
+      "sand timer",
+      "sandglass",
+      "timer glass"
+    ]
+  },
+  {
+    "icon_id": "mingcute:save",
+    "source_library": "mingcute",
+    "source_name": "save",
+    "label": "Save",
+    "depicts": "Document page with one folded corner and a large check mark centered inside the page",
+    "use_when": "Use when the interface wants save to feel like a confirmed document or completed file action.",
+    "avoid_when": "Do not use for the floppy disk variant when the save concept should reference storage media instead of a checked page.",
+    "semantic_tags": [
+      "approved file",
+      "checked page",
+      "save",
+      "save icon"
+    ],
+    "synonyms": [
+      "approved file",
+      "checked page",
+      "save",
+      "save icon"
+    ]
+  }
+]
