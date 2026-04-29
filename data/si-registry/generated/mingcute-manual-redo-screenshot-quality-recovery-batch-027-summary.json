@@ -1,0 +1,27 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-027",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 027",
+  "review_goal": "Differentiate five MingCute brush and palette variants with screenshot grounded depicts and deterministic evidence fields.",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "internal_review_only": true,
+  "process_rule": "Each icon must include depicts_observation (literal visual read) before final record generation.",
+  "final_schema_rule": "Final semantic_tags and synonyms are lowercased, de-duplicated, sorted, and filtered to short phrase values only.",
+  "item_count": 5,
+  "icon_ids": [
+    "mingcute:brush",
+    "mingcute:brush_2",
+    "mingcute:brush_3",
+    "mingcute:palette",
+    "mingcute:palette_2"
+  ],
+  "output_json_path": "data/si-registry/manual-redo/mingcute-manual-redo-screenshot-quality-recovery-batch-027-internal-review-reviewed-records.json",
+  "output_final_json_path": "data/si-registry/manual-redo/mingcute-manual-redo-screenshot-quality-recovery-batch-027-final-records.json",
+  "output_html_path": "docs/superpowers/plans/2026-04-29-mingcute-manual-redo-screenshot-quality-recovery-batch-027-internal-review.html"
+}

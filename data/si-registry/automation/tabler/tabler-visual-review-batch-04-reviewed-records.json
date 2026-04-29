@@ -7,7 +7,7 @@
       "source_library": "tabler",
       "source_name": "bookmark_plus",
       "label": "Bookmark Plus",
-      "depicts": "A symbol representing bookmark plus.",
+      "depicts": "A bookmark shape with a plus sign inside or below.",
       "purpose": "Show bookmark plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -18,8 +18,8 @@
         "bookmark",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to bookmark plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining bookmark with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -32,7 +32,7 @@
       "source_library": "tabler",
       "source_name": "calendar_clock",
       "label": "Calendar Clock",
-      "depicts": "A symbol representing calendar clock.",
+      "depicts": "A calendar with a small clock at the lower right.",
       "purpose": "Show calendar clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -43,8 +43,8 @@
         "calendar",
         "clock"
       ],
-      "use_when": "Use when the interface refers directly to calendar clock as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar clock directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar clock.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -57,7 +57,7 @@
       "source_library": "tabler",
       "source_name": "calendar_plus",
       "label": "Calendar Plus",
-      "depicts": "A symbol representing calendar plus.",
+      "depicts": "A calendar with a plus mark at the lower right.",
       "purpose": "Show calendar plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -68,8 +68,8 @@
         "calendar",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to calendar plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -82,7 +82,7 @@
       "source_library": "tabler",
       "source_name": "calendar_user",
       "label": "Calendar User",
-      "depicts": "A symbol representing calendar user.",
+      "depicts": "A calendar with a user silhouette at the lower right.",
       "purpose": "Show calendar user as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -93,8 +93,8 @@
         "calendar",
         "user"
       ],
-      "use_when": "Use when the interface refers directly to calendar user as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar user directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar user.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -107,7 +107,7 @@
       "source_library": "tabler",
       "source_name": "clock_edit",
       "label": "Clock Edit",
-      "depicts": "A symbol representing clock edit.",
+      "depicts": "A clock face with a pencil or edit marker at the lower right.",
       "purpose": "Show clock edit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -118,8 +118,8 @@
         "clock",
         "edit"
       ],
-      "use_when": "Use when the interface refers directly to clock edit as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a edit status or action cue.",
+      "avoid_when": "Do not use when the edit cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -132,7 +132,7 @@
       "source_library": "tabler",
       "source_name": "clock_plus",
       "label": "Clock Plus",
-      "depicts": "A symbol representing clock plus.",
+      "depicts": "A clock face with a plus mark at the lower right.",
       "purpose": "Show clock plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -143,8 +143,8 @@
         "clock",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to clock plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -157,7 +157,7 @@
       "source_library": "tabler",
       "source_name": "clock_x",
       "label": "Clock X",
-      "depicts": "A symbol representing clock x.",
+      "depicts": "A clock face with an X mark at the lower right.",
       "purpose": "Show clock x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -168,8 +168,8 @@
         "clock",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to clock x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing clock as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when clock should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -182,7 +182,7 @@
       "source_library": "tabler",
       "source_name": "arrow_rotary_straight",
       "label": "Arrow Rotary Straight",
-      "depicts": "A symbol representing arrow rotary straight.",
+      "depicts": "A straight horizontal arrow with a circular rotary indicator at the base.",
       "purpose": "Show arrow rotary straight as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -195,8 +195,8 @@
         "rotary",
         "straight"
       ],
-      "use_when": "Use when the interface refers directly to arrow rotary straight as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing arrow rotary straight directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than arrow rotary straight.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -209,7 +209,7 @@
       "source_library": "tabler",
       "source_name": "arrow_zig_zag",
       "label": "Arrow Zig Zag",
-      "depicts": "A symbol representing arrow zig zag.",
+      "depicts": "A horizontal arrow with a zigzag or stepped path, depicting a non-linear direction.",
       "purpose": "Show arrow zig zag as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -222,8 +222,8 @@
         "zig",
         "zag"
       ],
-      "use_when": "Use when the interface refers directly to arrow zig zag as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing arrow zig zag directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than arrow zig zag.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -236,7 +236,7 @@
       "source_library": "tabler",
       "source_name": "error_404",
       "label": "Error",
-      "depicts": "A symbol representing error.",
+      "depicts": "the numerals four, zero, and four arranged horizontally",
       "purpose": "Show error as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -247,8 +247,8 @@
         "error",
         "404"
       ],
-      "use_when": "Use when the interface refers directly to error as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing error 404 directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than error 404.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -261,7 +261,7 @@
       "source_library": "tabler",
       "source_name": "error_404_off",
       "label": "Error Off",
-      "depicts": "A symbol representing error off.",
+      "depicts": "the numerals four, zero, and four with a diagonal slash running from upper left to lower right across them",
       "purpose": "Show error off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -274,8 +274,8 @@
         "404",
         "off"
       ],
-      "use_when": "Use when the interface refers directly to error off as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing error 404 as disabled, unavailable, hidden, or turned off.",
+      "avoid_when": "Do not use when error 404 is active, available, visible, or enabled.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -288,7 +288,7 @@
       "source_library": "tabler",
       "source_name": "face_id_error",
       "label": "Face Id Error",
-      "depicts": "A symbol representing face id error.",
+      "depicts": "face recognition scanning frame with four corner brackets surrounding a sad face with two dot eyes and a curved downward frown",
       "purpose": "Show face id error as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -301,8 +301,8 @@
         "id",
         "error"
       ],
-      "use_when": "Use when the interface refers directly to face id error as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing face id error directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than face id error.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -315,7 +315,7 @@
       "source_library": "tabler",
       "source_name": "file_text",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner containing a small circular bullet point near the top and two horizontal lines below it representing text; solid variant is filled in black with the elements shown as cutouts",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -341,7 +341,7 @@
       "source_library": "tabler",
       "source_name": "file_text_spark",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner containing a bullet point and two horizontal lines, with a four-pointed sparkle or star symbol overlapping the lower right side",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -369,7 +369,7 @@
       "source_library": "tabler",
       "source_name": "file_time",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and a clock or timer symbol with a circular face and a single hand centered on the page; solid variant is filled in black with the clock shown as a cutout",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -395,7 +395,7 @@
       "source_library": "tabler",
       "source_name": "file_type_bmp",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters b, m, and p in bold type below it, representing a bitmap image file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -423,7 +423,7 @@
       "source_library": "tabler",
       "source_name": "file_type_css",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters c, s, and s in bold type below it, representing a cascading style sheet file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -451,7 +451,7 @@
       "source_library": "tabler",
       "source_name": "file_type_csv",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters c, s, and v in bold type below it, representing a comma-separated values file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -479,7 +479,7 @@
       "source_library": "tabler",
       "source_name": "file_type_doc",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters d, o, and c in bold type below it, representing a word document file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -507,7 +507,7 @@
       "source_library": "tabler",
       "source_name": "file_type_docx",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters d, o, c, and x in bold type below it, representing a modern word document file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -535,7 +535,7 @@
       "source_library": "tabler",
       "source_name": "file_type_html",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters h, t, m, and l in bold type below it, representing a hypertext markup language file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -563,7 +563,7 @@
       "source_library": "tabler",
       "source_name": "file_type_jpg",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters j, p, and g in bold type below it, representing a jpeg image file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -591,7 +591,7 @@
       "source_library": "tabler",
       "source_name": "file_type_js",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters j and s in bold type below it, representing a javascript file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -619,7 +619,7 @@
       "source_library": "tabler",
       "source_name": "file_type_jsx",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters j, s, and x in bold type below it, representing a javascript xml file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -647,7 +647,7 @@
       "source_library": "tabler",
       "source_name": "file_type_pdf",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters p, d, and f in bold type below it, representing a portable document format file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -675,7 +675,7 @@
       "source_library": "tabler",
       "source_name": "file_type_php",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters p, h, and p in bold type below it, representing a php script file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -703,7 +703,7 @@
       "source_library": "tabler",
       "source_name": "file_type_png",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters p, n, and g in bold type below it, representing a portable network graphics image file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -731,7 +731,7 @@
       "source_library": "tabler",
       "source_name": "file_type_ppt",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters p, p, and t in bold type below it, representing a powerpoint presentation file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -759,7 +759,7 @@
       "source_library": "tabler",
       "source_name": "file_type_rs",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters r and s in bold type below it, representing a rust source code file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -787,7 +787,7 @@
       "source_library": "tabler",
       "source_name": "file_type_sql",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters s, q, and l in bold type below it, representing a structured query language file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -815,7 +815,7 @@
       "source_library": "tabler",
       "source_name": "file_type_svg",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters s, v, and g in bold type below it, representing a scalable vector graphics file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -843,7 +843,7 @@
       "source_library": "tabler",
       "source_name": "file_type_ts",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters t and s in bold type below it, representing a typescript file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -871,7 +871,7 @@
       "source_library": "tabler",
       "source_name": "file_type_tsx",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters t, s, and x in bold type below it, representing a typescript xml file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -899,7 +899,7 @@
       "source_library": "tabler",
       "source_name": "file_type_txt",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters t, x, and t in bold type below it, representing a plain text file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -927,7 +927,7 @@
       "source_library": "tabler",
       "source_name": "file_type_vue",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters v, u, and e in bold type below it, representing a vue framework file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -955,7 +955,7 @@
       "source_library": "tabler",
       "source_name": "file_type_xls",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters x, l, and s in bold type below it, representing an excel spreadsheet file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -983,7 +983,7 @@
       "source_library": "tabler",
       "source_name": "file_type_xml",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters x, m, and l in bold type below it, representing an extensible markup language file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -1011,7 +1011,7 @@
       "source_library": "tabler",
       "source_name": "file_type_zip",
       "label": "File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "document page with a folded upper-right corner and the letters z, i, and p in bold type below it, representing a compressed archive file",
       "purpose": "Show a file, document, or file-related action.",
       "category": "system_control",
       "semantic_tags": [
@@ -1039,7 +1039,7 @@
       "source_library": "tabler",
       "source_name": "flag_pause",
       "label": "Flag Pause",
-      "depicts": "A symbol representing flag pause.",
+      "depicts": "waving flag on a vertical pole with two vertical pause bars to the lower right",
       "purpose": "Show flag pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1050,8 +1050,8 @@
         "flag",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to flag pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining flag with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1064,7 +1064,7 @@
       "source_library": "tabler",
       "source_name": "hand_stop",
       "label": "Hand Stop",
-      "depicts": "A symbol representing hand stop.",
+      "depicts": "an open hand with all five fingers extended upward; stop or open hand gesture",
       "purpose": "Show hand stop as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1075,8 +1075,8 @@
         "hand",
         "stop"
       ],
-      "use_when": "Use when the interface refers directly to hand stop as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing hand stop directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than hand stop.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1089,7 +1089,7 @@
       "source_library": "tabler",
       "source_name": "heart_pause",
       "label": "Heart Pause",
-      "depicts": "A symbol representing heart pause.",
+      "depicts": "a heart with a pause symbol in the lower right corner; heart paused",
       "purpose": "Show heart pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1100,8 +1100,8 @@
         "heart",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to heart pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining heart with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1114,7 +1114,7 @@
       "source_library": "tabler",
       "source_name": "location_pause",
       "label": "Location Pause",
-      "depicts": "A symbol representing location pause.",
+      "depicts": "a paper plane or send arrow with two vertical pause bars beside it; paused location",
       "purpose": "Show location pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1125,8 +1125,8 @@
         "location",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to location pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining location with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1139,7 +1139,7 @@
       "source_library": "tabler",
       "source_name": "map_pause",
       "label": "Map Pause",
-      "depicts": "A symbol representing map pause.",
+      "depicts": "a folded map with three panels and two vertical pause bars beside it; paused map",
       "purpose": "Show map pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1150,8 +1150,8 @@
         "map",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to map pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining map with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1164,7 +1164,7 @@
       "source_library": "tabler",
       "source_name": "map_pin_pause",
       "label": "Map Pin Pause",
-      "depicts": "A symbol representing map pin pause.",
+      "depicts": "a location pin marker with two vertical pause bars beside it; paused location",
       "purpose": "Show map pin pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1177,8 +1177,8 @@
         "pin",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to map pin pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining map pin with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1191,7 +1191,7 @@
       "source_library": "tabler",
       "source_name": "navigation_pause",
       "label": "Navigation Pause",
-      "depicts": "A symbol representing navigation pause.",
+      "depicts": "a triangular navigation arrow pointing upward with two vertical pause bars beside it; paused navigation",
       "purpose": "Show navigation pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1202,8 +1202,8 @@
         "navigation",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to navigation pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining navigation with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1216,7 +1216,7 @@
       "source_library": "tabler",
       "source_name": "object_scan",
       "label": "Object Scan",
-      "depicts": "A symbol representing object scan.",
+      "depicts": "a scanner frame with four corner brackets surrounding a central square; object scan",
       "purpose": "Show object scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1227,8 +1227,8 @@
         "object",
         "scan"
       ],
-      "use_when": "Use when the interface refers directly to object scan as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing object scan directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than object scan.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1241,7 +1241,7 @@
       "source_library": "tabler",
       "source_name": "pencil_pause",
       "label": "Pencil Pause",
-      "depicts": "A symbol representing pencil pause.",
+      "depicts": "a diagonal pencil with two small vertical bars beside it, representing a paused or suspended edit",
       "purpose": "Show pencil pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1252,8 +1252,8 @@
         "pencil",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to pencil pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining pencil with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1266,7 +1266,7 @@
       "source_library": "tabler",
       "source_name": "phone_pause",
       "label": "Phone Pause",
-      "depicts": "A symbol representing phone pause.",
+      "depicts": "a telephone handset with two vertical pause bars to its right, representing a paused call",
       "purpose": "Show phone pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1277,8 +1277,8 @@
         "phone",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to phone pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining phone with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1291,7 +1291,7 @@
       "source_library": "tabler",
       "source_name": "photo_pause",
       "label": "Photo Pause",
-      "depicts": "A symbol representing photo pause.",
+      "depicts": "a square picture frame with mountain peaks and two vertical pause bars to its lower right",
       "purpose": "Show photo pause as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1302,8 +1302,8 @@
         "photo",
         "pause"
       ],
-      "use_when": "Use when the interface refers directly to photo pause as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining photo with a pause status or action cue.",
+      "avoid_when": "Do not use when the pause cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1316,7 +1316,7 @@
       "source_library": "tabler",
       "source_name": "photo_scan",
       "label": "Photo Scan",
-      "depicts": "A symbol representing photo scan.",
+      "depicts": "a landscape with mountain peaks and a sun dot surrounded by four corner bracket marks, representing a photo scan or focus area",
       "purpose": "Show photo scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1327,8 +1327,8 @@
         "photo",
         "scan"
       ],
-      "use_when": "Use when the interface refers directly to photo scan as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing photo scan directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than photo scan.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1341,7 +1341,7 @@
       "source_library": "tabler",
       "source_name": "route_scan",
       "label": "Route Scan",
-      "depicts": "A symbol representing route scan.",
+      "depicts": "a route fork symbol inside a four-corner scan frame",
       "purpose": "Show route scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1352,8 +1352,8 @@
         "route",
         "scan"
       ],
-      "use_when": "Use when the interface refers directly to route scan as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing route scan directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than route scan.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1366,7 +1366,7 @@
       "source_library": "tabler",
       "source_name": "scan_position",
       "label": "Scan Position",
-      "depicts": "A symbol representing scan position.",
+      "depicts": "a four-corner scan frame with a small paper-plane navigation arrow inside",
       "purpose": "Show scan position as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1377,8 +1377,8 @@
         "scan",
         "position"
       ],
-      "use_when": "Use when the interface refers directly to scan position as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing scan position directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than scan position.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1391,7 +1391,7 @@
       "source_library": "tabler",
       "source_name": "scan_traces",
       "label": "Scan Traces",
-      "depicts": "A symbol representing scan traces.",
+      "depicts": "a four-corner scan frame with three short horizontal trace lines inside",
       "purpose": "Show scan traces as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1402,8 +1402,8 @@
         "scan",
         "traces"
       ],
-      "use_when": "Use when the interface refers directly to scan traces as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing scan traces directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than scan traces.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1416,7 +1416,7 @@
       "source_library": "tabler",
       "source_name": "target_arrow",
       "label": "Target Arrow",
-      "depicts": "A symbol representing target arrow.",
+      "depicts": "A circular target or bullseye with concentric rings and an arrow hitting the center",
       "purpose": "Show target arrow as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1427,8 +1427,8 @@
         "target",
         "arrow"
       ],
-      "use_when": "Use when the interface refers directly to target arrow as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing target arrow directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than target arrow.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1441,7 +1441,7 @@
       "source_library": "tabler",
       "source_name": "text_scan_2",
       "label": "Text Scan",
-      "depicts": "A symbol representing text scan.",
+      "depicts": "Three horizontal lines centered inside a four-corner scanning or focus frame",
       "purpose": "Show text scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1454,8 +1454,8 @@
         "scan",
         "2"
       ],
-      "use_when": "Use when the interface refers directly to text scan as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing text scan 2 directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than text scan 2.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1468,7 +1468,7 @@
       "source_library": "tabler",
       "source_name": "view_360_arrow",
       "label": "View Arrow",
-      "depicts": "A symbol representing view arrow.",
+      "depicts": "A curved arrow rotating around in a 360-degree loop",
       "purpose": "Show view arrow as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1481,8 +1481,8 @@
         "360",
         "arrow"
       ],
-      "use_when": "Use when the interface refers directly to view arrow as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing view 360 arrow directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than view 360 arrow.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1495,7 +1495,7 @@
       "source_library": "tabler",
       "source_name": "zoom_scan",
       "label": "Zoom Scan",
-      "depicts": "A symbol representing zoom scan.",
+      "depicts": "A magnifying glass surrounded by four corner brackets forming a scan frame",
       "purpose": "Show zoom scan as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1506,8 +1506,8 @@
         "zoom",
         "scan"
       ],
-      "use_when": "Use when the interface refers directly to zoom scan as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing zoom scan directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than zoom scan.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1520,7 +1520,7 @@
       "source_library": "tabler",
       "source_name": "layout_align_left",
       "label": "Layout Align Left",
-      "depicts": "A symbol representing layout align left.",
+      "depicts": "a horizontal rectangle aligned to a vertical line on the left; align left",
       "purpose": "Show layout align left as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1533,8 +1533,8 @@
         "align",
         "left"
       ],
-      "use_when": "Use when the interface refers directly to layout align left as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing layout align left directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than layout align left.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1547,7 +1547,7 @@
       "source_library": "tabler",
       "source_name": "layout_align_right",
       "label": "Layout Align Right",
-      "depicts": "A symbol representing layout align right.",
+      "depicts": "a horizontal rectangle aligned to a vertical line on the right; align right",
       "purpose": "Show layout align right as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1560,8 +1560,8 @@
         "align",
         "right"
       ],
-      "use_when": "Use when the interface refers directly to layout align right as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing layout align right directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than layout align right.",
       "evidence_sources": [
         "source-name",
         "svg-payload"

@@ -49,6 +49,15 @@ import {
   loadSemanticRegistryRecords,
   mergeSemanticMatchesIntoIcons,
 } from './semantic-registry.js';
+import {
+  buildVariantLookupCandidates,
+  compareVariantPreference,
+  getConceptKeyForIcon,
+  iconMatchesRequestedStyle,
+  librarySupportsSolid,
+  normalizeRequestedStyle,
+  VARIANT_STYLES,
+} from './variant-support.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -80,15 +89,23 @@ const semanticRegistryMap = createSemanticRegistryMap(loadSemanticRegistryRecord
 
 function loadData() {
   const raw = JSON.parse(readFileSync(join(dataDir, 'icon-index.json'), 'utf8'));
+  const solidPath = join(dataDir, 'icon-index-solid.json');
+  const solidRaw = existsSync(solidPath)
+    ? JSON.parse(readFileSync(solidPath, 'utf8'))
+    : { icons: [] };
   const synonyms = JSON.parse(readFileSync(join(dataDir, 'synonyms.json'), 'utf8'));
 
   // icon-index.json has { icons: [...] } where each entry is { id, name, lib, type, style, svg? }
   // Include Material Symbols so MCP tools can resolve export-grade SVG snapshots on demand.
-  const freeIcons = raw.icons
+  const outlineIcons = raw.icons
     .filter(entry => (entry.type === 'svg' && entry.svg) || (entry.lib === 'material' && entry.type === 'font'))
     .map(icon => ({ ...icon, premium: false }));
+  const solidIcons = (solidRaw.icons || [])
+    .filter(entry => entry.type === 'svg' && entry.svg)
+    .map(icon => ({ ...icon, premium: false }));
+  const freeIcons = [...outlineIcons, ...solidIcons];
 
-  return { freeIcons, synonyms };
+  return { freeIcons, outlineIcons, solidIcons, synonyms };
 }
 
 function loadPremiumPacks() {
@@ -248,18 +265,23 @@ function loadMaterialExportManifest() {
   return materialExportState.manifest;
 }
 
-function getMaterialExportAxes() {
+function getMaterialExportAxes(style = VARIANT_STYLES.OUTLINE) {
   const manifest = loadMaterialExportManifest();
-  return { ...MATERIAL_EXPORT_DEFAULT_AXES, ...(manifest?.defaultAxes || {}) };
+  const normalizedStyle = normalizeRequestedStyle(style);
+  return {
+    ...MATERIAL_EXPORT_DEFAULT_AXES,
+    ...(manifest?.defaultAxes || {}),
+    fill: normalizedStyle === VARIANT_STYLES.SOLID ? 1 : 0,
+  };
 }
 
 function normalizeMaterialSnapshotSvg(rawSvg) {
   return normalizeOwnedMaterialSnapshotSvg(rawSvg);
 }
 
-async function resolveMaterialSnapshotSvg(icon) {
+async function resolveMaterialSnapshotSvg(icon, style = VARIANT_STYLES.OUTLINE) {
   const manifest = loadMaterialExportManifest();
-  const axes = getMaterialExportAxes();
+  const axes = getMaterialExportAxes(style);
   const cacheKey = buildMaterialCacheKey(icon.id, axes);
 
   if (materialExportState.svgCache.has(cacheKey)) {
@@ -310,13 +332,17 @@ async function resolveMaterialSnapshotSvg(icon) {
   };
 }
 
-async function buildToolIconResult(icon) {
+async function buildToolIconResult(icon, options = {}) {
+  const requestedStyle = normalizeRequestedStyle(options.style);
+  const resolvedStyle = icon.lib === 'material'
+    ? (requestedStyle === VARIANT_STYLES.SOLID ? VARIANT_STYLES.SOLID : VARIANT_STYLES.OUTLINE)
+    : (icon.style || VARIANT_STYLES.OUTLINE);
   let svg = icon.svg;
   let materialAxes = null;
   let svgSource = 'native-svg';
 
   if (icon.lib === 'material') {
-    const resolved = await resolveMaterialSnapshotSvg(icon);
+    const resolved = await resolveMaterialSnapshotSvg(icon, resolvedStyle);
     if (!resolved?.svg) return null;
     svg = resolved.svg;
     materialAxes = resolved.axes;
@@ -329,6 +355,7 @@ async function buildToolIconResult(icon) {
     library: icon.lib,
     libraryName: libraryMeta[icon.lib]?.name || icon.lib,
     type: 'svg',
+    style: resolvedStyle,
     originalType: icon.type,
     premium: icon.premium || false,
     svg,
@@ -347,7 +374,7 @@ async function buildToolIconResult(icon) {
   return attachSemanticPayload(result, semanticRegistryMap, icon);
 }
 
-const { freeIcons, synonyms } = loadData();
+const { freeIcons, outlineIcons, solidIcons, synonyms } = loadData();
 const premiumIcons = loadPremiumPacks();
 
 // Combined icon set (auth determines which subset is searchable)
@@ -385,6 +412,42 @@ function getAccessibleIcons() {
     return [...freeIcons, ...purchased];
   }
   return freeIcons;
+}
+
+function getResultKey(icon, requestedStyle) {
+  const normalizedStyle = normalizeRequestedStyle(requestedStyle);
+  if (normalizedStyle === VARIANT_STYLES.ANY) {
+    return getConceptKeyForIcon(icon) || `${icon.lib}:${icon.id}:${icon.style || VARIANT_STYLES.OUTLINE}`;
+  }
+  return `${icon.lib}:${icon.id}:${icon.style || VARIANT_STYLES.OUTLINE}`;
+}
+
+function mergeOrderedSearchResults(primaryResults, secondaryResults, requestedStyle) {
+  const normalizedStyle = normalizeRequestedStyle(requestedStyle);
+  const selected = new Map();
+  const orderedKeys = [];
+
+  for (const icon of [...primaryResults, ...secondaryResults]) {
+    const key = getResultKey(icon, normalizedStyle);
+    const existing = selected.get(key);
+
+    if (!existing) {
+      selected.set(key, icon);
+      orderedKeys.push(key);
+      continue;
+    }
+
+    if (compareVariantPreference(existing, icon, normalizedStyle) > 0) {
+      selected.set(key, icon);
+    }
+  }
+
+  return orderedKeys.map((key) => selected.get(key));
+}
+
+function choosePreferredIconCandidate(candidates, requestedStyle) {
+  if (!Array.isArray(candidates) || candidates.length === 0) return null;
+  return [...candidates].sort((left, right) => compareVariantPreference(left, right, requestedStyle))[0] || null;
 }
 
 // Check if user has access to a specific premium library
@@ -467,57 +530,78 @@ function buildMotionLabIconLookupError(id, library) {
   });
 }
 
-async function resolveAccessibleIcon(id, library) {
-  const accessibleIcons = getAccessibleIcons();
-  const exact = accessibleIcons.find((icon) => icon.id === id && icon.lib === library);
-  if (exact) {
-    return buildToolIconResult(exact);
+async function resolveAccessibleIcon(id, library, options = {}) {
+  const requestedStyle = normalizeRequestedStyle(options.style);
+  const accessibleIcons = getAccessibleIcons().filter((icon) => icon.lib.toLowerCase() === library.toLowerCase());
+
+  for (const candidateId of buildVariantLookupCandidates({ library, id, style: requestedStyle })) {
+    const candidates = accessibleIcons.filter((icon) =>
+      icon.id.toLowerCase() === candidateId.toLowerCase() && iconMatchesRequestedStyle(icon, requestedStyle)
+    );
+
+    const chosen = choosePreferredIconCandidate(candidates, requestedStyle);
+    if (chosen) {
+      return buildToolIconResult(chosen, { style: requestedStyle });
+    }
   }
 
-  const loose = accessibleIcons.find((icon) =>
-    icon.id.toLowerCase() === id.toLowerCase() && icon.lib.toLowerCase() === library.toLowerCase()
-  );
-  if (!loose) return null;
-  return buildToolIconResult(loose);
+  return null;
 }
 
-async function searchAccessibleIcons({ query, library, limit }) {
+async function searchAccessibleIcons({ query, library, limit, style = VARIANT_STYLES.ANY }) {
+  const requestedStyle = normalizeRequestedStyle(style);
   const accessibleIcons = getAccessibleIcons();
   const searchableIcons = library
-    ? accessibleIcons.filter((icon) => icon.lib === library)
-    : accessibleIcons;
+    ? accessibleIcons.filter((icon) => icon.lib === library && iconMatchesRequestedStyle(icon, requestedStyle))
+    : accessibleIcons.filter((icon) => iconMatchesRequestedStyle(icon, requestedStyle));
 
-  let results;
-  try {
-    const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
-    const byKey = new Map(searchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
-    results = (hostedPayload.results || [])
-      .map((row) => byKey.get(row.icon_id))
-      .filter(Boolean);
-  } catch (error) {
-    if (!shouldAllowLocalSearchFallback()) {
-      throw error;
+  const hostedSearchableIcons = searchableIcons.filter((icon) =>
+    icon.lib === 'material' || icon.style !== VARIANT_STYLES.SOLID
+  );
+
+  let hostedResults = [];
+  if (requestedStyle !== VARIANT_STYLES.SOLID) {
+    try {
+      const hostedPayload = await searchIconsHostedMcp({ query, library, limit });
+      const byKey = new Map(hostedSearchableIcons.map((icon) => [`${icon.lib}:${icon.id}`, icon]));
+      hostedResults = (hostedPayload.results || [])
+        .map((row) => byKey.get(row.icon_id))
+        .filter(Boolean);
+    } catch (error) {
+      if (!shouldAllowLocalSearchFallback()) {
+        throw error;
+      }
     }
-    results = searchIcons(query, searchableIcons, synonyms, { library, limit });
   }
 
-  return mergeSemanticMatchesIntoIcons(query, results, searchableIcons, semanticRegistryMap, { limit });
+  const localResults = searchIcons(query, searchableIcons, synonyms, {
+    library,
+    limit: Math.max(limit * 2, 20),
+    style: requestedStyle,
+  });
+
+  const baselineResults = requestedStyle === VARIANT_STYLES.SOLID
+    ? localResults
+    : mergeOrderedSearchResults(hostedResults, localResults, requestedStyle);
+
+  const merged = mergeSemanticMatchesIntoIcons(query, baselineResults, searchableIcons, semanticRegistryMap, { limit });
+  return mergeOrderedSearchResults(merged, [], requestedStyle).slice(0, Math.max(1, limit));
 }
 
 // ============================================================
 // Library Metadata
 // ============================================================
 const libraryMeta = {
-  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false },
-  lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true },
-  tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true },
-  phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false },
-  heroicons: { name: 'Heroicons', description: 'Beautiful hand-crafted SVG icons by Tailwind CSS', hasStroke: true },
-  bootstrap: { name: 'Bootstrap', description: 'Official open-source SVG icon library for Bootstrap', hasStroke: false },
-  iconoir: { name: 'Iconoir', description: 'High-quality open-source icon library', hasStroke: true },
-  ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true },
-  simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false },
-  mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false },
+  material: { name: 'Material Symbols', description: 'Google Material Symbols with 4-axis variable font support', hasStroke: false, hasFilled: true },
+  lucide: { name: 'Lucide', description: 'Beautiful, consistent open-source icons', hasStroke: true, hasFilled: false },
+  tabler: { name: 'Tabler', description: 'Over 5,000 free MIT-licensed SVG icons', hasStroke: true, hasFilled: true },
+  phosphor: { name: 'Phosphor', description: 'Flexible icon family for interfaces and beyond', hasStroke: false, hasFilled: true },
+  heroicons: { name: 'Heroicons', description: 'Beautiful hand-crafted SVG icons by Tailwind CSS', hasStroke: true, hasFilled: true },
+  bootstrap: { name: 'Bootstrap', description: 'Official open-source SVG icon library for Bootstrap', hasStroke: false, hasFilled: true },
+  iconoir: { name: 'Iconoir', description: 'High-quality open-source icon library', hasStroke: true, hasFilled: true },
+  ionicons: { name: 'Ionicons', description: 'Premium open-source icons for Ionic Framework', hasStroke: true, hasFilled: true },
+  simpleicons: { name: 'Simple Icons', description: '3,400+ SVG icons for popular brands', hasStroke: false, hasFilled: false },
+  mingcute: { name: 'MingCute', description: 'Modern open-source icon set with broad interface coverage', hasStroke: false, hasFilled: true },
 };
 
 // Add premium pack libraries
@@ -540,6 +624,14 @@ const libCounts = {};
 for (const icon of allIcons) {
   libCounts[icon.lib] = (libCounts[icon.lib] || 0) + 1;
 }
+const outlineLibCounts = {};
+for (const icon of outlineIcons) {
+  outlineLibCounts[icon.lib] = (outlineLibCounts[icon.lib] || 0) + 1;
+}
+const solidLibCounts = {};
+for (const icon of solidIcons) {
+  solidLibCounts[icon.lib] = (solidLibCounts[icon.lib] || 0) + 1;
+}
 const freeLibraryCount = Object.values(libraryMeta).filter(meta => !meta.premium).length;
 const productFacts = loadProductFacts();
 const mcpPackage = loadPackageMetadata();
@@ -561,9 +653,10 @@ server.tool(
   {
     query: z.string().describe('Search term (e.g. "heart", "login", "download arrow")'),
     library: z.string().optional().describe('Filter by library: lucide, tabler, phosphor, heroicons, bootstrap, iconoir, ionicons, material, simpleicons, mingcute, or premium pack names'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` only for libraries that ship fill or solid variants.'),
     limit: z.number().min(1).max(50).optional().default(10).describe('Max results (1-50, default 10)'),
   },
-  async ({ query, library, limit }) => {
+  async ({ query, library, style, limit }) => {
     // If user requests a premium library without Pro access, return 403-like message
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
@@ -572,7 +665,7 @@ server.tool(
 
     let results;
     try {
-      results = await searchAccessibleIcons({ query, library, limit });
+      results = await searchAccessibleIcons({ query, library, style, limit });
     } catch (error) {
       return buildStructuredToolErrorResponse(error, 'SuperIcons search is unavailable.');
     }
@@ -587,7 +680,7 @@ server.tool(
         content: [{ type: 'text', text: `No icons found for "${query}"${library ? ` in ${library}` : ''}.` }],
       };
     }
-    const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon)))).filter(Boolean);
+    const formatted = (await Promise.all(results.map(icon => buildToolIconResult(icon, { style })))).filter(Boolean);
     if (formatted.length === 0) {
       void logMcpSearchAttempt({
         query,
@@ -616,10 +709,11 @@ server.tool(
   {
     task: z.string().describe('Overall UI task, for example "replace the 4 bottom navigation icons" or "choose icons for a settings panel".'),
     library: z.string().optional().describe('Optional library filter such as mingcute, lucide, tabler, material, or simpleicons.'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to prefer filled variants where they exist.'),
     slots: z.array(z.string().min(1)).min(1).max(12).describe('List of UI slots to fill, for example ["Home tab", "Create action", "Alerts tab", "Profile tab"].'),
     limit_per_slot: z.number().min(1).max(5).optional().default(3).describe('How many choices to return per slot, including the top recommendation.'),
   },
-  async ({ task, library, slots, limit_per_slot }) => {
+  async ({ task, library, style, slots, limit_per_slot }) => {
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse(buildPremiumLibraryAccessError(libraryMeta[library].name));
     }
@@ -628,11 +722,12 @@ server.tool(
       const payload = await recommendIconsForTask({
         task,
         library,
+        style,
         slots,
         limitPerSlot: limit_per_slot,
         semanticMap: semanticRegistryMap,
-        searchIconsForQuery: ({ query, library: searchLibrary, limit }) =>
-          searchAccessibleIcons({ query, library: searchLibrary, limit }),
+        searchIconsForQuery: ({ query, library: searchLibrary, style: searchStyle, limit }) =>
+          searchAccessibleIcons({ query, library: searchLibrary, style: searchStyle, limit }),
         buildIconResult: buildToolIconResult,
       });
 
@@ -653,8 +748,9 @@ server.tool(
   {
     id: z.string().describe('Icon ID (e.g. "heart", "arrow-right", "settings")'),
     library: z.string().describe('Library name (e.g. "lucide", "tabler", "phosphor", or premium pack name)'),
+    style: z.enum(['any', 'outline', 'solid']).optional().default('any').describe('Optional style preference. Use `solid` to request a filled variant when the library supports it.'),
   },
-  async ({ id, library }) => {
+  async ({ id, library, style }) => {
     // Check if requesting premium library without access
     if (libraryMeta[library]?.premium && !hasLibraryAccess(library)) {
       return buildTextResponse({
@@ -663,7 +759,7 @@ server.tool(
       });
     }
 
-    const result = await resolveAccessibleIcon(id, library);
+    const result = await resolveAccessibleIcon(id, library, { style });
     if (!result) {
       return buildTextResponse(`Icon "${id}" not found in library "${library}". Use search_icons to find available icons.`);
     }
@@ -681,7 +777,11 @@ server.tool(
       id,
       name: meta.name,
       count: libCounts[id] || 0,
+      outlineCount: outlineLibCounts[id] || 0,
+      solidCount: id === 'material' ? (librarySupportsSolid(id) ? outlineLibCounts[id] || 0 : 0) : (solidLibCounts[id] || 0),
       hasStroke: meta.hasStroke,
+      hasFilled: meta.hasFilled || librarySupportsSolid(id),
+      supportedStyles: meta.hasFilled || librarySupportsSolid(id) ? ['outline', 'solid'] : ['outline'],
       description: meta.description,
       premium: meta.premium || false,
       accessible: meta.premium ? hasLibraryAccess(id) : true,

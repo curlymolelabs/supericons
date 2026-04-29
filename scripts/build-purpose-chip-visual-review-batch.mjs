@@ -61,21 +61,21 @@ const REVIEW_DECISIONS = Object.freeze({
     outcome: 'keep_as_reviewed_draft',
     note: 'The sparkle cluster still reads too broadly across magic, polish, delight, and AI enhancement.',
     overrides: {
-      confidence: 0.8,
+      routing_score: 0.8,
     },
   },
   'material:network_intelligence_update': {
     outcome: 'hold_for_editor_review',
     note: 'The down-arrow variant still mixes graph insight, refresh, and inbound update meanings too broadly.',
     overrides: {
-      confidence: 0.82,
+      routing_score: 0.82,
     },
   },
   'material:prompt_suggestion': {
     outcome: 'hold_for_editor_review',
     note: 'The hooked arrow shape reads more like insert, return, or submit than a clearly AI-specific prompt suggestion.',
     overrides: {
-      confidence: 0.8,
+      routing_score: 0.8,
       purpose: 'Show inserting a suggested prompt, reusing suggested text, or applying a prompt suggestion into an input.',
       use_when: 'Use when the interface inserts or applies a suggested prompt into a text field or composer.',
       avoid_when: 'Do not use for generic send, reply, continue, or enter actions when the meaning is not specifically about applying a suggestion.',
@@ -85,21 +85,21 @@ const REVIEW_DECISIONS = Object.freeze({
     outcome: 'hold_for_editor_review',
     note: 'The stacked density bars still need tighter wording to separate view density from generic list or layout controls.',
     overrides: {
-      confidence: 0.8,
+      routing_score: 0.8,
     },
   },
   'material:double_arrow': {
     outcome: 'hold_for_editor_review',
     note: 'The doubled arrow still drifts between jump ahead, fast forward, skip, and high-speed motion.',
     overrides: {
-      confidence: 0.81,
+      routing_score: 0.81,
     },
   },
   'material:psychology_alt': {
     outcome: 'hold_for_editor_review',
     note: 'The head-and-question-mark shape does not safely read as reasoning; it drifts toward ask, doubt, or uncertainty instead.',
     overrides: {
-      confidence: 0.81,
+      routing_score: 0.81,
       label: 'Questioning',
       purpose: 'Show questioning, uncertainty, or a thinking state centered on an open question.',
       use_when: 'Use when the interface highlights uncertainty, open questions, or a thinking step focused on what to ask next.',
@@ -151,7 +151,7 @@ function countBy(values, selector) {
 
 function buildReviewedRecord(stagedRecord, decision) {
   const overrides = decision.overrides || {};
-  const confidence = overrides.confidence ?? stagedRecord.confidence;
+  const routingScore = overrides.routing_score ?? stagedRecord.routing_score ?? 0;
 
   return {
     icon_id: stagedRecord.icon_id,
@@ -161,15 +161,13 @@ function buildReviewedRecord(stagedRecord, decision) {
     depicts: overrides.depicts ?? stagedRecord.depicts,
     purpose: overrides.purpose ?? stagedRecord.purpose,
     category: overrides.category ?? stagedRecord.category,
-    intent: overrides.intent ?? stagedRecord.intent,
-    domain: overrides.domain ?? stagedRecord.domain,
     semantic_tags: overrides.semantic_tags ?? stagedRecord.semantic_tags,
     synonyms: overrides.synonyms ?? stagedRecord.synonyms,
     use_when: overrides.use_when ?? stagedRecord.use_when,
     avoid_when: overrides.avoid_when ?? stagedRecord.avoid_when,
     evidence_sources: ['source-name', 'visual-inspection', 'editorial-review'],
-    confidence_score: confidence,
-    confidence_band: confidence >= 0.86 ? 'high' : 'medium',
+    routing_score: routingScore,
+    routing_band: routingScore >= 0.86 ? 'high' : 'medium',
   };
 }
 
@@ -204,14 +202,14 @@ const visualReviewEntries = Object.keys(REVIEW_DECISIONS)
       purpose_chip_category_id: candidateRecord.purpose_chip_category_id,
       purpose_chip_category_label: candidateRecord.purpose_chip_category_label,
       queue_outcome: 'visual_review',
-      confidence_band: candidateRecord.confidence >= 0.86 ? 'high' : 'medium',
+      routing_band: (candidateRecord.routing_score ?? 0) >= 0.86 ? 'high' : 'medium',
       current_candidate_record: candidateRecord,
       visual_review_input: visualInput,
     };
   })
   .sort(
     (left, right) =>
-      right.current_candidate_record.confidence - left.current_candidate_record.confidence ||
+      (right.current_candidate_record.routing_score ?? 0) - (left.current_candidate_record.routing_score ?? 0) ||
       left.icon_id.localeCompare(right.icon_id)
   );
 

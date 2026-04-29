@@ -7,7 +7,7 @@
       "source_library": "tabler",
       "source_name": "adjustments_plus",
       "label": "Adjustments Plus",
-      "depicts": "A symbol representing adjustments plus.",
+      "depicts": "Three horizontal slider tracks with circular drag handles and a small plus sign below.",
       "purpose": "Show adjustments plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -18,8 +18,8 @@
         "adjustments",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to adjustments plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining adjustments with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -32,7 +32,7 @@
       "source_library": "tabler",
       "source_name": "adjustments_x",
       "label": "Adjustments X",
-      "depicts": "A symbol representing adjustments x.",
+      "depicts": "Three horizontal slider tracks with circular drag handles and a small X mark below.",
       "purpose": "Show adjustments x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -43,8 +43,8 @@
         "adjustments",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to adjustments x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing adjustments as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when adjustments should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -57,7 +57,7 @@
       "source_library": "tabler",
       "source_name": "alarm_plus",
       "label": "Alarm Plus",
-      "depicts": "A symbol representing alarm plus.",
+      "depicts": "An alarm bell with a small plus sign symbol below.",
       "purpose": "Show alarm plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -68,8 +68,8 @@
         "alarm",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to alarm plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining alarm with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -82,7 +82,7 @@
       "source_library": "tabler",
       "source_name": "archive_off",
       "label": "Archive Off",
-      "depicts": "A symbol representing archive off.",
+      "depicts": "A filing cabinet drawer with a diagonal strikethrough line.",
       "purpose": "Show archive off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -93,8 +93,8 @@
         "archive",
         "off"
       ],
-      "use_when": "Use when the interface refers directly to archive off as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing archive as disabled, unavailable, hidden, or turned off.",
+      "avoid_when": "Do not use when archive is active, available, visible, or enabled.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -107,7 +107,7 @@
       "source_library": "tabler",
       "source_name": "axis_x",
       "label": "Axis X",
-      "depicts": "A symbol representing axis x.",
+      "depicts": "A horizontal line with an arrowhead at the right end, depicting the X axis.",
       "purpose": "Show axis x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -118,8 +118,8 @@
         "axis",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to axis x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing axis as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when axis should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -132,7 +132,7 @@
       "source_library": "tabler",
       "source_name": "basket_plus",
       "label": "Basket Plus",
-      "depicts": "A symbol representing basket plus.",
+      "depicts": "A shopping basket shape with a small plus sign below.",
       "purpose": "Show basket plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -143,8 +143,8 @@
         "basket",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to basket plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining basket with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -157,7 +157,7 @@
       "source_library": "tabler",
       "source_name": "basket_x",
       "label": "Basket X",
-      "depicts": "A symbol representing basket x.",
+      "depicts": "A shopping basket shape with a small X mark below.",
       "purpose": "Show basket x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -168,8 +168,8 @@
         "basket",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to basket x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing basket as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when basket should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -182,7 +182,7 @@
       "source_library": "tabler",
       "source_name": "bluetooth_x",
       "label": "Bluetooth X",
-      "depicts": "A symbol representing bluetooth x.",
+      "depicts": "A Bluetooth symbol with an X mark, depicting a disconnected state.",
       "purpose": "Show bluetooth x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -193,8 +193,8 @@
         "bluetooth",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to bluetooth x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing bluetooth as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when bluetooth should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -207,7 +207,7 @@
       "source_library": "tabler",
       "source_name": "book_download",
       "label": "Download File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "A book shape with a downward arrow, depicting a book download.",
       "purpose": "Show downloading, exporting, or saving a file.",
       "category": "system_control",
       "semantic_tags": [
@@ -233,7 +233,7 @@
       "source_library": "tabler",
       "source_name": "book_upload",
       "label": "Upload File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "A book shape with an upward arrow, depicting a book upload.",
       "purpose": "Show uploading, importing, or adding a file.",
       "category": "system_control",
       "semantic_tags": [
@@ -259,7 +259,7 @@
       "source_library": "tabler",
       "source_name": "bookmark_minus",
       "label": "Bookmark Minus",
-      "depicts": "A symbol representing bookmark minus.",
+      "depicts": "A bookmark shape with a minus sign inside or below.",
       "purpose": "Show bookmark minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -270,8 +270,8 @@
         "bookmark",
         "minus"
       ],
-      "use_when": "Use when the interface refers directly to bookmark minus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining bookmark with a minus status or action cue.",
+      "avoid_when": "Do not use when the minus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -284,7 +284,7 @@
       "source_library": "tabler",
       "source_name": "bookmark_off",
       "label": "Bookmark Off",
-      "depicts": "A symbol representing bookmark off.",
+      "depicts": "A bookmark shape with a diagonal strikethrough line.",
       "purpose": "Show bookmark off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -295,8 +295,8 @@
         "bookmark",
         "off"
       ],
-      "use_when": "Use when the interface refers directly to bookmark off as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing bookmark as disabled, unavailable, hidden, or turned off.",
+      "avoid_when": "Do not use when bookmark is active, available, visible, or enabled.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -309,7 +309,7 @@
       "source_library": "tabler",
       "source_name": "bookmark_question",
       "label": "Bookmark Question",
-      "depicts": "A symbol representing bookmark question.",
+      "depicts": "A bookmark shape with a question mark inside or below.",
       "purpose": "Show bookmark question as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -320,8 +320,8 @@
         "bookmark",
         "question"
       ],
-      "use_when": "Use when the interface refers directly to bookmark question as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining bookmark with a question status or action cue.",
+      "avoid_when": "Do not use when the question cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -334,7 +334,7 @@
       "source_library": "tabler",
       "source_name": "border_bottom_plus",
       "label": "Border Bottom Plus",
-      "depicts": "A symbol representing border bottom plus.",
+      "depicts": "A rectangular frame with a solid bottom border and a plus indicator.",
       "purpose": "Show border bottom plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -347,8 +347,8 @@
         "bottom",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to border bottom plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining border bottom with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -361,7 +361,7 @@
       "source_library": "tabler",
       "source_name": "border_top_plus",
       "label": "Border Top Plus",
-      "depicts": "A symbol representing border top plus.",
+      "depicts": "A rectangular frame with a solid top border and a plus indicator.",
       "purpose": "Show border top plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -374,8 +374,8 @@
         "top",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to border top plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining border top with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -388,7 +388,7 @@
       "source_library": "tabler",
       "source_name": "brand_open_source",
       "label": "Open File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "An open lock or circular shape, the Open Source logo.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
       "semantic_tags": [
@@ -416,7 +416,7 @@
       "source_library": "tabler",
       "source_name": "brand_x",
       "label": "Brand X",
-      "depicts": "A symbol representing brand x.",
+      "depicts": "A crossed angular X shape, the X logo.",
       "purpose": "Show brand x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -427,8 +427,8 @@
         "brand",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to brand x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing the x brand, service, or logo mark.",
+      "avoid_when": "Do not use for generic actions, status, or product UI when the brand itself is not the subject.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -441,7 +441,7 @@
       "source_library": "tabler",
       "source_name": "browser_plus",
       "label": "Browser Plus",
-      "depicts": "A symbol representing browser plus.",
+      "depicts": "A browser window frame with a plus mark at the lower right.",
       "purpose": "Show browser plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -452,8 +452,8 @@
         "browser",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to browser plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining browser with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -466,7 +466,7 @@
       "source_library": "tabler",
       "source_name": "browser_x",
       "label": "Browser X",
-      "depicts": "A symbol representing browser x.",
+      "depicts": "A browser window frame with an X mark inside.",
       "purpose": "Show browser x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -477,8 +477,8 @@
         "browser",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to browser x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing browser as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when browser should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -491,7 +491,7 @@
       "source_library": "tabler",
       "source_name": "bubble_plus",
       "label": "Bubble Plus",
-      "depicts": "A symbol representing bubble plus.",
+      "depicts": "A speech bubble with a plus mark at the lower right.",
       "purpose": "Show bubble plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -502,8 +502,8 @@
         "bubble",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to bubble plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining bubble with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -516,7 +516,7 @@
       "source_library": "tabler",
       "source_name": "bubble_x",
       "label": "Bubble X",
-      "depicts": "A symbol representing bubble x.",
+      "depicts": "A speech bubble with an X mark at the lower right.",
       "purpose": "Show bubble x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -527,8 +527,8 @@
         "bubble",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to bubble x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing bubble as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when bubble should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -541,7 +541,7 @@
       "source_library": "tabler",
       "source_name": "building_plus",
       "label": "Building Plus",
-      "depicts": "A symbol representing building plus.",
+      "depicts": "A building with a plus mark at the lower right.",
       "purpose": "Show building plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -552,8 +552,8 @@
         "building",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to building plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining building with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -566,7 +566,7 @@
       "source_library": "tabler",
       "source_name": "calendar_bolt",
       "label": "Calendar Bolt",
-      "depicts": "A symbol representing calendar bolt.",
+      "depicts": "A calendar with a lightning bolt at the lower right.",
       "purpose": "Show calendar bolt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -577,8 +577,8 @@
         "calendar",
         "bolt"
       ],
-      "use_when": "Use when the interface refers directly to calendar bolt as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a bolt status or action cue.",
+      "avoid_when": "Do not use when the bolt cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -591,7 +591,7 @@
       "source_library": "tabler",
       "source_name": "calendar_cancel",
       "label": "Calendar Cancel",
-      "depicts": "A symbol representing calendar cancel.",
+      "depicts": "A calendar with a small cancellation symbol at the lower right.",
       "purpose": "Show calendar cancel as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -602,8 +602,8 @@
         "calendar",
         "cancel"
       ],
-      "use_when": "Use when the interface refers directly to calendar cancel as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing calendar as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when calendar should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -616,7 +616,7 @@
       "source_library": "tabler",
       "source_name": "calendar_cog",
       "label": "Calendar Cog",
-      "depicts": "A symbol representing calendar cog.",
+      "depicts": "A calendar with a small gear at the lower right.",
       "purpose": "Show calendar cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -627,8 +627,8 @@
         "calendar",
         "cog"
       ],
-      "use_when": "Use when the interface refers directly to calendar cog as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a cog status or action cue.",
+      "avoid_when": "Do not use when the cog cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -641,7 +641,7 @@
       "source_library": "tabler",
       "source_name": "calendar_dollar",
       "label": "Calendar Dollar",
-      "depicts": "A symbol representing calendar dollar.",
+      "depicts": "A calendar with a dollar sign at the lower right.",
       "purpose": "Show calendar dollar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -652,8 +652,8 @@
         "calendar",
         "dollar"
       ],
-      "use_when": "Use when the interface refers directly to calendar dollar as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a dollar status or action cue.",
+      "avoid_when": "Do not use when the dollar cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -666,7 +666,7 @@
       "source_library": "tabler",
       "source_name": "calendar_dot",
       "label": "Calendar Dot",
-      "depicts": "A symbol representing calendar dot.",
+      "depicts": "A calendar with a small dot at the lower right.",
       "purpose": "Show calendar dot as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -677,8 +677,8 @@
         "calendar",
         "dot"
       ],
-      "use_when": "Use when the interface refers directly to calendar dot as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar dot directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar dot.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -691,7 +691,7 @@
       "source_library": "tabler",
       "source_name": "calendar_due",
       "label": "Calendar Due",
-      "depicts": "A symbol representing calendar due.",
+      "depicts": "A calendar page with a centered dot inside.",
       "purpose": "Show calendar due as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -702,8 +702,8 @@
         "calendar",
         "due"
       ],
-      "use_when": "Use when the interface refers directly to calendar due as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar due directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar due.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -716,7 +716,7 @@
       "source_library": "tabler",
       "source_name": "calendar_event",
       "label": "Calendar Event",
-      "depicts": "A symbol representing calendar event.",
+      "depicts": "A calendar page with a small square event marker inside.",
       "purpose": "Show calendar event as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -727,8 +727,8 @@
         "calendar",
         "event"
       ],
-      "use_when": "Use when the interface refers directly to calendar event as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar event directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar event.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -741,7 +741,7 @@
       "source_library": "tabler",
       "source_name": "calendar_exclamation",
       "label": "Calendar Exclamation",
-      "depicts": "A symbol representing calendar exclamation.",
+      "depicts": "A calendar with an exclamation mark at the lower right.",
       "purpose": "Show calendar exclamation as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -752,8 +752,8 @@
         "calendar",
         "exclamation"
       ],
-      "use_when": "Use when the interface refers directly to calendar exclamation as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a exclamation status or action cue.",
+      "avoid_when": "Do not use when the exclamation cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -766,7 +766,7 @@
       "source_library": "tabler",
       "source_name": "calendar_heart",
       "label": "Calendar Heart",
-      "depicts": "A symbol representing calendar heart.",
+      "depicts": "A calendar with a heart at the lower right.",
       "purpose": "Show calendar heart as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -777,8 +777,8 @@
         "calendar",
         "heart"
       ],
-      "use_when": "Use when the interface refers directly to calendar heart as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a heart status or action cue.",
+      "avoid_when": "Do not use when the heart cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -791,7 +791,7 @@
       "source_library": "tabler",
       "source_name": "calendar_minus",
       "label": "Calendar Minus",
-      "depicts": "A symbol representing calendar minus.",
+      "depicts": "A calendar with a minus line at the lower right.",
       "purpose": "Show calendar minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -802,8 +802,8 @@
         "calendar",
         "minus"
       ],
-      "use_when": "Use when the interface refers directly to calendar minus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a minus status or action cue.",
+      "avoid_when": "Do not use when the minus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -816,7 +816,7 @@
       "source_library": "tabler",
       "source_name": "calendar_off",
       "label": "Calendar Off",
-      "depicts": "A symbol representing calendar off.",
+      "depicts": "A calendar page crossed by a diagonal strikethrough line.",
       "purpose": "Show calendar off as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -827,8 +827,8 @@
         "calendar",
         "off"
       ],
-      "use_when": "Use when the interface refers directly to calendar off as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing calendar as disabled, unavailable, hidden, or turned off.",
+      "avoid_when": "Do not use when calendar is active, available, visible, or enabled.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -841,7 +841,7 @@
       "source_library": "tabler",
       "source_name": "calendar_pin",
       "label": "Calendar Pin",
-      "depicts": "A symbol representing calendar pin.",
+      "depicts": "A calendar with a map pin at the lower right.",
       "purpose": "Show calendar pin as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -852,8 +852,8 @@
         "calendar",
         "pin"
       ],
-      "use_when": "Use when the interface refers directly to calendar pin as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a pin status or action cue.",
+      "avoid_when": "Do not use when the pin cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -866,7 +866,7 @@
       "source_library": "tabler",
       "source_name": "calendar_question",
       "label": "Calendar Question",
-      "depicts": "A symbol representing calendar question.",
+      "depicts": "A calendar with a question mark at the lower right.",
       "purpose": "Show calendar question as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -877,8 +877,8 @@
         "calendar",
         "question"
       ],
-      "use_when": "Use when the interface refers directly to calendar question as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a question status or action cue.",
+      "avoid_when": "Do not use when the question cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -891,7 +891,7 @@
       "source_library": "tabler",
       "source_name": "calendar_repeat",
       "label": "Calendar Repeat",
-      "depicts": "A symbol representing calendar repeat.",
+      "depicts": "A calendar with a circular repeat arrow at the lower right.",
       "purpose": "Show calendar repeat as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -902,8 +902,8 @@
         "calendar",
         "repeat"
       ],
-      "use_when": "Use when the interface refers directly to calendar repeat as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar repeat directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar repeat.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -916,7 +916,7 @@
       "source_library": "tabler",
       "source_name": "calendar_sad",
       "label": "Calendar Sad",
-      "depicts": "A symbol representing calendar sad.",
+      "depicts": "A calendar page with a sad face inside.",
       "purpose": "Show calendar sad as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -927,8 +927,8 @@
         "calendar",
         "sad"
       ],
-      "use_when": "Use when the interface refers directly to calendar sad as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar sad directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar sad.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -941,7 +941,7 @@
       "source_library": "tabler",
       "source_name": "calendar_share",
       "label": "Calendar Share",
-      "depicts": "A symbol representing calendar share.",
+      "depicts": "A calendar with an outward share arrow at the lower right.",
       "purpose": "Show calendar share as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -952,8 +952,8 @@
         "calendar",
         "share"
       ],
-      "use_when": "Use when the interface refers directly to calendar share as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a share status or action cue.",
+      "avoid_when": "Do not use when the share cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -966,7 +966,7 @@
       "source_library": "tabler",
       "source_name": "calendar_smile",
       "label": "Calendar Smile",
-      "depicts": "A symbol representing calendar smile.",
+      "depicts": "A calendar page with a smiling face inside.",
       "purpose": "Show calendar smile as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -977,8 +977,8 @@
         "calendar",
         "smile"
       ],
-      "use_when": "Use when the interface refers directly to calendar smile as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar smile directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar smile.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -991,7 +991,7 @@
       "source_library": "tabler",
       "source_name": "calendar_star",
       "label": "Calendar Star",
-      "depicts": "A symbol representing calendar star.",
+      "depicts": "A calendar with a star at the lower right.",
       "purpose": "Show calendar star as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1002,8 +1002,8 @@
         "calendar",
         "star"
       ],
-      "use_when": "Use when the interface refers directly to calendar star as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining calendar with a star status or action cue.",
+      "avoid_when": "Do not use when the star cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1016,7 +1016,7 @@
       "source_library": "tabler",
       "source_name": "calendar_stats",
       "label": "Calendar Stats",
-      "depicts": "A symbol representing calendar stats.",
+      "depicts": "A calendar with a small pie chart at the lower right.",
       "purpose": "Show calendar stats as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1027,8 +1027,8 @@
         "calendar",
         "stats"
       ],
-      "use_when": "Use when the interface refers directly to calendar stats as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar stats directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar stats.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1041,7 +1041,7 @@
       "source_library": "tabler",
       "source_name": "calendar_time",
       "label": "Calendar Time",
-      "depicts": "A symbol representing calendar time.",
+      "depicts": "A calendar with a small clock at the lower right.",
       "purpose": "Show calendar time as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1052,8 +1052,8 @@
         "calendar",
         "time"
       ],
-      "use_when": "Use when the interface refers directly to calendar time as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing calendar time directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than calendar time.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1066,7 +1066,7 @@
       "source_library": "tabler",
       "source_name": "camera_plus",
       "label": "Camera Plus",
-      "depicts": "A symbol representing camera plus.",
+      "depicts": "A camera with a plus mark at the lower right.",
       "purpose": "Show camera plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1077,8 +1077,8 @@
         "camera",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to camera plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining camera with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1091,7 +1091,7 @@
       "source_library": "tabler",
       "source_name": "camera_x",
       "label": "Camera X",
-      "depicts": "A symbol representing camera x.",
+      "depicts": "A camera with an X mark at the lower right.",
       "purpose": "Show camera x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1102,8 +1102,8 @@
         "camera",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to camera x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing camera as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when camera should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1116,7 +1116,7 @@
       "source_library": "tabler",
       "source_name": "cash_banknote_edit",
       "label": "Cash Banknote Edit",
-      "depicts": "A symbol representing cash banknote edit.",
+      "depicts": "A banknote with a small pencil or edit marker at the lower right.",
       "purpose": "Show cash banknote edit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1129,8 +1129,8 @@
         "banknote",
         "edit"
       ],
-      "use_when": "Use when the interface refers directly to cash banknote edit as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining cash banknote with a edit status or action cue.",
+      "avoid_when": "Do not use when the edit cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1143,7 +1143,7 @@
       "source_library": "tabler",
       "source_name": "cash_banknote_plus",
       "label": "Cash Banknote Plus",
-      "depicts": "A symbol representing cash banknote plus.",
+      "depicts": "A banknote with a plus mark at the lower right.",
       "purpose": "Show cash banknote plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1156,8 +1156,8 @@
         "banknote",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to cash banknote plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining cash banknote with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1170,7 +1170,7 @@
       "source_library": "tabler",
       "source_name": "cash_edit",
       "label": "Cash Edit",
-      "depicts": "A symbol representing cash edit.",
+      "depicts": "Two overlapping banknotes with a small pencil or edit marker.",
       "purpose": "Show cash edit as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1181,8 +1181,8 @@
         "cash",
         "edit"
       ],
-      "use_when": "Use when the interface refers directly to cash edit as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining cash with a edit status or action cue.",
+      "avoid_when": "Do not use when the edit cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1195,7 +1195,7 @@
       "source_library": "tabler",
       "source_name": "cash_plus",
       "label": "Cash Plus",
-      "depicts": "A symbol representing cash plus.",
+      "depicts": "Two overlapping banknotes with a plus mark at the lower right.",
       "purpose": "Show cash plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1206,8 +1206,8 @@
         "cash",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to cash plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining cash with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1220,7 +1220,7 @@
       "source_library": "tabler",
       "source_name": "category_plus",
       "label": "Category Plus",
-      "depicts": "A symbol representing category plus.",
+      "depicts": "A four-item grid with three squares and a plus mark at the lower right.",
       "purpose": "Show category plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1231,8 +1231,8 @@
         "category",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to category plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining category with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1245,7 +1245,7 @@
       "source_library": "tabler",
       "source_name": "circle_dashed_letter_x",
       "label": "Circle Dashed Letter X",
-      "depicts": "A symbol representing circle dashed letter x.",
+      "depicts": "The letter X inside a dashed circle.",
       "purpose": "Show circle dashed letter x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1260,8 +1260,8 @@
         "letter",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to circle dashed letter x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing circle dashed letter as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when circle dashed letter should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1274,7 +1274,7 @@
       "source_library": "tabler",
       "source_name": "circle_dashed_plus",
       "label": "Circle Dashed Plus",
-      "depicts": "A symbol representing circle dashed plus.",
+      "depicts": "A plus mark inside a dashed circle.",
       "purpose": "Show circle dashed plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1287,8 +1287,8 @@
         "dashed",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to circle dashed plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining circle dashed with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1301,7 +1301,7 @@
       "source_library": "tabler",
       "source_name": "circle_dashed_x",
       "label": "Circle Dashed X",
-      "depicts": "A symbol representing circle dashed x.",
+      "depicts": "An X mark inside a dashed circle.",
       "purpose": "Show circle dashed x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1314,8 +1314,8 @@
         "dashed",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to circle dashed x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing circle dashed as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when circle dashed should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1328,7 +1328,7 @@
       "source_library": "tabler",
       "source_name": "circle_dotted_letter_x",
       "label": "Circle Dotted Letter X",
-      "depicts": "A symbol representing circle dotted letter x.",
+      "depicts": "The letter X inside a dotted circle.",
       "purpose": "Show circle dotted letter x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1343,8 +1343,8 @@
         "letter",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to circle dotted letter x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing circle dotted letter as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when circle dotted letter should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1357,7 +1357,7 @@
       "source_library": "tabler",
       "source_name": "circle_letter_x",
       "label": "Circle Letter X",
-      "depicts": "A symbol representing circle letter x.",
+      "depicts": "The letter X inside a circle.",
       "purpose": "Show circle letter x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1370,8 +1370,8 @@
         "letter",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to circle letter x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing circle letter as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when circle letter should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1384,7 +1384,7 @@
       "source_library": "tabler",
       "source_name": "circle_plus",
       "label": "Circle Plus",
-      "depicts": "A symbol representing circle plus.",
+      "depicts": "A plus mark inside a circle.",
       "purpose": "Show circle plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1395,8 +1395,8 @@
         "circle",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to circle plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining circle with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1409,7 +1409,7 @@
       "source_library": "tabler",
       "source_name": "circle_plus_2",
       "label": "Circle Plus",
-      "depicts": "A symbol representing circle plus.",
+      "depicts": "An almost closed circle with a plus mark just outside the lower right.",
       "purpose": "Show circle plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1422,8 +1422,8 @@
         "plus",
         "2"
       ],
-      "use_when": "Use when the interface refers directly to circle plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing circle plus 2 directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than circle plus 2.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1436,7 +1436,7 @@
       "source_library": "tabler",
       "source_name": "circle_plus_minus",
       "label": "Circle Plus Minus",
-      "depicts": "A symbol representing circle plus minus.",
+      "depicts": "A plus sign above a minus line inside a circle.",
       "purpose": "Show circle plus minus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1449,8 +1449,8 @@
         "plus",
         "minus"
       ],
-      "use_when": "Use when the interface refers directly to circle plus minus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining circle plus with a minus status or action cue.",
+      "avoid_when": "Do not use when the minus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1463,7 +1463,7 @@
       "source_library": "tabler",
       "source_name": "circuit_cell_plus",
       "label": "Circuit Cell Plus",
-      "depicts": "A symbol representing circuit cell plus.",
+      "depicts": "A cell circuit symbol with one long and one short plate plus a plus mark.",
       "purpose": "Show circuit cell plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1476,8 +1476,8 @@
         "cell",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to circuit cell plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining circuit cell with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1490,7 +1490,7 @@
       "source_library": "tabler",
       "source_name": "circuit_switch_open",
       "label": "Open File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "An open switch circuit symbol with a diagonal lever between two contacts.",
       "purpose": "Show opening a file or entering a document view.",
       "category": "system_control",
       "semantic_tags": [
@@ -1518,7 +1518,7 @@
       "source_library": "tabler",
       "source_name": "clipboard_copy",
       "label": "Clipboard Copy",
-      "depicts": "A symbol representing clipboard copy.",
+      "depicts": "A clipboard with a small dashed copy square at the lower right.",
       "purpose": "Show clipboard copy as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1529,8 +1529,8 @@
         "clipboard",
         "copy"
       ],
-      "use_when": "Use when the interface refers directly to clipboard copy as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing clipboard copy directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than clipboard copy.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1543,7 +1543,7 @@
       "source_library": "tabler",
       "source_name": "clipboard_plus",
       "label": "Clipboard Plus",
-      "depicts": "A symbol representing clipboard plus.",
+      "depicts": "A clipboard with a plus mark inside.",
       "purpose": "Show clipboard plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1554,8 +1554,8 @@
         "clipboard",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to clipboard plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clipboard with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1568,7 +1568,7 @@
       "source_library": "tabler",
       "source_name": "clipboard_x",
       "label": "Clipboard X",
-      "depicts": "A symbol representing clipboard x.",
+      "depicts": "A clipboard with an X mark inside.",
       "purpose": "Show clipboard x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1579,8 +1579,8 @@
         "clipboard",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to clipboard x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing clipboard as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when clipboard should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1593,7 +1593,7 @@
       "source_library": "tabler",
       "source_name": "clock_12",
       "label": "Clock",
-      "depicts": "A symbol representing clock.",
+      "depicts": "A clock face with the number 12 at the lower right.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1604,8 +1604,8 @@
         "clock",
         "12"
       ],
-      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing clock 12 directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than clock 12.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1618,7 +1618,7 @@
       "source_library": "tabler",
       "source_name": "clock_24",
       "label": "Clock",
-      "depicts": "A symbol representing clock.",
+      "depicts": "A clock face with the number 24 at the lower right.",
       "purpose": "Show clock as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1629,8 +1629,8 @@
         "clock",
         "24"
       ],
-      "use_when": "Use when the interface refers directly to clock as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing clock 24 directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than clock 24.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1643,7 +1643,7 @@
       "source_library": "tabler",
       "source_name": "clock_bitcoin",
       "label": "Clock Bitcoin",
-      "depicts": "A symbol representing clock bitcoin.",
+      "depicts": "A clock face with a Bitcoin symbol at the lower right.",
       "purpose": "Show clock bitcoin as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1654,8 +1654,8 @@
         "clock",
         "bitcoin"
       ],
-      "use_when": "Use when the interface refers directly to clock bitcoin as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a bitcoin status or action cue.",
+      "avoid_when": "Do not use when the bitcoin cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1668,7 +1668,7 @@
       "source_library": "tabler",
       "source_name": "clock_bolt",
       "label": "Clock Bolt",
-      "depicts": "A symbol representing clock bolt.",
+      "depicts": "A clock face with a lightning bolt at the lower right.",
       "purpose": "Show clock bolt as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1679,8 +1679,8 @@
         "clock",
         "bolt"
       ],
-      "use_when": "Use when the interface refers directly to clock bolt as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a bolt status or action cue.",
+      "avoid_when": "Do not use when the bolt cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1693,7 +1693,7 @@
       "source_library": "tabler",
       "source_name": "clock_cancel",
       "label": "Clock Cancel",
-      "depicts": "A symbol representing clock cancel.",
+      "depicts": "A clock face with a small cancellation symbol at the lower right.",
       "purpose": "Show clock cancel as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1704,8 +1704,8 @@
         "clock",
         "cancel"
       ],
-      "use_when": "Use when the interface refers directly to clock cancel as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing clock as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when clock should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1718,7 +1718,7 @@
       "source_library": "tabler",
       "source_name": "clock_cog",
       "label": "Clock Cog",
-      "depicts": "A symbol representing clock cog.",
+      "depicts": "A clock face with a gear at the lower right.",
       "purpose": "Show clock cog as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1729,8 +1729,8 @@
         "clock",
         "cog"
       ],
-      "use_when": "Use when the interface refers directly to clock cog as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a cog status or action cue.",
+      "avoid_when": "Do not use when the cog cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1743,7 +1743,7 @@
       "source_library": "tabler",
       "source_name": "clock_dollar",
       "label": "Clock Dollar",
-      "depicts": "A symbol representing clock dollar.",
+      "depicts": "A clock face with a dollar sign at the lower right.",
       "purpose": "Show clock dollar as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1754,8 +1754,8 @@
         "clock",
         "dollar"
       ],
-      "use_when": "Use when the interface refers directly to clock dollar as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a dollar status or action cue.",
+      "avoid_when": "Do not use when the dollar cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -1768,7 +1768,7 @@
       "source_library": "tabler",
       "source_name": "clock_exclamation",
       "label": "Clock Exclamation",
-      "depicts": "A symbol representing clock exclamation.",
+      "depicts": "A clock face with an exclamation mark at the lower right.",
       "purpose": "Show clock exclamation as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1779,8 +1779,8 @@
         "clock",
         "exclamation"
       ],
-      "use_when": "Use when the interface refers directly to clock exclamation as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining clock with a exclamation status or action cue.",
+      "avoid_when": "Do not use when the exclamation cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"

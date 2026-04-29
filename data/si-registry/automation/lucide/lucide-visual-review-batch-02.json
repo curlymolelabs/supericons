@@ -5,14 +5,12 @@
   "library_id": "lucide",
   "library_label": "Lucide",
   "purpose": "Resolve the visually ambiguous Lucide icons from lucide-batch-02.",
-  "selected_count": 50,
+  "selected_count": 48,
   "selected_icon_ids": [
     "lucide:alarm_clock_plus",
     "lucide:archive_x",
     "lucide:bookmark_plus",
     "lucide:bookmark_x",
-    "lucide:file_plus_corner",
-    "lucide:file_x_corner",
     "lucide:bow_arrow",
     "lucide:circle_pause",
     "lucide:circle_play",
@@ -247,100 +245,6 @@
         "visual_payload_status": "svg_available",
         "renderable_icon_payload": {
           "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-bookmark-x\" viewBox=\"0 0 16 16\"> <path fill-rule=\"evenodd\" d=\"M6.146 5.146a.5.5 0 0 1 .708 0L8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 0 1 0-.708\"/> <path d=\"M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z\"/> </svg>"
-        }
-      }
-    },
-    {
-      "icon_id": "lucide:file_plus_corner",
-      "family_key": "file_actions",
-      "selection_score": 5,
-      "approved_reference_icon_id": null,
-      "queue_outcome": "needs_visual_review",
-      "current_candidate_record": {
-        "icon_id": "lucide:file_plus_corner",
-        "source_group": "free",
-        "source_library": "lucide",
-        "source_name": "file_plus_corner",
-        "source_asset_name": "file-plus-corner",
-        "label": "File",
-        "purpose": "Show a file, document, or file-related action.",
-        "category": "system_control",
-        "semantic_tags": [
-          "file",
-          "plus",
-          "corner"
-        ],
-        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
-        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
-        "version": "1.0.0",
-        "status": "draft",
-        "access_tier": "private_operational_enrichment",
-        "projection_policy": "internal_only",
-        "is_premium": false,
-        "depicts": "A file or folder symbol paired with an action or state cue.",
-        "synonyms": [
-          "file",
-          "file file",
-          "plus file",
-          "corner file"
-        ],
-        "evidence": [
-          "source_name",
-          "svg_payload"
-        ]
-      },
-      "visual_review_input": {
-        "source_asset_name": "file-plus-corner",
-        "visual_payload_status": "svg_available",
-        "renderable_icon_payload": {
-          "svg": "<svg class=\"lucide lucide-file-plus-corner\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M11.35 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5.35\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M14 19h6\" /> <path d=\"M17 16v6\" /> </svg>"
-        }
-      }
-    },
-    {
-      "icon_id": "lucide:file_x_corner",
-      "family_key": "file_actions",
-      "selection_score": 5,
-      "approved_reference_icon_id": null,
-      "queue_outcome": "needs_visual_review",
-      "current_candidate_record": {
-        "icon_id": "lucide:file_x_corner",
-        "source_group": "free",
-        "source_library": "lucide",
-        "source_name": "file_x_corner",
-        "source_asset_name": "file-x-corner",
-        "label": "File",
-        "purpose": "Show a file, document, or file-related action.",
-        "category": "system_control",
-        "semantic_tags": [
-          "file",
-          "x",
-          "corner"
-        ],
-        "use_when": "Use when the interface refers to basic file or folder handling such as opening, importing, exporting, or linking.",
-        "avoid_when": "Do not use for abstract system status when the meaning is specifically about files or folders.",
-        "version": "1.0.0",
-        "status": "draft",
-        "access_tier": "private_operational_enrichment",
-        "projection_policy": "internal_only",
-        "is_premium": false,
-        "depicts": "A file or folder symbol paired with an action or state cue.",
-        "synonyms": [
-          "file",
-          "file file",
-          "x file",
-          "corner file"
-        ],
-        "evidence": [
-          "source_name",
-          "svg_payload"
-        ]
-      },
-      "visual_review_input": {
-        "source_asset_name": "file-x-corner",
-        "visual_payload_status": "svg_available",
-        "renderable_icon_payload": {
-          "svg": "<svg class=\"lucide lucide-file-x-corner\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" > <path d=\"M11 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"m15 17 5 5\" /> <path d=\"m20 17-5 5\" /> </svg>"
         }
       }
     },

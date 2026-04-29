@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-027",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 027",
+  "review_goal": "Differentiate five MingCute brush and palette variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:brush",
+      "screenshot_file_name": "mingcute_brush_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/brush_line.svg",
+      "depicts_observation": "Flat paint brush outline with a square handle and four short bottom bristles",
+      "popular_reading": "Flat brush",
+      "plausible_readings": ["paint brush", "flat brush", "brush tool"],
+      "context_bias": "Use when the interface wants a flat brush head with visible short bristles.",
+      "ambiguity_note": "Do not use for the rounded or angled brush tools when the square handle and bristle row matter.",
+      "selection_reason": "The screenshot shows a flat brush block with a centered handle and short bottom bristle marks."
+    },
+    {
+      "icon_id": "mingcute:brush_2",
+      "screenshot_file_name": "mingcute_brush_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/brush_2_line.svg",
+      "depicts_observation": "Rounded paint brush outline with a looped handle and square bristle block",
+      "popular_reading": "Rounded brush",
+      "plausible_readings": ["paint brush", "round handle brush", "brush tool"],
+      "context_bias": "Use when the interface wants a softer rounded paint brush with a looped handle shape.",
+      "ambiguity_note": "Do not use for the flat or angled brush icons when the looped handle is the visible cue.",
+      "selection_reason": "The screenshot curves the handle into a loop above a separate square bristle block."
+    },
+    {
+      "icon_id": "mingcute:brush_3",
+      "screenshot_file_name": "mingcute_brush_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/brush_3_line.svg",
+      "depicts_observation": "Angled brush outline with a slanted head band and curved lower bristle edge",
+      "popular_reading": "Angled brush",
+      "plausible_readings": ["paint brush", "angled brush", "brush tip"],
+      "context_bias": "Use when the interface wants a brush with a slanted head rather than a flat square bristle block.",
+      "ambiguity_note": "Do not use for the centered flat brush forms when the angled head is the key visual cue.",
+      "selection_reason": "The screenshot tilts the brush head and gives the lower edge a slanted painted curve."
+    },
+    {
+      "icon_id": "mingcute:palette",
+      "screenshot_file_name": "mingcute_palette_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/palette_line.svg",
+      "depicts_observation": "Paint palette outline with three paint dots and a thumb notch cutout",
+      "popular_reading": "Paint palette",
+      "plausible_readings": ["palette", "paint board", "art palette"],
+      "context_bias": "Use when the interface wants the classic curved painter palette shape with paint dots.",
+      "ambiguity_note": "Do not use for swatch or folded palette shapes when the curved thumb notch matters.",
+      "selection_reason": "The screenshot shows a curved painter palette with three dots and one thumb opening."
+    },
+    {
+      "icon_id": "mingcute:palette_2",
+      "screenshot_file_name": "mingcute_palette_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/palette_2_line.svg",
+      "depicts_observation": "Vertical swatch block with two overlapping sample panels and one round mark",
+      "popular_reading": "Swatch palette",
+      "plausible_readings": ["color swatches", "sample cards", "design palette"],
+      "context_bias": "Use when the interface wants color selection shown as stacked sample panels instead of a painter palette.",
+      "ambiguity_note": "Do not use for the curved palette board when the upright swatch panels are the main cue.",
+      "selection_reason": "The screenshot replaces the palette board with upright overlapping color sample panels."
+    }
+  ]
+}

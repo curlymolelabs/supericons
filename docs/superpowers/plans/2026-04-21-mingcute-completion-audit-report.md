@@ -2,9 +2,9 @@
 
 ## Verdict
 
-- Status: `fully_approved_complete`
-- Message: The library now meets the stricter completion standard: every icon is approved and the public registry matches the full library size.
-- Recommended next step: Move to the next incomplete library or the next library in the rollout order.
+- Status: `incomplete_needs_follow_up`
+- Message: Every icon has been processed, but the library is still incomplete because some icons remain unresolved or still use weak placeholder semantics.
+- Recommended next step: Keep working through the remaining hold, draft, and placeholder-approved icons until every icon is genuinely suitable.
 
 ## Coverage
 
@@ -53,7 +53,7 @@
 
 ## Gaps
 
-- No blocking or follow-up gaps found.
+- 1130 approved records still use generic placeholder semantics and must be re-reviewed before the library can count as fully complete.
 
 ## Manual Spot Check Set
 

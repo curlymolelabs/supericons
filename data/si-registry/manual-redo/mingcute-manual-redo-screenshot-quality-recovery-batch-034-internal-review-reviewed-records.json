@@ -1,0 +1,458 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:download",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_download_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:download",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "download",
+      "label": "Download",
+      "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
+      "category": "system_control",
+      "semantic_tags": [
+        "download",
+        "save",
+        "export",
+        "pull content",
+        "transfer"
+      ],
+      "use_when": "Use when the interface downloads or saves content into the current device or workspace.",
+      "avoid_when": "Do not use for import or upload when the action is specifically downloading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A downward transfer or save action.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "download",
+        "save locally",
+        "export",
+        "pull down"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:download",
+      "source_library": "mingcute",
+      "source_name": "download",
+      "label": "Download",
+      "depicts_observation": "Downward arrow entering an open tray frame with two vertical side lines",
+      "popular_reading": "Tray download",
+      "plausible_readings": [
+        "download",
+        "arrow to tray",
+        "file download"
+      ],
+      "context_bias": "Use when the interface wants a download arrow entering a framed tray or inbox shape.",
+      "ambiguity_note": "Do not use for the plain shelf or cloud downloads when the side tray walls matter.",
+      "search_hints": [
+        "Download",
+        "download",
+        "arrow to tray",
+        "file download",
+        "Tray download"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the arrow dropping into a tray with two vertical side walls."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:download",
+      "source_library": "mingcute",
+      "source_name": "download",
+      "label": "Download",
+      "depicts": "Downward arrow entering an open tray frame with two vertical side lines",
+      "use_when": "Use when the interface wants a download arrow entering a framed tray or inbox shape.",
+      "avoid_when": "Do not use for the plain shelf or cloud downloads when the side tray walls matter.",
+      "semantic_tags": [
+        "arrow to tray",
+        "download",
+        "export",
+        "file download",
+        "pull content",
+        "save",
+        "transfer"
+      ],
+      "synonyms": [
+        "arrow to tray",
+        "download",
+        "export",
+        "file download",
+        "pull down",
+        "save locally"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:download_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_download_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:download_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "download_2",
+      "label": "Download",
+      "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
+      "category": "system_control",
+      "semantic_tags": [
+        "download",
+        "save",
+        "export",
+        "pull content",
+        "transfer"
+      ],
+      "use_when": "Use when the interface downloads or saves content into the current device or workspace.",
+      "avoid_when": "Do not use for import or upload when the action is specifically downloading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A downward transfer or save action.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "download",
+        "save locally",
+        "export",
+        "pull down"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:download_2",
+      "source_library": "mingcute",
+      "source_name": "download_2",
+      "label": "Download",
+      "depicts_observation": "Downward arrow landing on a simple shelf line with short side posts",
+      "popular_reading": "Shelf download",
+      "plausible_readings": [
+        "download",
+        "arrow to shelf",
+        "save down"
+      ],
+      "context_bias": "Use when the interface wants the most minimal downward arrow landing on a simple shelf.",
+      "ambiguity_note": "Do not use for the tray or cloud downloads when the base should stay as a flat shelf line.",
+      "search_hints": [
+        "Download",
+        "download",
+        "arrow to shelf",
+        "save down",
+        "Shelf download"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot removes the tray walls and leaves only a short shelf under the arrow."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:download_2",
+      "source_library": "mingcute",
+      "source_name": "download_2",
+      "label": "Download",
+      "depicts": "Downward arrow landing on a simple shelf line with short side posts",
+      "use_when": "Use when the interface wants the most minimal downward arrow landing on a simple shelf.",
+      "avoid_when": "Do not use for the tray or cloud downloads when the base should stay as a flat shelf line.",
+      "semantic_tags": [
+        "arrow to shelf",
+        "download",
+        "export",
+        "pull content",
+        "save",
+        "save down",
+        "transfer"
+      ],
+      "synonyms": [
+        "arrow to shelf",
+        "download",
+        "export",
+        "pull down",
+        "save down",
+        "save locally"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:download_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_download_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:download_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "download_3",
+      "label": "Download",
+      "purpose": "Show downloading, saving, or pulling content into the current device or workspace.",
+      "category": "system_control",
+      "semantic_tags": [
+        "download",
+        "save",
+        "export",
+        "pull content",
+        "transfer"
+      ],
+      "use_when": "Use when the interface downloads or saves content into the current device or workspace.",
+      "avoid_when": "Do not use for import or upload when the action is specifically downloading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A downward transfer or save action.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "download",
+        "save locally",
+        "export",
+        "pull down"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:download_3",
+      "source_library": "mingcute",
+      "source_name": "download_3",
+      "label": "Download",
+      "depicts_observation": "Downward arrow centered inside a cloud outline with an open lower curve",
+      "popular_reading": "Cloud download",
+      "plausible_readings": [
+        "cloud download",
+        "download cloud",
+        "sync down"
+      ],
+      "context_bias": "Use when the interface wants downloading shown inside a cloud rather than a tray or shelf.",
+      "ambiguity_note": "Do not use for the tray or shelf icons when the outer cloud outline must be visible.",
+      "search_hints": [
+        "Download",
+        "cloud download",
+        "download cloud",
+        "sync down",
+        "Cloud download"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot wraps the downward arrow inside a cloud outline instead of a boxy tray."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:download_3",
+      "source_library": "mingcute",
+      "source_name": "download_3",
+      "label": "Download",
+      "depicts": "Downward arrow centered inside a cloud outline with an open lower curve",
+      "use_when": "Use when the interface wants downloading shown inside a cloud rather than a tray or shelf.",
+      "avoid_when": "Do not use for the tray or shelf icons when the outer cloud outline must be visible.",
+      "semantic_tags": [
+        "cloud download",
+        "download",
+        "download cloud",
+        "export",
+        "pull content",
+        "save",
+        "sync down",
+        "transfer"
+      ],
+      "synonyms": [
+        "cloud download",
+        "download",
+        "download cloud",
+        "export",
+        "pull down",
+        "save locally",
+        "sync down"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:upload",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_upload_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:upload",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "upload",
+      "label": "Upload",
+      "purpose": "Show uploading, sending, or pushing content out from the current device or workspace.",
+      "category": "system_control",
+      "semantic_tags": [
+        "upload",
+        "send",
+        "push content",
+        "submit",
+        "transfer"
+      ],
+      "use_when": "Use when the interface uploads or sends content from the current device or workspace.",
+      "avoid_when": "Do not use for import or download when the action is specifically uploading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An upward transfer or submit action.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "upload",
+        "send up",
+        "submit file",
+        "push out"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:upload",
+      "source_library": "mingcute",
+      "source_name": "upload",
+      "label": "Upload",
+      "depicts_observation": "Upward arrow rising from an open tray frame with two vertical side lines",
+      "popular_reading": "Tray upload",
+      "plausible_readings": [
+        "upload",
+        "arrow from tray",
+        "file upload"
+      ],
+      "context_bias": "Use when the interface wants an upload arrow emerging from a framed tray shape.",
+      "ambiguity_note": "Do not use for shelf or cloud uploads when the tray walls should remain visible.",
+      "search_hints": [
+        "Upload",
+        "upload",
+        "arrow from tray",
+        "file upload",
+        "Tray upload"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/upload_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot mirrors the tray download shape but flips the arrow upward."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:upload",
+      "source_library": "mingcute",
+      "source_name": "upload",
+      "label": "Upload",
+      "depicts": "Upward arrow rising from an open tray frame with two vertical side lines",
+      "use_when": "Use when the interface wants an upload arrow emerging from a framed tray shape.",
+      "avoid_when": "Do not use for shelf or cloud uploads when the tray walls should remain visible.",
+      "semantic_tags": [
+        "arrow from tray",
+        "file upload",
+        "push content",
+        "send",
+        "submit",
+        "transfer",
+        "upload"
+      ],
+      "synonyms": [
+        "arrow from tray",
+        "file upload",
+        "push out",
+        "send up",
+        "submit file",
+        "upload"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:upload_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_upload_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:upload_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "upload_2",
+      "label": "Upload",
+      "purpose": "Show uploading, sending, or pushing content out from the current device or workspace.",
+      "category": "system_control",
+      "semantic_tags": [
+        "upload",
+        "send",
+        "push content",
+        "submit",
+        "transfer"
+      ],
+      "use_when": "Use when the interface uploads or sends content from the current device or workspace.",
+      "avoid_when": "Do not use for import or download when the action is specifically uploading.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An upward transfer or submit action.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "upload",
+        "send up",
+        "submit file",
+        "push out"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:upload_2",
+      "source_library": "mingcute",
+      "source_name": "upload_2",
+      "label": "Upload",
+      "depicts_observation": "Upward arrow rising from a simple shelf line with short side posts",
+      "popular_reading": "Shelf upload",
+      "plausible_readings": [
+        "upload",
+        "arrow from shelf",
+        "send up"
+      ],
+      "context_bias": "Use when the interface wants the simplest upward arrow leaving a short base shelf.",
+      "ambiguity_note": "Do not use for the tray or cloud uploads when the base should stay as a flat shelf line.",
+      "search_hints": [
+        "Upload",
+        "upload",
+        "arrow from shelf",
+        "send up",
+        "Shelf upload"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/upload_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps only the lower shelf line under the upward arrow and removes tray walls."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:upload_2",
+      "source_library": "mingcute",
+      "source_name": "upload_2",
+      "label": "Upload",
+      "depicts": "Upward arrow rising from a simple shelf line with short side posts",
+      "use_when": "Use when the interface wants the simplest upward arrow leaving a short base shelf.",
+      "avoid_when": "Do not use for the tray or cloud uploads when the base should stay as a flat shelf line.",
+      "semantic_tags": [
+        "arrow from shelf",
+        "push content",
+        "send",
+        "send up",
+        "submit",
+        "transfer",
+        "upload"
+      ],
+      "synonyms": [
+        "arrow from shelf",
+        "push out",
+        "send up",
+        "submit file",
+        "upload"
+      ]
+    }
+  }
+]

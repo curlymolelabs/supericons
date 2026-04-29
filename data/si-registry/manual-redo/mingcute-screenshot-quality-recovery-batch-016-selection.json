@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-016",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 016",
+  "review_goal": "Differentiate five MingCute loading and search variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:loading",
+      "screenshot_file_name": "mingcute_loading_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_line.svg",
+      "depicts_observation": "Incomplete circular loading ring with a gap near the top right",
+      "popular_reading": "Loading ring",
+      "plausible_readings": ["spinner ring", "loading circle", "progress ring"],
+      "context_bias": "Use when the interface wants a simple circular loader made from one incomplete stroke.",
+      "ambiguity_note": "Do not use for the dotted or multi ray spinners when the ring should stay as one arc.",
+      "selection_reason": "The screenshot shows a smooth circular arc with one open gap rather than dots or spokes."
+    },
+    {
+      "icon_id": "mingcute:loading_2",
+      "screenshot_file_name": "mingcute_loading_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_2_line.svg",
+      "depicts_observation": "Twelve spoke loading star with short rounded rays around a center",
+      "popular_reading": "Ray spinner",
+      "plausible_readings": ["spoke loader", "sunburst spinner", "loading rays"],
+      "context_bias": "Use when the interface wants a loader made from separate short rays instead of one ring.",
+      "ambiguity_note": "Do not use for circular arc or dotted spinners when the spoke shape matters.",
+      "selection_reason": "The screenshot replaces a ring with a full sunburst of short rounded spokes."
+    },
+    {
+      "icon_id": "mingcute:loading_3",
+      "screenshot_file_name": "mingcute_loading_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_3_line.svg",
+      "depicts_observation": "Pale circular track with a dark progress arc near the top",
+      "popular_reading": "Progress ring",
+      "plausible_readings": ["progress circle", "track ring", "loading progress"],
+      "context_bias": "Use when the interface wants a loader with a visible background track and a highlighted active arc.",
+      "ambiguity_note": "Do not use for the plain ring when the light track behind the dark arc is visible.",
+      "selection_reason": "The screenshot uniquely includes a pale full ring behind a darker active progress arc."
+    },
+    {
+      "icon_id": "mingcute:loading_4",
+      "screenshot_file_name": "mingcute_loading_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_4_line.svg",
+      "depicts_observation": "Circular ring with small dots spaced around the outer edge",
+      "popular_reading": "Dotted spinner",
+      "plausible_readings": ["dot loader", "dotted spinner", "loading dots"],
+      "context_bias": "Use when the interface wants loading shown through a ring of separate dots.",
+      "ambiguity_note": "Do not use for arc or spoke loaders when the dotted ring is the intended cue.",
+      "selection_reason": "The screenshot is the only loading variant built from separate evenly spaced dots."
+    },
+    {
+      "icon_id": "mingcute:search_ai",
+      "screenshot_file_name": "mingcute_search_ai_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/search_ai_line.svg",
+      "depicts_observation": "Open magnifying glass ring with a spark star floating at upper right",
+      "popular_reading": "Open spark search",
+      "plausible_readings": ["ai search", "spark search", "open ring search"],
+      "context_bias": "Use when the interface wants the loosest search symbol with an open ring and an external spark cue.",
+      "ambiguity_note": "Do not use for magnifying glass icons when the lens is open and the spark floats outside.",
+      "selection_reason": "The screenshot breaks the circle into an open ring and adds a separate spark star at the top right."
+    }
+  ]
+}

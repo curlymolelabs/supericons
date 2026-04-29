@@ -1,0 +1,133 @@
+[
+  {
+    "icon_id": "mingcute:rewind_backward_5",
+    "source_library": "mingcute",
+    "source_name": "rewind_backward_5",
+    "label": "Rewind Backward",
+    "depicts": "Circular rewind arrow outline with the number five centered inside the ring",
+    "use_when": "Use when the interface wants a rewind timer marked with the number five.",
+    "avoid_when": "Do not use for other rewind counts when the centered number five is the key difference.",
+    "semantic_tags": [
+      "5",
+      "back 5 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 5"
+    ],
+    "synonyms": [
+      "5",
+      "back 5 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 5",
+      "rewind backward"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rewind_backward_10",
+    "source_library": "mingcute",
+    "source_name": "rewind_backward_10",
+    "label": "Rewind Backward",
+    "depicts": "Circular rewind arrow outline with the number ten centered inside the ring",
+    "use_when": "Use when the interface wants a rewind timer marked with the number ten.",
+    "avoid_when": "Do not use for the other rewind counts when the centered number ten must remain visible.",
+    "semantic_tags": [
+      "10",
+      "back 10 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 10"
+    ],
+    "synonyms": [
+      "10",
+      "back 10 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 10",
+      "rewind backward"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rewind_backward_15",
+    "source_library": "mingcute",
+    "source_name": "rewind_backward_15",
+    "label": "Rewind Backward",
+    "depicts": "Circular rewind arrow outline with the number fifteen centered inside the ring",
+    "use_when": "Use when the interface wants the rewind timer variant marked with fifteen.",
+    "avoid_when": "Do not use for the five ten or thirty variants when the number fifteen matters.",
+    "semantic_tags": [
+      "15",
+      "back 15 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 15"
+    ],
+    "synonyms": [
+      "15",
+      "back 15 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 15",
+      "rewind backward"
+    ]
+  },
+  {
+    "icon_id": "mingcute:rewind_backward_30",
+    "source_library": "mingcute",
+    "source_name": "rewind_backward_30",
+    "label": "Rewind Backward",
+    "depicts": "Circular rewind arrow outline with the number thirty centered inside the ring",
+    "use_when": "Use when the interface wants the largest rewind timer in this circular ring family.",
+    "avoid_when": "Do not use for the lower rewind counts when the number thirty must stay visible.",
+    "semantic_tags": [
+      "30",
+      "back 30 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 30"
+    ],
+    "synonyms": [
+      "30",
+      "back 30 seconds",
+      "backward",
+      "media rewind",
+      "rewind",
+      "rewind 30",
+      "rewind backward"
+    ]
+  },
+  {
+    "icon_id": "mingcute:back",
+    "source_library": "mingcute",
+    "source_name": "back",
+    "label": "Back",
+    "depicts": "Left hooked return arrow with a straight lower line and rounded outer bend",
+    "use_when": "Use when the interface wants a plain back or return arrow rather than a numbered media rewind icon.",
+    "avoid_when": "Do not use for circular rewind timers when the icon should stay as one simple return arrow.",
+    "semantic_tags": [
+      "back",
+      "go back",
+      "left arrow",
+      "navigation",
+      "previous",
+      "return",
+      "return arrow"
+    ],
+    "synonyms": [
+      "back",
+      "back navigation",
+      "go back",
+      "left arrow",
+      "previous screen",
+      "return",
+      "return arrow"
+    ]
+  }
+]

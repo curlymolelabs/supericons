@@ -1,0 +1,109 @@
+[
+  {
+    "icon_id": "mingcute:calendar",
+    "source_library": "mingcute",
+    "source_name": "calendar",
+    "label": "Calendar",
+    "depicts": "Blank calendar page with top binder tabs and an empty lower panel",
+    "use_when": "Use when the interface wants a generic calendar symbol without visible dates or numbers.",
+    "avoid_when": "Do not use for dated calendar variants when the lower panel should stay blank.",
+    "semantic_tags": [
+      "calendar",
+      "date page",
+      "schedule page"
+    ],
+    "synonyms": [
+      "calendar",
+      "date page",
+      "schedule page"
+    ]
+  },
+  {
+    "icon_id": "mingcute:calendar_2",
+    "source_library": "mingcute",
+    "source_name": "calendar_2",
+    "label": "Calendar",
+    "depicts": "Calendar page with top binder tabs and six small date dots",
+    "use_when": "Use when the interface wants a calendar that explicitly shows small date markers inside the page.",
+    "avoid_when": "Do not use for the blank or numbered calendar variants when the six interior dots matter.",
+    "semantic_tags": [
+      "2",
+      "calendar",
+      "calendar dots",
+      "date calendar",
+      "schedule grid"
+    ],
+    "synonyms": [
+      "2",
+      "calendar",
+      "calendar dots",
+      "date calendar",
+      "schedule grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:calendar_3",
+    "source_library": "mingcute",
+    "source_name": "calendar_3",
+    "label": "Calendar",
+    "depicts": "Tear off calendar block with the number ten on the front panel",
+    "use_when": "Use when the interface wants a tear off day block rather than a full hanging calendar page.",
+    "avoid_when": "Do not use for the hanging calendar page icons when the bold number on a block should remain visible.",
+    "semantic_tags": [
+      "3",
+      "calendar",
+      "calendar number",
+      "date block",
+      "day block"
+    ],
+    "synonyms": [
+      "3",
+      "calendar",
+      "calendar number",
+      "date block",
+      "day block"
+    ]
+  },
+  {
+    "icon_id": "mingcute:coin",
+    "source_library": "mingcute",
+    "source_name": "coin",
+    "label": "Coin",
+    "depicts": "Coin outline from the side with a thin oval cylinder body",
+    "use_when": "Use when the interface wants the simplest single coin profile without extra stack bands.",
+    "avoid_when": "Do not use for stacked or gem like coins when the single thin coin edge matters.",
+    "semantic_tags": [
+      "coin",
+      "money coin",
+      "token"
+    ],
+    "synonyms": [
+      "coin",
+      "money coin",
+      "token"
+    ]
+  },
+  {
+    "icon_id": "mingcute:coin_2",
+    "source_library": "mingcute",
+    "source_name": "coin_2",
+    "label": "Coin",
+    "depicts": "Stacked coin cylinder with two horizontal bands across the body",
+    "use_when": "Use when the interface wants a taller stacked coin form rather than a single flat coin.",
+    "avoid_when": "Do not use for the single coin profile when the stacked cylinder bands are visible.",
+    "semantic_tags": [
+      "2",
+      "coin",
+      "coin cylinder",
+      "money stack",
+      "stacked coins"
+    ],
+    "synonyms": [
+      "2",
+      "coin",
+      "coin cylinder",
+      "money stack",
+      "stacked coins"
+    ]
+  }
+]

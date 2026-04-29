@@ -1,0 +1,96 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-004",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 004",
+  "review_goal": "Differentiate the next five MingCute home variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:home_1",
+      "screenshot_file_name": "mingcute_home_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_1_line.svg",
+      "depicts_observation": "Pentagon house outline with a pointed roof and flat bottom wall",
+      "popular_reading": "Simple home",
+      "plausible_readings": [
+        "simple home",
+        "house outline",
+        "home icon"
+      ],
+      "context_bias": "Use when the interface needs the plainest house silhouette without a doorway chimney or window detail.",
+      "ambiguity_note": "Do not use when another home variant includes a visible doorway circular window or angled roof overhangs.",
+      "selection_reason": "The screenshot shows a bare pentagon house outline with no interior marks and no extra roof overhang."
+    },
+    {
+      "icon_id": "mingcute:home_2",
+      "screenshot_file_name": "mingcute_home_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_2_line.svg",
+      "depicts_observation": "House outline with roof overhangs above a square body and flat base",
+      "popular_reading": "House with eaves",
+      "plausible_readings": [
+        "house with eaves",
+        "home outline",
+        "roofed house"
+      ],
+      "context_bias": "Use when the interface wants a home symbol with a classic roof eave shape over a square body.",
+      "ambiguity_note": "Do not use for the plain pentagon home when the visible roof overhangs are part of the distinction.",
+      "selection_reason": "The screenshot differs from home_1 by extending the roof corners outward beyond the square wall shape."
+    },
+    {
+      "icon_id": "mingcute:home_3",
+      "screenshot_file_name": "mingcute_home_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_3_line.svg",
+      "depicts_observation": "House outline with a centered rounded doorway inside a square body",
+      "popular_reading": "House with door",
+      "plausible_readings": [
+        "house with door",
+        "home entrance",
+        "doorway house"
+      ],
+      "context_bias": "Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.",
+      "ambiguity_note": "Do not use for the doorway cutout or window variants when the body walls and door shape differ visibly.",
+      "selection_reason": "The screenshot shows a square house body with a closed rounded doorway shape drawn inside it."
+    },
+    {
+      "icon_id": "mingcute:home_4",
+      "screenshot_file_name": "mingcute_home_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_4_line.svg",
+      "depicts_observation": "House outline with a centered arched doorway cutout and no roof overhangs",
+      "popular_reading": "Open doorway home",
+      "plausible_readings": [
+        "open doorway",
+        "arched home",
+        "entry house"
+      ],
+      "context_bias": "Use when the interface wants a simplified home shape built around an open arched doorway cutout.",
+      "ambiguity_note": "Do not use for home_3 when the doorway is drawn as an inner shape instead of an open cutout.",
+      "selection_reason": "The screenshot removes the roof eaves and uses an open doorway notch cut from the lower center."
+    },
+    {
+      "icon_id": "mingcute:home_5",
+      "screenshot_file_name": "mingcute_home_5_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_5_line.svg",
+      "depicts_observation": "House outline with a centered circular window inside a tapered body",
+      "popular_reading": "House with window",
+      "plausible_readings": [
+        "house window",
+        "home window",
+        "round window"
+      ],
+      "context_bias": "Use when the interface needs a home symbol distinguished by a centered round window instead of a doorway.",
+      "ambiguity_note": "Do not use for the door based home variants when the visible circular window is the main cue.",
+      "selection_reason": "The screenshot is the only selected home variant with a centered circular window in the body."
+    }
+  ]
+}

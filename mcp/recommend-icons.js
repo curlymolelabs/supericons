@@ -196,11 +196,14 @@ function getSlotPreferenceBonus(icon, slotLabel, intentTerms, library) {
 }
 
 function summarizeSemanticFit(slotLabel, semanticRecord, intentTerms) {
-  if (semanticRecord?.purpose) {
-    return `Strong fit for ${slotLabel}: ${semanticRecord.purpose}`;
+  if (semanticRecord?.depicts && semanticRecord?.use_when) {
+    return `Strong fit for ${slotLabel}: visually reads as ${String(semanticRecord.depicts).toLowerCase()}. ${semanticRecord.use_when}`;
   }
   if (semanticRecord?.depicts) {
     return `Good fit for ${slotLabel}: visually reads as ${String(semanticRecord.depicts).toLowerCase()}.`;
+  }
+  if (semanticRecord?.use_when) {
+    return `Strong fit for ${slotLabel}: ${semanticRecord.use_when}`;
   }
   if (intentTerms.length > 0) {
     return `Best lexical match for ${slotLabel} from the current library.`;
@@ -213,8 +216,8 @@ function buildWhySelected(slotLabel, semanticRecord, iconResult) {
   if (semanticRecord?.depicts) {
     return `${label} matches ${slotLabel} and visually reads as ${String(semanticRecord.depicts).toLowerCase()}.`;
   }
-  if (semanticRecord?.purpose) {
-    return `${label} matches ${slotLabel} because ${String(semanticRecord.purpose).charAt(0).toLowerCase()}${String(semanticRecord.purpose).slice(1)}`;
+  if (semanticRecord?.use_when) {
+    return `${label} matches ${slotLabel}. ${semanticRecord.use_when}`;
   }
   return `${label} is the clearest match for ${slotLabel} from the current library.`;
 }
@@ -224,8 +227,8 @@ function buildCandidatePayload(slotLabel, iconResult, semanticRecord, intentTerm
     id: iconResult.id,
     library: iconResult.library,
     name: iconResult.name,
+    style: iconResult.style || 'outline',
     label: semanticRecord?.label || iconResult.semantic?.label || iconResult.name,
-    purpose: semanticRecord?.purpose || iconResult.semantic?.purpose || null,
     semantic_fit: summarizeSemanticFit(slotLabel, semanticRecord, intentTerms),
     why_selected: buildWhySelected(slotLabel, semanticRecord, iconResult),
     svg: iconResult.svg,
@@ -236,6 +239,7 @@ function buildCandidatePayload(slotLabel, iconResult, semanticRecord, intentTerm
 export async function recommendIconsForTask({
   task,
   library,
+  style = 'any',
   slots,
   limitPerSlot = 3,
   searchIconsForQuery,
@@ -254,6 +258,7 @@ export async function recommendIconsForTask({
       const results = await searchIconsForQuery({
         query: queryVariant,
         library,
+        style,
         limit: Math.max(limitPerSlot * 4, 10),
       });
 
@@ -300,7 +305,7 @@ export async function recommendIconsForTask({
 
     const preparedCandidates = [];
     for (const entry of scored) {
-      const iconResult = await buildIconResult(entry.icon);
+      const iconResult = await buildIconResult(entry.icon, { style });
       if (!iconResult?.svg) continue;
       preparedCandidates.push(buildCandidatePayload(slotLabel, iconResult, entry.semanticRecord, intentTerms));
     }
@@ -316,6 +321,7 @@ export async function recommendIconsForTask({
   return {
     task,
     library: library || 'all',
+    style,
     slot_count: slots.length,
     results: slotResults,
   };

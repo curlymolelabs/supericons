@@ -12,8 +12,11 @@ scripts/tmp-frames/
 tools/converter-proof-service/artifacts/
 .agents/
 .playwright-cli/
+.playwright-mcp/
+.roo/
 .worktrees/
 .vscode/
+archive/
 deno.lock
 *.code-workspace
 *.log
@@ -21,4 +24,12 @@ deno.lock
 *.out.log
 .tmp-*
 tmp-*.png
+batch-*.png
+qa-*.png
+tmp-batch-review/
+tmp-review-*/
+mingcute-remaining-page-*.png
+output/qa/
+output/qa-spotcheck/
+output/tmp-*/
 dc_verify.png

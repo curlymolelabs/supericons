@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-036",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 036",
+  "review_goal": "Differentiate five MingCute heading and text variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:heading_1",
+      "screenshot_file_name": "mingcute_Heading_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_1_line.svg",
+      "depicts_observation": "H letter glyph with a small number one at the lower right side",
+      "popular_reading": "Heading one",
+      "plausible_readings": ["H1", "heading 1", "text heading"],
+      "context_bias": "Use when the interface wants the first heading level shown as H with a small one marker.",
+      "ambiguity_note": "Do not use for the other heading levels when the small number one should remain visible.",
+      "selection_reason": "The screenshot shows a large H glyph paired with a small numeral one at the right."
+    },
+    {
+      "icon_id": "mingcute:heading_2",
+      "screenshot_file_name": "mingcute_Heading_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_2_line.svg",
+      "depicts_observation": "H letter glyph with a small number two at the lower right side",
+      "popular_reading": "Heading two",
+      "plausible_readings": ["H2", "heading 2", "text heading"],
+      "context_bias": "Use when the interface wants the second heading level shown as H with a small two marker.",
+      "ambiguity_note": "Do not use for H1 or H3 when the small number two is the main difference.",
+      "selection_reason": "The screenshot matches the heading family and changes the small numeral to two."
+    },
+    {
+      "icon_id": "mingcute:heading_3",
+      "screenshot_file_name": "mingcute_Heading_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_3_line.svg",
+      "depicts_observation": "H letter glyph with a small number three at the lower right side",
+      "popular_reading": "Heading three",
+      "plausible_readings": ["H3", "heading 3", "text heading"],
+      "context_bias": "Use when the interface wants the third heading level shown as H with a small three marker.",
+      "ambiguity_note": "Do not use for H1 or H2 when the small number three should remain visible.",
+      "selection_reason": "The screenshot keeps the large H glyph and switches the small numeral to three."
+    },
+    {
+      "icon_id": "mingcute:text",
+      "screenshot_file_name": "mingcute_text_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/text_line.svg",
+      "depicts_observation": "T letter glyph with a long top bar and one centered vertical stem",
+      "popular_reading": "Simple T text",
+      "plausible_readings": ["text", "letter T", "type icon"],
+      "context_bias": "Use when the interface wants the simplest text icon as a plain capital T shape.",
+      "ambiguity_note": "Do not use for the serif T when the top bar and stem should stay plain and minimal.",
+      "selection_reason": "The screenshot shows a plain T with a broad top bar and one straight center stem."
+    },
+    {
+      "icon_id": "mingcute:text_2",
+      "screenshot_file_name": "mingcute_text_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/text_2_line.svg",
+      "depicts_observation": "T letter glyph with serif like top ends and a small bottom foot",
+      "popular_reading": "Serif T text",
+      "plausible_readings": ["text", "serif T", "type icon"],
+      "context_bias": "Use when the interface wants a more typographic serif style T instead of a plain block T.",
+      "ambiguity_note": "Do not use for the plain T when the top end caps and bottom foot matter visually.",
+      "selection_reason": "The screenshot adds serif like end caps and a small foot to the base of the T."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "icon_id": "mingcute:zoom_out",
+    "source_library": "mingcute",
+    "source_name": "zoom_out",
+    "label": "Zoom Out",
+    "depicts": "A zoom control for scaling content out.",
+    "semantic_tags": [
+      "zoom",
+      "out",
+      "scale",
+      "view control",
+      "magnify"
+    ],
+    "synonyms": [
+      "zoom out",
+      "shrink view",
+      "scale out",
+      "out closer"
+    ],
+    "use_when": "Use when the interface changes magnification and zooms out on visible content.",
+    "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level."
+  },
+  {
+    "icon_id": "mingcute:zoom_in",
+    "source_library": "mingcute",
+    "source_name": "zoom_in",
+    "label": "Zoom In",
+    "depicts": "A zoom control for scaling content in.",
+    "semantic_tags": [
+      "zoom",
+      "in",
+      "scale",
+      "view control",
+      "magnify"
+    ],
+    "synonyms": [
+      "zoom in",
+      "magnify view",
+      "scale in",
+      "in closer"
+    ],
+    "use_when": "Use when the interface changes magnification and zooms in on visible content.",
+    "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level."
+  },
+  {
+    "icon_id": "mingcute:zazen",
+    "source_library": "mingcute",
+    "source_name": "zazen",
+    "label": "Zazen",
+    "depicts": "A symbol representing zazen.",
+    "semantic_tags": [
+      "zazen"
+    ],
+    "synonyms": [
+      "zazen"
+    ],
+    "use_when": "Use when the interface refers directly to zazen as an object, concept, or themed surface cue.",
+    "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support."
+  }
+]

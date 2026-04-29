@@ -1,0 +1,111 @@
+[
+  {
+    "icon_id": "mingcute:location",
+    "source_library": "mingcute",
+    "source_name": "location",
+    "label": "Location",
+    "depicts": "Map pin outline with a round center ring and a pointed bottom tip",
+    "use_when": "Use when the interface wants the simplest location pin without a base or extra frame.",
+    "avoid_when": "Do not use for the grounded or framed location pins when the plain pointed drop matters.",
+    "semantic_tags": [
+      "location",
+      "location pin",
+      "map pin",
+      "place marker"
+    ],
+    "synonyms": [
+      "location",
+      "location pin",
+      "map pin",
+      "place marker"
+    ]
+  },
+  {
+    "icon_id": "mingcute:location_2",
+    "source_library": "mingcute",
+    "source_name": "location_2",
+    "label": "Location",
+    "depicts": "Map pin outline standing above a wide oval ground ring",
+    "use_when": "Use when the interface wants a location pin that visibly rests on an oval ground ring.",
+    "avoid_when": "Do not use for the plain pin when the oval base beneath the pin is part of the form.",
+    "semantic_tags": [
+      "2",
+      "location",
+      "location pin",
+      "map marker",
+      "place pin"
+    ],
+    "synonyms": [
+      "2",
+      "location",
+      "location pin",
+      "map marker",
+      "place pin"
+    ]
+  },
+  {
+    "icon_id": "mingcute:location_3",
+    "source_library": "mingcute",
+    "source_name": "location_3",
+    "label": "Location",
+    "depicts": "Map pin outline sitting inside a low trapezoid base frame",
+    "use_when": "Use when the interface wants a location pin paired with a low base frame instead of an oval ring.",
+    "avoid_when": "Do not use for the plain or oval based pins when the trapezoid base is visible.",
+    "semantic_tags": [
+      "3",
+      "location",
+      "location pin",
+      "map marker",
+      "place frame"
+    ],
+    "synonyms": [
+      "3",
+      "location",
+      "location pin",
+      "map marker",
+      "place frame"
+    ]
+  },
+  {
+    "icon_id": "mingcute:map",
+    "source_library": "mingcute",
+    "source_name": "map",
+    "label": "Map",
+    "depicts": "Folded map outline with three vertical panels and two inner fold lines",
+    "use_when": "Use when the interface wants a simple folded map instead of a location pin.",
+    "avoid_when": "Do not use for the square map sign when the three folded panels should remain visible.",
+    "semantic_tags": [
+      "folded map",
+      "map",
+      "route map"
+    ],
+    "synonyms": [
+      "folded map",
+      "map",
+      "route map"
+    ]
+  },
+  {
+    "icon_id": "mingcute:map_2",
+    "source_library": "mingcute",
+    "source_name": "map_2",
+    "label": "Map",
+    "depicts": "Square map panel with a diagonal route line meeting a top ridge",
+    "use_when": "Use when the interface wants a compact square map panel rather than a folded paper map.",
+    "avoid_when": "Do not use for the folded map when the square panel and route line are the visible cues.",
+    "semantic_tags": [
+      "2",
+      "map",
+      "map panel",
+      "map sign",
+      "route map"
+    ],
+    "synonyms": [
+      "2",
+      "map",
+      "map panel",
+      "map sign",
+      "route map"
+    ]
+  }
+]

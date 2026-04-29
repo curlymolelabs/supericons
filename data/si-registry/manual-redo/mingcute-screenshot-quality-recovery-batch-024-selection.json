@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-024",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 024",
+  "review_goal": "Differentiate five MingCute dashboard and counter variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:dashboard",
+      "screenshot_file_name": "mingcute_dashboard_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_line.svg",
+      "depicts_observation": "Round gauge outline with side ticks and a diagonal needle across the center",
+      "popular_reading": "Gauge dashboard",
+      "plausible_readings": ["gauge", "speed dial", "dashboard meter"],
+      "context_bias": "Use when the interface wants a full round gauge with a diagonal needle sweep.",
+      "ambiguity_note": "Do not use for the open arc or ring meter variants when the full dial face matters.",
+      "selection_reason": "The screenshot shows a full circular dial with side ticks and a diagonal center needle."
+    },
+    {
+      "icon_id": "mingcute:dashboard_2",
+      "screenshot_file_name": "mingcute_dashboard_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_2_line.svg",
+      "depicts_observation": "Open bottom gauge arc with a centered vertical needle line",
+      "popular_reading": "Open arc gauge",
+      "plausible_readings": ["gauge arc", "meter arc", "open dial"],
+      "context_bias": "Use when the interface wants a gauge reduced to an open arc and one central needle.",
+      "ambiguity_note": "Do not use for full circular gauges when the bottom gap in the arc should stay visible.",
+      "selection_reason": "The screenshot removes the lower dial edge and leaves one centered needle inside an open arc."
+    },
+    {
+      "icon_id": "mingcute:dashboard_3",
+      "screenshot_file_name": "mingcute_dashboard_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_3_line.svg",
+      "depicts_observation": "Round gauge outline with top ticks and a short angled center needle",
+      "popular_reading": "Top tick gauge",
+      "plausible_readings": ["gauge", "dial meter", "dashboard dial"],
+      "context_bias": "Use when the interface wants a round gauge whose ticks are concentrated across the top arc.",
+      "ambiguity_note": "Do not use for the diagonal side tick gauge when the top tick cluster is the key cue.",
+      "selection_reason": "The screenshot keeps the dial round but moves the tick emphasis to the top arc."
+    },
+    {
+      "icon_id": "mingcute:dashboard_4",
+      "screenshot_file_name": "mingcute_dashboard_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_4_line.svg",
+      "depicts_observation": "Concentric round gauge with inner arc bands and a short angled center needle",
+      "popular_reading": "Layered gauge",
+      "plausible_readings": ["ring gauge", "concentric dial", "dashboard rings"],
+      "context_bias": "Use when the interface wants a round meter with nested inner arc bands around the needle.",
+      "ambiguity_note": "Do not use for simpler gauges when the extra inner arc bands need to remain visible.",
+      "selection_reason": "The screenshot adds inner ring bands around the needle instead of a plain outer dial."
+    },
+    {
+      "icon_id": "mingcute:counter",
+      "screenshot_file_name": "mingcute_counter_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/counter_line.svg",
+      "depicts_observation": "Square counter panel with math symbols and two short number bars inside",
+      "popular_reading": "Math counter",
+      "plausible_readings": ["calculator panel", "math board", "counting panel"],
+      "context_bias": "Use when the interface wants a counting or math panel instead of a gauge style meter.",
+      "ambiguity_note": "Do not use for dial gauges when the square panel with symbols is the visible form.",
+      "selection_reason": "The screenshot uses a square panel with plus cross and bar marks rather than a round gauge."
+    }
+  ]
+}

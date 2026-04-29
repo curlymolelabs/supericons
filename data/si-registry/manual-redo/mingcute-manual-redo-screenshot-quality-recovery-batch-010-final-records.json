@@ -1,0 +1,115 @@
+[
+  {
+    "icon_id": "mingcute:battery",
+    "source_library": "mingcute",
+    "source_name": "battery",
+    "label": "Battery",
+    "depicts": "Battery outline with an empty body and a terminal nub on the right",
+    "use_when": "Use when the interface wants a battery shape without any visible charge bars.",
+    "avoid_when": "Do not use for the filled levels when the body should remain empty inside.",
+    "semantic_tags": [
+      "battery",
+      "battery outline",
+      "battery shell",
+      "empty battery"
+    ],
+    "synonyms": [
+      "battery",
+      "battery outline",
+      "battery shell",
+      "empty battery"
+    ]
+  },
+  {
+    "icon_id": "mingcute:battery_1",
+    "source_library": "mingcute",
+    "source_name": "battery_1",
+    "label": "Battery",
+    "depicts": "Battery outline with one vertical charge bar near the left side",
+    "use_when": "Use when the interface needs a low battery symbol with one visible charge segment.",
+    "avoid_when": "Do not use for higher charge levels when only one vertical bar should be shown.",
+    "semantic_tags": [
+      "1",
+      "battery",
+      "battery level one",
+      "low battery",
+      "single bar battery"
+    ],
+    "synonyms": [
+      "1",
+      "battery",
+      "battery level one",
+      "low battery",
+      "single bar battery"
+    ]
+  },
+  {
+    "icon_id": "mingcute:battery_2",
+    "source_library": "mingcute",
+    "source_name": "battery_2",
+    "label": "Battery",
+    "depicts": "Battery outline with two vertical charge bars inside the body",
+    "use_when": "Use when the interface needs a battery level between low and high with two bars.",
+    "avoid_when": "Do not use for one three or four bar levels when the count must stay at two.",
+    "semantic_tags": [
+      "2",
+      "battery",
+      "battery level two",
+      "medium battery",
+      "two bar battery"
+    ],
+    "synonyms": [
+      "2",
+      "battery",
+      "battery level two",
+      "medium battery",
+      "two bar battery"
+    ]
+  },
+  {
+    "icon_id": "mingcute:battery_3",
+    "source_library": "mingcute",
+    "source_name": "battery_3",
+    "label": "Battery",
+    "depicts": "Battery outline with three vertical charge bars inside the body",
+    "use_when": "Use when the interface needs a battery symbol that looks mostly charged but not full.",
+    "avoid_when": "Do not use for the two or four bar levels when the count of interior bars matters.",
+    "semantic_tags": [
+      "3",
+      "battery",
+      "battery level three",
+      "high battery",
+      "three bar battery"
+    ],
+    "synonyms": [
+      "3",
+      "battery",
+      "battery level three",
+      "high battery",
+      "three bar battery"
+    ]
+  },
+  {
+    "icon_id": "mingcute:battery_4",
+    "source_library": "mingcute",
+    "source_name": "battery_4",
+    "label": "Battery",
+    "depicts": "Battery outline with four vertical charge bars filling most of the body",
+    "use_when": "Use when the interface wants the fullest battery state in this five icon battery group.",
+    "avoid_when": "Do not use for lower battery levels when all four charge bars should stay visible.",
+    "semantic_tags": [
+      "4",
+      "battery",
+      "four bar battery",
+      "full battery",
+      "max battery"
+    ],
+    "synonyms": [
+      "4",
+      "battery",
+      "four bar battery",
+      "full battery",
+      "max battery"
+    ]
+  }
+]

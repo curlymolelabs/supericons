@@ -7,7 +7,7 @@
       "source_library": "tabler",
       "source_name": "copy_plus",
       "label": "Copy Plus",
-      "depicts": "A symbol representing copy plus.",
+      "depicts": "Two overlapping pages with a plus mark on the front page.",
       "purpose": "Show copy plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -18,8 +18,8 @@
         "copy",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to copy plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining copy with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -32,7 +32,7 @@
       "source_library": "tabler",
       "source_name": "copy_x",
       "label": "Copy X",
-      "depicts": "A symbol representing copy x.",
+      "depicts": "Two overlapping pages with an X mark on the front page.",
       "purpose": "Show copy x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -43,8 +43,8 @@
         "copy",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to copy x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing copy as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when copy should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -57,7 +57,7 @@
       "source_library": "tabler",
       "source_name": "link_plus",
       "label": "Linked File",
-      "depicts": "A file or folder symbol paired with an action or state cue.",
+      "depicts": "a chain link symbol with a plus sign below it; add link",
       "purpose": "Show a linked file, connected document, or reference to external file content.",
       "category": "system_control",
       "semantic_tags": [
@@ -84,7 +84,7 @@
       "source_library": "tabler",
       "source_name": "math_x_plus_x",
       "label": "Math X Plus X",
-      "depicts": "A symbol representing math x plus x.",
+      "depicts": "two multiplication x symbols separated by a plus sign; x plus x",
       "purpose": "Show math x plus x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -97,8 +97,8 @@
         "x",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to math x plus x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing math x plus as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when math x plus should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -111,7 +111,7 @@
       "source_library": "tabler",
       "source_name": "math_x_plus_y",
       "label": "Math X Plus Y",
-      "depicts": "A symbol representing math x plus y.",
+      "depicts": "a multiplication x symbol, a plus sign, and the letter y; x plus y",
       "purpose": "Show math x plus y as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -126,8 +126,8 @@
         "plus",
         "y"
       ],
-      "use_when": "Use when the interface refers directly to math x plus y as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when representing math x plus y directly in navigation, labels, empty states, or visual search.",
+      "avoid_when": "Do not use when another icon names the intended action, status, or object more clearly than math x plus y.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -140,7 +140,7 @@
       "source_library": "tabler",
       "source_name": "settings_plus",
       "label": "Settings Plus",
-      "depicts": "A symbol representing settings plus.",
+      "depicts": "a gear with a plus sign beside it",
       "purpose": "Show settings plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -151,8 +151,8 @@
         "settings",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to settings plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining settings with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -165,7 +165,7 @@
       "source_library": "tabler",
       "source_name": "settings_x",
       "label": "Settings X",
-      "depicts": "A symbol representing settings x.",
+      "depicts": "a gear with an X mark beside it",
       "purpose": "Show settings x as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -176,8 +176,8 @@
         "settings",
         "x"
       ],
-      "use_when": "Use when the interface refers directly to settings x as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when showing settings as canceled, rejected, removed, or unavailable.",
+      "avoid_when": "Do not use when settings should be added, confirmed, enabled, or completed.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -190,7 +190,7 @@
       "source_library": "tabler",
       "source_name": "user_plus",
       "label": "User Plus",
-      "depicts": "A symbol representing user plus.",
+      "depicts": "A person silhouette with a plus sign at the lower right",
       "purpose": "Show user plus as a direct object, concept, or themed surface cue.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -201,8 +201,8 @@
         "user",
         "plus"
       ],
-      "use_when": "Use when the interface refers directly to user plus as an object, concept, or themed surface cue.",
-      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "use_when": "Use when combining user with a plus status or action cue.",
+      "avoid_when": "Do not use when the plus cue is not visible or not the main meaning.",
       "evidence_sources": [
         "source-name",
         "svg-payload"

@@ -1,0 +1,117 @@
+[
+  {
+    "icon_id": "mingcute:building_1",
+    "source_library": "mingcute",
+    "source_name": "building_1",
+    "label": "Building",
+    "depicts": "Short rectangular building with three stacked windows and a smaller rear block",
+    "use_when": "Use when the interface needs a simple city building with windows and a short side extension.",
+    "avoid_when": "Do not use for peaked or tower heavy buildings when the main form is a flat topped block.",
+    "semantic_tags": [
+      "1",
+      "block building",
+      "building",
+      "city building",
+      "office building"
+    ],
+    "synonyms": [
+      "1",
+      "block building",
+      "building",
+      "city building",
+      "office building"
+    ]
+  },
+  {
+    "icon_id": "mingcute:building_2",
+    "source_library": "mingcute",
+    "source_name": "building_2",
+    "label": "Building",
+    "depicts": "Tall slanted tower with a smaller rear block on the same ground line",
+    "use_when": "Use when the interface wants a modern building with a strong diagonal roofline.",
+    "avoid_when": "Do not use for flat roof or centered doorway buildings when the tall slanted face is the visible cue.",
+    "semantic_tags": [
+      "2",
+      "angled building",
+      "building",
+      "city tower",
+      "modern tower"
+    ],
+    "synonyms": [
+      "2",
+      "angled building",
+      "building",
+      "city tower",
+      "modern tower"
+    ]
+  },
+  {
+    "icon_id": "mingcute:building_3",
+    "source_library": "mingcute",
+    "source_name": "building_3",
+    "label": "Building",
+    "depicts": "Tall rectangular building with four round windows and a centered doorway",
+    "use_when": "Use when the interface wants a front facing tall building with a visible entrance door.",
+    "avoid_when": "Do not use for winged or slanted buildings when the centered doorway and four windows matter.",
+    "semantic_tags": [
+      "3",
+      "building",
+      "building entrance",
+      "office block",
+      "tower building"
+    ],
+    "synonyms": [
+      "3",
+      "building",
+      "building entrance",
+      "office block",
+      "tower building"
+    ]
+  },
+  {
+    "icon_id": "mingcute:building_4",
+    "source_library": "mingcute",
+    "source_name": "building_4",
+    "label": "Building",
+    "depicts": "Symmetrical peaked building with two tall side panels on a shared base",
+    "use_when": "Use when the interface needs a balanced building with a sharp center peak rather than windows.",
+    "avoid_when": "Do not use for tower blocks when the main cue is the peaked roofline and two side faces.",
+    "semantic_tags": [
+      "4",
+      "building",
+      "gable building",
+      "peaked hall",
+      "symmetrical building"
+    ],
+    "synonyms": [
+      "4",
+      "building",
+      "gable building",
+      "peaked hall",
+      "symmetrical building"
+    ]
+  },
+  {
+    "icon_id": "mingcute:building_5",
+    "source_library": "mingcute",
+    "source_name": "building_5",
+    "label": "Building",
+    "depicts": "Central tower building with side wings and three stacked windows",
+    "use_when": "Use when the interface wants a center tower flanked by two shorter outer sections.",
+    "avoid_when": "Do not use for a plain block when the visible side wings frame the taller middle tower.",
+    "semantic_tags": [
+      "5",
+      "building",
+      "city hall",
+      "office complex",
+      "tower with wings"
+    ],
+    "synonyms": [
+      "5",
+      "building",
+      "city hall",
+      "office complex",
+      "tower with wings"
+    ]
+  }
+]

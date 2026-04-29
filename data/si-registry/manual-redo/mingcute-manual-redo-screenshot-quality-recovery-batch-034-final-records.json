@@ -1,0 +1,133 @@
+[
+  {
+    "icon_id": "mingcute:download",
+    "source_library": "mingcute",
+    "source_name": "download",
+    "label": "Download",
+    "depicts": "Downward arrow entering an open tray frame with two vertical side lines",
+    "use_when": "Use when the interface wants a download arrow entering a framed tray or inbox shape.",
+    "avoid_when": "Do not use for the plain shelf or cloud downloads when the side tray walls matter.",
+    "semantic_tags": [
+      "arrow to tray",
+      "download",
+      "export",
+      "file download",
+      "pull content",
+      "save",
+      "transfer"
+    ],
+    "synonyms": [
+      "arrow to tray",
+      "download",
+      "export",
+      "file download",
+      "pull down",
+      "save locally"
+    ]
+  },
+  {
+    "icon_id": "mingcute:download_2",
+    "source_library": "mingcute",
+    "source_name": "download_2",
+    "label": "Download",
+    "depicts": "Downward arrow landing on a simple shelf line with short side posts",
+    "use_when": "Use when the interface wants the most minimal downward arrow landing on a simple shelf.",
+    "avoid_when": "Do not use for the tray or cloud downloads when the base should stay as a flat shelf line.",
+    "semantic_tags": [
+      "arrow to shelf",
+      "download",
+      "export",
+      "pull content",
+      "save",
+      "save down",
+      "transfer"
+    ],
+    "synonyms": [
+      "arrow to shelf",
+      "download",
+      "export",
+      "pull down",
+      "save down",
+      "save locally"
+    ]
+  },
+  {
+    "icon_id": "mingcute:download_3",
+    "source_library": "mingcute",
+    "source_name": "download_3",
+    "label": "Download",
+    "depicts": "Downward arrow centered inside a cloud outline with an open lower curve",
+    "use_when": "Use when the interface wants downloading shown inside a cloud rather than a tray or shelf.",
+    "avoid_when": "Do not use for the tray or shelf icons when the outer cloud outline must be visible.",
+    "semantic_tags": [
+      "cloud download",
+      "download",
+      "download cloud",
+      "export",
+      "pull content",
+      "save",
+      "sync down",
+      "transfer"
+    ],
+    "synonyms": [
+      "cloud download",
+      "download",
+      "download cloud",
+      "export",
+      "pull down",
+      "save locally",
+      "sync down"
+    ]
+  },
+  {
+    "icon_id": "mingcute:upload",
+    "source_library": "mingcute",
+    "source_name": "upload",
+    "label": "Upload",
+    "depicts": "Upward arrow rising from an open tray frame with two vertical side lines",
+    "use_when": "Use when the interface wants an upload arrow emerging from a framed tray shape.",
+    "avoid_when": "Do not use for shelf or cloud uploads when the tray walls should remain visible.",
+    "semantic_tags": [
+      "arrow from tray",
+      "file upload",
+      "push content",
+      "send",
+      "submit",
+      "transfer",
+      "upload"
+    ],
+    "synonyms": [
+      "arrow from tray",
+      "file upload",
+      "push out",
+      "send up",
+      "submit file",
+      "upload"
+    ]
+  },
+  {
+    "icon_id": "mingcute:upload_2",
+    "source_library": "mingcute",
+    "source_name": "upload_2",
+    "label": "Upload",
+    "depicts": "Upward arrow rising from a simple shelf line with short side posts",
+    "use_when": "Use when the interface wants the simplest upward arrow leaving a short base shelf.",
+    "avoid_when": "Do not use for the tray or cloud uploads when the base should stay as a flat shelf line.",
+    "semantic_tags": [
+      "arrow from shelf",
+      "push content",
+      "send",
+      "send up",
+      "submit",
+      "transfer",
+      "upload"
+    ],
+    "synonyms": [
+      "arrow from shelf",
+      "push out",
+      "send up",
+      "submit file",
+      "upload"
+    ]
+  }
+]

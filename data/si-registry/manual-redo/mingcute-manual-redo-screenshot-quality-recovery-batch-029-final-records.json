@@ -1,0 +1,115 @@
+[
+  {
+    "icon_id": "mingcute:classify",
+    "source_library": "mingcute",
+    "source_name": "classify",
+    "label": "Classify",
+    "depicts": "Four round dots arranged in a two by two grid",
+    "use_when": "Use when the interface wants a simple four item classification grid made from dots.",
+    "avoid_when": "Do not use for square or petal grids when the four round dots are the visible cue.",
+    "semantic_tags": [
+      "classify",
+      "classify grid",
+      "four dots",
+      "grid"
+    ],
+    "synonyms": [
+      "classify",
+      "classify grid",
+      "four dots",
+      "grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:classify_2",
+    "source_library": "mingcute",
+    "source_name": "classify_2",
+    "label": "Classify",
+    "depicts": "Four tile grid with three square panels and one top right diamond panel",
+    "use_when": "Use when the interface wants a classification grid made from square tiles with one diamond tile.",
+    "avoid_when": "Do not use for dot or petal grids when the square and diamond tile mix matters.",
+    "semantic_tags": [
+      "2",
+      "classify",
+      "classify tiles",
+      "panel grid",
+      "tile grid"
+    ],
+    "synonyms": [
+      "2",
+      "classify",
+      "classify tiles",
+      "panel grid",
+      "tile grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:classify_3",
+    "source_library": "mingcute",
+    "source_name": "classify_3",
+    "label": "Classify",
+    "depicts": "Four petal tiles arranged around the center like a clover grid",
+    "use_when": "Use when the interface wants a softer rounded classification grid built from petal like tiles.",
+    "avoid_when": "Do not use for dot or square tile grids when the petal shapes are the key cue.",
+    "semantic_tags": [
+      "3",
+      "classify",
+      "classify petals",
+      "clover tiles",
+      "petal grid"
+    ],
+    "synonyms": [
+      "3",
+      "classify",
+      "classify petals",
+      "clover tiles",
+      "petal grid"
+    ]
+  },
+  {
+    "icon_id": "mingcute:columns_2",
+    "source_library": "mingcute",
+    "source_name": "columns_2",
+    "label": "Columns",
+    "depicts": "Rectangle frame split into two tall vertical column panels",
+    "use_when": "Use when the interface wants a framed two column layout instead of a classify grid.",
+    "avoid_when": "Do not use for free standing bars when the outer rectangle frame should remain visible.",
+    "semantic_tags": [
+      "2",
+      "column layout",
+      "columns",
+      "split panel",
+      "two columns"
+    ],
+    "synonyms": [
+      "2",
+      "column layout",
+      "columns",
+      "split panel",
+      "two columns"
+    ]
+  },
+  {
+    "icon_id": "mingcute:columns_3",
+    "source_library": "mingcute",
+    "source_name": "columns_3",
+    "label": "Columns",
+    "depicts": "Two separate tall column bars standing apart with no outer frame",
+    "use_when": "Use when the interface wants two free standing column bars instead of a framed split rectangle.",
+    "avoid_when": "Do not use for the framed column icon when the outer container should be absent.",
+    "semantic_tags": [
+      "3",
+      "column bars",
+      "columns",
+      "split columns",
+      "two bars"
+    ],
+    "synonyms": [
+      "3",
+      "column bars",
+      "columns",
+      "split columns",
+      "two bars"
+    ]
+  }
+]

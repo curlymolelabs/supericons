@@ -1,0 +1,113 @@
+[
+  {
+    "icon_id": "mingcute:aiming",
+    "source_library": "mingcute",
+    "source_name": "aiming",
+    "label": "Aiming",
+    "depicts": "Crosshair target ring with four outer ticks and one centered dot",
+    "use_when": "Use when the interface wants a crosshair style target with one center dot and four outer ticks.",
+    "avoid_when": "Do not use for the bullseye target when inner rings matter more than a single center dot.",
+    "semantic_tags": [
+      "aim target",
+      "aiming",
+      "sight mark",
+      "target icon"
+    ],
+    "synonyms": [
+      "aim target",
+      "aiming",
+      "sight mark",
+      "target icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:aiming_2",
+    "source_library": "mingcute",
+    "source_name": "aiming_2",
+    "label": "Aiming",
+    "depicts": "Bullseye target with two concentric ring circles and four outer ticks around a centered dot",
+    "use_when": "Use when the interface wants a bullseye target with two inner rings inside the crosshair frame.",
+    "avoid_when": "Do not use for the single dot crosshair when the center should read as a filled dot instead of a ring.",
+    "semantic_tags": [
+      "2",
+      "aim target",
+      "aiming",
+      "sight target",
+      "target rings"
+    ],
+    "synonyms": [
+      "2",
+      "aim target",
+      "aiming",
+      "sight target",
+      "target rings"
+    ]
+  },
+  {
+    "icon_id": "mingcute:airpods",
+    "source_library": "mingcute",
+    "source_name": "airpods",
+    "label": "Airpods",
+    "depicts": "Two separate earbud stem shapes facing inward across the center",
+    "use_when": "Use when the interface wants two loose earbuds rather than a case or charger shape.",
+    "avoid_when": "Do not use for the charging case icon when the main shape should be a rounded box.",
+    "semantic_tags": [
+      "airpods",
+      "audio buds",
+      "earbuds",
+      "headset buds"
+    ],
+    "synonyms": [
+      "airpods",
+      "audio buds",
+      "earbuds",
+      "headset buds"
+    ]
+  },
+  {
+    "icon_id": "mingcute:airpods_2",
+    "source_library": "mingcute",
+    "source_name": "airpods_2",
+    "label": "Airpods",
+    "depicts": "Rounded charging case with a lid line and one centered latch",
+    "use_when": "Use when the interface wants a rounded earbud charging case with a clear lid seam.",
+    "avoid_when": "Do not use for the loose earbuds icon when no outer case should be visible.",
+    "semantic_tags": [
+      "2",
+      "airpods",
+      "audio case",
+      "charging case",
+      "earbud case"
+    ],
+    "synonyms": [
+      "2",
+      "airpods",
+      "audio case",
+      "charging case",
+      "earbud case"
+    ]
+  },
+  {
+    "icon_id": "mingcute:alarm_1",
+    "source_library": "mingcute",
+    "source_name": "alarm_1",
+    "label": "Alarm",
+    "depicts": "Twin bell alarm clock with two feet and short hands inside",
+    "use_when": "Use when the interface wants a classic twin bell alarm clock with feet at the bottom.",
+    "avoid_when": "Do not use for the simpler round alarm when the floating bells and feet are not present.",
+    "semantic_tags": [
+      "1",
+      "alarm",
+      "alarm clock",
+      "bell clock",
+      "clock icon"
+    ],
+    "synonyms": [
+      "1",
+      "alarm",
+      "alarm clock",
+      "bell clock",
+      "clock icon"
+    ]
+  }
+]

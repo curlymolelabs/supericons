@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-042",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 042",
+  "review_goal": "Differentiate alarm, album, and android variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:alarm_2",
+      "screenshot_file_name": "mingcute_alarm_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/alarm_2_line.svg",
+      "depicts_observation": "Round alarm clock with two floating bells and short hands inside",
+      "popular_reading": "Round alarm clock",
+      "plausible_readings": ["alarm clock", "clock alarm", "bell clock"],
+      "context_bias": "Use when the interface wants a simpler round alarm clock without feet at the bottom.",
+      "ambiguity_note": "Do not use for the twin bell clock with bottom feet when that more classic silhouette is needed.",
+      "selection_reason": "The screenshot keeps the bell arcs and clock hands but removes the lower feet found on the first alarm variant."
+    },
+    {
+      "icon_id": "mingcute:album",
+      "screenshot_file_name": "mingcute_album_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/album_line.svg",
+      "depicts_observation": "Round record disc with one centered dot and one upper groove",
+      "popular_reading": "Record disc",
+      "plausible_readings": ["album disc", "vinyl disc", "music disc"],
+      "context_bias": "Use when the interface wants a round record style disc rather than a sleeve or folder shape.",
+      "ambiguity_note": "Do not use for the open album sleeve when the main shape should be a wide pocket.",
+      "selection_reason": "The screenshot is a single round disc with one dot and one short curved groove near the top left."
+    },
+    {
+      "icon_id": "mingcute:album_2",
+      "screenshot_file_name": "mingcute_album_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/album_2_line.svg",
+      "depicts_observation": "Open record sleeve with a flat top edge and wide pocket opening",
+      "popular_reading": "Album sleeve",
+      "plausible_readings": ["record sleeve", "album case", "music sleeve"],
+      "context_bias": "Use when the interface wants a record sleeve or open pocket shape rather than a round disc.",
+      "ambiguity_note": "Do not use for the round record disc when the icon should stay circular.",
+      "selection_reason": "The screenshot forms a wide open sleeve with a straight top line instead of a circular disc."
+    },
+    {
+      "icon_id": "mingcute:android",
+      "screenshot_file_name": "mingcute_android_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/android_line.svg",
+      "depicts_observation": "Robot head and body with two antennae inside a rounded shell",
+      "popular_reading": "Android robot",
+      "plausible_readings": ["android mascot", "robot body", "android logo"],
+      "context_bias": "Use when the interface wants the full android robot with body, eyes, and antennae.",
+      "ambiguity_note": "Do not use for the half head android when the lower body should not be visible.",
+      "selection_reason": "The screenshot shows the full robot shell with eyes, antennae, and a rounded lower body."
+    },
+    {
+      "icon_id": "mingcute:android_2",
+      "screenshot_file_name": "mingcute_android_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/logo/android_2_line.svg",
+      "depicts_observation": "Half android head with two antennae and a flat lower edge",
+      "popular_reading": "Android head",
+      "plausible_readings": ["robot head", "android mascot", "android logo"],
+      "context_bias": "Use when the interface wants only the android head cap without the full body below it.",
+      "ambiguity_note": "Do not use for the full android robot when a rounded lower body should remain visible.",
+      "selection_reason": "The screenshot crops the android robot to a half dome head with two eyes and antennae."
+    }
+  ]
+}

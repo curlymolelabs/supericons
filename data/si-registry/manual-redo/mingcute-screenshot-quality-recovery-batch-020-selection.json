@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-020",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 020",
+  "review_goal": "Differentiate five MingCute calendar and coin variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:calendar",
+      "screenshot_file_name": "mingcute_calendar_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_line.svg",
+      "depicts_observation": "Blank calendar page with top binder tabs and an empty lower panel",
+      "popular_reading": "Blank calendar",
+      "plausible_readings": ["calendar", "date page", "schedule page"],
+      "context_bias": "Use when the interface wants a generic calendar symbol without visible dates or numbers.",
+      "ambiguity_note": "Do not use for dated calendar variants when the lower panel should stay blank.",
+      "selection_reason": "The screenshot is the plainest calendar page with binder tabs and no interior date marks."
+    },
+    {
+      "icon_id": "mingcute:calendar_2",
+      "screenshot_file_name": "mingcute_calendar_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_2_line.svg",
+      "depicts_observation": "Calendar page with top binder tabs and six small date dots",
+      "popular_reading": "Dotted calendar",
+      "plausible_readings": ["date calendar", "schedule grid", "calendar dots"],
+      "context_bias": "Use when the interface wants a calendar that explicitly shows small date markers inside the page.",
+      "ambiguity_note": "Do not use for the blank or numbered calendar variants when the six interior dots matter.",
+      "selection_reason": "The screenshot adds six date dots inside the calendar body while keeping the same top tabs."
+    },
+    {
+      "icon_id": "mingcute:calendar_3",
+      "screenshot_file_name": "mingcute_calendar_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_3_line.svg",
+      "depicts_observation": "Tear off calendar block with the number ten on the front panel",
+      "popular_reading": "Numbered calendar block",
+      "plausible_readings": ["day block", "date block", "calendar number"],
+      "context_bias": "Use when the interface wants a tear off day block rather than a full hanging calendar page.",
+      "ambiguity_note": "Do not use for the hanging calendar page icons when the bold number on a block should remain visible.",
+      "selection_reason": "The screenshot changes the shape from a page to a tear off desk block with the number ten."
+    },
+    {
+      "icon_id": "mingcute:coin",
+      "screenshot_file_name": "mingcute_coin_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/coin_line.svg",
+      "depicts_observation": "Coin outline from the side with a thin oval cylinder body",
+      "popular_reading": "Single coin",
+      "plausible_readings": ["coin", "token", "money coin"],
+      "context_bias": "Use when the interface wants the simplest single coin profile without extra stack bands.",
+      "ambiguity_note": "Do not use for stacked or gem like coins when the single thin coin edge matters.",
+      "selection_reason": "The screenshot shows one thin coin profile instead of a stack or decorative emblem."
+    },
+    {
+      "icon_id": "mingcute:coin_2",
+      "screenshot_file_name": "mingcute_coin_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/coin_2_line.svg",
+      "depicts_observation": "Stacked coin cylinder with two horizontal bands across the body",
+      "popular_reading": "Coin stack",
+      "plausible_readings": ["stacked coins", "money stack", "coin cylinder"],
+      "context_bias": "Use when the interface wants a taller stacked coin form rather than a single flat coin.",
+      "ambiguity_note": "Do not use for the single coin profile when the stacked cylinder bands are visible.",
+      "selection_reason": "The screenshot adds a second band to make the coin read as a short stacked cylinder."
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { validateRegistryRecord } from '../lib/si-registry/record-shape.js';
+import { loadScreenshotQualityState } from '../lib/screenshot-quality/state.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..');
@@ -23,6 +24,11 @@ const bannedFields = [
   'workflow_trace',
   'agent_notes',
   'private_confidence_rationale',
+];
+const genericPlaceholderPatterns = [
+  /direct object, concept, or themed surface cue/i,
+  /generic draft can support/i,
+  /^A symbol representing /i,
 ];
 
 function assert(condition, message) {
@@ -90,7 +96,42 @@ function summarizeBannedFields(records, recordType) {
   return hits;
 }
 
-function buildGapList({ coverageMatches, projectionMatches, holdCount, draftCount, bannedHits, overlapSkipped }) {
+function summarizeGenericPlaceholderRecords(records, recordType) {
+  const hits = [];
+
+  for (const record of records) {
+    const checkedFields = ['purpose', 'use_when', 'avoid_when', 'depicts'];
+    for (const field of checkedFields) {
+      const value = record[field];
+      if (typeof value !== 'string') {
+        continue;
+      }
+      const matchedPattern = genericPlaceholderPatterns.find((pattern) => pattern.test(value));
+      if (matchedPattern) {
+        hits.push({
+          record_type: recordType,
+          icon_id: record.icon_id ?? record.source_name ?? 'unknown',
+          field,
+          value,
+        });
+        break;
+      }
+    }
+  }
+
+  return hits;
+}
+
+function buildGapList({
+  coverageMatches,
+  projectionMatches,
+  holdCount,
+  draftCount,
+  bannedHits,
+  overlapSkipped,
+  genericPlaceholderHits,
+  screenshotWorkflow,
+}) {
   const gaps = [];
 
   if (!coverageMatches) {
@@ -113,8 +154,26 @@ function buildGapList({ coverageMatches, projectionMatches, holdCount, draftCoun
     gaps.push('Sensitive workflow fields leaked into library records and need cleanup.');
   }
 
+  if (genericPlaceholderHits.length > 0) {
+    gaps.push(`${genericPlaceholderHits.length} approved records still use generic placeholder semantics and must be re-reviewed before the library can count as fully complete.`);
+  }
+
   if (overlapSkipped > 0) {
     gaps.push(`${overlapSkipped} icons were skipped because they already exist in another free registry group.`);
+  }
+
+  if (screenshotWorkflow) {
+    if (screenshotWorkflow.reviewed_pending > 0) {
+      gaps.push(`${screenshotWorkflow.reviewed_pending} screenshot-reviewed concepts are still pending promotion.`);
+    }
+
+    if (screenshotWorkflow.untouched > 0) {
+      gaps.push(`${screenshotWorkflow.untouched} screenshot-backed concepts have not been reviewed yet.`);
+    }
+
+    if (screenshotWorkflow.unresolved_unmapped > 0) {
+      gaps.push(`${screenshotWorkflow.unresolved_unmapped} screenshot-backed concepts are still unresolved in the unmapped backlog.`);
+    }
   }
 
   return gaps;
@@ -145,7 +204,30 @@ async function loadPriorPublicSameLibraryCount({ libraryId, libraryOrder }) {
   return count;
 }
 
-function buildVerdict({ coverageMatches, projectionMatches, holdCount, draftCount, bannedHits }) {
+function buildVerdict({
+  coverageMatches,
+  projectionMatches,
+  holdCount,
+  draftCount,
+  bannedHits,
+  genericPlaceholderHits,
+  screenshotWorkflow,
+}) {
+  if (
+    screenshotWorkflow &&
+    (
+      screenshotWorkflow.reviewed_pending > 0 ||
+      screenshotWorkflow.untouched > 0 ||
+      screenshotWorkflow.unresolved_unmapped > 0
+    )
+  ) {
+    return {
+      status: 'incomplete_needs_follow_up',
+      message: 'The screenshot-quality workflow still has unresolved work, so the library is not safe to close yet.',
+      recommended_next_step: 'Finish the remaining screenshot-quality or unmapped backlog before moving to the next library.',
+    };
+  }
+
   if (!coverageMatches || !projectionMatches || bannedHits.length > 0) {
     return {
       status: 'needs_fix',
@@ -154,11 +236,11 @@ function buildVerdict({ coverageMatches, projectionMatches, holdCount, draftCoun
     };
   }
 
-  if (holdCount > 0 || draftCount > 0) {
+  if (holdCount > 0 || draftCount > 0 || genericPlaceholderHits.length > 0) {
     return {
       status: 'incomplete_needs_follow_up',
-      message: 'Every icon has been processed, but the library is still incomplete because some icons remain on hold or draft status.',
-      recommended_next_step: 'Keep working through the remaining hold and draft icons until every icon is approved or escalated.',
+      message: 'Every icon has been processed, but the library is still incomplete because some icons remain unresolved or still use weak placeholder semantics.',
+      recommended_next_step: 'Keep working through the remaining hold, draft, and placeholder-approved icons until every icon is genuinely suitable.',
     };
   }
 
@@ -209,6 +291,16 @@ function renderMarkdown(report) {
 - Earlier public records outside this rollout: \`${report.projection.prior_public_records_outside_library_rollout}\`
 - Expected public total: \`${report.projection.expected_public_registry_records}\`
 - Matches expected public total: \`${report.projection.matches_expected_public_registry_count}\`
+
+## Screenshot Workflow
+
+- Screenshot concept scope: \`${report.screenshot_workflow.concept_scope_total}\`
+- Completed live: \`${report.screenshot_workflow.completed_live}\`
+- Reviewed pending: \`${report.screenshot_workflow.reviewed_pending}\`
+- Untouched: \`${report.screenshot_workflow.untouched}\`
+- Resolved unmapped: \`${report.screenshot_workflow.resolved_unmapped}\`
+- Unresolved unmapped: \`${report.screenshot_workflow.unresolved_unmapped}\`
+- Library complete: \`${report.screenshot_workflow.library_complete}\`
 
 ## Quality Signals
 
@@ -377,7 +469,7 @@ function renderHtml(report) {
       <div class="pill">Post-Library Audit</div>
       <h1>${report.library_label} Completion Audit</h1>
       <p>This page checks whether the ${report.library_label} rollout is really safe to close. It looks at the official library size, how many icons were approved, how many are still on hold or draft status, and whether the public registry matches the approved records.</p>
-      <p><strong>Current result:</strong> <span class="${report.verdict.status === 'needs_fix' ? 'status-bad' : report.verdict.status === 'operationally_complete_with_follow_up' ? 'status-warn' : 'status-good'}">${report.verdict.message}</span></p>
+      <p><strong>Current result:</strong> <span class="${report.verdict.status === 'needs_fix' ? 'status-bad' : report.verdict.status === 'incomplete_needs_follow_up' ? 'status-warn' : 'status-good'}">${report.verdict.message}</span></p>
     </section>
 
     <section class="grid">
@@ -405,6 +497,10 @@ function renderHtml(report) {
         <div class="label">Public Registry Records</div>
         <div class="value">${report.projection.public_registry_records}</div>
       </article>
+      <article class="metric">
+        <div class="label">Unresolved Unmapped</div>
+        <div class="value">${report.screenshot_workflow.unresolved_unmapped}</div>
+      </article>
     </section>
 
     <section class="section two-up">
@@ -415,6 +511,8 @@ function renderHtml(report) {
           <li>The public registry count ${report.projection.matches_expected_public_registry_count ? 'matches' : 'does not match'} the expected total for this library.</li>
           <li>${report.metadata_safety.records_checked} records were checked for sensitive workflow fields.</li>
           <li>${report.metadata_safety.banned_field_hit_count === 0 ? 'No sensitive workflow fields were found in the audited records.' : `${report.metadata_safety.banned_field_hit_count} sensitive field hits were found and need cleanup.`}</li>
+          <li>${report.quality_signals.generic_placeholder_record_count === 0 ? 'No approved records still use generic placeholder wording.' : `${report.quality_signals.generic_placeholder_record_count} approved records still use generic placeholder wording and need re-review.`}</li>
+          <li>The screenshot workflow currently reports <strong>${report.screenshot_workflow.completed_live}</strong> concepts completed live and <strong>${report.screenshot_workflow.unresolved_unmapped}</strong> unresolved unmapped concepts.</li>
         </ul>
       </article>
       <article class="card">
@@ -463,6 +561,7 @@ assert(libraryMeta, `Unknown library_id: ${libraryId}`);
 const iconIndex = await readJson(path.join(publicDir, 'icon-index.json'));
 const sourceLibraryEntry = (iconIndex.libraries || []).find((item) => item.id === libraryId);
 assert(sourceLibraryEntry, `Missing source library count for ${libraryId}`);
+const screenshotMappingPath = path.join(repoRoot, 'output', 'icon_screenshot', libraryId, 'screenshot-mapping.json');
 
 const summaryPath = path.join(generatedDir, `${libraryId}-approval-summary.json`);
 assert(await exists(summaryPath), `Missing approval summary for ${libraryId}`);
@@ -478,6 +577,28 @@ const holdRecords = await readJson(holdQueuePath);
 const promotionDecisions = await readJson(promotionDecisionPath);
 const publicRegistryRecords = await readJson(publicRegistryPath);
 const priorPublicSameLibraryCount = await loadPriorPublicSameLibraryCount({ libraryId, libraryOrder });
+const screenshotSnapshot = await exists(screenshotMappingPath)
+  ? loadScreenshotQualityState({ repoRoot, library: libraryId })
+  : null;
+const screenshotWorkflow = screenshotSnapshot
+  ? {
+      concept_scope_total: screenshotSnapshot.completionState.concept_scope_total,
+      completed_live: screenshotSnapshot.reviewState.completed_live.length,
+      reviewed_pending: screenshotSnapshot.reviewState.reviewed_pending.length,
+      untouched: screenshotSnapshot.reviewState.untouched.length,
+      resolved_unmapped: screenshotSnapshot.completionState.resolved_unmapped_count,
+      unresolved_unmapped: screenshotSnapshot.completionState.unresolved_unmapped_count,
+      library_complete: screenshotSnapshot.completionState.library_complete,
+    }
+  : {
+      concept_scope_total: sourceLibraryEntry.count,
+      completed_live: 0,
+      reviewed_pending: 0,
+      untouched: 0,
+      resolved_unmapped: 0,
+      unresolved_unmapped: 0,
+      library_complete: false,
+    };
 
 for (const record of approvedRecords) {
   validateRegistryRecord(record);
@@ -486,6 +607,7 @@ for (const record of approvedRecords) {
 const approvedRecordBannedHits = summarizeBannedFields(approvedRecords, 'approved_record');
 const holdRecordBannedHits = summarizeBannedFields(holdRecords, 'hold_record');
 const bannedHits = [...approvedRecordBannedHits, ...holdRecordBannedHits];
+const genericPlaceholderHits = summarizeGenericPlaceholderRecords(approvedRecords, 'approved_record');
 
 const reviewedDraftIconIds = Object.values(promotionDecisions.batches || {})
   .flatMap((batch) => extractDecisionIconIds(batch.keep_as_reviewed_draft));
@@ -506,6 +628,8 @@ const gaps = buildGapList({
   draftCount,
   bannedHits,
   overlapSkipped,
+  genericPlaceholderHits,
+  screenshotWorkflow,
 });
 const verdict = buildVerdict({
   coverageMatches,
@@ -513,6 +637,8 @@ const verdict = buildVerdict({
   holdCount,
   draftCount,
   bannedHits,
+  genericPlaceholderHits,
+  screenshotWorkflow,
 });
 const topCategories = sortEntries(approvalSummary.approved_by_category);
 const topDomains = sortEntries(approvalSummary.approved_by_domain);
@@ -542,11 +668,14 @@ const report = {
     expected_public_registry_records: expectedPublicRegistryCount,
     matches_expected_public_registry_count: projectionMatches,
   },
+  screenshot_workflow: screenshotWorkflow,
   quality_signals: {
     approved_ratio: Number((approvedCount / sourceTotal).toFixed(4)),
     hold_ratio: Number((holdCount / sourceTotal).toFixed(4)),
     draft_ratio: Number((draftCount / sourceTotal).toFixed(4)),
     batch_count: Object.keys(approvalSummary.batch_summaries || {}).length,
+    generic_placeholder_record_count: genericPlaceholderHits.length,
+    generic_placeholder_examples: genericPlaceholderHits.slice(0, 8).map((hit) => hit.icon_id),
     top_categories: topCategories,
     top_domains: topDomains,
   },

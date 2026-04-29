@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-029",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 029",
+  "review_goal": "Differentiate five MingCute classify and columns variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:classify",
+      "screenshot_file_name": "mingcute_classify_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/classify_line.svg",
+      "depicts_observation": "Four round dots arranged in a two by two grid",
+      "popular_reading": "Dot grid",
+      "plausible_readings": ["four dots", "grid", "classify grid"],
+      "context_bias": "Use when the interface wants a simple four item classification grid made from dots.",
+      "ambiguity_note": "Do not use for square or petal grids when the four round dots are the visible cue.",
+      "selection_reason": "The screenshot shows the most minimal classify variant as four evenly spaced dots."
+    },
+    {
+      "icon_id": "mingcute:classify_2",
+      "screenshot_file_name": "mingcute_classify_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/classify_2_line.svg",
+      "depicts_observation": "Four tile grid with three square panels and one top right diamond panel",
+      "popular_reading": "Mixed tile grid",
+      "plausible_readings": ["tile grid", "classify tiles", "panel grid"],
+      "context_bias": "Use when the interface wants a classification grid made from square tiles with one diamond tile.",
+      "ambiguity_note": "Do not use for dot or petal grids when the square and diamond tile mix matters.",
+      "selection_reason": "The screenshot uses three square tiles plus one diamond instead of circles or petals."
+    },
+    {
+      "icon_id": "mingcute:classify_3",
+      "screenshot_file_name": "mingcute_classify_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/classify_3_line.svg",
+      "depicts_observation": "Four petal tiles arranged around the center like a clover grid",
+      "popular_reading": "Petal grid",
+      "plausible_readings": ["petal grid", "clover tiles", "classify petals"],
+      "context_bias": "Use when the interface wants a softer rounded classification grid built from petal like tiles.",
+      "ambiguity_note": "Do not use for dot or square tile grids when the petal shapes are the key cue.",
+      "selection_reason": "The screenshot rounds each tile into a petal form instead of circles or square blocks."
+    },
+    {
+      "icon_id": "mingcute:columns_2",
+      "screenshot_file_name": "mingcute_columns_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/columns_2_line.svg",
+      "depicts_observation": "Rectangle frame split into two tall vertical column panels",
+      "popular_reading": "Two columns frame",
+      "plausible_readings": ["two columns", "column layout", "split panel"],
+      "context_bias": "Use when the interface wants a framed two column layout instead of a classify grid.",
+      "ambiguity_note": "Do not use for free standing bars when the outer rectangle frame should remain visible.",
+      "selection_reason": "The screenshot shows two vertical columns enclosed by one outer rectangle frame."
+    },
+    {
+      "icon_id": "mingcute:columns_3",
+      "screenshot_file_name": "mingcute_columns_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/design/columns_3_line.svg",
+      "depicts_observation": "Two separate tall column bars standing apart with no outer frame",
+      "popular_reading": "Separate columns",
+      "plausible_readings": ["column bars", "two bars", "split columns"],
+      "context_bias": "Use when the interface wants two free standing column bars instead of a framed split rectangle.",
+      "ambiguity_note": "Do not use for the framed column icon when the outer container should be absent.",
+      "selection_reason": "The screenshot removes the outer frame and leaves only two separate vertical bars."
+    }
+  ]
+}

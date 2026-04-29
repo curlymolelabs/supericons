@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-056",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 056",
+  "review_goal": "Differentiate diamond, disabled, and drawer variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:diamond_2",
+      "screenshot_file_name": "mingcute_diamond_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/diamond_2_line.svg",
+      "depicts_observation": "Cut gemstone shape with a flat top center facets and pointed bottom",
+      "popular_reading": "Faceted diamond",
+      "plausible_readings": ["gemstone icon", "diamond gem", "cut jewel"],
+      "context_bias": "Use when the interface wants a cut gemstone with visible facet lines across the center.",
+      "ambiguity_note": "Do not use for the plain diamond outline when the shape should stay empty inside.",
+      "selection_reason": "The screenshot adds a flat crown and several facet lines to a pointed gem shape."
+    },
+    {
+      "icon_id": "mingcute:disabled",
+      "screenshot_file_name": "mingcute_disabled_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/sport/disabled_line.svg",
+      "depicts_observation": "Wheelchair symbol with a seated figure above one large rear wheel",
+      "popular_reading": "Wheelchair icon",
+      "plausible_readings": ["accessibility symbol", "disabled icon", "mobility icon"],
+      "context_bias": "Use when the interface wants a seated wheelchair figure with an upright torso and wheel.",
+      "ambiguity_note": "Do not use for the leaning wheelchair figure when the upper body should angle forward.",
+      "selection_reason": "The screenshot shows a seated stick figure with an upright torso over one large wheel."
+    },
+    {
+      "icon_id": "mingcute:disabled_2",
+      "screenshot_file_name": "mingcute_disabled_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/sport/disabled_2_line.svg",
+      "depicts_observation": "Wheelchair symbol with a leaning figure above one large rear wheel",
+      "popular_reading": "Leaning wheelchair icon",
+      "plausible_readings": ["accessibility symbol", "disabled icon", "mobility icon"],
+      "context_bias": "Use when the interface wants the wheelchair figure leaning forward into the wheel.",
+      "ambiguity_note": "Do not use for the more upright wheelchair symbol when the upper body should stay straight.",
+      "selection_reason": "The screenshot tilts the figure forward and angles the arm above the same large wheel."
+    },
+    {
+      "icon_id": "mingcute:drawer",
+      "screenshot_file_name": "mingcute_drawer_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/drawer_line.svg",
+      "depicts_observation": "Tall chest form with three drawers stacked above two short feet",
+      "popular_reading": "Three drawer chest",
+      "plausible_readings": ["drawer cabinet", "dresser", "storage chest"],
+      "context_bias": "Use when the interface wants a tall chest with three stacked drawers and tiny feet.",
+      "ambiguity_note": "Do not use for the two drawer cabinet when the top should not extend into a third drawer.",
+      "selection_reason": "The screenshot clearly stacks three drawer fronts inside one tall cabinet frame."
+    },
+    {
+      "icon_id": "mingcute:drawer_2",
+      "screenshot_file_name": "mingcute_drawer_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/drawer_2_line.svg",
+      "depicts_observation": "Small cabinet form with two drawers flat top and two short feet",
+      "popular_reading": "Two drawer cabinet",
+      "plausible_readings": ["drawer cabinet", "night cabinet", "storage chest"],
+      "context_bias": "Use when the interface wants a compact two drawer cabinet with a flat top panel.",
+      "ambiguity_note": "Do not use for the three drawer chest when a taller stacked cabinet should be visible.",
+      "selection_reason": "The screenshot shortens the cabinet and keeps only two drawer fronts above the feet."
+    }
+  ]
+}

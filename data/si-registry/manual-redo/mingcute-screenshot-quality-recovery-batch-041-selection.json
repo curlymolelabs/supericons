@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-041",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 041",
+  "review_goal": "Differentiate aiming, airpods, and alarm variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:aiming",
+      "screenshot_file_name": "mingcute_aiming_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/aiming_line.svg",
+      "depicts_observation": "Crosshair target ring with four outer ticks and one centered dot",
+      "popular_reading": "Crosshair target",
+      "plausible_readings": ["aim target", "sight mark", "target icon"],
+      "context_bias": "Use when the interface wants a crosshair style target with one center dot and four outer ticks.",
+      "ambiguity_note": "Do not use for the bullseye target when inner rings matter more than a single center dot.",
+      "selection_reason": "The screenshot shows one outer ring, four short ticks, and one solid dot at the center."
+    },
+    {
+      "icon_id": "mingcute:aiming_2",
+      "screenshot_file_name": "mingcute_aiming_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/aiming_2_line.svg",
+      "depicts_observation": "Bullseye target with two concentric ring circles and four outer ticks around a centered dot",
+      "popular_reading": "Bullseye target",
+      "plausible_readings": ["target rings", "aim target", "sight target"],
+      "context_bias": "Use when the interface wants a bullseye target with two inner rings inside the crosshair frame.",
+      "ambiguity_note": "Do not use for the single dot crosshair when the center should read as a filled dot instead of a ring.",
+      "selection_reason": "The screenshot replaces the center dot with two concentric rings while keeping the outer target ticks."
+    },
+    {
+      "icon_id": "mingcute:airpods",
+      "screenshot_file_name": "mingcute_airpods_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/airpods_line.svg",
+      "depicts_observation": "Two separate earbud stem shapes facing inward across the center",
+      "popular_reading": "Wireless earbuds",
+      "plausible_readings": ["earbuds", "audio buds", "headset buds"],
+      "context_bias": "Use when the interface wants two loose earbuds rather than a case or charger shape.",
+      "ambiguity_note": "Do not use for the charging case icon when the main shape should be a rounded box.",
+      "selection_reason": "The screenshot shows two mirrored earbud stems standing apart with no outer case around them."
+    },
+    {
+      "icon_id": "mingcute:airpods_2",
+      "screenshot_file_name": "mingcute_airpods_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/airpods_2_line.svg",
+      "depicts_observation": "Rounded charging case with a lid line and one centered latch",
+      "popular_reading": "Earbud case",
+      "plausible_readings": ["charging case", "earbud case", "audio case"],
+      "context_bias": "Use when the interface wants a rounded earbud charging case with a clear lid seam.",
+      "ambiguity_note": "Do not use for the loose earbuds icon when no outer case should be visible.",
+      "selection_reason": "The screenshot is a rounded rectangle case with a horizontal lid seam and one latch shape in front."
+    },
+    {
+      "icon_id": "mingcute:alarm_1",
+      "screenshot_file_name": "mingcute_alarm_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/alarm_1_line.svg",
+      "depicts_observation": "Twin bell alarm clock with two feet and short hands inside",
+      "popular_reading": "Twin bell alarm",
+      "plausible_readings": ["alarm clock", "bell clock", "clock icon"],
+      "context_bias": "Use when the interface wants a classic twin bell alarm clock with feet at the bottom.",
+      "ambiguity_note": "Do not use for the simpler round alarm when the floating bells and feet are not present.",
+      "selection_reason": "The screenshot shows a round clock body with two top bells, two feet, and short hands inside."
+    }
+  ]
+}

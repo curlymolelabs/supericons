@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-045",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 045",
+  "review_goal": "Differentiate bill, black board, and bowl variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:bill",
+      "screenshot_file_name": "mingcute_bill_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/bill_line.svg",
+      "depicts_observation": "Receipt sheet with two horizontal text lines and a zigzag bottom edge",
+      "popular_reading": "Receipt sheet",
+      "plausible_readings": ["bill icon", "receipt", "invoice slip"],
+      "context_bias": "Use when the interface wants a single receipt page with a torn zigzag bottom edge.",
+      "ambiguity_note": "Do not use for the stacked receipt when a second page should show behind the front sheet.",
+      "selection_reason": "The screenshot shows one receipt page with two lines and one torn lower edge."
+    },
+    {
+      "icon_id": "mingcute:bill_2",
+      "screenshot_file_name": "mingcute_bill_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/bill_2_line.svg",
+      "depicts_observation": "Receipt sheet with two text lines and a second page behind the left side",
+      "popular_reading": "Stacked receipt",
+      "plausible_readings": ["bill icon", "receipt stack", "invoice pages"],
+      "context_bias": "Use when the interface wants a receipt shape with a second sheet peeking from behind.",
+      "ambiguity_note": "Do not use for the single receipt when no second page should appear behind the front sheet.",
+      "selection_reason": "The screenshot adds a second page behind the first receipt while keeping the torn lower edge."
+    },
+    {
+      "icon_id": "mingcute:black_board",
+      "screenshot_file_name": "mingcute_black_board_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/black_board_line.svg",
+      "depicts_observation": "Classroom blackboard on a base rail with one centered eraser block",
+      "popular_reading": "Classroom blackboard",
+      "plausible_readings": ["board icon", "school board", "teaching board"],
+      "context_bias": "Use when the interface wants a classroom board resting on a base rail with an eraser.",
+      "ambiguity_note": "Do not use for the hanging board when the top hook and text lines should be visible.",
+      "selection_reason": "The screenshot shows a wide board on a base line with one small block resting near the center."
+    },
+    {
+      "icon_id": "mingcute:black_board_2",
+      "screenshot_file_name": "mingcute_black_board_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/black_board_2_line.svg",
+      "depicts_observation": "Hanging board with a top hook and two short text lines",
+      "popular_reading": "Hanging board",
+      "plausible_readings": ["board sign", "notice board", "teaching board"],
+      "context_bias": "Use when the interface wants a hanging board or sign with short text lines inside.",
+      "ambiguity_note": "Do not use for the classroom blackboard on a base when the lower rail should be visible.",
+      "selection_reason": "The screenshot adds a top hook and two short horizontal lines inside the board."
+    },
+    {
+      "icon_id": "mingcute:bowl",
+      "screenshot_file_name": "mingcute_bowl_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/food/bowl_line.svg",
+      "depicts_observation": "Round serving bowl with a half circle rim above a thick foot",
+      "popular_reading": "Serving bowl",
+      "plausible_readings": ["bowl icon", "dish bowl", "food bowl"],
+      "context_bias": "Use when the interface wants a plain serving bowl without steam or extra marks above it.",
+      "ambiguity_note": "Do not use for the hot bowl when steam curls should rise over the rim.",
+      "selection_reason": "The screenshot shows only the bowl body and foot with no steam above it."
+    }
+  ]
+}

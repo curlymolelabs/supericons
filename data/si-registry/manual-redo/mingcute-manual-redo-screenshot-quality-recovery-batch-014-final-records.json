@@ -1,0 +1,115 @@
+[
+  {
+    "icon_id": "mingcute:flag_1",
+    "source_library": "mingcute",
+    "source_name": "flag_1",
+    "label": "Flag",
+    "depicts": "Rectangular flag panel with a forked notch on a vertical line pole",
+    "use_when": "Use when the interface wants a simple pole flag with a rectangular body and a forked tail notch.",
+    "avoid_when": "Do not use for the triangular or wavy flags when the body should stay rectangular.",
+    "semantic_tags": [
+      "1",
+      "banner flag",
+      "flag",
+      "marker flag"
+    ],
+    "synonyms": [
+      "1",
+      "banner flag",
+      "flag",
+      "marker flag"
+    ]
+  },
+  {
+    "icon_id": "mingcute:flag_2",
+    "source_library": "mingcute",
+    "source_name": "flag_2",
+    "label": "Flag",
+    "depicts": "Angled flag panel on a vertical line pole with a diagonal lower edge",
+    "use_when": "Use when the interface wants a stiffer banner shape with straight edges and a diagonal bottom.",
+    "avoid_when": "Do not use for the notch or pennant flags when the body is a four sided angled panel.",
+    "semantic_tags": [
+      "2",
+      "angled banner",
+      "flag",
+      "marker flag",
+      "pole flag"
+    ],
+    "synonyms": [
+      "2",
+      "angled banner",
+      "flag",
+      "marker flag",
+      "pole flag"
+    ]
+  },
+  {
+    "icon_id": "mingcute:flag_3",
+    "source_library": "mingcute",
+    "source_name": "flag_3",
+    "label": "Flag",
+    "depicts": "Triangular flag panel with a vertical line pole at the left",
+    "use_when": "Use when the interface wants a simple triangular pennant instead of a rectangular flag body.",
+    "avoid_when": "Do not use for wider flags when the pointed triangle shape is the main cue.",
+    "semantic_tags": [
+      "3",
+      "flag",
+      "marker pennant",
+      "pennant",
+      "triangle flag"
+    ],
+    "synonyms": [
+      "3",
+      "flag",
+      "marker pennant",
+      "pennant",
+      "triangle flag"
+    ]
+  },
+  {
+    "icon_id": "mingcute:flag_4",
+    "source_library": "mingcute",
+    "source_name": "flag_4",
+    "label": "Flag",
+    "depicts": "Wavy flag outline with a vertical line pole at the left",
+    "use_when": "Use when the interface wants a soft cloth like flag shape rather than a stiff banner panel.",
+    "avoid_when": "Do not use for the straight edged flags when the wavy cloth outline should remain visible.",
+    "semantic_tags": [
+      "4",
+      "banner",
+      "cloth flag",
+      "flag",
+      "waving flag"
+    ],
+    "synonyms": [
+      "4",
+      "banner",
+      "cloth flag",
+      "flag",
+      "waving flag"
+    ]
+  },
+  {
+    "icon_id": "mingcute:building_6",
+    "source_library": "mingcute",
+    "source_name": "building_6",
+    "label": "Building",
+    "depicts": "Tall slanted center tower with short side panels on both sides above a base",
+    "use_when": "Use when the interface wants a modern three tower building with a tall central wedge.",
+    "avoid_when": "Do not use for the flatter buildings when the central slanted tower and two side towers matter.",
+    "semantic_tags": [
+      "6",
+      "building",
+      "modern building",
+      "office towers",
+      "tower trio"
+    ],
+    "synonyms": [
+      "6",
+      "building",
+      "modern building",
+      "office towers",
+      "tower trio"
+    ]
+  }
+]

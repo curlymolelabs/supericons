@@ -1,0 +1,117 @@
+[
+  {
+    "icon_id": "mingcute:bill",
+    "source_library": "mingcute",
+    "source_name": "bill",
+    "label": "Bill",
+    "depicts": "Receipt sheet with two horizontal text lines and a zigzag bottom edge",
+    "use_when": "Use when the interface wants a single receipt page with a torn zigzag bottom edge.",
+    "avoid_when": "Do not use for the stacked receipt when a second page should show behind the front sheet.",
+    "semantic_tags": [
+      "bill",
+      "bill icon",
+      "invoice slip",
+      "receipt"
+    ],
+    "synonyms": [
+      "bill",
+      "bill icon",
+      "invoice slip",
+      "receipt"
+    ]
+  },
+  {
+    "icon_id": "mingcute:bill_2",
+    "source_library": "mingcute",
+    "source_name": "bill_2",
+    "label": "Bill",
+    "depicts": "Receipt sheet with two text lines and a second page behind the left side",
+    "use_when": "Use when the interface wants a receipt shape with a second sheet peeking from behind.",
+    "avoid_when": "Do not use for the single receipt when no second page should appear behind the front sheet.",
+    "semantic_tags": [
+      "2",
+      "bill",
+      "bill icon",
+      "invoice pages",
+      "receipt stack"
+    ],
+    "synonyms": [
+      "2",
+      "bill",
+      "bill icon",
+      "invoice pages",
+      "receipt stack"
+    ]
+  },
+  {
+    "icon_id": "mingcute:black_board",
+    "source_library": "mingcute",
+    "source_name": "black_board",
+    "label": "Black Board",
+    "depicts": "Classroom blackboard on a base rail with one centered eraser block",
+    "use_when": "Use when the interface wants a classroom board resting on a base rail with an eraser.",
+    "avoid_when": "Do not use for the hanging board when the top hook and text lines should be visible.",
+    "semantic_tags": [
+      "black",
+      "board",
+      "board icon",
+      "school board",
+      "teaching board"
+    ],
+    "synonyms": [
+      "black",
+      "black board",
+      "board",
+      "board icon",
+      "school board",
+      "teaching board"
+    ]
+  },
+  {
+    "icon_id": "mingcute:black_board_2",
+    "source_library": "mingcute",
+    "source_name": "black_board_2",
+    "label": "Black Board",
+    "depicts": "Hanging board with a top hook and two short text lines",
+    "use_when": "Use when the interface wants a hanging board or sign with short text lines inside.",
+    "avoid_when": "Do not use for the classroom blackboard on a base when the lower rail should be visible.",
+    "semantic_tags": [
+      "2",
+      "black",
+      "board",
+      "board sign",
+      "notice board",
+      "teaching board"
+    ],
+    "synonyms": [
+      "2",
+      "black",
+      "black board",
+      "board",
+      "board sign",
+      "notice board",
+      "teaching board"
+    ]
+  },
+  {
+    "icon_id": "mingcute:bowl",
+    "source_library": "mingcute",
+    "source_name": "bowl",
+    "label": "Bowl",
+    "depicts": "Round serving bowl with a half circle rim above a thick foot",
+    "use_when": "Use when the interface wants a plain serving bowl without steam or extra marks above it.",
+    "avoid_when": "Do not use for the hot bowl when steam curls should rise over the rim.",
+    "semantic_tags": [
+      "bowl",
+      "bowl icon",
+      "dish bowl",
+      "food bowl"
+    ],
+    "synonyms": [
+      "bowl",
+      "bowl icon",
+      "dish bowl",
+      "food bowl"
+    ]
+  }
+]

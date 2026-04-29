@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-040",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 040",
+  "review_goal": "Differentiate five MingCute music and headphone variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:music",
+      "screenshot_file_name": "mingcute_music_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/music_line.svg",
+      "depicts_observation": "Beamed musical note with two round note heads and one top bar",
+      "popular_reading": "Beamed music note",
+      "plausible_readings": ["music note", "song note", "audio icon"],
+      "context_bias": "Use when the interface wants a double note symbol with a connecting top beam.",
+      "ambiguity_note": "Do not use for the single note or circular note icons when two note heads are visible.",
+      "selection_reason": "The screenshot shows two round note heads connected by one short top beam."
+    },
+    {
+      "icon_id": "mingcute:music_2",
+      "screenshot_file_name": "mingcute_music_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/music_2_line.svg",
+      "depicts_observation": "Single musical note with one round head and a short flag at the top",
+      "popular_reading": "Single music note",
+      "plausible_readings": ["music note", "single note", "audio note"],
+      "context_bias": "Use when the interface wants one simple music note instead of a beamed pair.",
+      "ambiguity_note": "Do not use for the double note or circular note icons when only one note head should show.",
+      "selection_reason": "The screenshot reduces the music symbol to one note head and one flagged stem."
+    },
+    {
+      "icon_id": "mingcute:music_3",
+      "screenshot_file_name": "mingcute_music_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/music_3_line.svg",
+      "depicts_observation": "Round ring icon with one single note head inside the circle",
+      "popular_reading": "Ring music note",
+      "plausible_readings": ["music ring", "note icon", "audio ring"],
+      "context_bias": "Use when the interface wants a music note enclosed inside a circular ring frame.",
+      "ambiguity_note": "Do not use for the free standing note icons when the outer ring needs to remain visible.",
+      "selection_reason": "The screenshot wraps the single music note inside a circular ring frame."
+    },
+    {
+      "icon_id": "mingcute:headphone",
+      "screenshot_file_name": "mingcute_headphone_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/headphone_line.svg",
+      "depicts_observation": "Over ear headphone outline with a round headband and angled ear pads",
+      "popular_reading": "Round headphones",
+      "plausible_readings": ["headphones", "audio headset", "music headset"],
+      "context_bias": "Use when the interface wants over ear headphones with a rounded headband and angled pads.",
+      "ambiguity_note": "Do not use for the straighter headphone frame when the round headband curve matters.",
+      "selection_reason": "The screenshot shows a soft round headband ending in two angled ear pad shapes."
+    },
+    {
+      "icon_id": "mingcute:headphone_2",
+      "screenshot_file_name": "mingcute_headphone_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/headphone_2_line.svg",
+      "depicts_observation": "Headphone outline with a tall U shaped band and straight rounded ear pads",
+      "popular_reading": "U band headphones",
+      "plausible_readings": ["headphones", "headset", "audio headset"],
+      "context_bias": "Use when the interface wants headphones with a straighter U shaped band and vertical ear pads.",
+      "ambiguity_note": "Do not use for the rounder headphone icon when the tall U band should remain visible.",
+      "selection_reason": "The screenshot straightens the headband into a taller U and makes the ear pads more vertical."
+    }
+  ]
+}

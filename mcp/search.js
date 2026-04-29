@@ -4,6 +4,12 @@
  */
 import { createIconSemanticAliasMap } from '../lib/icon-semantic-aliases.js';
 import { createIconTaxonomyMap } from '../lib/icon-taxonomy-seed.js';
+import {
+  compareVariantPreference,
+  getConceptKeyForIcon,
+  iconMatchesRequestedStyle,
+  normalizeRequestedStyle,
+} from './variant-support.js';
 
 const iconSemanticAliasMap = createIconSemanticAliasMap();
 const iconTaxonomyMap = createIconTaxonomyMap();
@@ -205,13 +211,15 @@ function expandSearchTerms(query, synonyms) {
  * @returns {Array} Matched icons (direct first, then synonym matches)
  */
 export function searchIcons(query, icons, synonyms, options = {}) {
-  const { library, limit = 20 } = options;
+  const { library, limit = 20, style = 'any' } = options;
+  const normalizedStyle = normalizeRequestedStyle(style);
 
   // Library filter
   let filtered = icons;
   if (library) {
     filtered = filtered.filter(icon => icon.lib === library);
   }
+  filtered = filtered.filter((icon) => iconMatchesRequestedStyle(icon, normalizedStyle));
 
   if (!query || !query.trim()) {
     return filtered.slice(0, limit);
@@ -259,5 +267,28 @@ export function searchIcons(query, icons, synonyms, options = {}) {
     !tier1Keys.has(iconKey(icon)) && iconMatchesTermSets(icon, termSets)
   );
 
-  return [...tier1, ...tier2].slice(0, limit);
+  const merged = [...tier1, ...tier2];
+  if (normalizedStyle !== 'any') {
+    return merged.slice(0, limit);
+  }
+
+  const selected = new Map();
+  const orderedKeys = [];
+
+  for (const icon of merged) {
+    const conceptKey = getConceptKeyForIcon(icon) || iconKey(icon);
+    const existing = selected.get(conceptKey);
+
+    if (!existing) {
+      selected.set(conceptKey, icon);
+      orderedKeys.push(conceptKey);
+      continue;
+    }
+
+    if (compareVariantPreference(existing, icon, normalizedStyle) > 0) {
+      selected.set(conceptKey, icon);
+    }
+  }
+
+  return orderedKeys.map((key) => selected.get(key)).slice(0, limit);
 }

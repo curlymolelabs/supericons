@@ -1,0 +1,434 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:currency_rupee_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_rupee_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_rupee_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee_2",
+      "label": "Currency Rupee",
+      "purpose": "Show currency rupee as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "rupee",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency rupee as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency rupee.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "rupee",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_rupee_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee_2",
+      "label": "Currency Rupee",
+      "depicts_observation": "Standalone rupee currency sign with one top bar and one diagonal tail",
+      "popular_reading": "Rupee symbol",
+      "plausible_readings": [
+        "rupee symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the rupee sign alone with a top bar and diagonal tail.",
+      "ambiguity_note": "Do not use for the ring rupee sign when the symbol should stay inside a circular border.",
+      "search_hints": [
+        "Currency Rupee",
+        "rupee symbol",
+        "money sign",
+        "currency icon",
+        "Rupee symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_rupee_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps only the rupee letterform and removes the outer circle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_rupee_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee_2",
+      "label": "Currency Rupee",
+      "depicts": "Standalone rupee currency sign with one top bar and one diagonal tail",
+      "use_when": "Use when the interface wants the rupee sign alone with a top bar and diagonal tail.",
+      "avoid_when": "Do not use for the ring rupee sign when the symbol should stay inside a circular border.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "money sign",
+        "rupee",
+        "rupee symbol"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency icon",
+        "currency rupee",
+        "money sign",
+        "rupee",
+        "rupee symbol"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:currency_shekel",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_shekel_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_shekel",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel",
+      "label": "Currency Shekel",
+      "purpose": "Show currency shekel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "shekel"
+      ],
+      "use_when": "Use when the interface refers directly to currency shekel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency shekel.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "shekel"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_shekel",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel",
+      "label": "Currency Shekel",
+      "depicts_observation": "Shekel currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring shekel sign",
+      "plausible_readings": [
+        "shekel symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the shekel symbol enclosed inside a circular ring frame.",
+      "ambiguity_note": "Do not use for the standalone shekel symbol when the outer ring should not remain visible.",
+      "search_hints": [
+        "Currency Shekel",
+        "shekel symbol",
+        "money sign",
+        "currency icon",
+        "Ring shekel sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_shekel_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot centers the shekel sign within one full circular border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_shekel",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel",
+      "label": "Currency Shekel",
+      "depicts": "Shekel currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the shekel symbol enclosed inside a circular ring frame.",
+      "avoid_when": "Do not use for the standalone shekel symbol when the outer ring should not remain visible.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "money sign",
+        "shekel",
+        "shekel symbol"
+      ],
+      "synonyms": [
+        "currency",
+        "currency icon",
+        "currency shekel",
+        "money sign",
+        "shekel",
+        "shekel symbol"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:currency_shekel_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_shekel_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_shekel_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel_2",
+      "label": "Currency Shekel",
+      "purpose": "Show currency shekel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "shekel",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency shekel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency shekel.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "shekel",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_shekel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel_2",
+      "label": "Currency Shekel",
+      "depicts_observation": "Standalone shekel currency sign with one mirrored loop shape and one right stem",
+      "popular_reading": "Shekel symbol",
+      "plausible_readings": [
+        "shekel symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the shekel symbol by itself with its mirrored loop form visible.",
+      "ambiguity_note": "Do not use for the ring shekel sign when the symbol should stay inside a circle.",
+      "search_hints": [
+        "Currency Shekel",
+        "shekel symbol",
+        "money sign",
+        "currency icon",
+        "Shekel symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_shekel_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot leaves the shekel letterform with one right stem and no surrounding ring."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_shekel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_shekel_2",
+      "label": "Currency Shekel",
+      "depicts": "Standalone shekel currency sign with one mirrored loop shape and one right stem",
+      "use_when": "Use when the interface wants the shekel symbol by itself with its mirrored loop form visible.",
+      "avoid_when": "Do not use for the ring shekel sign when the symbol should stay inside a circle.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "money sign",
+        "shekel",
+        "shekel symbol"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency icon",
+        "currency shekel",
+        "money sign",
+        "shekel",
+        "shekel symbol"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:currency_won",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_won_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_won",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_won",
+      "label": "Currency Won",
+      "purpose": "Show currency won as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "won"
+      ],
+      "use_when": "Use when the interface refers directly to currency won as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency won.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "won"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_won",
+      "source_library": "mingcute",
+      "source_name": "currency_won",
+      "label": "Currency Won",
+      "depicts_observation": "Won currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring won sign",
+      "plausible_readings": [
+        "won symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the won symbol enclosed inside a thin circular ring.",
+      "ambiguity_note": "Do not use for the standalone won sign when the outer ring should be absent.",
+      "search_hints": [
+        "Currency Won",
+        "won symbol",
+        "money sign",
+        "currency icon",
+        "Ring won sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_won_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot places the won sign inside one round border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_won",
+      "source_library": "mingcute",
+      "source_name": "currency_won",
+      "label": "Currency Won",
+      "depicts": "Won currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the won symbol enclosed inside a thin circular ring.",
+      "avoid_when": "Do not use for the standalone won sign when the outer ring should be absent.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "money sign",
+        "won",
+        "won symbol"
+      ],
+      "synonyms": [
+        "currency",
+        "currency icon",
+        "currency won",
+        "money sign",
+        "won",
+        "won symbol"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:currency_won_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_won_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_won_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_won_2",
+      "label": "Currency Won",
+      "purpose": "Show currency won as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "won",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency won as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency won.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "won",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_won_2",
+      "source_library": "mingcute",
+      "source_name": "currency_won_2",
+      "label": "Currency Won",
+      "depicts_observation": "Standalone won currency sign with one w shape and two crossbars across the center",
+      "popular_reading": "Won symbol",
+      "plausible_readings": [
+        "won symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the won sign alone with two short crossbars through the w shape.",
+      "ambiguity_note": "Do not use for the ring won sign when the symbol should remain enclosed.",
+      "search_hints": [
+        "Currency Won",
+        "won symbol",
+        "money sign",
+        "currency icon",
+        "Won symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_won_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot removes the ring and keeps only the w shaped won symbol with bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_won_2",
+      "source_library": "mingcute",
+      "source_name": "currency_won_2",
+      "label": "Currency Won",
+      "depicts": "Standalone won currency sign with one w shape and two crossbars across the center",
+      "use_when": "Use when the interface wants the won sign alone with two short crossbars through the w shape.",
+      "avoid_when": "Do not use for the ring won sign when the symbol should remain enclosed.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "money sign",
+        "won",
+        "won symbol"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency icon",
+        "currency won",
+        "money sign",
+        "won",
+        "won symbol"
+      ]
+    }
+  }
+]

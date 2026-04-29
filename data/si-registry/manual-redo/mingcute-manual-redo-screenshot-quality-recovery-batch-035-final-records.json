@@ -1,0 +1,136 @@
+[
+  {
+    "icon_id": "mingcute:folder",
+    "source_library": "mingcute",
+    "source_name": "folder",
+    "label": "Folder",
+    "depicts": "Folder outline with a short top tab and a flat lower body panel",
+    "use_when": "Use when the interface wants the simplest closed folder shape with one top tab.",
+    "avoid_when": "Do not use for striped or corner fold folders when the body should stay plain.",
+    "semantic_tags": [
+      "browse",
+      "collection",
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "tab folder"
+    ],
+    "synonyms": [
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "folder item",
+      "tab folder"
+    ]
+  },
+  {
+    "icon_id": "mingcute:folder_2",
+    "source_library": "mingcute",
+    "source_name": "folder_2",
+    "label": "Folder",
+    "depicts": "Folder outline with a top band stripe running across the upper body",
+    "use_when": "Use when the interface wants a closed folder with a visible horizontal band across the body.",
+    "avoid_when": "Do not use for the plain folder when the upper stripe should remain visible.",
+    "semantic_tags": [
+      "browse",
+      "collection",
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "folder band",
+      "tab folder"
+    ],
+    "synonyms": [
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "folder band",
+      "folder item",
+      "tab folder"
+    ]
+  },
+  {
+    "icon_id": "mingcute:folder_3",
+    "source_library": "mingcute",
+    "source_name": "folder_3",
+    "label": "Folder",
+    "depicts": "Rounded folder outline with a folded top right corner panel",
+    "use_when": "Use when the interface wants a folder whose main cue is the folded panel at the top right.",
+    "avoid_when": "Do not use for plain tab folders when the folded corner panel is visible.",
+    "semantic_tags": [
+      "browse",
+      "collection",
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "folder fold",
+      "rounded folder"
+    ],
+    "synonyms": [
+      "container",
+      "directory",
+      "file folder",
+      "folder",
+      "folder fold",
+      "folder item",
+      "rounded folder"
+    ]
+  },
+  {
+    "icon_id": "mingcute:folder_open",
+    "source_library": "mingcute",
+    "source_name": "folder_open",
+    "label": "Open Folder",
+    "depicts": "Open folder outline with a front panel tilted downward from the tab edge",
+    "use_when": "Use when the interface wants a folder shown opened toward the viewer with a tilted front panel.",
+    "avoid_when": "Do not use for the flatter open folder when the front panel tilt is the visible difference.",
+    "semantic_tags": [
+      "browse",
+      "directory",
+      "enter container",
+      "file folder",
+      "folder",
+      "folder open",
+      "open folder"
+    ],
+    "synonyms": [
+      "browse folder",
+      "enter folder",
+      "file folder",
+      "folder open",
+      "open directory",
+      "open folder"
+    ]
+  },
+  {
+    "icon_id": "mingcute:folder_open_2",
+    "source_library": "mingcute",
+    "source_name": "folder_open_2",
+    "label": "Open Folder",
+    "depicts": "Open folder outline with a broad open mouth and a flatter front panel",
+    "use_when": "Use when the interface wants an open folder with a wider flatter front opening.",
+    "avoid_when": "Do not use for the more tilted open folder when the broad open mouth is the main cue.",
+    "semantic_tags": [
+      "browse",
+      "directory",
+      "enter container",
+      "file folder",
+      "folder",
+      "open folder",
+      "wide folder"
+    ],
+    "synonyms": [
+      "browse folder",
+      "enter folder",
+      "file folder",
+      "open directory",
+      "open folder",
+      "wide folder"
+    ]
+  }
+]

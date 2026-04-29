@@ -3,6 +3,7 @@
   "library_id": "mingcute",
   "title": "MingCute Manual Redo Batch 01",
   "review_goal": "Redo the first 5 MingCute semantic records by hand, show the exact metadata and icon side by side, then pause for user review before continuing.",
+  "internal_review_only": true,
   "item_count": 5,
   "icon_ids": [
     "mingcute:abs",
@@ -11,6 +12,6 @@
     "mingcute:ad_rectangle",
     "mingcute:ad_rectangle_off"
   ],
-  "output_json_path": "data/si-registry/manual-redo/mingcute-manual-redo-batch-01-reviewed-records.json",
-  "output_html_path": "docs/superpowers/plans/2026-04-21-mingcute-manual-redo-batch-01-review.html"
+  "output_json_path": "data/si-registry/manual-redo/mingcute-manual-redo-batch-01-internal-review-reviewed-records.json",
+  "output_html_path": "docs/superpowers/plans/2026-04-22-mingcute-manual-redo-batch-01-internal-review.html"
 }

@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-047",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 047",
+  "review_goal": "Differentiate bulb, cactus, and camcorder variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:bulb",
+      "screenshot_file_name": "mingcute_bulb_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/bulb_line.svg",
+      "depicts_observation": "Light bulb outline with a zigzag filament inside and a short screw base",
+      "popular_reading": "Lit bulb",
+      "plausible_readings": ["light bulb", "idea bulb", "lamp bulb"],
+      "context_bias": "Use when the interface wants a bulb with a visible zigzag filament inside the glass.",
+      "ambiguity_note": "Do not use for the empty bulb when the center of the globe should stay blank.",
+      "selection_reason": "The screenshot includes a lightning style filament inside the bulb globe."
+    },
+    {
+      "icon_id": "mingcute:bulb_2",
+      "screenshot_file_name": "mingcute_bulb_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/bulb_2_line.svg",
+      "depicts_observation": "Light bulb outline with an empty round globe above a short screw base",
+      "popular_reading": "Empty bulb",
+      "plausible_readings": ["light bulb", "glass bulb", "lamp bulb"],
+      "context_bias": "Use when the interface wants a plain bulb outline with no filament marks inside the globe.",
+      "ambiguity_note": "Do not use for the lit bulb when a zigzag filament should be visible inside.",
+      "selection_reason": "The screenshot keeps the bulb globe empty and removes the inner zigzag mark."
+    },
+    {
+      "icon_id": "mingcute:cactus",
+      "screenshot_file_name": "mingcute_cactus_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/cactus_line.svg",
+      "depicts_observation": "Tall cactus with one arm on each side above a flat ground line",
+      "popular_reading": "Desert cactus",
+      "plausible_readings": ["cactus", "plant icon", "desert plant"],
+      "context_bias": "Use when the interface wants a tall desert cactus with two side arms on a ground line.",
+      "ambiguity_note": "Do not use for the oval thorn cactus when the plant should not be enclosed by an outer ring.",
+      "selection_reason": "The screenshot is a classic tall cactus silhouette with two side arms and a base line."
+    },
+    {
+      "icon_id": "mingcute:cactus_2",
+      "screenshot_file_name": "mingcute_cactus_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/cactus_2_line.svg",
+      "depicts_observation": "Oval cactus ring with side thorns and one centered tall leaf",
+      "popular_reading": "Round cactus",
+      "plausible_readings": ["cactus", "thorn plant", "desert plant"],
+      "context_bias": "Use when the interface wants a rounded cactus form with an outer ring and thorn marks.",
+      "ambiguity_note": "Do not use for the tall desert cactus when separate side arms on a ground line should be visible.",
+      "selection_reason": "The screenshot wraps the cactus around one center leaf and thorn marks in an oval form."
+    },
+    {
+      "icon_id": "mingcute:camcorder_2",
+      "screenshot_file_name": "mingcute_camcorder_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/camcorder_2_line.svg",
+      "depicts_observation": "Tilted video camera body with one side handle and one lower hanging cord",
+      "popular_reading": "Handheld camcorder",
+      "plausible_readings": ["video camera", "camcorder", "camera icon"],
+      "context_bias": "Use when the interface wants a tilted handheld camcorder body with a visible cord loop.",
+      "ambiguity_note": "Do not use for the lens ring icon when the shape should stay circular instead of camera shaped.",
+      "selection_reason": "The screenshot shows an angled camera body, a side grip, and a short cord hanging down."
+    }
+  ]
+}

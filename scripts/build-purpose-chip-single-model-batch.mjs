@@ -127,7 +127,7 @@ for (const [batchId, definition] of Object.entries(BATCH_DEFINITIONS)) {
       purpose_chip_category_id: candidate.purpose_chip_category_id,
       purpose_chip_category_label: candidate.purpose_chip_category_label,
       queue_outcome: queue.queue_outcome || queue.queue,
-      confidence_band: queue.confidence_band,
+      routing_band: queue.routing_band,
       current_candidate_record: candidate,
       visual_review_input: visual,
     };

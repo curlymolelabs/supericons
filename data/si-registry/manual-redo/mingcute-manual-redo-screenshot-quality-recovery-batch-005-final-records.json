@@ -1,0 +1,117 @@
+[
+  {
+    "icon_id": "mingcute:settings_1",
+    "source_library": "mingcute",
+    "source_name": "settings_1",
+    "label": "Settings",
+    "depicts": "Hexagon settings cog badge with a centered ring and small inner circle",
+    "use_when": "Use when the interface wants a settings symbol built from a hexagonal badge rather than a gear or sliders.",
+    "avoid_when": "Do not use for gear or slider controls when the visible form is a hexagon around a center ring.",
+    "semantic_tags": [
+      "1",
+      "control hub",
+      "hex badge",
+      "hex settings",
+      "settings"
+    ],
+    "synonyms": [
+      "1",
+      "control hub",
+      "hex badge",
+      "hex settings",
+      "settings"
+    ]
+  },
+  {
+    "icon_id": "mingcute:settings_2",
+    "source_library": "mingcute",
+    "source_name": "settings_2",
+    "label": "Settings",
+    "depicts": "Three horizontal slider lines with plus shaped handles instead of a gear",
+    "use_when": "Use when the interface needs adjustable settings shown as horizontal control lines with movable handles.",
+    "avoid_when": "Do not use for gear shaped settings icons when the visible form is three slider rows with handle crosses.",
+    "semantic_tags": [
+      "2",
+      "adjustment lines",
+      "settings",
+      "slider controls",
+      "tuning bars"
+    ],
+    "synonyms": [
+      "2",
+      "adjustment lines",
+      "settings",
+      "slider controls",
+      "tuning bars"
+    ]
+  },
+  {
+    "icon_id": "mingcute:settings_3",
+    "source_library": "mingcute",
+    "source_name": "settings_3",
+    "label": "Settings",
+    "depicts": "Rounded cog ring with a centered circle inside an eight lobe outline",
+    "use_when": "Use when the interface wants a settings cog with rounded scalloped lobes around a centered circle.",
+    "avoid_when": "Do not use for the sharper star gear or hex badge variants when the rounded lobes are the visible cue.",
+    "semantic_tags": [
+      "3",
+      "gear icon",
+      "rounded gear",
+      "settings",
+      "settings cog"
+    ],
+    "synonyms": [
+      "3",
+      "gear icon",
+      "rounded gear",
+      "settings",
+      "settings cog"
+    ]
+  },
+  {
+    "icon_id": "mingcute:settings_4",
+    "source_library": "mingcute",
+    "source_name": "settings_4",
+    "label": "Settings",
+    "depicts": "Pointed cog star with a centered circle inside an eight point outline",
+    "use_when": "Use when the interface wants a sharper settings cog with visible pointed teeth around the center ring.",
+    "avoid_when": "Do not use for the rounded scalloped gear when the tooth shape needs to stay visibly angular.",
+    "semantic_tags": [
+      "4",
+      "gear star",
+      "pointed gear",
+      "settings",
+      "settings cog"
+    ],
+    "synonyms": [
+      "4",
+      "gear star",
+      "pointed gear",
+      "settings",
+      "settings cog"
+    ]
+  },
+  {
+    "icon_id": "mingcute:settings_5",
+    "source_library": "mingcute",
+    "source_name": "settings_5",
+    "label": "Settings",
+    "depicts": "Classic gear ring with a centered circle and many rounded teeth",
+    "use_when": "Use when the interface wants the most traditional gear wheel symbol for settings or system controls.",
+    "avoid_when": "Do not use for the hex badge slider bars or pointed star gear when the many teeth matter visually.",
+    "semantic_tags": [
+      "5",
+      "classic gear",
+      "cog wheel",
+      "settings",
+      "settings gear"
+    ],
+    "synonyms": [
+      "5",
+      "classic gear",
+      "cog wheel",
+      "settings",
+      "settings gear"
+    ]
+  }
+]

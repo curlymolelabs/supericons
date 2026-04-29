@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-017",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 017",
+  "review_goal": "Differentiate five MingCute train and attachment variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:train",
+      "screenshot_file_name": "mingcute_train_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_line.svg",
+      "depicts_observation": "Rounded train vehicle with three window panels above a flat track line",
+      "popular_reading": "Bullet train",
+      "plausible_readings": ["train", "rail car", "bullet train"],
+      "context_bias": "Use when the interface wants a side view train with a rounded nose and visible windows.",
+      "ambiguity_note": "Do not use for the front facing trains when the long side view silhouette matters.",
+      "selection_reason": "The screenshot is the only selected train shown from the side with three windows and a rail line."
+    },
+    {
+      "icon_id": "mingcute:train_2",
+      "screenshot_file_name": "mingcute_train_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_2_line.svg",
+      "depicts_observation": "Front train vehicle with a display bar two lights and outward track lines",
+      "popular_reading": "Front train with display",
+      "plausible_readings": ["front train", "rail front", "train face"],
+      "context_bias": "Use when the interface wants a head on train with a display panel and two lower lights.",
+      "ambiguity_note": "Do not use for the striped or slanted windshield trains when the display bar is the main cue.",
+      "selection_reason": "The screenshot centers a front train face with a top display bar and two round lower lights."
+    },
+    {
+      "icon_id": "mingcute:train_3",
+      "screenshot_file_name": "mingcute_train_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_3_line.svg",
+      "depicts_observation": "Front train vehicle with two horizontal bars and one round light",
+      "popular_reading": "Striped front train",
+      "plausible_readings": ["striped train", "front rail car", "train face"],
+      "context_bias": "Use when the interface wants a head on train marked by two horizontal bands across the body.",
+      "ambiguity_note": "Do not use for the display bar or windshield variants when the twin stripes matter visually.",
+      "selection_reason": "The screenshot differs by showing two horizontal body stripes and one centered round light."
+    },
+    {
+      "icon_id": "mingcute:train_4",
+      "screenshot_file_name": "mingcute_train_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_4_line.svg",
+      "depicts_observation": "Rounded front train vehicle with a slanted window panel and two bottom lights",
+      "popular_reading": "Windshield front train",
+      "plausible_readings": ["front train", "rail car nose", "train front"],
+      "context_bias": "Use when the interface wants a head on train whose main cue is the slanted windshield panel.",
+      "ambiguity_note": "Do not use for the striped or display bar trains when the windshield shape matters most.",
+      "selection_reason": "The screenshot shows the most rounded front train with a slanted windshield opening."
+    },
+    {
+      "icon_id": "mingcute:attachment",
+      "screenshot_file_name": "mingcute_attachment_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/attachment_line.svg",
+      "depicts_observation": "Tilted paper clip with two long parallel loops",
+      "popular_reading": "Paper clip",
+      "plausible_readings": ["attachment clip", "paper clip", "file attachment"],
+      "context_bias": "Use when the interface wants the most familiar tilted paper clip shape for attachments.",
+      "ambiguity_note": "Do not use for the hooked or upright clips when the diagonal double loop should remain visible.",
+      "selection_reason": "The screenshot shows the classic diagonal paper clip with two long nested loops."
+    }
+  ]
+}

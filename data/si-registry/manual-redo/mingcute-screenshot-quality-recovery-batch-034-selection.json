@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-034",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 034",
+  "review_goal": "Differentiate five MingCute download and upload variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:download",
+      "screenshot_file_name": "mingcute_download_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_line.svg",
+      "depicts_observation": "Downward arrow entering an open tray frame with two vertical side lines",
+      "popular_reading": "Tray download",
+      "plausible_readings": ["download", "arrow to tray", "file download"],
+      "context_bias": "Use when the interface wants a download arrow entering a framed tray or inbox shape.",
+      "ambiguity_note": "Do not use for the plain shelf or cloud downloads when the side tray walls matter.",
+      "selection_reason": "The screenshot shows the arrow dropping into a tray with two vertical side walls."
+    },
+    {
+      "icon_id": "mingcute:download_2",
+      "screenshot_file_name": "mingcute_download_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_2_line.svg",
+      "depicts_observation": "Downward arrow landing on a simple shelf line with short side posts",
+      "popular_reading": "Shelf download",
+      "plausible_readings": ["download", "arrow to shelf", "save down"],
+      "context_bias": "Use when the interface wants the most minimal downward arrow landing on a simple shelf.",
+      "ambiguity_note": "Do not use for the tray or cloud downloads when the base should stay as a flat shelf line.",
+      "selection_reason": "The screenshot removes the tray walls and leaves only a short shelf under the arrow."
+    },
+    {
+      "icon_id": "mingcute:download_3",
+      "screenshot_file_name": "mingcute_download_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/download_3_line.svg",
+      "depicts_observation": "Downward arrow centered inside a cloud outline with an open lower curve",
+      "popular_reading": "Cloud download",
+      "plausible_readings": ["cloud download", "download cloud", "sync down"],
+      "context_bias": "Use when the interface wants downloading shown inside a cloud rather than a tray or shelf.",
+      "ambiguity_note": "Do not use for the tray or shelf icons when the outer cloud outline must be visible.",
+      "selection_reason": "The screenshot wraps the downward arrow inside a cloud outline instead of a boxy tray."
+    },
+    {
+      "icon_id": "mingcute:upload",
+      "screenshot_file_name": "mingcute_upload_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/upload_line.svg",
+      "depicts_observation": "Upward arrow rising from an open tray frame with two vertical side lines",
+      "popular_reading": "Tray upload",
+      "plausible_readings": ["upload", "arrow from tray", "file upload"],
+      "context_bias": "Use when the interface wants an upload arrow emerging from a framed tray shape.",
+      "ambiguity_note": "Do not use for shelf or cloud uploads when the tray walls should remain visible.",
+      "selection_reason": "The screenshot mirrors the tray download shape but flips the arrow upward."
+    },
+    {
+      "icon_id": "mingcute:upload_2",
+      "screenshot_file_name": "mingcute_upload_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/upload_2_line.svg",
+      "depicts_observation": "Upward arrow rising from a simple shelf line with short side posts",
+      "popular_reading": "Shelf upload",
+      "plausible_readings": ["upload", "arrow from shelf", "send up"],
+      "context_bias": "Use when the interface wants the simplest upward arrow leaving a short base shelf.",
+      "ambiguity_note": "Do not use for the tray or cloud uploads when the base should stay as a flat shelf line.",
+      "selection_reason": "The screenshot keeps only the lower shelf line under the upward arrow and removes tray walls."
+    }
+  ]
+}

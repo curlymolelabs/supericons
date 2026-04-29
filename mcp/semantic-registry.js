@@ -1,18 +1,15 @@
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { getBaseSemanticIdsForVariant } from './variant-support.js';
 
 const PUBLIC_SEMANTIC_FIELDS = Object.freeze([
   'label',
-  'purpose',
-  'category',
+  'source_name',
+  'depicts',
   'semantic_tags',
   'synonyms',
   'use_when',
   'avoid_when',
-  'depicts',
-  'intent',
-  'domain',
-  'confidence',
 ]);
 
 function normalizeText(value) {
@@ -31,17 +28,7 @@ function tokenize(value) {
 }
 
 function buildPossibleRegistryIds(library, id) {
-  const baseId = `${library}:${id}`;
-  const ids = [baseId];
-
-  if (library === 'mingcute') {
-    const normalizedId = String(id || '').replace(/_(line|fill)$/i, '');
-    if (normalizedId && normalizedId !== id) {
-      ids.push(`${library}:${normalizedId}`);
-    }
-  }
-
-  return ids;
+  return getBaseSemanticIdsForVariant({ library, id });
 }
 
 function getPrimaryRegistryId(iconOrLibrary, maybeId) {
@@ -109,11 +96,8 @@ export function scoreSemanticAlignment(query, semanticRecord) {
 
   const weightedSources = [
     { value: semanticRecord.label, weight: 6 },
-    { value: semanticRecord.category, weight: 6 },
-    { value: semanticRecord.intent, weight: 5 },
-    { value: semanticRecord.domain, weight: 5 },
+    { value: semanticRecord.source_name, weight: 5 },
     { value: semanticRecord.depicts, weight: 4 },
-    { value: semanticRecord.purpose, weight: 4 },
     { value: semanticRecord.use_when, weight: 3 },
     { value: semanticRecord.avoid_when, weight: 2 },
   ];

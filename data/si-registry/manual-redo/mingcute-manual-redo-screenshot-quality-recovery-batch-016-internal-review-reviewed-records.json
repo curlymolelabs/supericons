@@ -1,0 +1,423 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:loading",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_loading_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:loading",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "loading",
+      "label": "Loading",
+      "purpose": "Show loading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "loading"
+      ],
+      "use_when": "Use when the interface refers directly to loading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing loading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "loading"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:loading",
+      "source_library": "mingcute",
+      "source_name": "loading",
+      "label": "Loading",
+      "depicts_observation": "Incomplete circular loading ring with a gap near the top right",
+      "popular_reading": "Loading ring",
+      "plausible_readings": [
+        "spinner ring",
+        "loading circle",
+        "progress ring"
+      ],
+      "context_bias": "Use when the interface wants a simple circular loader made from one incomplete stroke.",
+      "ambiguity_note": "Do not use for the dotted or multi ray spinners when the ring should stay as one arc.",
+      "search_hints": [
+        "Loading",
+        "spinner ring",
+        "loading circle",
+        "progress ring",
+        "Loading ring"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a smooth circular arc with one open gap rather than dots or spokes."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:loading",
+      "source_library": "mingcute",
+      "source_name": "loading",
+      "label": "Loading",
+      "depicts": "Incomplete circular loading ring with a gap near the top right",
+      "use_when": "Use when the interface wants a simple circular loader made from one incomplete stroke.",
+      "avoid_when": "Do not use for the dotted or multi ray spinners when the ring should stay as one arc.",
+      "semantic_tags": [
+        "loading",
+        "loading circle",
+        "progress ring",
+        "spinner ring"
+      ],
+      "synonyms": [
+        "loading",
+        "loading circle",
+        "progress ring",
+        "spinner ring"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:loading_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_loading_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:loading_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "loading_2",
+      "label": "Loading",
+      "purpose": "Show loading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "loading",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to loading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing loading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "loading",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:loading_2",
+      "source_library": "mingcute",
+      "source_name": "loading_2",
+      "label": "Loading",
+      "depicts_observation": "Twelve spoke loading star with short rounded rays around a center",
+      "popular_reading": "Ray spinner",
+      "plausible_readings": [
+        "spoke loader",
+        "sunburst spinner",
+        "loading rays"
+      ],
+      "context_bias": "Use when the interface wants a loader made from separate short rays instead of one ring.",
+      "ambiguity_note": "Do not use for circular arc or dotted spinners when the spoke shape matters.",
+      "search_hints": [
+        "Loading",
+        "spoke loader",
+        "sunburst spinner",
+        "loading rays",
+        "Ray spinner"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces a ring with a full sunburst of short rounded spokes."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:loading_2",
+      "source_library": "mingcute",
+      "source_name": "loading_2",
+      "label": "Loading",
+      "depicts": "Twelve spoke loading star with short rounded rays around a center",
+      "use_when": "Use when the interface wants a loader made from separate short rays instead of one ring.",
+      "avoid_when": "Do not use for circular arc or dotted spinners when the spoke shape matters.",
+      "semantic_tags": [
+        "2",
+        "loading",
+        "loading rays",
+        "spoke loader",
+        "sunburst spinner"
+      ],
+      "synonyms": [
+        "2",
+        "loading",
+        "loading rays",
+        "spoke loader",
+        "sunburst spinner"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:loading_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_loading_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:loading_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "loading_3",
+      "label": "Loading",
+      "purpose": "Show loading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "loading",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to loading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing loading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "loading",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:loading_3",
+      "source_library": "mingcute",
+      "source_name": "loading_3",
+      "label": "Loading",
+      "depicts_observation": "Pale circular track with a dark progress arc near the top",
+      "popular_reading": "Progress ring",
+      "plausible_readings": [
+        "progress circle",
+        "track ring",
+        "loading progress"
+      ],
+      "context_bias": "Use when the interface wants a loader with a visible background track and a highlighted active arc.",
+      "ambiguity_note": "Do not use for the plain ring when the light track behind the dark arc is visible.",
+      "search_hints": [
+        "Loading",
+        "progress circle",
+        "track ring",
+        "loading progress",
+        "Progress ring"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uniquely includes a pale full ring behind a darker active progress arc."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:loading_3",
+      "source_library": "mingcute",
+      "source_name": "loading_3",
+      "label": "Loading",
+      "depicts": "Pale circular track with a dark progress arc near the top",
+      "use_when": "Use when the interface wants a loader with a visible background track and a highlighted active arc.",
+      "avoid_when": "Do not use for the plain ring when the light track behind the dark arc is visible.",
+      "semantic_tags": [
+        "3",
+        "loading",
+        "loading progress",
+        "progress circle",
+        "track ring"
+      ],
+      "synonyms": [
+        "3",
+        "loading",
+        "loading progress",
+        "progress circle",
+        "track ring"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:loading_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_loading_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:loading_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "loading_4",
+      "label": "Loading",
+      "purpose": "Show loading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "loading",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to loading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing loading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "loading",
+        "4"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:loading_4",
+      "source_library": "mingcute",
+      "source_name": "loading_4",
+      "label": "Loading",
+      "depicts_observation": "Circular ring with small dots spaced around the outer edge",
+      "popular_reading": "Dotted spinner",
+      "plausible_readings": [
+        "dot loader",
+        "dotted spinner",
+        "loading dots"
+      ],
+      "context_bias": "Use when the interface wants loading shown through a ring of separate dots.",
+      "ambiguity_note": "Do not use for arc or spoke loaders when the dotted ring is the intended cue.",
+      "search_hints": [
+        "Loading",
+        "dot loader",
+        "dotted spinner",
+        "loading dots",
+        "Dotted spinner"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/loading_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the only loading variant built from separate evenly spaced dots."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:loading_4",
+      "source_library": "mingcute",
+      "source_name": "loading_4",
+      "label": "Loading",
+      "depicts": "Circular ring with small dots spaced around the outer edge",
+      "use_when": "Use when the interface wants loading shown through a ring of separate dots.",
+      "avoid_when": "Do not use for arc or spoke loaders when the dotted ring is the intended cue.",
+      "semantic_tags": [
+        "4",
+        "dot loader",
+        "dotted spinner",
+        "loading",
+        "loading dots"
+      ],
+      "synonyms": [
+        "4",
+        "dot loader",
+        "dotted spinner",
+        "loading",
+        "loading dots"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:search_ai",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_search_ai_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:search_ai",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "search_ai",
+      "label": "AI Search",
+      "purpose": "Show AI-assisted search, agent lookup, or model-guided retrieval.",
+      "category": "search_discovery",
+      "semantic_tags": [
+        "ai search",
+        "assistant search",
+        "retrieval",
+        "lookup",
+        "search"
+      ],
+      "use_when": "Use when the interface offers AI-assisted retrieval, model-guided lookup, or assistant-powered search.",
+      "avoid_when": "Do not use for ordinary search when there is no AI, assistant, or model-guided search meaning.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A search symbol paired with an AI marker.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "assistant search",
+        "ai lookup",
+        "model search",
+        "retrieval search"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:search_ai",
+      "source_library": "mingcute",
+      "source_name": "search_ai",
+      "label": "AI Search",
+      "depicts_observation": "Open magnifying glass ring with a spark star floating at upper right",
+      "popular_reading": "Open spark search",
+      "plausible_readings": [
+        "ai search",
+        "spark search",
+        "open ring search"
+      ],
+      "context_bias": "Use when the interface wants the loosest search symbol with an open ring and an external spark cue.",
+      "ambiguity_note": "Do not use for magnifying glass icons when the lens is open and the spark floats outside.",
+      "search_hints": [
+        "AI Search",
+        "ai search",
+        "spark search",
+        "open ring search",
+        "Open spark search"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/search_ai_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot breaks the circle into an open ring and adds a separate spark star at the top right."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:search_ai",
+      "source_library": "mingcute",
+      "source_name": "search_ai",
+      "label": "AI Search",
+      "depicts": "Open magnifying glass ring with a spark star floating at upper right",
+      "use_when": "Use when the interface wants the loosest search symbol with an open ring and an external spark cue.",
+      "avoid_when": "Do not use for magnifying glass icons when the lens is open and the spark floats outside.",
+      "semantic_tags": [
+        "ai search",
+        "assistant search",
+        "lookup",
+        "open ring search",
+        "retrieval",
+        "search",
+        "spark search"
+      ],
+      "synonyms": [
+        "ai lookup",
+        "ai search",
+        "assistant search",
+        "model search",
+        "open ring search",
+        "retrieval search",
+        "spark search"
+      ]
+    }
+  }
+]

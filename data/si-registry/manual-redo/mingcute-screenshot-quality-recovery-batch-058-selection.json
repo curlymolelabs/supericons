@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-058",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 058",
+  "review_goal": "Differentiate factory, fan, and filter variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:factory_2",
+      "screenshot_file_name": "mingcute_factory_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/factory_2_line.svg",
+      "depicts_observation": "Factory block with one tall stack above a zigzag roof and two windows",
+      "popular_reading": "Zigzag roof factory",
+      "plausible_readings": ["factory icon", "plant building", "industrial site"],
+      "context_bias": "Use when the interface wants a boxy factory building with a zigzag roof and window dots.",
+      "ambiguity_note": "Do not use for the cooling tower factory when the main shapes should be two tall towers.",
+      "selection_reason": "The screenshot adds one tall stack, a sawtooth roof line, and two square windows."
+    },
+    {
+      "icon_id": "mingcute:fan",
+      "screenshot_file_name": "mingcute_fan_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/fan_line.svg",
+      "depicts_observation": "Five petal fan swirl with curved blades around a centered hub",
+      "popular_reading": "Swirl fan",
+      "plausible_readings": ["fan icon", "cooling fan", "blower icon"],
+      "context_bias": "Use when the interface wants a fan drawn as five curved swirl blades around the center.",
+      "ambiguity_note": "Do not use for the four loop fan when the blades should look like overlapping circles.",
+      "selection_reason": "The screenshot forms the fan from five curved petals spinning around a small center gap."
+    },
+    {
+      "icon_id": "mingcute:fan_2",
+      "screenshot_file_name": "mingcute_fan_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/fan_2_line.svg",
+      "depicts_observation": "Four loop fan shape with round blade circles overlapping around a centered hub",
+      "popular_reading": "Loop fan",
+      "plausible_readings": ["fan icon", "cooling fan", "blower icon"],
+      "context_bias": "Use when the interface wants a fan built from four round loop blades instead of swirl petals.",
+      "ambiguity_note": "Do not use for the five petal swirl fan when the blades should curl more sharply.",
+      "selection_reason": "The screenshot uses four circular loop blades that overlap around the center."
+    },
+    {
+      "icon_id": "mingcute:filter",
+      "screenshot_file_name": "mingcute_filter_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/filter_line.svg",
+      "depicts_observation": "Funnel form with a wide top narrow neck and pointed lower tip",
+      "popular_reading": "Funnel filter",
+      "plausible_readings": ["filter icon", "funnel icon", "sort filter"],
+      "context_bias": "Use when the interface wants a classic funnel filter tapering to a pointed lower tip.",
+      "ambiguity_note": "Do not use for the stacked filter bars when the icon should be made from horizontal lines.",
+      "selection_reason": "The screenshot is a full funnel shape with sloped sides and a narrow lower point."
+    },
+    {
+      "icon_id": "mingcute:filter_2",
+      "screenshot_file_name": "mingcute_filter_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/filter_2_line.svg",
+      "depicts_observation": "Three horizontal filter bars descending in length from top to bottom",
+      "popular_reading": "Filter bars",
+      "plausible_readings": ["filter icon", "sort bars", "rank bars"],
+      "context_bias": "Use when the interface wants a filter mark drawn as three descending horizontal bars.",
+      "ambiguity_note": "Do not use for the funnel shaped filters when the icon should not taper into a neck.",
+      "selection_reason": "The screenshot replaces the funnel with three short stacked bars of different lengths."
+    }
+  ]
+}

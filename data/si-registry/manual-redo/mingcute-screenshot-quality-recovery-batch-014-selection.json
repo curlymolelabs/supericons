@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-014",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 014",
+  "review_goal": "Differentiate five MingCute flag and building variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:flag_1",
+      "screenshot_file_name": "mingcute_flag_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/flag_1_line.svg",
+      "depicts_observation": "Rectangular flag panel with a forked notch on a vertical line pole",
+      "popular_reading": "Notched flag",
+      "plausible_readings": ["flag", "marker flag", "banner flag"],
+      "context_bias": "Use when the interface wants a simple pole flag with a rectangular body and a forked tail notch.",
+      "ambiguity_note": "Do not use for the triangular or wavy flags when the body should stay rectangular.",
+      "selection_reason": "The screenshot shows the broadest flag panel with a clear cutout notch at the trailing edge."
+    },
+    {
+      "icon_id": "mingcute:flag_2",
+      "screenshot_file_name": "mingcute_flag_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/flag_2_line.svg",
+      "depicts_observation": "Angled flag panel on a vertical line pole with a diagonal lower edge",
+      "popular_reading": "Angled flag",
+      "plausible_readings": ["pole flag", "angled banner", "marker flag"],
+      "context_bias": "Use when the interface wants a stiffer banner shape with straight edges and a diagonal bottom.",
+      "ambiguity_note": "Do not use for the notch or pennant flags when the body is a four sided angled panel.",
+      "selection_reason": "The screenshot forms a slanted four sided panel instead of a notched or wavy flag cloth."
+    },
+    {
+      "icon_id": "mingcute:flag_3",
+      "screenshot_file_name": "mingcute_flag_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/flag_3_line.svg",
+      "depicts_observation": "Triangular flag panel with a vertical line pole at the left",
+      "popular_reading": "Pennant flag",
+      "plausible_readings": ["pennant", "triangle flag", "marker pennant"],
+      "context_bias": "Use when the interface wants a simple triangular pennant instead of a rectangular flag body.",
+      "ambiguity_note": "Do not use for wider flags when the pointed triangle shape is the main cue.",
+      "selection_reason": "The screenshot is the only selected flag reduced to a clean triangular pennant."
+    },
+    {
+      "icon_id": "mingcute:flag_4",
+      "screenshot_file_name": "mingcute_flag_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/flag_4_line.svg",
+      "depicts_observation": "Wavy flag outline with a vertical line pole at the left",
+      "popular_reading": "Wavy flag",
+      "plausible_readings": ["waving flag", "cloth flag", "banner"],
+      "context_bias": "Use when the interface wants a soft cloth like flag shape rather than a stiff banner panel.",
+      "ambiguity_note": "Do not use for the straight edged flags when the wavy cloth outline should remain visible.",
+      "selection_reason": "The screenshot differs from the other flags by using a visibly wavy cloth contour."
+    },
+    {
+      "icon_id": "mingcute:building_6",
+      "screenshot_file_name": "mingcute_building_6_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/building_6_line.svg",
+      "depicts_observation": "Tall slanted center tower with short side panels on both sides above a base",
+      "popular_reading": "Three tower building",
+      "plausible_readings": ["modern building", "tower trio", "office towers"],
+      "context_bias": "Use when the interface wants a modern three tower building with a tall central wedge.",
+      "ambiguity_note": "Do not use for the flatter buildings when the central slanted tower and two side towers matter.",
+      "selection_reason": "The screenshot shows a tall center wedge flanked by two shorter towers on the same base."
+    }
+  ]
+}

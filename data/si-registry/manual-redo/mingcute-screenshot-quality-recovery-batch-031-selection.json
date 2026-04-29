@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-031",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 031",
+  "review_goal": "Differentiate five MingCute copy and document variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:copy",
+      "screenshot_file_name": "mingcute_copy_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/copy_line.svg",
+      "depicts_observation": "Two overlapping document sheets with two short text bars on the front page",
+      "popular_reading": "Copy pages with text",
+      "plausible_readings": ["copy document", "stacked pages", "duplicate page"],
+      "context_bias": "Use when the interface wants duplicated pages and the front sheet visibly carries text bars.",
+      "ambiguity_note": "Do not use for blank or dashed copy icons when the front page text bars should remain visible.",
+      "selection_reason": "The screenshot shows two stacked pages and places short text bars on the front sheet."
+    },
+    {
+      "icon_id": "mingcute:copy_2",
+      "screenshot_file_name": "mingcute_copy_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/copy_2_line.svg",
+      "depicts_observation": "Two overlapping square document panels with a blank front sheet",
+      "popular_reading": "Blank copy pages",
+      "plausible_readings": ["copy sheets", "duplicate pages", "stacked panels"],
+      "context_bias": "Use when the interface wants duplicated page panels without text lines or dashed edges.",
+      "ambiguity_note": "Do not use for the text bar or dashed selection variants when the front sheet should stay blank.",
+      "selection_reason": "The screenshot keeps the overlapping page stack but removes the text bars from the front panel."
+    },
+    {
+      "icon_id": "mingcute:copy_3",
+      "screenshot_file_name": "mingcute_copy_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/copy_3_line.svg",
+      "depicts_observation": "Square document panel with a dashed duplicate frame floating at the upper right",
+      "popular_reading": "Dashed copy frame",
+      "plausible_readings": ["copy selection", "duplicate frame", "dashed copy"],
+      "context_bias": "Use when the interface wants a copy symbol that emphasizes a dashed duplicate frame instead of stacked sheets.",
+      "ambiguity_note": "Do not use for the overlapping page copies when the dashed outer frame is the main cue.",
+      "selection_reason": "The screenshot replaces the rear sheet with a dashed frame floating around the upper right corner."
+    },
+    {
+      "icon_id": "mingcute:document",
+      "screenshot_file_name": "mingcute_document_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/document_line.svg",
+      "depicts_observation": "Single document sheet with two short horizontal text bars centered inside",
+      "popular_reading": "Text document",
+      "plausible_readings": ["document", "text page", "paper sheet"],
+      "context_bias": "Use when the interface wants one plain document page with two centered text bars.",
+      "ambiguity_note": "Do not use for folded corner documents when the top edge should stay flat and plain.",
+      "selection_reason": "The screenshot is the plainest single page with two centered text bars and no folded corner."
+    },
+    {
+      "icon_id": "mingcute:document_2",
+      "screenshot_file_name": "mingcute_document_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/document_2_line.svg",
+      "depicts_observation": "Document sheet with a folded top right corner one dot and one short text bar",
+      "popular_reading": "Folded corner document",
+      "plausible_readings": ["page corner fold", "document", "paper fold"],
+      "context_bias": "Use when the interface wants a single page with a visible folded corner and mixed line dot marks.",
+      "ambiguity_note": "Do not use for the plain page when the folded corner should remain part of the form.",
+      "selection_reason": "The screenshot adds a folded top corner plus one dot and one short line inside the page."
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:train",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_train_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:train",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "train",
+      "label": "Train",
+      "purpose": "Show train as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "train"
+      ],
+      "use_when": "Use when the interface refers directly to train as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing train.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "train"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:train",
+      "source_library": "mingcute",
+      "source_name": "train",
+      "label": "Train",
+      "depicts_observation": "Rounded train vehicle with three window panels above a flat track line",
+      "popular_reading": "Bullet train",
+      "plausible_readings": [
+        "train",
+        "rail car",
+        "bullet train"
+      ],
+      "context_bias": "Use when the interface wants a side view train with a rounded nose and visible windows.",
+      "ambiguity_note": "Do not use for the front facing trains when the long side view silhouette matters.",
+      "search_hints": [
+        "Train",
+        "train",
+        "rail car",
+        "bullet train",
+        "Bullet train"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the only selected train shown from the side with three windows and a rail line."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:train",
+      "source_library": "mingcute",
+      "source_name": "train",
+      "label": "Train",
+      "depicts": "Rounded train vehicle with three window panels above a flat track line",
+      "use_when": "Use when the interface wants a side view train with a rounded nose and visible windows.",
+      "avoid_when": "Do not use for the front facing trains when the long side view silhouette matters.",
+      "semantic_tags": [
+        "bullet train",
+        "rail car",
+        "train"
+      ],
+      "synonyms": [
+        "bullet train",
+        "rail car",
+        "train"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:train_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_train_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:train_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "train_2",
+      "label": "Train",
+      "purpose": "Show train as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "train",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to train as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing train.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "train",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:train_2",
+      "source_library": "mingcute",
+      "source_name": "train_2",
+      "label": "Train",
+      "depicts_observation": "Front train vehicle with a display bar two lights and outward track lines",
+      "popular_reading": "Front train with display",
+      "plausible_readings": [
+        "front train",
+        "rail front",
+        "train face"
+      ],
+      "context_bias": "Use when the interface wants a head on train with a display panel and two lower lights.",
+      "ambiguity_note": "Do not use for the striped or slanted windshield trains when the display bar is the main cue.",
+      "search_hints": [
+        "Train",
+        "front train",
+        "rail front",
+        "train face",
+        "Front train with display"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot centers a front train face with a top display bar and two round lower lights."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:train_2",
+      "source_library": "mingcute",
+      "source_name": "train_2",
+      "label": "Train",
+      "depicts": "Front train vehicle with a display bar two lights and outward track lines",
+      "use_when": "Use when the interface wants a head on train with a display panel and two lower lights.",
+      "avoid_when": "Do not use for the striped or slanted windshield trains when the display bar is the main cue.",
+      "semantic_tags": [
+        "2",
+        "front train",
+        "rail front",
+        "train",
+        "train face"
+      ],
+      "synonyms": [
+        "2",
+        "front train",
+        "rail front",
+        "train",
+        "train face"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:train_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_train_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:train_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "train_3",
+      "label": "Train",
+      "purpose": "Show train as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "train",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to train as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing train.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "train",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:train_3",
+      "source_library": "mingcute",
+      "source_name": "train_3",
+      "label": "Train",
+      "depicts_observation": "Front train vehicle with two horizontal bars and one round light",
+      "popular_reading": "Striped front train",
+      "plausible_readings": [
+        "striped train",
+        "front rail car",
+        "train face"
+      ],
+      "context_bias": "Use when the interface wants a head on train marked by two horizontal bands across the body.",
+      "ambiguity_note": "Do not use for the display bar or windshield variants when the twin stripes matter visually.",
+      "search_hints": [
+        "Train",
+        "striped train",
+        "front rail car",
+        "train face",
+        "Striped front train"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot differs by showing two horizontal body stripes and one centered round light."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:train_3",
+      "source_library": "mingcute",
+      "source_name": "train_3",
+      "label": "Train",
+      "depicts": "Front train vehicle with two horizontal bars and one round light",
+      "use_when": "Use when the interface wants a head on train marked by two horizontal bands across the body.",
+      "avoid_when": "Do not use for the display bar or windshield variants when the twin stripes matter visually.",
+      "semantic_tags": [
+        "3",
+        "front rail car",
+        "striped train",
+        "train",
+        "train face"
+      ],
+      "synonyms": [
+        "3",
+        "front rail car",
+        "striped train",
+        "train",
+        "train face"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:train_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_train_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:train_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "train_4",
+      "label": "Train",
+      "purpose": "Show train as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "train",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to train as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing train.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "train",
+        "4"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:train_4",
+      "source_library": "mingcute",
+      "source_name": "train_4",
+      "label": "Train",
+      "depicts_observation": "Rounded front train vehicle with a slanted window panel and two bottom lights",
+      "popular_reading": "Windshield front train",
+      "plausible_readings": [
+        "front train",
+        "rail car nose",
+        "train front"
+      ],
+      "context_bias": "Use when the interface wants a head on train whose main cue is the slanted windshield panel.",
+      "ambiguity_note": "Do not use for the striped or display bar trains when the windshield shape matters most.",
+      "search_hints": [
+        "Train",
+        "front train",
+        "rail car nose",
+        "train front",
+        "Windshield front train"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/train_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the most rounded front train with a slanted windshield opening."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:train_4",
+      "source_library": "mingcute",
+      "source_name": "train_4",
+      "label": "Train",
+      "depicts": "Rounded front train vehicle with a slanted window panel and two bottom lights",
+      "use_when": "Use when the interface wants a head on train whose main cue is the slanted windshield panel.",
+      "avoid_when": "Do not use for the striped or display bar trains when the windshield shape matters most.",
+      "semantic_tags": [
+        "4",
+        "front train",
+        "rail car nose",
+        "train",
+        "train front"
+      ],
+      "synonyms": [
+        "4",
+        "front train",
+        "rail car nose",
+        "train",
+        "train front"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:attachment",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_attachment_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:attachment",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "attachment",
+      "label": "Attachment",
+      "purpose": "Show attachment as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "attachment"
+      ],
+      "use_when": "Use when the interface refers directly to attachment as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing attachment.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "attachment"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:attachment",
+      "source_library": "mingcute",
+      "source_name": "attachment",
+      "label": "Attachment",
+      "depicts_observation": "Tilted paper clip with two long parallel loops",
+      "popular_reading": "Paper clip",
+      "plausible_readings": [
+        "attachment clip",
+        "paper clip",
+        "file attachment"
+      ],
+      "context_bias": "Use when the interface wants the most familiar tilted paper clip shape for attachments.",
+      "ambiguity_note": "Do not use for the hooked or upright clips when the diagonal double loop should remain visible.",
+      "search_hints": [
+        "Attachment",
+        "attachment clip",
+        "paper clip",
+        "file attachment",
+        "Paper clip"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/attachment_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the classic diagonal paper clip with two long nested loops."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:attachment",
+      "source_library": "mingcute",
+      "source_name": "attachment",
+      "label": "Attachment",
+      "depicts": "Tilted paper clip with two long parallel loops",
+      "use_when": "Use when the interface wants the most familiar tilted paper clip shape for attachments.",
+      "avoid_when": "Do not use for the hooked or upright clips when the diagonal double loop should remain visible.",
+      "semantic_tags": [
+        "attachment",
+        "attachment clip",
+        "file attachment",
+        "paper clip"
+      ],
+      "synonyms": [
+        "attachment",
+        "attachment clip",
+        "file attachment",
+        "paper clip"
+      ]
+    }
+  }
+]

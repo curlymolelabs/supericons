@@ -1,0 +1,111 @@
+[
+  {
+    "icon_id": "mingcute:heading_1",
+    "source_library": "mingcute",
+    "source_name": "heading_1",
+    "label": "Heading",
+    "depicts": "H letter glyph with a small number one at the lower right side",
+    "use_when": "Use when the interface wants the first heading level shown as H with a small one marker.",
+    "avoid_when": "Do not use for the other heading levels when the small number one should remain visible.",
+    "semantic_tags": [
+      "1",
+      "h1",
+      "heading",
+      "heading 1",
+      "text heading"
+    ],
+    "synonyms": [
+      "1",
+      "h1",
+      "heading",
+      "heading 1",
+      "text heading"
+    ]
+  },
+  {
+    "icon_id": "mingcute:heading_2",
+    "source_library": "mingcute",
+    "source_name": "heading_2",
+    "label": "Heading",
+    "depicts": "H letter glyph with a small number two at the lower right side",
+    "use_when": "Use when the interface wants the second heading level shown as H with a small two marker.",
+    "avoid_when": "Do not use for H1 or H3 when the small number two is the main difference.",
+    "semantic_tags": [
+      "2",
+      "h2",
+      "heading",
+      "heading 2",
+      "text heading"
+    ],
+    "synonyms": [
+      "2",
+      "h2",
+      "heading",
+      "heading 2",
+      "text heading"
+    ]
+  },
+  {
+    "icon_id": "mingcute:heading_3",
+    "source_library": "mingcute",
+    "source_name": "heading_3",
+    "label": "Heading",
+    "depicts": "H letter glyph with a small number three at the lower right side",
+    "use_when": "Use when the interface wants the third heading level shown as H with a small three marker.",
+    "avoid_when": "Do not use for H1 or H2 when the small number three should remain visible.",
+    "semantic_tags": [
+      "3",
+      "h3",
+      "heading",
+      "heading 3",
+      "text heading"
+    ],
+    "synonyms": [
+      "3",
+      "h3",
+      "heading",
+      "heading 3",
+      "text heading"
+    ]
+  },
+  {
+    "icon_id": "mingcute:text",
+    "source_library": "mingcute",
+    "source_name": "text",
+    "label": "Text",
+    "depicts": "T letter glyph with a long top bar and one centered vertical stem",
+    "use_when": "Use when the interface wants the simplest text icon as a plain capital T shape.",
+    "avoid_when": "Do not use for the serif T when the top bar and stem should stay plain and minimal.",
+    "semantic_tags": [
+      "letter t",
+      "text",
+      "type icon"
+    ],
+    "synonyms": [
+      "letter t",
+      "text",
+      "type icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:text_2",
+    "source_library": "mingcute",
+    "source_name": "text_2",
+    "label": "Text",
+    "depicts": "T letter glyph with serif like top ends and a small bottom foot",
+    "use_when": "Use when the interface wants a more typographic serif style T instead of a plain block T.",
+    "avoid_when": "Do not use for the plain T when the top end caps and bottom foot matter visually.",
+    "semantic_tags": [
+      "2",
+      "serif t",
+      "text",
+      "type icon"
+    ],
+    "synonyms": [
+      "2",
+      "serif t",
+      "text",
+      "type icon"
+    ]
+  }
+]

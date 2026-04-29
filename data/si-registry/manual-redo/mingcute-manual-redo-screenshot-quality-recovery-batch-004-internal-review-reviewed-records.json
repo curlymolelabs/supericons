@@ -1,0 +1,477 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:home_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_home_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:home_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "home_1",
+      "label": "Home",
+      "purpose": "Show the home destination, root view, or main landing area of the product.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "home",
+        "root",
+        "main",
+        "start",
+        "destination"
+      ],
+      "use_when": "Use when the interface moves to the home destination or main landing area.",
+      "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A house-shaped home destination symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "home page",
+        "main screen",
+        "start page",
+        "root destination"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:home_1",
+      "source_library": "mingcute",
+      "source_name": "home_1",
+      "label": "Home",
+      "depicts_observation": "Pentagon house outline with a pointed roof and flat bottom wall",
+      "popular_reading": "Simple home",
+      "plausible_readings": [
+        "simple home",
+        "house outline",
+        "home icon"
+      ],
+      "context_bias": "Use when the interface needs the plainest house silhouette without a doorway chimney or window detail.",
+      "ambiguity_note": "Do not use when another home variant includes a visible doorway circular window or angled roof overhangs.",
+      "search_hints": [
+        "Home",
+        "simple home",
+        "house outline",
+        "home icon",
+        "Simple home"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a bare pentagon house outline with no interior marks and no extra roof overhang."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:home_1",
+      "source_library": "mingcute",
+      "source_name": "home_1",
+      "label": "Home",
+      "depicts": "Pentagon house outline with a pointed roof and flat bottom wall",
+      "use_when": "Use when the interface needs the plainest house silhouette without a doorway chimney or window detail.",
+      "avoid_when": "Do not use when another home variant includes a visible doorway circular window or angled roof overhangs.",
+      "semantic_tags": [
+        "destination",
+        "home",
+        "home icon",
+        "house outline",
+        "main",
+        "root",
+        "simple home",
+        "start"
+      ],
+      "synonyms": [
+        "home",
+        "home icon",
+        "home page",
+        "house outline",
+        "main screen",
+        "root destination",
+        "simple home",
+        "start page"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:home_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_home_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:home_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "home_2",
+      "label": "Home",
+      "purpose": "Show the home destination, root view, or main landing area of the product.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "home",
+        "root",
+        "main",
+        "start",
+        "destination"
+      ],
+      "use_when": "Use when the interface moves to the home destination or main landing area.",
+      "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A house-shaped home destination symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "home page",
+        "main screen",
+        "start page",
+        "root destination"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:home_2",
+      "source_library": "mingcute",
+      "source_name": "home_2",
+      "label": "Home",
+      "depicts_observation": "House outline with roof overhangs above a square body and flat base",
+      "popular_reading": "House with eaves",
+      "plausible_readings": [
+        "house with eaves",
+        "home outline",
+        "roofed house"
+      ],
+      "context_bias": "Use when the interface wants a home symbol with a classic roof eave shape over a square body.",
+      "ambiguity_note": "Do not use for the plain pentagon home when the visible roof overhangs are part of the distinction.",
+      "search_hints": [
+        "Home",
+        "house with eaves",
+        "home outline",
+        "roofed house",
+        "House with eaves"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot differs from home_1 by extending the roof corners outward beyond the square wall shape."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:home_2",
+      "source_library": "mingcute",
+      "source_name": "home_2",
+      "label": "Home",
+      "depicts": "House outline with roof overhangs above a square body and flat base",
+      "use_when": "Use when the interface wants a home symbol with a classic roof eave shape over a square body.",
+      "avoid_when": "Do not use for the plain pentagon home when the visible roof overhangs are part of the distinction.",
+      "semantic_tags": [
+        "destination",
+        "home",
+        "home outline",
+        "house with eaves",
+        "main",
+        "roofed house",
+        "root",
+        "start"
+      ],
+      "synonyms": [
+        "home",
+        "home outline",
+        "home page",
+        "house with eaves",
+        "main screen",
+        "roofed house",
+        "root destination",
+        "start page"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:home_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_home_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:home_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "home_3",
+      "label": "Home",
+      "purpose": "Show the home destination, root view, or main landing area of the product.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "home",
+        "root",
+        "main",
+        "start",
+        "destination"
+      ],
+      "use_when": "Use when the interface moves to the home destination or main landing area.",
+      "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A house-shaped home destination symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "home page",
+        "main screen",
+        "start page",
+        "root destination"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:home_3",
+      "source_library": "mingcute",
+      "source_name": "home_3",
+      "label": "Home",
+      "depicts_observation": "House outline with a centered rounded doorway inside a square body",
+      "popular_reading": "House with door",
+      "plausible_readings": [
+        "house with door",
+        "home entrance",
+        "doorway house"
+      ],
+      "context_bias": "Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.",
+      "ambiguity_note": "Do not use for the doorway cutout or window variants when the body walls and door shape differ visibly.",
+      "search_hints": [
+        "Home",
+        "house with door",
+        "home entrance",
+        "doorway house",
+        "House with door"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a square house body with a closed rounded doorway shape drawn inside it."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:home_3",
+      "source_library": "mingcute",
+      "source_name": "home_3",
+      "label": "Home",
+      "depicts": "House outline with a centered rounded doorway inside a square body",
+      "use_when": "Use when the interface wants a home symbol whose main distinction is a centered rounded doorway opening.",
+      "avoid_when": "Do not use for the doorway cutout or window variants when the body walls and door shape differ visibly.",
+      "semantic_tags": [
+        "destination",
+        "doorway house",
+        "home",
+        "home entrance",
+        "house with door",
+        "main",
+        "root",
+        "start"
+      ],
+      "synonyms": [
+        "doorway house",
+        "home",
+        "home entrance",
+        "home page",
+        "house with door",
+        "main screen",
+        "root destination",
+        "start page"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:home_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_home_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:home_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "home_4",
+      "label": "Home",
+      "purpose": "Show the home destination, root view, or main landing area of the product.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "home",
+        "root",
+        "main",
+        "start",
+        "destination"
+      ],
+      "use_when": "Use when the interface moves to the home destination or main landing area.",
+      "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A house-shaped home destination symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "home page",
+        "main screen",
+        "start page",
+        "root destination"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:home_4",
+      "source_library": "mingcute",
+      "source_name": "home_4",
+      "label": "Home",
+      "depicts_observation": "House outline with a centered arched doorway cutout and no roof overhangs",
+      "popular_reading": "Open doorway home",
+      "plausible_readings": [
+        "open doorway",
+        "arched home",
+        "entry house"
+      ],
+      "context_bias": "Use when the interface wants a simplified home shape built around an open arched doorway cutout.",
+      "ambiguity_note": "Do not use for home_3 when the doorway is drawn as an inner shape instead of an open cutout.",
+      "search_hints": [
+        "Home",
+        "open doorway",
+        "arched home",
+        "entry house",
+        "Open doorway home"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot removes the roof eaves and uses an open doorway notch cut from the lower center."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:home_4",
+      "source_library": "mingcute",
+      "source_name": "home_4",
+      "label": "Home",
+      "depicts": "House outline with a centered arched doorway cutout and no roof overhangs",
+      "use_when": "Use when the interface wants a simplified home shape built around an open arched doorway cutout.",
+      "avoid_when": "Do not use for home_3 when the doorway is drawn as an inner shape instead of an open cutout.",
+      "semantic_tags": [
+        "arched home",
+        "destination",
+        "entry house",
+        "home",
+        "main",
+        "open doorway",
+        "root",
+        "start"
+      ],
+      "synonyms": [
+        "arched home",
+        "entry house",
+        "home",
+        "home page",
+        "main screen",
+        "open doorway",
+        "root destination",
+        "start page"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:home_5",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_home_5_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:home_5",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "home_5",
+      "label": "Home",
+      "purpose": "Show the home destination, root view, or main landing area of the product.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "home",
+        "root",
+        "main",
+        "start",
+        "destination"
+      ],
+      "use_when": "Use when the interface moves to the home destination or main landing area.",
+      "avoid_when": "Do not use for physical houses, smart-home devices, or location meaning when the icon is a UI home destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A house-shaped home destination symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "home page",
+        "main screen",
+        "start page",
+        "root destination"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:home_5",
+      "source_library": "mingcute",
+      "source_name": "home_5",
+      "label": "Home",
+      "depicts_observation": "House outline with a centered circular window inside a tapered body",
+      "popular_reading": "House with window",
+      "plausible_readings": [
+        "house window",
+        "home window",
+        "round window"
+      ],
+      "context_bias": "Use when the interface needs a home symbol distinguished by a centered round window instead of a doorway.",
+      "ambiguity_note": "Do not use for the door based home variants when the visible circular window is the main cue.",
+      "search_hints": [
+        "Home",
+        "house window",
+        "home window",
+        "round window",
+        "House with window"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/home_5_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the only selected home variant with a centered circular window in the body."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:home_5",
+      "source_library": "mingcute",
+      "source_name": "home_5",
+      "label": "Home",
+      "depicts": "House outline with a centered circular window inside a tapered body",
+      "use_when": "Use when the interface needs a home symbol distinguished by a centered round window instead of a doorway.",
+      "avoid_when": "Do not use for the door based home variants when the visible circular window is the main cue.",
+      "semantic_tags": [
+        "destination",
+        "home",
+        "home window",
+        "house window",
+        "main",
+        "root",
+        "round window",
+        "start"
+      ],
+      "synonyms": [
+        "home",
+        "home page",
+        "home window",
+        "house window",
+        "main screen",
+        "root destination",
+        "round window",
+        "start page"
+      ]
+    }
+  }
+]

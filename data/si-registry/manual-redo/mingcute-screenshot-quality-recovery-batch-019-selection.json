@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-019",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 019",
+  "review_goal": "Differentiate five MingCute VIP and attachment variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:vip_1",
+      "screenshot_file_name": "mingcute_VIP_1_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/VIP_1_line.svg",
+      "depicts_observation": "Diamond badge outline with a centered downward chevron",
+      "popular_reading": "Diamond VIP badge",
+      "plausible_readings": ["vip badge", "diamond badge", "premium mark"],
+      "context_bias": "Use when the interface wants a premium badge formed as a diamond with an inner chevron.",
+      "ambiguity_note": "Do not use for crowns or V badges when the outer diamond frame matters.",
+      "selection_reason": "The screenshot is the only selected VIP icon with a diamond border around an inner chevron."
+    },
+    {
+      "icon_id": "mingcute:vip_2",
+      "screenshot_file_name": "mingcute_VIP_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/VIP_2_line.svg",
+      "depicts_observation": "Crown outline with three rounded tips and a wide base line",
+      "popular_reading": "Crown VIP",
+      "plausible_readings": ["crown", "premium crown", "royal badge"],
+      "context_bias": "Use when the interface wants a premium symbol that reads as a crown rather than a letter shaped badge.",
+      "ambiguity_note": "Do not use for the diamond or V marks when the crown form is the visible cue.",
+      "selection_reason": "The screenshot switches from badge geometry to a clear three tip crown silhouette."
+    },
+    {
+      "icon_id": "mingcute:vip_3",
+      "screenshot_file_name": "mingcute_VIP_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/VIP_3_line.svg",
+      "depicts_observation": "Wide V badge outline with a centered notch at the top",
+      "popular_reading": "V badge",
+      "plausible_readings": ["v badge", "premium mark", "vip symbol"],
+      "context_bias": "Use when the interface wants a sharp V shaped premium badge without an added jewel.",
+      "ambiguity_note": "Do not use for the jeweled V badge when the top center should remain open and plain.",
+      "selection_reason": "The screenshot is a plain wide V shape with a small top notch and no added diamond."
+    },
+    {
+      "icon_id": "mingcute:vip_4",
+      "screenshot_file_name": "mingcute_VIP_4_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/VIP_4_line.svg",
+      "depicts_observation": "V badge outline with a small top diamond shape at center",
+      "popular_reading": "Jeweled V badge",
+      "plausible_readings": ["vip jewel badge", "v badge", "premium gem mark"],
+      "context_bias": "Use when the interface wants the V shaped premium badge that carries a small diamond jewel cue.",
+      "ambiguity_note": "Do not use for the plain V badge when the top diamond ornament should remain visible.",
+      "selection_reason": "The screenshot adds a diamond jewel at the top center of the same V shaped frame."
+    },
+    {
+      "icon_id": "mingcute:attachment_3",
+      "screenshot_file_name": "mingcute_attachment_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/attachment_3_line.svg",
+      "depicts_observation": "Upright paper clip with a vertical outer loop and inner loop",
+      "popular_reading": "Upright paper clip",
+      "plausible_readings": ["vertical clip", "paper clip", "attachment icon"],
+      "context_bias": "Use when the interface wants a paper clip drawn vertically instead of diagonally or hooked open.",
+      "ambiguity_note": "Do not use for the diagonal clips when the vertical upright orientation matters.",
+      "selection_reason": "The screenshot stands the paper clip upright with a tall outer loop and centered inner loop."
+    }
+  ]
+}

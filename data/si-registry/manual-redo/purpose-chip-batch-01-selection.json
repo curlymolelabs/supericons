@@ -5,6 +5,12 @@
   "title": "Purpose Icons Manual Redo Batch 01",
   "review_goal": "Restart the semantic work from the beginning with the first 5 purpose icons. Show the icon, the current record, and a new interpretation-first proposal before continuing.",
   "record_source_path": "data/si-registry/pilot/purpose-chip/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
   "visual_source": {
     "kind": "purpose_visual_inputs",
     "path": "data/si-registry/pilot/purpose-chip/visual-review-inputs.json"
@@ -13,7 +19,7 @@
     {
       "icon_id": "lucide:binary",
       "official_source_url": "https://lucide.dev/icons/binary",
-      "depicts_observation": "Two pairs of rounded vertical bit shapes connected by short lines, arranged in a technical binary-style layout.",
+      "depicts_observation": "2x2 grid of binary-style digits with 0 1 on top and 1 0 below",
       "popular_reading": "Binary data or low-level digital values.",
       "plausible_readings": [
         "bits and bytes",
@@ -27,7 +33,7 @@
     {
       "icon_id": "lucide:blocks",
       "official_source_url": "https://lucide.dev/icons/blocks",
-      "depicts_observation": "Four small rounded square outlines arranged as modular tiles, with one tile offset at the upper-right.",
+      "depicts_observation": "Stepped cluster of block outlines with one separate rounded square at the upper right",
       "popular_reading": "Modules, building blocks, or composable parts.",
       "plausible_readings": [
         "plugins or extensions",
@@ -41,7 +47,7 @@
     {
       "icon_id": "lucide:bot-message-square",
       "official_source_url": "https://lucide.dev/icons/bot-message-square",
-      "depicts_observation": "A squared chat bubble with a robot-style face, using two short vertical eyes to signal a bot message.",
+      "depicts_observation": "Square speech bubble with two vertical eye marks and a short top-left stem like a robot face",
       "popular_reading": "Assistant message or bot reply.",
       "plausible_readings": [
         "AI chat response",
@@ -55,7 +61,7 @@
     {
       "icon_id": "lucide:brain-circuit",
       "official_source_url": "https://lucide.dev/icons/brain-circuit",
-      "depicts_observation": "A half-brain form connected to circuit lines and node dots, combining organic and digital visual cues.",
+      "depicts_observation": "Left half-brain outline linked to circuit branches with four small node dots on the right",
       "popular_reading": "AI reasoning, machine intelligence, or neural-style computation.",
       "plausible_readings": [
         "smart automation",
@@ -69,7 +75,7 @@
     {
       "icon_id": "lucide:circuit-board",
       "official_source_url": "https://lucide.dev/icons/circuit-board",
-      "depicts_observation": "A rounded board shape with connector nodes and trace-like lines, resembling a circuit board schematic.",
+      "depicts_observation": "Rounded square circuit board with two circular nodes connected by short trace lines",
       "popular_reading": "Compute architecture, hardware logic, or system circuitry.",
       "plausible_readings": [
         "electronic board",

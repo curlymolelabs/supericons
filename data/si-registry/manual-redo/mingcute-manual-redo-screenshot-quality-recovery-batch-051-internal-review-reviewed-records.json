@@ -1,0 +1,430 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:currency_cny",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_cny_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_cny",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_cny",
+      "label": "Currency Cny",
+      "purpose": "Show currency cny as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "cny"
+      ],
+      "use_when": "Use when the interface refers directly to currency cny as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency cny.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "cny"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_cny",
+      "source_library": "mingcute",
+      "source_name": "currency_cny",
+      "label": "Currency Cny",
+      "depicts_observation": "Yuan currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring yuan sign",
+      "plausible_readings": [
+        "yuan symbol",
+        "yen style sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the yuan sign enclosed inside one thin circle.",
+      "ambiguity_note": "Do not use for the standalone yuan sign when the outer ring should be absent.",
+      "search_hints": [
+        "Currency Cny",
+        "yuan symbol",
+        "yen style sign",
+        "currency icon",
+        "Ring yuan sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_cny_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot frames the yuan letterform inside a full circular ring."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_cny",
+      "source_library": "mingcute",
+      "source_name": "currency_cny",
+      "label": "Currency Cny",
+      "depicts": "Yuan currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the yuan sign enclosed inside one thin circle.",
+      "avoid_when": "Do not use for the standalone yuan sign when the outer ring should be absent.",
+      "semantic_tags": [
+        "cny",
+        "currency",
+        "currency icon",
+        "yen style sign",
+        "yuan symbol"
+      ],
+      "synonyms": [
+        "cny",
+        "currency",
+        "currency cny",
+        "currency icon",
+        "yen style sign",
+        "yuan symbol"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:currency_cny_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_cny_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_cny_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_cny_2",
+      "label": "Currency Cny",
+      "purpose": "Show currency cny as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "cny",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency cny as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency cny.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "cny",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_cny_2",
+      "source_library": "mingcute",
+      "source_name": "currency_cny_2",
+      "label": "Currency Cny",
+      "depicts_observation": "Standalone yuan currency sign with two horizontal crossbars across the center",
+      "popular_reading": "Yuan symbol",
+      "plausible_readings": [
+        "yuan symbol",
+        "yen style sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the yuan sign by itself with no surrounding circle.",
+      "ambiguity_note": "Do not use for the ring yuan symbol when the sign should sit inside a circular frame.",
+      "search_hints": [
+        "Currency Cny",
+        "yuan symbol",
+        "yen style sign",
+        "currency icon",
+        "Yuan symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_cny_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot leaves only the yuan letterform with two crossbars and no outer ring."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_cny_2",
+      "source_library": "mingcute",
+      "source_name": "currency_cny_2",
+      "label": "Currency Cny",
+      "depicts": "Standalone yuan currency sign with two horizontal crossbars across the center",
+      "use_when": "Use when the interface wants the yuan sign by itself with no surrounding circle.",
+      "avoid_when": "Do not use for the ring yuan symbol when the sign should sit inside a circular frame.",
+      "semantic_tags": [
+        "2",
+        "cny",
+        "currency",
+        "currency icon",
+        "yen style sign",
+        "yuan symbol"
+      ],
+      "synonyms": [
+        "2",
+        "cny",
+        "currency",
+        "currency cny",
+        "currency icon",
+        "yen style sign",
+        "yuan symbol"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:currency_dollar",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_dollar_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_dollar",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar",
+      "label": "Currency Dollar",
+      "purpose": "Show currency dollar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "dollar"
+      ],
+      "use_when": "Use when the interface refers directly to currency dollar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency dollar.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "dollar"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_dollar",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar",
+      "label": "Currency Dollar",
+      "depicts_observation": "Dollar currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring dollar sign",
+      "plausible_readings": [
+        "dollar symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the dollar sign enclosed inside a circular ring.",
+      "ambiguity_note": "Do not use for the standalone dollar sign when the outer ring should not appear.",
+      "search_hints": [
+        "Currency Dollar",
+        "dollar symbol",
+        "money sign",
+        "currency icon",
+        "Ring dollar sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_dollar_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot wraps the dollar sign in one full circular border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_dollar",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar",
+      "label": "Currency Dollar",
+      "depicts": "Dollar currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the dollar sign enclosed inside a circular ring.",
+      "avoid_when": "Do not use for the standalone dollar sign when the outer ring should not appear.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "dollar",
+        "dollar symbol",
+        "money sign"
+      ],
+      "synonyms": [
+        "currency",
+        "currency dollar",
+        "currency icon",
+        "dollar",
+        "dollar symbol",
+        "money sign"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:currency_dollar_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_dollar_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_dollar_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar_2",
+      "label": "Currency Dollar",
+      "purpose": "Show currency dollar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "dollar",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency dollar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency dollar.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "dollar",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_dollar_2",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar_2",
+      "label": "Currency Dollar",
+      "depicts_observation": "Standalone dollar currency sign with one vertical stroke through a centered s",
+      "popular_reading": "Dollar symbol",
+      "plausible_readings": [
+        "dollar symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the dollar sign alone without a circular frame around it.",
+      "ambiguity_note": "Do not use for the ring dollar sign when the symbol should remain enclosed inside a circle.",
+      "search_hints": [
+        "Currency Dollar",
+        "dollar symbol",
+        "money sign",
+        "currency icon",
+        "Dollar symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_dollar_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot leaves the s shaped dollar sign with one vertical stroke and no ring."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_dollar_2",
+      "source_library": "mingcute",
+      "source_name": "currency_dollar_2",
+      "label": "Currency Dollar",
+      "depicts": "Standalone dollar currency sign with one vertical stroke through a centered s",
+      "use_when": "Use when the interface wants the dollar sign alone without a circular frame around it.",
+      "avoid_when": "Do not use for the ring dollar sign when the symbol should remain enclosed inside a circle.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "dollar",
+        "dollar symbol",
+        "money sign"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency dollar",
+        "currency icon",
+        "dollar",
+        "dollar symbol",
+        "money sign"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:currency_euro",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_euro_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_euro",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_euro",
+      "label": "Currency Euro",
+      "purpose": "Show currency euro as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "euro"
+      ],
+      "use_when": "Use when the interface refers directly to currency euro as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency euro.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "euro"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_euro",
+      "source_library": "mingcute",
+      "source_name": "currency_euro",
+      "label": "Currency Euro",
+      "depicts_observation": "Euro currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring euro sign",
+      "plausible_readings": [
+        "euro symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the euro sign centered inside a circular ring frame.",
+      "ambiguity_note": "Do not use for the standalone euro sign when the outer ring should be removed.",
+      "search_hints": [
+        "Currency Euro",
+        "euro symbol",
+        "money sign",
+        "currency icon",
+        "Ring euro sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_euro_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot places the euro symbol inside a full circular border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_euro",
+      "source_library": "mingcute",
+      "source_name": "currency_euro",
+      "label": "Currency Euro",
+      "depicts": "Euro currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the euro sign centered inside a circular ring frame.",
+      "avoid_when": "Do not use for the standalone euro sign when the outer ring should be removed.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "euro",
+        "euro symbol",
+        "money sign"
+      ],
+      "synonyms": [
+        "currency",
+        "currency euro",
+        "currency icon",
+        "euro",
+        "euro symbol",
+        "money sign"
+      ]
+    }
+  }
+]

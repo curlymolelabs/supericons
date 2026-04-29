@@ -1,0 +1,137 @@
+[
+  {
+    "icon_id": "mingcute:factory_2",
+    "source_library": "mingcute",
+    "source_name": "factory_2",
+    "label": "Factory",
+    "depicts": "Factory block with one tall stack above a zigzag roof and two windows",
+    "use_when": "Use when the interface wants a boxy factory building with a zigzag roof and window dots.",
+    "avoid_when": "Do not use for the cooling tower factory when the main shapes should be two tall towers.",
+    "semantic_tags": [
+      "2",
+      "factory",
+      "factory icon",
+      "industrial site",
+      "plant building"
+    ],
+    "synonyms": [
+      "2",
+      "factory",
+      "factory icon",
+      "industrial site",
+      "plant building"
+    ]
+  },
+  {
+    "icon_id": "mingcute:fan",
+    "source_library": "mingcute",
+    "source_name": "fan",
+    "label": "Fan",
+    "depicts": "Five petal fan swirl with curved blades around a centered hub",
+    "use_when": "Use when the interface wants a fan drawn as five curved swirl blades around the center.",
+    "avoid_when": "Do not use for the four loop fan when the blades should look like overlapping circles.",
+    "semantic_tags": [
+      "airflow",
+      "blower icon",
+      "cooling fan",
+      "device",
+      "fan",
+      "fan icon",
+      "object"
+    ],
+    "synonyms": [
+      "airflow device",
+      "blower icon",
+      "cooling fan",
+      "fan",
+      "fan icon",
+      "fan object",
+      "rotor"
+    ]
+  },
+  {
+    "icon_id": "mingcute:fan_2",
+    "source_library": "mingcute",
+    "source_name": "fan_2",
+    "label": "Fan",
+    "depicts": "Four loop fan shape with round blade circles overlapping around a centered hub",
+    "use_when": "Use when the interface wants a fan built from four round loop blades instead of swirl petals.",
+    "avoid_when": "Do not use for the five petal swirl fan when the blades should curl more sharply.",
+    "semantic_tags": [
+      "airflow",
+      "blower icon",
+      "cooling fan",
+      "device",
+      "fan",
+      "fan icon",
+      "object"
+    ],
+    "synonyms": [
+      "airflow device",
+      "blower icon",
+      "cooling fan",
+      "fan",
+      "fan icon",
+      "fan object",
+      "rotor"
+    ]
+  },
+  {
+    "icon_id": "mingcute:filter",
+    "source_library": "mingcute",
+    "source_name": "filter",
+    "label": "Filter",
+    "depicts": "Funnel form with a wide top narrow neck and pointed lower tip",
+    "use_when": "Use when the interface wants a classic funnel filter tapering to a pointed lower tip.",
+    "avoid_when": "Do not use for the stacked filter bars when the icon should be made from horizontal lines.",
+    "semantic_tags": [
+      "data control",
+      "filter",
+      "filter icon",
+      "funnel icon",
+      "narrow",
+      "refine",
+      "results",
+      "sort filter"
+    ],
+    "synonyms": [
+      "apply filters",
+      "filter",
+      "filter icon",
+      "filter results",
+      "funnel icon",
+      "narrow results",
+      "refine list",
+      "sort filter"
+    ]
+  },
+  {
+    "icon_id": "mingcute:filter_2",
+    "source_library": "mingcute",
+    "source_name": "filter_2",
+    "label": "Filter",
+    "depicts": "Three horizontal filter bars descending in length from top to bottom",
+    "use_when": "Use when the interface wants a filter mark drawn as three descending horizontal bars.",
+    "avoid_when": "Do not use for the funnel shaped filters when the icon should not taper into a neck.",
+    "semantic_tags": [
+      "data control",
+      "filter",
+      "filter icon",
+      "narrow",
+      "rank bars",
+      "refine",
+      "results",
+      "sort bars"
+    ],
+    "synonyms": [
+      "apply filters",
+      "filter",
+      "filter icon",
+      "filter results",
+      "narrow results",
+      "rank bars",
+      "refine list",
+      "sort bars"
+    ]
+  }
+]

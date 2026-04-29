@@ -97,7 +97,7 @@ for (const [batchId, batchDecision] of Object.entries(decisions.batches || {})) 
       icon_id: reviewedRecord.icon_id,
       label: reviewedRecord.label,
       category: reviewedRecord.category,
-      confidence_score: reviewedRecord.confidence_score,
+      routing_score: reviewedRecord.routing_score,
       why_not_imported_yet: entry.note || 'Still too context-sensitive for approval.',
     });
     seenDraft.add(entry.icon_id);
@@ -120,7 +120,6 @@ const approvalSummary = {
   total_editor_hold_records: editorHoldQueue.length,
   total_reviewed_drafts: draftRecords.length,
   approved_by_category: countBy(approvedRecords, (record) => record.category),
-  approved_by_domain: countBy(approvedRecords, (record) => record.domain || 'unknown'),
   batch_summaries: batchSummaries,
   approved_record_path: 'data/si-registry/pilot/purpose-chip/approved-records.json',
   editor_hold_queue_path: 'data/si-registry/pilot/purpose-chip/editor-hold-queue.json',

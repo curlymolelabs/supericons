@@ -1,0 +1,123 @@
+[
+  {
+    "icon_id": "mingcute:link",
+    "source_library": "mingcute",
+    "source_name": "link",
+    "label": "Link",
+    "depicts": "Two chain loops joined diagonally with open curved ends facing inward",
+    "use_when": "Use when the interface wants a linked chain shown on a diagonal without extra breaks or sparks.",
+    "avoid_when": "Do not use for the parallel or looped links when the diagonal join is the key cue.",
+    "semantic_tags": [
+      "chain",
+      "connected",
+      "connected links",
+      "connection",
+      "hyperlink",
+      "link",
+      "reference"
+    ],
+    "synonyms": [
+      "chain",
+      "connected links",
+      "connected reference",
+      "connection",
+      "hyperlink",
+      "link",
+      "linked"
+    ]
+  },
+  {
+    "icon_id": "mingcute:link_2",
+    "source_library": "mingcute",
+    "source_name": "link_2",
+    "label": "Link",
+    "depicts": "Two chain loops joined on a diagonal with straighter inner connector bars",
+    "use_when": "Use when the interface wants the diagonal chain link variant with straighter inner bar segments.",
+    "avoid_when": "Do not use for the more curved diagonal chain when the inner straight bars matter.",
+    "semantic_tags": [
+      "chain links",
+      "connected",
+      "connected chain",
+      "connection",
+      "hyperlink",
+      "link",
+      "reference"
+    ],
+    "synonyms": [
+      "chain links",
+      "connected chain",
+      "connected reference",
+      "connection",
+      "hyperlink",
+      "link",
+      "linked"
+    ]
+  },
+  {
+    "icon_id": "mingcute:link_3",
+    "source_library": "mingcute",
+    "source_name": "link_3",
+    "label": "Link",
+    "depicts": "Two rounded chain loops interlocked horizontally with a centered join",
+    "use_when": "Use when the interface wants a horizontal interlocked chain rather than a diagonal one.",
+    "avoid_when": "Do not use for the diagonal link variants when the loops should sit side by side.",
+    "semantic_tags": [
+      "chain loops",
+      "connected",
+      "connected links",
+      "connection",
+      "hyperlink",
+      "link",
+      "reference"
+    ],
+    "synonyms": [
+      "chain loops",
+      "connected links",
+      "connected reference",
+      "connection",
+      "hyperlink",
+      "link",
+      "linked"
+    ]
+  },
+  {
+    "icon_id": "mingcute:unlink",
+    "source_library": "mingcute",
+    "source_name": "unlink",
+    "label": "Unlink",
+    "depicts": "Broken diagonal chain loops with four short spark marks around the split",
+    "use_when": "Use when the interface wants a broken chain icon with spark marks around the separation.",
+    "avoid_when": "Do not use for intact links when the break and surrounding spark marks matter.",
+    "semantic_tags": [
+      "broken chain",
+      "disconnect link",
+      "unlink"
+    ],
+    "synonyms": [
+      "broken chain",
+      "disconnect link",
+      "unlink"
+    ]
+  },
+  {
+    "icon_id": "mingcute:unlink_2",
+    "source_library": "mingcute",
+    "source_name": "unlink_2",
+    "label": "Unlink",
+    "depicts": "Broken diagonal chain loops with separated halves and spark marks above and below",
+    "use_when": "Use when the interface wants the broken chain variant whose two halves pull farther apart.",
+    "avoid_when": "Do not use for the tighter broken link when the wider split between halves should remain visible.",
+    "semantic_tags": [
+      "2",
+      "broken link",
+      "disconnect chain",
+      "unlink"
+    ],
+    "synonyms": [
+      "2",
+      "broken link",
+      "disconnect chain",
+      "unlink"
+    ]
+  }
+]

@@ -1,0 +1,461 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:dashboard",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_dashboard_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:dashboard",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "dashboard",
+      "label": "Dashboard",
+      "purpose": "Show a dashboard destination or an overview surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "dashboard",
+        "overview",
+        "summary",
+        "main surface",
+        "home panel"
+      ],
+      "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+      "avoid_when": "Do not use for individual charts or analytics details when the meaning is specifically the dashboard destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "overview page",
+        "dashboard home",
+        "summary surface",
+        "main dashboard"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:dashboard",
+      "source_library": "mingcute",
+      "source_name": "dashboard",
+      "label": "Dashboard",
+      "depicts_observation": "Round gauge outline with side ticks and a diagonal needle across the center",
+      "popular_reading": "Gauge dashboard",
+      "plausible_readings": [
+        "gauge",
+        "speed dial",
+        "dashboard meter"
+      ],
+      "context_bias": "Use when the interface wants a full round gauge with a diagonal needle sweep.",
+      "ambiguity_note": "Do not use for the open arc or ring meter variants when the full dial face matters.",
+      "search_hints": [
+        "Dashboard",
+        "gauge",
+        "speed dial",
+        "dashboard meter",
+        "Gauge dashboard"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a full circular dial with side ticks and a diagonal center needle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:dashboard",
+      "source_library": "mingcute",
+      "source_name": "dashboard",
+      "label": "Dashboard",
+      "depicts": "Round gauge outline with side ticks and a diagonal needle across the center",
+      "use_when": "Use when the interface wants a full round gauge with a diagonal needle sweep.",
+      "avoid_when": "Do not use for the open arc or ring meter variants when the full dial face matters.",
+      "semantic_tags": [
+        "dashboard",
+        "dashboard meter",
+        "gauge",
+        "home panel",
+        "main surface",
+        "overview",
+        "speed dial",
+        "summary"
+      ],
+      "synonyms": [
+        "dashboard",
+        "dashboard home",
+        "dashboard meter",
+        "gauge",
+        "main dashboard",
+        "overview page",
+        "speed dial",
+        "summary surface"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:dashboard_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_dashboard_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:dashboard_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "dashboard_2",
+      "label": "Dashboard",
+      "purpose": "Show a dashboard destination or an overview surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "dashboard",
+        "overview",
+        "summary",
+        "main surface",
+        "home panel"
+      ],
+      "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+      "avoid_when": "Do not use for individual charts or analytics details when the meaning is specifically the dashboard destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "overview page",
+        "dashboard home",
+        "summary surface",
+        "main dashboard"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:dashboard_2",
+      "source_library": "mingcute",
+      "source_name": "dashboard_2",
+      "label": "Dashboard",
+      "depicts_observation": "Open bottom gauge arc with a centered vertical needle line",
+      "popular_reading": "Open arc gauge",
+      "plausible_readings": [
+        "gauge arc",
+        "meter arc",
+        "open dial"
+      ],
+      "context_bias": "Use when the interface wants a gauge reduced to an open arc and one central needle.",
+      "ambiguity_note": "Do not use for full circular gauges when the bottom gap in the arc should stay visible.",
+      "search_hints": [
+        "Dashboard",
+        "gauge arc",
+        "meter arc",
+        "open dial",
+        "Open arc gauge"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot removes the lower dial edge and leaves one centered needle inside an open arc."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:dashboard_2",
+      "source_library": "mingcute",
+      "source_name": "dashboard_2",
+      "label": "Dashboard",
+      "depicts": "Open bottom gauge arc with a centered vertical needle line",
+      "use_when": "Use when the interface wants a gauge reduced to an open arc and one central needle.",
+      "avoid_when": "Do not use for full circular gauges when the bottom gap in the arc should stay visible.",
+      "semantic_tags": [
+        "dashboard",
+        "gauge arc",
+        "home panel",
+        "main surface",
+        "meter arc",
+        "open dial",
+        "overview",
+        "summary"
+      ],
+      "synonyms": [
+        "dashboard",
+        "dashboard home",
+        "gauge arc",
+        "main dashboard",
+        "meter arc",
+        "open dial",
+        "overview page",
+        "summary surface"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:dashboard_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_dashboard_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:dashboard_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "dashboard_3",
+      "label": "Dashboard",
+      "purpose": "Show a dashboard destination or an overview surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "dashboard",
+        "overview",
+        "summary",
+        "main surface",
+        "home panel"
+      ],
+      "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+      "avoid_when": "Do not use for individual charts or analytics details when the meaning is specifically the dashboard destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "overview page",
+        "dashboard home",
+        "summary surface",
+        "main dashboard"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:dashboard_3",
+      "source_library": "mingcute",
+      "source_name": "dashboard_3",
+      "label": "Dashboard",
+      "depicts_observation": "Round gauge outline with top ticks and a short angled center needle",
+      "popular_reading": "Top tick gauge",
+      "plausible_readings": [
+        "gauge",
+        "dial meter",
+        "dashboard dial"
+      ],
+      "context_bias": "Use when the interface wants a round gauge whose ticks are concentrated across the top arc.",
+      "ambiguity_note": "Do not use for the diagonal side tick gauge when the top tick cluster is the key cue.",
+      "search_hints": [
+        "Dashboard",
+        "gauge",
+        "dial meter",
+        "dashboard dial",
+        "Top tick gauge"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps the dial round but moves the tick emphasis to the top arc."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:dashboard_3",
+      "source_library": "mingcute",
+      "source_name": "dashboard_3",
+      "label": "Dashboard",
+      "depicts": "Round gauge outline with top ticks and a short angled center needle",
+      "use_when": "Use when the interface wants a round gauge whose ticks are concentrated across the top arc.",
+      "avoid_when": "Do not use for the diagonal side tick gauge when the top tick cluster is the key cue.",
+      "semantic_tags": [
+        "dashboard",
+        "dashboard dial",
+        "dial meter",
+        "gauge",
+        "home panel",
+        "main surface",
+        "overview",
+        "summary"
+      ],
+      "synonyms": [
+        "dashboard",
+        "dashboard dial",
+        "dashboard home",
+        "dial meter",
+        "gauge",
+        "main dashboard",
+        "overview page",
+        "summary surface"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:dashboard_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_dashboard_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:dashboard_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "dashboard_4",
+      "label": "Dashboard",
+      "purpose": "Show a dashboard destination or an overview surface.",
+      "category": "navigation_interface",
+      "semantic_tags": [
+        "dashboard",
+        "overview",
+        "summary",
+        "main surface",
+        "home panel"
+      ],
+      "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+      "avoid_when": "Do not use for individual charts or analytics details when the meaning is specifically the dashboard destination.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "overview page",
+        "dashboard home",
+        "summary surface",
+        "main dashboard"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:dashboard_4",
+      "source_library": "mingcute",
+      "source_name": "dashboard_4",
+      "label": "Dashboard",
+      "depicts_observation": "Concentric round gauge with inner arc bands and a short angled center needle",
+      "popular_reading": "Layered gauge",
+      "plausible_readings": [
+        "ring gauge",
+        "concentric dial",
+        "dashboard rings"
+      ],
+      "context_bias": "Use when the interface wants a round meter with nested inner arc bands around the needle.",
+      "ambiguity_note": "Do not use for simpler gauges when the extra inner arc bands need to remain visible.",
+      "search_hints": [
+        "Dashboard",
+        "ring gauge",
+        "concentric dial",
+        "dashboard rings",
+        "Layered gauge"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/dashboard_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds inner ring bands around the needle instead of a plain outer dial."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:dashboard_4",
+      "source_library": "mingcute",
+      "source_name": "dashboard_4",
+      "label": "Dashboard",
+      "depicts": "Concentric round gauge with inner arc bands and a short angled center needle",
+      "use_when": "Use when the interface wants a round meter with nested inner arc bands around the needle.",
+      "avoid_when": "Do not use for simpler gauges when the extra inner arc bands need to remain visible.",
+      "semantic_tags": [
+        "concentric dial",
+        "dashboard",
+        "dashboard rings",
+        "home panel",
+        "main surface",
+        "overview",
+        "ring gauge",
+        "summary"
+      ],
+      "synonyms": [
+        "concentric dial",
+        "dashboard",
+        "dashboard home",
+        "dashboard rings",
+        "main dashboard",
+        "overview page",
+        "ring gauge",
+        "summary surface"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:counter",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_counter_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:counter",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "counter",
+      "label": "Counter",
+      "purpose": "Show counter as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "counter"
+      ],
+      "use_when": "Use when the interface refers directly to counter as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing counter.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "counter"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:counter",
+      "source_library": "mingcute",
+      "source_name": "counter",
+      "label": "Counter",
+      "depicts_observation": "Square counter panel with math symbols and two short number bars inside",
+      "popular_reading": "Math counter",
+      "plausible_readings": [
+        "calculator panel",
+        "math board",
+        "counting panel"
+      ],
+      "context_bias": "Use when the interface wants a counting or math panel instead of a gauge style meter.",
+      "ambiguity_note": "Do not use for dial gauges when the square panel with symbols is the visible form.",
+      "search_hints": [
+        "Counter",
+        "calculator panel",
+        "math board",
+        "counting panel",
+        "Math counter"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/counter_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses a square panel with plus cross and bar marks rather than a round gauge."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:counter",
+      "source_library": "mingcute",
+      "source_name": "counter",
+      "label": "Counter",
+      "depicts": "Square counter panel with math symbols and two short number bars inside",
+      "use_when": "Use when the interface wants a counting or math panel instead of a gauge style meter.",
+      "avoid_when": "Do not use for dial gauges when the square panel with symbols is the visible form.",
+      "semantic_tags": [
+        "calculator panel",
+        "counter",
+        "counting panel",
+        "math board"
+      ],
+      "synonyms": [
+        "calculator panel",
+        "counter",
+        "counting panel",
+        "math board"
+      ]
+    }
+  }
+]

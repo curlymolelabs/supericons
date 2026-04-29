@@ -14,21 +14,21 @@ const REVIEW_DECISIONS = Object.freeze({
     outcome: 'hold_for_editor_review',
     note: 'The token badge with sparkles still reads more like tokenized magic or enhanced output than a stable token-generation concept.',
     overrides: {
-      confidence: 0.81,
+      routing_score: 0.81,
     },
   },
   'material:model_training': {
     outcome: 'hold_for_editor_review',
     note: 'The looping bulb icon still mixes training, iteration, and idea refinement too broadly.',
     overrides: {
-      confidence: 0.81,
+      routing_score: 0.81,
     },
   },
   'material:segment': {
     outcome: 'hold_for_editor_review',
     note: 'The stacked bars icon does not clearly read as a segmented control without stronger UI context.',
     overrides: {
-      confidence: 0.8,
+      routing_score: 0.8,
       purpose: 'Show segment layout, grouped bars, or a compact segmented interface when nearby UI context makes that meaning clear.',
       use_when: 'Use when the interface refers to segment-based layout or grouped sections with clear surrounding context.',
       avoid_when: 'Do not use for generic list, density, or alignment controls when the meaning is not specifically about segments or grouped sections.',
@@ -38,14 +38,14 @@ const REVIEW_DECISIONS = Object.freeze({
     outcome: 'hold_for_editor_review',
     note: 'The cube token icon is useful, but it still spans package, object, artifact, and token-unit meanings.',
     overrides: {
-      confidence: 0.81,
+      routing_score: 0.81,
     },
   },
   'material:data_object': {
     outcome: 'keep_as_reviewed_draft',
     note: 'The braces read clearly as structured data, but the exact product meaning still drifts between object, code, and typed schema.',
     overrides: {
-      confidence: 0.82,
+      routing_score: 0.82,
     },
   },
 });
@@ -94,7 +94,7 @@ function countBy(values, selector) {
 function buildReviewedRecord(stagedRecord) {
   const decision = REVIEW_DECISIONS[stagedRecord.icon_id] || {};
   const overrides = decision.overrides || {};
-  const confidence = overrides.confidence ?? stagedRecord.confidence;
+  const routingScore = overrides.routing_score ?? stagedRecord.routing_score ?? 0;
 
   return {
     icon_id: stagedRecord.icon_id,
@@ -104,15 +104,13 @@ function buildReviewedRecord(stagedRecord) {
     depicts: overrides.depicts ?? stagedRecord.depicts,
     purpose: overrides.purpose ?? stagedRecord.purpose,
     category: overrides.category ?? stagedRecord.category,
-    intent: overrides.intent ?? stagedRecord.intent,
-    domain: overrides.domain ?? stagedRecord.domain,
     semantic_tags: overrides.semantic_tags ?? stagedRecord.semantic_tags,
     synonyms: overrides.synonyms ?? stagedRecord.synonyms,
     use_when: overrides.use_when ?? stagedRecord.use_when,
     avoid_when: overrides.avoid_when ?? stagedRecord.avoid_when,
     evidence_sources: stagedRecord.evidence?.map((value) => value.replaceAll('_', '-')) || ['source-name', 'editor-review'],
-    confidence_score: confidence,
-    confidence_band: confidence >= 0.86 ? 'high' : 'medium',
+    routing_score: routingScore,
+    routing_band: routingScore >= 0.86 ? 'high' : 'medium',
   };
 }
 
@@ -135,9 +133,9 @@ const editorReviewEntries = (
     ? savedEditorReviewEntries
     : liveEditorReviewEntries
 ).sort((left, right) => {
-  const leftConfidence = stagedById.get(left.icon_id)?.confidence ?? existingBatchById.get(left.icon_id)?.confidence ?? 0;
-  const rightConfidence = stagedById.get(right.icon_id)?.confidence ?? existingBatchById.get(right.icon_id)?.confidence ?? 0;
-  return rightConfidence - leftConfidence || left.icon_id.localeCompare(right.icon_id);
+  const leftScore = stagedById.get(left.icon_id)?.routing_score ?? existingBatchById.get(left.icon_id)?.routing_score ?? 0;
+  const rightScore = stagedById.get(right.icon_id)?.routing_score ?? existingBatchById.get(right.icon_id)?.routing_score ?? 0;
+  return rightScore - leftScore || left.icon_id.localeCompare(right.icon_id);
 });
 
 const batchRecords = editorReviewEntries.map((entry) => {
@@ -157,7 +155,7 @@ const batchRecords = editorReviewEntries.map((entry) => {
     purpose_chip_category_id: stagedRecord.purpose_chip_category_id,
     purpose_chip_category_label: stagedRecord.purpose_chip_category_label,
     queue_outcome: entry.next_step,
-    confidence_band: stagedRecord.confidence >= 0.86 ? 'high' : 'medium',
+    routing_band: (stagedRecord.routing_score ?? 0) >= 0.86 ? 'high' : 'medium',
     current_candidate_record: stagedRecord,
     visual_review_input: visualInput,
   };

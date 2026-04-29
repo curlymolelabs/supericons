@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-037",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 037",
+  "review_goal": "Differentiate five MingCute leaf and butterfly variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:leaf",
+      "screenshot_file_name": "mingcute_leaf_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/leaf_line.svg",
+      "depicts_observation": "Single leaf outline with a curved center vein and a short lower stem",
+      "popular_reading": "Single leaf",
+      "plausible_readings": ["leaf", "plant leaf", "nature icon"],
+      "context_bias": "Use when the interface wants the simplest natural leaf form with one center vein.",
+      "ambiguity_note": "Do not use for the flower or clover leaf shapes when the single leaf blade matters.",
+      "selection_reason": "The screenshot shows one leaf blade with a curved inner vein and a short stem below."
+    },
+    {
+      "icon_id": "mingcute:leaf_2",
+      "screenshot_file_name": "mingcute_leaf_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/leaf_2_line.svg",
+      "depicts_observation": "Four petal flower outline with one small stem and a center dot",
+      "popular_reading": "Flower leaf icon",
+      "plausible_readings": ["flower", "petal bloom", "nature icon"],
+      "context_bias": "Use when the interface wants a small flower shaped nature mark rather than a true leaf blade.",
+      "ambiguity_note": "Do not use for the single leaf or clover form when the four petal blossom matters.",
+      "selection_reason": "The screenshot changes from a leaf blade to a round four petal flower with a center dot."
+    },
+    {
+      "icon_id": "mingcute:leaf_3",
+      "screenshot_file_name": "mingcute_leaf_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/leaf_3_line.svg",
+      "depicts_observation": "Four heart shaped leaf loops centered in a clover cross shape",
+      "popular_reading": "Clover leaves",
+      "plausible_readings": ["clover", "four leaves", "nature icon"],
+      "context_bias": "Use when the interface wants a clover like four leaf emblem rather than one blade or flower.",
+      "ambiguity_note": "Do not use for the single leaf or flower when the four heart loops are the visual cue.",
+      "selection_reason": "The screenshot arranges four heart shaped loops into a clover style center crossing."
+    },
+    {
+      "icon_id": "mingcute:butterfly",
+      "screenshot_file_name": "mingcute_butterfly_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/butterfly_line.svg",
+      "depicts_observation": "Butterfly outline with two tall wings and a short split antenna tuft",
+      "popular_reading": "Tall wing butterfly",
+      "plausible_readings": ["butterfly", "insect", "wing icon"],
+      "context_bias": "Use when the interface wants a butterfly with a narrow body and taller separated wings.",
+      "ambiguity_note": "Do not use for the rounded loop butterfly when the tall wing separation matters.",
+      "selection_reason": "The screenshot shows tall upright wings divided by a narrow center body and short top tufts."
+    },
+    {
+      "icon_id": "mingcute:butterfly_2",
+      "screenshot_file_name": "mingcute_butterfly_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/nature/butterfly_2_line.svg",
+      "depicts_observation": "Butterfly outline with two broad rounded wing loops crossing at the center",
+      "popular_reading": "Loop wing butterfly",
+      "plausible_readings": ["butterfly", "rounded wings", "insect icon"],
+      "context_bias": "Use when the interface wants the softer butterfly built from two broad overlapping wing loops.",
+      "ambiguity_note": "Do not use for the tall wing butterfly when the rounded loop wings are the main difference.",
+      "selection_reason": "The screenshot merges the wings into two broad rounded loops that cross at the center."
+    }
+  ]
+}

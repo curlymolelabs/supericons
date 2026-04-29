@@ -7,7 +7,7 @@
       "source_library": "tabler",
       "source_name": "bell_ringing",
       "label": "Active Notification",
-      "depicts": "A ringing bell for active notifications or alerts.",
+      "depicts": "Bell with ringing motion lines on both sides",
       "purpose": "Show an active notification, alert stream, or ringing reminder state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -38,7 +38,7 @@
       "source_library": "tabler",
       "source_name": "camera_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "Camera body with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -69,7 +69,7 @@
       "source_library": "tabler",
       "source_name": "check",
       "label": "Confirmed",
-      "depicts": "A check mark used for confirmation or completion.",
+      "depicts": "Single angled check mark with a longer rising right stroke",
       "purpose": "Show success, confirmation, or a completed state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -96,25 +96,28 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:circle_check",
+      "icon_id": "tabler:circle-check",
       "source_library": "tabler",
-      "source_name": "circle_check",
+      "source_name": "circle-check",
       "label": "Confirmed Success",
-      "depicts": "A checkmark inside a circle.",
+      "depicts": "Circle containing a check mark",
       "purpose": "Show a successful, completed, or confirmed state.",
       "category": "status_feedback",
       "semantic_tags": [
-        "success",
         "complete",
+        "completed",
         "confirmed",
+        "done",
         "passed",
-        "done"
+        "success"
       ],
       "synonyms": [
         "completed",
+        "confirmed",
+        "confirmed success",
         "passed check",
-        "success state",
-        "confirmed"
+        "success",
+        "success state"
       ],
       "use_when": "Use when a task, step, validation, or operation has completed successfully.",
       "avoid_when": "Do not use for blocked, warning, or security-specific verification states.",
@@ -131,7 +134,7 @@
       "source_library": "tabler",
       "source_name": "circle_key",
       "label": "Access Key",
-      "depicts": "A key symbol for access or credentials.",
+      "depicts": "Circle containing a key",
       "purpose": "Show credentials, access keys, or a key-based access concept.",
       "category": "security_auth",
       "semantic_tags": [
@@ -158,25 +161,31 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:clipboard_check",
+      "icon_id": "tabler:clipboard-check",
       "source_library": "tabler",
-      "source_name": "clipboard_check",
+      "source_name": "clipboard-check",
       "label": "Clipboard Complete",
-      "depicts": "Clipboard Complete shown with a completion check mark.",
+      "depicts": "Clipboard with a check mark inside",
       "purpose": "Show a completed or confirmed clipboard state.",
       "category": "status_feedback",
       "semantic_tags": [
-        "complete",
-        "confirmed",
         "checked",
-        "done",
-        "clipboard"
+        "checked clipboard",
+        "clipboard",
+        "clipboard complete",
+        "complete",
+        "completed task",
+        "confirmed",
+        "done"
       ],
       "synonyms": [
+        "checked clipboard",
+        "checked state",
+        "clipboard complete",
         "clipboard done",
         "completed",
-        "confirmed",
-        "checked state"
+        "completed task",
+        "confirmed"
       ],
       "use_when": "Use when the interface shows that a clipboard action or object is complete or confirmed.",
       "avoid_when": "Do not use for sending or editing when the meaning is specifically a completed state.",
@@ -193,7 +202,7 @@
       "source_library": "tabler",
       "source_name": "clipboard_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "Clipboard with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -220,11 +229,11 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:cloud_check",
+      "icon_id": "tabler:cloud-check",
       "source_library": "tabler",
-      "source_name": "cloud_check",
+      "source_name": "cloud-check",
       "label": "Cloud Synced",
-      "depicts": "A cloud with a check mark showing successful cloud state.",
+      "depicts": "a cloud with a checkmark below it",
       "purpose": "Show that content is synced, backed up, or safely stored in the cloud.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -255,7 +264,7 @@
       "source_library": "tabler",
       "source_name": "cloud_lock",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "a cloud with a small closed padlock below it",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -286,7 +295,7 @@
       "source_library": "tabler",
       "source_name": "cloud_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a cloud with a small magnifying glass below it",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -317,7 +326,7 @@
       "source_library": "tabler",
       "source_name": "device_desktop_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a desktop monitor with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -348,7 +357,7 @@
       "source_library": "tabler",
       "source_name": "device_imac_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "an iMac-style monitor on a stand with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -379,7 +388,7 @@
       "source_library": "tabler",
       "source_name": "device_ipad_horizontal_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a tablet device in landscape orientation with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -410,7 +419,7 @@
       "source_library": "tabler",
       "source_name": "device_ipad_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a tablet device in portrait orientation with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -441,7 +450,7 @@
       "source_library": "tabler",
       "source_name": "device_mobile_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a mobile phone with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -472,7 +481,7 @@
       "source_library": "tabler",
       "source_name": "device_tablet_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a tablet device with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -503,7 +512,7 @@
       "source_library": "tabler",
       "source_name": "device_watch_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a smartwatch with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -534,7 +543,7 @@
       "source_library": "tabler",
       "source_name": "devices_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a laptop and phone together with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -565,7 +574,7 @@
       "source_library": "tabler",
       "source_name": "external_link",
       "label": "Open External Link",
-      "depicts": "An outbound arrow leaving a square or window frame.",
+      "depicts": "a square with an arrow pointing out of its upper right corner",
       "purpose": "Show opening a destination outside the current app, surface, or page.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -596,24 +605,24 @@
       "source_library": "tabler",
       "source_name": "eye",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an open eye with an iris and pupil",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
         "visible",
-        "view",
-        "preview",
-        "reveal",
-        "eye"
-      ],
-      "synonyms": [
         "show",
         "preview",
-        "reveal",
-        "visible state"
+        "see",
+        "displayed"
       ],
-      "use_when": "Use when the interface reveals content or shows that something is visible.",
-      "avoid_when": "Do not use for analytics or read-tracking when the meaning is specifically visibility or preview.",
+      "synonyms": [
+        "show content",
+        "visible state",
+        "preview",
+        "currently shown"
+      ],
+      "use_when": "Use when the interface indicates that content is visible or can be previewed.",
+      "avoid_when": "Do not use for search or surveillance when the meaning is specifically visibility.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -627,7 +636,7 @@
       "source_library": "tabler",
       "source_name": "eye_bitcoin",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a small bitcoin symbol at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -658,7 +667,7 @@
       "source_library": "tabler",
       "source_name": "eye_bolt",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a lightning bolt at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -689,7 +698,7 @@
       "source_library": "tabler",
       "source_name": "eye_cancel",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a diagonal line through it",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -720,7 +729,7 @@
       "source_library": "tabler",
       "source_name": "eye_closed",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "a closed eye with a curved eyelid line",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -751,7 +760,7 @@
       "source_library": "tabler",
       "source_name": "eye_cog",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a gear at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -782,7 +791,7 @@
       "source_library": "tabler",
       "source_name": "eye_discount",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a percent symbol at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -813,7 +822,7 @@
       "source_library": "tabler",
       "source_name": "eye_dollar",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a dollar sign at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -844,7 +853,7 @@
       "source_library": "tabler",
       "source_name": "eye_dotted",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a dotted or dashed outline",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -875,7 +884,7 @@
       "source_library": "tabler",
       "source_name": "eye_exclamation",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with an exclamation mark at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -906,7 +915,7 @@
       "source_library": "tabler",
       "source_name": "eye_heart",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a heart shape at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -937,7 +946,7 @@
       "source_library": "tabler",
       "source_name": "eye_minus",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a minus sign at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -964,11 +973,11 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:eye_off",
+      "icon_id": "tabler:eye-off",
       "source_library": "tabler",
-      "source_name": "eye_off",
+      "source_name": "eye-off",
       "label": "Hidden",
-      "depicts": "An eye symbol crossed to show hidden visibility.",
+      "depicts": "an eye with a diagonal slash through it indicating hidden",
       "purpose": "Show hidden content, turned-off visibility, or a concealed state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -999,7 +1008,7 @@
       "source_library": "tabler",
       "source_name": "eye_pin",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a map pin marker at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1030,7 +1039,7 @@
       "source_library": "tabler",
       "source_name": "eye_question",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a question mark at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1061,7 +1070,7 @@
       "source_library": "tabler",
       "source_name": "eye_share",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a share symbol at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1092,7 +1101,7 @@
       "source_library": "tabler",
       "source_name": "eye_spark",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a sparkle or star burst at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1123,7 +1132,7 @@
       "source_library": "tabler",
       "source_name": "eye_star",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a five-pointed star at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1154,7 +1163,7 @@
       "source_library": "tabler",
       "source_name": "eye_table",
       "label": "Visible",
-      "depicts": "An eye symbol for visible or reveal state.",
+      "depicts": "an eye with a small grid or table at the lower right",
       "purpose": "Show a visible, reveal, or preview state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -1185,7 +1194,7 @@
       "source_library": "tabler",
       "source_name": "filter",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel shape pointing downward",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1196,13 +1205,13 @@
         "data control"
       ],
       "synonyms": [
-        "filter results",
-        "refine list",
-        "apply filters",
-        "narrow results"
+        "refine results",
+        "filter data",
+        "narrow list",
+        "apply filters"
       ],
-      "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
-      "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+      "use_when": "Use when the user can narrow, refine, or filter a list, search result, or data view.",
+      "avoid_when": "Do not use for funnel analytics, ingestion pipelines, or generic status meaning when the UI is not actually filtering results.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -1216,7 +1225,7 @@
       "source_library": "tabler",
       "source_name": "filter_2",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel shape with horizontal section lines",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1247,7 +1256,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_bolt",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a lightning bolt at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1277,8 +1286,8 @@
       "icon_id": "tabler:filter_2_cancel",
       "source_library": "tabler",
       "source_name": "filter_2_cancel",
-      "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "label": "Cancel Filter Variant",
+      "depicts": "three horizontal filter lines with a small barred circle at the lower right, indicating a canceled filter variant",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1294,8 +1303,8 @@
         "apply filters",
         "narrow results"
       ],
-      "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
-      "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+      "use_when": "Use when a compact or alternate filter control is canceled, blocked, or not allowed.",
+      "avoid_when": "Do not use for the standard funnel-shaped filter cancel icon.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -1309,7 +1318,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_cog",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a gear at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1340,7 +1349,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_discount",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a percent symbol at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1371,7 +1380,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_dollar",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a dollar sign at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1402,7 +1411,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_exclamation",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with an exclamation mark at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1433,7 +1442,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_minus",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a minus sign at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1464,7 +1473,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_pin",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a map pin at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1495,7 +1504,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_question",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a question mark at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1526,7 +1535,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_share",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a share symbol at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1557,7 +1566,7 @@
       "source_library": "tabler",
       "source_name": "filter_2_spark",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a sparkle at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1588,7 +1597,7 @@
       "source_library": "tabler",
       "source_name": "filter_bolt",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a lightning bolt at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1618,8 +1627,8 @@
       "icon_id": "tabler:filter_cancel",
       "source_library": "tabler",
       "source_name": "filter_cancel",
-      "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "label": "Cancel Filter",
+      "depicts": "funnel outline with a small barred circle at the lower right, indicating a canceled filter",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1635,8 +1644,8 @@
         "apply filters",
         "narrow results"
       ],
-      "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
-      "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+      "use_when": "Use when a filter action is canceled, blocked, or not allowed.",
+      "avoid_when": "Do not use for simply turning filters off; use the slashed filter icon for disabled filters.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -1650,7 +1659,7 @@
       "source_library": "tabler",
       "source_name": "filter_cog",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a gear at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1681,7 +1690,7 @@
       "source_library": "tabler",
       "source_name": "filter_discount",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a percent symbol at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1712,7 +1721,7 @@
       "source_library": "tabler",
       "source_name": "filter_dollar",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a dollar sign at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1743,7 +1752,7 @@
       "source_library": "tabler",
       "source_name": "filter_exclamation",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with an exclamation mark at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1774,7 +1783,7 @@
       "source_library": "tabler",
       "source_name": "filter_heart",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a heart at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1805,7 +1814,7 @@
       "source_library": "tabler",
       "source_name": "filter_minus",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a minus sign at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1835,8 +1844,8 @@
       "icon_id": "tabler:filter_off",
       "source_library": "tabler",
       "source_name": "filter_off",
-      "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "label": "Filter Off",
+      "depicts": "funnel outline crossed by a diagonal slash, indicating filters are disabled or turned off",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1852,8 +1861,8 @@
         "apply filters",
         "narrow results"
       ],
-      "use_when": "Use when the interface narrows, refines, or filters a list, table, or result set.",
-      "avoid_when": "Do not use for sorting or analytics funnels when the meaning is specifically filtering visible results.",
+      "use_when": "Use when filtering is disabled, unavailable, or turned off.",
+      "avoid_when": "Do not use when a filter action was canceled or blocked; use the filter cancel icon instead.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -1867,7 +1876,7 @@
       "source_library": "tabler",
       "source_name": "filter_pin",
       "label": "Filter",
-      "depicts": "A funnel-shaped control used to narrow visible results.",
+      "depicts": "a funnel with a map pin at the lower right",
       "purpose": "Show filtering or refinement of results, content, or data.",
       "category": "data_controls",
       "semantic_tags": [
@@ -1898,7 +1907,7 @@
       "source_library": "tabler",
       "source_name": "flag_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a flag with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -1929,7 +1938,7 @@
       "source_library": "tabler",
       "source_name": "heart_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "a heart with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -1960,7 +1969,7 @@
       "source_library": "tabler",
       "source_name": "home_exclamation",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with an exclamation mark at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -1991,7 +2000,7 @@
       "source_library": "tabler",
       "source_name": "home_hand",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a hand shape at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2022,7 +2031,7 @@
       "source_library": "tabler",
       "source_name": "home_heart",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a heart at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2053,7 +2062,7 @@
       "source_library": "tabler",
       "source_name": "home_infinity",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with an infinity symbol at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2084,7 +2093,7 @@
       "source_library": "tabler",
       "source_name": "home_minus",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a minus sign at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2115,7 +2124,7 @@
       "source_library": "tabler",
       "source_name": "home_move",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a move or drag symbol at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2146,7 +2155,7 @@
       "source_library": "tabler",
       "source_name": "home_off",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a diagonal line through it",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2177,7 +2186,7 @@
       "source_library": "tabler",
       "source_name": "home_question",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a question mark at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2208,7 +2217,7 @@
       "source_library": "tabler",
       "source_name": "home_ribbon",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a ribbon or badge at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2239,7 +2248,7 @@
       "source_library": "tabler",
       "source_name": "home_share",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a share symbol at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2270,7 +2279,7 @@
       "source_library": "tabler",
       "source_name": "home_signal",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a signal or wifi symbol at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2301,7 +2310,7 @@
       "source_library": "tabler",
       "source_name": "home_spark",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a sparkle at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2332,7 +2341,7 @@
       "source_library": "tabler",
       "source_name": "home_star",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a star at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2363,7 +2372,7 @@
       "source_library": "tabler",
       "source_name": "home_stats",
       "label": "Go Home",
-      "depicts": "A simple house silhouette with a doorway.",
+      "depicts": "a house with a bar chart or stats symbol at the lower right",
       "purpose": "Show the home destination, root view, or primary landing area of the product.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2394,7 +2403,7 @@
       "source_library": "tabler",
       "source_name": "input_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "an input field with a magnifying glass at the right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -2425,7 +2434,7 @@
       "source_library": "tabler",
       "source_name": "key",
       "label": "Access Key",
-      "depicts": "A key symbol for access or credentials.",
+      "depicts": "key with a rounded head containing one circular hole and a notched blade pointing down and left",
       "purpose": "Show credentials, access keys, or a key-based access concept.",
       "category": "security_auth",
       "semantic_tags": [
@@ -2456,7 +2465,7 @@
       "source_library": "tabler",
       "source_name": "key_off",
       "label": "Access Key",
-      "depicts": "A key symbol for access or credentials.",
+      "depicts": "key with a rounded head and notched blade struck through by a diagonal line from upper left to lower right",
       "purpose": "Show credentials, access keys, or a key-based access concept.",
       "category": "security_auth",
       "semantic_tags": [
@@ -2487,7 +2496,7 @@
       "source_library": "tabler",
       "source_name": "layout_dashboard",
       "label": "Dashboard",
-      "depicts": "A panel-style layout icon for a dashboard surface.",
+      "depicts": "four rounded rectangles of different sizes arranged in a dashboard panel layout with one large block top-left and three smaller blocks filling the remaining space",
       "purpose": "Show a dashboard destination or an overview surface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2518,7 +2527,7 @@
       "source_library": "tabler",
       "source_name": "list",
       "label": "List View",
-      "depicts": "A shell or layout control symbol used for major navigation and view changes.",
+      "depicts": "three horizontal lines each preceded by a solid round bullet point on the left",
       "purpose": "Show a list layout or switching content into a list view.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2545,7 +2554,7 @@
       "source_library": "tabler",
       "source_name": "location_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "location pin with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -2575,25 +2584,25 @@
       "icon_id": "tabler:lock",
       "source_library": "tabler",
       "source_name": "lock",
-      "label": "Lock",
-      "depicts": "A closed padlock.",
+      "label": "Locked",
+      "depicts": "closed padlock with a rounded shackle arching over the body and a circular keyhole in the center",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
-        "lock",
-        "secure",
+        "locked",
         "protected",
         "restricted",
-        "access"
+        "secure",
+        "permission needed"
       ],
       "synonyms": [
-        "locked",
-        "secure access",
-        "protected",
-        "restricted"
+        "secure lock",
+        "restricted",
+        "locked access",
+        "protected"
       ],
-      "use_when": "Use when content, actions, or settings are locked or require protection.",
-      "avoid_when": "Do not use for generic privacy copy unless the interface truly represents restricted access.",
+      "use_when": "Use when the interface indicates something is locked, protected, or restricted.",
+      "avoid_when": "Do not use for password fields or account sign-in when a more specific auth icon would be clearer.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -2607,7 +2616,7 @@
       "source_library": "tabler",
       "source_name": "lock_access",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock centered inside a square frame formed by four corner bracket marks suggesting an access boundary",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2638,7 +2647,7 @@
       "source_library": "tabler",
       "source_name": "lock_access_off",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock inside a corner-bracket frame struck through by a diagonal line from upper left to lower right",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2669,7 +2678,7 @@
       "source_library": "tabler",
       "source_name": "lock_bitcoin",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock with a Bitcoin capital B symbol attached at the lower right of the lock body",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2700,7 +2709,7 @@
       "source_library": "tabler",
       "source_name": "lock_bolt",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock with a lightning bolt shape at the lower right of the lock body",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2731,7 +2740,7 @@
       "source_library": "tabler",
       "source_name": "lock_cancel",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock with a circular X or cancel mark at the lower right of the lock body",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2762,7 +2771,7 @@
       "source_library": "tabler",
       "source_name": "lock_cog",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock with a gear or cog wheel at the lower right of the lock body",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2793,7 +2802,7 @@
       "source_library": "tabler",
       "source_name": "lock_dollar",
       "label": "Lock",
-      "depicts": "A closed padlock.",
+      "depicts": "padlock with a dollar sign at the lower right of the lock body",
       "purpose": "Show locked access, protected content, or a secured state.",
       "category": "security",
       "semantic_tags": [
@@ -2824,7 +2833,7 @@
       "source_library": "tabler",
       "source_name": "map_pin_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "map pin with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -2855,7 +2864,7 @@
       "source_library": "tabler",
       "source_name": "map_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "folded map with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -2886,7 +2895,7 @@
       "source_library": "tabler",
       "source_name": "menu",
       "label": "Menu",
-      "depicts": "A stacked-line menu or drawer entry icon.",
+      "depicts": "two centered horizontal lines stacked one above the other",
       "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2917,7 +2926,7 @@
       "source_library": "tabler",
       "source_name": "menu_2",
       "label": "Menu",
-      "depicts": "A stacked-line menu or drawer entry icon.",
+      "depicts": "three centered horizontal lines of equal length",
       "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -2948,7 +2957,7 @@
       "source_library": "tabler",
       "source_name": "navigation_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "triangular navigation pointer with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -2979,7 +2988,7 @@
       "source_library": "tabler",
       "source_name": "pencil_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "diagonal pencil with a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -3010,7 +3019,7 @@
       "source_library": "tabler",
       "source_name": "photo_search",
       "label": "Search",
-      "depicts": "A magnifying glass.",
+      "depicts": "picture frame with mountain and sun plus a magnifying glass at the lower right",
       "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
       "category": "search_discovery",
       "semantic_tags": [
@@ -3041,7 +3050,7 @@
       "source_library": "tabler",
       "source_name": "square_arrow_right",
       "label": "Move Right",
-      "depicts": "A directional arrow pointing right.",
+      "depicts": "rounded square outline containing a right-pointing arrow",
       "purpose": "Show moving, stepping, or navigating right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3072,7 +3081,7 @@
       "source_library": "tabler",
       "source_name": "square_arrow_up",
       "label": "Move Up",
-      "depicts": "A directional arrow pointing up.",
+      "depicts": "rounded square outline containing an upward arrow",
       "purpose": "Show moving, stepping, or navigating up within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3103,7 +3112,7 @@
       "source_library": "tabler",
       "source_name": "square_chevron_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "rounded square outline containing a downward chevron",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3133,7 +3142,7 @@
       "source_library": "tabler",
       "source_name": "square_chevron_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "rounded square outline containing a left-pointing chevron",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3165,7 +3174,7 @@
       "source_library": "tabler",
       "source_name": "square_chevron_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "rounded square outline containing a right-pointing chevron",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3197,7 +3206,7 @@
       "source_library": "tabler",
       "source_name": "square_chevron_up",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "rounded square outline containing an upward chevron",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3227,7 +3236,7 @@
       "source_library": "tabler",
       "source_name": "stack_back",
       "label": "Back",
-      "depicts": "A left-pointing arrow with a return-like stem.",
+      "depicts": "three layered diamond-like tiles stacked with the upper tile behind the middle layer",
       "purpose": "Show back navigation to the previous screen, view, or state.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3258,7 +3267,7 @@
       "source_library": "tabler",
       "source_name": "stack_forward",
       "label": "Forward Or Next",
-      "depicts": "A right-pointing arrow with a forward stem.",
+      "depicts": "two layered diamond-like tiles with a solid top tile overlapping a lower outline tile",
       "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3289,7 +3298,7 @@
       "source_library": "tabler",
       "source_name": "toggle_left",
       "label": "Disabled Toggle",
-      "depicts": "A toggle switch in the off position.",
+      "depicts": "horizontal pill-shaped toggle with the knob on the left",
       "purpose": "Show that a setting, control, or feature is switched off or disabled.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -3316,11 +3325,11 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:toggle_right",
+      "icon_id": "tabler:toggle-right",
       "source_library": "tabler",
-      "source_name": "toggle_right",
+      "source_name": "toggle-right",
       "label": "Enabled Toggle",
-      "depicts": "A toggle switch in the on position.",
+      "depicts": "horizontal pill-shaped toggle with the knob on the right",
       "purpose": "Show that a setting, control, or feature is switched on or enabled.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -3331,13 +3340,13 @@
         "switch"
       ],
       "synonyms": [
-        "enabled",
-        "switch on",
-        "active toggle",
-        "toggle on"
+        "turned on",
+        "enabled state",
+        "active switch",
+        "setting on"
       ],
-      "use_when": "Use when the interface shows an enabled setting or active on-state.",
-      "avoid_when": "Do not use for generic success or approval when the meaning is not a toggle state.",
+      "use_when": "Use when the product needs to communicate an enabled setting or an active on-state.",
+      "avoid_when": "Do not use as a general success mark or power symbol with no toggle meaning.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -3351,7 +3360,7 @@
       "source_library": "tabler",
       "source_name": "robot",
       "label": "AI Agent",
-      "depicts": "A robot or bot face used for an automated assistant.",
+      "depicts": "simple robot body with a square head, short arms, and short legs",
       "purpose": "Show an AI agent, automated assistant, or bot-powered workflow.",
       "category": "agent_lifecycle",
       "semantic_tags": [
@@ -3382,7 +3391,7 @@
       "source_library": "tabler",
       "source_name": "calendar_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Calendar page with double angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -3409,7 +3418,7 @@
       "source_library": "tabler",
       "source_name": "circle_open_arrow_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Open circle with a downward arrow inside",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3439,7 +3448,7 @@
       "source_library": "tabler",
       "source_name": "circle_open_arrow_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Open circle with a left-pointing arrow inside",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3471,7 +3480,7 @@
       "source_library": "tabler",
       "source_name": "circle_open_arrow_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Open circle with a right-pointing arrow inside",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3503,7 +3512,7 @@
       "source_library": "tabler",
       "source_name": "circle_open_arrow_up",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "Open circle with an upward arrow inside",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3533,7 +3542,7 @@
       "source_library": "tabler",
       "source_name": "clock_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Clock outline with double angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -3560,7 +3569,7 @@
       "source_library": "tabler",
       "source_name": "code_plus",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with a plus sign between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -3587,7 +3596,7 @@
       "source_library": "tabler",
       "source_name": "code_variable_plus",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with an underscore and plus sign between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -3616,7 +3625,7 @@
       "source_library": "tabler",
       "source_name": "file_alert",
       "label": "Warning",
-      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "depicts": "a document with an exclamation mark at the lower right",
       "purpose": "Show a warning, caution, or state that needs attention.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -3643,7 +3652,7 @@
       "source_library": "tabler",
       "source_name": "file_arrow_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "a document with a leftward arrow at the lower right",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3674,7 +3683,7 @@
       "source_library": "tabler",
       "source_name": "file_arrow_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "a document with a rightward arrow at the lower right",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3705,7 +3714,7 @@
       "source_library": "tabler",
       "source_name": "file_text_shield",
       "label": "Protection",
-      "depicts": "A security symbol used for access, protection, or trusted safeguards.",
+      "depicts": "a document with text lines and a small shield",
       "purpose": "Show protection, defense, or a security safeguard.",
       "category": "security",
       "semantic_tags": [
@@ -3734,8 +3743,8 @@
       "icon_id": "tabler:layout_sidebar_left_collapse",
       "source_library": "tabler",
       "source_name": "layout_sidebar_left_collapse",
-      "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "label": "Collapse Left Sidebar",
+      "depicts": "square frame with a left sidebar panel containing a left-pointing chevron and a solid right content area",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3753,8 +3762,8 @@
         "return",
         "back navigation"
       ],
-      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
-      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "use_when": "Use when collapsing or hiding the left sidebar while keeping the main content area visible.",
+      "avoid_when": "Do not use for opening the left sidebar or for general back navigation.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -3766,8 +3775,8 @@
       "icon_id": "tabler:layout_sidebar_left_expand",
       "source_library": "tabler",
       "source_name": "layout_sidebar_left_expand",
-      "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "label": "Expand Left Sidebar",
+      "depicts": "square frame with a left sidebar panel containing a right-pointing chevron and a solid right content area",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3785,8 +3794,8 @@
         "return",
         "back navigation"
       ],
-      "use_when": "Use when the interface moves backward to the previous screen, panel, or navigation level.",
-      "avoid_when": "Do not use for undo or dismiss when the action is not actual back navigation.",
+      "use_when": "Use when expanding or revealing the left sidebar beside the main content area.",
+      "avoid_when": "Do not use for collapsing the left sidebar or for general forward navigation.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -3799,7 +3808,7 @@
       "source_library": "tabler",
       "source_name": "layout_sidebar_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "square divided into a larger left content area and a narrow right sidebar panel",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3829,8 +3838,8 @@
       "icon_id": "tabler:layout_sidebar_right_collapse",
       "source_library": "tabler",
       "source_name": "layout_sidebar_right_collapse",
-      "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "label": "Collapse Right Sidebar",
+      "depicts": "square frame with a right sidebar panel containing a right-pointing chevron and a solid left content area",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3848,8 +3857,8 @@
         "continue",
         "forward navigation"
       ],
-      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
-      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "use_when": "Use when collapsing or hiding the right sidebar while keeping the main content area visible.",
+      "avoid_when": "Do not use for opening the right sidebar or for general forward navigation.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -3861,8 +3870,8 @@
       "icon_id": "tabler:layout_sidebar_right_expand",
       "source_library": "tabler",
       "source_name": "layout_sidebar_right_expand",
-      "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "label": "Expand Right Sidebar",
+      "depicts": "square frame with a right sidebar panel containing a left-pointing chevron and a solid left content area",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3880,8 +3889,8 @@
         "continue",
         "forward navigation"
       ],
-      "use_when": "Use when the interface moves to the next screen, panel, or navigation level.",
-      "avoid_when": "Do not use for send or submit when the action is not actual forward navigation.",
+      "use_when": "Use when expanding or revealing the right sidebar beside the main content area.",
+      "avoid_when": "Do not use for collapsing the right sidebar or for general back navigation.",
       "evidence_sources": [
         "source-name",
         "svg-payload"
@@ -3894,7 +3903,7 @@
       "source_library": "tabler",
       "source_name": "layout_sidebar_right_inactive",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "square with a solid left content area and a right sidebar shown as a dashed or broken panel",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -3926,7 +3935,7 @@
       "source_library": "tabler",
       "source_name": "mail_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "envelope with a pair of angle brackets at the lower right corner",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -3953,7 +3962,7 @@
       "source_library": "tabler",
       "source_name": "mail_pause",
       "label": "Mail",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "envelope with two vertical pause bars at the lower right corner",
       "purpose": "Show mail, email communication, or an email-related action.",
       "category": "communication_social",
       "semantic_tags": [
@@ -3982,7 +3991,7 @@
       "source_library": "tabler",
       "source_name": "message_2_check",
       "label": "Confirmed",
-      "depicts": "A status or attention symbol used to communicate state clearly.",
+      "depicts": "square speech bubble with two text lines and a check mark at the lower right",
       "purpose": "Show a confirmed, completed, or accepted state.",
       "category": "status_feedback",
       "semantic_tags": [
@@ -4011,7 +4020,7 @@
       "source_library": "tabler",
       "source_name": "message_2_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "square speech bubble with two text lines and angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -4040,7 +4049,7 @@
       "source_library": "tabler",
       "source_name": "message_2_pause",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "square speech bubble with two text lines and pause bars at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4071,7 +4080,7 @@
       "source_library": "tabler",
       "source_name": "message_2_plus",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "square speech bubble with two text lines and a plus sign at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4102,7 +4111,7 @@
       "source_library": "tabler",
       "source_name": "message_2_x",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "square speech bubble with two text lines and an X mark at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4133,7 +4142,7 @@
       "source_library": "tabler",
       "source_name": "message_circle_pause",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "round speech bubble with pause bars at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4164,7 +4173,7 @@
       "source_library": "tabler",
       "source_name": "message_circle_user",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "round speech bubble with a small user bust at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4195,7 +4204,7 @@
       "source_library": "tabler",
       "source_name": "message_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "wide speech bubble with two text lines and angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -4222,7 +4231,7 @@
       "source_library": "tabler",
       "source_name": "message_pause",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "wide speech bubble with two text lines and pause bars at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4251,7 +4260,7 @@
       "source_library": "tabler",
       "source_name": "message_plus",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "wide speech bubble with two text lines and a plus sign at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4280,7 +4289,7 @@
       "source_library": "tabler",
       "source_name": "message_user",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "wide speech bubble with a small user bust at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4309,7 +4318,7 @@
       "source_library": "tabler",
       "source_name": "message_x",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "wide speech bubble with two text lines and an X mark at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [
@@ -4338,7 +4347,7 @@
       "source_library": "tabler",
       "source_name": "settings_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "gear with angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -4365,7 +4374,7 @@
       "source_library": "tabler",
       "source_name": "user_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "person bust with a pair of angle brackets badge near the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -4392,7 +4401,7 @@
       "source_library": "tabler",
       "source_name": "arrows_down",
       "label": "Move Down",
-      "depicts": "A directional arrow pointing down.",
+      "depicts": "Two parallel downward arrows",
       "purpose": "Show moving, stepping, or navigating down within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4423,7 +4432,7 @@
       "source_library": "tabler",
       "source_name": "arrows_left",
       "label": "Move Left",
-      "depicts": "A directional arrow pointing left.",
+      "depicts": "Two parallel left-pointing arrows",
       "purpose": "Show moving, stepping, or navigating left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4454,7 +4463,7 @@
       "source_library": "tabler",
       "source_name": "arrows_right",
       "label": "Move Right",
-      "depicts": "A directional arrow pointing right.",
+      "depicts": "Two parallel right-pointing arrows",
       "purpose": "Show moving, stepping, or navigating right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4485,7 +4494,7 @@
       "source_library": "tabler",
       "source_name": "arrows_up",
       "label": "Move Up",
-      "depicts": "A directional arrow pointing up.",
+      "depicts": "Two parallel upward arrows",
       "purpose": "Show moving, stepping, or navigating up within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4516,7 +4525,7 @@
       "source_library": "tabler",
       "source_name": "bookmark_ai",
       "label": "AI Assist",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Bookmark ribbon with the letters AI beside it",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
       "semantic_tags": [
@@ -4543,7 +4552,7 @@
       "source_library": "tabler",
       "source_name": "chevrons_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Double downward chevrons",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4572,7 +4581,7 @@
       "source_library": "tabler",
       "source_name": "chevrons_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Double left chevrons",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4603,7 +4612,7 @@
       "source_library": "tabler",
       "source_name": "chevrons_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Double right chevrons",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4634,7 +4643,7 @@
       "source_library": "tabler",
       "source_name": "chevrons_up",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "Double upward chevrons",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4663,7 +4672,7 @@
       "source_library": "tabler",
       "source_name": "escalator_down",
       "label": "Move Down",
-      "depicts": "A directional arrow pointing down.",
+      "depicts": "a set of escalator steps with a downward arrow",
       "purpose": "Show moving, stepping, or navigating down within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4694,7 +4703,7 @@
       "source_library": "tabler",
       "source_name": "escalator_up",
       "label": "Move Up",
-      "depicts": "A directional arrow pointing up.",
+      "depicts": "a set of escalator steps with an upward arrow",
       "purpose": "Show moving, stepping, or navigating up within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4725,7 +4734,7 @@
       "source_library": "tabler",
       "source_name": "file_text_ai",
       "label": "AI Assist",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a document with text lines and the letters AI",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
       "semantic_tags": [
@@ -4754,7 +4763,7 @@
       "source_library": "tabler",
       "source_name": "pilcrow_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "pilcrow symbol above a left-pointing horizontal arrow",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4785,7 +4794,7 @@
       "source_library": "tabler",
       "source_name": "pilcrow_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "pilcrow symbol above a right-pointing horizontal arrow",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4816,7 +4825,7 @@
       "source_library": "tabler",
       "source_name": "settings_ai",
       "label": "AI Assist",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "gear with the letters AI in the center",
       "purpose": "Show AI assistance, model-generated help, or an automated agent feature.",
       "category": "agent_lifecycle",
       "semantic_tags": [
@@ -4839,28 +4848,28 @@
       "routing_band": "medium"
     },
     {
-      "icon_id": "tabler:thumb_down",
+      "icon_id": "tabler:thumb-down",
       "source_library": "tabler",
-      "source_name": "thumb_down",
+      "source_name": "thumb-down",
       "label": "Disapproval",
-      "depicts": "A thumbs-down disapproval gesture.",
+      "depicts": "thumbs-down hand with a squared cuff",
       "purpose": "Show disapproval, negative feedback, or a disliked state.",
       "category": "status_feedback",
       "semantic_tags": [
         "disapproval",
-        "negative feedback",
         "dislike",
+        "negative feedback",
         "rejected",
         "thumbs down"
       ],
       "synonyms": [
         "disliked",
-        "negative",
-        "rejected",
+        "negative signal",
+        "bad feedback",
         "downvote"
       ],
-      "use_when": "Use when the interface shows negative feedback, disapproval, or a disliked state.",
-      "avoid_when": "Do not use for generic confirmation or warning when the meaning is specifically feedback sentiment.",
+      "use_when": "Use when the interface signals negative feedback, disapproval, or a disliked state.",
+      "avoid_when": "Do not use for warnings or errors when the meaning is specifically negative feedback.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -4870,28 +4879,28 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:thumb_up",
+      "icon_id": "tabler:thumb-up",
       "source_library": "tabler",
-      "source_name": "thumb_up",
+      "source_name": "thumb-up",
       "label": "Approval",
-      "depicts": "A thumbs-up approval gesture.",
+      "depicts": "thumbs-up hand with a squared cuff",
       "purpose": "Show approval, positive feedback, or a liked state.",
       "category": "status_feedback",
       "semantic_tags": [
         "approval",
-        "positive feedback",
         "like",
+        "positive feedback",
         "endorsed",
         "thumbs up"
       ],
       "synonyms": [
         "liked",
-        "positive",
         "approved",
-        "endorsement"
+        "positive signal",
+        "good feedback"
       ],
-      "use_when": "Use when the interface shows positive feedback, approval, or a liked state.",
-      "avoid_when": "Do not use for generic confirmation or warning when the meaning is specifically feedback sentiment.",
+      "use_when": "Use when the interface signals positive feedback, approval, or a liked state.",
+      "avoid_when": "Do not use for completion or trust verification when the meaning is specifically approval or liking.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -4901,28 +4910,28 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:trending_down",
+      "icon_id": "tabler:trending-down",
       "source_library": "tabler",
-      "source_name": "trending_down",
-      "label": "Trend Down",
-      "depicts": "A falling trend line.",
+      "source_name": "trending-down",
+      "label": "Downward Trend",
+      "depicts": "downward zigzag line ending in a right-pointing arrow",
       "purpose": "Show downward trend, decline, or reduced movement in analytics or metrics.",
       "category": "analytics_data",
       "semantic_tags": [
+        "downward trend",
+        "decrease",
+        "decline",
+        "lowering",
+        "metric down"
+      ],
+      "synonyms": [
         "trend down",
         "decline",
         "decrease",
-        "analytics",
-        "downward"
+        "metric drop"
       ],
-      "synonyms": [
-        "downward trend",
-        "decline line",
-        "decrease",
-        "falling metric"
-      ],
-      "use_when": "Use when the interface shows metric movement or analytics trend direction.",
-      "avoid_when": "Do not use for navigation arrows when the meaning is specifically trend or analytics direction.",
+      "use_when": "Use when the interface shows that a metric or measure is trending downward.",
+      "avoid_when": "Do not use for download or move-down actions when the meaning is specifically analytics decline.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -4932,28 +4941,28 @@
       "routing_band": "high"
     },
     {
-      "icon_id": "tabler:trending_up",
+      "icon_id": "tabler:trending-up",
       "source_library": "tabler",
-      "source_name": "trending_up",
+      "source_name": "trending-up",
       "label": "Trend Up",
-      "depicts": "A rising trend line.",
+      "depicts": "upward zigzag line ending in a right-pointing arrow",
       "purpose": "Show upward trend, growth, or improved movement in analytics or metrics.",
       "category": "analytics_data",
       "semantic_tags": [
-        "trend up",
         "growth",
-        "increase",
-        "analytics",
-        "upward"
+        "trend",
+        "improving",
+        "upward",
+        "metrics"
       ],
       "synonyms": [
+        "growth trend",
         "upward trend",
-        "growth line",
-        "increase",
-        "rising metric"
+        "improving metrics",
+        "performance up"
       ],
-      "use_when": "Use when the interface shows metric movement or analytics trend direction.",
-      "avoid_when": "Do not use for navigation arrows when the meaning is specifically trend or analytics direction.",
+      "use_when": "Use when the interface needs to show positive metric movement or an improving trend.",
+      "avoid_when": "Do not use as a generic directional arrow or navigation control.",
       "evidence_sources": [
         "source-name",
         "approved-reference",
@@ -4967,7 +4976,7 @@
       "source_library": "tabler",
       "source_name": "trending_up_down",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "rising zigzag line with one arrow pointing up right and another pointing down right",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -4997,7 +5006,7 @@
       "source_library": "tabler",
       "source_name": "align_left",
       "label": "Align Left",
-      "depicts": "A formatting alignment control.",
+      "depicts": "Three horizontal lines aligned to the left",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
       "semantic_tags": [
@@ -5028,7 +5037,7 @@
       "source_library": "tabler",
       "source_name": "align_left_2",
       "label": "Align Left",
-      "depicts": "A formatting alignment control.",
+      "depicts": "Three left-aligned horizontal lines beside a vertical guide line",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
       "semantic_tags": [
@@ -5059,7 +5068,7 @@
       "source_library": "tabler",
       "source_name": "align_right",
       "label": "Align Right",
-      "depicts": "A formatting alignment control.",
+      "depicts": "Three horizontal lines aligned to the right",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
       "semantic_tags": [
@@ -5090,7 +5099,7 @@
       "source_library": "tabler",
       "source_name": "align_right_2",
       "label": "Align Right",
-      "depicts": "A formatting alignment control.",
+      "depicts": "Three right-aligned horizontal lines beside a vertical guide line",
       "purpose": "Show text or layout alignment inside a formatted surface.",
       "category": "data_controls",
       "semantic_tags": [
@@ -5121,7 +5130,7 @@
       "source_library": "tabler",
       "source_name": "corner_down_left",
       "label": "Move Down Left",
-      "depicts": "A directional arrow pointing down left.",
+      "depicts": "an arrow that bends downward then turns left",
       "purpose": "Show moving, stepping, or navigating down left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5152,7 +5161,7 @@
       "source_library": "tabler",
       "source_name": "corner_down_right",
       "label": "Move Down Right",
-      "depicts": "A directional arrow pointing down right.",
+      "depicts": "an arrow that bends downward then turns right",
       "purpose": "Show moving, stepping, or navigating down right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5183,7 +5192,7 @@
       "source_library": "tabler",
       "source_name": "corner_left_down",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "an arrow that goes left then bends downward",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5215,7 +5224,7 @@
       "source_library": "tabler",
       "source_name": "corner_left_up",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "an arrow that goes left then bends upward",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5247,7 +5256,7 @@
       "source_library": "tabler",
       "source_name": "corner_right_down",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "an arrow that goes right then bends downward",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5279,7 +5288,7 @@
       "source_library": "tabler",
       "source_name": "corner_right_up",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "an arrow that goes right then bends upward",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5311,7 +5320,7 @@
       "source_library": "tabler",
       "source_name": "corner_up_left",
       "label": "Move Up Left",
-      "depicts": "A directional arrow pointing up left.",
+      "depicts": "an arrow that goes upward then bends left",
       "purpose": "Show moving, stepping, or navigating up left within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5342,7 +5351,7 @@
       "source_library": "tabler",
       "source_name": "corner_up_right",
       "label": "Move Up Right",
-      "depicts": "A directional arrow pointing up right.",
+      "depicts": "an arrow that goes upward then bends right",
       "purpose": "Show moving, stepping, or navigating up right within a layout, list, map, or directional interface.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5373,7 +5382,7 @@
       "source_library": "tabler",
       "source_name": "adjustments_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Three vertical slider controls with double angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -5400,7 +5409,7 @@
       "source_library": "tabler",
       "source_name": "arrow_autofit_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Open corner frame with a downward arrow on the right side",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5429,7 +5438,7 @@
       "source_library": "tabler",
       "source_name": "arrow_autofit_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Open corner frame with a leftward arrow along the bottom edge",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5460,7 +5469,7 @@
       "source_library": "tabler",
       "source_name": "arrow_autofit_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Open corner frame with a rightward arrow along the bottom edge",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5491,7 +5500,7 @@
       "source_library": "tabler",
       "source_name": "arrow_autofit_up",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "Open corner frame with an upward arrow on the right side",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5520,7 +5529,7 @@
       "source_library": "tabler",
       "source_name": "arrow_badge_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Downward chevron-shaped arrow inside a badge outline",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5549,7 +5558,7 @@
       "source_library": "tabler",
       "source_name": "arrow_badge_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Left-pointing chevron-shaped arrow inside a badge outline",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5580,7 +5589,7 @@
       "source_library": "tabler",
       "source_name": "arrow_badge_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Right-pointing chevron-shaped arrow inside a badge outline",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5611,7 +5620,7 @@
       "source_library": "tabler",
       "source_name": "arrow_badge_up",
       "label": "Move Up",
-      "depicts": "An upward arrow or movement cue.",
+      "depicts": "Upward chevron-shaped arrow inside a badge outline",
       "purpose": "Show upward movement, upward navigation, or moving an item to a higher position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5640,7 +5649,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Downward arrow positioned below a horizontal bar",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5669,7 +5678,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Left-pointing arrow beside a vertical bar on the right",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5700,7 +5709,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Right-pointing arrow beside a vertical bar on the left",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5731,7 +5740,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_to_down",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Downward arrow above a horizontal bar",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5761,7 +5770,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_to_down_dashed",
       "label": "Move Down",
-      "depicts": "A downward arrow or movement cue.",
+      "depicts": "Downward arrow above a dashed horizontal bar",
       "purpose": "Show downward movement, downward navigation, or moving an item to a lower position.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5792,7 +5801,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_to_left",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Left-pointing arrow to the right of a vertical bar",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5824,7 +5833,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_to_left_dashed",
       "label": "Back",
-      "depicts": "A left-facing arrow or backward navigation cue.",
+      "depicts": "Left-pointing arrow to the right of a dashed vertical bar",
       "purpose": "Show a back action or a move to the previous screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5857,7 +5866,7 @@
       "source_library": "tabler",
       "source_name": "arrow_bar_to_right",
       "label": "Forward",
-      "depicts": "A right-facing arrow or forward navigation cue.",
+      "depicts": "Right-pointing arrow to the left of a vertical bar",
       "purpose": "Show a forward action or a move to the next screen, panel, or step.",
       "category": "navigation_interface",
       "semantic_tags": [
@@ -5889,7 +5898,7 @@
       "source_library": "tabler",
       "source_name": "basket_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Shopping basket with double angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -5916,7 +5925,7 @@
       "source_library": "tabler",
       "source_name": "camera_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "Camera body with double angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -5943,7 +5952,7 @@
       "source_library": "tabler",
       "source_name": "cloud_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a cloud with angle brackets below it",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -5970,7 +5979,7 @@
       "source_library": "tabler",
       "source_name": "code_asterisk",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with an asterisk between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -5997,7 +6006,7 @@
       "source_library": "tabler",
       "source_name": "code_circle",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets inside a circle",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6024,7 +6033,7 @@
       "source_library": "tabler",
       "source_name": "code_circle_2",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets inside a circle with a small mark at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6053,7 +6062,7 @@
       "source_library": "tabler",
       "source_name": "code_dots",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with three horizontal dots between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6080,7 +6089,7 @@
       "source_library": "tabler",
       "source_name": "code_minus",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with a minus sign between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6107,7 +6116,7 @@
       "source_library": "tabler",
       "source_name": "code_off",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with a diagonal line through them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6134,7 +6143,7 @@
       "source_library": "tabler",
       "source_name": "code_variable",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with an underscore between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6161,7 +6170,7 @@
       "source_library": "tabler",
       "source_name": "code_variable_minus",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a pair of angle brackets with an underscore and minus sign between them",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6190,7 +6199,7 @@
       "source_library": "tabler",
       "source_name": "device_desktop_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a desktop monitor with angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6219,7 +6228,7 @@
       "source_library": "tabler",
       "source_name": "device_imac_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "an iMac-style monitor on a stand with angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6248,7 +6257,7 @@
       "source_library": "tabler",
       "source_name": "device_ipad_code",
       "label": "Code",
-      "depicts": "A technical or AI-oriented symbol used for system behavior and tooling.",
+      "depicts": "a tablet device in portrait orientation with angle brackets at the lower right",
       "purpose": "Show source code, markup, structured syntax, or developer-facing code views.",
       "category": "engineering_developer_tools",
       "semantic_tags": [
@@ -6277,7 +6286,7 @@
       "source_library": "tabler",
       "source_name": "device_mobile_message",
       "label": "Message",
-      "depicts": "A message or mail symbol used for communication and message flow.",
+      "depicts": "a mobile phone with a message bubble at the lower right",
       "purpose": "Show messages, conversation, or a communication surface.",
       "category": "communication_social",
       "semantic_tags": [

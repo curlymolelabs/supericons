@@ -1,0 +1,113 @@
+[
+  {
+    "icon_id": "mingcute:music",
+    "source_library": "mingcute",
+    "source_name": "music",
+    "label": "Music",
+    "depicts": "Beamed musical note with two round note heads and one top bar",
+    "use_when": "Use when the interface wants a double note symbol with a connecting top beam.",
+    "avoid_when": "Do not use for the single note or circular note icons when two note heads are visible.",
+    "semantic_tags": [
+      "audio icon",
+      "music",
+      "music note",
+      "song note"
+    ],
+    "synonyms": [
+      "audio icon",
+      "music",
+      "music note",
+      "song note"
+    ]
+  },
+  {
+    "icon_id": "mingcute:music_2",
+    "source_library": "mingcute",
+    "source_name": "music_2",
+    "label": "Music",
+    "depicts": "Single musical note with one round head and a short flag at the top",
+    "use_when": "Use when the interface wants one simple music note instead of a beamed pair.",
+    "avoid_when": "Do not use for the double note or circular note icons when only one note head should show.",
+    "semantic_tags": [
+      "2",
+      "audio note",
+      "music",
+      "music note",
+      "single note"
+    ],
+    "synonyms": [
+      "2",
+      "audio note",
+      "music",
+      "music note",
+      "single note"
+    ]
+  },
+  {
+    "icon_id": "mingcute:music_3",
+    "source_library": "mingcute",
+    "source_name": "music_3",
+    "label": "Music",
+    "depicts": "Round ring icon with one single note head inside the circle",
+    "use_when": "Use when the interface wants a music note enclosed inside a circular ring frame.",
+    "avoid_when": "Do not use for the free standing note icons when the outer ring needs to remain visible.",
+    "semantic_tags": [
+      "3",
+      "audio ring",
+      "music",
+      "music ring",
+      "note icon"
+    ],
+    "synonyms": [
+      "3",
+      "audio ring",
+      "music",
+      "music ring",
+      "note icon"
+    ]
+  },
+  {
+    "icon_id": "mingcute:headphone",
+    "source_library": "mingcute",
+    "source_name": "headphone",
+    "label": "Headphone",
+    "depicts": "Over ear headphone outline with a round headband and angled ear pads",
+    "use_when": "Use when the interface wants over ear headphones with a rounded headband and angled pads.",
+    "avoid_when": "Do not use for the straighter headphone frame when the round headband curve matters.",
+    "semantic_tags": [
+      "audio headset",
+      "headphone",
+      "headphones",
+      "music headset"
+    ],
+    "synonyms": [
+      "audio headset",
+      "headphone",
+      "headphones",
+      "music headset"
+    ]
+  },
+  {
+    "icon_id": "mingcute:headphone_2",
+    "source_library": "mingcute",
+    "source_name": "headphone_2",
+    "label": "Headphone",
+    "depicts": "Headphone outline with a tall U shaped band and straight rounded ear pads",
+    "use_when": "Use when the interface wants headphones with a straighter U shaped band and vertical ear pads.",
+    "avoid_when": "Do not use for the rounder headphone icon when the tall U band should remain visible.",
+    "semantic_tags": [
+      "2",
+      "audio headset",
+      "headphone",
+      "headphones",
+      "headset"
+    ],
+    "synonyms": [
+      "2",
+      "audio headset",
+      "headphone",
+      "headphones",
+      "headset"
+    ]
+  }
+]

@@ -2,20 +2,7 @@
   "schema_version": "1.0.0",
   "batches": {
     "single-model-batch-01": {
-      "approve_for_import": [
-        "lucide:bot-message-square",
-        "lucide:brain-circuit",
-        "lucide:scan-search",
-        "lucide:workflow",
-        "tabler:circle-check",
-        "tabler:alert-circle",
-        "tabler:shield-check",
-        "tabler:trending-up",
-        "tabler:ban",
-        "tabler:circle-x",
-        "tabler:toggle-right",
-        "tabler:trophy"
-      ],
+      "approve_for_import": [],
       "hold_for_editor_review": [],
       "keep_as_reviewed_draft": []
     },
@@ -27,25 +14,13 @@
         "material:search",
         "material:settings",
         "material:arrow_back",
-        "material:arrow_forward",
-        "lucide:binary",
-        "lucide:blocks",
-        "lucide:code-xml",
-        "tabler:alert-triangle",
-        "tabler:power"
+        "material:arrow_forward"
       ],
       "hold_for_editor_review": [],
       "keep_as_reviewed_draft": []
     },
     "single-model-batch-03": {
-      "approve_for_import": [
-        "tabler:send",
-        "tabler:filter",
-        "tabler:trash",
-        "tabler:refresh",
-        "lucide:circuit-board",
-        "lucide:search-code"
-      ],
+      "approve_for_import": [],
       "hold_for_editor_review": [
         {
           "icon_id": "tabler:link",
@@ -76,56 +51,12 @@
       ]
     },
     "editor-review-batch-01": {
-      "approve_for_import": [
-        "lucide:file-search",
-        "lucide:folder-search",
-        "lucide:scan-eye",
-        "lucide:server-cog",
-        "tabler:cloud-check",
-        "tabler:help-circle",
-        "tabler:info-circle",
-        "tabler:mail-check",
-        "tabler:message-check",
-        "tabler:progress-check",
-        "tabler:bell",
-        "tabler:clipboard-check",
-        "tabler:clock",
-        "tabler:eye",
-        "tabler:eye-off",
-        "tabler:hourglass",
-        "tabler:key",
-        "tabler:list-check",
-        "tabler:loader-2",
-        "tabler:lock",
-        "tabler:lock-open",
-        "tabler:rosette-discount-check",
-        "tabler:thumb-down",
-        "tabler:thumb-up",
-        "tabler:trending-down",
-        "tabler:wifi",
-        "tabler:sort-ascending"
-      ],
+      "approve_for_import": [],
       "hold_for_editor_review": [],
       "keep_as_reviewed_draft": []
     },
     "visual-review-batch-01": {
-      "approve_for_import": [
-        "lucide:database-zap",
-        "lucide:message-circle-code",
-        "lucide:message-square-code",
-        "lucide:network",
-        "lucide:layers-3",
-        "lucide:messages-square",
-        "lucide:router",
-        "tabler:archive",
-        "tabler:bookmark",
-        "tabler:flag",
-        "tabler:heart",
-        "tabler:star",
-        "tabler:mood-sad",
-        "tabler:mood-smile",
-        "tabler:pinned"
-      ],
+      "approve_for_import": [],
       "hold_for_editor_review": [
         {
           "icon_id": "lucide:plug-zap",

@@ -1,0 +1,411 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:earth",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_earth_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:earth",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "earth",
+      "label": "Earth",
+      "purpose": "Show earth as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "earth"
+      ],
+      "use_when": "Use when the interface refers directly to earth as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing earth.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "earth"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:earth",
+      "source_library": "mingcute",
+      "source_name": "earth",
+      "label": "Earth",
+      "depicts_observation": "Globe outline with vertical longitude lines and horizontal latitude lines",
+      "popular_reading": "Full grid globe",
+      "plausible_readings": [
+        "globe",
+        "world grid",
+        "earth icon"
+      ],
+      "context_bias": "Use when the interface wants the most complete globe grid with both meridians and latitude bands.",
+      "ambiguity_note": "Do not use for the simpler globe variants when the fuller grid pattern should stay visible.",
+      "search_hints": [
+        "Earth",
+        "globe",
+        "world grid",
+        "earth icon",
+        "Full grid globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/earth_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the densest globe grid with multiple curved vertical and horizontal bands."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:earth",
+      "source_library": "mingcute",
+      "source_name": "earth",
+      "label": "Earth",
+      "depicts": "Globe outline with vertical longitude lines and horizontal latitude lines",
+      "use_when": "Use when the interface wants the most complete globe grid with both meridians and latitude bands.",
+      "avoid_when": "Do not use for the simpler globe variants when the fuller grid pattern should stay visible.",
+      "semantic_tags": [
+        "earth",
+        "earth icon",
+        "globe",
+        "world grid"
+      ],
+      "synonyms": [
+        "earth",
+        "earth icon",
+        "globe",
+        "world grid"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:earth_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_earth_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:earth_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "earth_2",
+      "label": "Earth",
+      "purpose": "Show earth as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "earth",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to earth as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing earth.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "earth",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:earth_2",
+      "source_library": "mingcute",
+      "source_name": "earth_2",
+      "label": "Earth",
+      "depicts_observation": "Globe outline with two curved side lines and one horizontal equator line",
+      "popular_reading": "Simple globe",
+      "plausible_readings": [
+        "earth",
+        "globe",
+        "world sphere"
+      ],
+      "context_bias": "Use when the interface needs a simpler globe with one equator and two side meridians.",
+      "ambiguity_note": "Do not use for the fuller globe grid when the cleaner three band structure matters.",
+      "search_hints": [
+        "Earth",
+        "earth",
+        "globe",
+        "world sphere",
+        "Simple globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/earth_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot reduces the globe to one equator band with broad curved side meridians."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:earth_2",
+      "source_library": "mingcute",
+      "source_name": "earth_2",
+      "label": "Earth",
+      "depicts": "Globe outline with two curved side lines and one horizontal equator line",
+      "use_when": "Use when the interface needs a simpler globe with one equator and two side meridians.",
+      "avoid_when": "Do not use for the fuller globe grid when the cleaner three band structure matters.",
+      "semantic_tags": [
+        "2",
+        "earth",
+        "globe",
+        "world sphere"
+      ],
+      "synonyms": [
+        "2",
+        "earth",
+        "globe",
+        "world sphere"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:earth_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_earth_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:earth_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "earth_3",
+      "label": "Earth",
+      "purpose": "Show earth as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "earth",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to earth as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing earth.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "earth",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:earth_3",
+      "source_library": "mingcute",
+      "source_name": "earth_3",
+      "label": "Earth",
+      "depicts_observation": "Globe outline with a top cap panel side lines and one equator line",
+      "popular_reading": "Capped globe",
+      "plausible_readings": [
+        "globe cap",
+        "world grid",
+        "earth panel"
+      ],
+      "context_bias": "Use when the interface wants a globe whose top arc is split into a visible cap section.",
+      "ambiguity_note": "Do not use for the standard globe when the top cap cut should remain visible.",
+      "search_hints": [
+        "Earth",
+        "globe cap",
+        "world grid",
+        "earth panel",
+        "Capped globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/earth_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds a small top cap panel above the equator and side meridians."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:earth_3",
+      "source_library": "mingcute",
+      "source_name": "earth_3",
+      "label": "Earth",
+      "depicts": "Globe outline with a top cap panel side lines and one equator line",
+      "use_when": "Use when the interface wants a globe whose top arc is split into a visible cap section.",
+      "avoid_when": "Do not use for the standard globe when the top cap cut should remain visible.",
+      "semantic_tags": [
+        "3",
+        "earth",
+        "earth panel",
+        "globe cap",
+        "world grid"
+      ],
+      "synonyms": [
+        "3",
+        "earth",
+        "earth panel",
+        "globe cap",
+        "world grid"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:earth_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_earth_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:earth_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "earth_4",
+      "label": "Earth",
+      "purpose": "Show earth as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "earth",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to earth as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing earth.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "earth",
+        "4"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:earth_4",
+      "source_library": "mingcute",
+      "source_name": "earth_4",
+      "label": "Earth",
+      "depicts_observation": "Globe outline with two tall inner lobes and one horizontal equator line",
+      "popular_reading": "Two lobe globe",
+      "plausible_readings": [
+        "earth oval",
+        "globe",
+        "world symbol"
+      ],
+      "context_bias": "Use when the interface needs the most minimal globe made from two tall inner lobes and an equator.",
+      "ambiguity_note": "Do not use for the fuller grid globes when only two inner vertical lobes are shown.",
+      "search_hints": [
+        "Earth",
+        "earth oval",
+        "globe",
+        "world symbol",
+        "Two lobe globe"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/earth_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot strips the globe down to two tall inner ovals plus one central horizontal band."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:earth_4",
+      "source_library": "mingcute",
+      "source_name": "earth_4",
+      "label": "Earth",
+      "depicts": "Globe outline with two tall inner lobes and one horizontal equator line",
+      "use_when": "Use when the interface needs the most minimal globe made from two tall inner lobes and an equator.",
+      "avoid_when": "Do not use for the fuller grid globes when only two inner vertical lobes are shown.",
+      "semantic_tags": [
+        "4",
+        "earth",
+        "earth oval",
+        "globe",
+        "world symbol"
+      ],
+      "synonyms": [
+        "4",
+        "earth",
+        "earth oval",
+        "globe",
+        "world symbol"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:book_6",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_book_6_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:book_6",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "book_6",
+      "label": "Book",
+      "purpose": "Show book as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "book",
+        "6"
+      ],
+      "use_when": "Use when the interface refers directly to book as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing book.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "book",
+        "6"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:book_6",
+      "source_library": "mingcute",
+      "source_name": "book_6",
+      "label": "Book",
+      "depicts_observation": "Open book outline with softly curved bottom edges and two facing page panels",
+      "popular_reading": "Curved open book",
+      "plausible_readings": [
+        "open pages",
+        "book spread",
+        "reading book"
+      ],
+      "context_bias": "Use when the interface wants an open book whose bottom edges curve downward more softly than the flat book icon.",
+      "ambiguity_note": "Do not use for the straighter open book when the wavy lower page edges matter visually.",
+      "search_hints": [
+        "Book",
+        "open pages",
+        "book spread",
+        "reading book",
+        "Curved open book"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/book_6_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot differs from book by using softer curved lower page edges on the open spread."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:book_6",
+      "source_library": "mingcute",
+      "source_name": "book_6",
+      "label": "Book",
+      "depicts": "Open book outline with softly curved bottom edges and two facing page panels",
+      "use_when": "Use when the interface wants an open book whose bottom edges curve downward more softly than the flat book icon.",
+      "avoid_when": "Do not use for the straighter open book when the wavy lower page edges matter visually.",
+      "semantic_tags": [
+        "6",
+        "book",
+        "book spread",
+        "open pages",
+        "reading book"
+      ],
+      "synonyms": [
+        "6",
+        "book",
+        "book spread",
+        "open pages",
+        "reading book"
+      ]
+    }
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-032",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 032",
+  "review_goal": "Differentiate five MingCute cursor and finger variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:cursor",
+      "screenshot_file_name": "mingcute_cursor_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/development/cursor_line.svg",
+      "depicts_observation": "Solid pointer arrow outline leaning slightly left with a thick lower tail",
+      "popular_reading": "Pointer arrow",
+      "plausible_readings": ["cursor", "mouse pointer", "arrow pointer"],
+      "context_bias": "Use when the interface wants a simple pointer arrow without click sparks or open center lines.",
+      "ambiguity_note": "Do not use for the open arrow or click pointer when the thick solid arrow body matters.",
+      "selection_reason": "The screenshot shows the fullest triangular pointer shape with a thick lower tail segment."
+    },
+    {
+      "icon_id": "mingcute:cursor_2",
+      "screenshot_file_name": "mingcute_cursor_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/development/cursor_2_line.svg",
+      "depicts_observation": "Open pointer arrow outline leaning right with a separated lower tail line",
+      "popular_reading": "Open cursor arrow",
+      "plausible_readings": ["cursor outline", "arrow pointer", "open pointer"],
+      "context_bias": "Use when the interface wants a lighter open pointer shape instead of a solid triangular arrow.",
+      "ambiguity_note": "Do not use for the solid pointer when the open center and separated tail are visible.",
+      "selection_reason": "The screenshot opens the arrow center and detaches the lower tail into a separate line."
+    },
+    {
+      "icon_id": "mingcute:cursor_3",
+      "screenshot_file_name": "mingcute_cursor_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/development/cursor_3_line.svg",
+      "depicts_observation": "Pointer arrow outline with four short click rays at the upper left",
+      "popular_reading": "Click cursor",
+      "plausible_readings": ["click pointer", "cursor tap", "active pointer"],
+      "context_bias": "Use when the interface wants a cursor icon that explicitly shows a click or tap burst.",
+      "ambiguity_note": "Do not use for the plain pointer arrows when the short click rays are part of the visual.",
+      "selection_reason": "The screenshot adds four short click rays around the pointer tip area."
+    },
+    {
+      "icon_id": "mingcute:hand_finger",
+      "screenshot_file_name": "mingcute_hand_finger_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hand_finger_line.svg",
+      "depicts_observation": "Rounded hand outline with one raised index finger and a closed palm loop",
+      "popular_reading": "Raised finger hand",
+      "plausible_readings": ["index finger", "hand pointer", "touch hand"],
+      "context_bias": "Use when the interface wants a touch hand icon built as one rounded palm loop and one raised finger.",
+      "ambiguity_note": "Do not use for the detailed finger hand when the palm should stay as one simple loop.",
+      "selection_reason": "The screenshot shows a rounded palm loop with one straight raised finger and no extra finger detail."
+    },
+    {
+      "icon_id": "mingcute:hand_finger_2",
+      "screenshot_file_name": "mingcute_hand_finger_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/hand_finger_2_line.svg",
+      "depicts_observation": "Hand outline with one raised index finger and several curved finger bumps",
+      "popular_reading": "Detailed finger hand",
+      "plausible_readings": ["hand pointer", "touch finger", "raised hand"],
+      "context_bias": "Use when the interface wants the raised finger hand that also shows the other curled finger bumps.",
+      "ambiguity_note": "Do not use for the simpler looped palm hand when the extra finger bumps need to remain visible.",
+      "selection_reason": "The screenshot adds multiple curved finger bumps along the right side of the hand."
+    }
+  ]
+}

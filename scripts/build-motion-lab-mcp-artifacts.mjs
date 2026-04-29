@@ -79,6 +79,7 @@ writeJson(join(mcpGeneratedDir, 'motion-lab-baseline.json'), baselinePayload);
 writeHostedTs(join(hostedSharedDir, 'generated.ts'), hostedPayload);
 copyFileSync(join(repoRoot, 'material-export.js'), join(repoRoot, 'mcp', 'material-export.js'));
 copyFileSync(join(repoRoot, 'public', 'icon-index.json'), join(mcpPublicDir, 'icon-index.json'));
+copyFileSync(join(repoRoot, 'public', 'icon-index-solid.json'), join(mcpPublicDir, 'icon-index-solid.json'));
 copyFileSync(join(repoRoot, 'public', 'synonyms.json'), join(mcpPublicDir, 'synonyms.json'));
 
 console.log(`Motion Lab MCP artifacts built: ${baselinePresets.length} presets.`);

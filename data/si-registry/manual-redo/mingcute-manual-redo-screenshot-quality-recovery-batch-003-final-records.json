@@ -1,0 +1,143 @@
+[
+  {
+    "icon_id": "mingcute:message_1",
+    "source_library": "mingcute",
+    "source_name": "message_1",
+    "label": "Message",
+    "depicts": "Rounded square speech bubble with two centered dots and a bottom notch",
+    "use_when": "Use when the interface needs a basic chat or message symbol with a two dot conversation cue.",
+    "avoid_when": "Do not use for text document or notification cards when the visible form is clearly a speech bubble.",
+    "semantic_tags": [
+      "chat",
+      "chat bubble",
+      "comment box",
+      "communication",
+      "conversation",
+      "message",
+      "message icon",
+      "reply"
+    ],
+    "synonyms": [
+      "chat",
+      "chat bubble",
+      "comment box",
+      "conversation",
+      "message",
+      "message bubble",
+      "message icon",
+      "reply"
+    ]
+  },
+  {
+    "icon_id": "mingcute:message_1_ai",
+    "source_library": "mingcute",
+    "source_name": "message_1_ai",
+    "label": "Assistant Message",
+    "depicts": "Rounded square speech bubble with two dots and a spark star at upper right",
+    "use_when": "Use when the interface marks a conversation bubble as AI assisted automated or assistant generated.",
+    "avoid_when": "Do not use for ordinary chat bubbles when the visible spark star cue is absent from the meaning.",
+    "semantic_tags": [
+      "agent reply",
+      "ai communication",
+      "ai message",
+      "assistant",
+      "assistant chat",
+      "assistant message",
+      "generated message",
+      "smart reply"
+    ],
+    "synonyms": [
+      "agent communication",
+      "ai message",
+      "assistant chat",
+      "assistant message",
+      "assistant reply",
+      "generated reply",
+      "smart reply"
+    ]
+  },
+  {
+    "icon_id": "mingcute:message_2",
+    "source_library": "mingcute",
+    "source_name": "message_2",
+    "label": "Message",
+    "depicts": "Square speech bubble outline with an open center and a bottom left tail",
+    "use_when": "Use when the interface needs a plain message bubble without text dots or extra assistant decoration.",
+    "avoid_when": "Do not use for filled conversation states when the visible bubble interior is intentionally left empty.",
+    "semantic_tags": [
+      "chat",
+      "chat outline",
+      "comment box",
+      "communication",
+      "conversation",
+      "empty message",
+      "message",
+      "reply"
+    ],
+    "synonyms": [
+      "chat",
+      "chat outline",
+      "comment box",
+      "conversation",
+      "empty message",
+      "message",
+      "message bubble",
+      "reply"
+    ]
+  },
+  {
+    "icon_id": "mingcute:message_2_ai",
+    "source_library": "mingcute",
+    "source_name": "message_2_ai",
+    "label": "Assistant Message",
+    "depicts": "Square speech bubble outline with a spark star at upper right and bottom tail",
+    "use_when": "Use when the interface needs an empty chat bubble that is specifically marked as assistant or AI related.",
+    "avoid_when": "Do not use for standard message outlines when the visible spark star cue is not part of the meaning.",
+    "semantic_tags": [
+      "agent reply",
+      "ai bubble",
+      "ai communication",
+      "assistant",
+      "assistant message",
+      "generated message",
+      "smart chat"
+    ],
+    "synonyms": [
+      "agent communication",
+      "ai bubble",
+      "ai message",
+      "assistant message",
+      "assistant reply",
+      "generated reply",
+      "smart chat"
+    ]
+  },
+  {
+    "icon_id": "mingcute:message_3",
+    "source_library": "mingcute",
+    "source_name": "message_3",
+    "label": "Message",
+    "depicts": "Round speech bubble with two centered dots and a short lower tail",
+    "use_when": "Use when the interface wants a softer rounded conversation symbol rather than the square message variants.",
+    "avoid_when": "Do not use for the square bubble family when the visible circular outline is an important distinction.",
+    "semantic_tags": [
+      "chat",
+      "comment icon",
+      "communication",
+      "conversation",
+      "message",
+      "message bubble",
+      "reply",
+      "round chat"
+    ],
+    "synonyms": [
+      "chat",
+      "comment icon",
+      "conversation",
+      "message",
+      "message bubble",
+      "reply",
+      "round chat"
+    ]
+  }
+]

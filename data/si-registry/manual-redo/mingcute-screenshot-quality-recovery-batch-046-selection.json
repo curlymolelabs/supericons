@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-046",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 046",
+  "review_goal": "Differentiate bowl, bridge, and briefcase variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:bowl_2",
+      "screenshot_file_name": "mingcute_bowl_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/food/bowl_2_line.svg",
+      "depicts_observation": "Round bowl with three steam line curls rising above the rim",
+      "popular_reading": "Hot bowl",
+      "plausible_readings": ["steaming bowl", "food bowl", "hot dish"],
+      "context_bias": "Use when the interface wants a hot bowl with steam marks clearly rising above it.",
+      "ambiguity_note": "Do not use for the plain bowl when no steam should appear above the rim.",
+      "selection_reason": "The screenshot adds three steam curls above the same bowl shape."
+    },
+    {
+      "icon_id": "mingcute:bridge",
+      "screenshot_file_name": "mingcute_bridge_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/bridge_line.svg",
+      "depicts_observation": "Suspension bridge frame with two towers one curved line cable above deck rails",
+      "popular_reading": "Suspension bridge",
+      "plausible_readings": ["bridge icon", "city bridge", "landmark bridge"],
+      "context_bias": "Use when the interface wants a suspension bridge with two towers and hanging cable lines.",
+      "ambiguity_note": "Do not use for the arched bridge when the main span should be a single arch over water.",
+      "selection_reason": "The screenshot shows bridge towers, a curved suspension cable, and rail segments across the deck."
+    },
+    {
+      "icon_id": "mingcute:bridge_2",
+      "screenshot_file_name": "mingcute_bridge_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/bridge_2_line.svg",
+      "depicts_observation": "Arched bridge with three top posts and two short water line marks below",
+      "popular_reading": "Arched bridge",
+      "plausible_readings": ["bridge icon", "stone bridge", "city bridge"],
+      "context_bias": "Use when the interface wants an arched bridge silhouette over short water lines below.",
+      "ambiguity_note": "Do not use for the suspension bridge when two towers and hanging cables should remain visible.",
+      "selection_reason": "The screenshot simplifies the bridge into one arch with small posts and water marks underneath."
+    },
+    {
+      "icon_id": "mingcute:briefcase",
+      "screenshot_file_name": "mingcute_briefcase_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/briefcase_line.svg",
+      "depicts_observation": "Briefcase with a top handle lid stripe and one centered clasp dot",
+      "popular_reading": "Briefcase clasp",
+      "plausible_readings": ["briefcase", "work bag", "business case"],
+      "context_bias": "Use when the interface wants a briefcase with a flat handle and one small clasp under the lid stripe.",
+      "ambiguity_note": "Do not use for the lock plate briefcase when the front should show an oval lock shape.",
+      "selection_reason": "The screenshot uses a boxy briefcase with one top handle and one small clasp dot on the front."
+    },
+    {
+      "icon_id": "mingcute:briefcase_2",
+      "screenshot_file_name": "mingcute_briefcase_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/briefcase_2_line.svg",
+      "depicts_observation": "Briefcase with a half circle handle above one oval lock plate",
+      "popular_reading": "Locked briefcase",
+      "plausible_readings": ["briefcase", "work bag", "business case"],
+      "context_bias": "Use when the interface wants a briefcase with a rounded handle and an oval lock plate in front.",
+      "ambiguity_note": "Do not use for the clasp dot briefcase when the front closure should stay small and simple.",
+      "selection_reason": "The screenshot rounds the handle and replaces the clasp dot with a larger oval lock plate."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-025",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 025",
+  "review_goal": "Differentiate five MingCute rewind and back variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:rewind_backward_5",
+      "screenshot_file_name": "mingcute_rewind_backward_5_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/rewind_backward_5_line.svg",
+      "depicts_observation": "Circular rewind arrow outline with the number five centered inside the ring",
+      "popular_reading": "Rewind five",
+      "plausible_readings": ["rewind 5", "back 5 seconds", "media rewind"],
+      "context_bias": "Use when the interface wants a rewind timer marked with the number five.",
+      "ambiguity_note": "Do not use for other rewind counts when the centered number five is the key difference.",
+      "selection_reason": "The screenshot shows the same circular rewind arrow family with a bold number five inside."
+    },
+    {
+      "icon_id": "mingcute:rewind_backward_10",
+      "screenshot_file_name": "mingcute_rewind_backward_10_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/rewind_backward_10_line.svg",
+      "depicts_observation": "Circular rewind arrow outline with the number ten centered inside the ring",
+      "popular_reading": "Rewind ten",
+      "plausible_readings": ["rewind 10", "back 10 seconds", "media rewind"],
+      "context_bias": "Use when the interface wants a rewind timer marked with the number ten.",
+      "ambiguity_note": "Do not use for the other rewind counts when the centered number ten must remain visible.",
+      "selection_reason": "The screenshot matches the rewind ring family but changes the inner number to ten."
+    },
+    {
+      "icon_id": "mingcute:rewind_backward_15",
+      "screenshot_file_name": "mingcute_rewind_backward_15_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/rewind_backward_15_line.svg",
+      "depicts_observation": "Circular rewind arrow outline with the number fifteen centered inside the ring",
+      "popular_reading": "Rewind fifteen",
+      "plausible_readings": ["rewind 15", "back 15 seconds", "media rewind"],
+      "context_bias": "Use when the interface wants the rewind timer variant marked with fifteen.",
+      "ambiguity_note": "Do not use for the five ten or thirty variants when the number fifteen matters.",
+      "selection_reason": "The screenshot keeps the rewind ring and swaps the inner label to fifteen."
+    },
+    {
+      "icon_id": "mingcute:rewind_backward_30",
+      "screenshot_file_name": "mingcute_rewind_backward_30_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/media/rewind_backward_30_line.svg",
+      "depicts_observation": "Circular rewind arrow outline with the number thirty centered inside the ring",
+      "popular_reading": "Rewind thirty",
+      "plausible_readings": ["rewind 30", "back 30 seconds", "media rewind"],
+      "context_bias": "Use when the interface wants the largest rewind timer in this circular ring family.",
+      "ambiguity_note": "Do not use for the lower rewind counts when the number thirty must stay visible.",
+      "selection_reason": "The screenshot is the same rewind ring family with the bold number thirty at center."
+    },
+    {
+      "icon_id": "mingcute:back",
+      "screenshot_file_name": "mingcute_back_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/arrow/back_line.svg",
+      "depicts_observation": "Left hooked return arrow with a straight lower line and rounded outer bend",
+      "popular_reading": "Back arrow",
+      "plausible_readings": ["return arrow", "back", "left arrow"],
+      "context_bias": "Use when the interface wants a plain back or return arrow rather than a numbered media rewind icon.",
+      "ambiguity_note": "Do not use for circular rewind timers when the icon should stay as one simple return arrow.",
+      "selection_reason": "The screenshot shows a plain hooked back arrow without a circle or countdown number."
+    }
+  ]
+}

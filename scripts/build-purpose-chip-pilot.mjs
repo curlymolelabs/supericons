@@ -107,7 +107,7 @@ async function main() {
     visual_review_input_count: visualReviewInputs.length,
     visual_payload_status_counts: visualPayloadStatusCounts,
     material_coverage: materialCoverage,
-    confidence_bands: reviewQueueSummary.byBand,
+    routing_bands: reviewQueueSummary.byBand,
     review_queue_counts: reviewQueueSummary.byOutcome,
     approved_record_count: approvedRecords.length,
     approved_import_path: 'data/si-registry/pilot/purpose-chip/approved-records.json',

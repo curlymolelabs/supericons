@@ -1,0 +1,413 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:battery",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_battery_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:battery",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "battery",
+      "label": "Battery",
+      "purpose": "Show battery as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "battery"
+      ],
+      "use_when": "Use when the interface refers directly to battery as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing battery.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "battery"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:battery",
+      "source_library": "mingcute",
+      "source_name": "battery",
+      "label": "Battery",
+      "depicts_observation": "Battery outline with an empty body and a terminal nub on the right",
+      "popular_reading": "Empty battery",
+      "plausible_readings": [
+        "battery shell",
+        "empty battery",
+        "battery outline"
+      ],
+      "context_bias": "Use when the interface wants a battery shape without any visible charge bars.",
+      "ambiguity_note": "Do not use for the filled levels when the body should remain empty inside.",
+      "search_hints": [
+        "Battery",
+        "battery shell",
+        "empty battery",
+        "battery outline",
+        "Empty battery"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/battery_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the same battery shell used by the family but with no interior bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:battery",
+      "source_library": "mingcute",
+      "source_name": "battery",
+      "label": "Battery",
+      "depicts": "Battery outline with an empty body and a terminal nub on the right",
+      "use_when": "Use when the interface wants a battery shape without any visible charge bars.",
+      "avoid_when": "Do not use for the filled levels when the body should remain empty inside.",
+      "semantic_tags": [
+        "battery",
+        "battery outline",
+        "battery shell",
+        "empty battery"
+      ],
+      "synonyms": [
+        "battery",
+        "battery outline",
+        "battery shell",
+        "empty battery"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:battery_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_battery_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:battery_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "battery_1",
+      "label": "Battery",
+      "purpose": "Show battery as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "battery",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to battery as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing battery.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "battery",
+        "1"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:battery_1",
+      "source_library": "mingcute",
+      "source_name": "battery_1",
+      "label": "Battery",
+      "depicts_observation": "Battery outline with one vertical charge bar near the left side",
+      "popular_reading": "One bar battery",
+      "plausible_readings": [
+        "low battery",
+        "single bar battery",
+        "battery level one"
+      ],
+      "context_bias": "Use when the interface needs a low battery symbol with one visible charge segment.",
+      "ambiguity_note": "Do not use for higher charge levels when only one vertical bar should be shown.",
+      "search_hints": [
+        "Battery",
+        "low battery",
+        "single bar battery",
+        "battery level one",
+        "One bar battery"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/battery_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds exactly one interior bar inside the standard battery shell."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:battery_1",
+      "source_library": "mingcute",
+      "source_name": "battery_1",
+      "label": "Battery",
+      "depicts": "Battery outline with one vertical charge bar near the left side",
+      "use_when": "Use when the interface needs a low battery symbol with one visible charge segment.",
+      "avoid_when": "Do not use for higher charge levels when only one vertical bar should be shown.",
+      "semantic_tags": [
+        "1",
+        "battery",
+        "battery level one",
+        "low battery",
+        "single bar battery"
+      ],
+      "synonyms": [
+        "1",
+        "battery",
+        "battery level one",
+        "low battery",
+        "single bar battery"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:battery_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_battery_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:battery_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "battery_2",
+      "label": "Battery",
+      "purpose": "Show battery as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "battery",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to battery as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing battery.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "battery",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:battery_2",
+      "source_library": "mingcute",
+      "source_name": "battery_2",
+      "label": "Battery",
+      "depicts_observation": "Battery outline with two vertical charge bars inside the body",
+      "popular_reading": "Two bar battery",
+      "plausible_readings": [
+        "medium battery",
+        "two bar battery",
+        "battery level two"
+      ],
+      "context_bias": "Use when the interface needs a battery level between low and high with two bars.",
+      "ambiguity_note": "Do not use for one three or four bar levels when the count must stay at two.",
+      "search_hints": [
+        "Battery",
+        "medium battery",
+        "two bar battery",
+        "battery level two",
+        "Two bar battery"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/battery_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot clearly shows two evenly spaced charge bars inside the battery shell."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:battery_2",
+      "source_library": "mingcute",
+      "source_name": "battery_2",
+      "label": "Battery",
+      "depicts": "Battery outline with two vertical charge bars inside the body",
+      "use_when": "Use when the interface needs a battery level between low and high with two bars.",
+      "avoid_when": "Do not use for one three or four bar levels when the count must stay at two.",
+      "semantic_tags": [
+        "2",
+        "battery",
+        "battery level two",
+        "medium battery",
+        "two bar battery"
+      ],
+      "synonyms": [
+        "2",
+        "battery",
+        "battery level two",
+        "medium battery",
+        "two bar battery"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:battery_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_battery_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:battery_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "battery_3",
+      "label": "Battery",
+      "purpose": "Show battery as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "battery",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to battery as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing battery.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "battery",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:battery_3",
+      "source_library": "mingcute",
+      "source_name": "battery_3",
+      "label": "Battery",
+      "depicts_observation": "Battery outline with three vertical charge bars inside the body",
+      "popular_reading": "Three bar battery",
+      "plausible_readings": [
+        "high battery",
+        "three bar battery",
+        "battery level three"
+      ],
+      "context_bias": "Use when the interface needs a battery symbol that looks mostly charged but not full.",
+      "ambiguity_note": "Do not use for the two or four bar levels when the count of interior bars matters.",
+      "search_hints": [
+        "Battery",
+        "high battery",
+        "three bar battery",
+        "battery level three",
+        "Three bar battery"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/battery_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot increases the charge bars to three while keeping the same outer battery shell."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:battery_3",
+      "source_library": "mingcute",
+      "source_name": "battery_3",
+      "label": "Battery",
+      "depicts": "Battery outline with three vertical charge bars inside the body",
+      "use_when": "Use when the interface needs a battery symbol that looks mostly charged but not full.",
+      "avoid_when": "Do not use for the two or four bar levels when the count of interior bars matters.",
+      "semantic_tags": [
+        "3",
+        "battery",
+        "battery level three",
+        "high battery",
+        "three bar battery"
+      ],
+      "synonyms": [
+        "3",
+        "battery",
+        "battery level three",
+        "high battery",
+        "three bar battery"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:battery_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_battery_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:battery_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "battery_4",
+      "label": "Battery",
+      "purpose": "Show battery as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "battery",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to battery as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing battery.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "battery",
+        "4"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:battery_4",
+      "source_library": "mingcute",
+      "source_name": "battery_4",
+      "label": "Battery",
+      "depicts_observation": "Battery outline with four vertical charge bars filling most of the body",
+      "popular_reading": "Full battery",
+      "plausible_readings": [
+        "full battery",
+        "four bar battery",
+        "max battery"
+      ],
+      "context_bias": "Use when the interface wants the fullest battery state in this five icon battery group.",
+      "ambiguity_note": "Do not use for lower battery levels when all four charge bars should stay visible.",
+      "search_hints": [
+        "Battery",
+        "full battery",
+        "four bar battery",
+        "max battery",
+        "Full battery"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/device/battery_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the densest battery level with four interior bars spanning the shell."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:battery_4",
+      "source_library": "mingcute",
+      "source_name": "battery_4",
+      "label": "Battery",
+      "depicts": "Battery outline with four vertical charge bars filling most of the body",
+      "use_when": "Use when the interface wants the fullest battery state in this five icon battery group.",
+      "avoid_when": "Do not use for lower battery levels when all four charge bars should stay visible.",
+      "semantic_tags": [
+        "4",
+        "battery",
+        "four bar battery",
+        "full battery",
+        "max battery"
+      ],
+      "synonyms": [
+        "4",
+        "battery",
+        "four bar battery",
+        "full battery",
+        "max battery"
+      ]
+    }
+  }
+]

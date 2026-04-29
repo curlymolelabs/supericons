@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-044",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 044",
+  "review_goal": "Differentiate baseball, bed, and bedside table variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:baseball_2",
+      "screenshot_file_name": "mingcute_baseball_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/sport/baseball_2_line.svg",
+      "depicts_observation": "Baseball bat shape beside a small round ball near the upper right",
+      "popular_reading": "Baseball bat and ball",
+      "plausible_readings": ["sports bat", "baseball icon", "bat and ball"],
+      "context_bias": "Use when the interface wants a baseball bat with a separate round ball beside it.",
+      "ambiguity_note": "Do not use for the stitched baseball when the icon should stay a simple round ball.",
+      "selection_reason": "The screenshot pairs a slanted bat with a separate small ball instead of showing seam lines."
+    },
+    {
+      "icon_id": "mingcute:bed",
+      "screenshot_file_name": "mingcute_bed_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/bed_line.svg",
+      "depicts_observation": "Side view bed frame with one pillow inside one large blanket block",
+      "popular_reading": "Side bed",
+      "plausible_readings": ["bed icon", "sleep bed", "hotel bed"],
+      "context_bias": "Use when the interface wants a side view bed with a visible pillow and blanket block.",
+      "ambiguity_note": "Do not use for the front facing bed when the mattress should face the viewer directly.",
+      "selection_reason": "The screenshot shows the bed from the side with one pillow circle and one blanket rectangle."
+    },
+    {
+      "icon_id": "mingcute:bed_2",
+      "screenshot_file_name": "mingcute_bed_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/bed_2_line.svg",
+      "depicts_observation": "Front facing bed frame with one centered headboard panel and two short legs",
+      "popular_reading": "Front bed",
+      "plausible_readings": ["bed icon", "sleep bed", "hotel bed"],
+      "context_bias": "Use when the interface wants a bed seen from the front with the headboard above the mattress.",
+      "ambiguity_note": "Do not use for the side view bed when the pillow and blanket block should be seen in profile.",
+      "selection_reason": "The screenshot faces the bed forward and stacks the headboard, mattress stripe, and two legs vertically."
+    },
+    {
+      "icon_id": "mingcute:bedside_table",
+      "screenshot_file_name": "mingcute_bedside_table_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/bedside_table_line.svg",
+      "depicts_observation": "Bedside cabinet with a top drawer two door handles and two short feet",
+      "popular_reading": "Nightstand cabinet",
+      "plausible_readings": ["bedside table", "nightstand", "small cabinet"],
+      "context_bias": "Use when the interface wants a nightstand with one drawer above two cabinet doors.",
+      "ambiguity_note": "Do not use for the two door bedside cabinet when the top drawer should not be visible.",
+      "selection_reason": "The screenshot clearly separates one top drawer from two lower doors with handles."
+    },
+    {
+      "icon_id": "mingcute:bedside_table_2",
+      "screenshot_file_name": "mingcute_bedside_table_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/other/bedside_table_2_line.svg",
+      "depicts_observation": "Two door bedside cabinet with a flat top and two short feet",
+      "popular_reading": "Two door nightstand",
+      "plausible_readings": ["bedside table", "nightstand", "small cabinet"],
+      "context_bias": "Use when the interface wants a bedside cabinet made only from two doors under a flat top.",
+      "ambiguity_note": "Do not use for the drawer plus doors nightstand when a top drawer should remain visible.",
+      "selection_reason": "The screenshot removes the top drawer and keeps a simple two door cabinet shape."
+    }
+  ]
+}

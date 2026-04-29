@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-050",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 050",
+  "review_goal": "Differentiate cloud, baht, and bitcoin variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:cloud_2",
+      "screenshot_file_name": "mingcute_cloud_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/weather/cloud_2_line.svg",
+      "depicts_observation": "Rounded cloud loop with one open curl on the right side",
+      "popular_reading": "Loop cloud",
+      "plausible_readings": ["cloud icon", "weather cloud", "storage cloud"],
+      "context_bias": "Use when the interface wants a rounded cloud loop with an open curl on one side.",
+      "ambiguity_note": "Do not use for the puffy cloud when the outer outline should stay fully closed.",
+      "selection_reason": "The screenshot leaves the right side of the cloud as a curled open loop instead of a closed bump."
+    },
+    {
+      "icon_id": "mingcute:currency_baht",
+      "screenshot_file_name": "mingcute_currency_baht_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_baht_line.svg",
+      "depicts_observation": "Baht currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring baht sign",
+      "plausible_readings": ["baht symbol", "money sign", "currency icon"],
+      "context_bias": "Use when the interface wants the baht currency symbol enclosed inside a thin circular ring.",
+      "ambiguity_note": "Do not use for the standalone baht symbol when no outer ring should surround the sign.",
+      "selection_reason": "The screenshot shows the baht symbol framed by a full circular ring."
+    },
+    {
+      "icon_id": "mingcute:currency_baht_2",
+      "screenshot_file_name": "mingcute_currency_baht_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_baht_2_line.svg",
+      "depicts_observation": "Standalone baht currency sign with two rounded right loops",
+      "popular_reading": "Baht symbol",
+      "plausible_readings": ["baht symbol", "money sign", "currency icon"],
+      "context_bias": "Use when the interface wants the baht sign alone with no surrounding ring.",
+      "ambiguity_note": "Do not use for the ring baht symbol when the sign should sit inside a full circle frame.",
+      "selection_reason": "The screenshot keeps only the baht letterform with two rounded loops and no outer ring."
+    },
+    {
+      "icon_id": "mingcute:currency_bitcoin",
+      "screenshot_file_name": "mingcute_currency_bitcoin_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/crypto/currency_bitcoin_line.svg",
+      "depicts_observation": "Bitcoin currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring bitcoin sign",
+      "plausible_readings": ["bitcoin symbol", "crypto sign", "currency icon"],
+      "context_bias": "Use when the interface wants the bitcoin symbol enclosed inside a circular ring frame.",
+      "ambiguity_note": "Do not use for the standalone bitcoin symbol when no outer ring should remain around it.",
+      "selection_reason": "The screenshot places the bitcoin sign inside one thin circle."
+    },
+    {
+      "icon_id": "mingcute:currency_bitcoin_2",
+      "screenshot_file_name": "mingcute_currency_bitcoin_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/crypto/currency_bitcoin_2_line.svg",
+      "depicts_observation": "Standalone bitcoin currency sign with two vertical strokes across the center",
+      "popular_reading": "Bitcoin symbol",
+      "plausible_readings": ["bitcoin symbol", "crypto sign", "currency icon"],
+      "context_bias": "Use when the interface wants the bitcoin sign by itself without any outer circle frame.",
+      "ambiguity_note": "Do not use for the ring bitcoin symbol when the sign should remain enclosed.",
+      "selection_reason": "The screenshot strips away the ring and leaves the bitcoin letterform with two vertical strokes."
+    }
+  ]
+}

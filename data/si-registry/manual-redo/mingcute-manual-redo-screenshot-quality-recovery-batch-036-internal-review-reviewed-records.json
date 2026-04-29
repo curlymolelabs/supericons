@@ -1,0 +1,409 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:heading_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_Heading_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:heading_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "heading_1",
+      "label": "Heading",
+      "purpose": "Show heading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "heading",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to heading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing heading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "heading",
+        "1"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:heading_1",
+      "source_library": "mingcute",
+      "source_name": "heading_1",
+      "label": "Heading",
+      "depicts_observation": "H letter glyph with a small number one at the lower right side",
+      "popular_reading": "Heading one",
+      "plausible_readings": [
+        "H1",
+        "heading 1",
+        "text heading"
+      ],
+      "context_bias": "Use when the interface wants the first heading level shown as H with a small one marker.",
+      "ambiguity_note": "Do not use for the other heading levels when the small number one should remain visible.",
+      "search_hints": [
+        "Heading",
+        "H1",
+        "heading 1",
+        "text heading",
+        "Heading one"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a large H glyph paired with a small numeral one at the right."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:heading_1",
+      "source_library": "mingcute",
+      "source_name": "heading_1",
+      "label": "Heading",
+      "depicts": "H letter glyph with a small number one at the lower right side",
+      "use_when": "Use when the interface wants the first heading level shown as H with a small one marker.",
+      "avoid_when": "Do not use for the other heading levels when the small number one should remain visible.",
+      "semantic_tags": [
+        "1",
+        "h1",
+        "heading",
+        "heading 1",
+        "text heading"
+      ],
+      "synonyms": [
+        "1",
+        "h1",
+        "heading",
+        "heading 1",
+        "text heading"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:heading_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_Heading_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:heading_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "heading_2",
+      "label": "Heading",
+      "purpose": "Show heading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "heading",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to heading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing heading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "heading",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:heading_2",
+      "source_library": "mingcute",
+      "source_name": "heading_2",
+      "label": "Heading",
+      "depicts_observation": "H letter glyph with a small number two at the lower right side",
+      "popular_reading": "Heading two",
+      "plausible_readings": [
+        "H2",
+        "heading 2",
+        "text heading"
+      ],
+      "context_bias": "Use when the interface wants the second heading level shown as H with a small two marker.",
+      "ambiguity_note": "Do not use for H1 or H3 when the small number two is the main difference.",
+      "search_hints": [
+        "Heading",
+        "H2",
+        "heading 2",
+        "text heading",
+        "Heading two"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot matches the heading family and changes the small numeral to two."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:heading_2",
+      "source_library": "mingcute",
+      "source_name": "heading_2",
+      "label": "Heading",
+      "depicts": "H letter glyph with a small number two at the lower right side",
+      "use_when": "Use when the interface wants the second heading level shown as H with a small two marker.",
+      "avoid_when": "Do not use for H1 or H3 when the small number two is the main difference.",
+      "semantic_tags": [
+        "2",
+        "h2",
+        "heading",
+        "heading 2",
+        "text heading"
+      ],
+      "synonyms": [
+        "2",
+        "h2",
+        "heading",
+        "heading 2",
+        "text heading"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:heading_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_Heading_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:heading_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "heading_3",
+      "label": "Heading",
+      "purpose": "Show heading as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "heading",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to heading as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing heading.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "heading",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:heading_3",
+      "source_library": "mingcute",
+      "source_name": "heading_3",
+      "label": "Heading",
+      "depicts_observation": "H letter glyph with a small number three at the lower right side",
+      "popular_reading": "Heading three",
+      "plausible_readings": [
+        "H3",
+        "heading 3",
+        "text heading"
+      ],
+      "context_bias": "Use when the interface wants the third heading level shown as H with a small three marker.",
+      "ambiguity_note": "Do not use for H1 or H2 when the small number three should remain visible.",
+      "search_hints": [
+        "Heading",
+        "H3",
+        "heading 3",
+        "text heading",
+        "Heading three"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/Heading_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot keeps the large H glyph and switches the small numeral to three."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:heading_3",
+      "source_library": "mingcute",
+      "source_name": "heading_3",
+      "label": "Heading",
+      "depicts": "H letter glyph with a small number three at the lower right side",
+      "use_when": "Use when the interface wants the third heading level shown as H with a small three marker.",
+      "avoid_when": "Do not use for H1 or H2 when the small number three should remain visible.",
+      "semantic_tags": [
+        "3",
+        "h3",
+        "heading",
+        "heading 3",
+        "text heading"
+      ],
+      "synonyms": [
+        "3",
+        "h3",
+        "heading",
+        "heading 3",
+        "text heading"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:text",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_text_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:text",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "text",
+      "label": "Text",
+      "purpose": "Show text as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "text"
+      ],
+      "use_when": "Use when the interface refers directly to text as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing text.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "text"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:text",
+      "source_library": "mingcute",
+      "source_name": "text",
+      "label": "Text",
+      "depicts_observation": "T letter glyph with a long top bar and one centered vertical stem",
+      "popular_reading": "Simple T text",
+      "plausible_readings": [
+        "text",
+        "letter T",
+        "type icon"
+      ],
+      "context_bias": "Use when the interface wants the simplest text icon as a plain capital T shape.",
+      "ambiguity_note": "Do not use for the serif T when the top bar and stem should stay plain and minimal.",
+      "search_hints": [
+        "Text",
+        "text",
+        "letter T",
+        "type icon",
+        "Simple T text"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/text_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a plain T with a broad top bar and one straight center stem."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:text",
+      "source_library": "mingcute",
+      "source_name": "text",
+      "label": "Text",
+      "depicts": "T letter glyph with a long top bar and one centered vertical stem",
+      "use_when": "Use when the interface wants the simplest text icon as a plain capital T shape.",
+      "avoid_when": "Do not use for the serif T when the top bar and stem should stay plain and minimal.",
+      "semantic_tags": [
+        "letter t",
+        "text",
+        "type icon"
+      ],
+      "synonyms": [
+        "letter t",
+        "text",
+        "type icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:text_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_text_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:text_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "text_2",
+      "label": "Text",
+      "purpose": "Show text as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "text",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to text as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing text.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "text",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:text_2",
+      "source_library": "mingcute",
+      "source_name": "text_2",
+      "label": "Text",
+      "depicts_observation": "T letter glyph with serif like top ends and a small bottom foot",
+      "popular_reading": "Serif T text",
+      "plausible_readings": [
+        "text",
+        "serif T",
+        "type icon"
+      ],
+      "context_bias": "Use when the interface wants a more typographic serif style T instead of a plain block T.",
+      "ambiguity_note": "Do not use for the plain T when the top end caps and bottom foot matter visually.",
+      "search_hints": [
+        "Text",
+        "text",
+        "serif T",
+        "type icon",
+        "Serif T text"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/editor/text_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds serif like end caps and a small foot to the base of the T."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:text_2",
+      "source_library": "mingcute",
+      "source_name": "text_2",
+      "label": "Text",
+      "depicts": "T letter glyph with serif like top ends and a small bottom foot",
+      "use_when": "Use when the interface wants a more typographic serif style T instead of a plain block T.",
+      "avoid_when": "Do not use for the plain T when the top end caps and bottom foot matter visually.",
+      "semantic_tags": [
+        "2",
+        "serif t",
+        "text",
+        "type icon"
+      ],
+      "synonyms": [
+        "2",
+        "serif t",
+        "text",
+        "type icon"
+      ]
+    }
+  }
+]

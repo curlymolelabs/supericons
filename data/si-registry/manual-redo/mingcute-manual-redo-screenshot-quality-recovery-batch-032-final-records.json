@@ -1,0 +1,117 @@
+[
+  {
+    "icon_id": "mingcute:cursor",
+    "source_library": "mingcute",
+    "source_name": "cursor",
+    "label": "Cursor",
+    "depicts": "Solid pointer arrow outline leaning slightly left with a thick lower tail",
+    "use_when": "Use when the interface wants a simple pointer arrow without click sparks or open center lines.",
+    "avoid_when": "Do not use for the open arrow or click pointer when the thick solid arrow body matters.",
+    "semantic_tags": [
+      "arrow pointer",
+      "cursor",
+      "mouse pointer"
+    ],
+    "synonyms": [
+      "arrow pointer",
+      "cursor",
+      "mouse pointer"
+    ]
+  },
+  {
+    "icon_id": "mingcute:cursor_2",
+    "source_library": "mingcute",
+    "source_name": "cursor_2",
+    "label": "Cursor",
+    "depicts": "Open pointer arrow outline leaning right with a separated lower tail line",
+    "use_when": "Use when the interface wants a lighter open pointer shape instead of a solid triangular arrow.",
+    "avoid_when": "Do not use for the solid pointer when the open center and separated tail are visible.",
+    "semantic_tags": [
+      "2",
+      "arrow pointer",
+      "cursor",
+      "cursor outline",
+      "open pointer"
+    ],
+    "synonyms": [
+      "2",
+      "arrow pointer",
+      "cursor",
+      "cursor outline",
+      "open pointer"
+    ]
+  },
+  {
+    "icon_id": "mingcute:cursor_3",
+    "source_library": "mingcute",
+    "source_name": "cursor_3",
+    "label": "Cursor",
+    "depicts": "Pointer arrow outline with four short click rays at the upper left",
+    "use_when": "Use when the interface wants a cursor icon that explicitly shows a click or tap burst.",
+    "avoid_when": "Do not use for the plain pointer arrows when the short click rays are part of the visual.",
+    "semantic_tags": [
+      "3",
+      "active pointer",
+      "click pointer",
+      "cursor",
+      "cursor tap"
+    ],
+    "synonyms": [
+      "3",
+      "active pointer",
+      "click pointer",
+      "cursor",
+      "cursor tap"
+    ]
+  },
+  {
+    "icon_id": "mingcute:hand_finger",
+    "source_library": "mingcute",
+    "source_name": "hand_finger",
+    "label": "Hand Finger",
+    "depicts": "Rounded hand outline with one raised index finger and a closed palm loop",
+    "use_when": "Use when the interface wants a touch hand icon built as one rounded palm loop and one raised finger.",
+    "avoid_when": "Do not use for the detailed finger hand when the palm should stay as one simple loop.",
+    "semantic_tags": [
+      "finger",
+      "hand",
+      "hand pointer",
+      "index finger",
+      "touch hand"
+    ],
+    "synonyms": [
+      "finger",
+      "hand",
+      "hand finger",
+      "hand pointer",
+      "index finger",
+      "touch hand"
+    ]
+  },
+  {
+    "icon_id": "mingcute:hand_finger_2",
+    "source_library": "mingcute",
+    "source_name": "hand_finger_2",
+    "label": "Hand Finger",
+    "depicts": "Hand outline with one raised index finger and several curved finger bumps",
+    "use_when": "Use when the interface wants the raised finger hand that also shows the other curled finger bumps.",
+    "avoid_when": "Do not use for the simpler looped palm hand when the extra finger bumps need to remain visible.",
+    "semantic_tags": [
+      "2",
+      "finger",
+      "hand",
+      "hand pointer",
+      "raised hand",
+      "touch finger"
+    ],
+    "synonyms": [
+      "2",
+      "finger",
+      "hand",
+      "hand finger",
+      "hand pointer",
+      "raised hand",
+      "touch finger"
+    ]
+  }
+]

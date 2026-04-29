@@ -1,0 +1,405 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:calendar",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_calendar_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:calendar",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "calendar",
+      "label": "Calendar",
+      "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "calendar"
+      ],
+      "use_when": "Use when the interface refers directly to calendar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing calendar.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "calendar"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:calendar",
+      "source_library": "mingcute",
+      "source_name": "calendar",
+      "label": "Calendar",
+      "depicts_observation": "Blank calendar page with top binder tabs and an empty lower panel",
+      "popular_reading": "Blank calendar",
+      "plausible_readings": [
+        "calendar",
+        "date page",
+        "schedule page"
+      ],
+      "context_bias": "Use when the interface wants a generic calendar symbol without visible dates or numbers.",
+      "ambiguity_note": "Do not use for dated calendar variants when the lower panel should stay blank.",
+      "search_hints": [
+        "Calendar",
+        "calendar",
+        "date page",
+        "schedule page",
+        "Blank calendar"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is the plainest calendar page with binder tabs and no interior date marks."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:calendar",
+      "source_library": "mingcute",
+      "source_name": "calendar",
+      "label": "Calendar",
+      "depicts": "Blank calendar page with top binder tabs and an empty lower panel",
+      "use_when": "Use when the interface wants a generic calendar symbol without visible dates or numbers.",
+      "avoid_when": "Do not use for dated calendar variants when the lower panel should stay blank.",
+      "semantic_tags": [
+        "calendar",
+        "date page",
+        "schedule page"
+      ],
+      "synonyms": [
+        "calendar",
+        "date page",
+        "schedule page"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:calendar_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_calendar_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:calendar_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "calendar_2",
+      "label": "Calendar",
+      "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "calendar",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to calendar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing calendar.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "calendar",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:calendar_2",
+      "source_library": "mingcute",
+      "source_name": "calendar_2",
+      "label": "Calendar",
+      "depicts_observation": "Calendar page with top binder tabs and six small date dots",
+      "popular_reading": "Dotted calendar",
+      "plausible_readings": [
+        "date calendar",
+        "schedule grid",
+        "calendar dots"
+      ],
+      "context_bias": "Use when the interface wants a calendar that explicitly shows small date markers inside the page.",
+      "ambiguity_note": "Do not use for the blank or numbered calendar variants when the six interior dots matter.",
+      "search_hints": [
+        "Calendar",
+        "date calendar",
+        "schedule grid",
+        "calendar dots",
+        "Dotted calendar"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds six date dots inside the calendar body while keeping the same top tabs."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:calendar_2",
+      "source_library": "mingcute",
+      "source_name": "calendar_2",
+      "label": "Calendar",
+      "depicts": "Calendar page with top binder tabs and six small date dots",
+      "use_when": "Use when the interface wants a calendar that explicitly shows small date markers inside the page.",
+      "avoid_when": "Do not use for the blank or numbered calendar variants when the six interior dots matter.",
+      "semantic_tags": [
+        "2",
+        "calendar",
+        "calendar dots",
+        "date calendar",
+        "schedule grid"
+      ],
+      "synonyms": [
+        "2",
+        "calendar",
+        "calendar dots",
+        "date calendar",
+        "schedule grid"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:calendar_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_calendar_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:calendar_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "calendar_3",
+      "label": "Calendar",
+      "purpose": "Show calendar as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "calendar",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to calendar as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing calendar.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "calendar",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:calendar_3",
+      "source_library": "mingcute",
+      "source_name": "calendar_3",
+      "label": "Calendar",
+      "depicts_observation": "Tear off calendar block with the number ten on the front panel",
+      "popular_reading": "Numbered calendar block",
+      "plausible_readings": [
+        "day block",
+        "date block",
+        "calendar number"
+      ],
+      "context_bias": "Use when the interface wants a tear off day block rather than a full hanging calendar page.",
+      "ambiguity_note": "Do not use for the hanging calendar page icons when the bold number on a block should remain visible.",
+      "search_hints": [
+        "Calendar",
+        "day block",
+        "date block",
+        "calendar number",
+        "Numbered calendar block"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/calendar_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot changes the shape from a page to a tear off desk block with the number ten."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:calendar_3",
+      "source_library": "mingcute",
+      "source_name": "calendar_3",
+      "label": "Calendar",
+      "depicts": "Tear off calendar block with the number ten on the front panel",
+      "use_when": "Use when the interface wants a tear off day block rather than a full hanging calendar page.",
+      "avoid_when": "Do not use for the hanging calendar page icons when the bold number on a block should remain visible.",
+      "semantic_tags": [
+        "3",
+        "calendar",
+        "calendar number",
+        "date block",
+        "day block"
+      ],
+      "synonyms": [
+        "3",
+        "calendar",
+        "calendar number",
+        "date block",
+        "day block"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:coin",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_coin_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:coin",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "coin",
+      "label": "Coin",
+      "purpose": "Show coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "coin"
+      ],
+      "use_when": "Use when the interface refers directly to coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing coin.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "coin"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:coin",
+      "source_library": "mingcute",
+      "source_name": "coin",
+      "label": "Coin",
+      "depicts_observation": "Coin outline from the side with a thin oval cylinder body",
+      "popular_reading": "Single coin",
+      "plausible_readings": [
+        "coin",
+        "token",
+        "money coin"
+      ],
+      "context_bias": "Use when the interface wants the simplest single coin profile without extra stack bands.",
+      "ambiguity_note": "Do not use for stacked or gem like coins when the single thin coin edge matters.",
+      "search_hints": [
+        "Coin",
+        "coin",
+        "token",
+        "money coin",
+        "Single coin"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/coin_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows one thin coin profile instead of a stack or decorative emblem."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:coin",
+      "source_library": "mingcute",
+      "source_name": "coin",
+      "label": "Coin",
+      "depicts": "Coin outline from the side with a thin oval cylinder body",
+      "use_when": "Use when the interface wants the simplest single coin profile without extra stack bands.",
+      "avoid_when": "Do not use for stacked or gem like coins when the single thin coin edge matters.",
+      "semantic_tags": [
+        "coin",
+        "money coin",
+        "token"
+      ],
+      "synonyms": [
+        "coin",
+        "money coin",
+        "token"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:coin_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_coin_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:coin_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "coin_2",
+      "label": "Coin",
+      "purpose": "Show coin as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "coin",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to coin as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing coin.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "coin",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:coin_2",
+      "source_library": "mingcute",
+      "source_name": "coin_2",
+      "label": "Coin",
+      "depicts_observation": "Stacked coin cylinder with two horizontal bands across the body",
+      "popular_reading": "Coin stack",
+      "plausible_readings": [
+        "stacked coins",
+        "money stack",
+        "coin cylinder"
+      ],
+      "context_bias": "Use when the interface wants a taller stacked coin form rather than a single flat coin.",
+      "ambiguity_note": "Do not use for the single coin profile when the stacked cylinder bands are visible.",
+      "search_hints": [
+        "Coin",
+        "stacked coins",
+        "money stack",
+        "coin cylinder",
+        "Coin stack"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/coin_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds a second band to make the coin read as a short stacked cylinder."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:coin_2",
+      "source_library": "mingcute",
+      "source_name": "coin_2",
+      "label": "Coin",
+      "depicts": "Stacked coin cylinder with two horizontal bands across the body",
+      "use_when": "Use when the interface wants a taller stacked coin form rather than a single flat coin.",
+      "avoid_when": "Do not use for the single coin profile when the stacked cylinder bands are visible.",
+      "semantic_tags": [
+        "2",
+        "coin",
+        "coin cylinder",
+        "money stack",
+        "stacked coins"
+      ],
+      "synonyms": [
+        "2",
+        "coin",
+        "coin cylinder",
+        "money stack",
+        "stacked coins"
+      ]
+    }
+  }
+]

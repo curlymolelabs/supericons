@@ -1,0 +1,407 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:location",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_location_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:location",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "location",
+      "label": "Location",
+      "purpose": "Show location as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "location"
+      ],
+      "use_when": "Use when the interface refers directly to location as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing location.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "location"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:location",
+      "source_library": "mingcute",
+      "source_name": "location",
+      "label": "Location",
+      "depicts_observation": "Map pin outline with a round center ring and a pointed bottom tip",
+      "popular_reading": "Plain map pin",
+      "plausible_readings": [
+        "location pin",
+        "map pin",
+        "place marker"
+      ],
+      "context_bias": "Use when the interface wants the simplest location pin without a base or extra frame.",
+      "ambiguity_note": "Do not use for the grounded or framed location pins when the plain pointed drop matters.",
+      "search_hints": [
+        "Location",
+        "location pin",
+        "map pin",
+        "place marker",
+        "Plain map pin"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/location_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a classic drop pin with one centered ring and pointed bottom tip."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:location",
+      "source_library": "mingcute",
+      "source_name": "location",
+      "label": "Location",
+      "depicts": "Map pin outline with a round center ring and a pointed bottom tip",
+      "use_when": "Use when the interface wants the simplest location pin without a base or extra frame.",
+      "avoid_when": "Do not use for the grounded or framed location pins when the plain pointed drop matters.",
+      "semantic_tags": [
+        "location",
+        "location pin",
+        "map pin",
+        "place marker"
+      ],
+      "synonyms": [
+        "location",
+        "location pin",
+        "map pin",
+        "place marker"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:location_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_location_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:location_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "location_2",
+      "label": "Location",
+      "purpose": "Show location as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "location",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to location as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing location.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "location",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:location_2",
+      "source_library": "mingcute",
+      "source_name": "location_2",
+      "label": "Location",
+      "depicts_observation": "Map pin outline standing above a wide oval ground ring",
+      "popular_reading": "Grounded map pin",
+      "plausible_readings": [
+        "location pin",
+        "map marker",
+        "place pin"
+      ],
+      "context_bias": "Use when the interface wants a location pin that visibly rests on an oval ground ring.",
+      "ambiguity_note": "Do not use for the plain pin when the oval base beneath the pin is part of the form.",
+      "search_hints": [
+        "Location",
+        "location pin",
+        "map marker",
+        "place pin",
+        "Grounded map pin"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/location_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds a wide oval ring under the pin to suggest a ground shadow or base."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:location_2",
+      "source_library": "mingcute",
+      "source_name": "location_2",
+      "label": "Location",
+      "depicts": "Map pin outline standing above a wide oval ground ring",
+      "use_when": "Use when the interface wants a location pin that visibly rests on an oval ground ring.",
+      "avoid_when": "Do not use for the plain pin when the oval base beneath the pin is part of the form.",
+      "semantic_tags": [
+        "2",
+        "location",
+        "location pin",
+        "map marker",
+        "place pin"
+      ],
+      "synonyms": [
+        "2",
+        "location",
+        "location pin",
+        "map marker",
+        "place pin"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:location_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_location_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:location_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "location_3",
+      "label": "Location",
+      "purpose": "Show location as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "location",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to location as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing location.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "location",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:location_3",
+      "source_library": "mingcute",
+      "source_name": "location_3",
+      "label": "Location",
+      "depicts_observation": "Map pin outline sitting inside a low trapezoid base frame",
+      "popular_reading": "Framed map pin",
+      "plausible_readings": [
+        "location pin",
+        "map marker",
+        "place frame"
+      ],
+      "context_bias": "Use when the interface wants a location pin paired with a low base frame instead of an oval ring.",
+      "ambiguity_note": "Do not use for the plain or oval based pins when the trapezoid base is visible.",
+      "search_hints": [
+        "Location",
+        "location pin",
+        "map marker",
+        "place frame",
+        "Framed map pin"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/location_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces the oval ground ring with a low trapezoid style base frame."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:location_3",
+      "source_library": "mingcute",
+      "source_name": "location_3",
+      "label": "Location",
+      "depicts": "Map pin outline sitting inside a low trapezoid base frame",
+      "use_when": "Use when the interface wants a location pin paired with a low base frame instead of an oval ring.",
+      "avoid_when": "Do not use for the plain or oval based pins when the trapezoid base is visible.",
+      "semantic_tags": [
+        "3",
+        "location",
+        "location pin",
+        "map marker",
+        "place frame"
+      ],
+      "synonyms": [
+        "3",
+        "location",
+        "location pin",
+        "map marker",
+        "place frame"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:map",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_map_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:map",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "map",
+      "label": "Map",
+      "purpose": "Show map as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "map"
+      ],
+      "use_when": "Use when the interface refers directly to map as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing map.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "map"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:map",
+      "source_library": "mingcute",
+      "source_name": "map",
+      "label": "Map",
+      "depicts_observation": "Folded map outline with three vertical panels and two inner fold lines",
+      "popular_reading": "Folded map",
+      "plausible_readings": [
+        "map",
+        "folded map",
+        "route map"
+      ],
+      "context_bias": "Use when the interface wants a simple folded map instead of a location pin.",
+      "ambiguity_note": "Do not use for the square map sign when the three folded panels should remain visible.",
+      "search_hints": [
+        "Map",
+        "map",
+        "folded map",
+        "route map",
+        "Folded map"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/map_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows the classic folded map shape with three vertical panels."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:map",
+      "source_library": "mingcute",
+      "source_name": "map",
+      "label": "Map",
+      "depicts": "Folded map outline with three vertical panels and two inner fold lines",
+      "use_when": "Use when the interface wants a simple folded map instead of a location pin.",
+      "avoid_when": "Do not use for the square map sign when the three folded panels should remain visible.",
+      "semantic_tags": [
+        "folded map",
+        "map",
+        "route map"
+      ],
+      "synonyms": [
+        "folded map",
+        "map",
+        "route map"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:map_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_map_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:map_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "map_2",
+      "label": "Map",
+      "purpose": "Show map as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "map",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to map as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing map.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "map",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:map_2",
+      "source_library": "mingcute",
+      "source_name": "map_2",
+      "label": "Map",
+      "depicts_observation": "Square map panel with a diagonal route line meeting a top ridge",
+      "popular_reading": "Square route map",
+      "plausible_readings": [
+        "map panel",
+        "route map",
+        "map sign"
+      ],
+      "context_bias": "Use when the interface wants a compact square map panel rather than a folded paper map.",
+      "ambiguity_note": "Do not use for the folded map when the square panel and route line are the visible cues.",
+      "search_hints": [
+        "Map",
+        "map panel",
+        "route map",
+        "map sign",
+        "Square route map"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/map_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot compresses the map into one square panel with a route line across it."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:map_2",
+      "source_library": "mingcute",
+      "source_name": "map_2",
+      "label": "Map",
+      "depicts": "Square map panel with a diagonal route line meeting a top ridge",
+      "use_when": "Use when the interface wants a compact square map panel rather than a folded paper map.",
+      "avoid_when": "Do not use for the folded map when the square panel and route line are the visible cues.",
+      "semantic_tags": [
+        "2",
+        "map",
+        "map panel",
+        "map sign",
+        "route map"
+      ],
+      "synonyms": [
+        "2",
+        "map",
+        "map panel",
+        "map sign",
+        "route map"
+      ]
+    }
+  }
+]

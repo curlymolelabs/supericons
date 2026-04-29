@@ -1,0 +1,430 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:currency_pound",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_pound_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_pound",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_pound",
+      "label": "Currency Pound",
+      "purpose": "Show currency pound as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "pound"
+      ],
+      "use_when": "Use when the interface refers directly to currency pound as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency pound.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "pound"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_pound",
+      "source_library": "mingcute",
+      "source_name": "currency_pound",
+      "label": "Currency Pound",
+      "depicts_observation": "Pound currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring pound sign",
+      "plausible_readings": [
+        "pound symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the pound symbol enclosed inside a thin circular frame.",
+      "ambiguity_note": "Do not use for the standalone pound sign when the outer ring should not be visible.",
+      "search_hints": [
+        "Currency Pound",
+        "pound symbol",
+        "money sign",
+        "currency icon",
+        "Ring pound sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_pound_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot places the pound sign inside one circular border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_pound",
+      "source_library": "mingcute",
+      "source_name": "currency_pound",
+      "label": "Currency Pound",
+      "depicts": "Pound currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the pound symbol enclosed inside a thin circular frame.",
+      "avoid_when": "Do not use for the standalone pound sign when the outer ring should not be visible.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "money sign",
+        "pound",
+        "pound symbol"
+      ],
+      "synonyms": [
+        "currency",
+        "currency icon",
+        "currency pound",
+        "money sign",
+        "pound",
+        "pound symbol"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:currency_pound_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_pound_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_pound_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_pound_2",
+      "label": "Currency Pound",
+      "purpose": "Show currency pound as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "pound",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency pound as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency pound.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "pound",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_pound_2",
+      "source_library": "mingcute",
+      "source_name": "currency_pound_2",
+      "label": "Currency Pound",
+      "depicts_observation": "Standalone pound currency sign with one crossbar and one curled top",
+      "popular_reading": "Pound symbol",
+      "plausible_readings": [
+        "pound symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the pound sign by itself with its curled top and single bar.",
+      "ambiguity_note": "Do not use for the ring pound sign when the symbol should stay inside a circle.",
+      "search_hints": [
+        "Currency Pound",
+        "pound symbol",
+        "money sign",
+        "currency icon",
+        "Pound symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_pound_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot removes the circular border and keeps the curled pound letterform."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_pound_2",
+      "source_library": "mingcute",
+      "source_name": "currency_pound_2",
+      "label": "Currency Pound",
+      "depicts": "Standalone pound currency sign with one crossbar and one curled top",
+      "use_when": "Use when the interface wants the pound sign by itself with its curled top and single bar.",
+      "avoid_when": "Do not use for the ring pound sign when the symbol should stay inside a circle.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "money sign",
+        "pound",
+        "pound symbol"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency icon",
+        "currency pound",
+        "money sign",
+        "pound",
+        "pound symbol"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:currency_rubel",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_rubel_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_rubel",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel",
+      "label": "Currency Rubel",
+      "purpose": "Show currency rubel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "rubel"
+      ],
+      "use_when": "Use when the interface refers directly to currency rubel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency rubel.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "rubel"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_rubel",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel",
+      "label": "Currency Rubel",
+      "depicts_observation": "Ruble currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring ruble sign",
+      "plausible_readings": [
+        "ruble symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the ruble symbol centered inside a circular frame.",
+      "ambiguity_note": "Do not use for the standalone ruble sign when the outer ring should be absent.",
+      "search_hints": [
+        "Currency Rubel",
+        "ruble symbol",
+        "money sign",
+        "currency icon",
+        "Ring ruble sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_rubel_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot surrounds the ruble sign with one thin circle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_rubel",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel",
+      "label": "Currency Rubel",
+      "depicts": "Ruble currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the ruble symbol centered inside a circular frame.",
+      "avoid_when": "Do not use for the standalone ruble sign when the outer ring should be absent.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "money sign",
+        "rubel",
+        "ruble symbol"
+      ],
+      "synonyms": [
+        "currency",
+        "currency icon",
+        "currency rubel",
+        "money sign",
+        "rubel",
+        "ruble symbol"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:currency_rubel_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_rubel_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_rubel_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel_2",
+      "label": "Currency Rubel",
+      "purpose": "Show currency rubel as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "rubel",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to currency rubel as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency rubel.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "rubel",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_rubel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel_2",
+      "label": "Currency Rubel",
+      "depicts_observation": "Standalone ruble currency sign with one looped top and two crossbars",
+      "popular_reading": "Ruble symbol",
+      "plausible_readings": [
+        "ruble symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the ruble sign alone with its looped top and crossbars.",
+      "ambiguity_note": "Do not use for the ring ruble sign when the symbol should remain enclosed.",
+      "search_hints": [
+        "Currency Rubel",
+        "ruble symbol",
+        "money sign",
+        "currency icon",
+        "Ruble symbol"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_rubel_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot leaves only the ruble letterform with one rounded loop and two bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_rubel_2",
+      "source_library": "mingcute",
+      "source_name": "currency_rubel_2",
+      "label": "Currency Rubel",
+      "depicts": "Standalone ruble currency sign with one looped top and two crossbars",
+      "use_when": "Use when the interface wants the ruble sign alone with its looped top and crossbars.",
+      "avoid_when": "Do not use for the ring ruble sign when the symbol should remain enclosed.",
+      "semantic_tags": [
+        "2",
+        "currency",
+        "currency icon",
+        "money sign",
+        "rubel",
+        "ruble symbol"
+      ],
+      "synonyms": [
+        "2",
+        "currency",
+        "currency icon",
+        "currency rubel",
+        "money sign",
+        "rubel",
+        "ruble symbol"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:currency_rupee",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_currency_rupee_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:currency_rupee",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee",
+      "label": "Currency Rupee",
+      "purpose": "Show currency rupee as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "currency",
+        "rupee"
+      ],
+      "use_when": "Use when the interface refers directly to currency rupee as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing currency rupee.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "currency",
+        "rupee"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:currency_rupee",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee",
+      "label": "Currency Rupee",
+      "depicts_observation": "Rupee currency sign centered inside a thin outer ring",
+      "popular_reading": "Ring rupee sign",
+      "plausible_readings": [
+        "rupee symbol",
+        "money sign",
+        "currency icon"
+      ],
+      "context_bias": "Use when the interface wants the rupee symbol enclosed inside a circular ring.",
+      "ambiguity_note": "Do not use for the standalone rupee sign when the outer ring should be removed.",
+      "search_hints": [
+        "Currency Rupee",
+        "rupee symbol",
+        "money sign",
+        "currency icon",
+        "Ring rupee sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/business/currency_rupee_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot centers the rupee symbol inside one thin circular border."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:currency_rupee",
+      "source_library": "mingcute",
+      "source_name": "currency_rupee",
+      "label": "Currency Rupee",
+      "depicts": "Rupee currency sign centered inside a thin outer ring",
+      "use_when": "Use when the interface wants the rupee symbol enclosed inside a circular ring.",
+      "avoid_when": "Do not use for the standalone rupee sign when the outer ring should be removed.",
+      "semantic_tags": [
+        "currency",
+        "currency icon",
+        "money sign",
+        "rupee",
+        "rupee symbol"
+      ],
+      "synonyms": [
+        "currency",
+        "currency icon",
+        "currency rupee",
+        "money sign",
+        "rupee",
+        "rupee symbol"
+      ]
+    }
+  }
+]

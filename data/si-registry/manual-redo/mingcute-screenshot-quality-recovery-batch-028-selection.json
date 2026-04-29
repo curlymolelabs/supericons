@@ -1,0 +1,76 @@
+{
+  "batch_id": "mingcute-screenshot-quality-recovery-batch-028",
+  "track_id": "mingcute",
+  "track_label": "MingCute",
+  "title": "MingCute Screenshot Quality Recovery batch 028",
+  "review_goal": "Differentiate five MingCute car and bus variants with screenshot grounded depicts and deterministic evidence fields.",
+  "record_source_path": "data/si-registry/automation/mingcute/approved-records.json",
+  "review_policy_snapshot": {
+    "phase": "calibration",
+    "batch_size": 5,
+    "approval_scope": "full_batch",
+    "fallback_batch_size": 5
+  },
+  "visual_source": {
+    "kind": "icon_screenshot_folder",
+    "path": "output/icon_screenshot/mingcute",
+    "naming_pattern": "mingcute_{source_name}_line.png"
+  },
+  "items": [
+    {
+      "icon_id": "mingcute:car",
+      "screenshot_file_name": "mingcute_car_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/car_line.svg",
+      "depicts_observation": "Front car outline with two round lights and a curved roof line",
+      "popular_reading": "Front car",
+      "plausible_readings": ["car", "auto front", "vehicle front"],
+      "context_bias": "Use when the interface wants a simple front view car with round lights.",
+      "ambiguity_note": "Do not use for the smoother grille or sharp headlight cars when the round lights matter.",
+      "selection_reason": "The screenshot shows the most basic front car with two round lights and a gentle roof curve."
+    },
+    {
+      "icon_id": "mingcute:car_2",
+      "screenshot_file_name": "mingcute_car_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/car_2_line.svg",
+      "depicts_observation": "Front car outline with a wide curved grille line and no visible headlight dots",
+      "popular_reading": "Curved grille car",
+      "plausible_readings": ["car front", "smooth car", "vehicle grille"],
+      "context_bias": "Use when the interface wants a softer car front whose main cue is the wide curved grille.",
+      "ambiguity_note": "Do not use for the round light or sharp headlight cars when the blank front face matters.",
+      "selection_reason": "The screenshot removes the round lights and centers the curved grille line as the main cue."
+    },
+    {
+      "icon_id": "mingcute:car_3",
+      "screenshot_file_name": "mingcute_car_3_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/car_3_line.svg",
+      "depicts_observation": "Front car outline with two sharp angled headlight slashes at the sides",
+      "popular_reading": "Sharp headlight car",
+      "plausible_readings": ["car front", "sporty car", "vehicle headlights"],
+      "context_bias": "Use when the interface wants the most aggressive car front with sharp side headlight marks.",
+      "ambiguity_note": "Do not use for the softer car fronts when the slanted headlight slashes are visible.",
+      "selection_reason": "The screenshot adds sharp angled headlight slashes that are absent from the other car fronts."
+    },
+    {
+      "icon_id": "mingcute:bus",
+      "screenshot_file_name": "mingcute_bus_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/bus_line.svg",
+      "depicts_observation": "Front bus outline with a wide windshield band and two lower lights",
+      "popular_reading": "Front bus",
+      "plausible_readings": ["bus", "bus front", "transit bus"],
+      "context_bias": "Use when the interface wants a head on bus with a broad windshield and front lights.",
+      "ambiguity_note": "Do not use for the side bus when the flat front transit face is the visible cue.",
+      "selection_reason": "The screenshot shows a front facing bus with a wide top windshield band and lower lights."
+    },
+    {
+      "icon_id": "mingcute:bus_2",
+      "screenshot_file_name": "mingcute_bus_2_line.png",
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/transport/bus_2_line.svg",
+      "depicts_observation": "Side bus outline with three window panels and two round wheels below",
+      "popular_reading": "Side bus",
+      "plausible_readings": ["bus side", "transit vehicle", "coach bus"],
+      "context_bias": "Use when the interface wants a side view bus instead of a head on front panel.",
+      "ambiguity_note": "Do not use for the front bus when the side windows and wheels need to stay visible.",
+      "selection_reason": "The screenshot rotates the bus into a side view with window panels and wheels."
+    }
+  ]
+}

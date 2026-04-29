@@ -1,42 +1,62 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-04-21T10:19:28.774Z",
+  "generated_at": "2026-04-27T06:03:03.036Z",
   "library_id": "tabler",
   "library_label": "Tabler",
   "library_order": 4,
   "verdict": {
-    "status": "operationally_complete_with_follow_up",
-    "message": "The library is fully processed in the pipeline, but it still carries quality follow-up work.",
-    "recommended_next_step": "Keep the library closed for rollout sequencing, but schedule a later quality pass for holds and drafts."
+    "status": "incomplete_needs_follow_up",
+    "message": "The screenshot-quality workflow still has unresolved work, so the library is not safe to close yet.",
+    "recommended_next_step": "Finish the remaining screenshot-quality or unmapped backlog before moving to the next library."
   },
   "coverage": {
     "source_total_icons": 5021,
-    "approved_records": 1403,
+    "approved_records": 1423,
     "hold_records": 0,
     "reviewed_drafts": 3598,
-    "overlap_skipped": 20,
+    "overlap_skipped": 0,
     "processed_total": 5021,
     "processed_matches_source_total": true
   },
   "projection": {
-    "public_registry_records": 1448,
-    "prior_public_records_outside_library_rollout": 45,
-    "expected_public_registry_records": 1448,
+    "public_registry_records": 1423,
+    "prior_public_records_outside_library_rollout": 0,
+    "expected_public_registry_records": 1423,
     "matches_expected_public_registry_count": true
   },
+  "screenshot_workflow": {
+    "concept_scope_total": 5021,
+    "completed_live": 1423,
+    "reviewed_pending": 0,
+    "untouched": 0,
+    "resolved_unmapped": 0,
+    "unresolved_unmapped": 3598,
+    "library_complete": false
+  },
   "quality_signals": {
-    "approved_ratio": 0.2794,
+    "approved_ratio": 0.2834,
     "hold_ratio": 0,
     "draft_ratio": 0.7166,
     "batch_count": 41,
+    "generic_placeholder_record_count": 330,
+    "generic_placeholder_examples": [
+      "tabler:ad_circle",
+      "tabler:ad_circle_off",
+      "tabler:aerial_lift",
+      "tabler:air_balloon",
+      "tabler:album",
+      "tabler:anchor",
+      "tabler:artboard",
+      "tabler:aspect_ratio"
+    ],
     "top_categories": [
+      {
+        "key": "status_feedback",
+        "count": 482
+      },
       {
         "key": "navigation_interface",
         "count": 470
-      },
-      {
-        "key": "status_feedback",
-        "count": 469
       },
       {
         "key": "communication_social",
@@ -44,11 +64,11 @@
       },
       {
         "key": "data_controls",
-        "count": 72
+        "count": 73
       },
       {
         "key": "security",
-        "count": 56
+        "count": 57
       },
       {
         "key": "search_discovery",
@@ -64,7 +84,7 @@
       },
       {
         "key": "system_control",
-        "count": 38
+        "count": 40
       },
       {
         "key": "analytics_data",
@@ -80,18 +100,18 @@
       },
       {
         "key": "destructive_actions",
-        "count": 7
+        "count": 8
       },
       {
         "key": "security_auth",
-        "count": 7
-      },
-      {
-        "key": "media_playback",
-        "count": 4
+        "count": 8
       },
       {
         "key": "message_actions",
+        "count": 5
+      },
+      {
+        "key": "media_playback",
         "count": 4
       },
       {
@@ -105,63 +125,20 @@
     ],
     "top_domains": [
       {
-        "key": "ui_controls",
-        "count": 437
-      },
-      {
-        "key": "navigation",
-        "count": 387
-      },
-      {
-        "key": "ui_shell",
-        "count": 136
-      },
-      {
-        "key": "product_status",
-        "count": 133
-      },
-      {
-        "key": "communication",
-        "count": 91
-      },
-      {
-        "key": "developer_tools",
-        "count": 82
-      },
-      {
-        "key": "security",
-        "count": 63
-      },
-      {
-        "key": "brand_platforms",
-        "count": 41
-      },
-      {
-        "key": "ai_agents",
-        "count": 19
-      },
-      {
-        "key": "media",
-        "count": 10
-      },
-      {
-        "key": "analytics",
-        "count": 2
-      },
-      {
-        "key": "commerce",
-        "count": 2
+        "key": "unknown",
+        "count": 1423
       }
     ]
   },
   "metadata_safety": {
-    "records_checked": 1403,
+    "records_checked": 1423,
     "banned_field_hit_count": 0,
     "banned_field_hits": []
   },
   "gaps": [
     "3598 icons are still kept as reviewed drafts, so the semantics are not fully approved yet.",
-    "20 icons were skipped because they already exist in another free registry group."
+    "330 approved records still use generic placeholder semantics and must be re-reviewed before the library can count as fully complete.",
+    "3598 screenshot-backed concepts are still unresolved in the unmapped backlog."
   ],
   "manual_spotcheck": {
     "approved_examples": [
@@ -188,7 +165,7 @@
   },
   "report_paths": {
     "json": "data/si-registry/generated/tabler-completion-audit.json",
-    "markdown": "docs/superpowers/plans/2026-04-21-tabler-completion-audit-report.md",
-    "html": "docs/superpowers/plans/2026-04-21-tabler-completion-audit-report.html"
+    "markdown": "docs/superpowers/plans/2026-04-27-tabler-completion-audit-report.md",
+    "html": "docs/superpowers/plans/2026-04-27-tabler-completion-audit-report.html"
   }
 }

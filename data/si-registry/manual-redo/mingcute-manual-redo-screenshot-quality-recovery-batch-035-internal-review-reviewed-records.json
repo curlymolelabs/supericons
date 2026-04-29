@@ -1,0 +1,461 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:folder",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_folder_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:folder",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "folder",
+      "label": "Folder",
+      "purpose": "Show a folder, directory, or file container.",
+      "category": "system_control",
+      "semantic_tags": [
+        "folder",
+        "directory",
+        "container",
+        "browse",
+        "collection"
+      ],
+      "use_when": "Use when the interface refers to a generic folder, directory, or file container.",
+      "avoid_when": "Do not use for folder creation, protection, or transfer when a more specific folder icon exists.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A generic folder or directory symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "directory",
+        "file folder",
+        "container",
+        "folder item"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:folder",
+      "source_library": "mingcute",
+      "source_name": "folder",
+      "label": "Folder",
+      "depicts_observation": "Folder outline with a short top tab and a flat lower body panel",
+      "popular_reading": "Plain folder",
+      "plausible_readings": [
+        "folder",
+        "file folder",
+        "tab folder"
+      ],
+      "context_bias": "Use when the interface wants the simplest closed folder shape with one top tab.",
+      "ambiguity_note": "Do not use for striped or corner fold folders when the body should stay plain.",
+      "search_hints": [
+        "Folder",
+        "folder",
+        "file folder",
+        "tab folder",
+        "Plain folder"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/folder_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a basic closed folder with a short top tab and plain body."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:folder",
+      "source_library": "mingcute",
+      "source_name": "folder",
+      "label": "Folder",
+      "depicts": "Folder outline with a short top tab and a flat lower body panel",
+      "use_when": "Use when the interface wants the simplest closed folder shape with one top tab.",
+      "avoid_when": "Do not use for striped or corner fold folders when the body should stay plain.",
+      "semantic_tags": [
+        "browse",
+        "collection",
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "tab folder"
+      ],
+      "synonyms": [
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "folder item",
+        "tab folder"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:folder_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_folder_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:folder_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "folder_2",
+      "label": "Folder",
+      "purpose": "Show a folder, directory, or file container.",
+      "category": "system_control",
+      "semantic_tags": [
+        "folder",
+        "directory",
+        "container",
+        "browse",
+        "collection"
+      ],
+      "use_when": "Use when the interface refers to a generic folder, directory, or file container.",
+      "avoid_when": "Do not use for folder creation, protection, or transfer when a more specific folder icon exists.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A generic folder or directory symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "directory",
+        "file folder",
+        "container",
+        "folder item"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:folder_2",
+      "source_library": "mingcute",
+      "source_name": "folder_2",
+      "label": "Folder",
+      "depicts_observation": "Folder outline with a top band stripe running across the upper body",
+      "popular_reading": "Striped folder",
+      "plausible_readings": [
+        "folder band",
+        "file folder",
+        "tab folder"
+      ],
+      "context_bias": "Use when the interface wants a closed folder with a visible horizontal band across the body.",
+      "ambiguity_note": "Do not use for the plain folder when the upper stripe should remain visible.",
+      "search_hints": [
+        "Folder",
+        "folder band",
+        "file folder",
+        "tab folder",
+        "Striped folder"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/folder_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot adds a horizontal band stripe across the folder body below the tab."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:folder_2",
+      "source_library": "mingcute",
+      "source_name": "folder_2",
+      "label": "Folder",
+      "depicts": "Folder outline with a top band stripe running across the upper body",
+      "use_when": "Use when the interface wants a closed folder with a visible horizontal band across the body.",
+      "avoid_when": "Do not use for the plain folder when the upper stripe should remain visible.",
+      "semantic_tags": [
+        "browse",
+        "collection",
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "folder band",
+        "tab folder"
+      ],
+      "synonyms": [
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "folder band",
+        "folder item",
+        "tab folder"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:folder_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_folder_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:folder_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "folder_3",
+      "label": "Folder",
+      "purpose": "Show a folder, directory, or file container.",
+      "category": "system_control",
+      "semantic_tags": [
+        "folder",
+        "directory",
+        "container",
+        "browse",
+        "collection"
+      ],
+      "use_when": "Use when the interface refers to a generic folder, directory, or file container.",
+      "avoid_when": "Do not use for folder creation, protection, or transfer when a more specific folder icon exists.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A generic folder or directory symbol.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "directory",
+        "file folder",
+        "container",
+        "folder item"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:folder_3",
+      "source_library": "mingcute",
+      "source_name": "folder_3",
+      "label": "Folder",
+      "depicts_observation": "Rounded folder outline with a folded top right corner panel",
+      "popular_reading": "Corner fold folder",
+      "plausible_readings": [
+        "folder fold",
+        "file folder",
+        "rounded folder"
+      ],
+      "context_bias": "Use when the interface wants a folder whose main cue is the folded panel at the top right.",
+      "ambiguity_note": "Do not use for plain tab folders when the folded corner panel is visible.",
+      "search_hints": [
+        "Folder",
+        "folder fold",
+        "file folder",
+        "rounded folder",
+        "Corner fold folder"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/folder_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot changes the top edge into a rounded body with a folded corner panel."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:folder_3",
+      "source_library": "mingcute",
+      "source_name": "folder_3",
+      "label": "Folder",
+      "depicts": "Rounded folder outline with a folded top right corner panel",
+      "use_when": "Use when the interface wants a folder whose main cue is the folded panel at the top right.",
+      "avoid_when": "Do not use for plain tab folders when the folded corner panel is visible.",
+      "semantic_tags": [
+        "browse",
+        "collection",
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "folder fold",
+        "rounded folder"
+      ],
+      "synonyms": [
+        "container",
+        "directory",
+        "file folder",
+        "folder",
+        "folder fold",
+        "folder item",
+        "rounded folder"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:folder_open",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_folder_open_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:folder_open",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "folder_open",
+      "label": "Open Folder",
+      "purpose": "Show opening a folder or entering a file container.",
+      "category": "system_control",
+      "semantic_tags": [
+        "open folder",
+        "folder",
+        "enter container",
+        "directory",
+        "browse"
+      ],
+      "use_when": "Use when the interface opens or enters a folder, directory, or file container.",
+      "avoid_when": "Do not use for creating folders or generic file browsing when the meaning is specifically opening a folder.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An open folder indicating entry into a container.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "open folder",
+        "browse folder",
+        "open directory",
+        "enter folder"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:folder_open",
+      "source_library": "mingcute",
+      "source_name": "folder_open",
+      "label": "Open Folder",
+      "depicts_observation": "Open folder outline with a front panel tilted downward from the tab edge",
+      "popular_reading": "Open folder front",
+      "plausible_readings": [
+        "open folder",
+        "folder open",
+        "file folder"
+      ],
+      "context_bias": "Use when the interface wants a folder shown opened toward the viewer with a tilted front panel.",
+      "ambiguity_note": "Do not use for the flatter open folder when the front panel tilt is the visible difference.",
+      "search_hints": [
+        "Open Folder",
+        "open folder",
+        "folder open",
+        "file folder",
+        "Open folder front"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/folder_open_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot angles the front folder panel downward to show the folder open toward the front."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:folder_open",
+      "source_library": "mingcute",
+      "source_name": "folder_open",
+      "label": "Open Folder",
+      "depicts": "Open folder outline with a front panel tilted downward from the tab edge",
+      "use_when": "Use when the interface wants a folder shown opened toward the viewer with a tilted front panel.",
+      "avoid_when": "Do not use for the flatter open folder when the front panel tilt is the visible difference.",
+      "semantic_tags": [
+        "browse",
+        "directory",
+        "enter container",
+        "file folder",
+        "folder",
+        "folder open",
+        "open folder"
+      ],
+      "synonyms": [
+        "browse folder",
+        "enter folder",
+        "file folder",
+        "folder open",
+        "open directory",
+        "open folder"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:folder_open_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_folder_open_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:folder_open_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "folder_open_2",
+      "label": "Open Folder",
+      "purpose": "Show opening a folder or entering a file container.",
+      "category": "system_control",
+      "semantic_tags": [
+        "open folder",
+        "folder",
+        "enter container",
+        "directory",
+        "browse"
+      ],
+      "use_when": "Use when the interface opens or enters a folder, directory, or file container.",
+      "avoid_when": "Do not use for creating folders or generic file browsing when the meaning is specifically opening a folder.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An open folder indicating entry into a container.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "open folder",
+        "browse folder",
+        "open directory",
+        "enter folder"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:folder_open_2",
+      "source_library": "mingcute",
+      "source_name": "folder_open_2",
+      "label": "Open Folder",
+      "depicts_observation": "Open folder outline with a broad open mouth and a flatter front panel",
+      "popular_reading": "Open folder wide",
+      "plausible_readings": [
+        "open folder",
+        "wide folder",
+        "file folder"
+      ],
+      "context_bias": "Use when the interface wants an open folder with a wider flatter front opening.",
+      "ambiguity_note": "Do not use for the more tilted open folder when the broad open mouth is the main cue.",
+      "search_hints": [
+        "Open Folder",
+        "open folder",
+        "wide folder",
+        "file folder",
+        "Open folder wide"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/file/folder_open_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot opens the folder into a wider flatter mouth instead of a sharply tilted front panel."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:folder_open_2",
+      "source_library": "mingcute",
+      "source_name": "folder_open_2",
+      "label": "Open Folder",
+      "depicts": "Open folder outline with a broad open mouth and a flatter front panel",
+      "use_when": "Use when the interface wants an open folder with a wider flatter front opening.",
+      "avoid_when": "Do not use for the more tilted open folder when the broad open mouth is the main cue.",
+      "semantic_tags": [
+        "browse",
+        "directory",
+        "enter container",
+        "file folder",
+        "folder",
+        "open folder",
+        "wide folder"
+      ],
+      "synonyms": [
+        "browse folder",
+        "enter folder",
+        "file folder",
+        "open directory",
+        "open folder",
+        "wide folder"
+      ]
+    }
+  }
+]

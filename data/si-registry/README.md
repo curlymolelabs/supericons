@@ -44,8 +44,24 @@ These remain the active product files during this phase:
 - `public/icon-index-solid.json`
 - `public/icon-taxonomy.json`
 - `mcp/public/icon-index.json`
+- `mcp/public/icon-index-solid.json`
 - `public/packs/manifest.json`
 
 `scripts/build-icons.js` remains the active builder for current free-icon product projections during P1-A.
 
 Registry preview outputs created in this phase are inspection outputs only. They are not the final product access-control story and they do not replace the live product until a later cutover.
+
+## Semantic Registry Boundary
+
+The semantic registry is the meaning layer.
+
+- `public/registry/records.json` and `mcp/public/registry-records.json` describe icon meaning and usage
+- `public/icon-index.json` and `public/icon-index-solid.json` are the browser asset catalogs
+- `mcp/public/icon-index.json` and `mcp/public/icon-index-solid.json` are the MCP asset catalogs
+
+Do not treat the semantic registry as the raw visual variant inventory.
+
+If an icon has outline and solid forms, the preferred model is:
+
+- one semantic record for the concept
+- multiple visual asset variants that reuse that semantic record

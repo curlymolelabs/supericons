@@ -1,0 +1,433 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:emoji",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_emoji_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:emoji",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "emoji",
+      "label": "Emoji",
+      "purpose": "Show emoji as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "emoji"
+      ],
+      "use_when": "Use when the interface refers directly to emoji as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing emoji.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "emoji"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:emoji",
+      "source_library": "mingcute",
+      "source_name": "emoji",
+      "label": "Emoji",
+      "depicts_observation": "Smiling face with two round eyes above one curved mouth",
+      "popular_reading": "Smiling face",
+      "plausible_readings": [
+        "emoji face",
+        "happy face",
+        "smile icon"
+      ],
+      "context_bias": "Use when the interface wants a simple happy face with two open round eyes.",
+      "ambiguity_note": "Do not use for the winking face when one eye should close and the mouth should open.",
+      "search_hints": [
+        "Emoji",
+        "emoji face",
+        "happy face",
+        "smile icon",
+        "Smiling face"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/emoji/emoji_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a closed curved smile and two matching round eyes."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:emoji",
+      "source_library": "mingcute",
+      "source_name": "emoji",
+      "label": "Emoji",
+      "depicts": "Smiling face with two round eyes above one curved mouth",
+      "use_when": "Use when the interface wants a simple happy face with two open round eyes.",
+      "avoid_when": "Do not use for the winking face when one eye should close and the mouth should open.",
+      "semantic_tags": [
+        "emoji",
+        "emoji face",
+        "happy face",
+        "smile icon"
+      ],
+      "synonyms": [
+        "emoji",
+        "emoji face",
+        "happy face",
+        "smile icon"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:emoji_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_emoji_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:emoji_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "emoji_2",
+      "label": "Emoji",
+      "purpose": "Show emoji as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "emoji",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to emoji as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing emoji.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "emoji",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:emoji_2",
+      "source_library": "mingcute",
+      "source_name": "emoji_2",
+      "label": "Emoji",
+      "depicts_observation": "Winking face with one vertical eye above an open mouth and one angled wink",
+      "popular_reading": "Winking face",
+      "plausible_readings": [
+        "emoji face",
+        "playful face",
+        "wink icon"
+      ],
+      "context_bias": "Use when the interface wants a playful wink with one open mouth instead of a closed smile.",
+      "ambiguity_note": "Do not use for the simple smiling face when both eyes should stay round and open.",
+      "search_hints": [
+        "Emoji",
+        "emoji face",
+        "playful face",
+        "wink icon",
+        "Winking face"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/emoji/emoji_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot swaps one eye into a wink and opens the mouth into a wide smile shape."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:emoji_2",
+      "source_library": "mingcute",
+      "source_name": "emoji_2",
+      "label": "Emoji",
+      "depicts": "Winking face with one vertical eye above an open mouth and one angled wink",
+      "use_when": "Use when the interface wants a playful wink with one open mouth instead of a closed smile.",
+      "avoid_when": "Do not use for the simple smiling face when both eyes should stay round and open.",
+      "semantic_tags": [
+        "2",
+        "emoji",
+        "emoji face",
+        "playful face",
+        "wink icon"
+      ],
+      "synonyms": [
+        "2",
+        "emoji",
+        "emoji face",
+        "playful face",
+        "wink icon"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:eye",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_eye_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:eye",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "eye",
+      "label": "Visible",
+      "purpose": "Show a visible, reveal, or preview state.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "visible",
+        "view",
+        "preview",
+        "reveal",
+        "eye"
+      ],
+      "use_when": "Use when the interface reveals content or shows that something is visible.",
+      "avoid_when": "Do not use for analytics or read-tracking when the meaning is specifically visibility or preview.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An eye symbol for visible or reveal state.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "show",
+        "preview",
+        "reveal",
+        "visible state"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:eye",
+      "source_library": "mingcute",
+      "source_name": "eye",
+      "label": "Visible",
+      "depicts_observation": "Eye outline with one crescent moon pupil centered inside",
+      "popular_reading": "Moon eye",
+      "plausible_readings": [
+        "eye icon",
+        "sleep eye",
+        "view icon"
+      ],
+      "context_bias": "Use when the interface wants an eye outline with a crescent center rather than a plain round pupil.",
+      "ambiguity_note": "Do not use for the round pupil eye when the center should look like a complete dot.",
+      "search_hints": [
+        "Visible",
+        "eye icon",
+        "sleep eye",
+        "view icon",
+        "Moon eye"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/system/eye_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot places a crescent moon shape inside the eye instead of a full pupil."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:eye",
+      "source_library": "mingcute",
+      "source_name": "eye",
+      "label": "Visible",
+      "depicts": "Eye outline with one crescent moon pupil centered inside",
+      "use_when": "Use when the interface wants an eye outline with a crescent center rather than a plain round pupil.",
+      "avoid_when": "Do not use for the round pupil eye when the center should look like a complete dot.",
+      "semantic_tags": [
+        "eye",
+        "eye icon",
+        "preview",
+        "reveal",
+        "sleep eye",
+        "view",
+        "view icon",
+        "visible"
+      ],
+      "synonyms": [
+        "eye icon",
+        "preview",
+        "reveal",
+        "show",
+        "sleep eye",
+        "view icon",
+        "visible",
+        "visible state"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:eye_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_eye_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:eye_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "eye_2",
+      "label": "Visible",
+      "purpose": "Show a visible, reveal, or preview state.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "visible",
+        "view",
+        "preview",
+        "reveal",
+        "eye"
+      ],
+      "use_when": "Use when the interface reveals content or shows that something is visible.",
+      "avoid_when": "Do not use for analytics or read-tracking when the meaning is specifically visibility or preview.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "An eye symbol for visible or reveal state.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "approved_reference",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "show",
+        "preview",
+        "reveal",
+        "visible state"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:eye_2",
+      "source_library": "mingcute",
+      "source_name": "eye_2",
+      "label": "Visible",
+      "depicts_observation": "Eye outline with one round pupil centered around one inner dot",
+      "popular_reading": "Round pupil eye",
+      "plausible_readings": [
+        "eye icon",
+        "view icon",
+        "vision icon"
+      ],
+      "context_bias": "Use when the interface wants a standard eye outline with a round pupil in the middle.",
+      "ambiguity_note": "Do not use for the crescent eye when the center should suggest a moon shaped pupil.",
+      "search_hints": [
+        "Visible",
+        "eye icon",
+        "view icon",
+        "vision icon",
+        "Round pupil eye"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/part/eye_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot uses a full circular pupil with a small center dot instead of a crescent."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:eye_2",
+      "source_library": "mingcute",
+      "source_name": "eye_2",
+      "label": "Visible",
+      "depicts": "Eye outline with one round pupil centered around one inner dot",
+      "use_when": "Use when the interface wants a standard eye outline with a round pupil in the middle.",
+      "avoid_when": "Do not use for the crescent eye when the center should suggest a moon shaped pupil.",
+      "semantic_tags": [
+        "eye",
+        "eye icon",
+        "preview",
+        "reveal",
+        "view",
+        "view icon",
+        "visible",
+        "vision icon"
+      ],
+      "synonyms": [
+        "eye icon",
+        "preview",
+        "reveal",
+        "show",
+        "view icon",
+        "visible",
+        "visible state",
+        "vision icon"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:factory",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_factory_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:factory",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "factory",
+      "label": "Factory",
+      "purpose": "Show factory as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "factory"
+      ],
+      "use_when": "Use when the interface refers directly to factory as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing factory.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "factory"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:factory",
+      "source_library": "mingcute",
+      "source_name": "factory",
+      "label": "Factory",
+      "depicts_observation": "Factory silhouette with two cooling towers above a flat ground line",
+      "popular_reading": "Cooling tower factory",
+      "plausible_readings": [
+        "factory icon",
+        "plant building",
+        "industrial site"
+      ],
+      "context_bias": "Use when the interface wants two tall cooling tower shapes instead of a boxy factory building.",
+      "ambiguity_note": "Do not use for the zigzag roof factory when windows and one chimney should show.",
+      "search_hints": [
+        "Factory",
+        "factory icon",
+        "plant building",
+        "industrial site",
+        "Cooling tower factory"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/building/factory_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot is mostly two tapered cooling towers rising from one flat base line."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:factory",
+      "source_library": "mingcute",
+      "source_name": "factory",
+      "label": "Factory",
+      "depicts": "Factory silhouette with two cooling towers above a flat ground line",
+      "use_when": "Use when the interface wants two tall cooling tower shapes instead of a boxy factory building.",
+      "avoid_when": "Do not use for the zigzag roof factory when windows and one chimney should show.",
+      "semantic_tags": [
+        "factory",
+        "factory icon",
+        "industrial site",
+        "plant building"
+      ],
+      "synonyms": [
+        "factory",
+        "factory icon",
+        "industrial site",
+        "plant building"
+      ]
+    }
+  }
+]

@@ -164,13 +164,22 @@ for (const record of recordPreview) {
 }
 
 for (const record of publicRecordPreview) {
-  assert.equal(record.access_tier, 'public_open_record', `public preview should only include public records (${record.icon_id})`);
-  assert.equal(record.projectionTargets.includes(PUBLIC_PROJECTION_TARGET), true, `public record should include ${PUBLIC_PROJECTION_TARGET}`);
-  assert.equal(record.projectionTargets.includes(INTERNAL_PROJECTION_TARGET), true, `public record should still be visible internally`);
   assert.equal('provider' in record, false, `public records should not include nested provider branding (${record.icon_id})`);
   assert.equal('providerName' in record, false, `public records should not include providerName (${record.icon_id})`);
   assert.equal('providerNamespace' in record, false, `public records should not include providerNamespace (${record.icon_id})`);
   assert.equal('providerHomepage' in record, false, `public records should not include providerHomepage (${record.icon_id})`);
+  assert.equal('source_group' in record, false, `public records should not include source_group (${record.icon_id})`);
+  assert.equal('version' in record, false, `public records should not include version (${record.icon_id})`);
+  assert.equal('status' in record, false, `public records should not include status (${record.icon_id})`);
+  assert.equal('access_tier' in record, false, `public records should not include access_tier (${record.icon_id})`);
+  assert.equal('projection_policy' in record, false, `public records should not include projection_policy (${record.icon_id})`);
+  assert.equal('is_premium' in record, false, `public records should not include is_premium (${record.icon_id})`);
+  assert.equal('intent' in record, false, `public records should not include intent (${record.icon_id})`);
+  assert.equal('domain' in record, false, `public records should not include domain (${record.icon_id})`);
+  assert.equal('review_state' in record, false, `public records should not include review_state (${record.icon_id})`);
+  assert.equal('evidence' in record, false, `public records should not include evidence (${record.icon_id})`);
+  assert.equal('confidence' in record, false, `public records should not include confidence (${record.icon_id})`);
+  assert.equal('projectionTargets' in record, false, `public records should not include projectionTargets (${record.icon_id})`);
   if (record.icon_id.startsWith(providerPrefixedId)) {
     assert.equal(
       record.source_library,
@@ -201,12 +210,6 @@ for (const record of premiumRecordPreview) {
 for (const record of freeRecordPreview) {
   assert.equal(record.access_tier, 'public_open_record', `free preview should stay public-safe (${record.icon_id})`);
 }
-
-assert.equal(
-  publicRecordPreview.some((record) => record.access_tier === 'protected_premium_record'),
-  false,
-  'protected premium records must not leak into the public preview'
-);
 
 assert.equal(
   publicRecordPreview.some((record) => record.internalSignals || record.editorialNotes),

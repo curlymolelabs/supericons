@@ -1,0 +1,407 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:compass",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_compass_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:compass",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "compass",
+      "label": "Compass",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "compass"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing compass.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "compass"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:compass",
+      "source_library": "mingcute",
+      "source_name": "compass",
+      "label": "Compass",
+      "depicts_observation": "Round compass ring with a tilted inner diamond needle at the center",
+      "popular_reading": "Compass dial",
+      "plausible_readings": [
+        "compass",
+        "navigation dial",
+        "direction ring"
+      ],
+      "context_bias": "Use when the interface wants a classic round compass dial with an inner diamond needle.",
+      "ambiguity_note": "Do not use for drafting or signpost icons when the outer ring and center needle matter.",
+      "search_hints": [
+        "Compass",
+        "compass",
+        "navigation dial",
+        "direction ring",
+        "Compass dial"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/compass_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a circular compass ring with a distinct inner needle diamond."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:compass",
+      "source_library": "mingcute",
+      "source_name": "compass",
+      "label": "Compass",
+      "depicts": "Round compass ring with a tilted inner diamond needle at the center",
+      "use_when": "Use when the interface wants a classic round compass dial with an inner diamond needle.",
+      "avoid_when": "Do not use for drafting or signpost icons when the outer ring and center needle matter.",
+      "semantic_tags": [
+        "compass",
+        "direction ring",
+        "navigation dial"
+      ],
+      "synonyms": [
+        "compass",
+        "direction ring",
+        "navigation dial"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:compass_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_compass_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:compass_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "compass_2",
+      "label": "Compass",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "compass",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing compass.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "compass",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:compass_2",
+      "source_library": "mingcute",
+      "source_name": "compass_2",
+      "label": "Compass",
+      "depicts_observation": "Drafting compass outline with one ring hinge and two long pointed legs",
+      "popular_reading": "Drafting compass",
+      "plausible_readings": [
+        "draft compass",
+        "geometry tool",
+        "drawing compass"
+      ],
+      "context_bias": "Use when the interface wants the geometry tool used for drawing circles rather than a map dial.",
+      "ambiguity_note": "Do not use for navigation compasses when the two leg drafting tool form is visible.",
+      "search_hints": [
+        "Compass",
+        "draft compass",
+        "geometry tool",
+        "drawing compass",
+        "Drafting compass"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/education/compass_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot changes from a dial to a geometry compass with two long pointed legs."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:compass_2",
+      "source_library": "mingcute",
+      "source_name": "compass_2",
+      "label": "Compass",
+      "depicts": "Drafting compass outline with one ring hinge and two long pointed legs",
+      "use_when": "Use when the interface wants the geometry tool used for drawing circles rather than a map dial.",
+      "avoid_when": "Do not use for navigation compasses when the two leg drafting tool form is visible.",
+      "semantic_tags": [
+        "2",
+        "compass",
+        "draft compass",
+        "drawing compass",
+        "geometry tool"
+      ],
+      "synonyms": [
+        "2",
+        "compass",
+        "draft compass",
+        "drawing compass",
+        "geometry tool"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:compass_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_compass_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:compass_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "compass_3",
+      "label": "Compass",
+      "purpose": "Show compass as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "compass",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to compass as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing compass.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "compass",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:compass_3",
+      "source_library": "mingcute",
+      "source_name": "compass_3",
+      "label": "Compass",
+      "depicts_observation": "Tilted diamond compass marker with an inner crossed needle shape",
+      "popular_reading": "Diamond compass",
+      "plausible_readings": [
+        "compass marker",
+        "diamond compass",
+        "navigation diamond"
+      ],
+      "context_bias": "Use when the interface wants a compact compass marker without a surrounding ring.",
+      "ambiguity_note": "Do not use for the round dial or drafting compass when the diamond body is the cue.",
+      "search_hints": [
+        "Compass",
+        "compass marker",
+        "diamond compass",
+        "navigation diamond",
+        "Diamond compass"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/compass_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot reduces the compass to one tilted diamond frame with an inner crossed needle."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:compass_3",
+      "source_library": "mingcute",
+      "source_name": "compass_3",
+      "label": "Compass",
+      "depicts": "Tilted diamond compass marker with an inner crossed needle shape",
+      "use_when": "Use when the interface wants a compact compass marker without a surrounding ring.",
+      "avoid_when": "Do not use for the round dial or drafting compass when the diamond body is the cue.",
+      "semantic_tags": [
+        "3",
+        "compass",
+        "compass marker",
+        "diamond compass",
+        "navigation diamond"
+      ],
+      "synonyms": [
+        "3",
+        "compass",
+        "compass marker",
+        "diamond compass",
+        "navigation diamond"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:directions",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_directions_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:directions",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "directions",
+      "label": "Directions",
+      "purpose": "Show directions as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "directions"
+      ],
+      "use_when": "Use when the interface refers directly to directions as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing directions.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "directions"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:directions",
+      "source_library": "mingcute",
+      "source_name": "directions",
+      "label": "Directions",
+      "depicts_observation": "Signpost outline with two opposite arrow signs on a vertical pole",
+      "popular_reading": "Two way signpost",
+      "plausible_readings": [
+        "directions sign",
+        "signpost",
+        "wayfinding post"
+      ],
+      "context_bias": "Use when the interface wants a wayfinding signpost rather than a compass shaped direction marker.",
+      "ambiguity_note": "Do not use for compass icons when the vertical pole and two arrow signs matter.",
+      "search_hints": [
+        "Directions",
+        "directions sign",
+        "signpost",
+        "wayfinding post",
+        "Two way signpost"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/directions_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a pole with two stacked arrow signs pointing in opposite directions."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:directions",
+      "source_library": "mingcute",
+      "source_name": "directions",
+      "label": "Directions",
+      "depicts": "Signpost outline with two opposite arrow signs on a vertical pole",
+      "use_when": "Use when the interface wants a wayfinding signpost rather than a compass shaped direction marker.",
+      "avoid_when": "Do not use for compass icons when the vertical pole and two arrow signs matter.",
+      "semantic_tags": [
+        "directions",
+        "directions sign",
+        "signpost",
+        "wayfinding post"
+      ],
+      "synonyms": [
+        "directions",
+        "directions sign",
+        "signpost",
+        "wayfinding post"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:directions_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_directions_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:directions_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "directions_2",
+      "label": "Directions",
+      "purpose": "Show directions as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "directions",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to directions as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing directions.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "directions",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:directions_2",
+      "source_library": "mingcute",
+      "source_name": "directions_2",
+      "label": "Directions",
+      "depicts_observation": "Single road sign panel on a short vertical post with a pointed right end",
+      "popular_reading": "Single direction sign",
+      "plausible_readings": [
+        "road sign",
+        "direction panel",
+        "wayfinding sign"
+      ],
+      "context_bias": "Use when the interface wants one simple direction sign instead of a full two way signpost.",
+      "ambiguity_note": "Do not use for the two arrow signpost when the icon should stay as one right pointed panel.",
+      "search_hints": [
+        "Directions",
+        "road sign",
+        "direction panel",
+        "wayfinding sign",
+        "Single direction sign"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/map/directions_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot simplifies the signpost into one arrow ended sign panel on a short post."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:directions_2",
+      "source_library": "mingcute",
+      "source_name": "directions_2",
+      "label": "Directions",
+      "depicts": "Single road sign panel on a short vertical post with a pointed right end",
+      "use_when": "Use when the interface wants one simple direction sign instead of a full two way signpost.",
+      "avoid_when": "Do not use for the two arrow signpost when the icon should stay as one right pointed panel.",
+      "semantic_tags": [
+        "2",
+        "direction panel",
+        "directions",
+        "road sign",
+        "wayfinding sign"
+      ],
+      "synonyms": [
+        "2",
+        "direction panel",
+        "directions",
+        "road sign",
+        "wayfinding sign"
+      ]
+    }
+  }
+]

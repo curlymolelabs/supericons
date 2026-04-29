@@ -1,0 +1,413 @@
+[
+  {
+    "order": 1,
+    "icon_id": "mingcute:chat_1",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_chat_1_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:chat_1",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "chat_1",
+      "label": "Chat",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "chat",
+        "1"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing chat.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "chat",
+        "1"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:chat_1",
+      "source_library": "mingcute",
+      "source_name": "chat_1",
+      "label": "Chat",
+      "depicts_observation": "Rounded chat bubble outline with two short text bars and a lower tail",
+      "popular_reading": "Text bubble",
+      "plausible_readings": [
+        "chat bubble",
+        "message text",
+        "speech bubble"
+      ],
+      "context_bias": "Use when the interface wants a speech bubble that visibly contains short text bars.",
+      "ambiguity_note": "Do not use for dot or empty bubbles when the two inner text bars need to be shown.",
+      "search_hints": [
+        "Chat",
+        "chat bubble",
+        "message text",
+        "speech bubble",
+        "Text bubble"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/contact/chat_1_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows one rounded speech bubble with two stacked inner text bars."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:chat_1",
+      "source_library": "mingcute",
+      "source_name": "chat_1",
+      "label": "Chat",
+      "depicts": "Rounded chat bubble outline with two short text bars and a lower tail",
+      "use_when": "Use when the interface wants a speech bubble that visibly contains short text bars.",
+      "avoid_when": "Do not use for dot or empty bubbles when the two inner text bars need to be shown.",
+      "semantic_tags": [
+        "1",
+        "chat",
+        "chat bubble",
+        "message text",
+        "speech bubble"
+      ],
+      "synonyms": [
+        "1",
+        "chat",
+        "chat bubble",
+        "message text",
+        "speech bubble"
+      ]
+    }
+  },
+  {
+    "order": 2,
+    "icon_id": "mingcute:chat_2",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_chat_2_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:chat_2",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "chat_2",
+      "label": "Chat",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "chat",
+        "2"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing chat.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "chat",
+        "2"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:chat_2",
+      "source_library": "mingcute",
+      "source_name": "chat_2",
+      "label": "Chat",
+      "depicts_observation": "Round chat bubble outline with two centered dots and a lower left tail",
+      "popular_reading": "Dot chat bubble",
+      "plausible_readings": [
+        "message dots",
+        "chat bubble",
+        "speech dots"
+      ],
+      "context_bias": "Use when the interface wants a conversation bubble that reads as two message dots.",
+      "ambiguity_note": "Do not use for text bar or empty bubbles when the two centered dots are visible.",
+      "search_hints": [
+        "Chat",
+        "message dots",
+        "chat bubble",
+        "speech dots",
+        "Dot chat bubble"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/contact/chat_2_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot replaces text bars with two centered dots inside a round bubble."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:chat_2",
+      "source_library": "mingcute",
+      "source_name": "chat_2",
+      "label": "Chat",
+      "depicts": "Round chat bubble outline with two centered dots and a lower left tail",
+      "use_when": "Use when the interface wants a conversation bubble that reads as two message dots.",
+      "avoid_when": "Do not use for text bar or empty bubbles when the two centered dots are visible.",
+      "semantic_tags": [
+        "2",
+        "chat",
+        "chat bubble",
+        "message dots",
+        "speech dots"
+      ],
+      "synonyms": [
+        "2",
+        "chat",
+        "chat bubble",
+        "message dots",
+        "speech dots"
+      ]
+    }
+  },
+  {
+    "order": 3,
+    "icon_id": "mingcute:chat_3",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_chat_3_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:chat_3",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "chat_3",
+      "label": "Chat",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "chat",
+        "3"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing chat.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "chat",
+        "3"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:chat_3",
+      "source_library": "mingcute",
+      "source_name": "chat_3",
+      "label": "Chat",
+      "depicts_observation": "Round empty chat bubble outline with a short lower left tail",
+      "popular_reading": "Empty chat bubble",
+      "plausible_readings": [
+        "speech bubble",
+        "empty message",
+        "chat outline"
+      ],
+      "context_bias": "Use when the interface wants the most minimal round speech bubble without inner marks.",
+      "ambiguity_note": "Do not use for dotted or text bar bubbles when the center should stay empty.",
+      "search_hints": [
+        "Chat",
+        "speech bubble",
+        "empty message",
+        "chat outline",
+        "Empty chat bubble"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/contact/chat_3_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a plain round bubble with no interior dots or bars at all."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:chat_3",
+      "source_library": "mingcute",
+      "source_name": "chat_3",
+      "label": "Chat",
+      "depicts": "Round empty chat bubble outline with a short lower left tail",
+      "use_when": "Use when the interface wants the most minimal round speech bubble without inner marks.",
+      "avoid_when": "Do not use for dotted or text bar bubbles when the center should stay empty.",
+      "semantic_tags": [
+        "3",
+        "chat",
+        "chat outline",
+        "empty message",
+        "speech bubble"
+      ],
+      "synonyms": [
+        "3",
+        "chat",
+        "chat outline",
+        "empty message",
+        "speech bubble"
+      ]
+    }
+  },
+  {
+    "order": 4,
+    "icon_id": "mingcute:chat_4",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_chat_4_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:chat_4",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "chat_4",
+      "label": "Chat",
+      "purpose": "Show chat as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "chat",
+        "4"
+      ],
+      "use_when": "Use when the interface refers directly to chat as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing chat.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "chat",
+        "4"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:chat_4",
+      "source_library": "mingcute",
+      "source_name": "chat_4",
+      "label": "Chat",
+      "depicts_observation": "Rounded square chat bubble with two short vertical marks inside",
+      "popular_reading": "Square chat bubble",
+      "plausible_readings": [
+        "square bubble",
+        "message bubble",
+        "chat marks"
+      ],
+      "context_bias": "Use when the interface wants a softer square bubble instead of a round speech balloon.",
+      "ambiguity_note": "Do not use for round bubbles when the rounded square body and short vertical marks matter.",
+      "search_hints": [
+        "Chat",
+        "square bubble",
+        "message bubble",
+        "chat marks",
+        "Square chat bubble"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/contact/chat_4_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot changes the bubble body into a rounded square with two vertical inner marks."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:chat_4",
+      "source_library": "mingcute",
+      "source_name": "chat_4",
+      "label": "Chat",
+      "depicts": "Rounded square chat bubble with two short vertical marks inside",
+      "use_when": "Use when the interface wants a softer square bubble instead of a round speech balloon.",
+      "avoid_when": "Do not use for round bubbles when the rounded square body and short vertical marks matter.",
+      "semantic_tags": [
+        "4",
+        "chat",
+        "chat marks",
+        "message bubble",
+        "square bubble"
+      ],
+      "synonyms": [
+        "4",
+        "chat",
+        "chat marks",
+        "message bubble",
+        "square bubble"
+      ]
+    }
+  },
+  {
+    "order": 5,
+    "icon_id": "mingcute:comment",
+    "screenshot_path": "output/icon_screenshot/mingcute/mingcute_comment_line.png",
+    "current_semantic_record": {
+      "icon_id": "mingcute:comment",
+      "source_group": "free",
+      "source_library": "mingcute",
+      "source_name": "comment",
+      "label": "Comment",
+      "purpose": "Show comment as a direct object, concept, or themed surface cue.",
+      "category": "status_feedback",
+      "semantic_tags": [
+        "comment"
+      ],
+      "use_when": "Use when the interface refers directly to comment as an object, concept, or themed surface cue.",
+      "avoid_when": "Do not use when the product needs a more specific action, status, or domain meaning than this generic draft can support.",
+      "version": "1.0.0",
+      "status": "reviewed",
+      "access_tier": "public_open_record",
+      "projection_policy": "future_public_record",
+      "is_premium": false,
+      "depicts": "A symbol representing comment.",
+      "review_state": "human_reviewed",
+      "evidence": [
+        "source_name",
+        "svg_payload"
+      ],
+      "synonyms": [
+        "comment"
+      ]
+    },
+    "proposed_interpretation": {
+      "icon_id": "mingcute:comment",
+      "source_library": "mingcute",
+      "source_name": "comment",
+      "label": "Comment",
+      "depicts_observation": "Two overlapping comment bubble outlines with one front tail and one rear tail",
+      "popular_reading": "Comment threads",
+      "plausible_readings": [
+        "two comments",
+        "conversation thread",
+        "overlapping bubbles"
+      ],
+      "context_bias": "Use when the interface wants to show multiple comment bubbles rather than one single chat balloon.",
+      "ambiguity_note": "Do not use for single bubble icons when the two overlapping bubble outlines matter.",
+      "search_hints": [
+        "Comment",
+        "two comments",
+        "conversation thread",
+        "overlapping bubbles",
+        "Comment threads"
+      ],
+      "official_source_url": "https://raw.githubusercontent.com/Richard9394/MingCute/main/svg/contact/comment_line.svg",
+      "public_reference_url": null,
+      "selection_reason": "The screenshot shows a pair of overlapping comment bubbles instead of one standalone bubble."
+    },
+    "proposed_final_record": {
+      "icon_id": "mingcute:comment",
+      "source_library": "mingcute",
+      "source_name": "comment",
+      "label": "Comment",
+      "depicts": "Two overlapping comment bubble outlines with one front tail and one rear tail",
+      "use_when": "Use when the interface wants to show multiple comment bubbles rather than one single chat balloon.",
+      "avoid_when": "Do not use for single bubble icons when the two overlapping bubble outlines matter.",
+      "semantic_tags": [
+        "comment",
+        "conversation thread",
+        "overlapping bubbles",
+        "two comments"
+      ],
+      "synonyms": [
+        "comment",
+        "conversation thread",
+        "overlapping bubbles",
+        "two comments"
+      ]
+    }
+  }
+]
