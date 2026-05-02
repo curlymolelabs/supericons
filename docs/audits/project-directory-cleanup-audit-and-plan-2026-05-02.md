@@ -671,3 +671,27 @@ Reason:
 
 - The moved scripts are not exposed through npm commands and appear to be one-off recovery or verification helpers.
 - Keeping only package-called scripts in the active scripts folder makes the workflow easier to understand.
+
+## Execution Checkpoint: Internal Plan Draft Archive
+
+Untracked plan drafts under `docs/superpowers/plans` were moved into ignored archive storage instead of being promoted as durable public docs.
+
+Moved into `archive/project-cleanup-2026-05-02/internal-plan-drafts`:
+
+- `docs/superpowers/plans/2026-04-30-light-preview-color-fix.md`
+- `docs/superpowers/plans/2026-04-30-phosphor-completion-audit-report.html`
+- `docs/superpowers/plans/2026-04-30-phosphor-completion-audit-report.md`
+- `docs/superpowers/plans/2026-05-01-heroicons-depicts-bulk-pass.md`
+- `docs/superpowers/plans/2026-05-01-live-registry-depicts-recovery-plan.md`
+- `docs/superpowers/plans/2026-05-01-registry-source-of-truth-and-projection-cleanup-plan.md`
+- `docs/superpowers/plans/2026-05-01-registry-supabase-cutover-cleanup-plan.md`
+- `docs/superpowers/plans/2026-05-01-search-engine-registry-metadata-enhancement.md`
+- `docs/superpowers/plans/2026-05-01-semantic-registry-refactor-and-recovery-plan.md`
+- `docs/superpowers/plans/2026-05-01-si-registry-source-isolation-plan.md`
+- `docs/superpowers/plans/2026-05-01-supabase-registry-migration-and-data-cleanup-plan.md`
+
+Reason:
+
+- These are useful local operational drafts, but they include worker-oriented planning language.
+- The public-facing registry docs are now under `docs/registry`.
+- The audit files remain under `docs/audits`.
