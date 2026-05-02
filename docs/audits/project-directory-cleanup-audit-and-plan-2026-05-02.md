@@ -625,3 +625,27 @@ Change made:
 Reason:
 
 - The main data boundary becomes easier to understand: source files are committed, generated/staging workbench files are rebuildable, and public/MCP JSON remains export output.
+
+## Execution Checkpoint: Registry Pilot Archive
+
+The old purpose-chip pilot folder was moved after the registry manifest had been repointed to `data/si-registry/source`.
+
+Moved into `archive/project-cleanup-2026-05-02/data-si-registry-legacy-pilot`:
+
+- `data/si-registry/pilot`
+
+Archive result:
+
+- `35` files moved.
+- Approximately `1.26 MB` moved into ignored archive storage.
+
+Package script cleanup:
+
+- Removed `estimate:purpose-chip-single-model-batch-tokens`.
+- Removed `seed:purpose-chip-material-coverage`.
+
+Reason:
+
+- The pilot folder was a historical seed/review workflow, not the current registry source of truth.
+- The active approved material records now live under `data/si-registry/source`.
+- Removing the old npm shortcuts reduces the chance of accidentally rebuilding from stale pilot data.
