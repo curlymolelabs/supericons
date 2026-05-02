@@ -297,6 +297,11 @@ assert.match(
   /public\/icon-taxonomy\.json/,
   'search catalog sync should read icon taxonomy metadata',
 );
+assert.match(
+  syncScriptSource,
+  /duplicateResolvedIconIds/,
+  'search catalog sync should dedupe registry records that resolve to the same catalog icon id',
+);
 
 if (process.env.SUPERICONS_RUN_LIVE_HOSTED_SEARCH === '1') {
   const baseUrl = process.env.SUPERICONS_SEARCH_ENGINE_URL
@@ -364,8 +369,8 @@ if (process.env.SUPERICONS_RUN_LIVE_HOSTED_SEARCH === '1') {
     );
   }
 
-  await assertHostedSearchIncludes('three stacked server blocks', 'heroicons:server-stack');
-  await assertHostedSearchIncludes('security developer tools', 'lucide:shield');
+  await assertHostedSearchIncludes('database', 'iconoir:database');
+  await assertHostedSearchIncludes('move down', 'lucide:move-down');
 }
 
 console.log('verify-hosted-search-engine: ok');

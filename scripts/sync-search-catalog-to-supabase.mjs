@@ -89,8 +89,9 @@ function buildTaxonomyByIconId(rawTaxonomy) {
 
 function resolveRegistryRows(records, taxonomyByIconId, catalogRows) {
   const catalogIconIds = new Set((catalogRows || []).map((row) => row.icon_id));
-  const resolvedRecords = [];
+  const resolvedByIconId = new Map();
   const unresolvedIconIds = [];
+  const duplicateResolvedIconIds = new Set();
   const taxonomyByResolvedIconId = {};
 
   for (const record of records) {
@@ -109,15 +110,34 @@ function resolveRegistryRows(records, taxonomyByIconId, catalogRows) {
       taxonomyByResolvedIconId[resolvedIconId] = resolvedTaxonomy;
     }
 
-    resolvedRecords.push({
+    const resolvedRecord = {
       ...record,
       icon_id: resolvedIconId,
+    };
+    const existing = resolvedByIconId.get(resolvedIconId);
+    if (existing) {
+      duplicateResolvedIconIds.add(resolvedIconId);
+      const currentIsDirect = String(record?.icon_id || '').trim() === resolvedIconId;
+      const existingIsDirect = existing.originalIconId === resolvedIconId;
+      if (currentIsDirect && !existingIsDirect) {
+        resolvedByIconId.set(resolvedIconId, {
+          originalIconId,
+          record: resolvedRecord,
+        });
+      }
+      continue;
+    }
+
+    resolvedByIconId.set(resolvedIconId, {
+      originalIconId,
+      record: resolvedRecord,
     });
   }
 
   return {
-    resolvedRecords,
+    resolvedRecords: [...resolvedByIconId.values()].map((entry) => entry.record),
     unresolvedIconIds,
+    duplicateResolvedIconIds: [...duplicateResolvedIconIds],
     taxonomyByResolvedIconId,
   };
 }
@@ -132,7 +152,12 @@ for (const batch of chunk(rows, 500)) {
 const rawRegistry = await readJsonIfExists('public/registry/records.json', []);
 const rawTaxonomy = await readJsonIfExists('public/icon-taxonomy.json', { entries: [] });
 const taxonomyByIconId = buildTaxonomyByIconId(rawTaxonomy);
-const { resolvedRecords, unresolvedIconIds, taxonomyByResolvedIconId } = resolveRegistryRows(
+const {
+  resolvedRecords,
+  unresolvedIconIds,
+  duplicateResolvedIconIds,
+  taxonomyByResolvedIconId,
+} = resolveRegistryRows(
   normalizeRegistryRecords(rawRegistry),
   taxonomyByIconId,
   rows,
@@ -149,3 +174,4 @@ for (const batch of chunk(registryRows, 500)) {
 console.log(`sync-search-catalog-to-supabase: synced ${rows.length} catalog rows`);
 console.log(`sync-search-catalog-to-supabase: synced ${registryRows.length} public registry metadata rows`);
 console.log(`sync-search-catalog-to-supabase: skipped ${unresolvedIconIds.length} unresolved registry rows`);
+console.log(`sync-search-catalog-to-supabase: deduped ${duplicateResolvedIconIds.length} duplicate resolved registry rows`);
