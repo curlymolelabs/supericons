@@ -470,3 +470,20 @@ Verification after the move:
 - `npm run build:material-export-manifest` completed and wrote `118` owned entries.
 - `npm run verify:si-registry` passed.
 - `git status --short -- public/material-export public/material-export-manifest.json` returned no dirty entries after refreshing the manifest file.
+
+## Execution Checkpoint: Registry Manual Redo Archive
+
+The `data/si-registry/manual-redo` cleanup was reviewed as part of the registry data cleanup pass.
+
+Audit result:
+
+- `data/si-registry/manual-redo` is no longer present in the active tree.
+- Git shows `427` tracked `manual-redo` files as removed from the active tree.
+- The archived copy exists at `data/si-registry/archive/2026-05-01-pre-supabase-cutover/manual-redo`.
+- The archived copy contains `894` files and is approximately `15.39 MB`.
+
+Recommendation:
+
+- Commit the tracked removals for `data/si-registry/manual-redo` as an archive checkpoint.
+- Do not move `data/si-registry/automation` in the same commit because many legacy package scripts still reference automation files.
+- Clean or deprecate old `manual-redo` and `automation` package scripts in a separate focused pass so command dependencies are not broken silently.
