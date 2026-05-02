@@ -487,3 +487,34 @@ Recommendation:
 - Commit the tracked removals for `data/si-registry/manual-redo` as an archive checkpoint.
 - Do not move `data/si-registry/automation` in the same commit because many legacy package scripts still reference automation files.
 - Clean or deprecate old `manual-redo` and `automation` package scripts in a separate focused pass so command dependencies are not broken silently.
+
+## Execution Checkpoint: Legacy Registry Command Surface
+
+The package command surface was cleaned after the manual redo archive checkpoint.
+
+Audit result:
+
+- `package.json` still exposed old pre-Supabase registry commands for purpose-chip pilots, library rollout batches, editor-review batches, visual-review batches, approved-record promotion, manual redo, screenshot quality, and deterministic redo verification.
+- The current registry source-of-truth workflow is Supabase-centered and uses commands such as:
+  - `dry-run:registry-supabase-import`
+  - `import:registry-supabase`
+  - `export:live-registry-supabase`
+  - `verify:live-supabase-registry`
+  - `pull:registry-review-batch`
+  - `verify:registry-review-batch`
+  - `apply:registry-review-batch`
+  - `snapshot:registry-rollback`
+  - `verify:registry-rollback`
+- The old script files were left on disk for now.
+
+Change made:
+
+- Removed `86` legacy registry workflow shortcuts from `package.json`.
+- Kept current build, Supabase registry, search, MCP, bundle, and product verification commands.
+- Did not move `data/si-registry/automation` yet.
+
+Reason:
+
+- This reduces the chance that future work accidentally uses the old deterministic/manual workflow instead of the Supabase workflow.
+- It also prepares the repo for a later archive of `data/si-registry/automation` and the matching old script files.
+- The script files should be archived in a separate pass after one more dependency check.
