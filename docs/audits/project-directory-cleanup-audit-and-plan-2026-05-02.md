@@ -712,3 +712,14 @@ Reason:
 
 - Screenshot capture exception data is not registry source data.
 - Keeping it under `data/screenshot-capture` avoids bringing the old `data/si-registry/automation` folder back into the active tree.
+
+## Execution Checkpoint: Root Scratch Command Note Archive
+
+Moved into `archive/project-cleanup-2026-05-02/root-scratch`:
+
+- `commands.md`
+
+Reason:
+
+- The file was a root-level scratch prompt/command note, not app source, registry source, or durable product documentation.
+- Archiving it keeps the repository root focused on project files while preserving the note locally.
