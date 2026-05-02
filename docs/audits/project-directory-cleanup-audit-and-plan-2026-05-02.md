@@ -439,3 +439,34 @@ Expected Git status effect:
 - `output/icon_screenshot` now appears as tracked deletions because the files were moved into ignored archive storage.
 - The physical files still exist under `archive/project-cleanup-2026-05-02/output/icon_screenshot`.
 - The next cleanup decision is whether to commit those tracked removals and keep screenshot evidence only in ignored archive storage.
+
+## Execution Checkpoint: Material Export Cleanup
+
+The `public/material-export` cleanup was executed as a reorganization-only move. Files were moved into the ignored archive area instead of being deleted from disk.
+
+Audit result before moving files:
+
+- `public/material-export-manifest.json` declares `118` owned static material export entries.
+- `public/material-export` contained `8004` files.
+- `118` manifest-listed files were present.
+- `0` manifest-listed files were missing.
+- `7886` files were not listed in the manifest.
+- Git status showed `3975` dirty untracked material export entries.
+
+Moved into `archive/project-cleanup-2026-05-02/public-material-export-extra`:
+
+- `7886` non-manifest material SVG files.
+
+Result after moving files:
+
+- `public/material-export` contains exactly `118` files.
+- `118` manifest-listed files are present.
+- `0` manifest-listed files are missing.
+- `0` non-manifest files remain in `public/material-export`.
+- `archive/project-cleanup-2026-05-02/public-material-export-extra` contains `7886` files.
+
+Verification after the move:
+
+- `npm run build:material-export-manifest` completed and wrote `118` owned entries.
+- `npm run verify:si-registry` passed.
+- `git status --short -- public/material-export public/material-export-manifest.json` returned no dirty entries after refreshing the manifest file.
