@@ -5,6 +5,8 @@ export interface CandidateRow {
   style: string;
   icon_type: string;
   lexical_rank: number;
+  registry_rank?: number;
+  avoid_rank?: number;
 }
 
 export interface PrivateManifestRow {

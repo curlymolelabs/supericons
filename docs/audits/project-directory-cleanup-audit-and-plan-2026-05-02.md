@@ -695,3 +695,20 @@ Reason:
 - These are useful local operational drafts, but they include worker-oriented planning language.
 - The public-facing registry docs are now under `docs/registry`.
 - The audit files remain under `docs/audits`.
+
+## Execution Checkpoint: Screenshot Capture Exception Data
+
+One file from the archived registry automation folder is still needed by the screenshot capture tooling.
+
+Copied into active data:
+
+- `data/screenshot-capture/material-screenshot-capture-exceptions.json`
+
+Updated reader:
+
+- `lib/screenshot-capture/material-browser-fallback.js`
+
+Reason:
+
+- Screenshot capture exception data is not registry source data.
+- Keeping it under `data/screenshot-capture` avoids bringing the old `data/si-registry/automation` folder back into the active tree.

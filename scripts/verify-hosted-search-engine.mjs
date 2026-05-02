@@ -6,8 +6,10 @@ import { fileURLToPath } from 'node:url';
 import { createIconSemanticAliasMap } from '../lib/icon-semantic-aliases.js';
 import {
   buildHostedSearchManifestSeedRows,
+  buildHostedSearchPublicRegistryRows,
   indexRowsByIconId,
   rerankHostedSearchCandidates,
+  resolveHostedSearchRegistryIconId,
 } from '../lib/hosted-search-core.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -53,6 +55,90 @@ const features = indexRowsByIconId([
   },
 ]);
 
+const registryRows = buildHostedSearchPublicRegistryRows([
+  {
+    icon_id: 'heroicons:server-stack',
+    label: 'Server stack',
+    purpose: 'Represents infrastructure, hosting, and grouped servers.',
+    category: 'systems_architecture',
+    semantic_tags: ['hosting', 'infrastructure', 'servers'],
+    synonyms: ['self hosted', 'server cluster'],
+    use_when: 'Use for hosted systems, infrastructure, and server groups.',
+    avoid_when: 'Avoid for personal home storage.',
+    depicts: 'Three stacked server blocks.',
+  },
+], {
+  'heroicons:server-stack': {
+    jobCategory: 'engineering_developer_tools',
+    secondaryCategories: ['systems_architecture', 'security'],
+    rank: 12,
+  },
+});
+
+assert.equal(registryRows.length, 1, 'registry row builder should create one row');
+assert.deepEqual(
+  registryRows[0].synonyms,
+  ['self hosted', 'server cluster'],
+  'registry row builder should normalize synonyms',
+);
+assert.equal(
+  registryRows[0].job_category,
+  'engineering developer tools',
+  'registry row builder should normalize taxonomy job category',
+);
+assert.deepEqual(
+  registryRows[0].secondary_categories,
+  ['systems architecture', 'security'],
+  'registry row builder should normalize taxonomy secondary categories',
+);
+assert.equal(
+  registryRows[0].avoid_when,
+  'avoid for personal home storage',
+  'registry row builder should preserve negative guidance separately',
+);
+
+const knownCatalogIconIds = new Set([
+  'bootstrap:align-bottom',
+  'mingcute:add_circle_line',
+]);
+
+assert.equal(
+  resolveHostedSearchRegistryIconId(
+    {
+      icon_id: 'bootstrap:align_bottom',
+      source_library: 'bootstrap',
+      source_name: 'align_bottom',
+    },
+    knownCatalogIconIds,
+  ),
+  'bootstrap:align-bottom',
+  'registry icon resolver should normalize underscore ids to catalog ids',
+);
+assert.equal(
+  resolveHostedSearchRegistryIconId(
+    {
+      icon_id: 'mingcute:add_circle',
+      source_library: 'mingcute',
+      source_name: 'add_circle',
+    },
+    knownCatalogIconIds,
+  ),
+  'mingcute:add_circle_line',
+  'registry icon resolver should map MingCute records to line icon ids',
+);
+assert.equal(
+  resolveHostedSearchRegistryIconId(
+    {
+      icon_id: 'mingcute:abs',
+      source_library: 'mingcute',
+      source_name: 'abs',
+    },
+    knownCatalogIconIds,
+  ),
+  null,
+  'registry icon resolver should return null when no catalog icon exists',
+);
+
 const candidates = [
   {
     icon_id: 'lucide:server',
@@ -88,12 +174,105 @@ assert.ok(
   'hosted reranker should keep relevant lexical candidates in the result set',
 );
 
+const registryOnlyRanked = rerankHostedSearchCandidates('self hosted', [
+  {
+    icon_id: 'lucide:server',
+    name: 'server',
+    source_library: 'lucide',
+    style: 'outline',
+    icon_type: 'svg',
+    lexical_rank: 0.4,
+    registry_rank: 0.01,
+    avoid_rank: 0,
+  },
+  {
+    icon_id: 'tabler:server-cog',
+    name: 'server cog',
+    source_library: 'tabler',
+    style: 'outline',
+    icon_type: 'svg',
+    lexical_rank: 0.4,
+    registry_rank: 1.2,
+    avoid_rank: 0,
+  },
+  {
+    icon_id: 'tabler:server-off',
+    name: 'server off',
+    source_library: 'tabler',
+    style: 'outline',
+    icon_type: 'svg',
+    lexical_rank: 0.4,
+    registry_rank: 1.1,
+    avoid_rank: 2.5,
+  },
+], new Map(), new Map());
+
+assert.equal(
+  registryOnlyRanked[0]?.icon_id,
+  'tabler:server-cog',
+  'registry rank should promote strong public registry matches',
+);
+assert.ok(
+  registryOnlyRanked.findIndex((result) => result.icon_id === 'tabler:server-off')
+    > registryOnlyRanked.findIndex((result) => result.icon_id === 'tabler:server-cog'),
+  'avoid_when rank should penalize icons whose negative guidance matches the query',
+);
+
 const rpcPath = path.join(repoRoot, 'supabase', 'migrations', '20260418_hosted_search_engine_rpcs.sql');
+const publicRegistryMigrationPath = path.join(
+  repoRoot,
+  'supabase',
+  'migrations',
+  '20260501_hosted_search_public_registry_metadata.sql',
+);
+const registryRpcPath = path.join(
+  repoRoot,
+  'supabase',
+  'migrations',
+  '20260501_hosted_search_registry_rpc.sql',
+);
 const functionPath = path.join(repoRoot, 'supabase', 'functions', 'search-icons', 'index.ts');
 const sharedHandlerPath = path.join(repoRoot, 'supabase', 'functions', '_shared', 'search-engine', 'handle-search-request.ts');
+const syncScriptPath = path.join(repoRoot, 'scripts', 'sync-search-catalog-to-supabase.mjs');
 
 const rpcSql = await fs.readFile(rpcPath, 'utf8');
 assert.match(rpcSql, /si_search_icon_candidates/i, 'RPC migration should define si_search_icon_candidates');
+
+const publicRegistryMigrationSql = await fs.readFile(publicRegistryMigrationPath, 'utf8');
+assert.match(
+  publicRegistryMigrationSql,
+  /icon_search_public_registry_metadata/,
+  'public registry metadata migration should define the metadata table',
+);
+assert.match(
+  publicRegistryMigrationSql,
+  /search_document/,
+  'public registry metadata migration should define a weighted search document',
+);
+assert.match(
+  publicRegistryMigrationSql,
+  /avoid_document/,
+  'public registry metadata migration should define a negative-guidance search document',
+);
+assert.match(
+  publicRegistryMigrationSql,
+  /service_role/,
+  'public registry metadata migration should grant service_role access',
+);
+
+const registryRpcSql = await fs.readFile(registryRpcPath, 'utf8');
+assert.match(
+  registryRpcSql,
+  /icon_search_public_registry_metadata/,
+  'registry-aware RPC should join public registry metadata',
+);
+assert.match(
+  registryRpcSql,
+  /drop function if exists public\.si_search_icon_candidates\(text, text, integer\)/i,
+  'registry-aware RPC migration should drop the old function before changing the return shape',
+);
+assert.match(registryRpcSql, /registry_rank/, 'registry-aware RPC should return registry_rank');
+assert.match(registryRpcSql, /avoid_rank/, 'registry-aware RPC should return avoid_rank');
 
 const functionSource = await fs.readFile(functionPath, 'utf8');
 assert.match(functionSource, /handleSearchRequest/i, 'hosted search function should delegate to the shared handler');
@@ -101,6 +280,23 @@ assert.match(functionSource, /handleSearchRequest/i, 'hosted search function sho
 const sharedHandlerSource = await fs.readFile(sharedHandlerPath, 'utf8');
 assert.match(sharedHandlerSource, /search_request_audit/i, 'shared hosted search handler should record request audits');
 assert.match(sharedHandlerSource, /engine_version/i, 'shared hosted search handler should return an engine version');
+
+const syncScriptSource = await fs.readFile(syncScriptPath, 'utf8');
+assert.match(
+  syncScriptSource,
+  /icon_search_public_registry_metadata/,
+  'search catalog sync should upsert public registry metadata rows',
+);
+assert.match(
+  syncScriptSource,
+  /public\/registry\/records\.json/,
+  'search catalog sync should read the public registry records projection',
+);
+assert.match(
+  syncScriptSource,
+  /public\/icon-taxonomy\.json/,
+  'search catalog sync should read icon taxonomy metadata',
+);
 
 if (process.env.SUPERICONS_RUN_LIVE_HOSTED_SEARCH === '1') {
   const baseUrl = process.env.SUPERICONS_SEARCH_ENGINE_URL
@@ -145,6 +341,31 @@ if (process.env.SUPERICONS_RUN_LIVE_HOSTED_SEARCH === '1') {
   const payload = JSON.parse(raw);
   assert.ok(Array.isArray(payload.results), 'payload.results should be an array');
   assert.ok(payload.results.length > 0, 'hosted search should return at least one result');
+
+  async function assertHostedSearchIncludes(query, expectedIconId) {
+    const registryResponse = await fetch(baseUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        query,
+        library: null,
+        limit: 8,
+        source: 'verify',
+      }),
+    });
+
+    const registryRaw = await registryResponse.text();
+    assert.equal(registryResponse.status, 200, `hosted search should respond with 200 for ${query}. Body: ${registryRaw}`);
+    const registryPayload = JSON.parse(registryRaw);
+    const ids = (registryPayload.results || []).map((result) => result.icon_id);
+    assert.ok(
+      ids.includes(expectedIconId),
+      `hosted search for "${query}" should include ${expectedIconId}. Got: ${ids.join(', ')}`,
+    );
+  }
+
+  await assertHostedSearchIncludes('three stacked server blocks', 'heroicons:server-stack');
+  await assertHostedSearchIncludes('security developer tools', 'lucide:shield');
 }
 
 console.log('verify-hosted-search-engine: ok');

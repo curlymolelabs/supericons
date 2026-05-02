@@ -1,0 +1,234 @@
+{
+  "schema_version": "1.0.0",
+  "library": "material",
+  "verification_scope": "screenshot_capture_phase",
+  "phase_status": "approved_source_limit_exceptions",
+  "expected_failure_mode": "upstream_missing_svg",
+  "upstream_source_family": "google_material_symbols",
+  "entries": [
+    {
+      "asset_id": "delivery_dining",
+      "resolved_upstream_lookup_id": "delivery_dining",
+      "reason_bucket": "service / utility / source",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/delivery_dining/materialsymbolsoutlined/delivery_dining_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/delivery_dining/materialsymbolsoutlined/delivery_dining_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "drive_file_rename_outline",
+      "resolved_upstream_lookup_id": "drive_file_rename",
+      "reason_bucket": "file / branding",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/drive_file_rename/materialsymbolsoutlined/drive_file_rename_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/drive_file_rename/materialsymbolsoutlined/drive_file_rename_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "iso",
+      "resolved_upstream_lookup_id": "iso",
+      "reason_bucket": "camera / settings / media",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/iso/materialsymbolsoutlined/iso_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/iso/materialsymbolsoutlined/iso_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "replay_circle_filled",
+      "resolved_upstream_lookup_id": "replay_circle",
+      "reason_bucket": "camera / settings / media",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/replay_circle/materialsymbolsoutlined/replay_circle_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/replay_circle/materialsymbolsoutlined/replay_circle_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "shortcut",
+      "resolved_upstream_lookup_id": "shortcut",
+      "reason_bucket": "service / utility / source",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/shortcut/materialsymbolsoutlined/shortcut_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/shortcut/materialsymbolsoutlined/shortcut_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "signal_cellular_no_sim",
+      "resolved_upstream_lookup_id": "signal_cellular_no_sim",
+      "reason_bucket": "telecom / signal status",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_cellular_no_sim/materialsymbolsoutlined/signal_cellular_no_sim_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_cellular_no_sim/materialsymbolsoutlined/signal_cellular_no_sim_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "signal_wifi_4_bar_lock",
+      "resolved_upstream_lookup_id": "signal_wifi_4_bar_lock",
+      "reason_bucket": "telecom / signal status",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_4_bar_lock/materialsymbolsoutlined/signal_wifi_4_bar_lock_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_4_bar_lock/materialsymbolsoutlined/signal_wifi_4_bar_lock_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "signal_wifi_connected_no_internet_4",
+      "resolved_upstream_lookup_id": "signal_wifi_connected_no_internet_4",
+      "reason_bucket": "telecom / signal status",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_connected_no_internet_4/materialsymbolsoutlined/signal_wifi_connected_no_internet_4_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_connected_no_internet_4/materialsymbolsoutlined/signal_wifi_connected_no_internet_4_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "signal_wifi_statusbar_4_bar",
+      "resolved_upstream_lookup_id": "signal_wifi_statusbar_4_bar",
+      "reason_bucket": "telecom / signal status",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_statusbar_4_bar/materialsymbolsoutlined/signal_wifi_statusbar_4_bar_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/signal_wifi_statusbar_4_bar/materialsymbolsoutlined/signal_wifi_statusbar_4_bar_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "sim_card_alert",
+      "resolved_upstream_lookup_id": "sim_card_alert",
+      "reason_bucket": "telecom / signal status",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/sim_card_alert/materialsymbolsoutlined/sim_card_alert_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/sim_card_alert/materialsymbolsoutlined/sim_card_alert_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "source",
+      "resolved_upstream_lookup_id": "source",
+      "reason_bucket": "service / utility / source",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/source/materialsymbolsoutlined/source_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/source/materialsymbolsoutlined/source_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "system_security_update",
+      "resolved_upstream_lookup_id": "system_security_update",
+      "reason_bucket": "system / security update",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update/materialsymbolsoutlined/system_security_update_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update/materialsymbolsoutlined/system_security_update_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "system_security_update_good",
+      "resolved_upstream_lookup_id": "system_security_update_good",
+      "reason_bucket": "system / security update",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update_good/materialsymbolsoutlined/system_security_update_good_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update_good/materialsymbolsoutlined/system_security_update_good_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "system_security_update_warning",
+      "resolved_upstream_lookup_id": "system_security_update_warning",
+      "reason_bucket": "system / security update",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update_warning/materialsymbolsoutlined/system_security_update_warning_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/system_security_update_warning/materialsymbolsoutlined/system_security_update_warning_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "try",
+      "resolved_upstream_lookup_id": "try",
+      "reason_bucket": "file / branding",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/try/materialsymbolsoutlined/try_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/try/materialsymbolsoutlined/try_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    },
+    {
+      "asset_id": "tungsten",
+      "resolved_upstream_lookup_id": "tungsten",
+      "reason_bucket": "camera / settings / media",
+      "expected_missing_asset_styles": ["outline", "solid"],
+      "expected_missing_variant_count": 2,
+      "issue_source_catalog": "public/icon-index.json",
+      "evidence": {
+        "outline_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/tungsten/materialsymbolsoutlined/tungsten_wght300_24px.svg",
+        "solid_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/tungsten/materialsymbolsoutlined/tungsten_fill1_24px.svg",
+        "expected_outline_http_status": 404,
+        "expected_solid_http_status": 404
+      }
+    }
+  ]
+}

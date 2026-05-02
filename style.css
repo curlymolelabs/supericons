@@ -4046,22 +4046,8 @@ body.theme-light .icon-cell:hover .icon-cell__icon {
 body.theme-light .icon-cell.selected .icon-cell__icon {
   color: var(--si-primary);
 }
-/* Preview panel */
-body.theme-light .panel__preview {
-  background: linear-gradient(180deg, #ffffff 0%, #fbfaf7 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(227, 219, 207, 0.9),
-    0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
 body.theme-light .sidebar__item.active {
   background: rgba(255, 79, 0, 0.035);
-}
-body.theme-light .panel__preview .material-symbols-outlined {
-  color: var(--si-text-dim);
-}
-body.theme-light .panel__preview svg {
-  color: var(--si-text);
 }
 body.theme-light .preview-badge {
   border-color: var(--si-outline-variant);
