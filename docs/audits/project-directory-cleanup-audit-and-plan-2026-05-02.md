@@ -552,3 +552,40 @@ Reason:
 - `automation` and old review batches are pre-Supabase workflow evidence, not the current source of truth.
 - Current registry maintenance now runs through Supabase import/export/review commands.
 - Generated projections and source seed folders need a separate classification pass before any move.
+
+## Execution Checkpoint: Registry Generated Folder Cleanup
+
+The `data/si-registry/generated` folder was reduced to active projection outputs only.
+
+Kept in active tree:
+
+- `free-record-preview.json`
+- `premium-record-preview.json`
+- `public-record-preview.json`
+- `record-preview.json`
+- `registry-summary.json`
+
+Moved into `archive/project-cleanup-2026-05-02/data-si-registry-generated-legacy`:
+
+- Old approval summaries.
+- Old completion audits.
+- Old editor/visual review summaries.
+- Old contact sheets.
+- Old damage/unmapped/workflow audit reports.
+- Old Supabase import snapshot evidence.
+
+Archive result:
+
+- `352` files moved.
+- Approximately `63.87 MB` moved into ignored archive storage.
+
+Active tree result:
+
+- `data/si-registry/generated` now contains exactly `5` files.
+- Git shows `351` tracked generated-file deletions. This is expected because those files were moved into ignored archive storage.
+
+Reason:
+
+- Current build and verification scripts read/write only the five projection files listed above.
+- Historical generated reports are evidence artifacts, not current registry source-of-truth files.
+- The active projection files remain dirty and should be handled with the source/manifest cleanup checkpoint because they reflect the current registry projection state.
