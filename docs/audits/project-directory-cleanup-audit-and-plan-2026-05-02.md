@@ -518,3 +518,37 @@ Reason:
 - This reduces the chance that future work accidentally uses the old deterministic/manual workflow instead of the Supabase workflow.
 - It also prepares the repo for a later archive of `data/si-registry/automation` and the matching old script files.
 - The script files should be archived in a separate pass after one more dependency check.
+
+## Execution Checkpoint: Registry Automation Archive
+
+The legacy registry automation data was moved after old npm workflow shortcuts were removed.
+
+Moved into `archive/project-cleanup-2026-05-02/data-si-registry-legacy-workflow`:
+
+- `data/si-registry/automation`
+- `data/si-registry/staging/supabase-review-batches`
+
+Archive result:
+
+- `automation`: `896` files, approximately `81.24 MB`.
+- `staging-supabase-review-batches`: `122` files, approximately `34.49 MB`.
+
+Active tree result:
+
+- `data/si-registry/automation` is no longer present in the active tree.
+- `data/si-registry/staging/supabase-review-batches` is no longer present in the active tree.
+- Git shows `895` tracked automation deletions. This is expected because the files were moved into ignored archive storage.
+
+Kept in active tree:
+
+- `data/si-registry/source`
+- `data/si-registry/generated`
+- `data/si-registry/staging/supabase-review-queues`
+- `data/si-registry/staging/library-workbench`
+- `data/si-registry/registry-manifest.json`
+
+Reason:
+
+- `automation` and old review batches are pre-Supabase workflow evidence, not the current source of truth.
+- Current registry maintenance now runs through Supabase import/export/review commands.
+- Generated projections and source seed folders need a separate classification pass before any move.
