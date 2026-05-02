@@ -649,3 +649,25 @@ Reason:
 - The pilot folder was a historical seed/review workflow, not the current registry source of truth.
 - The active approved material records now live under `data/si-registry/source`.
 - Removing the old npm shortcuts reduces the chance of accidentally rebuilding from stale pilot data.
+
+## Execution Checkpoint: One-Off Script Archive
+
+Untracked scripts were classified by whether `package.json` still calls them.
+
+Moved into `archive/project-cleanup-2026-05-02/one-off-scripts`:
+
+- `scripts/audit-registry-replacement-candidates.mjs`
+- `scripts/heroicons-bulk-upgrade-depicts.mjs`
+- `scripts/isolate-si-registry-source.mjs`
+- `scripts/verify-screenshot-capture-completion.mjs`
+
+Kept in active tree:
+
+- Supabase import/export/review scripts still called by `package.json`.
+- Registry source-boundary and rollback scripts still called by `package.json`.
+- Current polish/repair scripts still called by `package.json`.
+
+Reason:
+
+- The moved scripts are not exposed through npm commands and appear to be one-off recovery or verification helpers.
+- Keeping only package-called scripts in the active scripts folder makes the workflow easier to understand.
