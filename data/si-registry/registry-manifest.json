@@ -8,67 +8,67 @@
   "recordGroups": [
     {
       "id": "free-pilot",
-      "path": "records/free-pilot.json",
+      "path": "source/free-pilot.json",
       "sourceGroup": "free",
       "description": "Pilot aggregated free records using source-library ids."
     },
     {
       "id": "purpose-chip-approved",
-      "path": "pilot/purpose-chip/approved-records.json",
+      "path": "source/purpose-chip-approved.json",
       "sourceGroup": "free",
       "description": "Approved purpose-chip semantic records promoted into the free SI registry path."
     },
     {
       "id": "mingcute-approved",
-      "path": "automation/mingcute/approved-records.json",
+      "path": "source/libraries/mingcute.json",
       "sourceGroup": "free",
       "description": "Approved MingCute semantic records promoted from the first library-by-library automation slice."
     },
     {
       "id": "simpleicons-approved",
-      "path": "automation/simpleicons/approved-records.json",
+      "path": "source/libraries/simpleicons.json",
       "sourceGroup": "free",
       "description": "Approved Simple Icons brand semantic records promoted from the second library-by-library automation slice."
     },
     {
       "id": "lucide-approved",
-      "path": "automation/lucide/approved-records.json",
+      "path": "source/libraries/lucide.json",
       "sourceGroup": "free",
       "description": "Approved Lucide semantic records promoted from the third library-by-library automation slice."
     },
     {
       "id": "tabler-approved",
-      "path": "automation/tabler/approved-records.json",
+      "path": "source/libraries/tabler.json",
       "sourceGroup": "free",
       "description": "Approved Tabler semantic records promoted from the fourth library-by-library automation slice."
     },
     {
       "id": "phosphor-approved",
-      "path": "automation/phosphor/approved-records.json",
+      "path": "source/libraries/phosphor.json",
       "sourceGroup": "free",
       "description": "Approved Phosphor semantic records promoted from the fifth library-by-library automation slice."
     },
     {
       "id": "heroicons-approved",
-      "path": "automation/heroicons/approved-records.json",
+      "path": "source/libraries/heroicons.json",
       "sourceGroup": "free",
       "description": "Approved Heroicons semantic records promoted from the sixth library-by-library automation slice."
     },
     {
       "id": "bootstrap-approved",
-      "path": "automation/bootstrap/approved-records.json",
+      "path": "source/libraries/bootstrap.json",
       "sourceGroup": "free",
       "description": "Approved Bootstrap semantic records promoted from the seventh library-by-library automation slice."
     },
     {
       "id": "iconoir-approved",
-      "path": "automation/iconoir/approved-records.json",
+      "path": "source/libraries/iconoir.json",
       "sourceGroup": "free",
       "description": "Approved Iconoir semantic records promoted from the eighth library-by-library automation slice."
     },
     {
       "id": "ionicons-approved",
-      "path": "automation/ionicons/approved-records.json",
+      "path": "source/libraries/ionicons.json",
       "sourceGroup": "free",
       "description": "Approved Ionicons semantic records promoted from the ninth library-by-library automation slice."
     }

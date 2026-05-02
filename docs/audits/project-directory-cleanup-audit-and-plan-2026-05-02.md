@@ -589,3 +589,39 @@ Reason:
 - Current build and verification scripts read/write only the five projection files listed above.
 - Historical generated reports are evidence artifacts, not current registry source-of-truth files.
 - The active projection files remain dirty and should be handled with the source/manifest cleanup checkpoint because they reflect the current registry projection state.
+
+## Execution Checkpoint: Registry Source Cutover Classification
+
+The registry source-of-truth cutover is now the next safe checkpoint.
+
+Verified active source files:
+
+- `data/si-registry/source/free-pilot.json`
+- `data/si-registry/source/purpose-chip-approved.json`
+- `data/si-registry/source/libraries/bootstrap.json`
+- `data/si-registry/source/libraries/heroicons.json`
+- `data/si-registry/source/libraries/iconoir.json`
+- `data/si-registry/source/libraries/ionicons.json`
+- `data/si-registry/source/libraries/lucide.json`
+- `data/si-registry/source/libraries/material.json`
+- `data/si-registry/source/libraries/mingcute.json`
+- `data/si-registry/source/libraries/phosphor.json`
+- `data/si-registry/source/libraries/simpleicons.json`
+- `data/si-registry/source/libraries/tabler.json`
+
+Classification:
+
+- `data/si-registry/source` is current registry source data and should be committed.
+- `data/si-registry/registry-manifest.json` now points record groups into `data/si-registry/source`.
+- `data/si-registry/generated` remains generated projection output and should be committed only for the five active projection files.
+- `public/registry/summary.json` and `mcp/public/registry-summary.json` are public/MCP projection summaries and should stay aligned with the generated registry summary.
+- `data/si-registry/staging/library-workbench` is rebuildable staging generated from source data, so it should not be committed as durable registry data.
+- `data/si-registry/pilot/purpose-chip/approved-records.json` is legacy pilot data and should not be promoted as current truth now that the manifest points to `source/purpose-chip-approved.json`.
+
+Change made:
+
+- Added `data/si-registry/staging/library-workbench/` to `.gitignore` so rebuildable workbench output does not keep appearing as source data.
+
+Reason:
+
+- The main data boundary becomes easier to understand: source files are committed, generated/staging workbench files are rebuildable, and public/MCP JSON remains export output.

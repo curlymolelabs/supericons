@@ -1,0 +1,2310 @@
+[
+  {
+    "icon_id": "material:account_tree",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "account_tree",
+    "label": "Hierarchy",
+    "purpose": "Show nested hierarchy, branching structure, or parent-child relationships.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "hierarchy",
+      "tree",
+      "branching",
+      "parent child",
+      "structure"
+    ],
+    "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+    "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Hierarchy shown as a connected system or branching structure.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "hierarchy",
+      "connected system",
+      "system graph",
+      "linked structure"
+    ]
+  },
+  {
+    "icon_id": "material:apps",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "apps",
+    "label": "App Grid",
+    "purpose": "Show an app grid, app launcher, or collection of app destinations.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "apps",
+      "app grid",
+      "launcher",
+      "destinations",
+      "dashboard"
+    ],
+    "use_when": "Use when the interface opens an app launcher, app grid, or collection of primary destinations.",
+    "avoid_when": "Do not use for generic layout switching when the meaning is specifically a set of apps or destinations.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A grid of small squares representing app destinations.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "app launcher",
+      "all apps",
+      "grid menu",
+      "app destinations"
+    ]
+  },
+  {
+    "icon_id": "material:arrow_back",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "arrow_back",
+    "label": "Back",
+    "purpose": "Show back navigation to the previous screen, view, or state.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "return",
+      "navigation",
+      "go back"
+    ],
+    "use_when": "Use when the user can return to the previous screen, previous step, or earlier navigation state.",
+    "avoid_when": "Do not use for undo, reply, or export-left behavior unless the product deliberately maps those actions to back navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A left-pointing arrow with a return-like stem.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "back button",
+      "previous screen",
+      "return",
+      "go back"
+    ]
+  },
+  {
+    "icon_id": "material:arrow_downward",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "arrow_downward",
+    "label": "Move Down",
+    "purpose": "Show downward movement, moving an item down, or navigating to a lower position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "down",
+      "move down",
+      "navigate",
+      "reorder",
+      "direction"
+    ],
+    "use_when": "Use when the user or system is moving downward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for download or negative status when the meaning is not about actual movement downward.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward arrow for movement or direction.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "move down",
+      "downward",
+      "go down",
+      "lower position"
+    ]
+  },
+  {
+    "icon_id": "material:arrow_forward",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "arrow_forward",
+    "label": "Forward Or Next",
+    "purpose": "Show forward navigation, continue flow, or move to the next screen or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "continue",
+      "navigation",
+      "advance"
+    ],
+    "use_when": "Use when the user should move to the next step, continue forward, or navigate deeper into a flow.",
+    "avoid_when": "Do not use for launch, growth, or share actions when the arrow is not actually about forward movement in the interface.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A right-pointing arrow with a forward stem.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "next",
+      "continue",
+      "go forward",
+      "next step"
+    ]
+  },
+  {
+    "icon_id": "material:arrow_upward",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "arrow_upward",
+    "label": "Move Up",
+    "purpose": "Show upward movement, moving an item up, or navigating to a higher position.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "up",
+      "move up",
+      "navigate",
+      "reorder",
+      "direction"
+    ],
+    "use_when": "Use when the user or system is moving upward in order, hierarchy, or directional navigation.",
+    "avoid_when": "Do not use for upload or positive trend when the meaning is not about actual movement upward.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward arrow for movement or direction.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "move up",
+      "upward",
+      "go up",
+      "higher position"
+    ]
+  },
+  {
+    "icon_id": "material:chevron_left",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "chevron_left",
+    "label": "Back",
+    "purpose": "Show a back action or a move to the previous screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "back",
+      "previous",
+      "navigate",
+      "return",
+      "left"
+    ],
+    "use_when": "Use when the interface needs to move backward to the previous screen, panel, or navigation level.",
+    "avoid_when": "Do not use for undo, close, or dismiss when the action is not actually backward navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Single left-pointing chevron angle used for back or previous navigation.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "go back",
+      "previous",
+      "return",
+      "back navigation"
+    ]
+  },
+  {
+    "icon_id": "material:chevron_right",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "chevron_right",
+    "label": "Forward",
+    "purpose": "Show a move forward to the next screen, panel, or step.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "forward",
+      "next",
+      "navigate",
+      "continue",
+      "right"
+    ],
+    "use_when": "Use when the interface needs to move to the next screen, panel, or navigation level.",
+    "avoid_when": "Do not use for send, share, or submit when the action is not actually moving forward in navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Single right-pointing chevron angle used for next or forward navigation.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "next",
+      "go forward",
+      "continue",
+      "forward navigation"
+    ]
+  },
+  {
+    "icon_id": "material:close",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "close",
+    "label": "Close Surface",
+    "purpose": "Close, dismiss, or collapse an open surface such as a modal, drawer, or panel.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "close",
+      "dismiss",
+      "cancel",
+      "panel",
+      "modal"
+    ],
+    "use_when": "Use when the user can close an open surface, overlay, drawer, or panel.",
+    "avoid_when": "Do not use for error, rejection, or blocked states where the X is a status symbol rather than a surface control.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A large X mark used as a close control.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "close panel",
+      "dismiss",
+      "close modal",
+      "close drawer"
+    ]
+  },
+  {
+    "icon_id": "material:dashboard",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "dashboard",
+    "label": "Dashboard",
+    "purpose": "Show a dashboard destination or a dashboard-style overview surface.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "dashboard",
+      "overview",
+      "home panel",
+      "main surface",
+      "summary view"
+    ],
+    "use_when": "Use when the interface navigates to or labels a dashboard or overview surface.",
+    "avoid_when": "Do not use for charts or analytics details when the meaning is specifically the dashboard destination.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A panel-style layout icon for a dashboard surface.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "overview page",
+      "main dashboard",
+      "summary surface",
+      "dashboard home"
+    ]
+  },
+  {
+    "icon_id": "material:database",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "database",
+    "label": "Data Store",
+    "purpose": "Show a structured data store or database.",
+    "category": "analytics_data",
+    "semantic_tags": [
+      "database",
+      "data store",
+      "records",
+      "structured data",
+      "storage"
+    ],
+    "use_when": "Use when the interface refers to a database, record store, persistent data source, or structured storage.",
+    "avoid_when": "Do not use for generic files, folders, spreadsheets, or unstructured document collections.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Stacked cylinder shape with horizontal bands representing a database of stored records.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "database",
+      "data store",
+      "record storage",
+      "structured storage",
+      "persistent data"
+    ]
+  },
+  {
+    "icon_id": "material:database_search",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "database_search",
+    "label": "Data Search",
+    "purpose": "Show search across stored records or structured data.",
+    "category": "search_discovery",
+    "semantic_tags": [
+      "search",
+      "database",
+      "records",
+      "lookup",
+      "structured query"
+    ],
+    "use_when": "Use when the interface needs a focused search, lookup, or inspection action with a clear scope.",
+    "avoid_when": "Do not use for generic browsing or broad AI reasoning when the meaning is specifically search or inspection.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A search-focused symbol showing structured or scoped search.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "search records",
+      "query database",
+      "structured lookup",
+      "data search"
+    ]
+  },
+  {
+    "icon_id": "material:dataset",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "dataset",
+    "label": "Dataset",
+    "purpose": "Show a dataset or grouped training data.",
+    "category": "analytics_data",
+    "semantic_tags": [
+      "dataset",
+      "training data",
+      "data collection",
+      "examples",
+      "data set"
+    ],
+    "use_when": "Use when the interface refers to a dataset, training data, example collection, or grouped records.",
+    "avoid_when": "Do not use for a single database, table schema, or generic file when the meaning is a dataset collection.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Rectangular dataset grid with grouped cells representing an organized collection of examples or records.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "dataset",
+      "data set",
+      "training data",
+      "example collection",
+      "data collection"
+    ]
+  },
+  {
+    "icon_id": "material:dataset_linked",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "dataset_linked",
+    "label": "Linked Dataset",
+    "purpose": "Show linked datasets or connected data sets.",
+    "category": "analytics_data",
+    "semantic_tags": [
+      "linked dataset",
+      "connected data",
+      "joined dataset",
+      "data relation",
+      "dataset"
+    ],
+    "use_when": "Use when the interface refers to linked datasets, joined records, related data sources, or connected training data.",
+    "avoid_when": "Do not use for a single standalone dataset or a generic hyperlink when the data relationship is not important.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Dataset grid paired with a link mark showing connected or related data collections.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "linked dataset",
+      "connected dataset",
+      "joined data",
+      "related datasets",
+      "linked data"
+    ]
+  },
+  {
+    "icon_id": "material:dock_to_left",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "dock_to_left",
+    "label": "Dock To Left",
+    "purpose": "Show docking or pinning content to the left side of the layout.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "dock",
+      "left",
+      "layout",
+      "pin panel",
+      "snap side"
+    ],
+    "use_when": "Use when the interface docks a panel, window, or content area to the left side.",
+    "avoid_when": "Do not use for simple back or forward navigation when the meaning is about layout docking.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A layout control that snaps or docks content to the left side.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "dock left",
+      "pin to left",
+      "left panel",
+      "snap left"
+    ]
+  },
+  {
+    "icon_id": "material:dock_to_right",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "dock_to_right",
+    "label": "Dock To Right",
+    "purpose": "Show docking or pinning content to the right side of the layout.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "dock",
+      "right",
+      "layout",
+      "pin panel",
+      "snap side"
+    ],
+    "use_when": "Use when the interface docks a panel, window, or content area to the right side.",
+    "avoid_when": "Do not use for simple back or forward navigation when the meaning is about layout docking.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A layout control that snaps or docks content to the right side.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "dock right",
+      "pin to right",
+      "right panel",
+      "snap right"
+    ]
+  },
+  {
+    "icon_id": "material:drag_indicator",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "drag_indicator",
+    "label": "Drag Handle",
+    "purpose": "Show that an item can be dragged, moved, or reordered.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "drag",
+      "reorder",
+      "move",
+      "handle",
+      "grip"
+    ],
+    "use_when": "Use when the user can drag or reorder an item in the interface.",
+    "avoid_when": "Do not use for navigation arrows or menu buttons when the control is specifically for drag movement.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A grip pattern used for dragging or reordering.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "drag handle",
+      "reorder item",
+      "move grip",
+      "grab handle"
+    ]
+  },
+  {
+    "icon_id": "material:expand_less",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "expand_less",
+    "label": "Collapse",
+    "purpose": "Show that open content, options, or details can collapse closed.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "collapse",
+      "show less",
+      "close",
+      "hide details",
+      "fold"
+    ],
+    "use_when": "Use when the interface can collapse a section, hide details, or close expanded content.",
+    "avoid_when": "Do not use for upload or upward movement when the meaning is not collapse.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward control indicating content can close or fold away.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "show less",
+      "collapse section",
+      "close details",
+      "fold up"
+    ]
+  },
+  {
+    "icon_id": "material:expand_more",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "expand_more",
+    "label": "Expand",
+    "purpose": "Show that more content, options, or details can expand open.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "expand",
+      "show more",
+      "open",
+      "details",
+      "dropdown"
+    ],
+    "use_when": "Use when the interface can expand a section, reveal more options, or open a dropdown-like control.",
+    "avoid_when": "Do not use for download, downward movement, or status decline when the meaning is not expansion.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward control indicating more content can open.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "show more",
+      "expand section",
+      "open details",
+      "dropdown open"
+    ]
+  },
+  {
+    "icon_id": "material:filter_list",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "filter_list",
+    "label": "Filter List",
+    "purpose": "Show filtering of a list, results, or visible data set.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "filter",
+      "list filter",
+      "refine",
+      "narrow",
+      "results"
+    ],
+    "use_when": "Use when the interface lets the user narrow, refine, or filter a list of results.",
+    "avoid_when": "Do not use for sort-only controls or analytics funnels when the UI is actually filtering results.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A list or funnel control for narrowing visible results.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "filter results",
+      "narrow list",
+      "refine list",
+      "apply list filters"
+    ]
+  },
+  {
+    "icon_id": "material:first_page",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "first_page",
+    "label": "First Page",
+    "purpose": "Show a jump to the first page or start of a paged result set.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "first page",
+      "start",
+      "jump to start",
+      "pagination",
+      "beginning"
+    ],
+    "use_when": "Use when pagination or result browsing needs a direct jump to the beginning.",
+    "avoid_when": "Do not use for rewind media or reset state when the control is specifically page navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A page-jump control that moves to the beginning of a list or pager.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "go to first page",
+      "start of pages",
+      "first result page",
+      "jump to beginning"
+    ]
+  },
+  {
+    "icon_id": "material:fullscreen",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "fullscreen",
+    "label": "Full Screen",
+    "purpose": "Show entering full screen or expanding content to take over the screen.",
+    "category": "system_control",
+    "semantic_tags": [
+      "full screen",
+      "expand view",
+      "maximize",
+      "immersive",
+      "view control"
+    ],
+    "use_when": "Use when the interface expands content into a full-screen or maximized view.",
+    "avoid_when": "Do not use for zoom or open in new window when the meaning is specifically full screen.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A frame-expansion icon that fills the available screen.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "maximize view",
+      "enter full screen",
+      "expand to screen",
+      "immersive mode"
+    ]
+  },
+  {
+    "icon_id": "material:fullscreen_exit",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "fullscreen_exit",
+    "label": "Exit Full Screen",
+    "purpose": "Show leaving full screen or restoring a smaller view.",
+    "category": "system_control",
+    "semantic_tags": [
+      "exit full screen",
+      "restore view",
+      "collapse",
+      "leave immersive",
+      "view control"
+    ],
+    "use_when": "Use when the interface leaves full screen and returns to the normal view.",
+    "avoid_when": "Do not use for close or dismiss when the meaning is specifically leaving full screen.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A frame-collapse icon returning from a full-screen view.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "leave full screen",
+      "restore window",
+      "shrink view",
+      "exit immersive mode"
+    ]
+  },
+  {
+    "icon_id": "material:grid_view",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "grid_view",
+    "label": "Grid View",
+    "purpose": "Show a grid or tiled view mode for browsing content.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "grid view",
+      "tiles",
+      "card view",
+      "browse grid",
+      "layout"
+    ],
+    "use_when": "Use when the interface switches content into a grid, tile, or card-based view.",
+    "avoid_when": "Do not use for app launchers or dashboards when the meaning is specifically a view mode.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A tiled layout icon showing content in a grid.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "tile view",
+      "card grid",
+      "grid layout",
+      "browse in grid"
+    ]
+  },
+  {
+    "icon_id": "material:home",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "home",
+    "label": "Go Home",
+    "purpose": "Show the home destination, root view, or primary landing area of the product.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "home",
+      "root",
+      "dashboard",
+      "landing",
+      "main destination"
+    ],
+    "use_when": "Use when the user can return to the home screen, dashboard, or main landing area.",
+    "avoid_when": "Do not use for literal housing, addresses, or storage locations unless the UI truly means home as a place.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A simple house silhouette with a doorway.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "go home",
+      "home page",
+      "root screen",
+      "main dashboard"
+    ]
+  },
+  {
+    "icon_id": "material:hub",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "hub",
+    "label": "Hub",
+    "purpose": "Show a central hub that connects multiple related system parts.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "hub",
+      "central node",
+      "connected center",
+      "shared point",
+      "system hub"
+    ],
+    "use_when": "Use when the interface refers to connected system structure, graph relationships, routing, or hierarchy.",
+    "avoid_when": "Do not use for simple chat or generic sharing when the meaning is specifically connected architecture.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Hub shown as a connected system or branching structure.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "hub",
+      "connected system",
+      "system graph",
+      "linked structure"
+    ]
+  },
+  {
+    "icon_id": "material:last_page",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "last_page",
+    "label": "Last Page",
+    "purpose": "Show a jump to the last page or end of a paged result set.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "last page",
+      "end",
+      "jump to end",
+      "pagination",
+      "final page"
+    ],
+    "use_when": "Use when pagination or result browsing needs a direct jump to the end.",
+    "avoid_when": "Do not use for fast-forward media or completion state when the control is specifically page navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A page-jump control that moves to the end of a list or pager.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "go to last page",
+      "end of pages",
+      "last result page",
+      "jump to end"
+    ]
+  },
+  {
+    "icon_id": "material:launch",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "launch",
+    "label": "Open In New",
+    "purpose": "Show opening content in a new tab, new window, or external destination.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "open in new",
+      "external",
+      "new tab",
+      "launch",
+      "outbound"
+    ],
+    "use_when": "Use when the interface opens content in a new tab, new window, or external destination.",
+    "avoid_when": "Do not use for send or share when the meaning is specifically opening elsewhere.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An outward arrow showing content opening in a new destination.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "metadata_only"
+    ],
+    "synonyms": [
+      "open external",
+      "new tab",
+      "launch page",
+      "open separately"
+    ]
+  },
+  {
+    "icon_id": "material:memory",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "memory",
+    "label": "Memory",
+    "purpose": "Show retained memory, saved context, or remembered state inside a system.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "memory",
+      "saved context",
+      "retained state",
+      "recall",
+      "history"
+    ],
+    "use_when": "Use when the interface refers to stored context, memory recall, or retained state in an agent or model.",
+    "avoid_when": "Do not use for hardware memory or browser history when the meaning is specifically contextual memory.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A memory-related symbol for saved context or retained state.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "agent memory",
+      "saved context",
+      "remembered state",
+      "recall"
+    ]
+  },
+  {
+    "icon_id": "material:memory_alt",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "memory_alt",
+    "label": "Memory",
+    "purpose": "Show retained memory, saved context, or remembered state inside a system.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "memory",
+      "saved context",
+      "retained state",
+      "recall",
+      "history"
+    ],
+    "use_when": "Use when the interface refers to stored context, memory recall, or retained state in an agent or model.",
+    "avoid_when": "Do not use for hardware memory or browser history when the meaning is specifically contextual memory.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A memory-related symbol for saved context or retained state.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "agent memory",
+      "saved context",
+      "remembered state",
+      "recall"
+    ]
+  },
+  {
+    "icon_id": "material:menu",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "menu",
+    "label": "Open Menu",
+    "purpose": "Show the main menu, navigation drawer, or app-level menu entry point.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "menu",
+      "navigation",
+      "drawer",
+      "app menu",
+      "hamburger"
+    ],
+    "use_when": "Use when the interface needs to open or indicate the main navigation menu, drawer, or app shell menu.",
+    "avoid_when": "Do not use for sortable lists, drag handles, or generic content lists with no menu meaning.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Three horizontal bars stacked like a hamburger menu.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "open menu",
+      "navigation menu",
+      "open drawer",
+      "main menu"
+    ]
+  },
+  {
+    "icon_id": "material:menu_open",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "menu_open",
+    "label": "Open Menu",
+    "purpose": "Show that the main menu or side menu can open or has been revealed.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "menu",
+      "open menu",
+      "sidebar",
+      "navigation drawer",
+      "panel"
+    ],
+    "use_when": "Use when the interface opens, reveals, or toggles a main navigation menu.",
+    "avoid_when": "Do not use for generic settings or overflow actions when the control is specifically a main menu.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A menu icon shown in an opened or opening state.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "open navigation",
+      "sidebar menu",
+      "open drawer",
+      "menu panel"
+    ]
+  },
+  {
+    "icon_id": "material:more_horiz",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "more_horiz",
+    "label": "More Options",
+    "purpose": "Show an overflow menu with more actions or options.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "more options",
+      "overflow",
+      "menu",
+      "actions",
+      "extra"
+    ],
+    "use_when": "Use when the interface hides additional actions inside an overflow menu.",
+    "avoid_when": "Do not use for settings, grid navigation, or pagination when the intent is specifically overflow actions.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A grouped dot icon used for overflow actions.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "overflow menu",
+      "more actions",
+      "extra options",
+      "kebab menu"
+    ]
+  },
+  {
+    "icon_id": "material:more_vert",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "more_vert",
+    "label": "More Options",
+    "purpose": "Show an overflow menu with more actions or options.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "more options",
+      "overflow",
+      "menu",
+      "actions",
+      "extra"
+    ],
+    "use_when": "Use when the interface hides additional actions inside an overflow menu.",
+    "avoid_when": "Do not use for settings, grid navigation, or pagination when the intent is specifically overflow actions.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A grouped dot icon used for overflow actions.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "overflow menu",
+      "more actions",
+      "extra options",
+      "kebab menu"
+    ]
+  },
+  {
+    "icon_id": "material:network_intelligence",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "network_intelligence",
+    "label": "Network Intelligence",
+    "purpose": "Show connected-system insight, graph intelligence, or analysis across linked parts of a system.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "network intelligence",
+      "system insight",
+      "graph signal",
+      "connected insight",
+      "network"
+    ],
+    "use_when": "Use when the product shows network-level insight, graph-style intelligence, or relationships across connected system parts.",
+    "avoid_when": "Do not use for generic AI branding, simple sharing, or ordinary node diagrams when the meaning is not system insight or connected analysis.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Network Intelligence shown as a connected system or branching structure.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "network intelligence",
+      "connected system",
+      "system graph",
+      "linked structure"
+    ]
+  },
+  {
+    "icon_id": "material:network_intelligence_history",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "network_intelligence_history",
+    "label": "Network History",
+    "purpose": "Show historical network insight, past graph activity, or connected-system analysis over time.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "network intelligence",
+      "system insight",
+      "graph signal",
+      "connected insight",
+      "network"
+    ],
+    "use_when": "Use when the product shows earlier network patterns, historical connected-system activity, or past graph intelligence.",
+    "avoid_when": "Do not use for generic history, logging, or timeline screens when the meaning is not tied to connected-system insight.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Network Intelligence shown as a connected system or branching structure.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "network intelligence",
+      "connected system",
+      "system graph",
+      "linked structure"
+    ]
+  },
+  {
+    "icon_id": "material:open_in_full",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "open_in_full",
+    "label": "Full Screen",
+    "purpose": "Show entering full screen or expanding content to take over the screen.",
+    "category": "system_control",
+    "semantic_tags": [
+      "full screen",
+      "expand view",
+      "maximize",
+      "immersive",
+      "view control"
+    ],
+    "use_when": "Use when the interface expands content into a full-screen or maximized view.",
+    "avoid_when": "Do not use for zoom or open in new window when the meaning is specifically full screen.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A frame-expansion icon that fills the available screen.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "maximize view",
+      "enter full screen",
+      "expand to screen",
+      "immersive mode"
+    ]
+  },
+  {
+    "icon_id": "material:open_in_new",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "open_in_new",
+    "label": "Open In New",
+    "purpose": "Show opening content in a new tab, new window, or external destination.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "open in new",
+      "external",
+      "new tab",
+      "launch",
+      "outbound"
+    ],
+    "use_when": "Use when the interface opens content in a new tab, new window, or external destination.",
+    "avoid_when": "Do not use for send or share when the meaning is specifically opening elsewhere.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An outward arrow showing content opening in a new destination.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "open external",
+      "new tab",
+      "launch page",
+      "open separately"
+    ]
+  },
+  {
+    "icon_id": "material:picture_in_picture_alt",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "picture_in_picture_alt",
+    "label": "Picture In Picture",
+    "purpose": "Show picture-in-picture or a floating mini-player style layout.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "picture in picture",
+      "floating window",
+      "mini player",
+      "overlay",
+      "media layout"
+    ],
+    "use_when": "Use when the interface switches media or content into a floating picture-in-picture layout.",
+    "avoid_when": "Do not use for generic popups or docking when the meaning is specifically a PiP layout.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A small floating window inside a larger frame.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "pip mode",
+      "floating player",
+      "small overlay",
+      "mini window"
+    ]
+  },
+  {
+    "icon_id": "material:psychology",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "psychology",
+    "label": "Reasoning",
+    "purpose": "Show reasoning, analytical thought, or a deliberate thinking process.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "reasoning",
+      "thinking",
+      "analysis",
+      "cognition",
+      "deliberation"
+    ],
+    "use_when": "Use when the interface highlights reasoning, analytical thought, or a deliberate decision-making stage.",
+    "avoid_when": "Do not use for mental health or human psychology content when the meaning is specifically system reasoning.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A thinking-focused symbol used for cognition or mental processing.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "thinking process",
+      "analysis",
+      "reasoning step",
+      "deliberation"
+    ]
+  },
+  {
+    "icon_id": "material:redo",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "redo",
+    "label": "Redo",
+    "purpose": "Show redoing an action that was just undone.",
+    "category": "system_control",
+    "semantic_tags": [
+      "redo",
+      "repeat action",
+      "reapply",
+      "history",
+      "restore change"
+    ],
+    "use_when": "Use when the interface reapplies an action that was previously undone.",
+    "avoid_when": "Do not use for forward navigation or submit actions when the meaning is not action history.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A curved arrow replaying a previous state change.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "redo last change",
+      "reapply action",
+      "restore undone change",
+      "repeat change"
+    ]
+  },
+  {
+    "icon_id": "material:refresh",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "refresh",
+    "label": "Refresh",
+    "purpose": "Show refreshing or reloading the current view, results, or visible content state.",
+    "category": "system_control",
+    "semantic_tags": [
+      "refresh",
+      "reload",
+      "update view",
+      "refetch",
+      "reload results"
+    ],
+    "use_when": "Use when the interface refreshes a page, refetches results, or reloads the current content state.",
+    "avoid_when": "Do not use for retry-after-error, sync status, or undo when the meaning is not a direct refresh action.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A circular arrow loop used for reloading or refetching.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "reload",
+      "refresh view",
+      "update results",
+      "refetch content"
+    ]
+  },
+  {
+    "icon_id": "material:robot",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "robot",
+    "label": "Agent",
+    "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "agent",
+      "assistant",
+      "bot",
+      "automation",
+      "ai"
+    ],
+    "use_when": "Use when the interface refers to an AI assistant, autonomous agent, or bot-driven actor.",
+    "avoid_when": "Do not use for general toys, mascots, or generic automation with no agent meaning.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A robot-like symbol for an assistant or automated agent.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "ai agent",
+      "assistant bot",
+      "automated assistant",
+      "agent actor"
+    ]
+  },
+  {
+    "icon_id": "material:schema",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "schema",
+    "label": "Schema",
+    "purpose": "Show structured schema, field rules, or typed data shape.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "schema",
+      "data shape",
+      "structure",
+      "typed fields",
+      "spec"
+    ],
+    "use_when": "Use when the interface refers to a data schema, typed structure, field model, validation rules, or backend contract.",
+    "avoid_when": "Do not use for user preferences, simple forms, or generic settings when typed data structure is not the meaning.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Structured schema diagram with connected blocks representing typed fields and data rules.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "schema",
+      "data schema",
+      "typed structure",
+      "field model",
+      "data rules"
+    ]
+  },
+  {
+    "icon_id": "material:search",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "search",
+    "label": "Search",
+    "purpose": "Show search, lookup, or find behavior over content, records, or interface surfaces.",
+    "category": "search_discovery",
+    "semantic_tags": [
+      "search",
+      "find",
+      "lookup",
+      "query",
+      "discovery"
+    ],
+    "use_when": "Use when the interface opens search, triggers lookup, or signals that users can find content.",
+    "avoid_when": "Do not use for scanning, inspection, or analytics-specific search when a more specialized icon communicates the meaning better.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Magnifying glass with a circular lens and handle for search or lookup.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "find",
+      "search content",
+      "lookup",
+      "query"
+    ]
+  },
+  {
+    "icon_id": "material:settings",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "settings",
+    "label": "Settings",
+    "purpose": "Show settings, preferences, configuration, or system options.",
+    "category": "configuration",
+    "semantic_tags": [
+      "settings",
+      "preferences",
+      "configuration",
+      "options",
+      "controls"
+    ],
+    "use_when": "Use when the user can open settings, change preferences, or manage configuration.",
+    "avoid_when": "Do not use for repair tools, automation workflows, or system architecture concepts where a gear would be too generic.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Gear cog with teeth around a center hub for settings and configuration.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "preferences",
+      "config",
+      "settings panel",
+      "options"
+    ]
+  },
+  {
+    "icon_id": "material:smart_toy",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "smart_toy",
+    "label": "Agent",
+    "purpose": "Show an AI assistant, autonomous agent, or bot-like system actor.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "agent",
+      "assistant",
+      "bot",
+      "automation",
+      "ai"
+    ],
+    "use_when": "Use when the interface refers to an AI assistant, autonomous agent, or bot-driven actor.",
+    "avoid_when": "Do not use for general toys, mascots, or generic automation with no agent meaning.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A robot-like symbol for an assistant or automated agent.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "ai agent",
+      "assistant bot",
+      "automated assistant",
+      "agent actor"
+    ]
+  },
+  {
+    "icon_id": "material:sort",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "sort",
+    "label": "Sort",
+    "purpose": "Show sorting of a list, results, or ordered set of items.",
+    "category": "data_controls",
+    "semantic_tags": [
+      "sort",
+      "order",
+      "arrange",
+      "rank",
+      "list control"
+    ],
+    "use_when": "Use when the interface changes how items are ordered or ranked.",
+    "avoid_when": "Do not use for filtering, navigation, or progress states when the control is about ordering.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A control that changes ordering or ranking of items.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "sort list",
+      "change order",
+      "arrange items",
+      "sort results"
+    ]
+  },
+  {
+    "icon_id": "material:splitscreen",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "splitscreen",
+    "label": "Split View",
+    "purpose": "Show a split-screen or side-by-side layout mode.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "split view",
+      "side by side",
+      "multi pane",
+      "layout",
+      "dual panel"
+    ],
+    "use_when": "Use when the interface switches into a split-screen or multi-pane layout.",
+    "avoid_when": "Do not use for resizing or generic window controls when the meaning is specifically split layout.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A layout icon showing the screen divided into sections.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "split screen",
+      "dual pane",
+      "two panel view",
+      "side by side layout"
+    ]
+  },
+  {
+    "icon_id": "material:subdirectory_arrow_right",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "subdirectory_arrow_right",
+    "label": "Nested Destination",
+    "purpose": "Show a move into a nested section, child route, or deeper branch in a hierarchy.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "nested route",
+      "subdirectory",
+      "drill in",
+      "child level",
+      "hierarchy"
+    ],
+    "use_when": "Use when the interface moves into a child item, nested route, or deeper hierarchy level.",
+    "avoid_when": "Do not use for simple forward navigation when the meaning is specifically hierarchical drill-in.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An arrow entering a nested branch or sublevel.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "go deeper",
+      "child route",
+      "nested destination",
+      "drill into branch"
+    ]
+  },
+  {
+    "icon_id": "material:swap_horiz",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "swap_horiz",
+    "label": "Swap",
+    "purpose": "Show swapping, reversing, or exchanging positions or directions.",
+    "category": "system_control",
+    "semantic_tags": [
+      "swap",
+      "switch",
+      "reverse",
+      "exchange",
+      "change order"
+    ],
+    "use_when": "Use when the interface swaps values, reverses direction, or exchanges positions.",
+    "avoid_when": "Do not use for sync, refresh, or undo when the meaning is not actual exchange.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Opposing arrows indicating exchange or order swap.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "switch sides",
+      "reverse order",
+      "exchange positions",
+      "swap direction"
+    ]
+  },
+  {
+    "icon_id": "material:swap_vert",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "swap_vert",
+    "label": "Swap",
+    "purpose": "Show swapping, reversing, or exchanging positions or directions.",
+    "category": "system_control",
+    "semantic_tags": [
+      "swap",
+      "switch",
+      "reverse",
+      "exchange",
+      "change order"
+    ],
+    "use_when": "Use when the interface swaps values, reverses direction, or exchanges positions.",
+    "avoid_when": "Do not use for sync, refresh, or undo when the meaning is not actual exchange.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Opposing arrows indicating exchange or order swap.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "switch sides",
+      "reverse order",
+      "exchange positions",
+      "swap direction"
+    ]
+  },
+  {
+    "icon_id": "material:tab",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "tab",
+    "label": "Tabs",
+    "purpose": "Show tabbed navigation between sibling sections or views.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "tabs",
+      "tab navigation",
+      "sections",
+      "switch view",
+      "top nav"
+    ],
+    "use_when": "Use when the interface switches between sibling sections through a tab pattern.",
+    "avoid_when": "Do not use for generic lists or cards when the control is specifically tab navigation.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A tab-like layout marker for switching sections.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "tab bar",
+      "section tabs",
+      "switch tabs",
+      "tabbed view"
+    ]
+  },
+  {
+    "icon_id": "material:terminal",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "terminal",
+    "label": "Terminal",
+    "purpose": "Show command-line tooling, terminal access, or developer shell work.",
+    "category": "engineering_developer_tools",
+    "semantic_tags": [
+      "terminal",
+      "command line",
+      "shell",
+      "developer tool",
+      "console"
+    ],
+    "use_when": "Use when the interface refers to shell commands, console work, or terminal-based tooling.",
+    "avoid_when": "Do not use for chat or generic code views when the meaning is specifically terminal access.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Terminal window prompt with command-line marks for shell or console input.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "shell",
+      "console",
+      "command line",
+      "terminal session"
+    ]
+  },
+  {
+    "icon_id": "material:undo",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "undo",
+    "label": "Undo",
+    "purpose": "Show undoing the most recent action.",
+    "category": "system_control",
+    "semantic_tags": [
+      "undo",
+      "reverse action",
+      "go back",
+      "revert",
+      "history"
+    ],
+    "use_when": "Use when the interface reverses the most recent user action.",
+    "avoid_when": "Do not use for back navigation or refresh when the meaning is not action history.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A curved arrow returning to a previous state.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "revert action",
+      "go back one step",
+      "undo last change",
+      "reverse change"
+    ]
+  },
+  {
+    "icon_id": "material:unfold_less",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "unfold_less",
+    "label": "Collapse",
+    "purpose": "Show that open content, options, or details can collapse closed.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "collapse",
+      "show less",
+      "close",
+      "hide details",
+      "fold"
+    ],
+    "use_when": "Use when the interface can collapse a section, hide details, or close expanded content.",
+    "avoid_when": "Do not use for upload or upward movement when the meaning is not collapse.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "An upward control indicating content can close or fold away.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "show less",
+      "collapse section",
+      "close details",
+      "fold up"
+    ]
+  },
+  {
+    "icon_id": "material:unfold_more",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "unfold_more",
+    "label": "Expand",
+    "purpose": "Show that more content, options, or details can expand open.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "expand",
+      "show more",
+      "open",
+      "details",
+      "dropdown"
+    ],
+    "use_when": "Use when the interface can expand a section, reveal more options, or open a dropdown-like control.",
+    "avoid_when": "Do not use for download, downward movement, or status decline when the meaning is not expansion.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A downward control indicating more content can open.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "show more",
+      "expand section",
+      "open details",
+      "dropdown open"
+    ]
+  },
+  {
+    "icon_id": "material:view_list",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "view_list",
+    "label": "List View",
+    "purpose": "Show a list view mode for browsing content in rows.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "list view",
+      "rows",
+      "stacked list",
+      "browse list",
+      "layout"
+    ],
+    "use_when": "Use when the interface switches content into a list or row-based view.",
+    "avoid_when": "Do not use for checklists or navigation menus when the meaning is specifically a view mode.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A stacked-line layout icon for list presentation.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "row view",
+      "list layout",
+      "browse in list",
+      "stacked items"
+    ]
+  },
+  {
+    "icon_id": "material:view_module",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "view_module",
+    "label": "Grid View",
+    "purpose": "Show a grid or tiled view mode for browsing content.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "grid view",
+      "tiles",
+      "card view",
+      "browse grid",
+      "layout"
+    ],
+    "use_when": "Use when the interface switches content into a grid, tile, or card-based view.",
+    "avoid_when": "Do not use for app launchers or dashboards when the meaning is specifically a view mode.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A tiled layout icon showing content in a grid.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "tile view",
+      "card grid",
+      "grid layout",
+      "browse in grid"
+    ]
+  },
+  {
+    "icon_id": "material:view_sidebar",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "view_sidebar",
+    "label": "Sidebar View",
+    "purpose": "Show a sidebar layout or a control that opens, closes, or focuses the sidebar.",
+    "category": "navigation_interface",
+    "semantic_tags": [
+      "sidebar",
+      "layout",
+      "side panel",
+      "navigation panel",
+      "split layout"
+    ],
+    "use_when": "Use when the interface highlights or toggles a sidebar or side navigation panel.",
+    "avoid_when": "Do not use for generic settings or drawer menus when the meaning is not a sidebar layout.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A layout icon showing a main area beside a sidebar.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "sidebar layout",
+      "side panel",
+      "open sidebar",
+      "toggle sidebar"
+    ]
+  },
+  {
+    "icon_id": "material:webhook",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "webhook",
+    "label": "Webhook",
+    "purpose": "Show a webhook, event callback, or trigger sent between systems.",
+    "category": "systems_architecture",
+    "semantic_tags": [
+      "webhook",
+      "event callback",
+      "trigger",
+      "integration",
+      "system event"
+    ],
+    "use_when": "Use when the interface refers to webhook setup, event callbacks, or system trigger flows.",
+    "avoid_when": "Do not use for generic links or external navigation when the meaning is specifically webhooks.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A hook-like integration symbol for events or callbacks.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "event hook",
+      "callback",
+      "integration trigger",
+      "webhook event"
+    ]
+  },
+  {
+    "icon_id": "material:workflow",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "workflow",
+    "label": "Workflow",
+    "purpose": "Show a multi-step workflow, orchestration path, or linked automation sequence.",
+    "category": "agent_lifecycle",
+    "semantic_tags": [
+      "workflow",
+      "orchestration",
+      "pipeline",
+      "sequence",
+      "automation"
+    ],
+    "use_when": "Use when the interface needs to show a linked sequence of automated or agent-driven steps.",
+    "avoid_when": "Do not use for a simple hierarchy, organization chart, or generic navigation pattern.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Workflow shown as a structured process or layered system symbol.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "approved_reference",
+      "metadata_only"
+    ],
+    "synonyms": [
+      "agent flow",
+      "automation flow",
+      "process map",
+      "pipeline"
+    ]
+  },
+  {
+    "icon_id": "material:zoom_in",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "zoom_in",
+    "label": "Zoom In",
+    "purpose": "Show zooming in on content or a workspace view.",
+    "category": "system_control",
+    "semantic_tags": [
+      "zoom",
+      "in",
+      "scale",
+      "view control",
+      "magnify"
+    ],
+    "use_when": "Use when the interface changes magnification and zooms in on visible content.",
+    "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A zoom control for scaling content in.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "zoom in",
+      "magnify view",
+      "scale in",
+      "in closer"
+    ]
+  },
+  {
+    "icon_id": "material:zoom_out",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "zoom_out",
+    "label": "Zoom Out",
+    "purpose": "Show zooming out on content or a workspace view.",
+    "category": "system_control",
+    "semantic_tags": [
+      "zoom",
+      "out",
+      "scale",
+      "view control",
+      "magnify"
+    ],
+    "use_when": "Use when the interface changes magnification and zooms out on visible content.",
+    "avoid_when": "Do not use for open, search, or resize when the meaning is specifically zoom level.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A zoom control for scaling content out.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "taxonomy_seed",
+      "svg_payload"
+    ],
+    "synonyms": [
+      "zoom out",
+      "shrink view",
+      "scale out",
+      "out closer"
+    ]
+  }
+]

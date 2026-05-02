@@ -1,0 +1,70 @@
+[
+  {
+    "icon_id": "heroicons:shield-check",
+    "source_group": "free",
+    "source_library": "heroicons",
+    "source_name": "shield-check",
+    "label": "Shield Check",
+    "purpose": "Show a confirmed trust, protection, or verification state.",
+    "category": "security",
+    "semantic_tags": [
+      "security",
+      "verified",
+      "trust",
+      "protection",
+      "safe"
+    ],
+    "use_when": "Use when a trust or safety check has passed and a public-safe icon is needed.",
+    "avoid_when": "Do not use for generic success feedback that has nothing to do with security or trust.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "A shield outline with a checkmark.",
+    "state": "verified",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ]
+  },
+  {
+    "icon_id": "material:lock",
+    "source_group": "free",
+    "source_library": "material",
+    "source_name": "lock",
+    "label": "Lock",
+    "purpose": "Show locked access, protection, or a secured setting in a simpler system style.",
+    "category": "security",
+    "semantic_tags": [
+      "lock",
+      "secure",
+      "protected",
+      "restricted",
+      "access"
+    ],
+    "use_when": "Use when the UI shows locked access, protected content, a secured setting, or a restricted action.",
+    "avoid_when": "Do not use for verified trust, shielded safety, or password entry when a more specific security icon is needed.",
+    "version": "1.0.0",
+    "status": "reviewed",
+    "access_tier": "public_open_record",
+    "projection_policy": "future_public_record",
+    "is_premium": false,
+    "depicts": "Closed padlock with a shackle and solid body indicating secured or restricted access.",
+    "review_state": "human_reviewed",
+    "evidence": [
+      "source_name",
+      "visual_inspection",
+      "editorial_judgment"
+    ],
+    "synonyms": [
+      "lock",
+      "locked access",
+      "restricted",
+      "protected content",
+      "secure setting"
+    ]
+  }
+]
