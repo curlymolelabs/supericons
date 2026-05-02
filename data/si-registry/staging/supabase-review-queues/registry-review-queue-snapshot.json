@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-02T11:31:15.257Z",
+  "source": {
+    "sourceTable": "icon_registry_records",
+    "source": "live_supabase:depicts_visual_quality",
+    "purpose": "Flag depicts records that are visually generic, duplicated, abstract, or missing visible modifiers."
+  },
+  "summary": {
+    "recordsScanned": 15103,
+    "reviewQueueRows": 0,
+    "qualityFindings": 0,
+    "reviewQueueByLibrary": {},
+    "findingsByIssue": {},
+    "findingsBySeverity": {}
+  },
+  "samples": [],
+  "tables": {
+    "icon_registry_quality_findings": [],
+    "icon_registry_review_queue": []
+  },
+  "contentHash": "c08cc2f108bce66e44ff280950fee756338f2e7713783b34d609fd1f31747ad7"
+}
